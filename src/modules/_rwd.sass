@@ -1,0 +1,107 @@
+//tablet phone computer large screen
+
+
+// RWD
+//
+// The main content of the RWD.
+
+=rwd($type)
+
+  @if $type == mobile
+    @media (max-width: $rwd-mobile)
+      @content
+      
+  @else if $type == tablet
+    @media (min-width: $rwd-tablet-min)
+      @content
+      
+  @else if $type == computer
+    @media (min-width: $rwd-computer-min)
+      @content
+      
+  @else if $type == large
+    @media (min-width: $rwd-large-min)
+      @content
+
+=rwd-serious($type)
+
+  @if $type == mobile
+    @media (max-width: $rwd-mobile)
+      @content
+      
+  @else if $type == tablet
+    @media (min-width: $rwd-tablet-min) and (max-width: $rwd-tablet-max)
+      @content
+      
+  @else if $type == computer
+    @media (min-width: $rwd-computer-min) and (max-width: $rwd-computer-max)
+      @content
+      
+  @else if $type == large
+    @media (min-width: $rwd-large-min)
+      @content
+
+
+// RWD Hide
+//
+// Hide when it match some kind of the device of the RWD rules.
+
+=rwd-hide($type)
+  +rwd($type)
+    display: none
+    width  : 0px
+
+
+
+
+// RWD Position
+//
+// Change the position when the RWD rules was changed.
+
+=rwd-pos($type, $pos, $xy: null)
+  +rwd($type)
+    +pos($pos, $xy)
+
+
+
+
+// RWD Size
+//
+// Change the size when the RWD rules was changed.
+
+=rwd-size($type, $width: null, $height: null)
+  +rwd($type)
+    +size($width, $height)
+
+
+
+
+// RWD Font
+//
+// Change the font size and options when the RWD rules was changed.
+
+=rwd-font($type, $size, $color: null, $weight: null)
+  +rwd($type)
+    +font($size, $color, $weight)
+
+
+
+
+// RWD Margin
+//
+// Change the margin and options when the RWD rules was changed.
+
+=rwd-mar($type, $margin)
+  +rwd($type)
+    margin: $margin
+
+
+
+
+// RWD Padding
+//
+// Change the margin and options when the RWD rules was changed.
+
+=rwd-pad($type, $padding)
+  +rwd($type)
+    padding: $padding

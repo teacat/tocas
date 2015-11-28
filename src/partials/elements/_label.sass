@@ -1,0 +1,72 @@
+=label-theme($color: #EEE, $textColor: false)
+
+  @if not $textColor
+    $textColor: lighten($color, 45%)
+
+  background-color: $color
+  border: 1px solid darken($color, 1%)
+  color: $textColor
+  
+
+  &.raised
+    box-shadow: 0 2px 4px 0 darken($color, 4%),0 2px 10px 0 darken($color, 4%)
+    border: 1px solid darken($color, 2%)
+    border-bottom-width: 1px
+
+
+.ts.label
+  +border-box
+  +label-theme($defaultColor, auten($defaultColor, 40%))
+  
+
+  font-size: 12px
+  padding: $padding / 2 $padding
+  font-weight: 600
+    
+  &.floating
+    +absolute
+    top: - $margin
+    right: - $margin
+    padding: $padding / 4 $padding / 2
+  
+  &.circular
+    padding: $padding / 2
+    border-radius: 500px
+    min-width: 22px
+    min-height: 22px
+    
+  &.basic
+    background-color: transparent
+    
+  &.mini
+    font-size: 12px
+    padding: $padding / 1.2 $padding * 1.6
+
+  &.tiny
+    font-size: 12px
+    padding: $padding $padding * 1.6
+
+  &.small
+    font-size: 13px
+    padding: $padding * 1.1 $padding * 1.8
+
+  &.medium
+    font-size: 14px
+    padding: $padding * 1.3 $padding * 2
+
+  &.large
+    font-size: 15px
+    padding: $padding * 1.5 $padding * 2.3
+
+  &.big
+    font-size: 16px
+    padding: $padding * 1.6 $padding * 2.6
+  
+  &.huge
+    font-size: 19px
+    padding: $padding * 1.9 $padding * 2.8
+  
+  
+  &.massive
+    font-size: 20px
+    padding: $padding * 2.1 $padding * 3.3

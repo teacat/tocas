@@ -1,0 +1,77 @@
+=card-theme($color: #808080, $bgColor: #FFF, $extraColor: #F5F5F5)
+  +basic-card
+  
+  .content
+    color: $color
+    
+    .header
+      color: darken($color, 10%)
+    
+    &.extra
+      border-top-color: lighten($color, 40%)
+      background: $extraColor
+      
+      .ts.comments
+        +comment-theme($extraColor)
+  
+    .meta
+      color: lighten($color, 20%)
+  
+  
+    
+
+.ts.card
+  +card-theme
+  +relative
+  
+  .image 
+    +relative
+    
+    img
+      +block
+      +relative
+      max-width: 100%
+    
+    .dim
+      +absolute
+      +fill
+      +padding
+      +border-box
+      
+      top: 0px
+      left: 0px
+      right: 0px
+      bottom: 0px
+      display: flex
+      align-items: flex-end
+      align-self: flex-end
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6))
+      text-shadow: 0 1px 0 black
+      color: #FFF
+  
+  .bottom.nav
+    .ts.menu
+      border-radius: 0px
+      border: none
+      border-bottom: none
+      border-left: none
+      border-right: none
+  
+  > .content
+    padding: $padding * 1.3 $padding * 1.5
+    word-break: break-word
+    word-wrap: break-word
+  
+    .header
+      font-weight: 600
+  
+    .meta
+      +small
+      
+      .list
+        +small
+    
+    &.extra
+      border-top-style: solid
+      border-top-width: 1px
+    

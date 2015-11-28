@@ -1,0 +1,239 @@
+
+=menu-theme($color: #fafafa)
+  //+no-overflow
+  
+  background          : $color
+  border-color: darken($color, 5%)
+  
+  .item
+    background : $color
+    color      : auten($color, 45%)
+  
+    &:hover
+      +poi
+      background : auten($color, 3%)
+  
+    &:active
+      +ext(no-ease)
+      +ext(no-tap)
+      
+      user-select: none
+      background: auten($color, 8%)
+  
+    .label
+      color: auten($color, 45%)
+      background: if(is_lighter($color), darken($color, 3%), darken($color, 3%))
+      border: none
+      
+    &.active,
+    &.active:after
+      background: auten($color, 8%)
+    
+  &:not(.vertical)
+    .item
+      border-color: darken($color, 10%)
+  
+  
+  
+  
+  &.vertical
+    .item
+      border-top-color    : if(is_lighter($color), lighten($color, 3%), lighten($color, 4%))
+      border-bottom-color : if(is_lighter($color), darken($color, 3%), darken($color, 3%))
+  
+      &:hover
+        background : auten($color, 3%)
+        border-top-color    : auten($color, 3%)
+        
+      &:active
+        +ext(no-ease)
+        +ext(no-tap)
+        
+        background: auten($color, 8%)
+        border-top-color    : auten($color, 8%)
+  
+  &.pointing
+
+    .item:after
+      border-color: darken($color, 10%)
+
+  &.pointing.secondary
+
+    .item
+      background-color: transparent
+      border-right-width: 0px
+      border-left-width: 0px
+      
+    .item.active
+      border-bottom: 2px solid darken($color, 10%)
+
+
+  
+
+
+
+
+.ts.menu, .ts.menu .menu
+  $thisParent: '.ts.menu'
+  display: flex
+  
+  +menu-theme(#fafafa)
+  +rd
+  +border-box
+
+  margin-top: $margin
+  margin-bottom: $margin
+  
+  
+  &:first-child
+    margin-top: 0px
+    
+  border-width: 1px
+  border-style: solid
+    
+  &.icon
+    .icon
+      margin-right: 0px
+  
+  .menu
+    border-radius: 0px
+    border: none
+    
+    &.right
+      margin-left: auto !important
+      
+      .item:first-child
+        border-left-width: 1px
+        border-left-style: solid
+
+  &.fluid
+    border-radius: 0px
+    border: none
+  
+  
+  &.mini
+    font-size: 14px
+  
+  &:not(.vertical)
+    .item
+      border-right-width: 1px
+      border-right-style: solid
+      
+      &:last-child
+        border-right-width: 0px
+  
+  
+  
+  &.pointing:not(.secondary)
+    .item.active:after
+      +absolute
+      
+      content: ''
+      top: 100%
+      left: 50%
+      transform: translateX(-50%) translateY(-50%) rotate(45deg)
+
+      margin-top: 0.5px
+      width: $padding
+      height: $padding
+
+      border-bottom-width: 1px
+      border-bottom-style: solid
+      border-right-width: 1px
+      border-right-style: solid
+      z-index: 2
+      transition: background 0.1s ease
+  
+
+  
+  
+  
+  .item
+    +ext(ease)
+    +inline-block
+    +normal
+    +relative
+    +flex
+    align-items: center
+    padding     : $padding * 1.2 $padding * 2.3
+    
+    text-shadow : 0 1px 1px rgba(0,0,0,0.2)
+    
+    
+    
+    +if-parent($thisParent, '.mini')
+      padding : $padding  $padding * 1.5
+
+    
+    
+    &.fitted
+      &.horizontally
+        padding-left: 0px
+        padding-right: 0px
+      
+      &.vertically
+      padding-top: 0px
+      padding-bottom: 0px
+    
+    
+    
+    
+    
+    //
+    //  Label
+    //
+    
+    .label
+      float     : right
+      margin-top: -2px
+      padding   : $padding / 3 $padding
+    
+    
+    //
+    // Image
+    //
+    
+    &.image
+      border-style  : none
+      padding       : 0px 
+      vertical-align: top
+      
+      img
+        +block
+        
+  &.relaxed
+    .item:not(.image)
+      padding: $padding * 1.8 $padding * 2.3
+    
+  
+  
+  &.vertical
+    display: block
+    
+    .item
+      +block
+      border-width: 1px 0px
+      border-style: solid
+  
+
+  &.borderless
+    .item
+      text-shadow : none
+      border: none
+      
+    .menu
+      .item
+        border: none !important
+        
+  
+  &.pointing.secondary
+    border: none
+    
+    .item.active
+      font-weight: bold
+    
+  &.secondary
+    background: none
+  
+    .item
+      text-shadow: none

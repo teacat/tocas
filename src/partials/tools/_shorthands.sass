@@ -1,0 +1,24 @@
+=ext($name, $silent: true)
+  @if $silent == true
+    @extend %#{$name} !optional
+  @else
+    @extend .#{$name} !optional
+    
+    
+    
+@function auten($color, $percent: 40%)
+  /** If too light, we use darken() otherwise we use lighten()
+  @if lightness($color) > 50
+    @return darken($color, $percent)
+  @else
+    @return lighten($color, $percent)
+    
+@function is_lighter($color)
+  @if lightness($color) > 90
+    @return true
+  @else
+    @return false
+    
+=if-parent($parent, $class)
+  @at-root #{selector-replace(&, #{$parent}, $parent + $class)}
+    @content

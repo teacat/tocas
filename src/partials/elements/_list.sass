@@ -1,0 +1,59 @@
+=list-theme($color: #808080, $fontSize: 14px)
+  font-size: $fontSize
+
+  .item
+    color: $color
+  
+  &.middoted,
+  &.bulleted
+  
+    .item:not(:first-child):before
+      color: rgba($color, 0.8)
+
+.ts.list
+  +list-theme
+  
+
+  &.horizontal
+  
+    .item
+      +inline-block
+      
+      margin-left: $margin
+      
+      &:first-child
+        margin-left: 0px
+      
+      &:not(:first-child):before
+        margin-left: $margin / 2.5
+        margin-right: $margin / 2.5
+    
+    &.relaxed
+      .item
+        margin-right: $margin
+      
+        &:last-child
+          margin-right: 0px
+    
+    .content
+      +inline-block
+      margin-left: $margin / 2
+        
+  &.middoted
+    
+    .item:not(:first-child):before
+      content: '·'
+
+  
+  &.bulleted
+  
+    .item:not(:first-child):before
+      content: '•'    
+      
+      //• bullet
+      //· middledot
+  
+  &.middoted .item,
+  &.bulleted .item
+    margin-left: 0px
+      

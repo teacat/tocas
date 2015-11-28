@@ -1,0 +1,151 @@
+=loader-theme($size: 36px, $borderSize: 3px, $color: #999)
+  
+  
+  
+  &:before,
+  &:after
+    height: $size
+    width: $size
+    
+  
+  &:before
+    border-width: $borderSize
+    border-style: solid
+
+  &:after
+    border-top-width: $borderSize
+    border-top-style: solid
+
+
+=loader-flower-theme($color: #FFF)
+  background: auten($color)
+  box-shadow: white 0 0 15px 0, $color -12px -12px 0 4px, $color 12px -12px 0 4px, $color 12px 12px 0 4px, $color -12px 12px 0 4px
+  @keyframes flower-loader
+    0%
+      transform: rotate(0deg)
+      box-shadow: white 0 0 15px 0, $color -12px -12px 0 4px, $color 12px -12px 0 4px, $color 12px 12px 0 4px, $color -12px 12px 0 4px
+    50%
+      transform: rotate(1080deg)
+      box-shadow: white 0 0 15px 0, $color 12px 12px 0 4px, $color -12px 12px 0 4px, $color -12px -12px 0 4px, $color 12px -12px 0 4px
+
+=loader-resource
+
+  &.text
+    padding-top: 36px + $padding
+    font-size: 14px
+  
+  &:before,
+  &:after
+    +border-box
+    +absolute
+    left: 0
+    top: 0
+    right: 0
+    margin-left: auto !important
+    margin-right: auto !important
+    content: ' '
+    border-radius: 50%
+    
+  &:before
+    opacity: 0.5
+    animation: spin 1s infinite linear
+    
+    
+  &:after
+    border-bottom: 5px solid transparent
+    border-left: 5px solid transparent
+    border-right: 5px solid transparent
+
+    animation: spin 1s infinite linear
+  
+  &.indeterminate:after,
+  &.indeterminate:before
+    animation: spin2 1s infinite linear
+  
+    @keyframes spin2
+      from
+        transform: rotate(360deg)
+      to
+        transform: rotate(0deg)
+        
+    @keyframes spin
+      from
+        transform: rotate(0deg)
+      to
+        transform: rotate(360deg)
+
+=loader-color($color: #999)
+  @if $color != false
+    color: $color
+
+  &:before
+    @if $color != false
+      border-color: $color
+
+  &:after
+    @if $color != false
+      border-top-color: $color
+
+
+.ts.loader
+  +loader-theme(36px, 3px)
+  +loader-color
+  +loader-resource
+  +relative
+  +block
+  
+  height: 36px
+  min-width: 36px
+  text-align: center
+
+ 
+  &.inline
+    +inline-block
+  
+  &.centered
+    margin: 0px auto
+    
+  &.mini
+    +loader-theme(16px, 2px)
+    font-size: 12px
+    min-width: 16px
+    width: 16px
+    height: 16px
+    
+    &.text
+      padding-top: 16px + $padding / 2
+  
+  &.small
+    +loader-theme(28px, 3px)
+    font-size: 12px
+    min-width: 28px
+    width: 28px
+    height: 28px
+    
+    &.text
+      padding-top: 28px + $padding / 2
+  
+  &.medium
+    +loader-theme(48px, 4px)
+    font-size: 14px
+    min-width: 48px
+    width: 48px
+    height: 48px
+
+    
+    &.text
+      padding-top: 48px + $padding / 2
+  
+  &.large
+    +loader-theme(56px, 4px)
+    font-size: 14px
+    min-width: 56px
+    width: 56px
+    height: 56px
+    
+    &.text
+      padding-top: 56px + $padding / 2
+    
+  &.text
+    width: auto
+    height: auto

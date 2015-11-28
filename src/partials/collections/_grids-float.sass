@@ -1,0 +1,44 @@
+// The amount of the column of a single row.
+$columnAmount: 16
+
+// The name of the each column size.
+$columnName  : one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen
+
+// The margin between each column.
+$columnMargin: 1.6
+
+// The margin of all the columns.
+$allMargin   : $columnAmount * $columnMargin
+
+// Calculate how much space left for columns.
+$columnWidth : 99 - $allMargin
+
+// Get the width of a single column.
+$columnSingle: $columnWidth / $columnAmount
+
+$singleLeft: 99 / $columnAmount
+
+
+=column-generator
+  @for $i from 1 through $columnAmount
+    [class*="#{nth($columnName, $i)} wide"]
+
+      width  : $columnSingle + $singleLeft * $i - $singleLeft * 1%
+      display: block
+      float  : left
+      margin : 0% 0% $columnMargin * 1%  $columnMargin * 1%
+
+
+
+.ts.grid
+  +column-generator
+  +flex 
+  
+  width    : 100%
+  max-width: 1170px
+  
+  &.centered
+    margin: 0px auto !important
+
+  .column:first-child
+    margin-left: 0px

@@ -1,0 +1,107 @@
+// The amount of the column of a single row.
+$columnAmount: 16
+
+// The name of the each column size.
+$columnName  : one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen
+
+=column-generator
+  @for $i from 1 through $columnAmount
+    [class*="#{nth($columnName, $i)} wide"]
+      +border-box
+
+      width  : 100% / $columnAmount * $i 
+    
+    [class*="#{nth($columnName, $i)} wide mobile"]
+      +rwd-serious(mobile)
+        width  : 100% / $columnAmount * $i !important
+
+    [class*="#{nth($columnName, $i)} wide tablet"]
+      +rwd-serious(tablet)
+        width  : 100% / $columnAmount * $i !important
+    
+    [class*="#{nth($columnName, $i)} wide computer"]
+      +rwd(computer)
+        width  : 100% / $columnAmount * $i !important
+    
+    [class*="#{nth($columnName, $i)} wide large screen"]
+      +rwd(large)
+        width  : 100% / $columnAmount * $i !important
+
+
+
+.ts.grid
+  
+  +flex 
+  +border-box
+  
+  flex-direction: row
+  width    : 100%
+  flex-wrap: wrap
+  
+  //margin-left: -#{$padding}
+  //margin-right: -#{$padding}
+  //margin-bottom: 1%
+  
+  [class*="only"]
+    display: none !important
+  
+  [class*="large screen only"]
+    +rwd(large)
+      display: initial !important
+      
+  [class*="computer only"]
+    +rwd(computer)
+      display: initial !important
+      
+  [class*="tablet only"]
+    +rwd(tablet)
+      display: initial !important
+  
+  [class*="mobile only"]
+    +rwd-serious(mobile)
+      display: initial !important
+
+  
+  
+  &.centered
+    //margin: 0px auto !important
+    
+  &.start
+    justify-content: flex-start
+  
+  &.end
+    justify-content: flex-end
+
+  > .row
+    +flex
+    flex-wrap: nowrap
+    width: 100%
+  
+  > .column,
+  > .row .column
+    +block
+    
+    padding-left: $padding / 2
+    padding-right: $padding / 2
+    margin-bottom: $margin * 1.8
+    
+    [class*="left aligned"]
+      text-align: left
+    
+    [class*="right aligned"]
+      text-align: right
+    
+    [class*="center aligned"]
+      text-align: center
+    
+    
+  &.relaxed
+    //margin-left: -#{$padding * 1.8}
+    //margin-right: -#{$padding * 1.8}
+  
+    > .column
+    
+      padding-left: $padding * 1.8
+      padding-right: $padding * 1.8
+  
+  +column-generator
