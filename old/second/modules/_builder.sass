@@ -1,0 +1,77 @@
+// Padding
+//
+//
+
+=padding($x: 1)
+  padding: $padding * $x
+
+// Margin
+//
+//
+
+=margin($x: 1)
+  margin: $margin * $x
+
+// Border Radius
+//
+//
+
+=rd($px: 4px)
+  border-radius: $px
+
+// Auten
+//
+// Auto + en, auto adjust to lighten or darken by the color deeper or not.
+// use lighten if the color too darken, or darken if the color too lighten.
+
+@function auten($color, $percent: 40%)
+  /** If too light, we use darken() otherwise we use lighten()
+  @if lightness($color) > 50
+    @return darken($color, $percent)
+  @else
+    @return lighten($color, $percent)
+
+// Ease
+//
+// The ease of the animations, use false to clear the ease effect.
+
+=ease($time: 0.15, $obj: all)
+  @if $time == false
+    transition-property: none
+  @else
+    transition: $obj $time + s ease-in-out
+
+// Background
+//
+//
+
+=bg($color, $image: null, $size: null)
+  background-color: $color
+  background-image: $image
+  background-size: $size
+
+// Unselectable
+//
+//
+
+=unselectable
+  -webkit-touch-callout: none
+  -webkit-user-select  : none
+  -khtml-user-select   : none
+  -moz-user-select     : none
+  -ms-user-select      : none
+  user-select          : none
+
+=center
+  vertical-align: middle !important
+  margin-left: auto !important
+  margin-right: auto !important
+  text-align: center !important
+
+
+=if-parent($parent, $class)
+  @at-root #{selector-replace(&, #{$parent}, $parent + $class)}
+    @content
+    
+=poi
+  cursor: pointer
