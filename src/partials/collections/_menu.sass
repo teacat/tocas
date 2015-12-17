@@ -1,9 +1,18 @@
+//**************************************
+//***********   T H E M E   ************
+//**************************************
 
 =menu-theme($color: #fafafa)
   //+no-overflow
   
   background          : $color
   border-color: darken($color, 5%)
+  
+  
+  
+  // Item
+  //
+  //
   
   .item
     background : $color
@@ -28,13 +37,22 @@
     &.active,
     &.active:after
       background: auten($color, 8%)
-    
+  
+  
+  
+  // NOT vertical
+  //
+  //
+  
   &:not(.vertical)
     .item
       border-color: darken($color, 10%)
   
   
   
+  // Veritcal
+  //
+  //
   
   &.vertical
     .item
@@ -52,11 +70,23 @@
         background: auten($color, 8%)
         border-top-color    : auten($color, 8%)
   
+  
+  
+  // Pointing
+  //
+  //
+  
   &.pointing
 
     .item:after
       border-color: darken($color, 10%)
 
+  
+  
+  // Pointing secondary
+  //
+  //
+  
   &.pointing.secondary
 
     .item
@@ -66,12 +96,23 @@
       
     .item.active
       border-bottom: 2px solid darken($color, 10%)
-
+  
+  
+  
+  // Secondary NOT pointing
+  //
+  //
+  
+  &.secondary:not(.pointing)
+    .item.active
+      background: rgba(auten($color, 8%), 0.45)
 
   
 
 
-
+//**************************************
+//************   M A I N   *************
+//**************************************
 
 .ts.menu, .ts.menu .menu
   $thisParent: '.ts.menu'
@@ -81,25 +122,34 @@
   +rd
   +border-box
 
-  margin-top: $margin
+  margin-top   : $margin
   margin-bottom: $margin
-  
+  border-width: 1px
+  border-style: solid
   
   &:first-child
     margin-top: 0px
     
-  border-width: 1px
-  border-style: solid
     
-  &.icon
-    .icon
-      margin-right: 0px
+    
+  // A
+  //
+  // 作為連結的選項而不是用 Div 來當作選項。
+  
+  a
+    text-decoration: none
+  
+
+
+  // Sub menu
+  //
+  // 選單中的選單，也就是子選單。
   
   .menu
     margin-bottom: 0px
-    margin-top: 0px
+    margin-top   : 0px
     border-radius: 0px
-    border: none
+    border       : none
     
     &.right
       margin-left: auto !important
@@ -107,48 +157,75 @@
       .item:first-child
         border-left-width: 1px
         border-left-style: solid
-
+        
+        
+        
+  // [&] Icon
+  //
+  // 擺放圖示用的選單。
+  
+  &.icon
+    .icon
+      margin-right: 0px
+  
+  
+  
+  // [&] Fluid
+  //
+  // 流動寬度選單。
+  
   &.fluid
     border-radius: 0px
+    border       : none
+
+
+
+  
+  // [&] Vertical
+  //
+  // 垂直選單。
+  
+  &.vertical
+    +block
+  
+  
+  
+  // [&] Borderless
+  //
+  // 更少框線的選單。
+
+  &.borderless
+    .menu
+      .item
+        border: none !important
+  
+  
+  
+  // [&] Pointing secondary
+  //
+  // 備用且帶有指針的選單。
+  
+  &.pointing.secondary
     border: none
-  
-  
-  &.mini
-    font-size: 14px
-  
-  &:not(.vertical)
-    .item
-      border-right-width: 1px
-      border-right-style: solid
+    background: none
+
       
-      &:last-child
-        border-right-width: 0px
   
   
+  // [&] Secondary NOT pointing
+  //
+  // 備用但非指針的選單。
   
-  &.pointing:not(.secondary)
-    .item.active:after
-      +absolute
-      
-      content: ''
-      top: 100%
-      left: 50%
-      transform: translateX(-50%) translateY(-50%) rotate(45deg)
+  &.secondary:not(.pointing)
+    border: none
+    background: none
 
-      margin-top: 0.5px
-      width: $padding
-      height: $padding
+     
 
-      border-bottom-width: 1px
-      border-bottom-style: solid
-      border-right-width: 1px
-      border-right-style: solid
-      z-index: 2
-      transition: background 0.1s ease
-  
 
-  
-  
+  //**************************************
+  //***********   I T E M S   ************
+  //**************************************
   
   .item
     +ext(ease)
@@ -156,34 +233,132 @@
     +normal
     +relative
     +flex
-    align-items: center
-    padding     : $padding * 1.2 $padding * 2.3
     
+    align-items : center
+    padding     : $padding * 1.2 $padding * 2.3
     text-shadow : 0 1px 1px rgba(0,0,0,0.2)
     
     
     
-    +if-parent($thisParent, '.mini')
-      padding : $padding  $padding * 1.5
-
+    // [PARENT] Small
+    //
+    // 迷你版選單。
+    
+    +if-parent($thisParent, '.small')
+      font-size: 14px
+      padding  : $padding  $padding * 1.5
     
     
-    &.fitted
-      &.horizontally
-        padding-left: 0px
-        padding-right: 0px
+    
+    // [PARENT] Large
+    //
+    // 較大版選單。
+    
+    +if-parent($thisParent, '.large')
+      font-size: 16px
+      padding  : $padding * 1.3  $padding * 2.3
       
-      &.vertically
-      padding-top: 0px
-      padding-bottom: 0px
     
     
-    
-    
-    
+    // [PARENT] Secondary NOT pointing
     //
-    //  Label
+    // 備用但非指針選單。
+    
+    +if-parent($thisParent, '.secondary:not(.pointing)')
+      +rd
+      border: none
+      
+      &:not(.active)
+        background: none
+    
+    
+    
+    // [PARENT] Pointing NOT secondary
     //
+    // 指針但非備用選單。
+    
+    +if-parent($thisParent, '.pointing:not(.secondary)')
+      &.active:after
+        +absolute
+        
+        content: ''
+        top: 100%
+        left: 50%
+        transform: translateX(-50%) translateY(-50%) rotate(45deg)
+  
+        margin-top: 0.5px
+        width: $padding
+        height: $padding
+  
+        border-bottom-width: 1px
+        border-bottom-style: solid
+        border-right-width : 1px
+        border-right-style : solid
+        z-index: 2
+        transition: background 0.1s ease
+      
+      
+      
+    // [PARENT] Pointing secondary
+    //
+    // 具有指針且備用。
+    
+    +if-parent($thisParent, '.pointing.secondary')
+      text-shadow: none
+      background: none
+      
+      &.active
+        font-weight: bold
+        
+        
+        
+    // [PARENT] Vertical
+    //
+    // 垂直選單。
+    
+    +if-parent($thisParent, '.vertical')
+      +block
+      border-width: 1px 0px
+      border-style: solid
+    
+    
+    
+    // [PARENT] Relaxed
+    //
+    // 較寬闊的高度和寬度。
+    
+    +if-parent($thisParent, '.relaxed')
+      &:not(.image)
+        padding: $padding * 1.8 $padding * 2.3
+    
+    
+    
+    // [PARENT] NOT vertical
+    //
+    // 非垂直的 Menu 選單。
+    
+    +if-parent($thisParent, ':not(.vertical)')
+      border-right-width: 1px
+      border-right-style: solid
+      
+      &:last-child
+        border-right-width: 0px
+    
+    
+    
+    // [PARENT] Borderless
+    //
+    // 較少框線。
+    
+    +if-parent($thisParent, '.borderless')
+      text-shadow: none
+      border     : none
+    
+    
+
+    // Label
+    //
+    // 標籤。
     
     .label
       float     : right
@@ -191,9 +366,10 @@
       padding   : $padding / 3 $padding
     
     
+    
+    // [&] Image
     //
-    // Image
-    //
+    // 放置圖片用的。
     
     &.image
       border-style  : none
@@ -203,39 +379,17 @@
       img
         +block
         
-  &.relaxed
-    .item:not(.image)
-      padding: $padding * 1.8 $padding * 2.3
-    
-  
-  
-  &.vertical
-    display: block
-    
-    .item
-      +block
-      border-width: 1px 0px
-      border-style: solid
-  
-
-  &.borderless
-    .item
-      text-shadow : none
-      border: none
-      
-    .menu
-      .item
-        border: none !important
         
-  
-  &.pointing.secondary
-    border: none
+        
+    // [&] Fitted
+    //
+    // 沒有水平或是垂直內距。
     
-    .item.active
-      font-weight: bold
-    
-  &.secondary
-    background: none
-  
-    .item
-      text-shadow: none
+    &.fitted
+      &.horizontally
+        padding-left : 0px
+        padding-right: 0px
+      
+      &.vertically
+      padding-top   : 0px
+      padding-bottom: 0px
