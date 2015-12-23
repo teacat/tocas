@@ -1,15 +1,629 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<link href="css/tocas.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Ubuntu+Mono' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/styles/tomorrow.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 <title>Tocas UI</title>
+<style>
+.fa
+{
+    
+    margin-right: 6px;
+}
+.icon.menu .fa,
+.button .fa,
+.header .fa
+{
+    margin-right: 0px;
+}
+
+.button .fa
+{
+    font-size: 15px
+}
+code
+{
+   
+    padding: 24px;
+    font-size: 14px; 
+}
+code *
+{
+     
+        font-weight: normal;
+    font-family: 'Ubuntu Mono';
+}
+.very-index
+{
+    color: #004B65;
+}
+.color-content .header
+{
+    color: #004B65;
+}
+.color-content,
+.color-content .sub.header
+{
+    color: #002430;
+}
+
+.very-index .sub.header
+{
+    color: #006588;
+}
+.ts.header
+{
+    font-weight: normal;
+}
+
+.ts.header:first-child
+{
+    margin-top: 0px;
+}
+
+.index-demo > .header
+{
+    color: #00ADEA;
+    margin-top: 32px;
+}
+
+
+#space, .stars {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.stars {
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: zoom 5s infinite;
+  opacity: 0;
+}
+
+.stars:nth-child(1) {
+  background-position: 50% 50%;
+  animation-delay: 0s;
+}
+.stars:nth-child(2) {
+  background-position: 20% 60%;
+  animation-delay: 1s;
+}
+.stars:nth-child(3) {
+  background-position: -20% -30%;
+  animation-delay: 2s;
+}
+.stars:nth-child(4) {
+  background-position: 40% -80%;
+  animation-delay: 3s;
+}
+.stars:nth-child(5) {
+  background-position: -20% 30%;
+  animation-delay: 4s;
+}
+
+@keyframes zoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+    animation-timing-function: ease-in;
+  } 
+  85% {
+    opacity: 1;
+    transform: scale(2.8);
+    animation-timing-function: linear;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(3.5);
+  }
+}
+
+/* Demo syles 
+------------------------------------- */
+
+  </style>
 </head>
 
 <body>
-    <nav>
-        <ul class="ts menu">
-            <li></li>
-        </ul>
-    </nav>
-</body>
+<header id="jungle">
+    <div class="ts container">
+        
+        <!-- 星星 -->
+        <div class="stars"></div>
+        <div class="stars"></div>
+        <div class="stars"></div>
+        <div class="stars"></div>
+        <div class="stars"></div>
+        <!-- / 星星 -->
+        
+        
+        <!-- 選單 -->
+        <div class="ts large secondary menu">
+            <a class="item" href="#">
+                <img src="img/logo.png" style="max-height: 28px">
+            </a>
 
+            
+            <!-- 右側選單 -->
+            <div class="right menu">
+                <a class="item" href="#">
+                    Github
+                </a>
+            </div>
+            <!-- / 右側選單 -->
+            
+        </div>
+        <!--/  選單 -->
+        
+        
+        <!-- 標題區塊 -->
+        <div id="title">
+            <h1 class="ts centered massive header inverted">
+                <div>Tocas UI</div>
+                <div class="sub header">這裡迎來另一個世界<!--Here comes another world.--></div>
+            </h1>
+            <br>
+            
+            <!-- 連結 -->
+            <a href="#" class="ts big basic inverted button">下載</a>
+            <a href="#" class="ts big basic inverted button">閱讀文件</a>
+            <!-- / 連結 -->
+            
+        </div>
+        <!-- / 標題區塊 -->
+        
+        
+    </div>
+</header>
+<section class="ts container">
+<p>&nbsp;</p>
+    <div class="ts relaxed grid">
+        
+
+        <div class="eight wide column color-content">
+            <h2 class="ts header">更有意義</h2>
+            <p>Tocas UI 以更有意義的方式來命名類別名稱，</p>
+            <p>就像是你直接稱呼這個元素一樣地親切。</p>
+            <p>程式已經夠枯燥乏味了，別再讓人生也繼續枯燥下去。</p>
+        </div>
+        
+        <div class="eight wide column index-demo">
+            <h3 class="ts header">HTML</h3>
+            <pre><code class="html ts segment">&lt;div class=&quot;ts buttons&quot;&gt;
+    &lt;button class=&quot;ts button&quot;&gt;&#21345;&#33673;&#32114;&lt;/button&gt;
+    &lt;button class=&quot;ts button&quot;&gt;&#20126;&#20961;&#33469;&lt;/button&gt;
+    &lt;button class=&quot;ts warning button&quot;&gt;&#27225;&#24076;&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+            
+            <div class="ts buttons">
+                  <button class="ts button">卡莉絲</button>
+                  <button class="ts button">亞凡芽</button>
+                  <button class="ts warning button">橙希</button>
+            </div>
+            
+            
+        </div>
+        
+        
+        
+        <div class="sixteen wide column">
+            <p>&nbsp;</p>
+            <div class="ts divider"></div>
+            <p>&nbsp;</p>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        <div class="eight wide column color-content">
+            <h2 class="ts header">自訂顏色只需一行指令</h2>
+            <p>在 Bootstrap 中，你會看到有人詢問如何更改顏色，</p>
+            <p>通常他們的答案是要求你另外寫一段 CSS 來覆蓋原生樣式，</p>
+            <p>在 Tocas UI 中，我們都幫你搞定了，甚至會自動替你的顏色配色。</p>
+            <p>&nbsp;</p>
+            <p>更有趣的是，幾乎每一個 Tocas UI 的元素都支援自訂顏色。</p>
+        </div>
+        
+        <div class="eight wide column index-demo">
+            <h3 class="ts header">SASS</h3>
+            <pre><code class="sass ts segment">.ts.button.sakura
+       +button-theme(#FFB7C5, #7F5961)</code></pre>
+           <h3 class="ts header">HTML</h3>
+           <pre><code class="sass ts segment">&lt;button class=&quot;ts fluid sakura button&quot;&gt;&#32701;&#30000;&#30333;&#38899;&lt;/button&gt;</code></pre>
+            
+     
+            <button class="ts fluid sakura button">羽田白音</button>
+                  
+        
+            
+            
+        </div>
+        
+        
+        
+        <div class="sixteen wide column">
+            <p>&nbsp;</p>
+            <div class="ts divider"></div>
+            <p>&nbsp;</p>
+        </div>
+        
+        <div class="sixteen wide column">
+            <div class="ts center aligned icon header very-index">
+                <i class="fa fa-gift" style="font-size: 128px"></i>
+                眾多搭配
+                <div class="sub header">元件除了可以單獨使用，還可以混搭著使用</div>
+            </div>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+        </div>
+
+        
+        <div class="four wide column index-demo">
+            <h3 class="ts header">圖片卡片</h3>
+            
+            <div class="ts card">
+                <div class="image">
+                    <img style="height: 150px; width: 100%; object-fit: cover" src="http://www.infinity-s.jp/products/novel/TwilightWiz/img/hero-bg.jpg">
+                    <div class="dim">黄昏ウィズ</div>
+                </div>
+            </div>
+            
+            <h3 class="ts header">垂直選單</h3>
+            
+            <div id="meow-selector" class="ts vertical menu">
+                   
+                                    <a class="item"><span class="fa fa-picture-o"></span> 相片<div class="ts label">3</div></a>
+                                    
+                                    <a class="item"><span class="fa fa-users"></span> 群組</a>
+                                    
+                                    <a class="item"><span class="fa fa-star"></span> 收藏</a>
+                                    
+                                </div>
+            
+            <h3 class="ts header">使用者清單</h3>
+            
+            <div class="ts divided relaxed items">
+                                        <div class="item">
+                                            <div class="image">
+                                                <img src="img/infinity-s/01.png">
+                                            </div>
+                                            <div class="content">
+                                                <div class="header">infinity-G™☆3日目東ユ46b</div>
+                                                <div class="meta">@infinity_AW</div>
+                                            </div>
+                                            <div class="side">
+                                                <button class="ts basic icon mini button">
+                                                    <span class="fa fa-star"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="image">
+                                                <img src="img/infinity-s/02.png">
+                                            </div>
+                                            <div class="content">
+                                                <div class="header">いんふぃ™☆3日目東ユ-46b</div>
+                                                <div class="meta">@AW_infi</div>
+                                            </div>
+                                            <div class="side">
+                                                <button class="ts basic icon mini button">
+                                                    <span class="fa fa-star"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="image">
+                                                <img src="img/infinity-s/03.png">
+                                            </div>
+                                            <div class="content">
+                                                <div class="header">Rhia™☆3日目東ユ-46b</div>
+                                                <div class="meta">@infinityG_Rhia</div>
+                                            </div>
+                                            <div class="side">
+                                                <button class="ts basic icon mini button">
+                                                    <span class="fa fa-star"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+        </div>
+        
+        <div class="eight wide column index-demo">
+            <h3 class="ts header">文章卡片</h3>
+            
+            <div class="ts card">
+           
+                <div class="content">
+                
+                    
+                
+                    <div class="header">
+                        Yami Odymel
+                    </div>
+                    
+                    
+                    
+                    <div class="meta">
+                        <div class="ts horizontal middoted link list">
+                            <a class="item">
+                                @yamiodymel
+                            </a>
+                            <a class="item">
+                                2 mins
+                            </a>
+                        </div>
+                    </div>
+                    
+                    
+                    <div style="margin-bottom: 16px"></div>
+                    <p>看似最重要的東西卻沒能被妥善利用，</p>
+                <p>沒有人能發現這一點，因為他們早已活在過去，</p>
+                <p>才剛開始的序章卻被放在頁尾。</p>
+
+                </div>
+                
+
+            </div>
+            
+            <h3 class="ts header">圖案選單</h3>
+            
+            <div class="ts icon large relaxed borderless menu">
+                
+                <div class="item">
+                    <span class="fa fa-bell"></span>
+                </div>
+                <div class="item">
+                    <span class="fa fa-music"></span>
+                </div>
+                <div class="item">
+                    <span class="fa fa-search"></span>
+                </div>
+            </div>
+            
+            <h3 class="ts header">按鈕</h3>
+            
+        
+            <div class="ts buttons">
+            
+            <button class="ts button">按鈕</button>
+            
+            <button class="ts warning button">小心</button>
+                                
+            <button class="ts negative button">不好了！</button>
+            
+            <button class="ts loading button">按鈕</button>
+            </div>
+            
+            
+            
+            
+            <h3 class="ts header">留言輸入框</h3>
+            
+            <div class="ts comments">
+                                            <div class="comment">
+                                                <div class="avatar">
+                                                    <img src="img/infinity-s/02.png">
+                                                    
+                                                </div>
+                                                <div class="content">
+                                                    <div class="reply">
+                                                        <div class="ts fluid input">
+                                                            <textarea placeholder="你今天學到了什麼？" style="min-height: 100px"></textarea>
+                                                        </div>
+                                                        <br>
+                                                        <button class="ts tiny floated right positive button">送出</button>
+                                                        <button class="ts tiny basic icon button"><span class="fa fa-smile-o"></span></button>
+                                                        <button class="ts tiny basic icon button"><span class="fa fa-camera"></span></button>
+                                                    </div>
+                                                </div>
+                                            
+                                            </div>
+                                        
+                                        </div>
+        </div>
+        
+        
+        <div class="four wide column index-demo">
+            
+            <h3 class="ts header">段落</h3>
+            
+            <div class="ts segment">
+                <div class="ts loader"></div>
+            </div>
+            
+            <h3 class="ts header">浮起來的段落</h3>
+            
+            <div class="ts raised segment">
+   
+<p>你將看見一個魔法師的日常生活，</p>
+ 
+<p>只要你能夠單身三十年，</p>
+ 
+<p>你也可以跟我一樣成為魔法師。 </p>
+            </div>
+            
+            
+            <h3 class="ts header">留言</h3>
+            
+            <div class="ts segment">
+                <div class="ts comments">
+                    <div class="comment">
+                        <div class="avatar">
+                            <img src="img/infinity-s/01.png">
+                            
+                        </div>
+                        <div class="content">
+                            <div class="author">infinity-G™☆3日目東ユ46b</div>
+                            
+                            <div class="inline text">
+                                入稿版冬コミ新作ブランケットです。よろしくね。 
+                            </div>
+                            <div class="metadata">
+                                <div class="ts horizontal middoted thin link list">
+                                  <a class="item">
+                                    Dec 13
+                                  </a>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    
+                    <div class="comment">
+                        <div class="avatar">
+                            <img src="img/infinity-s/02.png">
+                            
+                        </div>
+                        <div class="content">
+                            <div class="author">いんふぃ™☆3日目東ユ-46b</div>
+                            
+                            <div class="inline text">
+                                普通に知ってる
+                            </div>
+                            <div class="metadata">
+                                <div class="ts horizontal middoted thin link list">
+                                  <a class="item">
+                                    42 分鐘前
+                                  </a>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    
+                    
+                    
+    
+                </div>
+            </div>  
+            
+            
+            <h3 class="ts header">頁尾清單</h3>
+            
+            <div class="ts horizontal centered middoted link list">
+                                    <a class="item">
+                                        伊繁星
+                                    </a>
+                                    <a class="item">
+                                        卡莉絲
+                                    </a>
+                                    <a class="item">
+                                        天野望
+                                    </a>
+                                </div>
+                                
+        </div>
+        
+        
+        
+        <div class="sixteen wide column">
+            <p>&nbsp;</p>
+            <div class="ts divider"></div>
+            <p>&nbsp;</p>
+        </div>
+        
+        <div class="sixteen wide column">
+            <img class="ts image centered" src="img/bootstrap-logo-blue.png" style="margin-bottom: 16px">
+            <div class="ts center aligned header very-index">
+                與 Bootstrap 相比
+                <div class="sub header">差很多，真的</div>
+            </div>
+            <p>&nbsp;</p>
+        </div>
+        
+        <div class="eight wide column index-demo">
+            <h3 class="ts header">Tocas UI</h3>
+                <pre><code class="html ts segment" style="padding: 24px; font-size: 12px; line-height: 20px">&lt;div class=&quot;ts menu&quot;&gt;
+    &lt;div class=&quot;header item&quot;&gt;Brand&lt;/div&gt;
+    &lt;div class=&quot;active item&quot;&gt;Home&lt;/div&gt;
+    &lt;div class=&quot;item&quot;&gt;Products&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        
+        <div class="eight wide column index-demo">
+            <h3 class="ts header">Bootstrap 4</h3>
+                <pre><code class="html ts segment" style="padding: 24px; font-size: 12px; line-height: 20px">&lt;div class=&quot;navbar navbar-default&quot; role=&quot;navigation&quot;&gt;
+    &lt;div class=&quot;container-fluid&quot;&gt;
+        &lt;div class=&quot;navbar-header&quot;&gt;
+            &lt;a class=&quot;navbar-brand&quot; href=&quot;#&quot;&gt;Brand&lt;/a&gt;
+            &lt;button type=&quot;button&quot; class=&quot;navbar-toggle&quot; data-toggle=&quot;collapse&quot; data-target=&quot;.navbar-menubuilder&quot;&gt;
+                &lt;span class=&quot;sr-only&quot;&gt;Toggle navigation&lt;/span&gt;
+                &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;
+                &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;
+                &lt;span class=&quot;icon-bar&quot;&gt;&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;collapse navbar-collapse navbar-menubuilder&quot;&gt;
+            &lt;ul class=&quot;nav navbar-nav navbar-left&quot;&gt;
+                &lt;li&gt;
+                    &lt;a&gt;Home&lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li&gt;
+                    &lt;a&gt;Products&lt;/a&gt;
+                &lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        
+    </div>
+    <p>&nbsp;</p>
+</section>
+<footer id="footer" class="ts inverted segment">
+    <div class="ts container">
+        <br>
+        <div class="ts grid">
+            <div class="eight wide column">
+                <br>
+                <p><img class="ts image" src="img/logo.png" style="max-height: 86px; opacity: 0.9"></p>
+            </div>
+            <div class="four wide column">
+                <br>
+                <div class="ts header">
+                    合作夥伴
+                </div>
+                <div class="ts inverted link list">
+                    <a class="item" href="#">Infinity-G</a>
+                    <a class="item" href="#">Semantic UI</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <br>
+                <div class="ts header">
+                    其他連結
+                </div>
+                <div class="ts inverted link list">
+                    <a class="item" href="#">Github</a>
+                </div>
+            </div>
+            
+        </div>
+        <br>
+    </div>
+</footer>
+
+</body>
 </html>
