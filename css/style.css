@@ -322,7 +322,7 @@ td,
 th {
   padding: 0; }
 
-.ts.menu .item:active, .ts.menu .menu .item:active, .ts.menu.vertical .item:active, .ts.menu .menu.vertical .item:active, .ts.button:active, .ts.button.positive:active, .ts.button.negative:active, .ts.button.primary:active, .ts.button.warning:active, .ts.button.info:active, .ts.button.inverted:active, aside .ts.menu .item:active, aside .ts.menu.vertical .item:active, #container > nav .item:active, #container > nav.vertical .item:active, #meow-selector .item:active, #meow-selector.vertical .item:active, .meow .pure.button:active, .ts.button.sakura:active {
+.ts.menu .item:active, .ts.menu .menu .item:active, .ts.menu.vertical .item:active, .ts.menu .menu.vertical .item:active, .ts.button:active, .ts.button.active, .ts.button.positive:active, .ts.button.positive.active, .ts.button.negative:active, .ts.button.negative.active, .ts.button.primary:active, .ts.button.primary.active, .ts.button.warning:active, .ts.button.warning.active, .ts.button.info:active, .ts.button.info.active, .ts.button.basic.inverted:active, .ts.button.basic.inverted.active, .ts.button.inverted:not(.basic):active, .ts.button.inverted.active:not(.basic), aside .ts.menu .item:active, aside .ts.menu.vertical .item:active, #container > nav .item:active, #container > nav.vertical .item:active, #meow-selector .item:active, #meow-selector.vertical .item:active, .meow .pure.button:active, .meow .pure.button.active, .ts.button.sakura:active, .ts.button.sakura.active {
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -346,10 +346,10 @@ th {
 .ts.items > .item .aligned.bottom.image, .ts.items > .item .aligned.bottom.content, .ts.items > .item .aligned.bottom.side, .aligned.bottom.ts.header {
   align-self: flex-end; }
 
-.ts.menu .item, .ts.menu .menu .item, .ts.button:hover, .ts.button, .ts.button.positive:hover, .ts.button.negative:hover, .ts.button.primary:hover, .ts.button.warning:hover, .ts.button.info:hover, .ts.button.inverted:hover, .meow .pure.button:hover, .ts.button.sakura:hover {
+.ts.menu .item, .ts.menu .menu .item, .ts.button:hover, .ts.button, .ts.button.positive:hover, .ts.button.negative:hover, .ts.button.primary:hover, .ts.button.warning:hover, .ts.button.info:hover, .ts.button.basic.inverted:hover, .ts.button.inverted:not(.basic):hover, .meow .pure.button:hover, .ts.button.sakura:hover {
   transition: all 0.15s ease-in-out; }
 
-.ts.menu .item:active, .ts.menu .menu .item:active, .ts.menu.vertical .item:active, .ts.menu .menu.vertical .item:active, .ts.button:active, .ts.button.positive:active, .ts.button.negative:active, .ts.button.primary:active, .ts.button.warning:active, .ts.button.info:active, .ts.button.inverted:active, aside .ts.menu .item:active, aside .ts.menu.vertical .item:active, #container > nav .item:active, #container > nav.vertical .item:active, #meow-selector .item:active, #meow-selector.vertical .item:active, .meow .pure.button:active, .ts.button.sakura:active {
+.ts.menu .item:active, .ts.menu .menu .item:active, .ts.menu.vertical .item:active, .ts.menu .menu.vertical .item:active, .ts.button:active, .ts.button.active, .ts.button.positive:active, .ts.button.positive.active, .ts.button.negative:active, .ts.button.negative.active, .ts.button.primary:active, .ts.button.primary.active, .ts.button.warning:active, .ts.button.warning.active, .ts.button.info:active, .ts.button.info.active, .ts.button.basic.inverted:active, .ts.button.basic.inverted.active, .ts.button.inverted:not(.basic):active, .ts.button.inverted.active:not(.basic), aside .ts.menu .item:active, aside .ts.menu.vertical .item:active, #container > nav .item:active, #container > nav.vertical .item:active, #meow-selector .item:active, #meow-selector.vertical .item:active, .meow .pure.button:active, .meow .pure.button.active, .ts.button.sakura:active, .ts.button.sakura.active {
   transition: none; }
 
 .ts.dimmer {
@@ -832,6 +832,9 @@ th {
   @media (min-width: 1200px) {
     .ts.grid [class*="sixteen wide large screen"] {
       width: 100% !important; } }
+  @media (max-width: 767px) {
+    .ts.grid.stackable > .column {
+      width: 100%; } }
 
 .ts.menu, .ts.menu .menu {
   display: flex;
@@ -1136,6 +1139,20 @@ th {
     .ts.segment.inverted .ts.divider {
       border-top: 1px solid #3C3C3C; }
 
+.ts.segments .ts.segment:first-child:not(:last-child) {
+  border-bottom: none;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px; }
+.ts.segments .ts.segment:not(:last-child):not(:first-child) {
+  border-bottom: none;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px; }
+.ts.segments .ts.segment:last-child {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px; }
+
 .ts.list {
   font-size: 14px; }
   .ts.list .item {
@@ -1182,11 +1199,13 @@ th {
     margin-left: 0px; }
 
 .ts.buttons {
-  display: inline-flex;
-  width: 100%; }
+  display: inline-flex; }
+  .ts.buttons.fluid {
+    width: 100%; }
+    .ts.buttons.fluid .button {
+      width: 100%; }
   .ts.buttons .button {
     display: flex;
-    width: 100%;
     margin-right: 0px;
     border-radius: 0px;
     justify-content: center; }
@@ -1206,7 +1225,7 @@ th {
   border-radius: 4px;
   font-weight: 600;
   font-size: 14px;
-  padding: 9.6px 16px;
+  padding: 6.4px 16px;
   border-width: 1px;
   border-style: solid;
   text-decoration: none;
@@ -1218,7 +1237,9 @@ th {
     color: #DDD; }
   .ts.button.basic {
     background-color: transparent;
-    text-shadow: none; }
+    border-color: #DDD;
+    text-shadow: none;
+    color: #777777; }
   .ts.button:hover {
     cursor: pointer; }
     .ts.button:hover.transparent {
@@ -1229,19 +1250,19 @@ th {
       background-color: #e2e2e2; }
       .ts.button:hover:not(.transparent).basic {
         border-color: #c4c4c4;
-        color: #5e5e5e;
+        color: #919191;
         background-color: transparent; }
-  .ts.button:active.transparent {
+  .ts.button:active.transparent, .ts.button.active.transparent {
     color: #c4c4c4; }
-  .ts.button:active .label {
+  .ts.button:active .label, .ts.button.active .label {
     opacity: 1; }
-  .ts.button:active:not(.transparent) {
+  .ts.button:active:not(.transparent), .ts.button.active:not(.transparent) {
     color: #5e5e5e;
     background-color: #d5d5d5;
     box-shadow: inset 0px 0px 10px 0px #cecece; }
-    .ts.button:active:not(.transparent).basic {
-      border-color: #6a6a6a;
-      color: #4e4e4e;
+    .ts.button:active:not(.transparent).basic, .ts.button.active:not(.transparent).basic {
+      border-color: #eaeaea;
+      color: #9d9d9d;
       box-shadow: none; }
   .ts.button.raised {
     box-shadow: 0 2px 4px 0 lightgray, 0 2px 10px 0 lightgray;
@@ -1255,11 +1276,11 @@ th {
       border-color: #777777; }
     .ts.button.loading:after {
       border-top-color: #777777; }
-  .ts.button[disabled] {
+  .ts.button[disabled], .ts.button.disabled {
     background: #f7f7f7;
     color: rgba(119, 119, 119, 0.8);
     border-color: #f7f7f7; }
-    .ts.button[disabled]:hover {
+    .ts.button[disabled]:hover, .ts.button.disabled:hover {
       cursor: not-allowed;
       background: #f7f7f7; }
   .ts.button.loading {
@@ -1312,12 +1333,15 @@ th {
       top: calc(50% - 19px / 2); }
   .ts.button.fluid {
     width: 100%; }
+  .ts.button.compact {
+    padding: 4.8px 14.4px; }
   .ts.button.icon {
-    padding: 8px; }
+    padding: 8px;
+    line-height: 1px; }
     .ts.button.icon .icon {
       margin: 0px !important; }
   .ts.button.circular {
-    border-radius: 50%; }
+    border-radius: 100px; }
   .ts.button.transparent {
     background-color: transparent;
     border: none; }
@@ -1348,7 +1372,7 @@ th {
       background-color: transparent;
       box-shadow: none; }
   .ts.button.positive {
-    color: #f1f9f1;
+    color: #235323;
     text-shadow: 0 1px 1px #49ad49; }
     .ts.button.positive:not(.transparent) {
       background: #50B550;
@@ -1357,7 +1381,9 @@ th {
       color: #50B550; }
     .ts.button.positive.basic {
       background-color: transparent;
-      text-shadow: none; }
+      border-color: #50B550;
+      text-shadow: none;
+      color: #235323; }
     .ts.button.positive:hover {
       cursor: pointer; }
       .ts.button.positive:hover.transparent {
@@ -1368,19 +1394,19 @@ th {
         background-color: #57b857; }
         .ts.button.positive:hover:not(.transparent).basic {
           border-color: #3e943e;
-          color: #cdeacd;
+          color: #327732;
           background-color: transparent; }
-    .ts.button.positive:active.transparent {
+    .ts.button.positive:active.transparent, .ts.button.positive.active.transparent {
       color: #3e943e; }
-    .ts.button.positive:active .label {
+    .ts.button.positive:active .label, .ts.button.positive.active .label {
       opacity: 1; }
-    .ts.button.positive:active:not(.transparent) {
-      color: #cdeacd;
+    .ts.button.positive:active:not(.transparent), .ts.button.positive.active:not(.transparent) {
+      color: #142f14;
       background-color: #49ad49;
       box-shadow: inset 0px 0px 10px 0px #44a244; }
-      .ts.button.positive:active:not(.transparent).basic {
-        border-color: #dff2df;
-        color: #b8e1b8;
+      .ts.button.positive:active:not(.transparent).basic, .ts.button.positive.active:not(.transparent).basic {
+        border-color: #62bd62;
+        color: #3a893a;
         box-shadow: none; }
     .ts.button.positive.raised {
       box-shadow: 0 2px 4px 0 #48a948, 0 2px 10px 0 #48a948;
@@ -1389,20 +1415,20 @@ th {
       .ts.button.positive.raised:active {
         box-shadow: 0 2px 4px 0 #62bd62, 0 2px 10px 0 #62bd62; }
     .ts.button.positive.loading {
-      color: #f1f9f1; }
+      color: #235323; }
       .ts.button.positive.loading:before {
-        border-color: #f1f9f1; }
+        border-color: #235323; }
       .ts.button.positive.loading:after {
-        border-top-color: #f1f9f1; }
-    .ts.button.positive[disabled] {
+        border-top-color: #235323; }
+    .ts.button.positive[disabled], .ts.button.positive.disabled {
       background: #74c474;
-      color: rgba(241, 249, 241, 0.8);
+      color: rgba(35, 83, 35, 0.8);
       border-color: #74c474; }
-      .ts.button.positive[disabled]:hover {
+      .ts.button.positive[disabled]:hover, .ts.button.positive.disabled:hover {
         cursor: not-allowed;
         background: #74c474; }
   .ts.button.negative {
-    color: white;
+    color: #7e1e1b;
     text-shadow: 0 1px 1px #d64742; }
     .ts.button.negative:not(.transparent) {
       background: #D9534F;
@@ -1411,7 +1437,9 @@ th {
       color: #D9534F; }
     .ts.button.negative.basic {
       background-color: transparent;
-      text-shadow: none; }
+      border-color: #D9534F;
+      text-shadow: none;
+      color: #7e1e1b; }
     .ts.button.negative:hover {
       cursor: pointer; }
       .ts.button.negative:hover.transparent {
@@ -1422,19 +1450,19 @@ th {
         background-color: #db5b57; }
         .ts.button.negative:hover:not(.transparent).basic {
           border-color: #c9302c;
-          color: #f6d6d5;
+          color: #a82824;
           background-color: transparent; }
-    .ts.button.negative:active.transparent {
+    .ts.button.negative:active.transparent, .ts.button.negative.active.transparent {
       color: #c9302c; }
-    .ts.button.negative:active .label {
+    .ts.button.negative:active .label, .ts.button.negative.active .label {
       opacity: 1; }
-    .ts.button.negative:active:not(.transparent) {
-      color: #f6d6d5;
+    .ts.button.negative:active:not(.transparent), .ts.button.negative.active:not(.transparent) {
+      color: #541412;
       background-color: #d64742;
       box-shadow: inset 0px 0px 10px 0px #d43a36; }
-      .ts.button.negative:active:not(.transparent).basic {
-        border-color: #faebea;
-        color: #f1bdbc;
+      .ts.button.negative:active:not(.transparent).basic, .ts.button.negative.active:not(.transparent).basic {
+        border-color: #de6764;
+        color: #bd2d29;
         box-shadow: none; }
     .ts.button.negative.raised {
       box-shadow: 0 2px 4px 0 #d5433e, 0 2px 10px 0 #d5433e;
@@ -1443,74 +1471,76 @@ th {
       .ts.button.negative.raised:active {
         box-shadow: 0 2px 4px 0 #de6764, 0 2px 10px 0 #de6764; }
     .ts.button.negative.loading {
-      color: white; }
+      color: #7e1e1b; }
       .ts.button.negative.loading:before {
-        border-color: white; }
+        border-color: #7e1e1b; }
       .ts.button.negative.loading:after {
-        border-top-color: white; }
-    .ts.button.negative[disabled] {
+        border-top-color: #7e1e1b; }
+    .ts.button.negative[disabled], .ts.button.negative.disabled {
       background: #e27c79;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(126, 30, 27, 0.8);
       border-color: #e27c79; }
-      .ts.button.negative[disabled]:hover {
+      .ts.button.negative[disabled]:hover, .ts.button.negative.disabled:hover {
         cursor: not-allowed;
         background: #e27c79; }
   .ts.button.primary {
-    color: #d1f3ff;
-    text-shadow: 0 1px 1px #00b8f9; }
+    color: #54d2ff;
+    text-shadow: 0 1px 1px #009cd3; }
     .ts.button.primary:not(.transparent) {
-      background: #00ADEA;
-      border-color: #00a9e5; }
+      background: #0091C4;
+      border-color: #008dbf; }
     .ts.button.primary.transparent {
-      color: #00ADEA; }
+      color: #0091C4; }
     .ts.button.primary.basic {
       background-color: transparent;
-      text-shadow: none; }
+      border-color: #0091C4;
+      text-shadow: none;
+      color: #54d2ff; }
     .ts.button.primary:hover {
       cursor: pointer; }
       .ts.button.primary:hover.transparent {
-        color: #14c2ff; }
+        color: #00afed; }
       .ts.button.primary:hover .label {
         opacity: 0.9; }
       .ts.button.primary:hover:not(.transparent) {
-        background-color: #00b5f4; }
+        background-color: #0099ce; }
         .ts.button.primary:hover:not(.transparent).basic {
-          border-color: #0087b7;
-          color: #9ee6ff;
+          border-color: #006b91;
+          color: #87e0ff;
           background-color: transparent; }
-    .ts.button.primary:active.transparent {
-      color: #0087b7; }
-    .ts.button.primary:active .label {
+    .ts.button.primary:active.transparent, .ts.button.primary.active.transparent {
+      color: #006b91; }
+    .ts.button.primary:active .label, .ts.button.primary.active .label {
       opacity: 1; }
-    .ts.button.primary:active:not(.transparent) {
-      color: #9ee6ff;
-      background-color: #00a2db;
-      box-shadow: inset 0px 0px 10px 0px #0096cb; }
-      .ts.button.primary:active:not(.transparent).basic {
-        border-color: #b7ecff;
-        color: #7fdeff;
+    .ts.button.primary:active:not(.transparent), .ts.button.primary.active:not(.transparent) {
+      color: #21c5ff;
+      background-color: #0086b5;
+      box-shadow: inset 0px 0px 10px 0px #007aa5; }
+      .ts.button.primary:active:not(.transparent).basic, .ts.button.primary.active:not(.transparent).basic {
+        border-color: #00a4de;
+        color: #a0e6ff;
         box-shadow: none; }
     .ts.button.primary.raised {
-      box-shadow: 0 2px 4px 0 #009ed6, 0 2px 10px 0 #009ed6;
-      border-color: #00a5e0;
+      box-shadow: 0 2px 4px 0 #0082b0, 0 2px 10px 0 #0082b0;
+      border-color: #0089ba;
       border-bottom-width: 1px; }
       .ts.button.primary.raised:active {
-        box-shadow: 0 2px 4px 0 #05beff, 0 2px 10px 0 #05beff; }
+        box-shadow: 0 2px 4px 0 #00a4de, 0 2px 10px 0 #00a4de; }
     .ts.button.primary.loading {
-      color: #d1f3ff; }
+      color: #54d2ff; }
       .ts.button.primary.loading:before {
-        border-color: #d1f3ff; }
+        border-color: #54d2ff; }
       .ts.button.primary.loading:after {
-        border-top-color: #d1f3ff; }
-    .ts.button.primary[disabled] {
-      background: #1ec4ff;
-      color: rgba(209, 243, 255, 0.8);
-      border-color: #1ec4ff; }
-      .ts.button.primary[disabled]:hover {
+        border-top-color: #54d2ff; }
+    .ts.button.primary[disabled], .ts.button.primary.disabled {
+      background: #00b7f7;
+      color: rgba(84, 210, 255, 0.8);
+      border-color: #00b7f7; }
+      .ts.button.primary[disabled]:hover, .ts.button.primary.disabled:hover {
         cursor: not-allowed;
-        background: #1ec4ff; }
+        background: #00b7f7; }
   .ts.button.warning {
-    color: #f9f9ee;
+    color: #57551c;
     text-shadow: 0 1px 1px #b7b33c; }
     .ts.button.warning:not(.transparent) {
       background: #C1BD41;
@@ -1519,7 +1549,9 @@ th {
       color: #C1BD41; }
     .ts.button.warning.basic {
       background-color: transparent;
-      text-shadow: none; }
+      border-color: #C1BD41;
+      text-shadow: none;
+      color: #57551c; }
     .ts.button.warning:hover {
       cursor: pointer; }
       .ts.button.warning:hover.transparent {
@@ -1530,19 +1562,19 @@ th {
         background-color: #c4c049; }
         .ts.button.warning:hover:not(.transparent).basic {
           border-color: #9c9933;
-          color: #edecc8;
+          color: #7d7b29;
           background-color: transparent; }
-    .ts.button.warning:active.transparent {
+    .ts.button.warning:active.transparent, .ts.button.warning.active.transparent {
       color: #9c9933; }
-    .ts.button.warning:active .label {
+    .ts.button.warning:active .label, .ts.button.warning.active .label {
       opacity: 1; }
-    .ts.button.warning:active:not(.transparent) {
-      color: #edecc8;
+    .ts.button.warning:active:not(.transparent), .ts.button.warning.active:not(.transparent) {
+      color: #302f10;
       background-color: #b7b33c;
       box-shadow: inset 0px 0px 10px 0px #aba838; }
-      .ts.button.warning:active:not(.transparent).basic {
-        border-color: #f3f2db;
-        color: #e5e4b1;
+      .ts.button.warning:active:not(.transparent).basic, .ts.button.warning.active:not(.transparent).basic {
+        border-color: #c7c454;
+        color: #918d2f;
         box-shadow: none; }
     .ts.button.warning.raised {
       box-shadow: 0 2px 4px 0 #b3af3a, 0 2px 10px 0 #b3af3a;
@@ -1551,20 +1583,20 @@ th {
       .ts.button.warning.raised:active {
         box-shadow: 0 2px 4px 0 #c7c454, 0 2px 10px 0 #c7c454; }
     .ts.button.warning.loading {
-      color: #f9f9ee; }
+      color: #57551c; }
       .ts.button.warning.loading:before {
-        border-color: #f9f9ee; }
+        border-color: #57551c; }
       .ts.button.warning.loading:after {
-        border-top-color: #f9f9ee; }
-    .ts.button.warning[disabled] {
+        border-top-color: #57551c; }
+    .ts.button.warning[disabled], .ts.button.warning.disabled {
       background: #ceca67;
-      color: rgba(249, 249, 238, 0.8);
+      color: rgba(87, 85, 28, 0.8);
       border-color: #ceca67; }
-      .ts.button.warning[disabled]:hover {
+      .ts.button.warning[disabled]:hover, .ts.button.warning.disabled:hover {
         cursor: not-allowed;
         background: #ceca67; }
   .ts.button.info {
-    color: #f2f5f7;
+    color: #2e4046;
     text-shadow: 0 1px 1px #608694; }
     .ts.button.info:not(.transparent) {
       background: #678E9C;
@@ -1573,7 +1605,9 @@ th {
       color: #678E9C; }
     .ts.button.info.basic {
       background-color: transparent;
-      text-shadow: none; }
+      border-color: #678E9C;
+      text-shadow: none;
+      color: #2e4046; }
     .ts.button.info:hover {
       cursor: pointer; }
       .ts.button.info:hover.transparent {
@@ -1584,19 +1618,19 @@ th {
         background-color: #6d93a0; }
         .ts.button.info:hover:not(.transparent).basic {
           border-color: #52727e;
-          color: #d3dee2;
+          color: #425c65;
           background-color: transparent; }
-    .ts.button.info:active.transparent {
+    .ts.button.info:active.transparent, .ts.button.info.active.transparent {
       color: #52727e; }
-    .ts.button.info:active .label {
+    .ts.button.info:active .label, .ts.button.info.active .label {
       opacity: 1; }
-    .ts.button.info:active:not(.transparent) {
-      color: #d3dee2;
+    .ts.button.info:active:not(.transparent), .ts.button.info.active:not(.transparent) {
+      color: #1a2427;
       background-color: #608694;
       box-shadow: inset 0px 0px 10px 0px #5a7e8a; }
-      .ts.button.info:active:not(.transparent).basic {
-        border-color: #e3eaec;
-        color: #c1d1d6;
+      .ts.button.info:active:not(.transparent).basic, .ts.button.info.active:not(.transparent).basic {
+        border-color: #7699a6;
+        color: #4c6a75;
         box-shadow: none; }
     .ts.button.info.raised {
       box-shadow: 0 2px 4px 0 #5e8390, 0 2px 10px 0 #5e8390;
@@ -1605,78 +1639,140 @@ th {
       .ts.button.info.raised:active {
         box-shadow: 0 2px 4px 0 #7699a6, 0 2px 10px 0 #7699a6; }
     .ts.button.info.loading {
-      color: #f2f5f7; }
+      color: #2e4046; }
       .ts.button.info.loading:before {
-        border-color: #f2f5f7; }
+        border-color: #2e4046; }
       .ts.button.info.loading:after {
-        border-top-color: #f2f5f7; }
-    .ts.button.info[disabled] {
+        border-top-color: #2e4046; }
+    .ts.button.info[disabled], .ts.button.info.disabled {
       background: #86a5b0;
-      color: rgba(242, 245, 247, 0.8);
+      color: rgba(46, 64, 70, 0.8);
       border-color: #86a5b0; }
-      .ts.button.info[disabled]:hover {
+      .ts.button.info[disabled]:hover, .ts.button.info.disabled:hover {
         cursor: not-allowed;
         background: #86a5b0; }
-  .ts.button.inverted {
+  .ts.button.basic.inverted {
     color: #FFF;
-    text-shadow: 0 1px 1px #f7f7f7; }
-    .ts.button.inverted:not(.transparent) {
+    text-shadow: 0 1px 1px #f7f7f7;
+    border-width: 2px; }
+    .ts.button.basic.inverted:not(.transparent) {
       background: #FFF;
       border-color: #fcfcfc; }
-    .ts.button.inverted.transparent {
+    .ts.button.basic.inverted.transparent {
       color: #FFF; }
-    .ts.button.inverted.basic {
+    .ts.button.basic.inverted.basic {
       background-color: transparent;
-      text-shadow: none; }
-    .ts.button.inverted:hover {
+      border-color: #FFF;
+      text-shadow: none;
+      color: #FFF; }
+    .ts.button.basic.inverted:hover {
       cursor: pointer; }
-      .ts.button.inverted:hover.transparent {
+      .ts.button.basic.inverted:hover.transparent {
         color: white; }
-      .ts.button.inverted:hover .label {
+      .ts.button.basic.inverted:hover .label {
         opacity: 0.9; }
-      .ts.button.inverted:hover:not(.transparent) {
+      .ts.button.basic.inverted:hover:not(.transparent) {
         background-color: white; }
-        .ts.button.inverted:hover:not(.transparent).basic {
+        .ts.button.basic.inverted:hover:not(.transparent).basic {
           border-color: #e6e6e6;
-          color: #e6e6e6;
+          color: white;
           background-color: transparent; }
-    .ts.button.inverted:active.transparent {
+    .ts.button.basic.inverted:active.transparent, .ts.button.basic.inverted.active.transparent {
       color: #e6e6e6; }
-    .ts.button.inverted:active .label {
+    .ts.button.basic.inverted:active .label, .ts.button.basic.inverted.active .label {
       opacity: 1; }
-    .ts.button.inverted:active:not(.transparent) {
+    .ts.button.basic.inverted:active:not(.transparent), .ts.button.basic.inverted.active:not(.transparent) {
       color: #e6e6e6;
       background-color: #f7f7f7;
       box-shadow: inset 0px 0px 10px 0px #f0f0f0; }
-      .ts.button.inverted:active:not(.transparent).basic {
-        border-color: #f2f2f2;
-        color: #d6d6d6;
+      .ts.button.basic.inverted:active:not(.transparent).basic, .ts.button.basic.inverted.active:not(.transparent).basic {
+        border-color: white;
+        color: white;
         box-shadow: none; }
-    .ts.button.inverted.raised {
+    .ts.button.basic.inverted.raised {
       box-shadow: 0 2px 4px 0 whitesmoke, 0 2px 10px 0 whitesmoke;
       border-color: #fafafa;
       border-bottom-width: 1px; }
-      .ts.button.inverted.raised:active {
+      .ts.button.basic.inverted.raised:active {
         box-shadow: 0 2px 4px 0 white, 0 2px 10px 0 white; }
-    .ts.button.inverted.loading {
+    .ts.button.basic.inverted.loading {
       color: #FFF; }
-      .ts.button.inverted.loading:before {
+      .ts.button.basic.inverted.loading:before {
         border-color: #FFF; }
-      .ts.button.inverted.loading:after {
+      .ts.button.basic.inverted.loading:after {
         border-top-color: #FFF; }
-    .ts.button.inverted[disabled] {
+    .ts.button.basic.inverted[disabled], .ts.button.basic.inverted.disabled {
       background: white;
       color: rgba(255, 255, 255, 0.8);
       border-color: white; }
-      .ts.button.inverted[disabled]:hover {
+      .ts.button.basic.inverted[disabled]:hover, .ts.button.basic.inverted.disabled:hover {
         cursor: not-allowed;
         background: white; }
-    .ts.button.inverted.basic {
-      border-width: 2px; }
+  .ts.button.inverted:not(.basic) {
+    color: #CCC;
+    text-shadow: 0 1px 1px #080808; }
+    .ts.button.inverted:not(.basic):not(.transparent) {
+      background: #000;
+      border-color: black; }
+    .ts.button.inverted:not(.basic).transparent {
+      color: #000; }
+    .ts.button.inverted:not(.basic).basic {
+      background-color: transparent;
+      border-color: #000;
+      text-shadow: none;
+      color: #CCC; }
+    .ts.button.inverted:not(.basic):hover {
+      cursor: pointer; }
+      .ts.button.inverted:not(.basic):hover.transparent {
+        color: #141414; }
+      .ts.button.inverted:not(.basic):hover .label {
+        opacity: 0.9; }
+      .ts.button.inverted:not(.basic):hover:not(.transparent) {
+        background-color: #050505; }
+        .ts.button.inverted:not(.basic):hover:not(.transparent).basic {
+          border-color: black;
+          color: #e6e6e6;
+          background-color: transparent; }
+    .ts.button.inverted:not(.basic):active.transparent, .ts.button.inverted:not(.basic).active.transparent {
+      color: black; }
+    .ts.button.inverted:not(.basic):active .label, .ts.button.inverted:not(.basic).active .label {
+      opacity: 1; }
+    .ts.button.inverted:not(.basic):active:not(.transparent), .ts.button.inverted:not(.basic).active:not(.transparent) {
+      color: #b3b3b3;
+      background-color: black;
+      box-shadow: inset 0px 0px 10px 0px black; }
+      .ts.button.inverted:not(.basic):active:not(.transparent).basic, .ts.button.inverted:not(.basic).active:not(.transparent).basic {
+        border-color: #0d0d0d;
+        color: #f2f2f2;
+        box-shadow: none; }
+    .ts.button.inverted:not(.basic).raised {
+      box-shadow: 0 2px 4px 0 black, 0 2px 10px 0 black;
+      border-color: black;
+      border-bottom-width: 1px; }
+      .ts.button.inverted:not(.basic).raised:active {
+        box-shadow: 0 2px 4px 0 #0d0d0d, 0 2px 10px 0 #0d0d0d; }
+    .ts.button.inverted:not(.basic).loading {
+      color: #CCC; }
+      .ts.button.inverted:not(.basic).loading:before {
+        border-color: #CCC; }
+      .ts.button.inverted:not(.basic).loading:after {
+        border-top-color: #CCC; }
+    .ts.button.inverted:not(.basic)[disabled], .ts.button.inverted:not(.basic).disabled {
+      background: #1a1a1a;
+      color: rgba(204, 204, 204, 0.8);
+      border-color: #1a1a1a; }
+      .ts.button.inverted:not(.basic)[disabled]:hover, .ts.button.inverted:not(.basic).disabled:hover {
+        cursor: not-allowed;
+        background: #1a1a1a; }
   .ts.button.mini {
     min-width: 30px;
     font-size: 12px;
     padding: 6.66667px 12.8px; }
+    .ts.button.mini.icon {
+      font-size: 14px;
+      padding: 6.66667px; }
+    .ts.button.mini.compact {
+      padding: 5.71429px 11.2px; }
     .ts.button.mini.loading:before, .ts.button.mini.loading:after {
       height: 14px;
       width: 14px; }
@@ -1692,6 +1788,11 @@ th {
     min-width: 35px;
     font-size: 12px;
     padding: 8px 12.8px; }
+    .ts.button.tiny.icon {
+      font-size: 15px;
+      padding: 8px; }
+    .ts.button.tiny.compact {
+      padding: 6.66667px 12.8px; }
     .ts.button.tiny.loading:before, .ts.button.tiny.loading:after {
       height: 18px;
       width: 18px; }
@@ -1707,6 +1808,11 @@ th {
     min-width: 40px;
     font-size: 13px;
     padding: 8.8px 14.4px; }
+    .ts.button.small.icon {
+      font-size: 16px;
+      padding: 8.8px; }
+    .ts.button.small.compact {
+      padding: 8px 12.8px; }
     .ts.button.small.loading:before, .ts.button.small.loading:after {
       height: 19px;
       width: 19px; }
@@ -1722,6 +1828,11 @@ th {
     min-width: 45px;
     font-size: 14px;
     padding: 10.4px 16px; }
+    .ts.button.medium.icon {
+      font-size: 18px;
+      padding: 10.4px; }
+    .ts.button.medium.compact {
+      padding: 8.8px 14.4px; }
     .ts.button.medium.loading:before, .ts.button.medium.loading:after {
       height: 20px;
       width: 20px; }
@@ -1737,6 +1848,11 @@ th {
     min-width: 50px;
     font-size: 15px;
     padding: 12px 18.4px; }
+    .ts.button.large.icon {
+      font-size: 19px;
+      padding: 12px; }
+    .ts.button.large.compact {
+      padding: 10.4px 16px; }
     .ts.button.large.loading:before, .ts.button.large.loading:after {
       height: 21px;
       width: 21px; }
@@ -1752,6 +1868,11 @@ th {
     min-width: 55px;
     font-size: 16px;
     padding: 12.8px 20.8px; }
+    .ts.button.big.icon {
+      font-size: 20px;
+      padding: 12.8px; }
+    .ts.button.big.compact {
+      padding: 12px 18.4px; }
     .ts.button.big.loading:before, .ts.button.big.loading:after {
       height: 22px;
       width: 22px; }
@@ -1767,6 +1888,11 @@ th {
     min-width: 70px;
     font-size: 19px;
     padding: 15.2px 22.4px; }
+    .ts.button.huge.icon {
+      font-size: 23px;
+      padding: 15.2px; }
+    .ts.button.huge.compact {
+      padding: 12.8px 20.8px; }
     .ts.button.huge.loading:before, .ts.button.huge.loading:after {
       height: 25px;
       width: 25px; }
@@ -1782,6 +1908,11 @@ th {
     min-width: 80px;
     font-size: 20px;
     padding: 16.8px 26.4px; }
+    .ts.button.massive.icon {
+      font-size: 25px;
+      padding: 16.8px; }
+    .ts.button.massive.compact {
+      padding: 15.2px 22.4px; }
     .ts.button.massive.loading:before, .ts.button.massive.loading:after {
       height: 26px;
       width: 26px; }
@@ -1814,21 +1945,29 @@ th {
   box-shadow: 0 0 5px #51cbee; }
 
 .ts.header {
+  color: #333;
   margin-bottom: 8px;
   font-weight: 600;
   font-size: 24px; }
-  .ts.header + .header {
-    margin: 0px 0px 8px; }
+  .ts.header.dividing {
+    border-bottom: 1px solid #d9d9d9; }
+  .ts.header .ts.list .item {
+    color: #4d4d4d; }
+  .ts.header:first-child {
+    margin-top: 0px; }
   .ts.header.disabled {
     opacity: 0.4; }
   .ts.header .sub.header {
-    font-size: 19px; }
+    font-size: 19px;
+    font-weight: 400; }
   .ts.header.icon .icon, .ts.header.icon .fa {
     display: block;
     font-size: 72px; }
-  .ts.header.inverted {
+  .ts.header.inverted, .ts.header.inverted .header {
     color: #FFF; }
-    .ts.header.inverted .ts.list .item {
+    .ts.header.inverted.dividing, .ts.header.inverted .header.dividing {
+      border-bottom: 1px solid #595959; }
+    .ts.header.inverted .ts.list .item, .ts.header.inverted .header .ts.list .item {
       color: white; }
   .ts.header > .ts.list {
     display: inline-block; }
@@ -1861,6 +2000,8 @@ h2.ts.header,
 
 h3.ts.header,
 .ts.header.medium {
+  margin-top: 18px;
+  margin-bottom: 12px;
   font-size: 18px; }
   h3.ts.header .sub.header,
   .ts.header.medium .sub.header {
@@ -2127,11 +2268,13 @@ aside {
 
 .aaa {
   color: #888; }
+  .aaa.dividing {
+    border-bottom: 1px solid black; }
   .aaa .ts.list .item {
     color: #a2a2a2; }
 
 .meow .pure.button {
-  color: white;
+  color: #636363;
   text-shadow: 0 1px 1px #a2a2a2; }
   .meow .pure.button:not(.transparent) {
     background: #AAA;
@@ -2140,7 +2283,9 @@ aside {
     color: #AAA; }
   .meow .pure.button.basic {
     background-color: transparent;
-    text-shadow: none; }
+    border-color: #AAA;
+    text-shadow: none;
+    color: #636363; }
   .meow .pure.button:hover {
     cursor: pointer; }
     .meow .pure.button:hover.transparent {
@@ -2151,19 +2296,19 @@ aside {
       background-color: #afafaf; }
       .meow .pure.button:hover:not(.transparent).basic {
         border-color: #919191;
-        color: #e6e6e6;
+        color: #7c7c7c;
         background-color: transparent; }
-  .meow .pure.button:active.transparent {
+  .meow .pure.button:active.transparent, .meow .pure.button.active.transparent {
     color: #919191; }
-  .meow .pure.button:active .label {
+  .meow .pure.button:active .label, .meow .pure.button.active .label {
     opacity: 1; }
-  .meow .pure.button:active:not(.transparent) {
-    color: #e6e6e6;
+  .meow .pure.button:active:not(.transparent), .meow .pure.button.active:not(.transparent) {
+    color: #494949;
     background-color: #a2a2a2;
     box-shadow: inset 0px 0px 10px 0px #9b9b9b; }
-    .meow .pure.button:active:not(.transparent).basic {
-      border-color: #f2f2f2;
-      color: #d6d6d6;
+    .meow .pure.button:active:not(.transparent).basic, .meow .pure.button.active:not(.transparent).basic {
+      border-color: #b7b7b7;
+      color: #898989;
       box-shadow: none; }
   .meow .pure.button.raised {
     box-shadow: 0 2px 4px 0 #a0a0a0, 0 2px 10px 0 #a0a0a0;
@@ -2172,16 +2317,16 @@ aside {
     .meow .pure.button.raised:active {
       box-shadow: 0 2px 4px 0 #b7b7b7, 0 2px 10px 0 #b7b7b7; }
   .meow .pure.button.loading {
-    color: white; }
+    color: #636363; }
     .meow .pure.button.loading:before {
-      border-color: white; }
+      border-color: #636363; }
     .meow .pure.button.loading:after {
-      border-top-color: white; }
-  .meow .pure.button[disabled] {
+      border-top-color: #636363; }
+  .meow .pure.button[disabled], .meow .pure.button.disabled {
     background: #c4c4c4;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(99, 99, 99, 0.8);
     border-color: #c4c4c4; }
-    .meow .pure.button[disabled]:hover {
+    .meow .pure.button[disabled]:hover, .meow .pure.button.disabled:hover {
       cursor: not-allowed;
       background: #c4c4c4; }
 
@@ -2202,7 +2347,9 @@ aside {
     color: #FFB7C5; }
   .ts.button.sakura.basic {
     background-color: transparent;
-    text-shadow: none; }
+    border-color: #FFB7C5;
+    text-shadow: none;
+    color: #7F5961; }
   .ts.button.sakura:hover {
     cursor: pointer; }
     .ts.button.sakura:hover.transparent {
@@ -2213,19 +2360,19 @@ aside {
       background-color: #ffc1cd; }
       .ts.button.sakura:hover:not(.transparent).basic {
         border-color: #ff849c;
-        color: #61444a;
+        color: #9b7079;
         background-color: transparent; }
-  .ts.button.sakura:active.transparent {
+  .ts.button.sakura:active.transparent, .ts.button.sakura.active.transparent {
     color: #ff849c; }
-  .ts.button.sakura:active .label {
+  .ts.button.sakura:active .label, .ts.button.sakura.active .label {
     opacity: 1; }
-  .ts.button.sakura:active:not(.transparent) {
+  .ts.button.sakura:active:not(.transparent), .ts.button.sakura.active:not(.transparent) {
     color: #61444a;
     background-color: #ffa8b9;
     box-shadow: inset 0px 0px 10px 0px #ff98ac; }
-    .ts.button.sakura:active:not(.transparent).basic {
-      border-color: #704e56;
-      color: #4f373c;
+    .ts.button.sakura:active:not(.transparent).basic, .ts.button.sakura.active:not(.transparent).basic {
+      border-color: #ffd1da;
+      color: #a57f87;
       box-shadow: none; }
   .ts.button.sakura.raised {
     box-shadow: 0 2px 4px 0 #ffa3b5, 0 2px 10px 0 #ffa3b5;
@@ -2239,11 +2386,11 @@ aside {
       border-color: #7F5961; }
     .ts.button.sakura.loading:after {
       border-top-color: #7F5961; }
-  .ts.button.sakura[disabled] {
+  .ts.button.sakura[disabled], .ts.button.sakura.disabled {
     background: #ffeaee;
     color: rgba(127, 89, 97, 0.8);
     border-color: #ffeaee; }
-    .ts.button.sakura[disabled]:hover {
+    .ts.button.sakura[disabled]:hover, .ts.button.sakura.disabled:hover {
       cursor: not-allowed;
       background: #ffeaee; }
 
@@ -2266,5 +2413,14 @@ aside {
 
 #footer {
   background: linear-gradient(270deg, #1b1c1d, #45484b); }
+
+.blueprint {
+  background-color: #488BA4; }
+  .blueprint > div {
+    padding-top: 40px;
+    padding-bottom: 50px;
+    height: 100%;
+    background-image: linear-gradient(0deg, transparent 0%, transparent 9px, rgba(255, 255, 255, 0.2) 9px, rgba(255, 255, 255, 0.2) 10px, transparent 10px, transparent 19px, rgba(255, 255, 255, 0.1) 19px, rgba(255, 255, 255, 0.1) 20px, transparent 20px, transparent 29px, rgba(255, 255, 255, 0.1) 29px, rgba(255, 255, 255, 0.1) 30px, transparent 30px, transparent 39px, rgba(255, 255, 255, 0.1) 39px, rgba(255, 255, 255, 0.1) 40px, transparent 40px, transparent 49px, rgba(255, 255, 255, 0.1) 49px, rgba(255, 255, 255, 0.1) 50px), linear-gradient(-90deg, transparent 0%, transparent 9px, rgba(255, 255, 255, 0.2) 9px, rgba(255, 255, 255, 0.2) 10px, transparent 10px, transparent 19px, rgba(255, 255, 255, 0.1) 19px, rgba(255, 255, 255, 0.1) 20px, transparent 20px, transparent 29px, rgba(255, 255, 255, 0.1) 29px, rgba(255, 255, 255, 0.1) 30px, transparent 30px, transparent 39px, rgba(255, 255, 255, 0.1) 39px, rgba(255, 255, 255, 0.1) 40px, transparent 40px, transparent 49px, rgba(255, 255, 255, 0.1) 49px, rgba(255, 255, 255, 0.1) 50px);
+    background-size: 50px 50px; }
 
 /*# sourceMappingURL=style.css.map */
