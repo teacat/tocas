@@ -5,6 +5,9 @@
 =header-theme($color: #333, $baseWeight: 600)
   color: $color
   
+  &.dividing
+    border-bottom: 1px solid auten($color, 65%)
+  
   .ts.list
     .item
       color: lighten($color, 10%)
@@ -18,28 +21,32 @@
 
 .ts.header
   +ext(aligns)
+  +header-theme
   
   margin-bottom: $margin
   font-weight: 600
   font-size: 24px
   
+  &:first-child
+    margin-top: 0px
   
-  
-  & + .header
-    margin: 0px 0px $margin
-    
+  //& + .header
+   // margin-bottom: $margin
+
   &.disabled
     opacity: 0.4
   
   .sub.header
     font-size: 19px
+    font-weight: 400
   
   &.icon
     .icon, .fa
       +block
       font-size: 72px
   
-  &.inverted
+  &.inverted,
+  &.inverted .header
     +header-theme(#FFF)
     
     
@@ -64,48 +71,51 @@
   
 h1.ts.header,
 .ts.header.huge
-  font-size: 28px
+  font-size: $h1Size
   
   .sub.header
     font-size: 23px
 
 h2.ts.header,
 .ts.header.large
-  font-size: 24px
+  font-size: $h2Size
   
   .sub.header
     font-size: 19px
   
 h3.ts.header,
 .ts.header.medium
-  font-size: 18px
+  margin-top: 18px
+  margin-bottom: 12px
+  
+  font-size: $h3Size
   
   .sub.header
     font-size: 16px
   
 h4.ts.header,
 .ts.header.small
-  font-size: 15px
+  font-size: $h4Size
   
   .sub.header
     font-size: 13px
 
 h5.ts.header,
 .ts.header.tiny
-  font-size: 14px
+  font-size: $h5Size
   
   .sub.header
     font-size: 12px
   
 h6.ts.header,
 .ts.header.mini
-  font-size: 13px
+  font-size: $h6Size
   
   .sub.header
     font-size: 12px
   
 h7.ts.header
-  font-size: 12px
+  font-size: $h7Size
   
   .sub.header
     font-size: 10px
