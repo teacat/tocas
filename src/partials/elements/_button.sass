@@ -5,7 +5,7 @@
 =button-theme($color: #EEE, $textColor: false)
 
   @if not $textColor
-    $textColor: lighten($color, 45%)
+    $textColor: auten($color, 28%)
   
   
   
@@ -23,8 +23,9 @@
 
   &.basic
     background-color: transparent
+    border-color    : $color
     text-shadow     : none
-
+    color           : $textColor
 
   &:hover
     +ext(ease)
@@ -41,11 +42,12 @@
 
       &.basic
         border-color: darken($color, 10%)
-        color: darken($textColor, 10%)
+        color: lighten($textColor, 10%)
         background-color: transparent
 
   
-  &:active
+  &:active,
+  &.active
     +ext(no-ease)
     +ext(no-tap)
     
@@ -61,8 +63,8 @@
       box-shadow: inset 0px 0px 10px 0px darken($color, 6%)
     
       &.basic
-        border-color: darken($textColor, 5%)
-        color: darken($textColor, 16%)
+        border-color: lighten($color, 5%)
+        color: lighten($textColor, 15%)
         box-shadow: none
     
     
@@ -79,7 +81,8 @@
   
   &[disabled="disabled"],
   &[disabled="true"]
-  &[disabled]
+  &[disabled],
+  &.disabled
     background: lighten($color, 10%)
     color: rgba($textColor, 0.8)
     border-color: lighten($color, 10%)
@@ -91,11 +94,15 @@
 
 .ts.buttons
   +inline-flex
-  width: 100%
+  
+  &.fluid
+    width: 100%
+  
+    .button
+      width: 100%
   
   .button
     +flex
-    width: 100%
     margin-right: 0px
     border-radius: 0px
     justify-content: center
@@ -123,7 +130,7 @@
   
   font-weight: 600
   font-size   : 14px
-  padding     : $padding * 1.2 $padding * 2
+  padding     : $padding * 0.8 $padding * 2
   
   border-width: 1px
   border-style: solid
@@ -152,12 +159,17 @@
   &.fluid
     width: 100%
   
+  &.compact
+    padding: $padding * 0.6 $padding * 1.8
+  
   // Icon
   //
   //
   
   &.icon
     +padding
+    
+    line-height: 1px
     
     .icon
       margin: 0px !important
@@ -169,8 +181,7 @@
   //
 
   &.circular
-    border-radius: 50%
-    
+    border-radius: 100px
   
   
   // Transparent
@@ -253,11 +264,13 @@
   &.info
     +button-theme($infoColor)
   
-  &.inverted
+  &.basic.inverted
     +button-theme($invertedColor, $invertedColor)
+    border-width: 2px
     
-    &.basic
-      border-width: 2px
+  &.inverted:not(.basic)
+    +button-theme(#000, #CCC)
+      
 
 
 
@@ -275,6 +288,13 @@
     font-size: 12px
     padding  : $padding / 1.2 $padding * 1.6
   
+    &.icon
+      font-size: 14px
+      padding  : $padding / 1.2
+  
+    &.compact
+      padding: $padding / 1.4 $padding * 1.4
+  
     &.loading
       +loader-theme(14px, 2px)
       
@@ -291,7 +311,14 @@
     min-width: 35px
     font-size: 12px
     padding  : $padding $padding * 1.6
-  
+    
+    &.icon
+      font-size: 15px
+      padding  : $padding
+    
+    &.compact
+      padding: $padding / 1.2 $padding * 1.6
+    
     &.loading
       +loader-theme(18px, 2px)
       
@@ -309,6 +336,13 @@
     font-size: 13px
     padding  : $padding * 1.1 $padding * 1.8
   
+    &.icon
+      font-size: 16px
+      padding  : $padding * 1.1
+  
+    &.compact
+      padding: $padding $padding * 1.6
+      
     &.loading
       +loader-theme(19px, 2px)
       
@@ -326,6 +360,13 @@
     font-size: 14px
     padding  : $padding * 1.3 $padding * 2
   
+    &.icon
+      font-size: 18px
+      padding  : $padding * 1.3
+  
+    &.compact
+      padding: $padding * 1.1 $padding * 1.8
+  
     &.loading
       +loader-theme(20px, 2px)
       
@@ -342,7 +383,14 @@
     min-width: 50px
     font-size: 15px
     padding  : $padding * 1.5 $padding * 2.3
-  
+    
+    &.icon
+      font-size: 19px
+      padding  : $padding * 1.5
+    
+    &.compact
+      padding: $padding * 1.3 $padding * 2
+      
     &.loading
       +loader-theme(21px, 2px)
       
@@ -360,6 +408,13 @@
     font-size: 16px
     padding  : $padding * 1.6 $padding * 2.6
   
+    &.icon
+      font-size: 20px
+      padding  : $padding * 1.6
+  
+    &.compact
+      padding: $padding * 1.5 $padding * 2.3
+      
     &.loading
       +loader-theme(22px, 3px)
       
@@ -377,6 +432,13 @@
     font-size: 19px
     padding  : $padding * 1.9 $padding * 2.8
   
+    &.icon
+      font-size: 23px
+      padding  : $padding * 1.9
+  
+    &.compact
+      padding: $padding * 1.6 $padding * 2.6
+      
     &.loading
       +loader-theme(25px, 3px)
       
@@ -393,7 +455,14 @@
     min-width: 80px
     font-size: 20px
     padding  : $padding * 2.1 $padding * 3.3
-
+    
+    &.icon
+      font-size: 25px
+      padding  : $padding * 2.1
+    
+    &.compact
+      padding: $padding * 1.9 $padding * 2.8
+    
     &.loading
       +loader-theme(26px, 3px)
       
