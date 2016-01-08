@@ -1,10 +1,12 @@
 .ts.segment
+  +relative
+  +normal
   +basic-card
   +padding(2)
-  
+  +y-margin($margin)
+
   background: #FFF
-  
-  font-size: 14px
+
   
   .ts.divider
     +divider-theme(#EEE)
@@ -15,24 +17,51 @@
     .ts.divider
       +divider-theme(#3C3C3C)
     
+  &.secondary
+    background: auten(#FFF, 5%)
+    
+  &.tertiary
+    background: auten(#FFF, 10%)
+    
+  &.disabled
+    opacity: 0.3
+    color  : rgba(0, 0, 0, 0.3)
+    
+  &.loading
+    +relative
+    +loader-theme(3.6rem, .3rem, #EEE)
+    +loader-resource
+    +loader-color
+    
+    color      : transparent !important
+    text-shadow: none        !important
+    
+    &:before,
+    &:after
+      top: calc(50% - 3.6rem / 2)
+    
 
 .ts.segments
   
-  .ts.segment
-  
+  > .ts.segment
+
     &:first-child:not(:last-child)
+      margin-bottom: 0
       border-bottom: none
-      border-bottom-right-radius: 0px
-      border-bottom-left-radius : 0px
+      border-bottom-right-radius: 0
+      border-bottom-left-radius : 0
     
     &:not(:last-child):not(:first-child)
+      margin-top   : 0
+      margin-bottom: 0
       border-bottom: none
-      border-top-right-radius   : 0px
-      border-top-left-radius    : 0px
-      border-bottom-right-radius: 0px
-      border-bottom-left-radius : 0px
+      border-top-right-radius   : 0
+      border-top-left-radius    : 0
+      border-bottom-right-radius: 0
+      border-bottom-left-radius : 0
     
     &:last-child
-      border-top-right-radius: 0px
-      border-top-left-radius : 0px
+      margin-top: 0
+      border-top-right-radius: 0
+      border-top-left-radius : 0
   
