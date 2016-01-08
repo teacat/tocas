@@ -23,16 +23,15 @@
       background : auten($color, 3%)
   
     &:active
-      +ext(no-ease)
-      +ext(no-tap)
-      
-      user-select: none
-      background: auten($color, 8%)
+      +extend(no-ease)
+      +extend(no-tap)
+
+      background : auten($color, 8%)
   
     .label
-      color: auten($color, 45%)
+      color     : auten($color, 45%)
       background: if(is_lighter($color), darken($color, 3%), darken($color, 3%))
-      border: none
+      border    : none
       
     &.active,
     &.active:after
@@ -56,19 +55,19 @@
   
   &.vertical
     .item
-      border-top-color    : if(is_lighter($color), lighten($color, 3%), lighten($color, 4%))
-      border-bottom-color : if(is_lighter($color), darken($color, 3%), darken($color, 3%))
+      border-top-color   : if(is_lighter($color), lighten($color, 3%), lighten($color, 4%))
+      border-bottom-color: if(is_lighter($color), darken($color, 3%), darken($color, 3%))
   
       &:hover
-        background : auten($color, 3%)
-        border-top-color    : auten($color, 3%)
+        background      : auten($color, 3%)
+        border-top-color: auten($color, 3%)
         
       &:active
-        +ext(no-ease)
-        +ext(no-tap)
+        +extend(no-ease)
+        +extend(no-tap)
         
-        background: auten($color, 8%)
-        border-top-color    : auten($color, 8%)
+        background      : auten($color, 8%)
+        border-top-color: auten($color, 8%)
   
   
   
@@ -90,12 +89,12 @@
   &.pointing.secondary
 
     .item
-      background-color: transparent
-      border-right-width: 0px
-      border-left-width: 0px
+      background-color  : transparent
+      border-right-width: 0
+      border-left-width : 0
       
     .item.active
-      border-bottom: 2px solid darken($color, 10%)
+      border-bottom: .2rem solid darken($color, 10%)
   
   
   
@@ -124,11 +123,11 @@
 
   margin-top   : $margin
   margin-bottom: $margin
-  border-width: 1px
+  border-width: .1rem
   border-style: solid
   
   &:first-child
-    margin-top: 0px
+    margin-top: 0
     
     
     
@@ -146,16 +145,16 @@
   // 選單中的選單，也就是子選單。
   
   .menu
-    margin-bottom: 0px
-    margin-top   : 0px
-    border-radius: 0px
+    margin-bottom: 0
+    margin-top   : 0
+    border-radius: 0
     border       : none
     
     &.right
       margin-left: auto !important
       
       .item:first-child
-        border-left-width: 1px
+        border-left-width: .1rem
         border-left-style: solid
         
         
@@ -166,7 +165,7 @@
   
   &.icon
     .icon
-      margin-right: 0px
+      margin-right: 0
   
   
   
@@ -175,7 +174,7 @@
   // 流動寬度選單。
   
   &.fluid
-    border-radius: 0px
+    border-radius: 0
     border       : none
 
 
@@ -228,15 +227,14 @@
   //**************************************
   
   .item
-    +ext(ease)
-    +inline-block
+    +extend(ease)
     +normal
     +relative
-    +flex
-    
-    align-items : center
-    padding     : $padding * 1.2 $padding * 2.3
-    text-shadow : 0 1px 1px rgba(0,0,0,0.2)
+    +flex-center
+    +y-padding($padding * 1.2)
+    +x-padding($padding * 2.3)
+
+    text-shadow : 0 .1rem .1rem rgba(0,0,0,0.2)
     
     
     
@@ -245,7 +243,8 @@
     // 迷你版選單。
     
     +if-parent($thisParent, '.small')
-      font-size: 14px
+      +small
+      
       padding  : $padding  $padding * 1.5
     
     
@@ -255,8 +254,9 @@
     // 較大版選單。
     
     +if-parent($thisParent, '.large')
-      font-size: 16px
-      padding  : $padding * 1.3  $padding * 2.3
+      +base
+      
+      padding: $padding * 1.3  $padding * 2.3
       
     
     
@@ -282,17 +282,17 @@
         +absolute
         
         content: ''
-        top: 100%
-        left: 50%
+        top    : 100%
+        left   : 50%
         transform: translateX(-50%) translateY(-50%) rotate(45deg)
   
-        margin-top: 0.5px
-        width: $padding
-        height: $padding
+        margin-top: .5rem
+        width     : $padding
+        height    : $padding
   
-        border-bottom-width: 1px
+        border-bottom-width: .1rem
         border-bottom-style: solid
-        border-right-width : 1px
+        border-right-width : .1rem
         border-right-style : solid
         z-index: 2
         transition: background 0.1s ease
@@ -305,7 +305,7 @@
     
     +if-parent($thisParent, '.pointing.secondary')
       text-shadow: none
-      background: none
+      background : none
       
       &.active
         font-weight: bold
@@ -318,7 +318,7 @@
     
     +if-parent($thisParent, '.vertical')
       +block
-      border-width: 1px 0px
+      border-width: .1rem 0
       border-style: solid
     
     
@@ -329,7 +329,9 @@
     
     +if-parent($thisParent, '.relaxed')
       &:not(.image)
-        padding: $padding * 1.8 $padding * 2.3
+        +y-padding($padding * 1.8)
+        +x-padding($padding * 2.3)
+
     
     
     
@@ -338,11 +340,11 @@
     // 非垂直的 Menu 選單。
     
     +if-parent($thisParent, ':not(.vertical)')
-      border-right-width: 1px
+      border-right-width: .1rem
       border-right-style: solid
       
       &:last-child
-        border-right-width: 0px
+        border-right-width: 0
     
     
     
@@ -362,7 +364,7 @@
     
     .label
       float     : right
-      margin-top: -2px
+      margin-top: -.2rem
       padding   : $padding / 3 $padding
     
     
@@ -373,7 +375,7 @@
     
     &.image
       border-style  : none
-      padding       : 0px 
+      padding       : 0
       vertical-align: top
       
       img
@@ -387,9 +389,7 @@
     
     &.fitted
       &.horizontally
-        padding-left : 0px
-        padding-right: 0px
+        +x-padding(0)
       
       &.vertically
-      padding-top   : 0px
-      padding-bottom: 0px
+        +y-padding(0)
