@@ -5,16 +5,16 @@
 =button-theme($color: #EEE, $textColor: false)
 
   @if not $textColor
-    $textColor: auten($color, 28%)
+    $textColor: lighten($color, 40%)
   
   
   
   &:not(.transparent)
-    background: $color
+    background  : $color
     border-color: darken($color, 1%)
     
-  color: $textColor
-  text-shadow: 0 1px 1px auten($color, 3%)
+  color      : $textColor
+  text-shadow: 0 .1rem .1rem auten($color, 3%)
   
   
   &.transparent
@@ -23,33 +23,34 @@
 
   &.basic
     background-color: transparent
-    border-color    : $color
+    border-color    : darken($textColor, 20%)
     text-shadow     : none
-    color           : $textColor
+    color           : darken($textColor, 40%)
 
   &:hover
-    +ext(ease)
+    +extend(ease)
     +poi
     
     &.transparent
       color: lighten($color, 8%)
       
     .label
-      opacity: 0.9
+      //opacity: 0.9
     
     &:not(.transparent)
       background-color: lighten($color, 2%)
 
       &.basic
-        border-color: darken($color, 10%)
-        color: lighten($textColor, 10%)
+        border-color    : darken($textColor, 15%)
+        color           : darken($textColor, 35%)
+        opacity         : 0.9
         background-color: transparent
 
   
   &:active,
   &.active
-    +ext(no-ease)
-    +ext(no-tap)
+    +extend(no-ease)
+    +extend(no-tap)
     
     &.transparent
       color: darken($color, 10%)
@@ -58,23 +59,24 @@
       opacity: 1
 
     &:not(.transparent)
-      color: darken($textColor, 10%)
+      color           : darken($textColor, 10%)
       background-color: darken($color, 3%)
-      box-shadow: inset 0px 0px 10px 0px darken($color, 6%)
+      box-shadow      : inset 0 0 1rem 0 darken($color, 6%)
     
       &.basic
-        border-color: lighten($color, 5%)
-        color: lighten($textColor, 15%)
-        box-shadow: none
+        border-color: darken($textColor, 40%)
+        color       : darken($textColor, 40%)
+        opacity     : 1
+        box-shadow  : none
     
     
   &.raised
-    box-shadow: 0 2px 4px 0 darken($color, 4%),0 2px 10px 0 darken($color, 4%)
-    border-color: darken($color, 2%)
-    border-bottom-width: 1px
+    box-shadow         : 0 .2rem .4rem 0 darken($color, 4%), 0 .2rem 1rem 0 darken($color, 4%)
+    border-color       : darken($color, 2%)
+    border-bottom-width: .1rem
     
     &:active
-      box-shadow: 0 2px 4px 0 lighten($color, 5%),0 2px 10px 0 lighten($color, 5%)
+      box-shadow: 0 .1rem .2rem 0 lighten($color, 5%), 0 .1rem .5rem 0 lighten($color, 5%)
   
   &.loading
     +loader-color($textColor)
@@ -83,12 +85,12 @@
   &[disabled="true"]
   &[disabled],
   &.disabled
-    background: lighten($color, 10%)
-    color: rgba($textColor, 0.8)
+    background  : lighten($color, 10%)
+    color       : rgba($textColor, 0.8)
     border-color: lighten($color, 10%)
     
     &:hover
-      cursor: not-allowed
+      cursor    : not-allowed
       background: lighten($color, 10%)
 
 
@@ -103,18 +105,52 @@
   
   .button
     +flex
-    margin-right: 0px
-    border-radius: 0px
+    margin-right   : 0
+    border-radius  : 0
     justify-content: center
     
     &:first-child
-      border-top-left-radius: 4px
-      border-bottom-left-radius: 4px
+      border-top-left-radius   : .4rem
+      border-bottom-left-radius: .4rem
       
     &:last-child
-      border-top-right-radius: 4px
-      border-bottom-right-radius: 4px
-    
+      border-top-right-radius   : .4rem
+      border-bottom-right-radius: .4rem
+
+
+
+
+=button-generator
+  @for $i from 1 through $buttonAmount
+    @at-root
+      #{&}.#{nth($buttonSizes, $i)}
+        +y-padding($padding * ($i / 5))
+        +x-padding($padding * ($i / 2))
+        
+        
+        $fontSize  : nth($buttonFontSizes, $i)
+        $loaderSize: $fontSize * 1.2
+        
+        min-width: $fontSize * 3
+        font-size: $fontSize
+ 
+      
+        &.icon
+          font-size: $fontSize + .2
+          padding  : $padding / 1.2
+      
+        &.compact
+          +y-padding($padding * ($i / 6))
+          +x-padding($padding * ($i / 3))
+      
+        &.loading
+          +loader-theme($loaderSize, .2rem)
+          
+          &:before, &:after
+            top: calc(50% - #{$loaderSize} / 2)
+            
+          
+            
 
 //**************************************
 //************   M A I N   *************
@@ -125,14 +161,17 @@
   +border-box
   +inline-block
   +button-theme($defaultColor, auten($defaultColor, 40%))
-  +ext(ease)
+  +extend(ease)
   +rd
+  +normal
+  +y-padding($padding * 0.8)
+  +x-padding($padding * 2)
+  +button-generator
+  
   
   font-weight: 600
-  font-size   : 14px
-  padding     : $padding * 0.8 $padding * 2
   
-  border-width: 1px
+  border-width: .1rem
   border-style: solid
  
   text-decoration: none
@@ -146,7 +185,7 @@
   
   &.loading
     +relative
-    +loader-theme(19px, 2px)
+    +loader-theme(1.9rem, .2rem)
     +loader-resource
     
     color      : transparent !important
@@ -154,13 +193,15 @@
     
     &:before,
     &:after
-      top: calc(50% - 19px / 2)
+      top: calc(50% - 1.9rem / 2)
   
   &.fluid
     width: 100%
   
   &.compact
-    padding: $padding * 0.6 $padding * 1.8
+    +y-padding($padding * 0.6)
+    +x-padding($padding * 1.8)
+    
   
   // Icon
   //
@@ -169,10 +210,11 @@
   &.icon
     +padding
     
-    line-height: 1px
+    line-height: .1rem
+    min-width: 0
     
     .icon
-      margin: 0px !important
+      margin: 0 !important
   
   
   
@@ -181,7 +223,7 @@
   //
 
   &.circular
-    border-radius: 100px
+    border-radius: 10rem
   
   
   // Transparent
@@ -190,7 +232,7 @@
   
   &.transparent
     background-color: transparent
-    border: none
+    border          : none
   
   
   
@@ -199,7 +241,7 @@
   //
   
   &.pure
-    padding: 0px
+    padding    : 0
     text-shadow: none !important
   
   
@@ -211,36 +253,34 @@
   &.labeled
     +inline-flex
 
-    padding         : 0px
+    padding         : 0
     border          : none
     background-color: transparent
-    outline :none
+    outline         : none
     
     .ts.button,
     .ts.label
-      +flex
-      
-      align-items: center
+      +flex-center
 
     .ts.label
       text-shadow: none
     
     &.left
       .ts.label
-        border-right: none
-        border-top-right-radius   : 0px
-        border-bottom-right-radius: 0px
+        border-right              : none
+        border-top-right-radius   : 0
+        border-bottom-right-radius: 0
         
       .ts.button
-        border-top-left-radius   : 0px
-        border-bottom-left-radius: 0px
+        border-top-left-radius   : 0
+        border-bottom-left-radius: 0
   
     &:hover
       background-color: transparent
     
     &:active
       background-color: transparent
-      box-shadow: none
+      box-shadow      : none
 
     
   
@@ -266,7 +306,7 @@
   
   &.basic.inverted
     +button-theme($invertedColor, $invertedColor)
-    border-width: 2px
+    border-width: .2rem
     
   &.inverted:not(.basic)
     +button-theme(#000, #CCC)
@@ -278,195 +318,6 @@
   //**************************************
   //***********   S I Z E S   ************
   //**************************************
-  
-  // Mini
-  //
-  //
-  
-  &.mini
-    min-width: 30px
-    font-size: 12px
-    padding  : $padding / 1.2 $padding * 1.6
-  
-    &.icon
-      font-size: 14px
-      padding  : $padding / 1.2
-  
-    &.compact
-      padding: $padding / 1.4 $padding * 1.4
-  
-    &.loading
-      +loader-theme(14px, 2px)
-      
-      &:before, &:after
-        top: calc(50% - 14px / 2)
-  
-  
-  
-  // Tiny
-  //
-  //
-  
-  &.tiny
-    min-width: 35px
-    font-size: 12px
-    padding  : $padding $padding * 1.6
-    
-    &.icon
-      font-size: 15px
-      padding  : $padding
-    
-    &.compact
-      padding: $padding / 1.2 $padding * 1.6
-    
-    &.loading
-      +loader-theme(18px, 2px)
-      
-      &:before, &:after
-        top: calc(50% - 18px / 2)
-  
-  
-  
-  // Small
-  //
-  //
-  
-  &.small
-    min-width: 40px
-    font-size: 13px
-    padding  : $padding * 1.1 $padding * 1.8
-  
-    &.icon
-      font-size: 16px
-      padding  : $padding * 1.1
-  
-    &.compact
-      padding: $padding $padding * 1.6
-      
-    &.loading
-      +loader-theme(19px, 2px)
-      
-      &:before, &:after
-        top: calc(50% - 19px / 2)
-  
-  
-  
-  // Medium
-  //
-  //
-  
-  &.medium
-    min-width: 45px
-    font-size: 14px
-    padding  : $padding * 1.3 $padding * 2
-  
-    &.icon
-      font-size: 18px
-      padding  : $padding * 1.3
-  
-    &.compact
-      padding: $padding * 1.1 $padding * 1.8
-  
-    &.loading
-      +loader-theme(20px, 2px)
-      
-      &:before, &:after
-        top: calc(50% - 20px / 2)
-  
-  
-  
-  // Large
-  //
-  //
-  
-  &.large
-    min-width: 50px
-    font-size: 15px
-    padding  : $padding * 1.5 $padding * 2.3
-    
-    &.icon
-      font-size: 19px
-      padding  : $padding * 1.5
-    
-    &.compact
-      padding: $padding * 1.3 $padding * 2
-      
-    &.loading
-      +loader-theme(21px, 2px)
-      
-      &:before, &:after
-        top: calc(50% - 21px / 2)
-  
-  
-  
-  // Big
-  //
-  //
-  
-  &.big
-    min-width: 55px
-    font-size: 16px
-    padding  : $padding * 1.6 $padding * 2.6
-  
-    &.icon
-      font-size: 20px
-      padding  : $padding * 1.6
-  
-    &.compact
-      padding: $padding * 1.5 $padding * 2.3
-      
-    &.loading
-      +loader-theme(22px, 3px)
-      
-      &:before, &:after
-        top: calc(50% - 22px / 2)
-  
-  
-  
-  // Large
-  //
-  //
-  
-  &.huge
-    min-width: 70px
-    font-size: 19px
-    padding  : $padding * 1.9 $padding * 2.8
-  
-    &.icon
-      font-size: 23px
-      padding  : $padding * 1.9
-  
-    &.compact
-      padding: $padding * 1.6 $padding * 2.6
-      
-    &.loading
-      +loader-theme(25px, 3px)
-      
-      &:before, &:after
-        top: calc(50% - 25px / 2)
-  
-  
-  
-  // Massive
-  //
-  //
-  
-  &.massive
-    min-width: 80px
-    font-size: 20px
-    padding  : $padding * 2.1 $padding * 3.3
-    
-    &.icon
-      font-size: 25px
-      padding  : $padding * 2.1
-    
-    &.compact
-      padding: $padding * 1.9 $padding * 2.8
-    
-    &.loading
-      +loader-theme(26px, 3px)
-      
-      &:before, &:after
-        top: calc(50% - 26px / 2)
-  
- 
+
+
+         
