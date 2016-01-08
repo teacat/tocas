@@ -3,11 +3,33 @@
   input, textarea
     +rd
     +border-box
+    +normal
     
-    padding: $padding * 1.5 $padding * 2
-    font-size: 14px
-    resize: none
+    border   : .1rem solid #CCC
+    resize   : none
+    padding  : $padding $padding * 2
+    margin
     
+    
+    &:not(input)
+      +y-padding($padding * 1.5)
+      +x-padding($padding * 2)
+
+    
+    &[disabled="disabled"],
+    &[disabled="true"]
+    &[disabled],
+    &.disabled
+      pointer-events: none
+      opacity: 0.4
+  
+  
+  &.disabled
+    input, textarea
+      pointer-events: none
+      opacity: 0.4
+
+
   &.resizable
     input, textarea
       resize: both
@@ -18,16 +40,31 @@
   
   &.transparent
     input, textarea
-      border: none
+      border    : none
       background: transparent
       
   &:not(.transparent)
     input, textarea
       transition: all 0.30s ease-in-out
-      outline: none
+      outline   : none
   
-    input[type=text]:focus, textarea:focus 
-      
-      box-shadow: 0 0 5px rgba(81, 203, 238, 1)
+    &.focus input[type=text],
+    &.focus textarea,
+    input[type=text]:focus, 
+    textarea:focus
+      box-shadow: 0 0 .5rem rgba(81, 203, 238, 1)
   
+  
+  
+  &.error
+    
+    &.focus input[type=text],
+    &.focus textarea,
+    input[type=text]:focus, 
+    textarea:focus
       
+      box-shadow: 0 0 .5rem rgba(#DE8F8B, 1)
+      
+    input, textarea
+      //color: auten(#FFD9D7)
+      background-color: #FDEBEA
