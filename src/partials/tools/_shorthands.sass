@@ -1,10 +1,18 @@
-=ext($name, $silent: true)
+=extend($name, $silent: true)
   @if $silent == true
     @extend %#{$name} !optional
   @else
     @extend .#{$name} !optional
     
-    
+=position($top: x, $right: x, $bottom: x, $left: x)    
+  @if $top != x
+    top: $top
+  @if $right != x
+    right: $right
+  @if $bottom != x
+    bottom: $bottom
+  @if $left != x
+    left: $left
     
 @function auten($color, $percent: 40%)
   /** If too light, we use darken() otherwise we use lighten()
