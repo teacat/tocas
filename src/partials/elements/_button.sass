@@ -11,7 +11,7 @@
   
   &:not(.transparent)
     background  : $color
-    border-color: darken($color, 1%)
+    border-color: darken($color, 4%)
     
   color      : $textColor
   text-shadow: 0 .1rem .1rem auten($color, 3%)
@@ -113,12 +113,19 @@
       border-top-left-radius   : .4rem
       border-bottom-left-radius: .4rem
       
+        
     &:last-child
+  
       border-top-right-radius   : .4rem
       border-bottom-right-radius: .4rem
+      
+    &:first-child:not(:last-child)
+      border-right: none
 
 
-
+    &:not(:last-child):not(:first-child)
+      border-right: none
+      
 
 =button-generator
   @for $i from 1 through $buttonAmount
@@ -176,7 +183,9 @@
  
   text-decoration: none
   
-  margin-right: $margin / 2
+  
+  &:not(:last-child)
+    margin-right: $margin / 2
   
   
   // Loading
@@ -244,6 +253,8 @@
     padding    : 0
     text-shadow: none !important
   
+
+    
   
   
   // Labeled
@@ -320,4 +331,22 @@
   //**************************************
 
 
-         
+.ts.buttons
+  &.attached
+    width: 100%
+    
+    .button
+      width: 100%
+
+      
+    &.top
+      border-bottom-right-radius: 0px
+      border-bottom-left-radius : 0px
+    
+    &.bottom
+      .button
+        border-top-right-radius: 0px
+        border-top-left-radius : 0px
+    
+
+    
