@@ -54,13 +54,13 @@
       .author
         color: auten($color, 55%)
         
-      .metadata
+      .metadata, .metadata *
         color: auten($color, 35%)
         
       .text
         color: auten($color, 50%)
       
-      .actions
+      .actions, .actions *
         color: auten($color, 35%)
         
       .buttons
@@ -87,6 +87,9 @@
     &:first-child
       margin-top: 0px
     
+    
+    .comments
+      +y-margin($margin, x)
   
     .avatar
       float: left
@@ -106,8 +109,8 @@
         +inline-block
         +normal
         +medium
+        +x-margin(x, $margin / 2)
         
-        margin-right: $margin / 2
         line-height: $margin * 2.5
       
       .metadata
@@ -116,6 +119,12 @@
         
         .list
           +small
+        
+        > *:not(.list)
+          +x-margin(x, $margin)
+          
+          &:last-child
+            +x-margin(x, 0)
       
       .text.inline + .metadata
         +block
@@ -138,6 +147,13 @@
         +small
         
         margin-top: $margin / 2
+      
+        > *:not(.list)
+          +x-margin(x, $margin)
+          
+          &:last-child
+            +x-margin(x, 0)
+      
       
       .reply
         padding-top: $margin / 2.5
