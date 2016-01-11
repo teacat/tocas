@@ -30,10 +30,6 @@
 
 =loader-resource
 
-  &.text
-    +normal
-    
-    padding-top: 3.6rem + $padding
   
   &:before,
   &:after
@@ -55,7 +51,7 @@
     border-left  : .5rem solid transparent
     border-right : .5rem solid transparent
 
-    animation: spin 1s infinite linear
+    animation: spin 0.6s infinite linear
   
   &.indeterminate:after,
   &.indeterminate:before
@@ -86,65 +82,76 @@
       border-top-color: $color
 
 
+=loader-generator
+  @for $i from 1 through $loaderAmount
+    @at-root
+      #{&}.#{nth($loaderSizes, $i)}
+        
+        $fontSize  : nth($loaderFontSizes, $i)
+        $loaderSize: if($i < 4, $fontSize + $i / 5, $fontSize + $i / 2)
+        $borderSize: if($i < 4, $i / 10 + rem, $i / 15 + rem)
+        
+        +loader-theme($loaderSize, $borderSize)
+        
+        font-size: $fontSize
+        min-width: $loaderSize
+        height   : $loaderSize
+        
+        &.inline
+          
+          &.text
+            padding-top: $loaderSize + $padding * 1.5
+            height     : $fontSize
+            
+            &:empty
+              padding-top: 0
+              height     : $loaderSize
+              
+        
+        &:not(.inline)
+          
+          +position(calc(50% - #{$loaderSize} / 2), x, x, calc(50% - #{$loaderSize} / 2))
+          
+          &.text
+            +position(calc(50% - (#{$loaderSize} + #{$fontSize} + #{$padding}) / 2), x, x, calc(50% - #{$loaderSize} / 2))
+            
+            height     : $fontSize
+            max-width  : $loaderSize
+            padding-top: $loaderSize + $padding
+
+
+
 .ts.loader
   +loader-theme(36px, 3px)
   +loader-color
   +loader-resource
-  +relative
+  +loader-generator
+  +absolute
   +block
   
   height: 36px
   min-width: 36px
   text-align: center
 
+  &:not(.active)
+    +none
+ 
+ 
  
   &.inline
+    +relative
     +inline-block
+    +position(0, x, x, 0)
+
+  &:not(.inline)
+    +flex
+    +flex-all-center
+    white-space: nowrap
+
   
   &.centered
+    +block
     margin: 0px auto
     
-  &.mini
-    +loader-theme(1.6rem, .2rem)
-    font-size: 12px
-    min-width: 16px
-    width: 16px
-    height: 16px
-    
-    &.text
-      padding-top: 1.6rem + $padding / 2
-  
-  &.small
-    +loader-theme(28px, 3px)
-    font-size: 12px
-    min-width: 28px
-    width: 28px
-    height: 28px
-    
-    &.text
-      padding-top: 2.8rem + $padding / 2
-  
-  &.medium
-    +loader-theme(48px, 4px)
-    font-size: 14px
-    min-width: 48px
-    width: 48px
-    height: 48px
 
-    
-    &.text
-      padding-top: 4.8rem + $padding / 2
   
-  &.large
-    +loader-theme(56px, 4px)
-    font-size: 14px
-    min-width: 56px
-    width: 56px
-    height: 56px
-    
-    &.text
-      padding-top: 5.6rem + $padding / 2
-    
-  &.text
-    width: auto
-    height: auto
