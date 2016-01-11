@@ -2,18 +2,20 @@
 *
   font-family: 'Open Sans', 'Noto Sans TC'
   
-=basic-card($color: #CCC, $bgColor: #FFF)
-  color: auten($color)
+=basic-card($color: #808080, $bgColor: #FFF)
+  $borderColor: lighten($color, 40%)
+
+  color     : $color
   background: $bgColor
-  overflow: hidden
+  overflow  : hidden
 
   +rd
-  box-shadow: 0 0px 1px 0 lighten($color, 10%),0 0 0 0px lighten($color, 10%)
-  border: 1px solid lighten($color, 12%)
+  box-shadow: 0 0px 1px 0 lighten($borderColor, 4%),0 0 0 0px lighten($borderColor, 4%)
+  border: 1px solid $borderColor
   border-bottom-width: 2px
 
   &.raised
-    box-shadow: 0 2px 4px 0 lighten($color, 10%),0 2px 10px 0 lighten($color, 10%)
+    box-shadow: 0 2px 4px 0 darken($borderColor, 4%),0 2px 10px 0 darken($borderColor, 4%)
     border-bottom-width: 1px
 
 
@@ -51,7 +53,7 @@
 
 @import partials/views/item
 @import partials/views/comment
-@import partials/views/card
+
 
 
 
@@ -75,6 +77,7 @@
 @import partials/elements/segment
 @import partials/elements/list
 @import partials/elements/button
+@import partials/views/card
 @import partials/elements/input
 @import partials/elements/header
 @import partials/elements/container
