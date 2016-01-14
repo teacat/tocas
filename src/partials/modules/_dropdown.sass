@@ -1,0 +1,294 @@
+
+
+
+
+
+
+/* Generated with Bounce.js. Edit at http://goo.gl/l6LLrp */
+
+@keyframes downward
+  0%
+    opacity: 0
+    transform: translate(0, -15px) matrix3d(1,0,0.00,0,0.00,0.001,0.00,0,0,0,1,0,0,0,0,1)
+  
+  30%
+    opacity: 1
+    transform: translate(0, -3px) matrix3d(1,0,0.00,0,0.00,0.9,0.00,0,0,0,1,0,0,0,0,1)
+  
+  100%
+    opacity: 1
+    transform: translate(0, 0px) matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,0,0,0,1)
+
+
+@keyframes upward
+  0%
+    opacity: 0
+    transform: translate(0, 15px) matrix3d(1,0,0.00,0,0.00,0.001,0.00,0,0,0,1,0,0,0,0,1)
+  
+  30%
+    opacity: 1
+    transform: translate(0, 3px) matrix3d(1,0,0.00,0,0.00,0.9,0.00,0,0,0,1,0,0,0,0,1)
+  
+  100%
+    opacity: 1
+    transform: translate(0, 0px) matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,0,0,0,1)
+
+@keyframes upward-full
+  0%
+    opacity: 0
+    transform: translate(0, 100%)
+  
+  30%
+    opacity: 0.8
+    transform: translate(0, 40%)
+  
+  100%
+    opacity: 1
+    transform: translate(0, 0)
+
+@keyframes upward-hide
+  0%
+    opacity: 1
+    transform: translate(0, 0%)
+  
+  30%
+    opacity: 0.8
+    transform: translate(0, 40%)
+  
+  100%
+    opacity: 0
+    transform: translate(0, 100%)
+
+@keyframes upward-fa
+  0%
+    opacity: 0
+  
+  100%
+    opacity: 1
+
+@keyframes upward-da
+  0%
+    opacity: 1
+  
+  100%
+    opacity: 0
+
+
+.ts.dropdown
+  +relative 
+  //-webkit-transform: translateZ(0)
+  //-webkit-font-smoothing: antialiased
+  //-webkit-perspective: 1000
+  -webkit-backface-visibility: hidden
+
+  z-index: 1
+
+  &.mobile.friendly
+    //+rwd-serious(mobile)
+    .menu
+      +fixed
+      
+      +position(0, 0, 0, 0)
+      +margin(0)
+      //+y-padding(80%, x)
+
+      border: none
+      overflow-y: scroll
+      overflow-x: hidden
+      background-color: rgba(0,0,0,0.3)
+      -webkit-transform: translateZ(0)
+      -webkit-font-smoothing: antialiased
+      -webkit-perspective: 1000
+      -webkit-backface-visibility: hidden
+      -webkit-transform: translate3d(0, 0, 0)  
+      
+      
+      .inner
+        +flex
+        +flex-bottom
+        +flex-column
+        height: 110%
+        //-webkit-transform: translateZ(0)
+        //-webkit-font-smoothing: antialiased
+        //-webkit-perspective: 1000
+        -webkit-backface-visibility: hidden
+        box-shadow: 0 0px 1px 0 darken($defaultColor, 4%),0 0 0 0px darken($defaultColor, 4%)
+        -webkit-transform: translate3d(0, 0, 0)
+        pointer-events: none
+        
+        
+        .item
+          +y-padding($padding * 1.5)
+          +x-padding($padding * 2)
+          +flex
+          +flex-row
+          
+          pointer-events: visible
+          
+          .icon, .fa
+            +flex
+            +flex-items-center
+            +x-margin(x, $margin * 1.5)
+            
+            font-size: $normal * 2
+            line-height: 0
+          
+          &:first-child
+            box-shadow: 0px 0px 5px 0px rgba(darken($defaultColor, 40%), 0.6)
+          
+          .content
+            width: 100%
+          
+          .description, .text
+            overflow: hidden
+            text-overflow: ellipsis
+            white-space: nowrap
+
+  
+  .menu
+    +absolute
+    +no-wrap
+    +no-overflow
+    +rd
+    +y-margin($margin)
+    
+    border: 1px solid darken($defaultColor, 6%)
+    background-color: $defaultColor
+    box-shadow: 0 0px 1px 0 darken($defaultColor, 4%),0 0 0 0px darken($defaultColor, 4%)
+    
+    &.hidden
+      +none  
+    
+    
+    
+    
+      
+    
+    
+    
+    .item
+      +extend(ease-less)
+      +extend(no-tap)
+      +y-padding($padding)
+      +x-padding($padding * 1.5)
+      +normal
+      
+      color: rgba($defaultTextColor, 0.8)
+      background-color: $defaultColor
+      
+      .icon, .fa
+        +normal
+        +x-margin(x, $margin)
+        +inline-block
+        
+        line-height: $normal
+        vertical-align: top
+
+      &:hover
+        +extend(poi)
+        color: rgba($defaultTextColor, 1)
+        background-color: darken($defaultColor, 3%)
+      
+      &:active
+        color: rgba($defaultTextColor, 1)
+        background-color: darken($defaultColor, 6%)
+    
+      .content
+        +inline-block
+      
+      .description
+        +block
+        +small
+        +y-margin($margin / 2, x)
+        
+        color: rgba($defaultTextColor, 0.6)
+      
+      .text
+        line-height: $normal
+    
+    
+    .header
+      +extend(ease-less)
+      +extend(no-tap)
+      +y-padding($padding)
+      +x-padding($padding * 1.5)
+      +small
+      +bold-weight
+      
+    .header + .divider
+      +y-margin(0, x)
+      
+    
+    .divider
+      +y-margin($margin)
+      
+      border-bottom-style: solid
+      border-bottom-width: 1px
+      border-bottom-color: darken($defaultColor, 6%)
+      
+    
+    
+    
+  
+  &.downward
+    .menu
+      +position(100%, x, x, x)
+      
+  &.upward
+    .menu
+      +position(x, x, 100%, x)
+  
+  &.downward.active:not(.mobile):not(.friendly)
+    .menu
+      animation: downward 700ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+      transform-origin: center top 0px
+
+  &.rightward
+    .menu
+      +position(x, x, x, 0%)
+    
+  &.leftward
+    .menu
+      +position(x, 0%, x, x)
+  
+  &.upward.active:not(.mobile):not(.friendly)
+    .menu
+      animation: upward 700ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+      transform-origin: center bottom 0px
+      
+  &.upward.active.mobile.friendly
+    .menu
+      
+      animation: upward-fa 100ms ease-in-out both
+      transform-origin: center bottom 0px
+      
+      .inner
+        animation-delay: 00ms
+        animation-name: upward-full
+        animation-duration: 700ms
+        animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1)
+        animation-fill-mode: forwards
+        opacity: 0
+        transform-origin: center bottom 0px
+        -webkit-transform: translate3d(0, 0, 0)
+  
+  
+  &.upward.hiding.mobile.friendly    
+  
+    .menu
+      animation-delay: 100ms
+      animation-name: upward-da
+      animation-duration: 200ms
+      animation-timing-function: ease-in-out
+      animation-fill-mode: forwards
+      //opacity: 0
+      transform-origin: center bottom 0px
+  
+    .inner
+      animation-name: upward-hide
+      animation-duration: 700ms
+      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1)
+      animation-fill-mode: forwards
+      opacity: 0
+      transform-origin: center bottom 0px
+      -webkit-transform: translate3d(0, 0, 0)
