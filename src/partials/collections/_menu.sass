@@ -16,17 +16,19 @@
   
   .item
     background : $color
-    color      : auten($color, 45%)
-  
+    color      : rgba(auten($color, 45%), 0.8)
+    
     &:hover
       +poi
       background : auten($color, 3%)
+      color      : rgba(auten($color, 45%), 1)
   
     &:active
       +extend(no-ease)
       +extend(no-tap)
 
       background : auten($color, 8%)
+      
   
     .label
       color     : auten($color, 45%)
@@ -55,12 +57,15 @@
   
   &.vertical
     .item
-      border-top-color   : if(is_lighter($color), lighten($color, 3%), lighten($color, 4%))
+      border-top-color   : if(is_lighter($color), lighten($color, 1%), lighten($color, 2%))
       border-bottom-color: if(is_lighter($color), darken($color, 3%), darken($color, 3%))
   
+      &:first-child
+        border-top: none
+        
       &:hover
-        background      : auten($color, 3%)
-        border-top-color: auten($color, 3%)
+        background      : auten($color, 2%)
+        border-top-color: auten($color, 2%)
         
       &:active
         +extend(no-ease)
@@ -79,6 +84,9 @@
 
     .item:after
       border-color: darken($color, 10%)
+
+  &.hidden
+    +none
 
   
   
@@ -115,8 +123,8 @@
 
 .ts.menu, .ts.menu .menu
   $thisParent: '.ts.menu'
-  display: flex
   
+  +flex
   +menu-theme(#fafafa)
   +rd
   +border-box
@@ -166,6 +174,7 @@
   &.icon
     .icon
       margin-right: 0
+
   
   
   
@@ -227,14 +236,15 @@
   //**************************************
   
   .item
-    +extend(ease)
+    +extend(ease-less)
     +normal
     +relative
-    +flex-center
+    +flex
+    +flex-items-center
     +y-padding($padding * 1.2)
-    +x-padding($padding * 2.3)
+    +x-padding($padding * 2)
 
-    text-shadow : 0 .1rem .1rem rgba(0,0,0,0.2)
+    //text-shadow : 0 .2rem 0 rgba(0,0,0,0.2)
     
     
     
@@ -286,7 +296,7 @@
         left   : 50%
         transform: translateX(-50%) translateY(-50%) rotate(45deg)
   
-        margin-top: .5rem
+        //margin-top: .5rem
         width     : $padding
         height    : $padding
   
@@ -304,7 +314,7 @@
     // 具有指針且備用。
     
     +if-parent($thisParent, '.pointing.secondary')
-      text-shadow: none
+      //text-shadow: none
       background : none
       
       &.active
@@ -393,3 +403,11 @@
       
       &.vertically
         +y-padding(0)
+  
+  &.compact,
+  .ts.dropdown &
+    +inline-block
+    +no-overflow
+    
+    .item
+      border-right: none
