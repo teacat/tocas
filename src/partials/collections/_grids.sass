@@ -26,15 +26,35 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
     [class*="#{nth($columnName, $i)} wide large screen"]
       +rwd(large)
         width  : 100% / $columnAmount * $i !important
-
+    
+    
+    &[class*="#{nth($columnName, $i)} column"],
+    & .row[class*="#{nth($columnName, $i)} column"]
+      > .column:not(.row)
+        width  : 100% / $columnAmount * $i !important
+      
+      
+    & .row.doubling[class*="#{nth($columnName, $i)} column"]
+      > .column:not(.row)
+        +rwd-serious(mobile)
+          width  : if((100% / $columnAmount * $i) * 4 < 50%, (100% / $columnAmount * $i) * 4, 50%) !important
+        
+        +rwd-serious(tablet)
+          width  : if((100% / $columnAmount * $i) * 2 < 50%, (100% / $columnAmount * $i) * 2, 50%) !important
+        
+    
+    
+    
+    
+    
 
 
 .ts.grid
   
   +flex 
+  +flex-row
   +border-box
-  
-  flex-direction: row
+
   width    : 100%
   flex-wrap: wrap
   
@@ -63,7 +83,9 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
 
   
   
-  &.centered
+  &.centered,
+  .row.centered
+    +flex-content-center
     //margin: 0px auto !important
     
   &.start
@@ -72,15 +94,23 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
   &.end
     justify-content: flex-end
 
+
+
   > .row
     +flex
+    +flex-row
+    
+    
     flex-wrap: nowrap
     width: 100%
   
-  > .column,
-  > .row .column
-    +block
-    
+    &.doubling
+      flex-wrap: wrap
+  
+  > .column:not(.row),
+  > .row .column:not(.row)
+    //+block
+    +border-box
     padding-left : $padding / 2
     padding-right: $padding / 2
     margin-bottom: $margin * 1.8
@@ -99,7 +129,8 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
     //margin-left: -#{$padding * 1.8}
     //margin-right: -#{$padding * 1.8}
   
-    > .column
+    > .column:not(.row),
+    > .row > .column:not(.row)
     
       padding-left : $padding * 1.8
       padding-right: $padding * 1.8
@@ -107,6 +138,6 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
   +column-generator
 
   &.stackable
-    > .column
+    > .column:not(.row)
       +rwd-serious(mobile)
         width  : 100%
