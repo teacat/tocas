@@ -53,17 +53,29 @@
   
   .ts.card
     +margin
+
+a.ts.card
+  &:hover
     
+    z-index: 1
+    cursor: pointer
+    transform: translateY(-3px)
 
 .ts.card
   +card-theme
   +relative
   +border-box
+  +flex
+  +flex-column
   +word-wrap
+  +extend(ease)
   
+  z-index: 1
   width    : $cardSize
   max-width: $cardSize
   
+  &.centered
+    +x-margin(auto)
   
   &.fluid
     max-width: 100%
@@ -119,8 +131,13 @@
       border-top-width: 1px
   
     .header
+      +y-margin(x, $margin / 2)
+      +bold-weight
+      
       text-decoration: none
-      font-weight: 600
+    
+    .description
+      +normal
   
     .meta
       +small
