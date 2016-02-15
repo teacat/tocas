@@ -4,7 +4,7 @@
     $textColor: lighten($color, 45%)
 
   background-color: $color
-  border: .1rem solid darken($color, 1%)
+  border: .1rem solid darken($color, 2%)
   
   color: $textColor
   
@@ -29,6 +29,12 @@
   
     &.triangle
       border-bottom-color: $color
+  
+  &.ribbon
+    &:not(.right):after
+      border-right-color: darken($color, 8%)
+    &.right:after
+      border-top-color: darken($color, 8%)
 
 =label-generator
   @for $i from 1 through $labelAmount
@@ -43,7 +49,7 @@
 
 .ts.label
   +border-box
-  +label-theme($defaultColor, auten($defaultColor, 40%))
+  +label-theme(lighten($defaultColor, 3%), $defaultTextColor)
   +inline-flex
   +small
   +x-padding($padding)
@@ -58,22 +64,22 @@
   vertical-align: top
   
   &.positive
-    +label-theme($positiveColor)
+    +label-theme($positiveColor, $positiveTextColor)
   
   &.negative
-    +label-theme($negativeColor)
+    +label-theme($negativeColor, $negativeTextColor)
   
   &.warning
-    +label-theme($warningColor)
+    +label-theme($warningColor, $warningTextColor)
     
   &.info
-    +label-theme($infoColor)
+    +label-theme($infoColor, $infoTextColor)
     
   &.inverted
-    +label-theme($invertedColor)
+    +label-theme($invertedColor, $invertedTextColor)
   
   &.primary
-    +label-theme($primaryColor)
+    +label-theme($primaryColor, $primaryTextColor)
   
   &:not(.empty):empty
     display: none
@@ -84,7 +90,50 @@
     +x-padding($padding / 2)
     +position(-$margin, -$margin, x, x)
 
-
+  &.ribbon
+    +relative
+    +no-wrap
+    
+    
+    left: calc((-#{$padding} + -#{$padding} * 2) + ((-#{$padding} / 2) + #{$segmentBorderWidth}))
+    
+    &:not(.right)
+      +x-padding($padding * 3 + $segmentBorderWidth * 2, x)
+      border-top-left-radius: 0
+      border-bottom-left-radius: 0
+    
+    &.right
+      +x-padding(x, $padding * 3 + $segmentBorderWidth * 2)
+      left: calc(100% + (#{$padding} + #{$padding} * 2) + ((#{$padding} / 2) - #{$segmentBorderWidth}))
+      transform: translateX(-100%)
+      
+      border-top-right-radius: 0
+      border-bottom-right-radius: 0
+    
+    &:not(.right):after
+      position: absolute
+      content: ''
+      top: calc(100% + .1rem)
+      left: calc(0rem - #{$segmentBorderWidth})
+      background-color: transparent !important
+      border-style: solid
+      border-width: 0 1rem 1rem 0
+      border-bottom-color: transparent
+      width: 0
+      height: 0
+    
+    &.right:after
+      position: absolute
+      content: ''
+      top: calc(100% + .1rem)
+      right: calc(0rem - #{$segmentBorderWidth})
+      background-color: transparent !important
+      border-style: solid
+      border-width: 1rem 1rem 0 0
+      border-right-color: transparent
+      width: 0
+      height: 0
+  
   
   &.circular:not(.empty)
     +inline-block
