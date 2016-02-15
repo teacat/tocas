@@ -1,5 +1,24 @@
-.ts.input
+=input-generator
+  @for $i from 1 through $inputAmount
+    @at-root
+      #{&}.#{nth($inputSizes, $i)}
+      
+        input, textarea
+          +y-padding($padding * ($i / 5))
+          +x-padding($padding * ($i / 4))
+          
+          
+          $fontSize  : nth($buttonFontSizes, $i)
+  
+          font-size: $fontSize
+ 
+      
+   
 
+
+.ts.input
+  +input-generator
+  
   input, textarea
     +rd
     +border-box
