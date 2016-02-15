@@ -11,10 +11,10 @@
   
   &:not(.transparent)
     background  : $color
-    border-color: darken($color, 4%)
+    border-color: darken($color, 1%)
     
   color      : $textColor
-  text-shadow: 0 .1rem .1rem auten($color, 3%)
+  //text-shadow: 0 .1rem .1rem auten($color, 3%)
   
   
   &.transparent
@@ -23,12 +23,11 @@
 
   &.basic
     background-color: transparent
-    border-color    : darken($textColor, 20%)
+    border-color    : darken($color, 10%)
     text-shadow     : none
-    color           : darken($textColor, 40%)
+    color           : darken($color, 10%)
 
-  &:hover
-    +extend(ease)
+  &:hover:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled)
     +poi
     
     &.transparent
@@ -38,17 +37,18 @@
       //opacity: 0.9
     
     &:not(.transparent)
-      background-color: lighten($color, 2%)
+      background-color: darken($color, 5%)
 
       &.basic
-        border-color    : darken($textColor, 15%)
-        color           : darken($textColor, 35%)
-        opacity         : 0.9
-        background-color: transparent
+        background-color: $color
+        border-color    : $color
+        color           : $textColor
+        opacity         : 1
+        //background-color: transparent
 
   
-  &:active,
-  &.active
+  &:active:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled),
+  &.active:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled)
     +extend(no-ease)
     +extend(no-tap)
     
@@ -60,12 +60,14 @@
 
     &:not(.transparent)
       color           : darken($textColor, 10%)
-      background-color: darken($color, 3%)
-      box-shadow      : inset 0 0 1rem 0 darken($color, 6%)
+      background-color: darken($color, 17%)
+      border-color    : darken($color, 17%)
+      //box-shadow      : inset 0 0 1rem 0 darken($color, 6%)
     
       &.basic
-        border-color: darken($textColor, 40%)
-        color       : darken($textColor, 40%)
+        background-color: darken($color, 13%)
+        border-color    : darken($color, 13%)
+        //color           : darken($textColor, 13%)
         opacity     : 1
         box-shadow  : none
     
@@ -85,13 +87,10 @@
   &[disabled="true"]
   &[disabled],
   &.disabled
-    background  : lighten($color, 10%)
-    color       : rgba($textColor, 0.8)
-    border-color: lighten($color, 10%)
-    
+    opacity: 0.45
+
     &:hover
-      cursor    : not-allowed
-      background: lighten($color, 10%)
+      cursor: not-allowed
 
 
 
@@ -137,7 +136,7 @@
   +relative
   +border-box
   +inline-block
-  +button-theme($defaultColor, auten($defaultColor, 40%))
+  +button-theme($defaultColor, $defaultTextColor)
   +extend(ease)
   +rd
   +normal
@@ -146,7 +145,7 @@
   +button-generator
   
   
-  font-weight: 600
+  //font-weight: 600
   
   border-width: .1rem
   border-style: solid
@@ -271,22 +270,22 @@
   //**************************************
   
   &.positive
-    +button-theme($positiveColor)
+    +button-theme($positiveColor, $positiveTextColor)
     
   &.negative
-    +button-theme($negativeColor)
+    +button-theme($negativeColor, $negativeTextColor)
     
   &.primary
-    +button-theme($primaryColor)
+    +button-theme($primaryColor, $primaryTextColor)
     
   &.warning
-    +button-theme($warningColor)
+    +button-theme($warningColor, $warningTextColor)
     
   &.info
-    +button-theme($infoColor)
+    +button-theme($infoColor, $infoTextColor)
   
   &.basic.inverted
-    +button-theme($invertedColor, $invertedColor)
+    +button-theme($invertedColor, $invertedTextColor)
     border-width: .2rem
     
   &.inverted:not(.basic)
