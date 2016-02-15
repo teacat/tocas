@@ -6,7 +6,7 @@
         height: auto
 
 
-.ts.image
+.ts.image:not(.label)
   +image-generator
   +block
   
@@ -37,6 +37,16 @@
   
   &.rounded
     +rd
+
+  .ts.label
+    +absolute
+    top: $padding
+    
+    &:not(.right)
+      left: calc(-#{$padding} + (-#{$segmentBorderWidth} * 2))
+      
+    &.right
+      left: calc(100% + #{$padding} + #{$segmentBorderWidth} * 2)
 
   &.centered
     margin-left : auto
