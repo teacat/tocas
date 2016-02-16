@@ -1,0 +1,57 @@
+.ts.checkbox
+  +extend(no-select)
+
+  &:hover
+    +poi
+    +extend(ease)
+    opacity: 1
+  
+  &:active
+    +extend(no-ease)
+    opacity: 0.9
+  
+  [type="checkbox"]
+    +relative
+    +rd
+    +x-margin(x, .4em)
+    
+    -webkit-appearance: none
+    //background-color: $defaultColor
+    border: 1px solid $defaultColor
+    width: 1.4em
+    height: 1.4em
+    vertical-align: -.3em
+    
+    &:hover
+      +poi
+      +extend(ease)
+      border: 1px solid darken($defaultColor, 10%)
+    
+    &:active
+      +extend(no-ease)
+      border: 1px solid darken($defaultColor, 30%)
+      //background-color: darken($defaultColor, 20%)
+    
+    &:checked
+      //+extend(no-ease)
+      +extend(ease)
+      background-color: $defaultColor
+      border: 1px solid darken($defaultColor, 30%)
+      
+      &:after
+        border: 2px solid $defaultTextColor
+        border-right: 0
+        border-top: 0
+        content: " "
+        display: block
+        height: 7px
+        pointer-events: none
+        position: absolute
+        transform: rotate(-45deg)
+        width: 8px
+        height: 4px
+        left: 4px
+        opacity: 1
+        position: absolute
+        top: 4px
+        transform: rotate(-45deg) scale(1)
