@@ -6,6 +6,19 @@
         height: auto
 
 
+
+@for $i from 1 through $imageAmount
+  @at-root
+    .ts.images.#{nth($imageSizes, $i)} img
+      width: nth($imageFontSizes, $i)
+      height: auto
+
+.ts.images
+
+  &.inline
+    img
+      +inline-block
+
 .ts.image:not(.label)
   +image-generator
   +block
