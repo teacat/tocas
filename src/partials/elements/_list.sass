@@ -1,5 +1,4 @@
 =list-theme($color: #808080, $fontSize: 1.4rem)
-  font-size: $fontSize
 
   .item,
   li
@@ -12,8 +11,20 @@
     li:not(:first-child):before
       color: rgba($color, 0.8)
 
+
+=list-generator
+  @for $i from 1 through $listAmount
+    @at-root
+      #{&}.#{nth($listSizes, $i)}
+          
+        $fontSize  : nth($listFontSizes, $i)  
+        font-size: $fontSize
+
+
+
 .ts.list
   +list-theme
+  +list-generator
   
   margin: 0
   padding-left: 0
