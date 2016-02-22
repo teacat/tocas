@@ -105,3 +105,50 @@
 =rwd-pad($type, $padding)
   +rwd($type)
     padding: $padding
+
+
+
+
+[class*="mobile only"]
+  +rwd(tablet)
+    +none
+  +rwd(computer)
+    +none
+  +rwd(large)
+    +none
+
+[class*="mobile or tablet only"]
+  +rwd(computer)
+    +none
+  +rwd(large)
+    +none
+    
+[class*="tablet only"]:not(.mobile.or)
+  +rwd(mobile)
+    +none
+  +rwd(computer)
+    +none
+  +rwd(large)
+    +none
+
+[class*="computer only"]
+  +rwd-serious(mobile)
+    +none
+  +rwd-serious(tablet)
+    +none
+  +rwd-serious(large)
+    +none
+
+[class*="large device only"]
+  +rwd-serious(mobile)
+    +none
+  +rwd-serious(tablet)
+    +none
+
+[class*="large screen only"]
+  +rwd(mobile)
+    +none
+  +rwd(tablet)
+    +none
+  +rwd(computer)
+    +none
