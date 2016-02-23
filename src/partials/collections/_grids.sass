@@ -9,88 +9,92 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
     [class*="#{nth($columnName, $i)} wide"]
       +border-box
 
-      width  : 100% / $columnAmount * $i 
-    
+      width  : 100% / $columnAmount * $i
+
+  @for $i from 1 through $columnAmount
     [class*="#{nth($columnName, $i)} wide mobile"]
       +rwd-serious(mobile)
         width  : 100% / $columnAmount * $i !important
 
+  @for $i from 1 through $columnAmount
     [class*="#{nth($columnName, $i)} wide tablet"]
       +rwd-serious(tablet)
         width  : 100% / $columnAmount * $i !important
-    
+
+  @for $i from 1 through $columnAmount
     [class*="#{nth($columnName, $i)} wide computer"]
       +rwd(computer)
         width  : 100% / $columnAmount * $i !important
-    
+
+  @for $i from 1 through $columnAmount
     [class*="#{nth($columnName, $i)} wide large screen"]
       +rwd(large)
         width  : 100% / $columnAmount * $i !important
-    
-    
+
+  @for $i from 1 through $columnAmount
     &[class*="#{nth($columnName, $i)} column"],
     & .row[class*="#{nth($columnName, $i)} column"]
       > .column:not(.row)
         width  : 100% / $columnAmount * $i !important
-      
-      
+
+  @for $i from 1 through $columnAmount
     & .row.doubling[class*="#{nth($columnName, $i)} column"]
       > .column:not(.row)
         +rwd-serious(mobile)
           width  : if((100% / $columnAmount * $i) * 4 < 50%, (100% / $columnAmount * $i) * 4, 50%) !important
-        
+
         +rwd-serious(tablet)
           width  : if((100% / $columnAmount * $i) * 2 < 50%, (100% / $columnAmount * $i) * 2, 50%) !important
-        
-    
-    
-    
-    
-    
+
+
+
+
+
+
 
 
 .ts.grid
-  
-  +flex 
+
+  +flex
   +flex-row
   +border-box
 
   width    : 100%
   flex-wrap: wrap
-  
+
   //margin-left: -#{$padding}
   //margin-right: -#{$padding}
   //margin-bottom: 1%
-  
+
   [class*="only"]
     display: none !important
-  
+
   [class*="large screen only"]
     +rwd(large)
       display: initial !important
-      
+
   [class*="computer only"]
     +rwd(computer)
       display: initial !important
-      
+
   [class*="tablet only"]
     +rwd(tablet)
       display: initial !important
-  
+
   [class*="mobile only"]
     +rwd-serious(mobile)
       display: initial !important
 
-  
-  
+
+
   &.centered,
   .row.centered
     +flex-content-center
     //margin: 0px auto !important
-    
+
   &.start
     justify-content: flex-start
-  
+
   &.end
     justify-content: flex-end
 
@@ -99,14 +103,14 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
   > .row
     +flex
     +flex-row
-    
-    
+
+
     flex-wrap: nowrap
     width: 100%
-  
+
     &.doubling
       flex-wrap: wrap
-  
+
   > .column:not(.row),
   > .row .column:not(.row)
     //+block
@@ -114,27 +118,27 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
     padding-left : $padding / 2
     padding-right: $padding / 2
     margin-bottom: $margin * 1.8
-    
+
     [class*="left aligned"]
       text-align: left
-    
+
     [class*="right aligned"]
       text-align: right
-    
+
     [class*="center aligned"]
       text-align: center
-    
-    
+
+
   &.relaxed
     //margin-left: -#{$padding * 1.8}
     //margin-right: -#{$padding * 1.8}
-  
+
     > .column:not(.row),
     > .row > .column:not(.row)
-    
+
       padding-left : $padding * 1.8
       padding-right: $padding * 1.8
-  
+
   +column-generator
 
   &.stackable
