@@ -6,57 +6,57 @@
 
 =card-theme($color: #808080, $bgColor: #FFF, $extraColor: #F5F5F5)
   +basic-card($color, $bgColor)
-  
+
   &.basic
     +basic-card(#808080, #FFF)
-    
+
     border-bottom-color: $bgColor
-  
-  
+
+
   &:not(.basic)
 
     > .content
       color: $color
-      
+
       border-top-color: auten($bgColor, 10%)
-      
+
       &:not(.extra) *
         color: $color
-      
+
       .header
         color: darken($color, 10%)
-      
+
       &.extra
         border-top-color: lighten($color, 40%)
         background: $extraColor
-        
+
         .ts.comments
           +comment-theme($extraColor)
-    
+
       .meta *
         color: lighten($color, 20%)
-    
+
     .buttons
       border-top-color: darken($bgColor, 4%)
-      
+
       .positive
         +button-theme(darken($bgColor, 1%), $color)
-      
+
       .negative
         +button-theme(darken($bgColor, 3%), $color)
-    
-  
+
+
 .ts.cards
   +flex
-  
+
   flex-wrap: wrap
-  
+
   .ts.card
     +margin
 
 a.ts.card
   &:hover
-    
+
     z-index: 1
     cursor: pointer
     transform: translateY(-3px)
@@ -69,27 +69,27 @@ a.ts.card
   +flex-column
   +word-wrap
   +extend(ease)
-  
+
   z-index: 1
   width    : $cardSize
   max-width: $cardSize
-  
+
   &.centered
     +x-margin(auto)
-  
+
   &.fluid
     max-width: 100%
     width: 100%
-  
-  
-  .image 
+
+
+  .image
     +relative
-    
+
     img
       +block
       +relative
       max-width: 100%
-    
+
     .dim
       +absolute
       +fill
@@ -97,108 +97,108 @@ a.ts.card
       +border-box
       +position(0, 0, 0, 0)
       +flex
-      
+
       align-items: flex-end
       align-self: flex-end
       background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6))
       text-shadow: 0 .1rem 0 black
       color: #FFF
-  
+
   .bottom.nav
     .ts.menu
       +y-margin(0)
-      
+
       border-radius: 0
       border: none
       border-bottom: none
       border-left: none
       border-right: none
-  
-  
 
-  
-  
+
+
+
+
   > .content
     +y-padding($padding * 1.3)
     +x-padding($padding * 1.5)
     +word-wrap
     +relative
-    
+
     border-top-style: solid
     border-top-width: 0px
-    
+
     &:not(:first-child)
       border-top-width: 1px
-  
+
     .header
       +y-margin(x, $margin / 2)
       +bold-weight
-      
+
       text-decoration: none
-    
+
     .description
       +normal
-  
+
     .meta
       +small
       +y-margin($margin / 3, x)
-      
-      
-      
+
+
+
       .list
         +small
-      
+
       > *:not(.list)
         text-decoration: none
         margin-right: $margin / 2
-        
+
         &.floated.right:last-child
           +x-margin(x, 0)
-        
+
         &.floated.left:last-child
           +x-margin(0, x)
-    
+
     .symbol
       .icon, .fa
         +absolute
         +position(x, -3rem, -3rem, x)
-        
+
         font-size: 13rem
         opacity: 0.3
-    
-    
-    
+
+
+
     &.extra
       border-top-style: solid
       border-top-width: 1px
-  
+
   .ts.buttons.attached
     border-top-style: solid
     border-top-width: 1px
-      
+
     &.top .button
       border-top: none
-      
-      
+
+
     &.bottom .button
       border-top: none
       border-bottom: none
-        
-  
+
+
   &.primary
     +card-theme(lighten($primaryColor, 40%), $primaryColor)
-  
+
   &.warning
     +card-theme(lighten($warningColor, 40%), $warningColor)
-  
+
   &.info
     +card-theme(lighten($infoColor, 40%), $infoColor)
-    
+
   &.inverted
     +card-theme(lighten($invertedColor, 40%), $invertedColor)
-  
+
   &.positive
     +card-theme(lighten($positiveColor, 40%), $positiveColor)
-  
+
   &.negative
     +card-theme(lighten($negativeColor, 40%), $negativeColor)
