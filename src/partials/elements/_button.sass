@@ -6,17 +6,17 @@
 
   @if not $textColor
     $textColor: lighten($color, 40%)
-  
-  
-  
+
+
+
   &:not(.transparent)
     background  : $color
     border-color: darken($color, 1%)
-    
+
   color      : $textColor
   //text-shadow: 0 .1rem .1rem auten($color, 3%)
-  
-  
+
+
   &.transparent
     color: $color
 
@@ -27,15 +27,26 @@
     text-shadow     : none
     color           : darken($color, 10%)
 
+  &.labeled.icon
+    .icon
+      background-color: darken($color, 5%)
+
+
+
+
   &:hover:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled)
     +poi
-    
+
+    &.labeled.icon
+      .icon
+        background-color: darken($color, 10%)
+
     &.transparent
       color: lighten($color, 8%)
-      
+
     .label
       //opacity: 0.9
-    
+
     &:not(.transparent)
       background-color: darken($color, 5%)
 
@@ -46,15 +57,20 @@
         opacity         : 1
         //background-color: transparent
 
-  
+
   &:active:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled),
   &.active:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled)
     +extend(no-ease)
     +extend(no-tap)
-    
+
+    &.labeled.icon
+      .icon
+        +extend(no-ease)
+        background-color: darken($color, 22%)
+
     &.transparent
       color: darken($color, 10%)
-    
+
     .label
       opacity: 1
 
@@ -63,26 +79,26 @@
       background-color: darken($color, 17%)
       border-color    : darken($color, 17%)
       //box-shadow      : inset 0 0 1rem 0 darken($color, 6%)
-    
+
       &.basic
         background-color: darken($color, 13%)
         border-color    : darken($color, 13%)
         //color           : darken($textColor, 13%)
         opacity     : 1
         box-shadow  : none
-    
-    
+
+
   &.raised
     box-shadow         : 0 .2rem .4rem 0 darken($color, 4%), 0 .2rem 1rem 0 darken($color, 4%)
     border-color       : darken($color, 2%)
     border-bottom-width: .1rem
-    
+
     &:active
       box-shadow: 0 .1rem .2rem 0 lighten($color, 5%), 0 .1rem .5rem 0 lighten($color, 5%)
-  
+
   &.loading
     +loader-color($textColor)
-  
+
   &[disabled="disabled"],
   &[disabled="true"]
   &[disabled],
@@ -94,7 +110,7 @@
 
 
 
-      
+
 
 =button-generator
   @for $i from 1 through $buttonAmount
@@ -102,36 +118,61 @@
       #{&}.#{nth($buttonSizes, $i)}
         +y-padding($padding * ($i / 5))
         +x-padding($padding * ($i / 2))
-        
-        
+
+
         $fontSize  : nth($buttonFontSizes, $i)
         $loaderSize: $fontSize * 1.2
-        
+
         min-width: $fontSize * 3
         font-size: $fontSize
- 
-      
-        &.icon
+
+
+        &.icon:not(.labeled)
           font-size: $fontSize + .2
           padding  : $padding / 1.2
-      
+
+        &.labeled.icon
+
+          +x-padding($fontSize + .2 + $padding / 1.2 + $padding * 2, x)
+
+
+
+
+          .icon
+            +absolute
+            +position(0, x, 0, 0)
+            +extend(ease)
+            padding  : $padding / 1.2
+            width: 1em
+            font-size: $fontSize + .2
+
+            &:before
+              +block
+              +absolute
+              +position(50%, x, x, x)
+              transform: translateY(-50%)
+
+          &.right
+            .icon
+              +position(0, 0, 0, x)
+
         &.compact
           +y-padding($padding * ($i / 6))
           +x-padding($padding * ($i / 3))
-      
+
         &.loading
           +loader-theme($loaderSize, .2rem)
-          
+
           &:before, &:after
             top: calc(50% - #{$loaderSize} / 2)
-            
-          
-            
+
+
+
 
 //**************************************
 //************   M A I N   *************
 //**************************************
-  
+
 .ts.button
   +relative
   +border-box
@@ -143,154 +184,157 @@
   +y-padding($padding * 0.8)
   +x-padding($padding * 2)
   +button-generator
-  
-  
-  //font-weight: 600
-  
+
+  overflow: hidden
+
+  font-weight: 600
+
   border-width: .1rem
   border-style: solid
- 
+
   text-decoration: none
-  
-  
+
+
   &:not(:last-child)
     margin-right: $margin / 2
-  
-  
+
+
   // Loading
   //
   //
-  
+
   &.loading
     +relative
     +loader-theme(1.9rem, .2rem)
     +loader-resource
-    
+
     color      : transparent !important
     text-shadow: none        !important
-    
+
     &:before,
     &:after
       top: calc(50% - 1.9rem / 2)
-  
+
   &.fluid
     width: 100%
-  
+
   &.compact
     +y-padding($padding * 0.6)
     +x-padding($padding * 1.8)
-    
-  
+
+
   // Icon
   //
   //
-  
-  &.icon
+
+  &.icon:not(.labeled)
     +padding
-    
+
     line-height: .1rem
     min-width: 0
-    
+
     .icon
       margin: 0 !important
-  
-  
-  
+
+
+
   // Circular
   //
   //
 
   &.circular
     border-radius: 10rem
-  
-  
+
+
   // Transparent
   //
   //
-  
+
   &.transparent
     background-color: transparent
     border          : none
-  
-  
-  
+
+
+
   // Pure
   //
   //
-  
+
   &.pure
     padding    : 0
     text-shadow: none !important
-  
 
-    
-  
-  
+
+
+
+
   // Labeled
   //
   //
-  
+
   &.labeled
-    +inline-flex
 
-    padding         : 0
-    border          : none
-    background-color: transparent
-    outline         : none
-    
-    .ts.button,
-    .ts.label
-      //+flex-center
+  //&.labeled
+  //  +inline-flex
+  //
+  //  padding         : 0
+  //  border          : none
+  //  background-color: transparent
+  //  outline         : none
+  //
+  //  .ts.button,
+  //  .ts.label
+  //    //+flex-center
+  //
+  //  .ts.label
+  //    text-shadow: none
+  //
+  //  &.left
+  //    .ts.label
+  //      border-right              : none
+  //      border-top-right-radius   : 0
+  //      border-bottom-right-radius: 0
+  //
+  //    .ts.button
+  //      border-top-left-radius   : 0
+  //      border-bottom-left-radius: 0
+  //
+  //  &:hover
+  //    background-color: transparent
+  //
+  //  &:active
+  //    background-color: transparent
+  //    box-shadow      : none
 
-    .ts.label
-      text-shadow: none
-    
-    &.left
-      .ts.label
-        border-right              : none
-        border-top-right-radius   : 0
-        border-bottom-right-radius: 0
-        
-      .ts.button
-        border-top-left-radius   : 0
-        border-bottom-left-radius: 0
-  
-    &:hover
-      background-color: transparent
-    
-    &:active
-      background-color: transparent
-      box-shadow      : none
 
-    
-  
-  
+
+
   //**************************************
   //**********   C O L O R S   ***********
   //**************************************
-  
+
   &.positive
     +button-theme($positiveColor, $positiveTextColor)
-    
+
   &.negative
     +button-theme($negativeColor, $negativeTextColor)
-    
+
   &.primary
     +button-theme($primaryColor, $primaryTextColor)
-    
+
   &.warning
     +button-theme($warningColor, $warningTextColor)
-    
+
   &.info
     +button-theme($infoColor, $infoTextColor)
-  
+
   &.basic.inverted
     +button-theme($invertedColor, $invertedTextColor)
     border-width: .2rem
-    
+
   &.inverted:not(.basic)
     +button-theme(#000, #CCC)
-      
+
 
 
 
@@ -302,49 +346,49 @@
 
 .ts.buttons
   +inline-flex
-  
+
   &.fluid
     width: 100%
-  
+
     .button
       width: 100%
-  
+
   > .button
     +flex
     +flex-content-center
     +x-margin(x, 0)
 
     border-radius  : 0
-    
-    
+
+
     &:first-child
       border-top-left-radius   : .4rem
       border-bottom-left-radius: .4rem
-      
-        
+
+
     &:last-child
-  
+
       border-top-right-radius   : .4rem
       border-bottom-right-radius: .4rem
-      
+
     &:first-child:not(:last-child)
       border-right: none
 
 
     &:not(:last-child):not(:first-child)
       border-right: none
-      
+
   &.attached
     width: 100%
-    
+
     .button
       width: 100%
 
-      
+
     &.top
       border-bottom-right-radius: 0px
       border-bottom-left-radius : 0px
-    
+
     &.bottom
       .button
         border-top-right-radius: 0px
