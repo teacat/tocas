@@ -85,7 +85,19 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
     +rwd-serious(mobile)
       display: initial !important
 
+  .column
+    &[class*="right floated"]
+      margin-left: auto
 
+    &[class*="left floated"]
+      margin-right: auto
+
+  &.horizontally.fitted
+    > .column:first-child
+      +x-padding(0, x)
+
+    > .column:last-child
+      +x-padding(x, 0)
 
   &.centered,
   .row.centered
@@ -107,6 +119,13 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
 
     flex-wrap: nowrap
     width: 100%
+
+    &.horizontally.fitted
+      > .column:first-child
+        +x-padding(0, x)
+
+      > .column:last-child
+        +x-padding(x, 0)
 
     &.doubling
       flex-wrap: wrap
