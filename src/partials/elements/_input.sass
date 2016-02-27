@@ -3,95 +3,105 @@
     @at-root
       #{&}.#{nth($inputSizes, $i)}
         +y-margin($padding)
-        
+
         input, textarea
           +y-padding($padding * ($i / 5))
           +x-padding($padding * ($i / 4))
 
           $fontSize  : nth($inputFontSizes, $i)
-  
+
           font-size: $fontSize
- 
+
+        &.icon
+          .icon, .fa
+            right: $padding * ($i / 4)
+
 
 .ts.inputs
 
   &.vertical
     +y-margin($margin)
-  
+
     .ts.input
       +y-margin(0)
-      
+
       input, textarea
         &:focus
           +relative
           z-index: 2
-          
-      
+
+
       &:first-child:not(:last-child)
         input, textarea
           border-bottom-right-radius: 0
           border-bottom-left-radius : 0
           border-bottom-style: none
-        
+
           &:focus
             border-bottom-style: solid
-            
-        
+
+
       &:not(:first-child):not(:last-child)
         input, textarea
           border-radius: 0
           border-bottom-style: none
-          
+
           &:focus
             border-bottom-style: solid
-        
+
       &:last-child:not(:first-child)
         input, textarea
           border-top-right-radius: 0
           border-top-left-radius : 0
 
-      
-   
+
+
 
 
 .ts.input
   +input-generator
-  +relative 
-  
+  +relative
+
   input, textarea
     +rd
     +border-box
     +normal
-    
+
     background-color: lighten($defaultColor, 35%)
     color    : $defaultTextColor
     border   : .1rem solid $defaultColor
     resize   : none
     padding  : $padding $padding * 1.3
-    
+
     &::-webkit-input-placeholder
       color      : rgba($defaultTextColor, 0.6)
       font-weight: normal
-      
+
     &:-moz-placeholder,
-    &:-ms-input-placeholder 
+    &:-ms-input-placeholder
       color      : rgba($defaultTextColor, 0.6)
       font-weight: normal
 
-    
+
     &:not(input)
       +y-padding($padding * 1)
       +x-padding($padding * 1.3)
 
-    
+
     &[disabled="disabled"],
     &[disabled="true"]
     &[disabled],
     &.disabled
       pointer-events: none
       opacity: 0.4
-  
-  
+
+  &.icon
+    .icon, .fa
+      +block
+      +absolute
+      +position(50%, x, x, x)
+      transform: translateY(-50%)
+
   &.disabled
     input, textarea
       pointer-events: none
@@ -101,40 +111,40 @@
   &.resizable
     input, textarea
       resize: both
-  
+
   &.fluid
     input, textarea
       width: 100%
-  
+
   &.transparent
     input, textarea
       border    : none
       background: transparent
-      
+
   &:not(.transparent)
     input, textarea
       transition: box-shadow 0.30s ease-in-out
       outline   : none
-  
+
     &.focus input[type=text],
     &.focus textarea,
-    input[type=text]:focus, 
+    input[type=text]:focus,
     textarea:focus
       box-shadow: 0 0 .5rem rgba(81, 203, 238, 1)
       border-color: #67D7FF
-  
-  
-  
+
+
+
   &.error
-    
+
     &.focus input[type=text],
     &.focus textarea,
-    input[type=text]:focus, 
+    input[type=text]:focus,
     textarea:focus
-      
+
       box-shadow: 0 0 .5rem rgba(#DE8F8B, 1)
       border-color: #FF9F9A
-      
+
     input, textarea
       //color: auten(#FFD9D7)
       background-color: #FDEBEA
