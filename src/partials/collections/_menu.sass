@@ -14,7 +14,8 @@
   //
   //
 
-  a.item
+  > a.item,
+  > .menu a.item
     &:hover
       +poi
       background : auten($color, 5%)
@@ -26,11 +27,12 @@
 
       background : auten($color, 10%)
 
-  .item
+  > .item,
+  > .menu .item
     background : $color
     color      : rgba(auten($color, 45%), 1)
 
-    .label
+    .label:not(.empty):not(.primary):not(.warning):not(.positive):not(.negative):not(.info)
       color     : auten($color, 45%)
       background: if(is_lighter($color), darken($color, 3%), darken($color, 3%))
       border    : none
@@ -40,14 +42,28 @@
       background: auten($color, 8%)
 
 
+    &.primary
+      background : $primaryColor
+      color      : $primaryTextColor
+
+    &.info
+      background : $infoColor
+      color      : $infoTextColor
+
+
+
+
 
   // NOT vertical
   //
   //
 
   &:not(.vertical)
-    .item
+    > .item,
+    > .menu .item
       border-color: darken($color, 10%)
+
+
 
 
 
@@ -56,13 +72,16 @@
   //
 
   &.vertical
-    .item
+    > .item,
+    > .menu .item
       border-top-color   : if(is_lighter($color), lighten($color, 1%), lighten($color, 2%))
       border-bottom-color: if(is_lighter($color), darken($color, 3%), darken($color, 3%))
 
       &:first-child
         border-top: none
 
+    > a.item,
+    > .menu a.item
       &:hover
         background      : auten($color, 1%)
         border-top-color: auten($color, 2%)
@@ -82,7 +101,8 @@
 
   &.pointing
 
-    .item:after
+    > .item:after,
+    > .menu .item:after
       border-color: darken($color, 10%)
 
   &.hidden
@@ -96,12 +116,14 @@
 
   &.pointing.secondary
 
-    .item
+    > .item,
+    > .menu .item
       background-color  : transparent
       border-right-width: 0
       border-left-width : 0
 
-    .item.active
+    > .item.active,
+    > .menu .item.active
       border-bottom: .2rem solid darken($color, 10%)
 
 
@@ -111,7 +133,8 @@
   //
 
   &.secondary:not(.pointing)
-    .item.active
+    > .item.active,
+    > .menu .item.active
       background: rgba(auten($color, 8%), 0.45)
 
 
@@ -173,7 +196,7 @@
 
   &.icon
 
-    .item
+    > .item
       +x-padding($padding * 1.5)
       font-size: 1.8rem
 
@@ -209,7 +232,7 @@
 
   &.borderless
     .menu
-      .item
+      > .item
         border: none !important
 
 
@@ -234,13 +257,20 @@
     background: none
 
 
+  &:not(.vertical).tabbed
+    background: none
+    border-top-width: 0
+    border-left-width: 0
+    border-right-width: 0
+    border-bottom-width: 1px
+
 
 
   //**************************************
   //***********   I T E M S   ************
   //**************************************
 
-  .item
+  > .item
     +extend(ease-less)
     +normal
     +relative
@@ -417,5 +447,5 @@
     +inline-block
     +no-overflow
 
-    .item
+    > .item
       border-right: none
