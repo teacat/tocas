@@ -5,72 +5,75 @@
   <i>Here comes another world.</i>
 </p>
 
+&nbsp;
+
+<p align="center">
+  <img src="http://i.imgur.com/WIICQyZ.png"/>
+</p>
 
 &nbsp;
 
-## TocasUI（Alpha 階段）
+## TocasUI
 
-TocasUI 是基於 SASS 和 CSS3 的元件框架，而**教學首頁正在製作中**。
+TocasUI 是基於 SASS 和 CSS3 的元件框架，可快速建立大型或小型網站的介面，
 
-你說 Logo 看不出來是 Tocas？很正常。
+其用法與 Bootstrap 差異甚多，Tocas UI 以不雜亂，有意義為主。
 
-&nbsp;
-
-## 為什麼是 TocasUI？
-
-與 Bootstrap 相比（甚至是最新的 Bootstrap 4），TocasUI更好於：
+**相關教學網站仍在製作中。**
 
 &nbsp;
 
-###更簡潔
+## 特色
 
-在 Bootstrap 中，你會需要為了更改顏色，而新增更多 CSS 來覆蓋原生設定，
+1. 更簡潔，沒有像 Bootstrap 那樣**雜亂**的樣式名稱。（如：`.m-l-1`, `.p-x-2`, `.p-a-3`）
 
-而 TocasUI 中，**你只需要新增一行更換顏色的指令即可**。（而且 TocasUI 會自動為其配色。）
+2. 以**意義**為樣式命名的主要精神。 
+
+3. 以支援行動裝置為**優先**。
+
+4. 更**加彈性的格線系統**，並達到 16 格線。 
+
+5. 可自訂元件顏色，甚至**只需一行指令**。
+
+6. 據有**回饋力**的動畫。
+
+7. 元件之間可交互使用。
 
 &nbsp;
 
-###可自訂顏色
+## 範例
 
-你隨時都可以變換元件的顏色，還可以為他們命名，
-
-**你只需要提供一個主顏色**，而 TocasUI 會為其自動配副色。
-
-
-&nbsp;
-
-###更有意義
-
-在 Bootstrap 中，你會遇到像這樣的按鈕
+Tocas UI 的樣式命名方式來自於 Semantic UI 的精神，以意義為主。
 
 ```html
-<!-- 按鈕 按鈕-資訊 按鈕-更大 -->
-<button class="btn btn-info btn-lg">
+<!-- Tocas 大的 主要 按鈕 -->
+<button class="ts big primary button"></button>
 ```
 
-而在 TocasUI 中，我們將**樣式以更有意義的方式命名**。
+讓我們看看 Bootstrap 的樣式命名方式。
 
 ```html
-<!-- Tocas 按鈕 資訊 更大 -->
-<button class="ts button info large">
+<!-- 按鈕 按鈕-大的 按鈕-主要 -->
+<button class="btn btn-lg btn-primary"></button>
 ```
 
 &nbsp;
 
-### 不會因為顏色而命名
+### 意猶未盡？
 
-有的樣式框架以 `.btn-red .btn-green .btn-blue` 方式命名紅、綠、藍顏色按鈕，
+讓我們在展示一些更進階的用法，讓你清楚了解 Tocas UI 和 Bootstrap 之間的差異。
 
-設想看看，你可能以前用 `.btn-green` 當作送出的按鈕，日後若要更換成藍色，不就需要全部更換成 `.btn-blue` 了麼？
+```html
+<nav class="ts menu">
+    <div class="header item">WebSiteName</div>
+    <div class="item">Home</div>
+    <div class="item">Page 1</div>
+    <div class="item">Page 2</div>
+    <div class="item">Page 3</div>
+</nav>
+```
 
-TocasUI 以「意義」命名：`positive negative info primary`，因此你只需要更換該意義的顏色即可。
-
-
-&nbsp;
-
-###沒有雜亂的樣式，而且更短
-
-在 Bootstrap 中，你很常看見為了美化介面，而冒出的一堆 `<div>`：
+而這是 Bootstrap。
 
 ```html
 <nav class="navbar navbar-default">
@@ -90,17 +93,49 @@ TocasUI 以「意義」命名：`positive negative info primary`，因此你只�
 </nav>
 ```
 
-而 TocasUI 中，**每個容器都據有意義，而且更簡短**。
+## 可自訂顏色、而且更簡單
 
-```html
-<nav class="ts menu">
-    <div class="header item">WebSiteName</div>
-    <div class="item">Home</div>
-    <div class="item">Page 1</div>
-    <div class="item">Page 2</div>
-    <div class="item">Page 3</div>
-</nav>
-```
+<p align="center">
+  <img src="http://i.imgur.com/78oACTY.png"/>
+</p>
+
+在 Bootstrap 中，你會需要為了更改顏色，而新增更多 CSS 來覆蓋原生設定，
+
+而 TocasUI 中，**你只需要新增一行更換顏色的指令即可**。（而且 TocasUI 會自動為其配色。）
+
+你隨時都可以變換元件的顏色，還可以為他們命名。
+
+&nbsp;
+
+## 更有意義
+
+在 Tocas UI 裡
+
+&nbsp;
+
+## 不會因為顏色而命名
+
+<p align="center">
+  <img src="http://i.imgur.com/hm4w6ug.png"/>
+</p>
+
+假如你以 `.btn-green` 當作送出的按鈕，
+
+日後若要更換成藍色，不就需要全部更換成 `.btn-blue` 了麼？
+
+TocasUI 以「意義」命名：`positive negative info primary`，因此你只需要更換該意義的顏色即可。
+
+&nbsp;
+
+## 沒有雜亂的樣式，而且更短
+
+<p align="center">
+  <img src="http://i.imgur.com/tNwh3kZ.png"/>
+</p>
+
+Tocas UI 內建了許多**意義類別**，例如你正在建立一個選單，
+
+加上 `.pointing` 就可以變成帶有指標的選單，諸如此類的類別。
 
 &nbsp;
 
@@ -118,11 +153,21 @@ TocasUI 以「意義」命名：`positive negative info primary`，因此你只�
 
 &nbsp;
 
-### 可以交互使用
+### 元件可以交互使用
 
-Bootstrap 本身的設計是**每個元件都獨立使用**，造成你沒辦法更好地呈獻你所要的，
+<p align="center">
+  <img src="http://i.imgur.com/iKl8Z7A.png"/>
+</p>
 
-而 TocasUI 則是在這點上**強化了交互使用**，例如：你可以在「卡片（card）」樣式中插入一個「導覽列（menu）」。
+<p align="center">
+  <img src="http://i.imgur.com/RYvH03X.png"/>
+</p>
+
+Bootstrap 本身的設計是**每個元件都獨立使用**，造成你**沒辦法更好地呈獻你所要的**，
+
+而 TocasUI 則是在這點上**強化了交互使用**，
+
+假設你將按鈕放在卡片中，Tocas UI **會自動讓按鈕更符合卡片樣式**。
 
 &nbsp;
 
