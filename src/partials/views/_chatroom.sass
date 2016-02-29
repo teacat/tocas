@@ -1,0 +1,198 @@
+.ts.chatroom
+  +basic-card
+  
+  max-width: 280px
+  
+  > .header
+    +flex
+    
+    background-color: #00ADEA
+    color: #FFF
+    font-size: 1.4rem
+    
+    > .title
+      +flex
+      +flex-row
+      +flex-items-center
+      +x-padding(.8em)
+      +y-padding($padding / 2)
+      
+      overflow: hidden
+      flex: 1
+      text-overflow: ellipsis
+      
+      > .label
+        +x-margin(x, .8em)
+    
+    
+    > .actions
+      +flex
+      +flex-row
+      font-size: 1.8rem
+
+      
+      > .item
+        +x-padding(.7em)
+        +y-padding($padding / 2)
+        
+        &:hover
+          +poi
+          +extend(ease)
+          background-color: darken(#00ADEA, 5%)
+        
+        &:active
+          +extend(no-ease)
+          background-color: darken(#00ADEA, 15%)
+          color: darken(#FFF, 5%)
+  
+  > .notification
+    +x-padding(.8em)
+    +y-padding($padding / 2)
+    
+    background: lighten(#EEE, 5%)
+    border-bottom: 1px solid darken(lighten(#EEE, 5%), 5%)
+    
+  
+  > .content
+    +padding
+    
+    overflow-y: scroll
+    
+    > .divider
+      text-align: center
+      font-weight: 600
+      margin-bottom: .4em
+    
+    > .message
+      +flex
+      +flex-row
+      +y-margin(x, .4em)
+
+    
+      
+        
+      
+      > .avatar
+        
+        img
+          +rd
+          height: 32px
+          width: 32px
+      
+
+      
+      > .content
+        +x-margin(.8em, 0)
+        
+        > p
+          +relative
+          +basic-card
+          +x-padding(.6em)
+          +y-padding(.3em)
+          +word-wrap
+          
+          font-size: 1.4rem
+          line-height: 1.6rem
+          
+          &:after
+            +block
+            +absolute
+            +position(5px, x, auto, -6px)
+            
+            width: 0
+            content: ""
+            border-width: 7px 7px 7px 0px
+            border-color: transparent #fff
+            border-style: solid
+            
+          &:before
+            +block
+            +absolute
+            +position(4px, x, auto, -8px)
+            
+            width: 0
+            content: ""
+            border-width: 8px 8px 8px 0
+            border-color: transparent lighten(#808080, 40%)
+            border-style: solid
+        
+      
+        > .meta
+          +x-margin(.6em, x)
+          font-size: 12px
+          opacity: .5
+          text-align: left
+        
+      
+      &.left
+      
+      &.right
+        +flex-row-reverse
+        
+        > .content
+          +x-margin(0, .8em)
+          
+          > p
+          
+            &:after
+              +block
+              +absolute
+              +position(5px, -6px, auto, auto)
+  
+              border-width: 7px 0px 7px 7px
+            
+            &:before
+              +block
+              +absolute
+              +position(4px, -8px, auto, auto)
+  
+              border-width: 8px 0px 8px 8px
+          
+          > .meta
+            +x-margin(x, .6em)
+            text-align: right
+            
+            
+  > .footer
+    +padding
+    +flex
+    +flex-row
+    
+    border-top: 1px solid darken(lighten(#EEE, 5%), 5%)
+    
+    > .input
+      +flex
+      +flex-row
+      +flex-items-center
+      +x-padding(x, $padding)
+      flex: 1
+      
+      .ts.input
+        margin: 0
+      
+      &:not(:first-child)
+        +x-padding($padding, $padding)
+      
+    > .actions
+      +flex
+      +flex-row
+      +flex-items-center
+      
+      font-size: 2rem
+      
+      > .item
+        +x-padding(.4em)
+        +y-padding($padding / 2)
+        
+        *
+          margin-right: 0
+        
+        &:hover
+          +poi
+          +extend(ease)
+          background-color: darken(#00ADEA, 5%)
+        
+        &:active
+          +extend(no-ease)
+          background-color: darken(#00ADEA, 15%)
+          color: darken(#FFF, 5%)
