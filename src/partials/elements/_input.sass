@@ -3,18 +3,43 @@
     @at-root
       #{&}.#{nth($inputSizes, $i)}
         +y-margin($padding)
-
+        
+        $fontSize  : nth($inputFontSizes, $i)
+        
         input, textarea
           +y-padding($padding * ($i / 5))
           +x-padding($padding * ($i / 4))
 
-          $fontSize  : nth($inputFontSizes, $i)
+          
 
           font-size: $fontSize
 
         &.icon
-          .icon, .fa
-            right: $padding * ($i / 4)
+
+          &:not(.left)
+           
+            input, textarea
+              +x-padding(x, ($padding * ($i / 4)) * 2 + $fontSize)
+            
+            .icon, .fa
+              font-size: $fontSize
+              right: $padding * ($i / 3)
+              
+              &.circular
+                right: calc(#{$padding * ($i / 3)} - .4em)
+            
+            
+          &.left
+            
+            input, textarea
+              +x-padding(($padding * ($i / 4)) * 2 + $fontSize, x)
+            
+            .icon, .fa
+              font-size: $fontSize
+              left: $padding * ($i / 3)
+              
+              &.circular
+                left: calc(#{$padding * ($i / 3)} - .4em)
 
 
 .ts.inputs
@@ -24,6 +49,7 @@
 
     .ts.input
       +y-margin(0)
+      +block
 
       input, textarea
         &:focus
@@ -61,6 +87,7 @@
 .ts.input
   +input-generator
   +relative
+  +inline-block
 
   input, textarea
     +rd
@@ -96,11 +123,40 @@
       opacity: 0.4
 
   &.icon
+
     .icon, .fa
       +block
       +absolute
       +position(50%, x, x, x)
       transform: translateY(-50%)
+      margin: 0
+    
+      &:not(.link)
+        pointer-events: none
+      
+      &.link
+        +extend(ease)
+        opacity: .7
+        
+        &:hover
+          +poi
+          opacity: .85
+        
+        &:active
+          +extend(no-ease)
+          opacity: 1
+        
+      &.circular
+        padding: .4em
+        border-radius: 100em
+        border: 1px solid #CCC
+        
+        &:before
+          line-height: 1px
+       
+          
+          
+    
 
   &.disabled
     input, textarea
@@ -113,6 +169,9 @@
       resize: both
 
   &.fluid
+    +block
+    width: 100%
+    
     input, textarea
       width: 100%
 
