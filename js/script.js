@@ -41,6 +41,14 @@ $(function()
     hljs.initHighlightingOnLoad();
     
     
+    setTimeout(function()
+    {
+        $('.hljs-tag').each(function(){
+          if($(this).children().length == 0){
+            $(this).css('word-spacing', '0px');
+          }
+        });
+    }, 500)
     
     $(document).click(function(event) { 
     if(!$(event.target).closest('.dropdown').length) {
@@ -195,4 +203,6 @@ $(function()
         
         
     })
+    
+    
 })
