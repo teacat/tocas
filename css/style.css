@@ -687,6 +687,9 @@ body {
   .ts.chatroom.translucent {
     background-color: rgba(255, 255, 255, 0.85);
     border-color: rgba(255, 255, 255, 0.3); }
+  .ts.chatroom.fluid {
+    max-width: 100%;
+    width: 100%; }
   .ts.chatroom > .header {
     background-color: #00ADEA;
     color: #FFF;
@@ -730,7 +733,7 @@ body {
     .ts.chatroom > .content > .divider {
       text-align: center;
       font-weight: 600;
-      margin-bottom: .4em; }
+      margin-bottom: .8em; }
     .ts.chatroom > .content > .message {
       flex-direction: row;
       margin-bottom: 0.4em; }
@@ -795,22 +798,24 @@ body {
         .ts.chatroom > .content > .message.right > .content {
           margin-left: 0;
           margin-right: 0.8em; }
-          .ts.chatroom > .content > .message.right > .content > p:after {
-            display: block;
-            position: absolute;
-            top: 5px;
-            right: -6px;
-            bottom: auto;
-            left: auto;
-            border-width: 7px 0px 7px 7px; }
-          .ts.chatroom > .content > .message.right > .content > p:before {
-            display: block;
-            position: absolute;
-            top: 4px;
-            right: -8px;
-            bottom: auto;
-            left: auto;
-            border-width: 8px 0px 8px 8px; }
+          .ts.chatroom > .content > .message.right > .content > p {
+            float: right; }
+            .ts.chatroom > .content > .message.right > .content > p:after {
+              display: block;
+              position: absolute;
+              top: 5px;
+              right: -6px;
+              bottom: auto;
+              left: auto;
+              border-width: 7px 0px 7px 7px; }
+            .ts.chatroom > .content > .message.right > .content > p:before {
+              display: block;
+              position: absolute;
+              top: 4px;
+              right: -8px;
+              bottom: auto;
+              left: auto;
+              border-width: 8px 0px 8px 8px; }
           .ts.chatroom > .content > .message.right > .content > .meta {
             margin-right: 0.6em;
             text-align: right; }
@@ -821,8 +826,9 @@ body {
     .ts.chatroom > .footer > .input {
       flex-direction: row;
       align-items: center;
-      padding-right: 0.8rem;
       flex: 1; }
+      .ts.chatroom > .footer > .input:not(:only-child) {
+        padding-right: 0.8rem; }
       .ts.chatroom > .footer > .input .ts.input {
         margin: 0; }
       .ts.chatroom > .footer > .input:not(:first-child) {
@@ -833,6 +839,7 @@ body {
       align-items: center;
       font-size: 2rem; }
       .ts.chatroom > .footer > .actions > .item {
+        border-radius: 4px;
         padding-left: 0.4em;
         padding-right: 0.4em;
         padding-top: 0.4rem;
@@ -841,10 +848,9 @@ body {
           margin-right: 0; }
         .ts.chatroom > .footer > .actions > .item:hover {
           cursor: pointer;
-          background-color: #009ad1; }
+          background-color: #f2f2f2; }
         .ts.chatroom > .footer > .actions > .item:active {
-          background-color: #00749e;
-          color: #f2f2f2; }
+          background-color: #d9d9d9; }
 
 .ts.grid {
   flex-direction: row;
@@ -5773,9 +5779,6 @@ p:not(:first-child) {
   .hljs * {
     font-weight: normal;
     font-family: 'Ubuntu Mono'; }
-
-.hljs-tag:empty {
-  word-spacing: 0px; }
 
 pre.ts.segment {
   margin-top: 0px;
