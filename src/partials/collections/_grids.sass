@@ -35,18 +35,17 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
     &[class*="#{nth($columnName, $i)} column"],
     & .row[class*="#{nth($columnName, $i)} column"]
       > .column:not(.row)
-        width  : 100% / $columnAmount * $i !important
+        width  : 100% / $i !important
 
   @for $i from 1 through $columnAmount
-    & .row.doubling[class*="#{nth($columnName, $i)} column"]
+    & .row.doubling[class*="#{nth($columnName, $i)} column"],
+    &.doubling[class*="#{nth($columnName, $i)} column"]
       > .column:not(.row)
         +rwd-serious(mobile)
           width  : if((100% / $columnAmount * $i) * 4 < 50%, (100% / $columnAmount * $i) * 4, 50%) !important
 
         +rwd-serious(tablet)
           width  : if((100% / $columnAmount * $i) * 2 < 50%, (100% / $columnAmount * $i) * 2, 50%) !important
-
-
 
 
 
