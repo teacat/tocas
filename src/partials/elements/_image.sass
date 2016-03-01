@@ -5,6 +5,16 @@
         width: nth($imageFontSizes, $i)
         height: auto
 
+      #{&}.#{nth($imageSizes, $i)}.squared
+        width: nth($imageFontSizes, $i)
+        height: nth($imageFontSizes, $i)
+        object-fit: cover
+
+      #{&}.#{nth($imageSizes, $i)}.covered.fluid
+        width: 100%
+        height: nth($imageFontSizes, $i)
+        object-fit: cover
+
 
 
 @for $i from 1 through $imageAmount
@@ -12,6 +22,11 @@
     .ts.images.#{nth($imageSizes, $i)} img
       width: nth($imageFontSizes, $i)
       height: auto
+
+    .ts.images.#{nth($imageSizes, $i)}.squared img
+        width: nth($imageFontSizes, $i)
+        height: nth($imageFontSizes, $i)
+        object-fit: cover
 
 .ts.images
 
@@ -22,66 +37,68 @@
 .ts.image:not(.label)
   +image-generator
   +block
-  
+
   max-width: 100%
+
+  &.covered
+    object-fit: cover
 
   &.hidden
     +none
-  
+
   &.disabled
     opacity: 0.3
-  
+
   &.avatar
     +x-margin(x, .4em)
     +inline-block
-    
+
     width : 2em
     height: 2em
     vertical-align: middle
-    
+
   &.bordered
     border: 1px solid $defaultColor
-  
+
   &.fluid
     +block
-    
+
     width : 100%
     height: auto
-  
+
   &.rounded
     +rd
 
   .ts.label
     +absolute
     top: $padding
-    
+
     &:not(.right)
       left: calc(-#{$padding} + (-#{$segmentBorderWidth} * 2))
-      
+
     &.right
       left: calc(100% + #{$padding} + #{$segmentBorderWidth} * 2)
 
   &.centered
     margin-left : auto
     margin-right: auto
-    
+
   &.circular
     border-radius: 100rem
-  
+
   &.centered
     text-align: center
-  
+
   &.spaced
     +x-margin(.8em)
     +inline-block
-  
+
   &.aligned
     +inline-block
-  
+
     &.top
       vertical-align: top
     &.bottom
       vertical-align: bottom
     &.middle
       vertical-align: middle
-    
