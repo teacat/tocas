@@ -1,7 +1,12 @@
 .ts.chatroom
   +basic-card
   
+  
   max-width: 280px
+  
+  &.fluid
+    max-width: 100%
+    width: 100%
   
   > .header
     +flex
@@ -61,7 +66,7 @@
     > .divider
       text-align: center
       font-weight: 600
-      margin-bottom: .4em
+      margin-bottom: .8em
     
     > .message
       +flex
@@ -132,8 +137,10 @@
         > .content
           +x-margin(0, .8em)
           
-          > p
           
+          > p
+            float: right
+            
             &:after
               +block
               +absolute
@@ -164,8 +171,10 @@
       +flex
       +flex-row
       +flex-items-center
-      +x-padding(x, $padding)
       flex: 1
+      
+      &:not(:only-child)
+        +x-padding(x, $padding)
       
       .ts.input
         margin: 0
@@ -181,6 +190,7 @@
       font-size: 2rem
       
       > .item
+        +rd
         +x-padding(.4em)
         +y-padding($padding / 2)
         
@@ -190,9 +200,9 @@
         &:hover
           +poi
           +extend(ease)
-          background-color: darken(#00ADEA, 5%)
+          background-color: darken(#FFF, 5%)
         
         &:active
           +extend(no-ease)
-          background-color: darken(#00ADEA, 15%)
-          color: darken(#FFF, 5%)
+          background-color: darken(#FFF, 15%)
+          
