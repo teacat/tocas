@@ -8,7 +8,7 @@
   background          : $color
   border-color: darken($color, 5%)
 
-
+  $thisParent: '.ts.menu'
 
   // Item
   //
@@ -16,16 +16,19 @@
 
   > a.item,
   > .menu a.item
-    &:hover
-      +poi
-      background : auten($color, 5%)
-      color      : rgba(auten($color, 45%), 1)
 
-    &:active
-      +extend(no-ease)
-      +extend(no-tap)
+      &:hover
+        +poi
 
-      background : auten($color, 10%)
+        +if-parent($thisParent, ':not(.tabbed)')
+          background : auten($color, 5%)
+          color      : rgba(auten($color, 45%), 1)
+
+      &:active
+        +extend(no-ease)
+        +extend(no-tap)
+
+        background : auten($color, 10%)
 
   > .item,
   > .menu .item
@@ -264,6 +267,24 @@
     border-right-width: 0
     border-bottom-width: 1px
 
+    & .item
+      +rd
+
+      &:first-child:not(:last-child)
+        border-bottom-left-radius: 0
+        border-bottom-right-radius: 0
+
+      &:not(:last-child):not(:first-child)
+        border-bottom-left-radius: 0
+        border-bottom-right-radius: 0
+
+      &:last-child
+        border-bottom-left-radius: 0
+        border-bottom-right-radius: 0
+
+      &:not(.active)
+        background-color: transparent
+        border: none
 
 
   //**************************************
