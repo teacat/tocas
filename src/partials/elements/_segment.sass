@@ -31,18 +31,21 @@
     clear  : both
     visibility: hidden
 
+  &.fitted
+    padding: 0
+
   &.attached
 
     &.bottom
       +y-margin(0, x)
-      
+
       border-top-left-radius: 0
       border-top-right-radius: 0
       border-top-width: 1px
 
     &.top
       +y-margin(x, 0)
-      
+
       border-bottom-left-radius: 0
       border-bottom-right-radius: 0
       border-bottom-width: 1px
@@ -84,8 +87,9 @@
 
 
 .ts.segments
+  font-size: 0
 
-  > .ts.segment
+  &:not(.horizontal) > .ts.segment
 
     &:first-child:not(:last-child)
       margin-bottom: 0
@@ -106,3 +110,22 @@
       margin-top: 0
       border-top-right-radius: 0
       border-top-left-radius : 0
+
+  &.horizontal > .ts.segment
+    +inline-block
+
+    &:first-child:not(:last-child)
+      border-right: none
+      border-top-right-radius: 0
+      border-bottom-right-radius : 0
+
+    &:not(:last-child):not(:first-child)
+      border-right: none
+      border-top-right-radius   : 0
+      border-top-left-radius    : 0
+      border-bottom-right-radius: 0
+      border-bottom-left-radius : 0
+
+    &:last-child
+      border-top-left-radius: 0
+      border-bottom-left-radius : 0
