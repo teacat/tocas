@@ -98,6 +98,12 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
     > .column:last-child
       +x-padding(x, 0)
 
+  //&.vertically.fitted
+  //  +y-margin(-#{$margin * 1.8}, -#{($margin * 1.8) * 2})
+
+
+
+
   &.centered,
   .row.centered
     +flex-content-center
@@ -119,7 +125,7 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
     flex-wrap: nowrap
     width: 100%
 
-    &.horizontally.fitted
+    &[class*="horizontally fitted"]
       > .column:first-child
         +x-padding(0, x)
 
@@ -132,6 +138,7 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
   > .column:not(.row),
   > .row .column:not(.row)
     //+block
+    +relative
     +border-box
     padding-left : $padding / 2
     padding-right: $padding / 2
@@ -158,6 +165,10 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
       padding-right: $padding * 1.8
 
   +column-generator
+
+  &[class*="columns fitted"]
+    > .column:not(.row)
+      margin: 0
 
   &.stackable
     > .column:not(.row)
