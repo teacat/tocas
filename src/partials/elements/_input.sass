@@ -3,43 +3,45 @@
     @at-root
       #{&}.#{nth($inputSizes, $i)}
         +y-margin($padding)
-        
+
         $fontSize  : nth($inputFontSizes, $i)
-        
+
         input, textarea
           +y-padding($padding * ($i / 5))
           +x-padding($padding * ($i / 4))
 
-          
+
 
           font-size: $fontSize
 
         &.icon
 
           &:not(.left)
-           
+
             input, textarea
               +x-padding(x, ($padding * ($i / 4)) * 2 + $fontSize)
-            
+
             .icon, .fa
               font-size: $fontSize
               right: $padding * ($i / 3)
-              
+
               &.circular
                 right: calc(#{$padding * ($i / 3)} - .4em)
-            
-            
+
+
           &.left
-            
+
             input, textarea
               +x-padding(($padding * ($i / 4)) * 2 + $fontSize, x)
-            
+
             .icon, .fa
               font-size: $fontSize
               left: $padding * ($i / 3)
-              
+
               &.circular
                 left: calc(#{$padding * ($i / 3)} - .4em)
+
+
 
 
 .ts.inputs
@@ -80,8 +82,20 @@
           border-top-right-radius: 0
           border-top-left-radius : 0
 
+=input-theme($color, $textColor)
+  background-color: $color
+  color           : $textColor
+  border-color    : $defaultColor
 
+  &::-webkit-input-placeholder
+    color: rgba($textColor, 0.6)
 
+  &:-moz-placeholder,
+  &:-ms-input-placeholder
+    color: rgba($textColor, 0.6)
+
+  &:hover
+    border-color: darken($defaultColor, 10%)
 
 
 .ts.input
@@ -93,20 +107,18 @@
     +rd
     +border-box
     +normal
+    +input-theme(lighten($defaultColor, 35%), $defaultTextColor)
 
-    background-color: lighten($defaultColor, 35%)
-    color    : $defaultTextColor
-    border   : .1rem solid $defaultColor
+    border-width: .1rem
+    border-style: solid
     resize   : none
     padding  : $padding $padding * 1.3
 
     &::-webkit-input-placeholder
-      color      : rgba($defaultTextColor, 0.6)
       font-weight: normal
 
     &:-moz-placeholder,
     &:-ms-input-placeholder
-      color      : rgba($defaultTextColor, 0.6)
       font-weight: normal
 
 
@@ -130,33 +142,33 @@
       +position(50%, x, x, x)
       transform: translateY(-50%)
       margin: 0
-    
+
       &:not(.link)
         pointer-events: none
-      
+
       &.link
         +extend(ease)
         opacity: .7
-        
+
         &:hover
           +poi
           opacity: .85
-        
+
         &:active
           +extend(no-ease)
           opacity: 1
-        
+
       &.circular
         padding: .4em
         border-radius: 100em
         border: 1px solid #CCC
-        
+
         &:before
           line-height: 1px
-       
-          
-          
-    
+
+
+
+
 
   &.disabled
     input, textarea
@@ -171,7 +183,7 @@
   &.fluid
     +block
     width: 100%
-    
+
     input, textarea
       width: 100%
 
