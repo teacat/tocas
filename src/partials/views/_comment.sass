@@ -4,38 +4,38 @@
 //
 //  .comment
 //    margin-top: $originalSize / 2
-//    
+//
 //    .avatar
 //      width: $imgSize
-//    
+//
 //    @if($sameSize == false)
 //      $imgSize: 36px
-//    
+//
 //    .content
 //      line-height: $imgSize / 2
 //      margin-left: $originalSize + $margin
-//      
+//
 //      .author
 //        font-size: $imgSize / 2.2
 //        color: darken($color, 3%)
-//        
+//
 //      .metadata
 //        font-size: $imgSize / 2.5
 //        color: auten($color, 30%)
-//        
+//
 //      .text
 //        line-height: $imgSize / 2
 //        font-size: $imgSize / 2.5
 //        color: $color
-//      
+//
 //      .actions
 //        line-height: $imgSize / 1.3
 //        font-size: $imgSize / 2.6
 //        color: auten($color, 20%)
-//        
+//
 //      .buttons
 //        margin-top: $imgSize / 10
-//      
+//
 //        .ts.button
 //          line-height: $imgSize / 2.8
 
@@ -44,65 +44,67 @@
   $avatarSize: 3.2rem
 
   .comment
-    
+
     .avatar
       width: $avatarSize
-    
-    .content
+
+    .avatar + .content
       margin-left: $avatarSize + $margin * 1.3
-      
+
+    .content
+
       .author
         color: auten($color, 55%)
-        
+
       .metadata, .metadata *
         color: auten($color, 35%)
-        
+
       .text
         color: auten($color, 50%)
-      
+
       .actions, .actions *
         color: auten($color, 35%)
-        
+
       .buttons
         margin-top: $margin
-      
+
         .ts.button
           line-height: $margin
-      
+
       .reply
         .ts.input
           textarea, input
             padding-top: $avatarSize / 5
             border-color: auten($color, 20%)
-  
+
 
 .ts.comments
   +comment-theme
-  
+
   .comment
     +block
     margin-top: $margin
     margin-bottom: $margin / 2.5
-    
+
     &:first-child
       margin-top: 0px
-    
-    
+
+
     .comments
       +y-margin($margin, x)
-  
+
     .avatar
       float: left
       margin-top: $margin / 2.5
-    
+
       img
         +rd
         max-width : 100%
         max-height: 100%
-        
+
     > .content
       +block
-      
+
       line-height: $margin * 1.5
 
       .author
@@ -110,54 +112,54 @@
         +normal
         +medium-weight
         +x-margin(x, $margin / 2)
-        
+
         line-height: $margin * 2.5
-      
+
       .metadata
         +small
         +inline-block
-        
+
         .list
           +small
-        
+
         > *:not(.list)
           +x-margin(x, $margin)
-          
+
           &:last-child
             +x-margin(x, 0)
-      
+
       .text.inline + .metadata
         +block
-        
+
       .text + .metadata
         margin-top: $margin / 2
 
-      
+
       .text
         +normal
-        
+
         line-height: $margin * 2.5
 
-        
+
         &.inline
           +inline
-        
-        
+
+
       .actions
         +small
-        
+
         margin-top: $margin / 2
-      
+
         > *:not(.list)
           +x-margin(x, $margin)
-          
+
           &:last-child
             +x-margin(x, 0)
-      
-      
+
+
       .reply
         padding-top: $margin / 2.5
-      
+
         .ts.input
           textarea, input
             +normal
