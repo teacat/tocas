@@ -5,12 +5,12 @@
 
   background-color: $color
   border: .1rem solid darken($color, 2%)
-  
+
   color: $textColor
-  
+
   .icon, .fa
     color: $textColor
-  
+
   &.image
     &:hover
       +extend(ease)
@@ -20,16 +20,16 @@
     box-shadow: 0 .2rem .4rem 0 darken($color, 4%), 0 .2rem 1rem 0 darken($color, 4%)
     border: .1rem solid darken($color, 2%)
     border-bottom-width: .1rem
-  
+
   .detail
     background-color: darken($color, 8%)
     color: rgba($textColor, 0.9)
 
   &.empty
-  
+
     &.triangle
       border-bottom-color: $color
-  
+
   &.ribbon
     &:not(.right):after
       border-right-color: darken($color, 8%)
@@ -42,9 +42,9 @@
       #{&}.#{nth($labelSizes, $i)}
         +y-padding($padding * ($i / 20))
         +x-padding($padding * ($i / 8))
-        
+
         font-size: nth($labelFontSizes, $i)
-     
+
 
 
 .ts.label
@@ -62,28 +62,28 @@
   font-weight: 600
   line-height: 1.35em
   vertical-align: top
-  
+
   &.positive
     +label-theme($positiveColor, $positiveTextColor)
-  
+
   &.negative
     +label-theme($negativeColor, $negativeTextColor)
-  
+
   &.warning
     +label-theme($warningColor, $warningTextColor)
-    
+
   &.info
     +label-theme($infoColor, $infoTextColor)
-    
+
   &.inverted
     +label-theme($invertedColor, $invertedTextColor)
-  
+
   &.primary
     +label-theme($primaryColor, $primaryTextColor)
-  
+
   &:not(.empty):empty
     display: none
-  
+
   &.floating
     +absolute
     +y-padding($padding / 4)
@@ -93,52 +93,52 @@
   &.ribbon
     +relative
     +no-wrap
-    
-    
+
+
     left: calc((-#{$padding} + -#{$padding} * 2) + ((-#{$padding} / 2) + #{$segmentBorderWidth}))
-    
+
     &:not(.right)
       +x-padding($padding * 3 + $segmentBorderWidth * 2, x)
       border-top-left-radius: 0
       border-bottom-left-radius: 0
-    
+
     &.right
       +x-padding(x, $padding * 3 + $segmentBorderWidth * 2)
       left: calc(100% + (#{$padding} + #{$padding} * 2) + ((#{$padding} / 2) - #{$segmentBorderWidth}))
       transform: translateX(-100%)
-      
+
       border-top-right-radius: 0
       border-bottom-right-radius: 0
-    
+
     &:not(.right):after
       position: absolute
       content: ''
       top: calc(100% + .1rem)
-      left: calc(0rem - #{$segmentBorderWidth})
+      left: -1px
       background-color: transparent !important
       border-style: solid
       border-width: 0 1rem 1rem 0
       border-bottom-color: transparent
       width: 0
       height: 0
-    
+
     &.right:after
       position: absolute
       content: ''
       top: calc(100% + .1rem)
-      right: calc(0rem - #{$segmentBorderWidth})
+      right: -1px
       background-color: transparent !important
       border-style: solid
       border-width: 1rem 1rem 0 0
       border-right-color: transparent
       width: 0
       height: 0
-  
-  
+
+
   &.circular:not(.empty)
     +inline-block
     padding: $padding / 2
-    
+
     border-radius: 10rem
     min-width    : 2em
     line-height  : 1em
@@ -154,25 +154,25 @@
   &.right.icon
     .icon, .fa
       +x-margin($margin, 0)
-  
-  
-  
-  
+
+
+
+
   &.empty
     +inline-block
-  
+
     &.circular
       border-radius: 10rem
       padding: $padding / 2
       height : 1em
       width  : 1em
-    
+
     &.square
       border-radius: 0
       padding: $padding / 2
       height : 1em
       width  : 1em
-    
+
     &.triangle
       border-radius: 0
       border-top: none
@@ -182,9 +182,9 @@
       border-right: 0.5em solid transparent
       border-bottom-width: 1em
       border-bottom-style: solid
-      
-  
-  
+
+
+
 
   .detail
     +inline-flex
@@ -197,14 +197,14 @@
     margin-bottom: -$margin / 2
     margin-right : -$margin
     height: 2em
-    
+
     &:empty
       +none
 
     &:last-child
       border-top-right-radius: .4rem
       border-bottom-right-radius: .4rem
-   
+
   &.image
     img
       margin-top   : -$margin / 2
@@ -214,51 +214,51 @@
       height       : 2em
       border-top-left-radius: .4rem
       border-bottom-left-radius: .4rem
-    
+
     &:hover
       +poi
 
-      
-   
-   
-    
+
+
+
+
   &.attached
     +absolute
-    
+
     &.bottom
       bottom: 0
 
     &.top
       top: 0
-    
+
     &.left
       left: 0
-    
+
     &.right
       right: 0
-    
+
     &.top.left
       border-top-right-radius  : 0
       border-top-left-radius   : 0
       border-bottom-left-radius: 0
-    
+
     &.top.right
       border-top-right-radius   : 0
       border-top-left-radius    : 0
       border-bottom-right-radius: 0
-      
+
     &.bottom.left
       border-bottom-right-radius: 0
       border-bottom-left-radius : 0
       border-top-left-radius    : 0
-    
+
     &.bottom.right
       border-bottom-right-radius: 0
       border-bottom-left-radius : 0
       border-top-right-radius   : 0
-    
-  
-  
-  
+
+
+
+
   &.basic
     background-color: transparent
