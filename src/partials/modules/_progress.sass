@@ -1,0 +1,111 @@
+=progress-theme($color, $textColor: #FFF)
+  
+  color: $textColor
+  
+  .bar
+    color: $textColor
+    background: $color
+
+  &.indeterminate
+    background-image: linear-gradient(135deg, auten($color, 5%) 25%, auten($color, 1%) 25%, auten($color, 1%) 50%, auten($color, 5%) 50%, auten($color, 5%) 75%, auten($color, 1%) 75%, auten($color, 1%) 100%)
+    text-shadow: 0 1px 1px darken($color, 8%)
+    
+  &.active
+    .bar:after
+      background: auten($color, 15%)
+
+
+=progress-generator
+  @for $i from 1 through $progressAmount
+    @at-root
+      #{&}.#{nth($progressSizes, $i)}
+      
+        $fontSize  : nth($progressFontSizes, $i)
+        
+        
+        .bar
+          
+          +y-padding($padding * ($i / 5))
+          +x-padding($padding * ($i / 4))
+          //height: $fontSize
+        
+        &.indeterminate
+          +y-padding($padding * ($i / 5))
+          +x-padding($padding * ($i / 4))
+
+
+.ts.progress
+  +rd
+  +block
+  +relative
+  +border-box
+  +no-overflow
+  +progress-generator
+  +progress-theme($defaultColor, $defaultTextColor)
+  
+  width: 100%
+  border: 1px solid #EEE
+
+  &.positive
+    +progress-theme($positiveColor, $positiveTextColor)
+  
+  &.warning
+    +progress-theme($warningColor, $warningTextColor)
+  
+  &.negative
+    +progress-theme($negativeColor, $negativeTextColor)
+  
+  &.fluid
+    border-radius: 0
+    border: none
+  
+  .bar
+    +relative
+    +border-box
+    text-align: right
+    width: 30%
+    max-width: 100%
+    
+    &:after
+      content: '\200B'
+
+
+  &.active
+
+    .bar:after
+      +absolute
+      +position(0, x, 0, 0)
+      
+      content: '\200B'
+      
+      animation: process-active 2s ease infinite
+      @keyframes process-active
+        from
+          opacity: .8
+          width: 0%
+        to
+          opacity: 0
+          width: 100%
+
+
+
+  
+  &.indeterminate
+    +flex
+    +flex-items-center
+    +flex-content-center
+    
+    &:after
+      content: '\200B'
+      
+    .bar
+      +none
+      
+      
+    background-size: 40px 40px
+    animation: process-bar-animation 2s linear 0s infinite
+    @keyframes process-bar-animation
+      from
+        background-position: 0px
+      to
+        background-position: 40px
