@@ -1,22 +1,22 @@
 =message-theme($color: #808080, $bgColor: #F5F5F5)
   +basic-card($color, $bgColor)
-  
+
 
   //text-shadow: 0 .1rem .5rem rgba(darken($color, 3%), 0.3)
-  
+
 =message-generator
   @for $i from 1 through $messageAmount
     @at-root
       #{&}.#{nth($messageSizes, $i)}
         +y-padding($padding * ($i / 5))
         +x-padding($padding * ($i / 2))
-        
+
         font-size: nth($messageFontSizes, $i)
-        
+
         .header
           font-size: nth($messageFontSizes, $i) + 0.2
-  
-  
+
+
 .ts.message
   +rd
   +relative
@@ -24,83 +24,94 @@
   +x-padding($padding * 1.5)
   +message-theme
   +message-generator
-  
+  +border-box
+
   &:not(:first-child)
     +y-margin($margin)
-  
+
   &.icon
     +flex
     //+flex-middle
-    
+
     .icon, .fa
       +x-margin(x, $margin * 2)
       font-size: 5rem
-      
-      
+
+
     .content
       +flex
       //+flex-middle
       +flex-column
-  
-  
-  
-  
-  
-  
-      
+
+
+
+
+
+
+
   &.dismissable
     +x-padding(x, $padding * 1.8 + $padding * 1.5)
-  
+
     .close
       opacity: 0.6
-        
+
       &:before
         +large
         +absolute
         +position($padding * 2.1, $padding * 1.5, x, x)
         +border-box
-  
+
         line-height: 0rem
-        
+
         content: '✖'
-      
+
       &:hover
         opacity: 0.8
-        
+
       &:active
         opacity: 1
-  
+
   &.compact
     +inline-block
-  
-  
+
+
   .header
     +large
     +medium-weight
-  
+
   .list
     li
       +y-margin($margin, x)
-  
-  
+
+
   &.hidden
     +none
 
-  
+
   &.primary
     +message-theme($primaryTextColor, $primaryColor)
-  
+
   &.warning
     +message-theme($warningTextColor, $warningColor)
-    
 
 
-    
+
+
   &.info
     +message-theme($infoTextColor, $infoColor)
-  
+
   &.negative
     +message-theme($negativeTextColor, $negativeColor)
-  
+
   &.positive
     +message-theme($positiveTextColor, $positiveColor)
+
+  &.fluid
+    +flex
+    +flex-items-center
+    +flex-content-center
+
+    width: 100%
+    margin: 0
+    border: none
+    border-radius: 0
