@@ -1,13 +1,13 @@
 =loader-theme($size: 3.6rem, $borderSize: .3rem, $color: #999)
-  
-  
-  
+
+
+
   &:before,
   &:after
     height: $size
     width : $size
-    
-  
+
+
   &:before
     border-width: $borderSize
     border-style: solid
@@ -30,39 +30,39 @@
 
 =loader-resource
 
-  
+
   &:before,
   &:after
     +border-box
     +absolute
     +position(0, 0, x, 0)
     +margin-center
-    
+
     content: ' '
     border-radius: 50%
-    
+
   &:before
     opacity: 0.5
     animation: spin 1s infinite linear
-    
-    
+
+
   &:after
     border-bottom: .5rem solid transparent
     border-left  : .5rem solid transparent
     border-right : .5rem solid transparent
 
     animation: spin 0.6s infinite linear
-  
+
   &.indeterminate:after,
   &.indeterminate:before
     animation: spin2 1s infinite linear
-  
+
     @keyframes spin2
       from
         transform: rotate(360deg)
       to
         transform: rotate(0deg)
-        
+
     @keyframes spin
       from
         transform: rotate(0deg)
@@ -86,35 +86,35 @@
   @for $i from 1 through $loaderAmount
     @at-root
       #{&}.#{nth($loaderSizes, $i)}
-        
+
         $fontSize  : nth($loaderFontSizes, $i)
         $loaderSize: if($i < 4, $fontSize + $i / 5, $fontSize + $i / 2)
         $borderSize: if($i < 4, $i / 10 + rem, $i / 15 + rem)
-        
+
         +loader-theme($loaderSize, $borderSize)
-        
+
         font-size: $fontSize
         min-width: $loaderSize
         height   : $loaderSize
-        
+
         &.inline
-          
+
           &.text
             padding-top: $loaderSize + $padding * 1.5
             height     : $fontSize
-            
+
             &:empty
               padding-top: 0
               height     : $loaderSize
-              
-        
+
+
         &:not(.inline)
-          
+
           +position(calc(50% - #{$loaderSize} / 2), x, x, calc(50% - #{$loaderSize} / 2))
-          
+
           &.text
             +position(calc(50% - (#{$loaderSize} + #{$fontSize} + #{$padding}) / 2), x, x, calc(50% - #{$loaderSize} / 2))
-            
+
             height     : $fontSize
             max-width  : $loaderSize
             padding-top: $loaderSize + $padding
@@ -128,16 +128,20 @@
   +loader-generator
   +absolute
   +block
-  
+
   height: 36px
   min-width: 36px
   text-align: center
 
+  &.inverted
+    +loader-color($invertedTextColor)
+
+
   &:not(.active)
     +none
- 
- 
- 
+
+
+
   &.inline
     +relative
     +inline-block
@@ -148,10 +152,10 @@
     +flex-all-center
     white-space: nowrap
 
-  
+
   &.centered
     +block
     margin: 0px auto
-    
 
-  
+
+
