@@ -10,15 +10,15 @@
   @if $type == mobile
     @media (max-width: $rwd-mobile)
       @content
-      
+
   @else if $type == tablet
     @media (min-width: $rwd-tablet-min)
       @content
-      
+
   @else if $type == computer
     @media (min-width: $rwd-computer-min)
       @content
-      
+
   @else if $type == large
     @media (min-width: $rwd-large-min)
       @content
@@ -28,15 +28,15 @@
   @if $type == mobile
     @media (max-width: $rwd-mobile)
       @content
-      
+
   @else if $type == tablet
     @media (min-width: $rwd-tablet-min) and (max-width: $rwd-tablet-max)
       @content
-      
+
   @else if $type == computer
     @media (min-width: $rwd-computer-min) and (max-width: $rwd-computer-max)
       @content
-      
+
   @else if $type == large
     @media (min-width: $rwd-large-min)
       @content
@@ -122,8 +122,8 @@
     +none
   +rwd(large)
     +none
-    
-[class*="tablet only"]:not(.mobile.or)
+
+[class*="tablet only"]:not([class*="mobile or"])
   +rwd(mobile)
     +none
   +rwd(computer)
@@ -139,7 +139,11 @@
   +rwd-serious(large)
     +none
 
-[class*="large device only"]
+[class*="tablet or large device only"]
+  +rwd-serious(mobile)
+    +none
+
+[class*="large device only"]:not([class*="tablet or"])
   +rwd-serious(mobile)
     +none
   +rwd-serious(tablet)
