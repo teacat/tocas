@@ -6,7 +6,7 @@
 
         $fontSize  : nth($inputFontSizes, $i)
 
-        input, textarea
+        input, textarea, div[contenteditable]
           +y-padding($padding * ($i / 5))
           +x-padding($padding * ($i / 4))
 
@@ -18,7 +18,7 @@
 
           &:not(.left)
 
-            input, textarea
+            input, textarea, div[contenteditable]
               +x-padding(x, ($padding * ($i / 4)) * 2 + $fontSize)
 
             .icon, .fa
@@ -31,7 +31,7 @@
 
           &.left
 
-            input, textarea
+            input, textarea, div[contenteditable]
               +x-padding(($padding * ($i / 4)) * 2 + $fontSize, x)
 
             .icon, .fa
@@ -53,14 +53,14 @@
       +y-margin(0)
       +block
 
-      input, textarea
+      input, textarea, div[contenteditable]
         &:focus
           +relative
           z-index: 2
 
 
       &:first-child:not(:last-child)
-        input, textarea
+        input, textarea, div[contenteditable]
           border-bottom-right-radius: 0
           border-bottom-left-radius : 0
           border-bottom-style: none
@@ -70,7 +70,7 @@
 
 
       &:not(:first-child):not(:last-child)
-        input, textarea
+        input, textarea, div[contenteditable]
           border-radius: 0
           border-bottom-style: none
 
@@ -78,21 +78,23 @@
             border-bottom-style: solid
 
       &:last-child:not(:first-child)
-        input, textarea
+        input, textarea, div[contenteditable]
           border-top-right-radius: 0
           border-top-left-radius : 0
 
 =input-theme($color, $textColor)
   background-color: $color
   color           : $textColor
-  border-color    : $defaultColor
+  border-color    : darken($color, 10%)
 
   &::-webkit-input-placeholder
     color: rgba($textColor, 0.6)
-
-  &:-moz-placeholder,
-  &:-ms-input-placeholder
+  
+  
+  
+  &:empty:before
     color: rgba($textColor, 0.6)
+
 
   &:hover
     border-color: darken($defaultColor, 10%)
@@ -102,8 +104,12 @@
   +input-generator
   +relative
   +inline-block
+  
+  div[contenteditable]:empty:before
+    cursor: text
+    
 
-  input, textarea
+  input, textarea, div[contenteditable]
     +rd
     +border-box
     +normal
@@ -171,29 +177,29 @@
 
 
   &.disabled
-    input, textarea
+    input, textarea, div[contenteditable]
       pointer-events: none
       opacity: 0.4
 
 
   &.resizable
-    input, textarea
+    input, textarea, div[contenteditable]
       resize: both
 
   &.fluid
     +block
     width: 100%
 
-    input, textarea
+    input, textarea, div[contenteditable]
       width: 100%
 
   &.transparent
-    input, textarea
+    input, textarea, div[contenteditable]
       border    : none
       background: transparent
 
   &:not(.transparent)
-    input, textarea
+    input, textarea, div[contenteditable]
       transition: box-shadow 0.30s ease-in-out
       outline   : none
 
@@ -201,10 +207,12 @@
     &.focus input[type=email],
     &.focus input[type=password],
     &.focus textarea,
+    &.focus div[contenteditable],
     input[type=text]:focus,
     input[type=email]:focus,
     input[type=password]:focus,
-    textarea:focus
+    textarea:focus,
+    div[contenteditable]:focus
       box-shadow: 0 0 .5rem rgba(81, 203, 238, 1)
       border-color: #67D7FF
 
@@ -216,14 +224,16 @@
     &.focus input[type=email],
     &.focus input[type=password],
     &.focus textarea,
+    &.focus div[contenteditable],
     input[type=text]:focus,
     input[type=email]:focus,
     input[type=password]:focus,
-    textarea:focus
+    textarea:focus,
+    div[contenteditable]:focus
 
       box-shadow: 0 0 .5rem rgba(#DE8F8B, 1)
       border-color: #FF9F9A
 
-    input, textarea
+    input, textarea, div[contenteditable]
       //color: auten(#FFD9D7)
       background-color: #FDEBEA
