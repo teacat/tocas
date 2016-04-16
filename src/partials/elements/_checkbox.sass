@@ -1,61 +1,113 @@
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@   C H E C K B O X   @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 .ts.checkbox
   +relative
   +extend(no-select)
   +y-margin(.7em, .7em)
   +x-padding(calc(.7em + 1.4em), x)
   
+  
+  
+  // [&] HOVER
+  //
+  //
+  
   &:hover
     +poi
     +extend(ease)
+    
     opacity: 1
+  
+  
+  
+  // [&] ACTIVE
+  //
+  //
   
   &:active
     +extend(no-ease)
+    
     opacity: 0.9
+    
+  
+  
+  // Checkbox
+  //
+  // 核取方塊本體。
   
   [type="checkbox"]
+    +rd
     +absolute
     +position(-.2em, x, x, 0)
-    +rd
     +x-margin(x, .7em)
+    +size(1.4em, 1.4em)
     
     -webkit-appearance: none
-    background-color: #FFF
+    background-color  : #FFF
     border: 1px solid $defaultColor
-    width: 1.4em
-    height: 1.4em
     vertical-align: -.3em
     
+    
+    
+    // [&] HOVER
+    //
+    //
+  
     &:hover
       +poi
       +extend(ease)
       border: 1px solid darken($defaultColor, 10%)
+    
+    
+    
+    // [&] ACTIVE
+    //
+    //
     
     &:active
       +extend(no-ease)
       border: 1px solid darken($defaultColor, 30%)
       //background-color: darken($defaultColor, 20%)
     
+    
+    
+    // [&] CHECKED
+    //
+    //
+  
     &:checked
       +extend(no-ease)
       //+extend(ease)
       //background-color: $defaultColor
       border: 1px solid darken($defaultColor, 30%)
       
+      
+      
       &:after
-        border: 2px solid $defaultTextColor
+        +absolute
+        +block
+        +position(4px, x, x, 4px)
+        +size(4px, 8px)
+        +no-poi
+        
+        border      : 2px solid $defaultTextColor
         border-right: 0
-        border-top: 0
-        content: " "
-        display: block
-        height: 7px
-        pointer-events: none
-        position: absolute
-        transform: rotate(-45deg)
-        width: 8px
-        height: 4px
-        left: 4px
-        opacity: 1
-        position: absolute
-        top: 4px
-        transform: rotate(-45deg) scale(1)
+        border-top  : 0
+        content     : " "
+        opacity     : 1
+        transform   : rotate(-45deg) scale(1)

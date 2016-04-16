@@ -52,6 +52,18 @@
     margin-left : $mar
     margin-right: $mar-right
 
+=size($height, $width: null)
+  @if $width == null
+    width : $height
+    height: $height
+  @else if $width == x
+    height: $height
+  @else if $height == x
+    width : $width
+  @else if $height != x and $width != null
+    height: $height
+    width : $width
+
 =none
   display: none !important
 
@@ -87,6 +99,9 @@
 
 =poi
   cursor: pointer
+
+=no-poi
+  pointer-events: none
 
 =block
   display: block

@@ -1,16 +1,36 @@
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   H E A D E R   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 //**************************************
 //***********   T H E M E   ************
 //**************************************
 
 =header-theme($color: #333, $baseWeight: 600)
+  
   color: $color
-
+  
+  
+  
+  // [&] Dividing
+  //
+  // 帶有分隔線的標題。
+    
   &.dividing
     border-bottom: .1rem solid auten($color, 65%)
-
-  .ts.list
-    .item
-      color: lighten($color, 10%)
 
 
 
@@ -24,31 +44,54 @@
     @at-root
       #{nth($headerNames, $i)}#{&}:not(.sub),
       #{&}.#{nth($headerSizes, $i)}:not(.sub)
-        margin-top   : nth($headerFontSizes, $i)
-        margin-bottom: nth($headerFontSizes, $i) / 1.5
+        +margin-y(nth($headerFontSizes, $i), nth($headerFontSizes, $i) / 1.5)
 
         line-height: nth($headerFontSizes, $i) * 1.3
         font-size  : nth($headerFontSizes, $i)
 
         &:first-child
-          margin-top: 0
+          +margin-y(0, x)
 
         &:last-child
-          margin-bottom: 0
+          +margin-y(x, 0)
+
+
+
+        // [&] Dividing
+        //
+        // 帶有分隔線的標題。
 
         &.dividing
-          padding-bottom: nth($headerFontSizes, $i) / 3.5
-
+          +padding-y(x, nth($headerFontSizes, $i) / 3.5)
+        
+        
+        
+        // [&] Icon
+        //
+        // 帶有圖示的標題。
+  
         &.icon
           .icon, .fa
             font-size: nth($headerFontSizes, $i) * 4
-
+        
+        
+        
+        // Sub header
+        //
+        // 在大標題內的子標題。
+  
         .sub.header
-          font-size: nth($headerFontSizes, $i) / 1.7
+          +margin-y(nth($headerFontSizes, $i) / 4)
+          
+          font-size  : nth($headerFontSizes, $i) / 1.7
           line-height: nth($headerFontSizes, $i) / 1.7
-          margin-top   : nth($headerFontSizes, $i) / 4
-          margin-bottom: nth($headerFontSizes, $i) / 4
-
+      
+      
+      
+      // Sub header
+      //
+      // 子標題。
+        
       #{nth($headerNames, $i)}#{&}.sub,
       #{&}.#{nth($headerSizes, $i)}.sub
         font-size    : nth($headerFontSizes, $i) / 1.7
@@ -68,44 +111,35 @@
   +header-theme
   +header-generator
 
-  //margin-bottom: $margin
   font-weight: 600
-  font-size: 2.4rem
-
-
-
-  //& + .header
-   // margin-bottom: $margin
+  font-size  : 2.4rem
+  
+  
+  
+  // [&] Disabled
+  //
+  // 已停用的標題。
 
   &.disabled
     opacity: 0.4
-
-  .sub.header
-    font-size: 1.9rem
-    font-weight: 400
-
+  
+  
+  
+  // [&] Disabled
+  //
+  // 已停用的標題。
+  
   &.icon
     .icon, .fa
       +block
-      margin-right: 0
+      +margin-x(x, 0)
 
 
+  
+  // [&] Inverted
+  //
+  // 反色調的標題。
+  
   &.inverted,
   &.inverted .header
-    +header-theme(#FFF)
-
-
-  > .ts.list
-    +inline-block
-
-    .item
-      +small
-
-      font-weight: normal
-
-    &.middoted
-      .item:before
-        +x-margin($margin / 7, $margin / 2.5)
-
-        content: '·'
-
+    +header-theme($invertedColor)

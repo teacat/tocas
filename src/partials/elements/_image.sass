@@ -1,3 +1,24 @@
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   I M A G E   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+//**************************************
+//*******   G E N E R A T O R   ********
+//**************************************
+
 =image-generator
   @for $i from 1 through $imageAmount
     @at-root
@@ -18,62 +39,136 @@
 
 
 
+//**************************************
+//***********   S I Z E S   ************
+//**************************************
+
 @for $i from 1 through $imageAmount
   @at-root
     .ts.images.#{nth($imageSizes, $i)} img
-      width: nth($imageFontSizes, $i)
-      height: auto
-
-
-
+      +size(auto, nth($imageFontSizes, $i))
+    
+    
+    
+    // Squared
+    //
+    // 正方形圖片。
+    
     .ts.images.#{nth($imageSizes, $i)}.squared img
-      width: nth($imageFontSizes, $i)
-      height: nth($imageFontSizes, $i)
+      +size(nth($imageFontSizes, $i))
+
       object-fit: cover
 
-.ts.images
 
+
+
+//**************************************
+//**********   I m a g e s   ***********
+//**************************************
+
+.ts.images
+  
+  // [&] Inline
+  //
+  // 單一行的圖片群組。
+  
   &.inline
     img
       +inline-block
+
+
+
+
+//**************************************
+//************   M a i n   *************
+//**************************************
 
 .ts.image:not(.label)
   +image-generator
   +block
 
   max-width: 100%
-
+  
+  
+  
+  
+  // [&] Covered
+  //
+  // 隱藏被覆蓋的地方。
+  
   &.covered
     object-fit: cover
-
+  
+  
+  
+  // [&] Hidden
+  //
+  // 隱藏。
+  
   &.hidden
     +none
+    
+    
+  
+  // [&] Disabled
+  //
+  // 已停用的圖片。
 
   &.disabled
     opacity: 0.3
-
+  
+  
+  
+  // [&] Avatar
+  //
+  // 頭像。
+  
   &.avatar
     +x-margin(x, .4em)
     +inline-block
+    +size(2em)
 
-    width : 2em
-    height: 2em
     vertical-align: middle
-
+  
+  
+  
+  // [&] Bordered
+  //
+  // 戴有框線的。
+  
   &.bordered
     border: 1px solid $defaultColor
-
+  
+  
+  
+  // [&] Fluid
+  //
+  // 寬度為流動的圖片。
+  
   &.fluid
     +block
 
     width : 100%
     height: auto
-
+  
+  
+  
+  // [&] Rounded
+  //
+  // 帶圓角邊框的圖片。
+  
   &.rounded
     +rd
-
+  
+  
+  
+  //
+  //
+  //
+  
   .ts.label
     +absolute
+
     top: $padding
 
     &:not(.right)
@@ -81,21 +176,42 @@
 
     &.right
       left: calc(100% + #{$padding} + #{$segmentBorderWidth} * 2)
-
+  
+  
+  
+  // [&] Centered
+  //
+  // 水平置中。
+  
   &.centered
     margin-left : auto
     margin-right: auto
 
+  
+  
+  // [&] Circular
+  //
+  // 圓形圖片。
+  
   &.circular
     border-radius: 100rem
-
-  &.centered
-    text-align: center
+  
+  
+  
+  // [&] Spaced
+  //
+  // 左右帶有空白邊距的圖片。
 
   &.spaced
     +x-margin(.8em)
     +inline-block
-
+  
+  
+  
+  // [&] Aligned
+  //
+  // 對齊。
+  
   &.aligned
     +inline-block
 

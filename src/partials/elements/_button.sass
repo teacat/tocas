@@ -1,107 +1,161 @@
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   B U T T O N   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
 //**************************************
 //***********   T H E M E   ************
 //**************************************
 
 =button-theme($color: #EEE, $textColor: false)
-
+  
+  $thisParent: '.ts.button'
+  $hover     : ':hover:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled)'
+  $active    : ':active:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled), &.active:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled)'
+  
   @if not $textColor
     $textColor: lighten($color, 40%)
 
-
-
-  //&:not(.transparent)
   background  : $color
   border-color: darken($color, 1%)
-
-  color      : $textColor
-  //text-shadow: 0 .1rem .1rem auten($color, 3%)
+  color       : $textColor
 
 
-  //&.transparent
-  //  color: $color
-
-
+  
+  // [&] Basic
+  //
+  // 基本、最簡化樣式按鈕。
+        
   &.basic
     background-color: transparent
     border-color    : darken($color, 10%)
     text-shadow     : none
     color           : darken($color, 10%)
-
-  &.labeled.icon
-    .icon
-      background-color: darken($color, 5%)
-
-
-
-
-  &:hover:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled)
-    +poi
-
-    &.labeled.icon
-      .icon
-        background-color: darken($color, 10%)
-
-    //&.transparent
-    //  color: lighten($color, 8%)
-    color: lighten($textColor, 5%)
-
-    .label
-      //opacity: 0.9
-
-    &:not(.transparent)
-      background-color: darken($color, 5%)
-
-    &.basic
+  
+    +if-parent(&, $hover)
       background-color: $color
       border-color    : $color
       color           : $textColor
       opacity         : 1
-      //background-color: transparent
-
-
-  &:active:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled),
-  &.active:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled)
-    +extend(no-ease)
-    +extend(no-tap)
-
-    &.labeled.icon
+        
+        
+  
+  // [&] Labeled Icon
+  //
+  // 帶有圖示的標籤按鈕。
+        
+  &.labeled.icon
+    .icon
+      background-color: darken($color, 5%)
+      
+    +if-parent(&, $hover)
+      .icon
+        background-color: darken($color, 10%)
+      
+    +if-parent(&, $active)
       .icon
         +extend(no-ease)
         background-color: darken($color, 22%)
 
-    //&.transparent
-    //  color: darken($color, 10%)
+
+  
+  // [&] HOVER
+  //
+  //
+
+  #{$hover}
+    +poi
+
+    color: lighten($textColor, 5%)
+    
+    
+    
+    // [&] NOT Transparent
+    //
+    // 非透明的按鈕。
+    
+    &:not(.transparent)
+      background-color: darken($color, 5%)
+
+
+  
+  // [&] ACTIVE
+  //
+  //
+
+  #{$active}
+    +extend(no-ease)
+    +extend(no-tap)
 
     .label
       opacity: 1
 
     color: darken($textColor, 10%)
-
+    
+    
+    
+    // [&] NOT Transparent
+    //
+    // 非透明的按鈕。
+      
     &:not(.transparent)
 
       background-color: darken($color, 17%)
       border-color    : darken($color, 17%)
-      //box-shadow      : inset 0 0 1rem 0 darken($color, 6%)
-
+      
+      
+      
+      // [&] Basic
+      //
+      // 基本、最簡化樣式按鈕。
+  
       &.basic
         background-color: darken($color, 13%)
         border-color    : darken($color, 13%)
-        //color           : darken($textColor, 13%)
-        opacity     : 1
-        box-shadow  : none
+        opacity         : 1
+        box-shadow      : none
 
-
+  
+  
+  // [&] Raised
+  //
+  // 抬舉版本的按鈕。
+        
   &.raised
     box-shadow         : 0 .2rem .4rem 0 darken($color, 4%), 0 .2rem 1rem 0 darken($color, 4%)
     border-color       : darken($color, 2%)
     border-bottom-width: .1rem
-
-    &:active
+    
+    +if-parent(&, $active)
       box-shadow: 0 .1rem .2rem 0 lighten($color, 5%), 0 .1rem .5rem 0 lighten($color, 5%)
 
+  
+  
+  // [&] Loading
+  //
+  // 讀取中的按鈕。
+        
   &.loading
     +loader-color($textColor)
-
+  
+  
+  
+  // [&] DISABLED
+  //
+  // 已停用的按鈕。
+        
   &[disabled="disabled"],
   &[disabled="true"]
   &[disabled],
@@ -114,6 +168,9 @@
 
 
 
+//**************************************
+//*******   G E N E R A T O R   ********
+//**************************************
 
 =button-generator
   @for $i from 1 through $buttonAmount
@@ -130,39 +187,75 @@
         font-size: $fontSize
 
 
+        
+        // [&] Icon NOT Labeled
+        //
+        // 純圖示按鈕。
+  
         &.icon:not(.labeled)
           font-size: $fontSize + .2
           padding  : $padding / 1.2
 
+
+
+        // [&] Labeled Icon
+        //
+        // 帶標籤並且有圖示的按鈕。
+  
         &.labeled.icon
-
           +x-padding($fontSize + .2 + $padding / 1.2 + $padding * 2, x)
-
-
-
-
+          
+          
+          
+          // Icon
+          //
+          // 圖示。
+        
           .icon
             +absolute
             +position(0, x, 0, 0)
             +extend(ease)
-            padding  : $padding / 1.2
-            width: 1em
+            +y-padding($padding / 1.2)
+            +x-padding($padding / 1.2)
+            +size(x, 1em)
+
             font-size: $fontSize + .2
 
+
+            
             &:before
               +block
               +absolute
               +position(50%, x, x, x)
+              
               transform: translateY(-50%)
-
+          
+          
+          
+          // [&] Right
+          //
+          // 圖示位於右側的標籤圖示按鈕。
+          
           &.right
             .icon
               +position(0, 0, 0, x)
-
+        
+        
+        
+        // [&] Compact
+        //
+        // 縮減版按鈕。
+  
         &.compact
           +y-padding($padding * ($i / 6))
           +x-padding($padding * ($i / 3))
-
+        
+        
+        
+        // [&] Loading
+        //
+        // 讀取中的按鈕。
+        
         &.loading
           +loader-theme($loaderSize, .2rem)
 
@@ -188,13 +281,8 @@
   +x-padding($padding * 2)
   +button-generator
 
-  //overflow: hidden
-
-  //font-weight: 600
-
   border-width: .1rem
   border-style: solid
-
   text-decoration: none
 
 
@@ -202,9 +290,10 @@
     margin-right: $margin / 2
 
 
-  // Loading
+
+  // [&] Loading
   //
-  //
+  // 讀取時的按鈕。
 
   &.loading
     +relative
@@ -214,21 +303,36 @@
     color      : transparent !important
     text-shadow: none        !important
 
+
+
     &:before,
     &:after
       top: calc(50% - 1.9rem / 2)
-
+  
+  
+  
+  // [&] Fluid
+  //
+  // 流動寬度按鈕。
+  
   &.fluid
     width: 100%
-
+  
+  
+  
+  // [&] Compact
+  //
+  // 縮減版按鈕。
+  
   &.compact
     +y-padding($padding * 0.6)
     +x-padding($padding * 1.8)
 
 
-  // Icon
+
+  // [&] Icon NOT Labeled
   //
-  //
+  // 純圖示按鈕。
 
   &.icon:not(.labeled)
     +padding
@@ -241,17 +345,18 @@
 
 
 
-  // Circular
+  // [&] Circular
   //
-  //
+  // 圓形按鈕。
 
   &.circular
     border-radius: 10rem
 
 
-  // Transparent
+
+  // [&] Transparent
   //
-  //
+  // 透明背景按鈕。
 
   &.transparent
     background-color: transparent
@@ -259,31 +364,48 @@
 
 
 
-  // Pure
+  // [&] Pure
   //
-  //
+  // 純按鈕、無邊界、陰影。
 
   &.pure
     padding    : 0    !important
     text-shadow: none !important
 
+
+
+  // [&] Attached
+  //
+  // 吸附於某邊緣的按鈕。
+  
   &.attached
     width: 100%
-
+    
+    
+    
+    // [&] Bottom
+    //
+    // 吸附於底部。
+  
     &.bottom
-      border-top-left-radius: 0
+      border-top-left-radius : 0
       border-top-right-radius: 0
 
+    
+    
+    // [&] Top
+    //
+    // 吸附於頂部。
+    
     &.top
-      border-bottom-left-radius: 0
+      border-bottom-left-radius : 0
       border-bottom-right-radius: 0
 
 
 
-
-  // Labeled
+  // [&] Labeled
   //
-  //
+  // 帶標籤按鈕。
 
   &.labeled
 
@@ -351,21 +473,31 @@
 
 
 
-
-  //**************************************
-  //***********   S I Z E S   ************
-  //**************************************
-
+//**************************************
+//*********   B U T T O N S   **********
+//**************************************
 
 .ts.buttons
   +inline-flex
 
+
+
+  // [&] Fluid
+  //
+  // 流動寬度的按鈕群組。
+  
   &.fluid
     width: 100%
 
     .button
       width: 100%
-
+      
+  
+  
+  // [>] .button
+  //
+  //
+  
   > .button
     +flex
     +flex-content-center
@@ -373,35 +505,47 @@
 
     border-radius  : 0
 
-
     &:first-child
       border-top-left-radius   : .4rem
       border-bottom-left-radius: .4rem
 
-
     &:last-child
-
       border-top-right-radius   : .4rem
       border-bottom-right-radius: .4rem
 
-    &:first-child:not(:last-child)
-      border-right: none
-
-
+    &:first-child:not(:last-child),
     &:not(:last-child):not(:first-child)
       border-right: none
+  
+  
+  
+  // [&] Attached
+  //
+  // 吸附於某一邊緣的按鈕群組。
 
   &.attached
     width: 100%
 
     .button
       width: 100%
-
-
+    
+    
+    
+    // [&] Top
+    //
+    // 吸附於頂部。
+    
     &.top
-      border-bottom-right-radius: 0px
-      border-bottom-left-radius : 0px
-
+      .button
+        border-bottom-right-radius: 0px
+        border-bottom-left-radius : 0px
+    
+    
+    
+    // [&] Bottom
+    //
+    // 吸附於底部。
+    
     &.bottom
       .button
         border-top-right-radius: 0px

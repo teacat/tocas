@@ -1,9 +1,39 @@
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   L I S T   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+//**************************************
+//***********   T H E M E   ************
+//**************************************
+
 =list-theme($color: #808080, $fontSize: 1.4rem)
-
-  .item,
-  li
+  
+  // Item, LI
+  //
+  //
+  
+  .item, li
     color: $color
-
+  
+  
+  
+  // [&] Middoted, [&] Bulleted
+  //
+  // 帶有點的清單。
+  
   &.middoted,
   &.bulleted
 
@@ -11,6 +41,12 @@
     li:not(:first-child):before
       color: rgba($color, 0.8)
 
+
+
+
+//**************************************
+//*******   G E N E R A T O R   ********
+//**************************************
 
 =list-generator
   @for $i from 1 through $listAmount
@@ -22,12 +58,16 @@
 
 
 
+//**************************************
+//************   M A I N   *************
+//**************************************
+
 .ts.list
   +list-theme
   +list-generator
-
+  +x-padding(0, x)
+  
   margin: 0
-  padding-left: 0
 
   &:not(.horizontal)
     .item, li
@@ -85,10 +125,22 @@
     .item:not(:first-child)
     li:not(:first-child)
       padding-top: $padding / 2
-
+  
+  
+  
+  // [&] Inverted
+  //
+  // 反色調的清單。
+  
   &.inverted
-    +list-theme(#FFF)
-
+    +list-theme($invertedTextColor)
+  
+  
+  
+  // [&] Link
+  //
+  // 可供點擊回饋的連結清單。
+  
   &.link
     .item, li
       //opacity: 0.8
@@ -99,52 +151,85 @@
 
       &:hover
         opacity: 1
-
+  
+  
+  
+  // [&] Relaxed
+  //
+  // 較寬鬆的清單。
+  
   &.relaxed
     .item, li
       margin-bottom: $margin
 
       &:last-child
         margin-bottom: 0
-
+  
+  
+  
+  // [&] Horizontal
+  //
+  // 水平清單
 
   &.horizontal
-
+    
+    // Item, LI
+    //
+    // 
+    
     .item, li
       +inline-flex
-
-      margin-left: $margin
-      margin-bottom: 0
+      +y-margin(x, 0)
+      +x-margin($margin, x)
 
       &:first-child
-        margin-left: 0
+        +x-margin(0, x)
 
       &:not(:first-child):before
-        width: .6em
         +x-padding($margin / 4)
+        +size(x, .6em)
+    
+    
+    
+    // [&] Relaxed
+    //
+    // 較寬鬆的水平清單。
 
     &.relaxed
 
-      .item,
-      li
-        margin-right: $margin
+      .item, li
+        +x-margin(x, $margin)
 
         &:last-child
-          margin-right: 0
-
+          +x-margin(x, 0)
+    
+    
+    
+    // Content
+    //
+    //
+    
     .content
       +inline-block
-      margin-left: $margin / 2
+      +x-margin($margin / 2, x)
 
 
 
+    // [&] Middoted
+    //
+    // 帶有「置中點」的清單。
 
     &.middoted
 
       .item:not(:first-child):before,
       li:not(:first-child):before
         content: '·'
-
+    
+    
+    
+    // [&] Bulleted
+    //
+    // 帶有「重形點」的清單。
 
     &.bulleted
 
@@ -152,26 +237,45 @@
       li:not(:first-child):before
         content: '•'
         width: .1rem
-
-        //• bullet
-        //· middledot
-
+    
+    
+    
+    // Middoted / Bulleted Item, LI
+    //
+    // 移除水平清單在這些點左邊多餘的邊距。
+    
     &.middoted .item,
     &.bulleted .item,
     &.middoted li,
     &.bulleted li
       margin-left: 0
-
-
-  &.middoted:not(.horizontal)
-
-    .item:before,
-    li:before
-      content: '·'
-
-
-  &.bulleted:not(.horizontal)
-
-    .item:before,
-    li:before
-      content: '•'
+  
+  
+  
+  // [&] NOT Horizontal
+  //
+  // 不是水平清單（也就是垂直清單）。
+  
+  &:not(.horizontal)
+    
+    // [&] Middoted
+    //
+    // 帶有「置中點」的清單。
+    
+    &.middoted
+  
+      .item:before,
+      li:before
+        content: '·'
+    
+    
+    
+    // [&] Bulleted
+    //
+    // 帶有「重形點」的清單。
+  
+    &.bulleted
+  
+      .item:before,
+      li:before
+        content: '•'
