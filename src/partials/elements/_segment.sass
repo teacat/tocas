@@ -15,6 +15,10 @@
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   S E G M E N T   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+//**************************************
+//************   M A I N   *************
+//**************************************
+
 .ts.segment
   +relative
   +normal
@@ -24,28 +28,69 @@
 
   background: #FFF
 
-
+  
+  
+  // Divider
+  //
+  // 片段中的分隔線。
+  
   .ts.divider
     +divider-theme(#EEE)
-
+  
+  
+  
+  //
+  // 
+  //
+  
   &.inverted
     +basic-card(#FFF, #1B1C1D)
 
     .ts.divider
       +divider-theme(#3C3C3C)
-
+  
+  
+  
+  // [&] Secondary
+  // 
+  // 次要顏色的片段。
+  
   &.secondary
     background: auten(#FFF, 5%)
-
+  
+  
+  
+  // [&] Tertiary
+  // 
+  // 第三次要顏色的片段。
+  
   &.tertiary
     background: auten(#FFF, 10%)
-
+  
+  
+  
+  // [&] Fluid
+  // 
+  // 流動寬度的片段。
+  
   &.fluid
     border-radius: 0
   
+  
+  
+  // [&] Compact
+  // 
+  // 依照內容更改寬度的片段。
+  
   &.compact
     display: table
-        
+  
+  
+  
+  // [&] Clearing
+  // 
+  // 帶有 Clear 作用的片段。
+  
   &.clearing:after
     +block
 
@@ -53,10 +98,22 @@
     height : 0
     clear  : both
     visibility: hidden
-
+  
+  
+  
+  // [&] Fitted
+  // 
+  // 沒有內距片段。
+  
   &.fitted
     padding: 0
-
+  
+  
+  
+  // [&] Attached
+  // 
+  // 吸附於某一端的片段。
+  
   &.attached
 
     &.bottom
@@ -72,12 +129,23 @@
       border-bottom-left-radius: 0
       border-bottom-right-radius: 0
       border-bottom-width: 1px
-
+  
+  
+  
+  // [&] Disabled
+  // 
+  // 已經停用的片段。
 
   &.disabled
     opacity: 0.3
     color  : rgba(0, 0, 0, 0.3)
-
+  
+  
+  
+  // [&] Loading
+  // 
+  // 讀取中的片段。
+  
   &.loading
     +relative
     +loader-theme(3.6rem, .3rem, #EEE)
@@ -90,13 +158,25 @@
     &:before,
     &:after
       top: calc(50% - 3.6rem / 2)
-
+  
+  
+  
+  // [&] Basic
+  // 
+  // 基本最簡潔的片段。
+  
   &.basic
     border       : none
     box-shadow   : none
     background   : none
     border-radius: none
-
+  
+  
+  
+  // [&] Aligned
+  // 
+  // 對齊某側的片段。
+  
   &.aligned
 
     &.center
@@ -109,46 +189,65 @@
       text-align: right
 
 
+
+
+//**************************************
+//********   S E G M E N T S   *********
+//**************************************
+
 .ts.segments
   font-size: 0
-
-  &:not(.horizontal) > .ts.segment
-
-    &:first-child:not(:last-child)
-      margin-bottom: 0
-      border-bottom: none
-      border-bottom-right-radius: 0
-      border-bottom-left-radius : 0
-
-    &:not(:last-child):not(:first-child)
-      margin-top   : 0
-      margin-bottom: 0
-      border-bottom: none
-      border-top-right-radius   : 0
-      border-top-left-radius    : 0
-      border-bottom-right-radius: 0
-      border-bottom-left-radius : 0
-
-    &:last-child
-      margin-top: 0
-      border-top-right-radius: 0
-      border-top-left-radius : 0
-
-  &.horizontal > .ts.segment
-    +inline-block
-
-    &:first-child:not(:last-child)
-      border-right: none
-      border-top-right-radius: 0
-      border-bottom-right-radius : 0
-
-    &:not(:last-child):not(:first-child)
-      border-right: none
-      border-top-right-radius   : 0
-      border-top-left-radius    : 0
-      border-bottom-right-radius: 0
-      border-bottom-left-radius : 0
-
-    &:last-child
-      border-top-left-radius: 0
-      border-bottom-left-radius : 0
+  
+  
+  
+  // [&] NOT Horizontal
+  //
+  // 不是水平片段集。
+  
+  &:not(.horizontal) 
+    > .ts.segment
+      &:first-child:not(:last-child)
+        margin-bottom: 0
+        border-bottom: none
+        border-bottom-right-radius: 0
+        border-bottom-left-radius : 0
+  
+      &:not(:last-child):not(:first-child)
+        margin-top   : 0
+        margin-bottom: 0
+        border-bottom: none
+        border-top-right-radius   : 0
+        border-top-left-radius    : 0
+        border-bottom-right-radius: 0
+        border-bottom-left-radius : 0
+  
+      &:last-child
+        margin-top: 0
+        border-top-right-radius: 0
+        border-top-left-radius : 0
+  
+  
+  
+  // [&] Horizontal
+  //
+  // 水平片段集。
+  
+  &.horizontal 
+    > .ts.segment
+      +inline-block
+  
+      &:first-child:not(:last-child)
+        border-right: none
+        border-top-right-radius: 0
+        border-bottom-right-radius : 0
+  
+      &:not(:last-child):not(:first-child)
+        border-right: none
+        border-top-right-radius   : 0
+        border-top-left-radius    : 0
+        border-bottom-right-radius: 0
+        border-bottom-left-radius : 0
+  
+      &:last-child
+        border-top-left-radius: 0
+        border-bottom-left-radius : 0

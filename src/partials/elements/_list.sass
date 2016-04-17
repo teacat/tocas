@@ -68,16 +68,28 @@
   +x-padding(0, x)
   
   margin: 0
-
+  
   &:not(.horizontal)
     .item, li
-      margin-top   : $margin
-      margin-bottom: $margin
+      +y-margin($margin)
+    
+    .item:not(:first-child)
+    li:not(:first-child)
+      +y-padding($padding / 2, x)
 
+  
+  
+  // Item, LI
+  //
+  //
 
   .item, li
     +flex
-
+    
+    // Image
+    //
+    //
+    
     .image
       +extend(aligns)
 
@@ -85,48 +97,74 @@
         +block
         +rd
         max-height: 4rem
-
+    
+    
+    
+    // Content
+    //
+    //
+    
     .content
       +extend(aligns)
 
       flex: 1
       padding-left: $padding
 
-
+      
+      
+      // Header
+      //
+      //
+      
       .header
-        margin-top: -.3rem
-        color: #676767
+        +y-margin(margin-top: -.3rem, x)
+        
+        color      : #676767
         font-weight: 600
-
+      
+      
+      
+      // Meta
+      //
+      //
+      
       .meta
         +small
+        +y-margin($margin / 4, x)
 
         color: #888
-        margin-top: $margin / 4
-
+      
+      
+      
+      // Description
+      //
+      //  
+    
       .description
         +normal
+        +y-margin($margin / 4, x)
 
         color: #333
-        margin-top: $margin / 4
-
+      
+      
+      
+      // Extra
+      //
+      //
+      
       .extra
-        margin-top: $margin / 4
+        +y-margin($margin / 4, x)
 
 
 
+  // Centered
+  //
+  //
 
   &.centered
     text-align: center
 
 
-
-  &:not(.horizontal)
-    .item:not(:first-child)
-    li:not(:first-child)
-      padding-top: $padding / 2
-  
-  
   
   // [&] Inverted
   //

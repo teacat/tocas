@@ -15,9 +15,11 @@
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   L O A D E R   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+//**************************************
+//***********   T H E M E   ************
+//**************************************
+
 =loader-theme($size: 3.6rem, $borderSize: .3rem, $color: #999)
-
-
 
   &:before,
   &:after
@@ -34,9 +36,16 @@
     border-top-style: solid
 
 
+
+
+//**************************************
+//****   F L O W E R   T H E M E   *****
+//**************************************
+
 =loader-flower-theme($color: #FFF)
   background: auten($color)
   box-shadow: white 0 0 15px 0, $color -12px -12px 0 4px, $color 12px -12px 0 4px, $color 12px 12px 0 4px, $color -12px 12px 0 4px
+  
   @keyframes flower-loader
     0%
       transform: rotate(0deg)
@@ -44,6 +53,13 @@
     50%
       transform: rotate(1080deg)
       box-shadow: white 0 0 15px 0, $color 12px 12px 0 4px, $color -12px 12px 0 4px, $color -12px -12px 0 4px, $color 12px -12px 0 4px
+
+
+
+
+//**************************************
+//********   R E S O U R C E   *********
+//**************************************
 
 =loader-resource
 
@@ -86,6 +102,13 @@
       to
         transform: rotate(360deg)
 
+
+
+
+//**************************************
+//***********   C O L O R   ************
+//**************************************
+
 =loader-color($color: #999)
   @if $color != false
     color: $color
@@ -98,6 +121,12 @@
     @if $color != false
       border-top-color: $color
 
+
+
+
+//**************************************
+//*******   G E N E R A T O R   ********
+//**************************************
 
 =loader-generator
   @for $i from 1 through $loaderAmount
@@ -113,22 +142,44 @@
         font-size: $fontSize
         min-width: $loaderSize
         height   : $loaderSize
-
+        
+        
+        
+        // [&] Inline
+        //
+        // 同行的讀取指示器。
+  
         &.inline
-
+          
+          // [&] Text
+          //
+          // 帶有文字的讀取指示器。
+        
           &.text
-            padding-top: $loaderSize + $padding * 1.5
-            height     : $fontSize
-
+            +y-padding($loaderSize + $padding * 1.5, x)
+            +size($fontSize, x)
+            
+            // [&] EMPTY
+            //
+            // 當代有文字但卻是空的時候，重置高度。
+          
             &:empty
-              padding-top: 0
-              height     : $loaderSize
+              +y-padding(0, x)
+              +size($loaderSize, x)
 
-
+        
+        
+        // [&] NOT Inline
+        //
+        // 不是同行的讀取指示器。
+  
         &:not(.inline)
-
           +position(calc(50% - #{$loaderSize} / 2), x, x, calc(50% - #{$loaderSize} / 2))
-
+          
+          // [&] Text
+          //
+          // 帶有文字的讀取指示器。
+          
           &.text
             +position(calc(50% - (#{$loaderSize} + #{$fontSize} + #{$padding}) / 2), x, x, calc(50% - #{$loaderSize} / 2))
 
@@ -138,6 +189,11 @@
 
 
 
+
+//**************************************
+//************   M A I N   *************
+//**************************************
+
 .ts.loader
   +loader-theme(36px, 3px)
   +loader-color
@@ -145,33 +201,60 @@
   +loader-generator
   +absolute
   +block
+  +size(36px, x)
 
-  height: 36px
-  min-width: 36px
+  min-width : 36px
   text-align: center
-
+  
+  
+  
+  // [&] Inverted
+  //
+  // 相反色的讀取器。
+  
   &.inverted
     +loader-color($invertedTextColor)
 
-
+  
+  
+  // [&] NOT Active
+  //
+  // 沒有在啟用狀態的讀取器。
+  
   &:not(.active)
     +none
 
-
+  
+  // [&] Inline
+  //
+  // 同行的讀取指示器。
 
   &.inline
     +relative
     +inline-block
     +position(0, x, x, 0)
-
+  
+  
+  
+  // [&] NOT Inline
+  //
+  // 不是同行的讀取指示器。
+  
   &:not(.inline)
     +flex
     +flex-all-center
+    
     white-space: nowrap
 
 
+  
+  // [&] Centered
+  //
+  // 水平置中的讀取指示器。
+  
   &.centered
     +block
+    
     margin: 0px auto
 
 

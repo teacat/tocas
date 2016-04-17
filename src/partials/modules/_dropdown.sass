@@ -1,8 +1,23 @@
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@   D R O P D O W N   @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-
-
-
-
+//**************************************
+//*******   A N I M A T I O N   ********
+//**************************************
 
 /* Generated with Bounce.js. Edit at http://goo.gl/l6LLrp */
 
@@ -33,157 +48,77 @@
     opacity: 1
     transform: translate(0, 0px) matrix3d(1,0,0.00,0,0.00,1,0.00,0,0,0,1,0,0,0,0,1)
 
-@keyframes upward-full
-  0%
-    opacity: 0
-    transform: translate(0, 100%)
-
-  30%
-    opacity: 0.8
-    transform: translate(0, 40%)
-
-  100%
-    opacity: 1
-    transform: translate(0, 0)
-
-@keyframes upward-hide
-  0%
-    opacity: 1
-    transform: translate(0, 0%)
-
-  30%
-    opacity: 0.8
-    transform: translate(0, 40%)
-
-  100%
-    opacity: 0
-    transform: translate(0, 100%)
-
-@keyframes upward-fa
-  0%
-    opacity: 0
-
-  100%
-    opacity: 1
-
-@keyframes upward-da
-  0%
-    opacity: 1
-
-  100%
-    opacity: 0
 
 
+
+//**************************************
+//*******   G E N E R A T O R   ********
+//**************************************
 
 =dropdown-generator
   @for $i from 1 through $dropdownAmount
     @at-root
       #{&}.#{nth($dropdownSizes, $i)}
         +y-margin($padding)
-
-        $fontSize  : nth($dropdownFontSizes, $i)
-
         +y-padding($padding * ($i / 5))
         +x-padding($padding * ($i / 4), $padding * ($i / 4) * 3)
-        font-size: $fontSize
 
+        font-size: nth($dropdownFontSizes, $i)
         background-position: calc(100% - 20px) calc(#{$padding * ($i / 5)} + 1em - 5px), calc(100% - 15px) calc(#{$padding * ($i / 5)} + 1em - 5px)
 
 
 
+
+//**************************************
+//************   M A I N   *************
+//**************************************
+
 .ts.dropdown
+  +z(1)
+  +rd
   +relative
   +dropdown-generator
+  +border-box
+  +normal
+  +input-theme(lighten($defaultColor, 35%), $defaultTextColor)
   //-webkit-transform: translateZ(0)
   //-webkit-font-smoothing: antialiased
   //-webkit-perspective: 1000
   -webkit-backface-visibility: hidden
-  appearance: none
+  appearance        : none
   -webkit-appearance: none
-  -moz-appearance: none
-  z-index: 1
-
-  +rd
-  +border-box
-  +normal
-  +input-theme(lighten($defaultColor, 35%), $defaultTextColor)
-
+  -moz-appearance   : none
+ 
   border-width: .1rem
   border-style: solid
 
   background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%)
-
   background-size: 5px 5px, 5px 5px
   background-repeat: no-repeat
-
+  
+  
+  
+  // [&] HOVER
+  //
+  //
+  
   &:hover
     +poi
-
+  
+  
+  
+  // [&] Fluid
+  //
+  // 流動寬度的下拉選單。
+  
   &.fluid
     width: 100%
-
-
-  &.mobile.friendly
-    //+rwd-serious(mobile)
-    .menu
-      +fixed
-
-      +position(0, 0, 0, 0)
-      +margin(0)
-      //+y-padding(80%, x)
-
-      border: none
-      overflow-y: scroll
-      overflow-x: hidden
-      background-color: rgba(0,0,0,0.3)
-      -webkit-transform: translateZ(0)
-      -webkit-font-smoothing: antialiased
-      -webkit-perspective: 1000
-      -webkit-backface-visibility: hidden
-      -webkit-transform: translate3d(0, 0, 0)
-
-
-      .inner
-        +flex
-        +flex-bottom
-        +flex-column
-        height: 110%
-        //-webkit-transform: translateZ(0)
-        //-webkit-font-smoothing: antialiased
-        //-webkit-perspective: 1000
-        -webkit-backface-visibility: hidden
-        box-shadow: 0 0px 1px 0 darken($defaultColor, 4%),0 0 0 0px darken($defaultColor, 4%)
-        -webkit-transform: translate3d(0, 0, 0)
-        pointer-events: none
-
-
-        .item
-          +y-padding($padding * 1.5)
-          +x-padding($padding * 2)
-          +flex
-          +flex-row
-
-          pointer-events: visible
-
-          .icon, .fa
-            +flex
-            +flex-items-center
-            +x-margin(x, $margin * 1.5)
-
-            font-size: $normal * 2
-            line-height: 0
-
-          &:first-child
-            box-shadow: 0px 0px 5px 0px rgba(darken($defaultColor, 40%), 0.6)
-
-          .content
-            width: 100%
-
-          .description, .text
-            overflow: hidden
-            text-overflow: ellipsis
-            white-space: nowrap
-
+  
+  
+  
+  // Menu
+  //
+  // 選單。
 
   .menu
     +absolute
@@ -195,17 +130,22 @@
     border: 1px solid darken($defaultColor, 6%)
     background-color: $defaultColor
     box-shadow: 0 0px 1px 0 darken($defaultColor, 4%),0 0 0 0px darken($defaultColor, 4%)
-
+    
+    
+    
+    // Hidden
+    //
+    // 隱藏選單。
+  
     &.hidden
       +none
 
-
-
-
-
-
-
-
+    
+    
+    // Item
+    //
+    // 選項。
+    
     .item
       +extend(ease-less)
       +extend(no-tap)
@@ -215,7 +155,13 @@
 
       color: rgba($defaultTextColor, 0.8)
       background-color: $defaultColor
-
+      
+      
+      
+      // Icon, Fa
+      //
+      // 選項中的圖示。
+      
       .icon, .fa
         +normal
         +x-margin(x, $margin)
@@ -223,29 +169,65 @@
 
         line-height: $normal
         vertical-align: top
-
+      
+      
+      
+      // [&] HOVER
+      //
+      //
+      
       &:hover
         +extend(poi)
+        
         color: rgba($defaultTextColor, 1)
         background-color: darken($defaultColor, 3%)
-
+      
+      
+      
+      // [&] ACTIVE
+      //
+      //
+      
       &:active
         color: rgba($defaultTextColor, 1)
         background-color: darken($defaultColor, 6%)
-
+      
+      
+      
+      // Content
+      //
+      // 包含 Description 和 Text 的容器。
+      
       .content
         +inline-block
-
+      
+      
+      
+      // Description
+      //
+      // 說明區塊。
+      
       .description
         +block
         +small
         +y-margin($margin / 2, x)
 
         color: rgba($defaultTextColor, 0.6)
-
+      
+      
+      
+      // Text
+      //
+      // 動作標題區塊。
+      
       .text
         line-height: $normal
-
+    
+    
+    
+    // Header
+    //
+    // 於選單中的標題分隔列。
 
     .header
       +extend(ease-less)
@@ -254,10 +236,21 @@
       +x-padding($padding * 1.5)
       +small
       +bold-weight
-
+    
+    
+    
+    // Header + Divider
+    //
+    // 於標題分隔列後的分隔線。
+    
     .header + .divider
       +y-margin(0, x)
-
+    
+    
+    
+    // Divider
+    //
+    // 分隔線。
 
     .divider
       +y-margin($margin)
@@ -268,68 +261,62 @@
 
 
 
-
+  // [&] Downward
+  //
+  // 向下展開的選單。
 
   &.downward
     .menu
       +position(100%, x, x, x)
 
+  
+  
+  // [&] Upward
+  //
+  // 向上展開的選單。
+  
   &.upward
     .menu
       +position(x, x, 100%, x)
-
-  &.downward.active:not(.mobile):not(.friendly)
+  
+  
+  
+  // [&] Downward Active NOT Mobile NOT Friendly
+  //
+  // 向下展開的選單且啟用中而且不是全螢幕選單。
+  
+  &.downward.active
     .menu
       animation: downward 700ms cubic-bezier(0.22, 0.61, 0.36, 1) both
       transform-origin: center top 0px
-
+  
+  
+  
+  // [&] Rightward
+  //
+  // 向右展開的選單。
+  
   &.rightward
     .menu
       +position(x, x, x, 0%)
-
+  
+  
+  
+  // [&] Leftward
+  //
+  // 向左展開的選單。
+  
   &.leftward
     .menu
       +position(x, 0%, x, x)
-
-  &.upward.active:not(.mobile):not(.friendly)
+  
+  
+  
+  // [&] Upward Active NOT Mobile NOT Friendly
+  //
+  // 向上展開的選單且啟用中而且不是全螢幕選單。
+  
+  &.upward.active
     .menu
       animation: upward 700ms cubic-bezier(0.22, 0.61, 0.36, 1) both
       transform-origin: center bottom 0px
-
-  &.upward.active.mobile.friendly
-    .menu
-
-      animation: upward-fa 100ms ease-in-out both
-      transform-origin: center bottom 0px
-
-      .inner
-        animation-delay: 00ms
-        animation-name: upward-full
-        animation-duration: 700ms
-        animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1)
-        animation-fill-mode: forwards
-        opacity: 0
-        transform-origin: center bottom 0px
-        -webkit-transform: translate3d(0, 0, 0)
-
-
-  &.upward.hiding.mobile.friendly
-
-    .menu
-      animation-delay: 100ms
-      animation-name: upward-da
-      animation-duration: 200ms
-      animation-timing-function: ease-in-out
-      animation-fill-mode: forwards
-      //opacity: 0
-      transform-origin: center bottom 0px
-
-    .inner
-      animation-name: upward-hide
-      animation-duration: 700ms
-      animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1)
-      animation-fill-mode: forwards
-      opacity: 0
-      transform-origin: center bottom 0px
-      -webkit-transform: translate3d(0, 0, 0)
-

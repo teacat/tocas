@@ -1,19 +1,75 @@
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@   P R O G R E S S   @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+//**************************************
+//******   A N I M A T I O N S   *******
+//**************************************
+
+@keyframes process-bar-animation
+  from
+    background-position: 0px
+  to
+    background-position: 40px
+       
+       
+       
+        
+//**************************************
+//***********   T H E M E   ************
+//**************************************
+
 =progress-theme($color, $textColor: #FFF)
   
   color: $textColor
   
+  // Bar
+  //
+  // 主要的進度條。
+  
   .bar
     color: $textColor
     background: $color
-
+  
+  
+  
+  // [&] Indeterminate
+  //
+  // 還在未知狀態的進度條。
+  
   &.indeterminate
     background-image: linear-gradient(135deg, auten($color, 5%) 25%, auten($color, 1%) 25%, auten($color, 1%) 50%, auten($color, 5%) 50%, auten($color, 5%) 75%, auten($color, 1%) 75%, auten($color, 1%) 100%)
     text-shadow: 0 1px 1px darken($color, 8%)
-    
+  
+  
+  
+  // [&] Active
+  //
+  // 一個帶有正在進行動畫的進度條。
+  
   &.active
     .bar:after
       background: auten($color, 15%)
 
+
+
+
+//**************************************
+//*******   G E N E R A T O R   ********
+//**************************************
 
 =progress-generator
   @for $i from 1 through $progressAmount
@@ -22,17 +78,31 @@
       
         $fontSize  : nth($progressFontSizes, $i)
         
-        
+        // Bar
+        //
+        // 主要的進度條。
+  
         .bar
-          
           +y-padding($padding * ($i / 5))
           +x-padding($padding * ($i / 4))
           //height: $fontSize
         
+        
+        
+        // [&] Indeterminate
+        //
+        // 還在未知狀態的進度條。
+  
         &.indeterminate
           +y-padding($padding * ($i / 5))
           +x-padding($padding * ($i / 4))
 
+
+
+
+//**************************************
+//************   M A I N   *************
+//**************************************
 
 .ts.progress
   +rd
@@ -45,6 +115,13 @@
   
   width: 100%
   border: 1px solid #EEE
+  
+  
+  
+  
+  //**************************************
+  //**********   C O L O R S   ***********
+  //**************************************
 
   &.positive
     +progress-theme($positiveColor, $positiveTextColor)
@@ -55,21 +132,49 @@
   &.negative
     +progress-theme($negativeColor, $negativeTextColor)
   
+  &.info
+    +progress-theme($infoColor, $infoTextColor)
+  
+  &.primary
+    +progress-theme($primaryColor, $primaryTextColor)
+  
+  
+  
+  // Fluid
+  //
+  // 流動的進度條，移除了邊框和圓角。
+    
   &.fluid
     border-radius: 0
-    border: none
+    border       : none
   
+  
+  
+  // Bar
+  //
+  // 主要的進度條。
+    
   .bar
     +relative
     +border-box
+    +size(x, 30%)
+    
     text-align: right
-    width: 30%
     max-width: 100%
+    
+    // [&] AFTER
+    //
+    //
     
     &:after
       content: '\200B'
 
 
+
+  // [&] Active
+  //
+  // 一個帶有正在進行動畫的進度條。
+    
   &.active
 
     .bar:after
@@ -88,24 +193,33 @@
           width: 100%
 
 
-
+  
+  // [&] Indeterminate
+  //
+  // 還在未知狀態的進度條。
   
   &.indeterminate
     +flex
     +flex-items-center
     +flex-content-center
     
-    &:after
-      content: '\200B'
-      
-    .bar
-      +none
-      
-      
     background-size: 40px 40px
     animation: process-bar-animation 2s linear 0s infinite
-    @keyframes process-bar-animation
-      from
-        background-position: 0px
-      to
-        background-position: 40px
+
+
+
+    // [&] AFTER
+    //
+    //
+    
+    &:after
+      content: '\200B'
+    
+    
+    
+    // Bar
+    //
+    // 主要的進度條。
+    
+    .bar
+      +none
