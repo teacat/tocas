@@ -1,44 +1,114 @@
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   C A R D   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-
-
-
-
+//**************************************
+//***********   T H E M E   ************
+//**************************************
 
 =card-theme($color: #808080, $bgColor: #FFF, $extraColor: #F5F5F5)
   +basic-card($color, $bgColor)
-
+  
+  // [&] Basic
+  //
+  // 最基本款式，僅底線有顏色。
+  
   &.basic
     +basic-card(#808080, #FFF)
 
     border-bottom-color: $bgColor
-
+  
+  
+  
+  // [&] NOT Basic
+  //
+  // 不是基本款式。
 
   &:not(.basic)
-
+    
+    // > Content
+    //
+    // 內容區塊。
+    
     > .content
       color: $color
 
       border-top-color: auten($bgColor, 10%)
-
+      
+      
+      
+      // [&] NOT Extra *
+      //
+      // 任何不在額外資訊區塊的元素。
+  
       &:not(.extra) *
         color: $color
+      
+      
+      
+      // Header
+      //
+      // 標題區塊。
 
       .header
         color: darken($color, 10%)
-
+      
+      
+      
+      // Textnode
+      //
+      // 文字節點區塊。
+      
       .textnode
         color: darken($color, 20%)
-
+      
+      
+      
+      // [&] Extra
+      //
+      // 額外的內容區塊。
+    
       &.extra
         border-top-color: lighten($color, 40%)
         background: $extraColor
-
+        
+        
+        
+        // Comments
+        //
+        // 留言區塊。
+        
         .ts.comments
           +comment-theme($extraColor)
-
+      
+      
+      
+      // Meta *
+      //
+      // 中繼資料內的任何元素。
+      
       .meta *
         color: lighten($color, 20%)
-
+    
+    
+    
+    // Buttons
+    //
+    // 卡片裡的按鈕群組。
+    
     .buttons
       border-top-color: darken($bgColor, 4%)
 
@@ -49,21 +119,38 @@
         +button-theme(darken($bgColor, 3%), $color)
 
 
+
+
+//**************************************
+//***********   C A R D S   ************
+//**************************************
+
 .ts.cards
   +flex
 
   flex-wrap: wrap
-
+  
   .ts.card
     +margin
 
+
+
+
+//**************************************
+//************   M A I N   *************
+//**************************************
+
 a.ts.card
   +inline-block
-
+  
+  // [&] HOVER
+  //
+  //
+  
   &:hover
+    +z(1)
+    +poi
 
-    z-index: 1
-    cursor: pointer
     transform: translateY(-3px)
 
 .ts.card
@@ -78,23 +165,50 @@ a.ts.card
   z-index: 1
   width    : $cardSize
   max-width: $cardSize
-
+  
+  
+  
+  // [&] Centered
+  //
+  // 水平置中的卡片。
+  
   &.centered
     +x-margin(auto)
-
+  
+  
+  
+  // [&] Fluid
+  //
+  // 流動寬度的卡片。
+  
   &.fluid
     max-width: 100%
     width: 100%
-
+  
+  
+  
+  // Image
+  //
+  // 卡片中的圖片區塊。
 
   .image
     +relative
-
+    
+    // IMG
+    //
+    // 圖片區塊內的圖片。
+    
     img
       +block
       +relative
       max-width: 100%
-
+    
+    
+    
+    // Dim
+    //
+    // 圖片區塊內的淡化區塊。
+    
     .dim
       +absolute
       +fill
@@ -108,7 +222,13 @@ a.ts.card
       background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6))
       text-shadow: 0 .1rem 0 black
       color: #FFF
-
+  
+  
+  
+  // Bottom Nav
+  //
+  // 底部導航欄。
+  
   .bottom.nav
     +relative
 
@@ -123,7 +243,9 @@ a.ts.card
 
 
 
-
+  // > Content
+  //
+  // 內容區塊。
 
   > .content
     +y-padding($padding * 1.3)
@@ -136,26 +258,53 @@ a.ts.card
 
     &:not(:first-child)
       border-top-width: 1px
-
+    
+    
+    // Header
+    //
+    // 標題區塊。
+    
     .header
       +y-margin(x, $margin / 2)
       +bold-weight
 
       line-height: 1em
       text-decoration: none
-
+    
+    
+    
+    // Description
+    //
+    // 說明區塊。
+    
     .description
       +normal
-
+    
+    
+    
+    // Meta
+    //
+    // 中繼資料區塊。
+    
     .meta
       +small
       +y-margin($margin / 3, x)
 
-
+      
+      
+      // List
+      //
+      // 中繼資料區塊裡的清單。
 
       .list
         +small
-
+      
+      
+      
+      // > * NOT List
+      //
+      // 任何在中繼資料裡第一層不是清單的元素。
+      
       > *:not(.list)
         text-decoration: none
         margin-right: $margin / 2
@@ -166,22 +315,39 @@ a.ts.card
         &.floated.left:last-child
           +x-margin(0, x)
 
-
+    
+    
+    // Symbol
+    //
+    // 卡片代表的圖示。
 
     .symbol
       .icon, .fa
         +absolute
-        +position(x, -3rem, -3rem, x)
+        +position(x, 0, 0, x)
+        +no-overflow
+        +size(8em)
+        
+        font-size  : 13rem
+        line-height: 1.1em
+        opacity    : 0.2
 
-        font-size: 13rem
-        opacity: 0.3
-
-
+    
+    
+    // Extra
+    //
+    // 額外資訊區塊。
 
     &.extra
       border-top-style: solid
       border-top-width: 1px
-
+  
+  
+  
+  // Buttons Attached
+  //
+  // 附著於卡片某處的按鈕群錊。
+  
   .ts.buttons.attached
     border-top-style: solid
     border-top-width: 1px
@@ -189,11 +355,16 @@ a.ts.card
     &.top .button
       border-top: none
 
-
     &.bottom .button
       border-top: none
       border-bottom: none
-
+  
+  
+  
+  
+  //**************************************
+  //**********   C O L O R S   ***********
+  //**************************************
 
   &.primary
     +card-theme($primaryTextColor, $primaryColor)
