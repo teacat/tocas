@@ -22,8 +22,8 @@
 =button-theme($color: #EEE, $textColor: false)
   
   $thisParent: '.ts.button'
-  $hover     : ':hover:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled)'
-  $active    : ':active:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled), &.active:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled)'
+  $hover     : '&:hover:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled)'
+  $active    : '&:active:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled), &.active:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled)'
   
   @if not $textColor
     $textColor: lighten($color, 40%)
@@ -43,13 +43,7 @@
     border-color    : darken($color, 10%)
     text-shadow     : none
     color           : darken($color, 10%)
-  
-    +if-parent(&, $hover)
-      background-color: $color
-      border-color    : $color
-      color           : $textColor
-      opacity         : 1
-        
+
         
   
   // [&] Labeled Icon
@@ -59,15 +53,6 @@
   &.labeled.icon
     .icon
       background-color: darken($color, 5%)
-      
-    +if-parent(&, $hover)
-      .icon
-        background-color: darken($color, 10%)
-      
-    +if-parent(&, $active)
-      .icon
-        +extend(no-ease)
-        background-color: darken($color, 22%)
 
 
   
@@ -82,14 +67,36 @@
     
     
     
+    // [&] Basic
+    //
+    // 基本、最簡化樣式按鈕。
+          
+    &.basic
+      background-color: $color
+      border-color    : $color
+      color           : $textColor
+      opacity         : 1
+    
+    
+    
     // [&] NOT Transparent
     //
     // 非透明的按鈕。
     
     &:not(.transparent)
       background-color: darken($color, 5%)
-
-
+    
+    
+    
+    // [&] Labeled Icon
+    //
+    // 帶有圖示的標籤按鈕。
+    
+    &.labeled.icon
+      .icon
+        background-color: darken($color, 10%)
+        
+        
   
   // [&] ACTIVE
   //
@@ -126,8 +133,27 @@
         border-color    : darken($color, 13%)
         opacity         : 1
         box-shadow      : none
-
-  
+    
+    
+    
+    // [&] Labeled Icon
+    //
+    // 帶有圖示的標籤按鈕。
+    
+    &.labeled.icon
+      .icon
+        +extend(no-ease)
+        
+        background-color: darken($color, 22%)
+    
+    
+    
+    // [&] Raised
+    //
+    // 抬舉版本的按鈕。
+    
+    &.raised
+      box-shadow: 0 .1rem .2rem 0 lighten($color, 5%), 0 .1rem .5rem 0 lighten($color, 5%)
   
   // [&] Raised
   //
@@ -137,11 +163,8 @@
     box-shadow         : 0 .2rem .4rem 0 darken($color, 4%), 0 .2rem 1rem 0 darken($color, 4%)
     border-color       : darken($color, 2%)
     border-bottom-width: .1rem
-    
-    +if-parent(&, $active)
-      box-shadow: 0 .1rem .2rem 0 lighten($color, 5%), 0 .1rem .5rem 0 lighten($color, 5%)
 
-  
+
   
   // [&] Loading
   //
