@@ -83,9 +83,15 @@
         // 主要的進度條。
   
         .bar
-          +y-padding($padding * ($i / 5))
-          +x-padding($padding * ($i / 4))
-          //height: $fontSize
+          +y-padding(calc(.2em * #{$i / 5}))
+          +x-padding(.5em, .5em)
+          
+          height   :  calc(1em + (.2em * #{$i / 5}) * 2 )
+          line-height: 1em
+          font-size: $fontSize
+          
+          //&:empty:after
+          //  margin: calc(-.2em * #{$i / 5}) calc(-1em  * #{$i / 6})
         
         
         
@@ -112,11 +118,16 @@
   +no-overflow
   +progress-generator
   +progress-theme($defaultColor, $defaultTextColor)
-  
+  +y-margin(1em)
   width: 100%
   border: 1px solid #EEE
   
   
+  
+  @for $i from 0 through 100
+    &[data-percent="#{$i + '%'}"]
+      .bar
+        width: calc(#{$i + '%'} + 1em)
   
   
   //**************************************
@@ -155,6 +166,7 @@
   // 主要的進度條。
     
   .bar
+    +rd
     +relative
     +border-box
     +size(x, 30%)
@@ -166,8 +178,8 @@
     //
     //
     
-    &:after
-      content: '\200B'
+    //&:after
+    //  content: '\200B'
 
 
 
