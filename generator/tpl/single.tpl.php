@@ -14,7 +14,7 @@
     <!-- / 預覽 -->
     
     <!-- 原始碼 -->
-    <pre class="ts secondary segment code" data-important-class="<?= $highlight; ?>"></pre>
+    <pre class="ts secondary segment code" <?= $highlight ? "data-important-class='$highlight'" : '' ?>></pre>
     <!-- / 原始碼 -->
     
 </div>

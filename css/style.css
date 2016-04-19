@@ -503,6 +503,13 @@ body {
 .ts.items > .item .aligned.bottom.image, .ts.items > .item .aligned.bottom.content, .ts.items > .item .aligned.bottom.side, .ts.list .item .aligned.bottom.image, .ts.list li .aligned.bottom.image, .ts.list .item .aligned.bottom.content, .ts.list li .aligned.bottom.content, .aligned.bottom.ts.header, .aligned.bottom.ts.jumbotron {
   align-self: flex-end; }
 
+.ts.card > [class*="center aligned"].content.extra {
+  text-align: center; }
+.ts.card > [class*="left aligned"].content.extra {
+  text-align: left; }
+.ts.card > [class*="right aligned"].content.extra {
+  text-align: right; }
+
 .ts.chatroom > .header > .actions > .item:hover, .ts.chatroom > .footer > .actions > .item:hover, .ts.button, .ts.button.mini.labeled.icon .icon, .ts.button.tiny.labeled.icon .icon, .ts.button.small.labeled.icon .icon, .ts.button.medium.labeled.icon .icon, .ts.button.large.labeled.icon .icon, .ts.button.big.labeled.icon .icon, .ts.button.huge.labeled.icon .icon, .ts.button.massive.labeled.icon .icon, .ts.card, .ts.input.icon .icon.link, .ts.input.icon .fa.link, .ts.checkbox:hover, .ts.checkbox [type="checkbox"]:hover, .ts.label.image:hover, .ts.label.positive.image:hover, .ts.label.negative.image:hover, .ts.label.warning.image:hover, .ts.label.info.image:hover, .ts.label.inverted.image:hover, .ts.label.primary.image:hover {
   transition: all 0.15s ease-in-out; }
 
@@ -789,7 +796,7 @@ body {
     border-bottom: 1px solid #eeeeee; }
   .ts.chatroom > .content {
     padding: 0.8rem;
-    overflow-y: scroll; }
+    overflow-y: auto; }
     .ts.chatroom > .content > .divider {
       display: table;
       margin-bottom: 0.8em;
@@ -3759,7 +3766,8 @@ body {
     margin: 0.8rem; }
 
 a.ts.card {
-  display: inline-block; }
+  display: inline-block;
+  text-decoration: none; }
   a.ts.card:hover {
     z-index: 1;
     cursor: pointer;
@@ -4009,16 +4017,21 @@ a.ts.card {
           margin-right: 0; }
         .ts.card > .content .meta > *:not(.list).floated.left:last-child {
           margin-left: 0; }
-    .ts.card > .content .symbol .icon, .ts.card > .content .symbol .fa {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      overflow: hidden;
-      width: 8em;
-      height: 8em;
-      font-size: 13rem;
-      line-height: 1.1em;
-      opacity: 0.2; }
+    .ts.card > .content .symbol {
+      height: 1em; }
+      .ts.card > .content .symbol .icon, .ts.card > .content .symbol .fa {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+        width: 0.8em;
+        height: 0.8em;
+        margin-left: 0;
+        margin-right: 0;
+        pointer-events: none;
+        font-size: 13rem;
+        line-height: 1.1em;
+        opacity: 0.2; }
     .ts.card > .content.extra {
       border-top-style: solid;
       border-top-width: 1px; }
@@ -5589,6 +5602,12 @@ a.ts.card {
       border-bottom: 0.1rem solid #595959; }
   .ts.header.bolder {
     font-weight: 800; }
+  .ts.header.aligned[class*="right aligned"] {
+    text-align: right; }
+  .ts.header.aligned[class*="left aligned"] {
+    text-align: left; }
+  .ts.header.aligned[class*="center aligned"] {
+    text-align: center; }
 
 .ts.container {
   max-width: 1120px;
@@ -6060,6 +6079,7 @@ a.ts.card {
     left: calc((-0.8rem + -0.8rem * 2) + ((-0.8rem / 2) + 0.1rem)); }
     .ts.label.ribbon:not(.right) {
       padding-left: 2.6rem;
+      margin-right: -2em;
       border-top-left-radius: 0;
       border-bottom-left-radius: 0; }
       .ts.label.ribbon:not(.right):after {
@@ -6553,83 +6573,109 @@ a.ts.card {
   box-sizing: border-box;
   overflow: hidden;
   color: #7B7B7B;
+  margin-top: 1em;
+  margin-bottom: 1em;
   width: 100%;
   border: 1px solid #EEE; }
   .ts.progress.mini .bar {
-    padding-top: 0.16rem;
-    padding-bottom: 0.16rem;
-    padding-left: 0.2rem;
-    padding-right: 0.2rem; }
+    padding-top: calc(.2em * 0.2);
+    padding-bottom: calc(.2em * 0.2);
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    height: calc(1em + (.2em * 0.2) * 2 );
+    line-height: 1em;
+    font-size: 1.2rem; }
   .ts.progress.mini.indeterminate {
     padding-top: 0.16rem;
     padding-bottom: 0.16rem;
     padding-left: 0.2rem;
     padding-right: 0.2rem; }
   .ts.progress.tiny .bar {
-    padding-top: 0.32rem;
-    padding-bottom: 0.32rem;
-    padding-left: 0.4rem;
-    padding-right: 0.4rem; }
+    padding-top: calc(.2em * 0.4);
+    padding-bottom: calc(.2em * 0.4);
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    height: calc(1em + (.2em * 0.4) * 2 );
+    line-height: 1em;
+    font-size: 1.2rem; }
   .ts.progress.tiny.indeterminate {
     padding-top: 0.32rem;
     padding-bottom: 0.32rem;
     padding-left: 0.4rem;
     padding-right: 0.4rem; }
   .ts.progress.small .bar {
-    padding-top: 0.48rem;
-    padding-bottom: 0.48rem;
-    padding-left: 0.6rem;
-    padding-right: 0.6rem; }
+    padding-top: calc(.2em * 0.6);
+    padding-bottom: calc(.2em * 0.6);
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    height: calc(1em + (.2em * 0.6) * 2 );
+    line-height: 1em;
+    font-size: 1.3rem; }
   .ts.progress.small.indeterminate {
     padding-top: 0.48rem;
     padding-bottom: 0.48rem;
     padding-left: 0.6rem;
     padding-right: 0.6rem; }
   .ts.progress.medium .bar {
-    padding-top: 0.64rem;
-    padding-bottom: 0.64rem;
-    padding-left: 0.8rem;
-    padding-right: 0.8rem; }
+    padding-top: calc(.2em * 0.8);
+    padding-bottom: calc(.2em * 0.8);
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    height: calc(1em + (.2em * 0.8) * 2 );
+    line-height: 1em;
+    font-size: 1.3rem; }
   .ts.progress.medium.indeterminate {
     padding-top: 0.64rem;
     padding-bottom: 0.64rem;
     padding-left: 0.8rem;
     padding-right: 0.8rem; }
   .ts.progress.large .bar {
-    padding-top: 0.8rem;
-    padding-bottom: 0.8rem;
-    padding-left: 1rem;
-    padding-right: 1rem; }
+    padding-top: calc(.2em * 1);
+    padding-bottom: calc(.2em * 1);
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    height: calc(1em + (.2em * 1) * 2 );
+    line-height: 1em;
+    font-size: 1.6rem; }
   .ts.progress.large.indeterminate {
     padding-top: 0.8rem;
     padding-bottom: 0.8rem;
     padding-left: 1rem;
     padding-right: 1rem; }
   .ts.progress.big .bar {
-    padding-top: 0.96rem;
-    padding-bottom: 0.96rem;
-    padding-left: 1.2rem;
-    padding-right: 1.2rem; }
+    padding-top: calc(.2em * 1.2);
+    padding-bottom: calc(.2em * 1.2);
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    height: calc(1em + (.2em * 1.2) * 2 );
+    line-height: 1em;
+    font-size: 1.7rem; }
   .ts.progress.big.indeterminate {
     padding-top: 0.96rem;
     padding-bottom: 0.96rem;
     padding-left: 1.2rem;
     padding-right: 1.2rem; }
   .ts.progress.huge .bar {
-    padding-top: 1.12rem;
-    padding-bottom: 1.12rem;
-    padding-left: 1.4rem;
-    padding-right: 1.4rem; }
+    padding-top: calc(.2em * 1.4);
+    padding-bottom: calc(.2em * 1.4);
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    height: calc(1em + (.2em * 1.4) * 2 );
+    line-height: 1em;
+    font-size: 1.9rem; }
   .ts.progress.huge.indeterminate {
     padding-top: 1.12rem;
     padding-bottom: 1.12rem;
     padding-left: 1.4rem;
     padding-right: 1.4rem; }
   .ts.progress.massive .bar {
-    padding-top: 1.28rem;
-    padding-bottom: 1.28rem;
-    padding-left: 1.6rem;
-    padding-right: 1.6rem; }
+    padding-top: calc(.2em * 1.6);
+    padding-bottom: calc(.2em * 1.6);
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    height: calc(1em + (.2em * 1.6) * 2 );
+    line-height: 1em;
+    font-size: 2rem; }
   .ts.progress.massive.indeterminate {
     padding-top: 1.28rem;
     padding-bottom: 1.28rem;
@@ -6643,6 +6689,208 @@ a.ts.card {
     text-shadow: 0 1px 1px #dddddd; }
   .ts.progress.active .bar:after {
     background: #cbcbcb; }
+  .ts.progress[data-percent="0%"] .bar {
+    width: calc(0% + 1em); }
+  .ts.progress[data-percent="1%"] .bar {
+    width: calc(1% + 1em); }
+  .ts.progress[data-percent="2%"] .bar {
+    width: calc(2% + 1em); }
+  .ts.progress[data-percent="3%"] .bar {
+    width: calc(3% + 1em); }
+  .ts.progress[data-percent="4%"] .bar {
+    width: calc(4% + 1em); }
+  .ts.progress[data-percent="5%"] .bar {
+    width: calc(5% + 1em); }
+  .ts.progress[data-percent="6%"] .bar {
+    width: calc(6% + 1em); }
+  .ts.progress[data-percent="7%"] .bar {
+    width: calc(7% + 1em); }
+  .ts.progress[data-percent="8%"] .bar {
+    width: calc(8% + 1em); }
+  .ts.progress[data-percent="9%"] .bar {
+    width: calc(9% + 1em); }
+  .ts.progress[data-percent="10%"] .bar {
+    width: calc(10% + 1em); }
+  .ts.progress[data-percent="11%"] .bar {
+    width: calc(11% + 1em); }
+  .ts.progress[data-percent="12%"] .bar {
+    width: calc(12% + 1em); }
+  .ts.progress[data-percent="13%"] .bar {
+    width: calc(13% + 1em); }
+  .ts.progress[data-percent="14%"] .bar {
+    width: calc(14% + 1em); }
+  .ts.progress[data-percent="15%"] .bar {
+    width: calc(15% + 1em); }
+  .ts.progress[data-percent="16%"] .bar {
+    width: calc(16% + 1em); }
+  .ts.progress[data-percent="17%"] .bar {
+    width: calc(17% + 1em); }
+  .ts.progress[data-percent="18%"] .bar {
+    width: calc(18% + 1em); }
+  .ts.progress[data-percent="19%"] .bar {
+    width: calc(19% + 1em); }
+  .ts.progress[data-percent="20%"] .bar {
+    width: calc(20% + 1em); }
+  .ts.progress[data-percent="21%"] .bar {
+    width: calc(21% + 1em); }
+  .ts.progress[data-percent="22%"] .bar {
+    width: calc(22% + 1em); }
+  .ts.progress[data-percent="23%"] .bar {
+    width: calc(23% + 1em); }
+  .ts.progress[data-percent="24%"] .bar {
+    width: calc(24% + 1em); }
+  .ts.progress[data-percent="25%"] .bar {
+    width: calc(25% + 1em); }
+  .ts.progress[data-percent="26%"] .bar {
+    width: calc(26% + 1em); }
+  .ts.progress[data-percent="27%"] .bar {
+    width: calc(27% + 1em); }
+  .ts.progress[data-percent="28%"] .bar {
+    width: calc(28% + 1em); }
+  .ts.progress[data-percent="29%"] .bar {
+    width: calc(29% + 1em); }
+  .ts.progress[data-percent="30%"] .bar {
+    width: calc(30% + 1em); }
+  .ts.progress[data-percent="31%"] .bar {
+    width: calc(31% + 1em); }
+  .ts.progress[data-percent="32%"] .bar {
+    width: calc(32% + 1em); }
+  .ts.progress[data-percent="33%"] .bar {
+    width: calc(33% + 1em); }
+  .ts.progress[data-percent="34%"] .bar {
+    width: calc(34% + 1em); }
+  .ts.progress[data-percent="35%"] .bar {
+    width: calc(35% + 1em); }
+  .ts.progress[data-percent="36%"] .bar {
+    width: calc(36% + 1em); }
+  .ts.progress[data-percent="37%"] .bar {
+    width: calc(37% + 1em); }
+  .ts.progress[data-percent="38%"] .bar {
+    width: calc(38% + 1em); }
+  .ts.progress[data-percent="39%"] .bar {
+    width: calc(39% + 1em); }
+  .ts.progress[data-percent="40%"] .bar {
+    width: calc(40% + 1em); }
+  .ts.progress[data-percent="41%"] .bar {
+    width: calc(41% + 1em); }
+  .ts.progress[data-percent="42%"] .bar {
+    width: calc(42% + 1em); }
+  .ts.progress[data-percent="43%"] .bar {
+    width: calc(43% + 1em); }
+  .ts.progress[data-percent="44%"] .bar {
+    width: calc(44% + 1em); }
+  .ts.progress[data-percent="45%"] .bar {
+    width: calc(45% + 1em); }
+  .ts.progress[data-percent="46%"] .bar {
+    width: calc(46% + 1em); }
+  .ts.progress[data-percent="47%"] .bar {
+    width: calc(47% + 1em); }
+  .ts.progress[data-percent="48%"] .bar {
+    width: calc(48% + 1em); }
+  .ts.progress[data-percent="49%"] .bar {
+    width: calc(49% + 1em); }
+  .ts.progress[data-percent="50%"] .bar {
+    width: calc(50% + 1em); }
+  .ts.progress[data-percent="51%"] .bar {
+    width: calc(51% + 1em); }
+  .ts.progress[data-percent="52%"] .bar {
+    width: calc(52% + 1em); }
+  .ts.progress[data-percent="53%"] .bar {
+    width: calc(53% + 1em); }
+  .ts.progress[data-percent="54%"] .bar {
+    width: calc(54% + 1em); }
+  .ts.progress[data-percent="55%"] .bar {
+    width: calc(55% + 1em); }
+  .ts.progress[data-percent="56%"] .bar {
+    width: calc(56% + 1em); }
+  .ts.progress[data-percent="57%"] .bar {
+    width: calc(57% + 1em); }
+  .ts.progress[data-percent="58%"] .bar {
+    width: calc(58% + 1em); }
+  .ts.progress[data-percent="59%"] .bar {
+    width: calc(59% + 1em); }
+  .ts.progress[data-percent="60%"] .bar {
+    width: calc(60% + 1em); }
+  .ts.progress[data-percent="61%"] .bar {
+    width: calc(61% + 1em); }
+  .ts.progress[data-percent="62%"] .bar {
+    width: calc(62% + 1em); }
+  .ts.progress[data-percent="63%"] .bar {
+    width: calc(63% + 1em); }
+  .ts.progress[data-percent="64%"] .bar {
+    width: calc(64% + 1em); }
+  .ts.progress[data-percent="65%"] .bar {
+    width: calc(65% + 1em); }
+  .ts.progress[data-percent="66%"] .bar {
+    width: calc(66% + 1em); }
+  .ts.progress[data-percent="67%"] .bar {
+    width: calc(67% + 1em); }
+  .ts.progress[data-percent="68%"] .bar {
+    width: calc(68% + 1em); }
+  .ts.progress[data-percent="69%"] .bar {
+    width: calc(69% + 1em); }
+  .ts.progress[data-percent="70%"] .bar {
+    width: calc(70% + 1em); }
+  .ts.progress[data-percent="71%"] .bar {
+    width: calc(71% + 1em); }
+  .ts.progress[data-percent="72%"] .bar {
+    width: calc(72% + 1em); }
+  .ts.progress[data-percent="73%"] .bar {
+    width: calc(73% + 1em); }
+  .ts.progress[data-percent="74%"] .bar {
+    width: calc(74% + 1em); }
+  .ts.progress[data-percent="75%"] .bar {
+    width: calc(75% + 1em); }
+  .ts.progress[data-percent="76%"] .bar {
+    width: calc(76% + 1em); }
+  .ts.progress[data-percent="77%"] .bar {
+    width: calc(77% + 1em); }
+  .ts.progress[data-percent="78%"] .bar {
+    width: calc(78% + 1em); }
+  .ts.progress[data-percent="79%"] .bar {
+    width: calc(79% + 1em); }
+  .ts.progress[data-percent="80%"] .bar {
+    width: calc(80% + 1em); }
+  .ts.progress[data-percent="81%"] .bar {
+    width: calc(81% + 1em); }
+  .ts.progress[data-percent="82%"] .bar {
+    width: calc(82% + 1em); }
+  .ts.progress[data-percent="83%"] .bar {
+    width: calc(83% + 1em); }
+  .ts.progress[data-percent="84%"] .bar {
+    width: calc(84% + 1em); }
+  .ts.progress[data-percent="85%"] .bar {
+    width: calc(85% + 1em); }
+  .ts.progress[data-percent="86%"] .bar {
+    width: calc(86% + 1em); }
+  .ts.progress[data-percent="87%"] .bar {
+    width: calc(87% + 1em); }
+  .ts.progress[data-percent="88%"] .bar {
+    width: calc(88% + 1em); }
+  .ts.progress[data-percent="89%"] .bar {
+    width: calc(89% + 1em); }
+  .ts.progress[data-percent="90%"] .bar {
+    width: calc(90% + 1em); }
+  .ts.progress[data-percent="91%"] .bar {
+    width: calc(91% + 1em); }
+  .ts.progress[data-percent="92%"] .bar {
+    width: calc(92% + 1em); }
+  .ts.progress[data-percent="93%"] .bar {
+    width: calc(93% + 1em); }
+  .ts.progress[data-percent="94%"] .bar {
+    width: calc(94% + 1em); }
+  .ts.progress[data-percent="95%"] .bar {
+    width: calc(95% + 1em); }
+  .ts.progress[data-percent="96%"] .bar {
+    width: calc(96% + 1em); }
+  .ts.progress[data-percent="97%"] .bar {
+    width: calc(97% + 1em); }
+  .ts.progress[data-percent="98%"] .bar {
+    width: calc(98% + 1em); }
+  .ts.progress[data-percent="99%"] .bar {
+    width: calc(99% + 1em); }
+  .ts.progress[data-percent="100%"] .bar {
+    width: calc(100% + 1em); }
   .ts.progress.positive {
     color: white; }
     .ts.progress.positive .bar {
@@ -6697,13 +6945,12 @@ a.ts.card {
     border-radius: 0;
     border: none; }
   .ts.progress .bar {
+    border-radius: 4px;
     position: relative;
     box-sizing: border-box;
     width: 30%;
     text-align: right;
     max-width: 100%; }
-    .ts.progress .bar:after {
-      content: "​"; }
   .ts.progress.active .bar:after {
     position: absolute;
     top: 0;
@@ -6919,7 +7166,7 @@ pre.ts.segment {
 
 body > .ts.jumbotron {
   padding-left: 0;
-  padding-right: 0; }
+  padding-right: 0ㄊ; }
   body > .ts.jumbotron nav.menu {
     margin-top: -1.5em;
     margin-bottom: 2em !important; }

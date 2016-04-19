@@ -12,6 +12,15 @@ class TocasUIDocumention
         return $this;
     }
     
+    function pureHeader($title, $description)
+    {
+        ob_start();
+
+        include('tpl/pure-header.tpl.php');
+        
+        return $this;
+    }
+    
     function headerGroup($header, $description)
     {
         include('tpl/header-group.tpl.php');
@@ -37,6 +46,45 @@ class TocasUIDocumention
     {
         include('tpl/group-end.tpl.php');
         
+        return $this;
+    }
+    
+    function cards($array)
+    {
+        echo '<div class="four column doubling row">';
+        
+        foreach($array as $title => $data)
+        {
+            extract($data);
+            
+            include('tpl/single-card.tpl.php');
+        }
+        
+        echo '</div>';
+        
+        return $this;
+    }
+    
+    function pureFooter($path)
+    {
+        include('tpl/pure-footer.tpl.php');
+        
+        $html = $this->minify(ob_get_contents());
+        
+        ob_end_clean();
+        ob_end_flush();
+        
+        echo $html;
+        
+
+        $path = __DIR__ . '/../' . $path;
+        
+        umask(0);
+        
+        file_put_contents($path, $html);
+        
+        chmod($path, 0777);
+
         return $this;
     }
     
