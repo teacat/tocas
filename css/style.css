@@ -929,7 +929,7 @@ body {
 .ts.grid {
   flex-direction: row;
   box-sizing: border-box;
-  width: 100%;
+  margin: -0.4rem;
   flex-wrap: wrap; }
   .ts.grid .row[class*="only"],
   .ts.grid .column[class*="only"] {
@@ -975,8 +975,7 @@ body {
   .ts.grid > .row .column:not(.row) {
     position: relative;
     box-sizing: border-box;
-    padding-left: 0.4rem;
-    padding-right: 0.4rem;
+    padding: 0.4rem;
     margin-bottom: 1.44rem; }
     .ts.grid > .column:not(.row)[class*="left aligned"],
     .ts.grid > .row .column:not(.row)[class*="left aligned"] {
@@ -987,10 +986,11 @@ body {
     .ts.grid > .column:not(.row)[class*="center aligned"],
     .ts.grid > .row .column:not(.row)[class*="center aligned"] {
       text-align: center; }
-  .ts.grid.relaxed > .column:not(.row),
-  .ts.grid.relaxed > .row > .column:not(.row) {
-    padding-left: 1.44rem;
-    padding-right: 1.44rem; }
+  .ts.grid.relaxed {
+    margin: -1.44rem; }
+    .ts.grid.relaxed > .column:not(.row),
+    .ts.grid.relaxed > .row > .column:not(.row) {
+      padding: 1.44rem; }
   .ts.grid [class*="one wide"] {
     box-sizing: border-box;
     width: 6.25%; }
@@ -1365,6 +1365,15 @@ body {
     .ts.grid.stackable > .column:not(.row) {
       width: 100%; } }
 
+.ts.menu {
+  white-space: nowrap;
+  overflow-x: auto; }
+  .ts.menu.transparent {
+    margin-top: -0.96rem;
+    margin-bottom: -0.96rem;
+    margin-left: -1.6rem;
+    margin-right: -1.6rem; }
+
 .ts.menu, .ts.menu .menu {
   background: #fafafa;
   border-color: #ededed;
@@ -1404,13 +1413,10 @@ body {
       border: none; }
     .ts.menu.transparent.active, .ts.menu.transparent.active:after, .ts.menu.transparent > .menu.active, .ts.menu.transparent > .menu.active:after, .ts.menu .menu.transparent.active, .ts.menu .menu.transparent.active:after, .ts.menu .menu.transparent > .menu.active, .ts.menu .menu.transparent > .menu.active:after {
       background-color: #e6e6e6; }
-  .ts.menu:not(.vertical), .ts.menu .menu:not(.vertical) {
-    white-space: nowrap;
-    overflow-x: scroll; }
-    .ts.menu:not(.vertical) > .item,
-    .ts.menu:not(.vertical) > .menu .item, .ts.menu .menu:not(.vertical) > .item,
-    .ts.menu .menu:not(.vertical) > .menu .item {
-      border-color: #e1e1e1; }
+  .ts.menu:not(.vertical) > .item,
+  .ts.menu:not(.vertical) > .menu .item, .ts.menu .menu:not(.vertical) > .item,
+  .ts.menu .menu:not(.vertical) > .menu .item {
+    border-color: #e1e1e1; }
   .ts.menu.vertical > .item,
   .ts.menu.vertical > .menu .item, .ts.menu .menu.vertical > .item,
   .ts.menu .menu.vertical > .menu .item {
@@ -1454,6 +1460,8 @@ body {
     margin-top: 0; }
   .ts.menu a, .ts.menu .menu a {
     text-decoration: none; }
+  .ts.menu.transparent, .ts.menu .menu.transparent {
+    border: none; }
   .ts.menu .menu, .ts.menu .menu .menu {
     margin-bottom: 0;
     margin-top: 0;
@@ -1474,7 +1482,10 @@ body {
     border-radius: 0;
     border: none; }
   .ts.menu.vertical, .ts.menu .menu.vertical {
-    display: block; }
+    display: block;
+    white-space: nowrap;
+    overflow-x: hidden;
+    overflow-y: auto; }
   .ts.menu.borderless .menu > .item, .ts.menu .menu.borderless .menu > .item {
     border: none !important; }
   .ts.menu.pointing.secondary, .ts.menu .menu.pointing.secondary {
@@ -1511,6 +1522,8 @@ body {
     padding-bottom: 0.96rem;
     padding-left: 1.6rem;
     padding-right: 1.6rem; }
+    .ts.menu.transparent:not(.fluid) > .item, .ts.menu.transparent:not(.fluid) .menu > .item {
+      border-radius: 4px; }
     .ts.menu.small > .item, .ts.menu.small .menu > .item {
       font-size: 1.2rem;
       padding: 0.8rem 1.2rem; }
@@ -1612,13 +1625,10 @@ body {
         border: none; }
       .ts.menu.primary.transparent.active, .ts.menu.primary.transparent.active:after, .ts.menu.primary.transparent > .menu.active, .ts.menu.primary.transparent > .menu.active:after, .ts.menu .menu.primary.transparent.active, .ts.menu .menu.primary.transparent.active:after, .ts.menu .menu.primary.transparent > .menu.active, .ts.menu .menu.primary.transparent > .menu.active:after {
         background-color: #0ea4da; }
-    .ts.menu.primary:not(.vertical), .ts.menu .menu.primary:not(.vertical) {
-      white-space: nowrap;
-      overflow-x: scroll; }
-      .ts.menu.primary:not(.vertical) > .item,
-      .ts.menu.primary:not(.vertical) > .menu .item, .ts.menu .menu.primary:not(.vertical) > .item,
-      .ts.menu .menu.primary:not(.vertical) > .menu .item {
-        border-color: #0d9dd0; }
+    .ts.menu.primary:not(.vertical) > .item,
+    .ts.menu.primary:not(.vertical) > .menu .item, .ts.menu .menu.primary:not(.vertical) > .item,
+    .ts.menu .menu.primary:not(.vertical) > .menu .item {
+      border-color: #0d9dd0; }
     .ts.menu.primary.vertical > .item,
     .ts.menu.primary.vertical > .menu .item, .ts.menu .menu.primary.vertical > .item,
     .ts.menu .menu.primary.vertical > .menu .item {
@@ -1691,13 +1701,10 @@ body {
         border: none; }
       .ts.menu.info.transparent.active, .ts.menu.info.transparent.active:after, .ts.menu.info.transparent > .menu.active, .ts.menu.info.transparent > .menu.active:after, .ts.menu .menu.info.transparent.active, .ts.menu .menu.info.transparent.active:after, .ts.menu .menu.info.transparent > .menu.active, .ts.menu .menu.info.transparent > .menu.active:after {
         background-color: #5e97ab; }
-    .ts.menu.info:not(.vertical), .ts.menu .menu.info:not(.vertical) {
-      white-space: nowrap;
-      overflow-x: scroll; }
-      .ts.menu.info:not(.vertical) > .item,
-      .ts.menu.info:not(.vertical) > .menu .item, .ts.menu .menu.info:not(.vertical) > .item,
-      .ts.menu .menu.info:not(.vertical) > .menu .item {
-        border-color: #5892a8; }
+    .ts.menu.info:not(.vertical) > .item,
+    .ts.menu.info:not(.vertical) > .menu .item, .ts.menu .menu.info:not(.vertical) > .item,
+    .ts.menu .menu.info:not(.vertical) > .menu .item {
+      border-color: #5892a8; }
     .ts.menu.info.vertical > .item,
     .ts.menu.info.vertical > .menu .item, .ts.menu .menu.info.vertical > .item,
     .ts.menu .menu.info.vertical > .menu .item {
@@ -1770,13 +1777,10 @@ body {
         border: none; }
       .ts.menu.positive.transparent.active, .ts.menu.positive.transparent.active:after, .ts.menu.positive.transparent > .menu.active, .ts.menu.positive.transparent > .menu.active:after, .ts.menu .menu.positive.transparent.active, .ts.menu .menu.positive.transparent.active:after, .ts.menu .menu.positive.transparent > .menu.active, .ts.menu .menu.positive.transparent > .menu.active:after {
         background-color: #75ab53; }
-    .ts.menu.positive:not(.vertical), .ts.menu .menu.positive:not(.vertical) {
-      white-space: nowrap;
-      overflow-x: scroll; }
-      .ts.menu.positive:not(.vertical) > .item,
-      .ts.menu.positive:not(.vertical) > .menu .item, .ts.menu .menu.positive:not(.vertical) > .item,
-      .ts.menu .menu.positive:not(.vertical) > .menu .item {
-        border-color: #70a54f; }
+    .ts.menu.positive:not(.vertical) > .item,
+    .ts.menu.positive:not(.vertical) > .menu .item, .ts.menu .menu.positive:not(.vertical) > .item,
+    .ts.menu .menu.positive:not(.vertical) > .menu .item {
+      border-color: #70a54f; }
     .ts.menu.positive.vertical > .item,
     .ts.menu.positive.vertical > .menu .item, .ts.menu .menu.positive.vertical > .item,
     .ts.menu .menu.positive.vertical > .menu .item {
@@ -1849,13 +1853,10 @@ body {
         border: none; }
       .ts.menu.warning.transparent.active, .ts.menu.warning.transparent.active:after, .ts.menu.warning.transparent > .menu.active, .ts.menu.warning.transparent > .menu.active:after, .ts.menu .menu.warning.transparent.active, .ts.menu .menu.warning.transparent.active:after, .ts.menu .menu.warning.transparent > .menu.active, .ts.menu .menu.warning.transparent > .menu.active:after {
         background-color: #f3cb3c; }
-    .ts.menu.warning:not(.vertical), .ts.menu .menu.warning:not(.vertical) {
-      white-space: nowrap;
-      overflow-x: scroll; }
-      .ts.menu.warning:not(.vertical) > .item,
-      .ts.menu.warning:not(.vertical) > .menu .item, .ts.menu .menu.warning:not(.vertical) > .item,
-      .ts.menu .menu.warning:not(.vertical) > .menu .item {
-        border-color: #f2c832; }
+    .ts.menu.warning:not(.vertical) > .item,
+    .ts.menu.warning:not(.vertical) > .menu .item, .ts.menu .menu.warning:not(.vertical) > .item,
+    .ts.menu .menu.warning:not(.vertical) > .menu .item {
+      border-color: #f2c832; }
     .ts.menu.warning.vertical > .item,
     .ts.menu.warning.vertical > .menu .item, .ts.menu .menu.warning.vertical > .item,
     .ts.menu .menu.warning.vertical > .menu .item {
@@ -1928,13 +1929,10 @@ body {
         border: none; }
       .ts.menu.negative.transparent.active, .ts.menu.negative.transparent.active:after, .ts.menu.negative.transparent > .menu.active, .ts.menu.negative.transparent > .menu.active:after, .ts.menu .menu.negative.transparent.active, .ts.menu .menu.negative.transparent.active:after, .ts.menu .menu.negative.transparent > .menu.active, .ts.menu .menu.negative.transparent > .menu.active:after {
         background-color: #c44239; }
-    .ts.menu.negative:not(.vertical), .ts.menu .menu.negative:not(.vertical) {
-      white-space: nowrap;
-      overflow-x: scroll; }
-      .ts.menu.negative:not(.vertical) > .item,
-      .ts.menu.negative:not(.vertical) > .menu .item, .ts.menu .menu.negative:not(.vertical) > .item,
-      .ts.menu .menu.negative:not(.vertical) > .menu .item {
-        border-color: #bc3f37; }
+    .ts.menu.negative:not(.vertical) > .item,
+    .ts.menu.negative:not(.vertical) > .menu .item, .ts.menu .menu.negative:not(.vertical) > .item,
+    .ts.menu .menu.negative:not(.vertical) > .menu .item {
+      border-color: #bc3f37; }
     .ts.menu.negative.vertical > .item,
     .ts.menu.negative.vertical > .menu .item, .ts.menu .menu.negative.vertical > .item,
     .ts.menu .menu.negative.vertical > .menu .item {
@@ -2007,13 +2005,10 @@ body {
         border: none; }
       .ts.menu.inverted.transparent.active, .ts.menu.inverted.transparent.active:after, .ts.menu.inverted.transparent > .menu.active, .ts.menu.inverted.transparent > .menu.active:after, .ts.menu .menu.inverted.transparent.active, .ts.menu .menu.inverted.transparent.active:after, .ts.menu .menu.inverted.transparent > .menu.active, .ts.menu .menu.inverted.transparent > .menu.active:after {
         background-color: #ebebeb; }
-    .ts.menu.inverted:not(.vertical), .ts.menu .menu.inverted:not(.vertical) {
-      white-space: nowrap;
-      overflow-x: scroll; }
-      .ts.menu.inverted:not(.vertical) > .item,
-      .ts.menu.inverted:not(.vertical) > .menu .item, .ts.menu .menu.inverted:not(.vertical) > .item,
-      .ts.menu .menu.inverted:not(.vertical) > .menu .item {
-        border-color: #e6e6e6; }
+    .ts.menu.inverted:not(.vertical) > .item,
+    .ts.menu.inverted:not(.vertical) > .menu .item, .ts.menu .menu.inverted:not(.vertical) > .item,
+    .ts.menu .menu.inverted:not(.vertical) > .menu .item {
+      border-color: #e6e6e6; }
     .ts.menu.inverted.vertical > .item,
     .ts.menu.inverted.vertical > .menu .item, .ts.menu .menu.inverted.vertical > .item,
     .ts.menu .menu.inverted.vertical > .menu .item {
@@ -5393,7 +5388,7 @@ a.ts.card {
 .ts.header {
   display: block;
   color: #333;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 2.4rem; }
   .ts.header.dividing {
     border-bottom: 0.1rem solid #d9d9d9; }
@@ -5592,6 +5587,8 @@ a.ts.card {
     color: #FFF; }
     .ts.header.inverted.dividing, .ts.header.inverted .header.dividing {
       border-bottom: 0.1rem solid #595959; }
+  .ts.header.bolder {
+    font-weight: 800; }
 
 .ts.container {
   max-width: 1120px;
@@ -5603,8 +5600,8 @@ a.ts.card {
       width: auto !important; } }
   @media (max-width: 767px) {
     .ts.container {
-      margin-left: 0.8rem !important;
-      margin-right: 0.8rem !important;
+      margin-left: 1.584rem !important;
+      margin-right: 1.584rem !important;
       max-width: none !important;
       width: auto !important; } }
   .ts.container.text {
@@ -6878,7 +6875,7 @@ pre.ts.segment {
 .labelside::after {
   content: "";
   position: absolute;
-  top: 0;
+  top: 1em;
   right: 1em;
   bottom: 0;
   left: 0;
@@ -6891,6 +6888,7 @@ pre.ts.segment {
   .left.ul a {
     display: block;
     padding: 15px;
+    margin-left: -15px;
     border-radius: 4px;
     text-decoration: none;
     color: #5B7691; }
@@ -6900,7 +6898,7 @@ pre.ts.segment {
 
 [class*="left label"] {
   display: block;
-  margin: 15px;
+  margin: 15px 15px 15px 0px;
   font-size: 18px;
   font-weight: 500;
   color: #005F5F;
@@ -6919,10 +6917,12 @@ pre.ts.segment {
 .headerGroup > h4 {
   color: #019E9E !important; }
 
-body > .ts.jumbotron nav.menu {
-  margin-left: -1.1em;
-  margin-top: -2em;
-  margin-bottom: 2em !important; }
+body > .ts.jumbotron {
+  padding-left: 0;
+  padding-right: 0; }
+  body > .ts.jumbotron nav.menu {
+    margin-top: -1.5em;
+    margin-bottom: 2em !important; }
 body > .ts.container {
   color: #007878; }
 
