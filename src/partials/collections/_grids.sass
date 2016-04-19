@@ -4,6 +4,11 @@ $columnAmount: 16
 // The name of the each column size.
 $columnName  : one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen
 
+$columnPadding: $padding / 2
+
+$columnRelaxedPadding: $padding * 1.8
+
+
 =column-generator
   @for $i from 1 through $columnAmount
     [class*="#{nth($columnName, $i)} wide"]
@@ -57,8 +62,9 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
   +flex
   +flex-row
   +border-box
-
-  width    : 100%
+  
+  margin   : -#{$columnPadding}
+  //width    : 100%
   flex-wrap: wrap
 
   //margin-left: -#{$padding}
@@ -141,8 +147,7 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
     //+block
     +relative
     +border-box
-    padding-left : $padding / 2
-    padding-right: $padding / 2
+    padding: $columnPadding
     margin-bottom: $margin * 1.8
 
     &[class*="left aligned"]
@@ -156,14 +161,12 @@ $columnName  : one two three four five six seven eight nine ten eleven twelve th
 
 
   &.relaxed
-    //margin-left: -#{$padding * 1.8}
-    //margin-right: -#{$padding * 1.8}
+    margin: -#{$columnRelaxedPadding}
 
     > .column:not(.row),
     > .row > .column:not(.row)
-
-      padding-left : $padding * 1.8
-      padding-right: $padding * 1.8
+    
+      padding: $columnRelaxedPadding
 
   +column-generator
 

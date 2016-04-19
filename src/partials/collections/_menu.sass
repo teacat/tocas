@@ -19,9 +19,12 @@
 //***********   T H E M E   ************
 //**************************************
 
-=menu-theme($color: #fafafa)
+=menu-theme($color: #fafafa, $textColor: false)
   //+no-overflow
-
+  
+  @if not $textColor
+    $textColor: darken($color, 30%)
+    
   background          : $color
   border-color: darken($color, 5%)
 
@@ -33,41 +36,51 @@
 
   > a.item,
   > .menu a.item
-
+    
+    background-color : $color
+    color            : $textColor
+    
+    +if-parent($thisParent, '.transparent')
+      background-color: transparent
+    
     &:hover
       +poi
+      
       +if-parent($thisParent, ':not(.tabbed)')
-        background : auten($color, 5%)
-        color      : rgba(auten($color, 45%), 1)
+        background-color : auten($color, 5%)
+        color      : $textColor
+      
+      +if-parent($thisParent, '.transparent')
+        background-color : rgba(auten($color, 5%), .3)
+        
+      
         
     &:active
       +extend(no-ease)
       +extend(no-tap)
-      background : auten($color, 10%)
+      background-color: auten($color, 10%)
+      
+      +if-parent($thisParent, '.transparent')
+        background-color: rgba(auten($color, 10%), .6)
+  
+  
+  &.transparent,
+  &.transparent > .menu
+    background-color: transparent
+    
 
-  > .item,
-  > .menu .item
-    background : $color
-    color      : rgba(auten($color, 45%), 1)
-
+    
+    
+    
+    
     .label:not(.empty):not(.primary):not(.warning):not(.positive):not(.negative):not(.info)
-      color     : auten($color, 45%)
-      background: if(is_lighter($color), darken($color, 3%), darken($color, 3%))
+      color     : $textColor
+      background-color: if(is_lighter($color), darken($color, 3%), darken($color, 3%))
       border    : none
 
     &.active,
     &.active:after
-      background: auten($color, 8%)
-
-
-    &.primary
-      background : $primaryColor
-      color      : $primaryTextColor
-
-    &.info
-      background : $infoColor
-      color      : $infoTextColor
-
+      background-color: auten($color, 8%)
 
 
 
@@ -77,8 +90,6 @@
   //
 
   &:not(.vertical)
-    white-space: nowrap
-    overflow-x: scroll
   
     > .item,
     > .menu .item
@@ -104,14 +115,14 @@
     > a.item,
     > .menu a.item
       &:hover
-        background      : auten($color, 1%)
+        background-color      : auten($color, 1%)
         border-top-color: auten($color, 2%)
 
       &:active
         +extend(no-ease)
         +extend(no-tap)
 
-        background      : auten($color, 8%)
+        background-color      : auten($color, 8%)
         border-top-color: auten($color, 8%)
 
 
@@ -165,6 +176,18 @@
 //************   M A I N   *************
 //**************************************
 
+
+.ts.menu
+  white-space: nowrap
+  overflow-x : auto
+  
+  
+  &.transparent
+    +y-margin(-#{$padding * 1.2})
+    +x-margin(-#{$padding * 2})
+  
+  
+
 .ts.menu, .ts.menu .menu
   $thisParent: '.ts.menu'
 
@@ -178,6 +201,10 @@
   border-width: .1rem
   border-style: solid
 
+  
+
+
+
   &:first-child
     margin-top: 0
 
@@ -190,7 +217,11 @@
   a
     text-decoration: none
 
-
+  
+  
+  &.transparent
+    border: none
+    
 
   // Sub menu
   //
@@ -244,6 +275,10 @@
 
   &.vertical
     +block
+    
+    white-space: nowrap
+    overflow-x : hidden
+    overflow-y : auto
 
 
 
@@ -319,7 +354,9 @@
     +x-padding($padding * 2)
 
     //text-shadow : 0 .2rem 0 rgba(0,0,0,0.2)
-
+    
+    +if-parent($thisParent, '.transparent:not(.fluid)')
+      +rd
 
 
     // [PARENT] Small
@@ -488,3 +525,27 @@
 
     > .item
       border-right: none
+  
+
+      
+  
+  
+  &.primary
+    +menu-theme($primaryColor, $primaryTextColor)
+    
+  &.info
+    +menu-theme($infoColor, $infoTextColor)
+    
+  &.positive
+    +menu-theme($positiveColor, $positiveTextColor)
+    
+  &.warning
+    +menu-theme($warningColor, $warningTextColor)
+    
+  &.negative
+    +menu-theme($negativeColor, $negativeTextColor)
+  
+  &.inverted
+    +menu-theme($invertedColor, $invertedTextColor)
+  
+    
