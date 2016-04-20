@@ -133,36 +133,71 @@
 //**************************************
 
 =input-theme($color, $textColor)
-  background-color: $color
-  color           : $textColor
-  border-color    : darken($color, 10%)
+  color: $textColor
   
-  
-  
-  // WEBKIT-INPUT-PLACEHOLDER
-  //
-  // Webkit 的 Placeholder 屬性。
-  
-  &::-webkit-input-placeholder
-    color: rgba($textColor, 0.6)
-  
-  
-  
-  // EMPTY
-  //
-  // 空的時候。
-          
-  &:empty:before
-    color: rgba($textColor, 0.6)
-  
-  
-  
-  // HOVER
+  // INPUT
   //
   //
-  &:hover
-    border-color: darken($defaultColor, 10%)
+  
+  input, textarea, div[contenteditable]
+    border-color: darken($color, 10%)
+    color       : $textColor
+    
+    // WEBKIT-INPUT-PLACEHOLDER
+    //
+    // Webkit 的 Placeholder 屬性。
+    
+    &::-webkit-input-placeholder
+      color: $textColor
+    
+    &:-moz-placeholder,
+    &::-moz-placeholder,
+    &:-ms-input-placeholder
+      color: $textColor
+        
+        
+        
+    // EMPTY
+    //
+    // 空的時候。
+            
+    &:empty:before
+      color: rgba($textColor, 0.6)
+    
+  
+  
+    // HOVER
+    //
+    //
+    &:hover
+      border-color: darken($color, 20%)
 
+
+
+  //
+  //
+  //
+  
+  &:not(.transparent)
+    background-color: $color
+  
+    // INPUT
+    //
+    //
+    
+    input, textarea, div[contenteditable]
+    
+      // WEBKIT-INPUT-PLACEHOLDER
+      //
+      // Webkit 的 Placeholder 屬性。
+      
+      &::-webkit-input-placeholder
+        color: rgba($textColor, 0.6)
+      
+      &:-moz-placeholder,
+      &::-moz-placeholder,
+      &:-ms-input-placeholder
+        color: rgba($textColor, 0.6)
 
 
 
@@ -172,6 +207,7 @@
 
 .ts.input
   +input-generator
+  +input-theme(lighten($defaultColor, 35%), $defaultTextColor)
   +relative
   +inline-block
   
@@ -192,7 +228,6 @@
     +rd
     +border-box
     +normal
-    +input-theme(lighten($defaultColor, 35%), $defaultTextColor)
     +y-padding($padding)
     +x-padding($padding * 1.3)
     
@@ -358,8 +393,11 @@
 
   &.transparent
     input, textarea, div[contenteditable]
-      border    : none
       background: transparent
+      
+    &.borderless
+      input, textarea, div[contenteditable]
+        border: none
   
   
   
@@ -420,3 +458,22 @@
     input, textarea, div[contenteditable]
       //color: auten(#FFD9D7)
       background-color: #FDEBEA
+      
+  
+  &.inverted
+    +input-theme($invertedColor, $invertedTextColor)
+    
+  &.primary
+    +input-theme($primaryColor, $primaryTextColor)
+
+  &.info
+    +input-theme($infoColor, $infoTextColor)
+    
+  &.warning
+    +input-theme($warningColor, $warningTextColor)
+    
+  &.positive
+    +input-theme($positiveColor, $positiveTextColor)
+    
+  &.negative
+    +input-theme($negativeColor, $negativeTextColor)

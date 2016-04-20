@@ -1,0 +1,156 @@
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   T A B L E   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+//**************************************
+//************   M A I N   *************
+//**************************************
+
+.ts.table
+  +rd
+  +size(x, 100%)
+
+  border: 1px solid $tableBorderColor
+  
+  $thisParent: '.ts.table'
+
+  // TD, TH
+  //
+  //
+  
+  td, th
+    +extend(basicAligns)
+    +padding
+    
+    text-align: left
+    
+    &:not(:last-child)
+      border-right: 1px solid $tableBorderColor
+     
+    &.positive
+      background: rgba($positiveColor, 0.2)
+      color: $positiveColor
+    
+    &.negative, &.error
+      background: rgba($negativeColor, 0.2)
+      color: $negativeColor
+      
+    &.warning
+      background: rgba($warningColor, 0.2)
+      color: $warningColor
+    
+    &.active
+      background: rgba(#777, 0.2)
+      color: #777
+    
+    &.disabled
+      +no-poi
+      
+      color: rgba(#000, 0.2)
+  
+  
+  
+  // TR
+  //
+  //
+        
+  tr
+    &.positive
+      td
+        background: rgba($positiveColor, 0.2)
+        color: $positiveColor
+    
+    &.negative, &.error
+      td
+        background: rgba($negativeColor, 0.2)
+        color: $negativeColor
+    
+    &.warning
+      td
+        background: rgba($warningColor, 0.2)
+        color: $warningColor
+        
+    &.active
+      td
+        background: rgba(#777, 0.2)
+        color: #777
+        
+    &.disabled
+      +no-poi
+      
+      color: rgba(#000, 0.2)
+
+
+  
+  // TR
+  //
+  //
+  
+  tr
+    border-bottom: 1px solid $tableBorderColor
+  
+  
+  
+  // THEAD
+  //
+  //
+  
+  thead
+    td, th
+      font-weight: 500
+      color: #504F4F
+      background: $tableHeadColor
+    
+
+    th
+      +if-parent($thisParent, '.definition')
+        border-right: none
+        
+        &:first-child
+          visibility: hidden
+          
+        &:nth-child(2)
+          border-left: 1px solid $tableBorderColor
+
+
+
+  // TBODY
+  //
+  //
+  
+  tbody
+    
+    td
+      +if-parent($thisParent, '.definition')
+        &:first-child
+          background: #F5F5F5
+          
+        &:not(:first-child)
+          border-right: none
+    
+    tr
+      +if-parent($thisParent, '.striped')
+
+        &:nth-child(even)
+          background: $tableHeadColor
+
+
+
+  // TFOOT
+  //
+  //
+  
+  tfoot

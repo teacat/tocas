@@ -40,7 +40,7 @@
     background-color : $color
     color            : $textColor
     
-    +if-parent($thisParent, '.transparent')
+    +if-parent($thisParent, '.secondary:not(.pointing)')
       background-color: transparent
     
     &:hover
@@ -50,7 +50,7 @@
         background-color : auten($color, 5%)
         color      : $textColor
       
-      +if-parent($thisParent, '.transparent')
+      +if-parent($thisParent, '.secondary:not(.pointing)')
         background-color : rgba(auten($color, 5%), .3)
         
       
@@ -60,9 +60,11 @@
       +extend(no-tap)
       background-color: auten($color, 10%)
       
-      +if-parent($thisParent, '.transparent')
+      +if-parent($thisParent, '.secondary:not(.pointing)')
         background-color: rgba(auten($color, 10%), .6)
   
+  > div.item
+    color: $textColor
   
   &.transparent,
   &.transparent > .menu
@@ -188,7 +190,8 @@
   
   
 
-.ts.menu, .ts.menu .menu
+.ts.menu,
+.ts.menu .menu
   $thisParent: '.ts.menu'
 
   +flex
@@ -201,8 +204,9 @@
   border-width: .1rem
   border-style: solid
 
-  
 
+  .ts.input
+    margin: 0
 
 
   &:first-child
@@ -232,6 +236,7 @@
     margin-top   : 0
     border-radius: 0
     border       : none
+    background: none
 
     &.right
       margin-left: auto !important
@@ -265,6 +270,7 @@
   &.fluid
     border-radius: 0
     border       : none
+    width        : 100%
 
 
 
@@ -311,6 +317,9 @@
   &.secondary:not(.pointing)
     border: none
     background: none
+    
+    .menu
+      background: none
 
 
   &:not(.vertical).tabbed
@@ -353,10 +362,25 @@
     +y-padding($padding * 1.2)
     +x-padding($padding * 2)
 
-    //text-shadow : 0 .2rem 0 rgba(0,0,0,0.2)
+    
+    
+    // [&] Brand
+    //
+    // 顯示代表性文字的項目。
+    
+    &.brand
+      font-weight: bold
+      font-size  : 1.2em
+    
+    
+    
+    // [PARENT] Transparent NOT Fluid
+    //
+    // 當透明背景的時候加入圓角。
     
     +if-parent($thisParent, '.transparent:not(.fluid)')
       +rd
+
 
 
     // [PARENT] Small
@@ -365,8 +389,8 @@
 
     +if-parent($thisParent, '.small')
       +small
-
-      padding  : $padding  $padding * 1.5
+      +x-padding($padding)
+      +y-padding($padding * 1.5)
 
 
 
@@ -376,8 +400,8 @@
 
     +if-parent($thisParent, '.large')
       +base
-
-      padding: $padding * 1.3  $padding * 2.3
+      +x-padding($padding * 2.3)
+      +y-padding($padding * 1.3)
 
 
 
@@ -387,6 +411,7 @@
 
     +if-parent($thisParent, '.secondary:not(.pointing)')
       +rd
+      
       border: none
 
       &:not(.active)
@@ -401,21 +426,19 @@
     +if-parent($thisParent, '.pointing:not(.secondary)')
       &.active:after
         +absolute
+        +position(100%, x, x, 50%)
+        +size($padding)
+        +z(2)
 
         content: ''
-        top    : 100%
-        left   : 50%
         transform: translateX(-50%) translateY(-50%) rotate(45deg)
 
         //margin-top: .5rem
-        width     : $padding
-        height    : $padding
 
         border-bottom-width: .1rem
         border-bottom-style: solid
         border-right-width : .1rem
         border-right-style : solid
-        z-index: 2
         transition: background 0.1s ease
 
 
@@ -487,9 +510,11 @@
     // 標籤。
 
     .label
+      +x-padding($padding)
+      +y-padding($padding / 3)
+      +y-margin(-.2rem, x)
+      
       float     : right
-      margin-top: -.2rem
-      padding   : $padding / 3 $padding
 
 
 
@@ -517,7 +542,13 @@
 
       &.vertically
         +y-padding(0)
-
+  
+  
+  
+  // [&] Compact
+  //
+  // 縮減版的選單。
+  
   &.compact,
   .ts.dropdown &
     +inline-block
@@ -528,7 +559,10 @@
   
 
       
-  
+      
+  //**************************************
+  //**********   C O L O R S   ***********
+  //**************************************
   
   &.primary
     +menu-theme($primaryColor, $primaryTextColor)

@@ -1,8 +1,33 @@
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   M E S S A G E   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+//**************************************
+//***********   T H E M E   ************
+//**************************************
+
 =message-theme($color: #808080, $bgColor: #F5F5F5)
   +basic-card($color, $bgColor)
 
 
-  //text-shadow: 0 .1rem .5rem rgba(darken($color, 3%), 0.3)
+
+
+//**************************************
+//*******   G E N E R A T O R   ********
+//**************************************
 
 =message-generator
   @for $i from 1 through $messageAmount
@@ -17,6 +42,12 @@
           font-size: nth($messageFontSizes, $i) + 0.2
 
 
+
+
+//**************************************
+//************   M A I N   *************
+//**************************************
+
 .ts.message
   +rd
   +relative
@@ -25,77 +56,136 @@
   +message-theme
   +message-generator
   +border-box
-
+  
   &:not(:first-child)
     +y-margin($margin)
-
+  
+  
+  
+  // [&] Icon
+  //
+  // 帶圖示的訊息。
+  
   &.icon
     +flex
-    //+flex-middle
-
+    
+    // ICON, FA
+    //
+    //
+    
     .icon, .fa
       +x-margin(x, $margin * 2)
       font-size: 5rem
-
+    
+    
+    // Content
+    //
+    // 文字內容。
 
     .content
       +flex
-      //+flex-middle
       +flex-column
 
 
 
-
-
-
+  // [&] Dismissable
+  //
+  // 可關閉式的訊息。
 
   &.dismissable
     +x-padding(x, $padding * 1.8 + $padding * 1.5)
-
+    
+    
+    
+    // Close
+    //
+    // 關閉按鈕。
+    
     .close
       opacity: 0.6
-
+      
+      
+      
+      // [&] BEFORE
+      //
+      //
+      
       &:before
         +large
         +absolute
         +position($padding * 2.1, $padding * 1.5, x, x)
         +border-box
 
-        line-height: 0rem
-
-        content: '✖'
-
+        line-height: 0
+        content    : '✖'
+      
+      
+      
+      // [&] HOVER
+      //
+      //
+      
       &:hover
         opacity: 0.8
-
+      
+      
+      
+      // [&] ACTIVE
+      //
+      //
+      
       &:active
         opacity: 1
-
+  
+  
+  
+  // [&] Compact
+  //
+  // 縮減版。
+  
   &.compact
     +inline-block
 
-
+  
+  
+  // Header
+  //
+  // 標題列。
+  
   .header
     +large
     +medium-weight
-
+  
+  
+  
+  // List
+  //
+  // 清單元素。
+  
   .list
     li
       +y-margin($margin, x)
 
-
+  
+  
+  // [&] Hidden
+  //
+  // 隱藏。
+  
   &.hidden
     +none
 
-
+  
+  
+  //**************************************
+  //**********   C O L O R S   ***********
+  //**************************************
+  
   &.primary
     +message-theme($primaryTextColor, $primaryColor)
 
   &.warning
     +message-theme($warningTextColor, $warningColor)
-
-
-
 
   &.info
     +message-theme($infoTextColor, $infoColor)
@@ -105,7 +195,13 @@
 
   &.positive
     +message-theme($positiveTextColor, $positiveColor)
-
+  
+  
+  
+  // [&] Fluid
+  //
+  // 流動寬度。
+  
   &.fluid
     +flex
     +flex-items-center
@@ -115,14 +211,20 @@
     margin: 0
     border: none
     border-radius: 0
-
+  
+  
+  
+  // [&] Attached
+  //
+  // 吸附於其他容器的某一端。
+  
   &.attached
     &[class*="top attached"]
       margin-bottom: 0
-      border-bottom-left-radius: 0
+      border-bottom-left-radius : 0
       border-bottom-right-radius: 0
 
     &[class*="bottom attached"]
       margin-top: 0
-      border-top-left-radius: 0
+      border-top-left-radius : 0
       border-top-right-radius: 0
