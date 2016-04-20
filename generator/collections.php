@@ -9,6 +9,10 @@ $TocasUIDoc->pureHeader('聚合型', '專門收藏、集合資料用的元件。
                     '網格系統' => ['class'       => '.ts.grid',
                                    'description' => '網頁排版的基礎架構系統。',
                                    'link'        => 'collections/menu.html'],
+                                   
+                    '表格'     => ['class'       => '.ts.table',
+                                   'description' => '用以展示資料的表格。',
+                                   'link'        => 'collections/table.html'],
                     
                     '提示訊息' => ['class'       => '.ts.message',
                                    'description' => '用來提示、顯示簡短的訊息。',

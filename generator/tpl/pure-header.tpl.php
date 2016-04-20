@@ -18,25 +18,25 @@
     <div class="ts big fluid info gridded jumbotron">
         <div class="ts container">
             <nav class="ts transparent borderless relaxed inverted menu">
-                <a class="item">
+                <a class="item" href="index.html">
                     <img class="ts small image" src="../img/logo.png" style="margin-top: -.9em">
                 </a>
-                <a class="item">
+                <a class="item" href="main.html">
                     <i class="fa fa-file"></i> 主要說明
                 </a>
-                <a class="item">
+                <a class="item" href="collections.html">
                     <i class="fa fa-th"></i> 
                     聚合型
                 </a>
-                <a class="item">
+                <a class="item" href="elements.html">
                     <i class="fa fa-cogs"></i> 
                     普通元素
                 </a>
-                <a class="item">
+                <a class="item" href="modules.html">
                     <i class="fa fa-th-large"></i> 
                     模塊
                 </a>
-                <a class="item">
+                <a class="item" href="views.html">
                     <i class="fa fa-eye"></i> 
                     外觀型
                 </a>
