@@ -116,5 +116,5 @@ $TocasUIDoc ->header('片段', '碎片化的文字聚集地。')
             </div>', 'left aligned, center aligned, right aligned')
                             
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('elements/segment.html');
 ?>

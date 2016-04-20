@@ -344,5 +344,5 @@ $TocasUIDoc ->header('聊天室', '雙人，或者多人的聊天場所。')
             </div>', 'list, item')
             
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('views/chatroom.html');
 ?>

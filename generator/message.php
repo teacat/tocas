@@ -140,5 +140,5 @@ $TocasUIDoc ->header('訊息', '傳遞訊息至遠方。')
             </div>', 'mini, huge')
                             
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('collections/message.html');
 ?>

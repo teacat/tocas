@@ -269,5 +269,5 @@ $TocasUIDoc ->header('選單', '從這裡到達任何地方。')
             </div>', 'relaxed')
                             
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('collections/menu.html');
 ?>

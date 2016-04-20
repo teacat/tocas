@@ -134,5 +134,5 @@ $TocasUIDoc ->header('進度列', '讓使用者知道他還要等多久，前提
             </div>', 'mini, tiny, small, medium, large, big, huge, massive')
          
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('modules/progress.html');
 ?>

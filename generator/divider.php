@@ -26,5 +26,5 @@ $TocasUIDoc ->header('分隔線', '這裡開啟了另一個話題。')
             <p>而且只需要一個元素。</p>', 'horizontal')
                             
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('elements/divider.html');
 ?>

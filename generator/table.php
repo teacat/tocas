@@ -262,5 +262,5 @@ $TocasUIDoc ->header('表格', '呈現統計資料的好方法。')
             </table>', 'striped')
             
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('collections/table.html');
 ?>

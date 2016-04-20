@@ -114,5 +114,5 @@ $TocasUIDoc ->header('標題', '那數公分的大小落差，就足以形容事
             <h5 class="ts right floated header">向右浮動</h5>', 'left floated, right floated')
                             
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('elements/header.html');
 ?>

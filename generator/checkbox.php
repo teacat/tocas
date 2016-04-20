@@ -20,5 +20,5 @@ $TocasUIDoc ->header('核取方塊', '好了，下一個。')
             </div>', 'checkbox')
                             
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('elements/checkbox.html');
 ?>

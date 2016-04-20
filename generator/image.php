@@ -157,5 +157,5 @@ $TocasUIDoc ->header('圖片', '搭拉，這看起來跟你本人不太像。')
             </div>', 'small, images')
                             
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('elements/image.html');
 ?>

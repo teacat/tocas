@@ -125,5 +125,5 @@ $TocasUIDoc ->header('讀取指示器', '讓使用者能夠稍微在等待你一
             </div>', null)
                             
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('elements/loader.html');
 ?>

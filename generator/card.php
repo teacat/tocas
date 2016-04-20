@@ -426,5 +426,5 @@ $TocasUIDoc ->header('卡片', '隨心所欲，像漢堡一樣，拼湊出你喜
             </div>', 'fluid')
                             
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('views/card.html');
 ?>

@@ -248,5 +248,5 @@ $TocasUIDoc ->header('清單', '一個這個，一個那個。')
             </div>', 'mini, tiny, small, medium, large, big, huge, massive')
                             
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('elements/list.html');
 ?>

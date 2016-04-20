@@ -171,5 +171,5 @@ $TocasUIDoc ->header('按鈕', '一個重要的按鈕，我們將它視為核彈
             <button class="ts raised button">取消</button>', 'raised')
             
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('elements/button.html');
 ?>

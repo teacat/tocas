@@ -185,5 +185,5 @@ $TocasUIDoc ->header('標籤', '那個5元，然後這個——無價。')
             <div class="ts positive label">13</div>', 'primary, info, warning, positive, negative')
                             
             ->groupEnd()
-            ->footer('elements/input.html');
+            ->footer('elements/label.html');
 ?>
