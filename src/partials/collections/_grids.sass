@@ -70,6 +70,7 @@
 //**************************************
 
 .ts.grid
+  +relative
   +flex
   +flex-row
   +border-box
@@ -77,9 +78,25 @@
   margin: -#{$columnPadding}
   flex-wrap: wrap
   
+  + .ts.grid
+    +y-margin($columnPadding, x)
+  
+  
+  [class*="left aligned"] .column,
+  .row[class*="left aligned"] .column,
+  .column[class*="left aligned"]
+    text-align: left
+    
+  [class*="right aligned"] .column,
+  .row[class*="right aligned"] .column,
+  .column[class*="right aligned"]
+    text-align: right
+  
+  
+  
   .row[class*="only"],
   .column[class*="only"]
-    +none
+    display: none
   
   
   
@@ -87,21 +104,25 @@
   //*****   R W D   H E L P E R S   ******
   //**************************************
 
-  [class*="large screen only"]
+  .row[class*="large screen only"],
+  .column[class*="large screen only"]
     +rwd(large)
-      display: initial !important
+      display: flex !important
 
-  [class*="computer only"]
+  .row[class*="computer only"],
+  .column[class*="computer only"]
     +rwd(computer)
-      display: initial !important
+      display: flex !important
 
-  [class*="tablet only"]
+  .row[class*="tablet only"],
+  .column[class*="tablet only"]
     +rwd(tablet)
-      display: initial !important
+      display: flex !important
 
-  [class*="mobile only"]
+  .row[class*="mobile only"],
+  .column[class*="mobile only"]
     +rwd-serious(mobile)
-      display: initial !important
+      display: flex !important
   
   
   
@@ -152,6 +173,7 @@
   // 行。
   
   > .row
+    +relative
     +flex
     +flex-row
     
@@ -191,7 +213,7 @@
     +relative
     +border-box
     +extend(basicAligns)
-    +y-margin(x, $margin * 1.8)
+    //+y-margin(x, $margin * 1.8)
     
     padding: $columnPadding
 
@@ -202,12 +224,11 @@
   // 較寬鬆的網格。
   
   &.relaxed
-    margin: -#{$columnRelaxedPadding}
+    +x-margin(-#{$columnRelaxedPadding})
 
     > .column:not(.row),
     > .row > .column:not(.row)
-    
-      padding: $columnRelaxedPadding
+      +x-padding($columnRelaxedPadding)
   
   
   
