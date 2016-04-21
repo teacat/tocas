@@ -1,5 +1,6 @@
 <?php
-require('generator.php');
+if(!class_exists('TocasUIDocumention'))
+    require('../generator.php');
 $TocasUIDoc = new TocasUIDocumention();
 $TocasUIDoc->pureHeader('普通元素', '沒有特別分類的元素。')
            ->cards(['按鈕'   => ['class'       => '.ts.button',
@@ -44,5 +45,9 @@ $TocasUIDoc->pureHeader('普通元素', '沒有特別分類的元素。')
                                  
                     '片段'   => ['class'       => '.ts.segment',
                                  'description' => '包含短篇文章的片段容器，適合用來包覆文字。',
-                                 'link'        => 'elements/segment.html']])
+                                 'link'        => 'elements/segment.html'],
+                                 
+                    '容器'   => ['class'       => '.ts.container',
+                                 'description' => '將文字內容、集中在網頁中部，避免螢幕過寬文字導致過寬。',
+                                 'link'        => 'elements/container.html']])
             ->pureFooter('elements.html'); ?>

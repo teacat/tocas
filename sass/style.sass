@@ -190,6 +190,51 @@ pre.ts.segment
     color: #019E9E !important
   
 
+.preview
+  .ts.grid:not(.three)
+    
+    .grid:before
+      border-width: 2px
+  
+    &:before
+      +absolute
+      +position($columnPadding, $columnPadding, $columnPadding, $columnPadding)
+      +z(1)
+      
+      content: ''
+      border: 1px solid #929292
+    
+    &.relaxed:before
+      +position(x, $columnRelaxedPadding, x, $columnRelaxedPadding)
+    
+    
+    
+    .row
+      &:before
+        +absolute
+        +position($columnPadding, $columnPadding, $columnPadding, $columnPadding)
+        +z(1)
+        
+        content: ''
+        border: 2px solid #808080
+    
+    .column:not(.row):not(.grid)
+      +flex
+      +flex-content-center
+      +flex-column
+      
+      
+      height: 5em
+      
+      background: #E2E2E2
+      color: #909090
+      background-clip: content-box
+      
+    &.two
+      > .column:not(.row):not(.grid):first-child
+        height: 5em
+        background: transparent
+        background-clip: content-box
 
   
 body >

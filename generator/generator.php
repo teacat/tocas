@@ -1,124 +1,127 @@
 <?php
-class TocasUIDocumention
+if(!class_exists('TocasUIDocumention'))
 {
-    private $html = '';
-    
-    function header($title, $description)
+    class TocasUIDocumention
     {
-        ob_start();
-
-        include('tpl/header.tpl.php');
+        private $html = '';
         
-        return $this;
-    }
-    
-    function pureHeader($title, $description)
-    {
-        ob_start();
-
-        include('tpl/pure-header.tpl.php');
-        
-        return $this;
-    }
-    
-    function headerGroup($header, $description)
-    {
-        include('tpl/header-group.tpl.php');
-        
-        return $this;
-    }
-    
-    function groupStart($title, $description)
-    {
-        include('tpl/group-start.tpl.php');
-        
-        return $this;
-    }
-    
-    function single($title, $description, $sourceCode, $highlight)
-    {
-        include('tpl/single.tpl.php');
-        
-        return $this;
-    }
-    
-    function groupEnd()
-    {
-        include('tpl/group-end.tpl.php');
-        
-        return $this;
-    }
-    
-    function cards($array)
-    {
-        echo '<div class="four column doubling row">';
-        
-        foreach($array as $title => $data)
+        function header($title, $description, $hideSidebar=false)
         {
-            extract($data);
+            ob_start();
+    
+            include('tpl/header.tpl.php');
             
-            include('tpl/single-card.tpl.php');
+            return $this;
         }
         
-        echo '</div>';
-        
-        return $this;
-    }
+        function pureHeader($title, $description)
+        {
+            ob_start();
     
-    function pureFooter($path)
-    {
-        include('tpl/pure-footer.tpl.php');
+            include('tpl/pure-header.tpl.php');
+            
+            return $this;
+        }
         
-        $html = $this->minify(ob_get_contents());
+        function headerGroup($header, $description)
+        {
+            include('tpl/header-group.tpl.php');
+            
+            return $this;
+        }
         
-        ob_end_clean();
-        ob_end_flush();
+        function groupStart($title, $description)
+        {
+            include('tpl/group-start.tpl.php');
+            
+            return $this;
+        }
         
-        echo $html;
+        function single($title, $description, $sourceCode, $highlight)
+        {
+            include('tpl/single.tpl.php');
+            
+            return $this;
+        }
         
-
-        $path = __DIR__ . '/../' . $path;
+        function groupEnd()
+        {
+            include('tpl/group-end.tpl.php');
+            
+            return $this;
+        }
         
-        umask(0);
+        function cards($array)
+        {
+            echo '<div class="four column doubling row">';
+            
+            foreach($array as $title => $data)
+            {
+                extract($data);
+                
+                include('tpl/single-card.tpl.php');
+            }
+            
+            echo '</div>';
+            
+            return $this;
+        }
         
-        file_put_contents($path, $html);
-        
-        chmod($path, 0777);
-
-        return $this;
-    }
+        function pureFooter($path)
+        {
+            include('tpl/pure-footer.tpl.php');
+            
+            $html = $this->minify(ob_get_contents());
+            
+            ob_end_clean();
+            ob_end_flush();
+            
+            echo $html;
+            
     
-    function footer($path)
-    {
-        include('tpl/footer.tpl.php');
-        
-        $html = $this->minify(ob_get_contents());
-        
-        ob_end_flush();
-        ob_end_clean();
-
-        $path = __DIR__ . '/../' . $path;
-        
-        umask(0);
-        
-        file_put_contents($path, $html);
-        
-        chmod($path, 0777);
-
-        return $this;
-    }
+            $path = __DIR__ . '/../' . $path;
+            
+            umask(0);
+            
+            file_put_contents($path, $html);
+            
+            chmod($path, 0777);
     
-    function minify($html)
-    { 
-        $search  = ['/\>[^\S ]+/s',  // Strip whitespaces after tags, except space
-                    '/[^\S ]+\</s',  // Strip whitespaces before tags, except space
-                    '/(\s)+/s'];     // Shorten multiple whitespace sequences
-                    
-        $replace = ['>', '<', '\\1'];
-
-        $html = preg_replace($search, $replace, $html);
+            return $this;
+        }
         
-        return $html;
+        function footer($path)
+        {
+            include('tpl/footer.tpl.php');
+            
+            $html = $this->minify(ob_get_contents());
+            
+            ob_end_flush();
+            ob_end_clean();
+    
+            $path = __DIR__ . '/../' . $path;
+            
+            umask(0);
+            
+            file_put_contents($path, $html);
+            
+            chmod($path, 0777);
+    
+            return $this;
+        }
+        
+        function minify($html)
+        { 
+            $search  = ['/\>[^\S ]+/s',  // Strip whitespaces after tags, except space
+                        '/[^\S ]+\</s',  // Strip whitespaces before tags, except space
+                        '/(\s)+/s'];     // Shorten multiple whitespace sequences
+                        
+            $replace = ['>', '<', '\\1'];
+    
+            $html = preg_replace($search, $replace, $html);
+            
+            return $html;
+        }
     }
 }
 ?>

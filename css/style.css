@@ -581,7 +581,7 @@ body {
 
 .ts.items > .item, .ts.chatroom > .header, .ts.chatroom > .header > .title, .ts.chatroom > .header > .actions, .ts.chatroom > .header > .actions > .item, .ts.chatroom > .content > .message, .ts.chatroom > .footer, .ts.chatroom > .footer > .input, .ts.chatroom > .footer > .actions, .ts.grid, .ts.grid > .row, .ts.menu,
 .ts.menu .menu, .ts.menu > .item,
-.ts.menu .menu > .item, .ts.menu:not(.vertical) > .item, .ts.menu:not(.vertical) .menu > .item, .ts.message.icon, .ts.message.icon .content, .ts.message.fluid, .ts.loader:not(.inline), .ts.list .item, .ts.list li, .ts.buttons > .button, .ts.cards, .ts.card, .ts.card .image .dim, .ts.jumbotron[class*="full page"], .ts.dimmer, .ts.progress.indeterminate {
+.ts.menu .menu > .item, .ts.menu:not(.vertical) > .item, .ts.menu:not(.vertical) .menu > .item, .ts.message.icon, .ts.message.icon .content, .ts.message.fluid, .ts.loader:not(.inline), .ts.list .item, .ts.list li, .ts.buttons > .button, .ts.cards, .ts.card, .ts.card .image .dim, .ts.jumbotron[class*="full page"], .ts.dimmer, .ts.progress.indeterminate, .preview .ts.grid:not(.three) .column:not(.row):not(.grid) {
   display: flex; }
 
 .ts.list.horizontal .item, .ts.list.horizontal li, .ts.buttons, .ts.label, .ts.label .detail {
@@ -968,25 +968,40 @@ body {
           background-color: #d9d9d9; }
 
 .ts.grid {
+  position: relative;
   flex-direction: row;
   box-sizing: border-box;
   margin: -0.4rem;
   flex-wrap: wrap; }
+  .ts.grid + .ts.grid {
+    margin-top: 0.4rem; }
+  .ts.grid [class*="left aligned"] .column,
+  .ts.grid .row[class*="left aligned"] .column,
+  .ts.grid .column[class*="left aligned"] {
+    text-align: left; }
+  .ts.grid [class*="right aligned"] .column,
+  .ts.grid .row[class*="right aligned"] .column,
+  .ts.grid .column[class*="right aligned"] {
+    text-align: right; }
   .ts.grid .row[class*="only"],
   .ts.grid .column[class*="only"] {
-    display: none !important; }
+    display: none; }
   @media (min-width: 1200px) {
-    .ts.grid [class*="large screen only"] {
-      display: initial !important; } }
+    .ts.grid .row[class*="large screen only"],
+    .ts.grid .column[class*="large screen only"] {
+      display: flex !important; } }
   @media (min-width: 992px) {
-    .ts.grid [class*="computer only"] {
-      display: initial !important; } }
+    .ts.grid .row[class*="computer only"],
+    .ts.grid .column[class*="computer only"] {
+      display: flex !important; } }
   @media (min-width: 768px) {
-    .ts.grid [class*="tablet only"] {
-      display: initial !important; } }
+    .ts.grid .row[class*="tablet only"],
+    .ts.grid .column[class*="tablet only"] {
+      display: flex !important; } }
   @media (max-width: 767px) {
-    .ts.grid [class*="mobile only"] {
-      display: initial !important; } }
+    .ts.grid .row[class*="mobile only"],
+    .ts.grid .column[class*="mobile only"] {
+      display: flex !important; } }
   .ts.grid .column[class*="right floated"] {
     margin-left: auto; }
   .ts.grid .column[class*="left floated"] {
@@ -999,6 +1014,7 @@ body {
   .ts.grid.end {
     justify-content: flex-end; }
   .ts.grid > .row {
+    position: relative;
     flex-direction: row;
     flex-wrap: nowrap;
     width: 100%; }
@@ -1012,13 +1028,14 @@ body {
   .ts.grid > .row .column:not(.row) {
     position: relative;
     box-sizing: border-box;
-    margin-bottom: 1.44rem;
     padding: 0.4rem; }
   .ts.grid.relaxed {
-    margin: -1.44rem; }
+    margin-left: -1.44rem;
+    margin-right: -1.44rem; }
     .ts.grid.relaxed > .column:not(.row),
     .ts.grid.relaxed > .row > .column:not(.row) {
-      padding: 1.44rem; }
+      padding-left: 1.44rem;
+      padding-right: 1.44rem; }
   .ts.grid [class*="one wide"] {
     box-sizing: border-box;
     width: 6.25%; }
@@ -6298,8 +6315,7 @@ a.ts.card {
   text-align: center;
   text-shadow: none;
   font-weight: 600;
-  line-height: 1.35em;
-  vertical-align: top; }
+  line-height: 1.35em; }
   .ts.label .icon, .ts.label .fa {
     color: #7B7B7B; }
   .ts.label.image:hover {
@@ -7600,6 +7616,41 @@ pre.ts.segment {
 .group > h4,
 .headerGroup > h4 {
   color: #019E9E !important; }
+
+.preview .ts.grid:not(.three) .grid:before {
+  border-width: 2px; }
+.preview .ts.grid:not(.three):before {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  bottom: 0.4rem;
+  left: 0.4rem;
+  z-index: 1;
+  content: "";
+  border: 1px solid #929292; }
+.preview .ts.grid:not(.three).relaxed:before {
+  right: 1.44rem;
+  left: 1.44rem; }
+.preview .ts.grid:not(.three) .row:before {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  bottom: 0.4rem;
+  left: 0.4rem;
+  z-index: 1;
+  content: "";
+  border: 2px solid #808080; }
+.preview .ts.grid:not(.three) .column:not(.row):not(.grid) {
+  justify-content: center;
+  flex-direction: column;
+  height: 5em;
+  background: #E2E2E2;
+  color: #909090;
+  background-clip: content-box; }
+.preview .ts.grid:not(.three).two > .column:not(.row):not(.grid):first-child {
+  height: 5em;
+  background: transparent;
+  background-clip: content-box; }
 
 body > .ts.jumbotron {
   padding-left: 0;

@@ -1,5 +1,6 @@
 <?php
-require('generator.php');
+if(!class_exists('TocasUIDocumention'))
+    require('../generator.php');
 $TocasUIDoc = new TocasUIDocumention();
 $TocasUIDoc->pureHeader('模塊', '較獨立的元件。')
            ->cards(['淡化幕'   => ['class'       => '.ts.dimmer',

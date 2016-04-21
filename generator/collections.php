@@ -1,5 +1,6 @@
 <?php
-require('generator.php');
+if(!class_exists('TocasUIDocumention'))
+    require('../generator.php');
 $TocasUIDoc = new TocasUIDocumention();
 $TocasUIDoc->pureHeader('聚合型', '專門收藏、集合資料用的元件。')
            ->cards(['選單'     => ['class'       => '.ts.menu',
