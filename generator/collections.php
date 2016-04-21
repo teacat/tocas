@@ -1,6 +1,5 @@
 <?php
-if(!class_exists('TocasUIDocumention'))
-    require('../generator.php');
+require('generator.php');
 $TocasUIDoc = new TocasUIDocumention();
 $TocasUIDoc->pureHeader('聚合型', '專門收藏、集合資料用的元件。')
            ->cards(['選單'     => ['class'       => '.ts.menu',
@@ -9,7 +8,7 @@ $TocasUIDoc->pureHeader('聚合型', '專門收藏、集合資料用的元件。
 
                     '網格系統' => ['class'       => '.ts.grid',
                                    'description' => '網頁排版的基礎架構系統。',
-                                   'link'        => 'collections/menu.html'],
+                                   'link'        => 'collections/grid.html'],
                                    
                     '表格'     => ['class'       => '.ts.table',
                                    'description' => '用以展示資料的表格。',
