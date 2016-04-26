@@ -1,5 +1,5 @@
-
     </div>
+    <div class="ts hidden divider"></div>
 </div>
 
 <footer id="footer" class="ts inverted fluid segment">

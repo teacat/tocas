@@ -1,6 +1,6 @@
 <?php
 if(!class_exists('TocasUIDocumention'))
-    require('../generator.php');
+    require('generator.php');
 $TocasUIDoc = new TocasUIDocumention();
 $TocasUIDoc->pureHeader('普通元素', '沒有特別分類的元素。')
            ->cards(['按鈕'   => ['class'       => '.ts.button',

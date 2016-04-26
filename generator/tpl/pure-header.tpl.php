@@ -65,7 +65,7 @@
     
     <div class="ts big fluid info gridded jumbotron">
         <div class="ts container">
-            <nav class="ts secondary relaxed inverted menu">
+            <nav class="ts secondary relaxed inverted fluid menu">
                 <a class="item" href="//tocas-ui.com/index.html">
                     <img class="ts small image" src="../img/logo.png" style="margin-top: -.9em">
                 </a>
@@ -109,7 +109,7 @@
     </div>
     
     <div class="ts container">
-        <br>
+        <div class="ts hidden divider"></div>
         <div class="ts stackable relaxed grid">
             
         

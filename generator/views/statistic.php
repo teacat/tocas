@@ -136,7 +136,7 @@ $TocasUIDoc ->header('統計數據', '平均可能不超過 8 —— 公分。')
                 <div class="label">
                     點擊次數
                 </div>
-            </div>', 'label')
+            </div>', 'horizontal')
             
             /**
              * 水平統計數據群組
@@ -160,7 +160,7 @@ $TocasUIDoc ->header('統計數據', '平均可能不超過 8 —— 公分。')
                         檢視次數
                     </div>
                 </div>
-            </div>', 'label')
+            </div>', 'horizontal')
             
             ->groupEnd()
             

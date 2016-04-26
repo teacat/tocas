@@ -1,6 +1,6 @@
 <?php
 if(!class_exists('TocasUIDocumention'))
-    require('../generator.php');
+    require('generator.php');
 $TocasUIDoc = new TocasUIDocumention();
 $TocasUIDoc->pureHeader('外觀型', '偏於外觀類的元件。')
            ->cards(['卡片'   => ['class'       => '.ts.card',
