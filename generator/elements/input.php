@@ -120,6 +120,15 @@ $TocasUIDoc ->header('輸入欄位', '再鍵入幾個字就是新的開始。')
             </div>', 'right icon, left icon')
             
             /**
+             * 圓形
+             */
+             
+            ->single('圓形', '輸入欄位可以是圓形（圓角邊框）的。', 
+           '<div class="ts circular input">
+                <input type="text" placeholder="輸入欄位">
+            </div>', 'circular')
+            
+            /**
              * 可調整尺寸
              */
              

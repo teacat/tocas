@@ -1,8 +1,10 @@
+<?php if ($title !== '') {  ?>
 <h3 class="ts type header">
     <?= $title; ?>
     <br>
     <span class="sub header"><?= $description; ?></span>
 </h3>
+<?php } ?>
  
  
 <div class="ts segments example">
