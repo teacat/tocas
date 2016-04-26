@@ -1,9 +1,27 @@
-//tablet phone computer large screen
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   R W D S   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+//**************************************
+//*******   F U N C T I O N S    *******
+//**************************************
 
 // RWD
 //
-// The main content of the RWD.
+// 基本的 RWD 規定。
 
 =rwd($type)
 
@@ -22,6 +40,12 @@
   @else if $type == large
     @media (min-width: $rwd-large-min)
       @content
+
+
+
+// RWD Serious
+//
+// 更嚴格的 RWD 規定。
 
 =rwd-serious($type)
 
@@ -42,9 +66,10 @@
       @content
 
 
+
 // RWD Hide
 //
-// Hide when it match some kind of the device of the RWD rules.
+// 在某個裝置的時候隱藏元素。
 
 =rwd-hide($type)
   +rwd($type)
@@ -53,61 +78,24 @@
 
 
 
-
-// RWD Position
-//
-// Change the position when the RWD rules was changed.
-
-=rwd-pos($type, $pos, $xy: null)
-  +rwd($type)
-    +pos($pos, $xy)
-
-
-
-
 // RWD Size
 //
-// Change the size when the RWD rules was changed.
+// 在某個裝置的時候更換元素大小。
 
-=rwd-size($type, $width: null, $height: null)
+=rwd-size($type, $height: null, $width: null)
   +rwd($type)
-    +size($width, $height)
+    +size($height, $width)
 
 
 
 
-// RWD Font
+//**************************************
+//*********   H E L P E R S    *********
+//**************************************
+
+// Mobile Only
 //
-// Change the font size and options when the RWD rules was changed.
-
-=rwd-font($type, $size, $color: null, $weight: null)
-  +rwd($type)
-    +font($size, $color, $weight)
-
-
-
-
-// RWD Margin
-//
-// Change the margin and options when the RWD rules was changed.
-
-=rwd-mar($type, $margin)
-  +rwd($type)
-    margin: $margin
-
-
-
-
-// RWD Padding
-//
-// Change the margin and options when the RWD rules was changed.
-
-=rwd-pad($type, $padding)
-  +rwd($type)
-    padding: $padding
-
-
-
+// 僅有行動裝置。
 
 [class*="mobile only"]
   +rwd(tablet)
@@ -117,11 +105,23 @@
   +rwd(large)
     +none
 
+
+
+// Mobile Or Table Only
+//
+// 僅有行動裝置或平板。
+
 [class*="mobile or tablet only"]
   +rwd(computer)
     +none
   +rwd(large)
     +none
+
+
+
+// Table Only
+//
+// 僅有平板。
 
 [class*="tablet only"]:not([class*="mobile or"])
   +rwd(mobile)
@@ -131,6 +131,12 @@
   +rwd(large)
     +none
 
+
+
+// Computer Only
+//
+// 僅有電腦裝置。
+
 [class*="computer only"]
   +rwd-serious(mobile)
     +none
@@ -139,15 +145,33 @@
   +rwd-serious(large)
     +none
 
+
+
+// Tablet Or Large Device Only
+//
+// 僅有平板或大型裝置（包含電腦）。
+
 [class*="tablet or large device only"]
   +rwd-serious(mobile)
     +none
+
+
+
+// Large Device Only
+//
+// 僅有大型裝置（包含電腦）。
 
 [class*="large device only"]:not([class*="tablet or"])
   +rwd-serious(mobile)
     +none
   +rwd-serious(tablet)
     +none
+
+
+
+// Large Device Only
+//
+// 僅有大型螢幕。
 
 [class*="large screen only"]
   +rwd(mobile)
