@@ -80,12 +80,29 @@
 
 
 
+//**************************************
+//***********   T H E M E   ************
+//**************************************
+
+=inputs-theme($color, $textColor)
+  color: $textColor
+  
+  & .input:hover + .input
+    input, textarea, div[contenteditable]
+      border-top-color: darken($color, 20%)
+  
+  & .input input:focus + .input
+    input, textarea, div[contenteditable]
+      border-top-color: #67D7FF
+      
+
 
 //**************************************
 //**********   I N P U T S   ***********
 //**************************************
 
 .ts.inputs
+  +inputs-theme(lighten($defaultColor, 35%), $defaultTextColor)
   
   // [&] Vertical
   //
@@ -95,6 +112,7 @@
     +y-margin($margin)
 
     .ts.input
+      +rd
       +y-margin(0)
       +block
 
@@ -111,20 +129,21 @@
 
           &:focus
             border-bottom-style: solid
+            margin-bottom: -1px
 
       &:not(:first-child):not(:last-child)
         input, textarea, div[contenteditable]
           border-radius: 0
           border-bottom-style: none
-
+          
           &:focus
             border-bottom-style: solid
+            margin-bottom: -1px
 
       &:last-child:not(:first-child)
         input, textarea, div[contenteditable]
           border-top-right-radius: 0
           border-top-left-radius : 0
-
 
 
 
@@ -169,9 +188,10 @@
     // HOVER
     //
     //
+    
     &:hover
       border-color: darken($color, 20%)
-
+      
 
 
   //
@@ -198,9 +218,8 @@
       &::-moz-placeholder,
       &:-ms-input-placeholder
         color: rgba($textColor, 0.6)
-
-
-
+        
+        
 //**************************************
 //************   M A I N   *************
 //**************************************
@@ -210,6 +229,15 @@
   +input-theme(lighten($defaultColor, 35%), $defaultTextColor)
   +relative
   +inline-block
+  
+  //
+  //
+  //
+  
+  &:only-child
+    margin: 0
+   
+  
   
   // DIV[CONTENTEDITABLE] EMPTY
   //
@@ -398,6 +426,18 @@
     &.borderless
       input, textarea, div[contenteditable]
         border: none
+  
+  
+  
+  // [&] Circular
+  //
+  // 圓形的輸入欄位。
+  
+  &.circular
+    border-radius: 50em
+    
+    input, textarea, div[contenteditable]
+      border-radius: 50em
   
   
   
