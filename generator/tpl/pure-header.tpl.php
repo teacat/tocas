@@ -93,11 +93,11 @@
                         <i class="fa fa-paypal"></i>
                         贊助
                     </a>
-                    <a class="item">
+                    <a class="item" href="//github.com/TeaMeow/TocasUI/">
                         <i class="fa fa-github"></i>
                         Github
                     </a>
-                    <a class="item">下載</a>
+                    <a class="item" href="//github.com/TeaMeow/TocasUI/releases">下載</a>
                 </div>
             </nav>
         

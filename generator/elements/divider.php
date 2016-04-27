@@ -20,12 +20,25 @@ $TocasUIDoc ->header('分隔線', '這裡開啟了另一個話題。')
              * 水平分隔線
              */
              
-            ->single('水平分隔線', '水平分隔線可以在中間插入文字。', 
+            ->single('水平分隔線', '水平分隔線可以讓你在中間插入文字。', 
            '<p>嗶嗶嗶。</p>
             <div class="ts horizontal divider">我是分隔線</div>
             <p>沒錯，你可以在分隔線中間插入一小段文字，</p>
             <p>而且只需要一個元素。</p>', 'horizontal')
                             
             ->groupEnd()
+            ->groupStart('種類', '分隔線具有不同的種類。')
+            
+            /**
+             * 隱藏
+             */
+             
+            ->single('隱藏', '不可見的分隔線，但仍帶有分隔效果。', 
+           '<p>嗶嗶嗶。</p>
+            <div class="ts hidden divider">我是分隔線</div>
+            <p>你有看見中間的分隔線嗎？。</p>
+            <p>很多人看不見。</p>
+            <p>但是很多人不說。</p>', 'hidden')
+            
             ->footer('elements/divider.html');
 ?>

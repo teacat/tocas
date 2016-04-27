@@ -29,19 +29,17 @@ $TocasUIDoc ->header('卡片', '隨心所欲，像漢堡一樣，拼湊出你喜
                         いんふぃ™
                     </div>
                     <div class="meta">
-                        <a>
-                            @AW_infi
-                        </a>
-                        <a>
-                            Jan 2
-                        </a>
+                        <a>@AW_infi</a>
+                        <a>Jan 2</a>
                     </div>
+                    <div class="description">
                     <p>
                         【お知らせ】
                         冬コミで頒布した新作ブランケット、新刊同人誌、本編ディスク、
                         過去グッズ等すべての通信販売を開始しました！
                         http://shop.infinity-s.jp
                     </p>
+                    </div>
                 </div>
             </div>', 'card')
                 
@@ -53,27 +51,28 @@ $TocasUIDoc ->header('卡片', '隨心所欲，像漢堡一樣，拼湊出你喜
            '<div class="ts cards">
                 <div class="ts card">
                     <div class="content">
-    
                         <div class="header">
                             Yami Odymel
                         </div>
-    
-                        <p>看似最重要的東西卻沒能被妥善利用，</p>
-                        <p>沒有人能發現這一點，因為他們早已活在過去，</p>
-                        <p>才剛開始的序章卻被放在頁尾。</p>
-    
+                        <div class="description">
+                            <p>看似最重要的東西卻沒能被妥善利用，</p>
+                            <p>沒有人能發現這一點，因為他們早已活在過去，</p>
+                            <p>才剛開始的序章卻被放在頁尾。</p>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="ts card">
                     <div class="content">
-                    
                         <div class="header">
                             いんふぃ™
                         </div>
-    
-                        <p>infinity-S最新作、『黄昏ウィズ - Twilight Invocation』
-                            Google PlayおよびApp Storeにて好評配信中！</p>
+                        <div class="description">
+                            <p>
+                                infinity-S最新作、『黄昏ウィズ - Twilight Invocation』
+                                Google PlayおよびApp Storeにて好評配信中！
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>', 'cards')
@@ -123,7 +122,9 @@ $TocasUIDoc ->header('卡片', '隨心所欲，像漢堡一樣，拼湊出你喜
                     <div class="header">
                         いんふぃ™
                     </div>
-                    <p>冬コミの売り上げも底をつき、当サークル運用資金が0円になりました。</p>
+                    <div class="description">
+                        <p>冬コミの売り上げも底をつき、当サークル運用資金が0円になりました。</p>
+                    </div>
                 </div>
             </div>', 'header')
                             
@@ -162,7 +163,12 @@ $TocasUIDoc ->header('卡片', '隨心所欲，像漢堡一樣，拼湊出你喜
                             Jan 2
                         </a>
                     </div>
-                    <p>映画のように没入できる『シネマティックノベル』をリリースしている『infinity-G™』および『いんふぃ™』です。最新作『ALLiWs』を2016年8月リリース予定。</p>
+                    <div class="description">
+                        <p>
+                            映画のように没入できる『シネマティックノベル』をリリースしている『infinity-G™』および『いんふぃ™』です。
+                            最新作『ALLiWs』を2016年8月リリース予定。
+                        </p>
+                    </div>
                 </div>
             </div>', 'meta')
                             
@@ -224,14 +230,14 @@ $TocasUIDoc ->header('卡片', '隨心所欲，像漢堡一樣，拼湊出你喜
                         いんふぃ™
                     </div>
                     <div class="meta">
-                        <a>
-                            @AW_infi
-                        </a>
-                        <a>
-                            5h
-                        </a>
+                        <a>@AW_infi</a>
+                        <a>5h</a>
                     </div>
-                    <p>今のゲーム制作用PCをPV制作もできるようリプレースするためには最低20万円の投資が必要だと判明した(ヨドバシ基..</p>
+                    <div class="description">
+                        <p>
+                            今のゲーム制作用PCをPV制作もできるようリプレースするためには最低20万円の投資が必要だと判明した(ヨドバシ基..
+                        </p>
+                    </div>
                 </div>
                 <div class="ts attached bottom buttons">
                     <button class="ts button">完成預覽</button>
@@ -265,8 +271,10 @@ $TocasUIDoc ->header('卡片', '隨心所欲，像漢堡一樣，拼湊出你喜
                     <div class="meta">
                         <a>2014-11-24 22:13</a>
                     </div>
-                    <p>正氣和狂氣，理性和知性，自信和確信，</p>
-                    <p>在悲劇性的不合理世界，故事開始了。</p>
+                    <div class="description">
+                        <p>正氣和狂氣，理性和知性，自信和確信，</p>
+                        <p>在悲劇性的不合理世界，故事開始了。</p>
+                    </div>
                 </div>
                 <div class="extra content">
                     <i class="fa fa-eye"></i> 934 次欣賞
@@ -356,7 +364,9 @@ $TocasUIDoc ->header('卡片', '隨心所欲，像漢堡一樣，拼湊出你喜
            '<div class="ts positive card">
                 <div class="content">
                     <div class="header">請問</div>
-                    <p>比起小明，您是否更喜歡小安？</p>
+                    <div class="description">
+                        <p>比起小明，您是否更喜歡小安？</p>
+                    </div>
                     <div class="symbol">
                         <i class="fa fa-question-circle"></i>
                     </div>
@@ -376,7 +386,9 @@ $TocasUIDoc ->header('卡片', '隨心所欲，像漢堡一樣，拼湊出你喜
            '<div class="ts postive card">
                 <div class="content">
                     <div class="header">請問</div>
-                    <p>比起小明，您是否更喜歡小安？</p>
+                    <div class="description">
+                        <p>比起小明，您是否更喜歡小安？</p>
+                    </div>
                     <div class="symbol">
                         <i class="fa fa-question-circle"></i>
                     </div>
@@ -398,9 +410,11 @@ $TocasUIDoc ->header('卡片', '隨心所欲，像漢堡一樣，拼湊出你喜
                     <div class="header">絕園的暴風雨</div>
                     <div class="meta">
                         <a>1457 次欣賞</a>
-                        <a class="floated right">2014-01-05 16:18</a>
+                        <a class="right floated">2014-01-05 16:18</a>
                     </div>
-                    <p>事到如今裝成受害者才更卑劣。</p>
+                    <div class="description">
+                        <p>事到如今裝成受害者才更卑劣。</p>
+                    </div>
                 </div>
             </div>', 'floated, right')
             
@@ -415,14 +429,15 @@ $TocasUIDoc ->header('卡片', '隨心所欲，像漢堡一樣，拼湊出你喜
                     <div class="meta">
                         <a>Tocas 聚合</a>
                     </div>
-                    <p>⠠⠁ ⠏⠑⠗⠎⠕⠝ ⠺⠓⠕ ⠋⠗⠕⠍ ⠞⠓⠑ ⠍⠁⠛⠊⠉⠁⠇ ⠺⠕⠗⠇⠙⠂ ⠏⠑⠗⠓⠁⠏⠎ ⠝⠕⠞⠂</p>
-                    
-                    <p>⠠⠊⠋ ⠠⠊ ⠞⠑⠇⠇ ⠽⠕⠥ ⠞⠓⠁⠞ ⠠⠉⠁⠗⠊⠎ ⠊⠎ ⠁⠉⠞⠥⠁⠇⠇⠽ ⠁ ⠑⠧⠊⠇⠂ </p>
-                    
-                    <p>⠺⠊⠇⠇ ⠽⠕⠥ ⠎⠞⠊⠇⠇ ⠞⠗⠥⠎⠞ ⠍⠑⠦</p>
-                    
-                    <p>⠠⠏⠇⠑⠁⠎⠑⠂ ⠎⠁⠽ ⠽⠑⠎⠲</p>
-                    
+                    <div class="description">
+                        <p>⠠⠁ ⠏⠑⠗⠎⠕⠝ ⠺⠓⠕ ⠋⠗⠕⠍ ⠞⠓⠑ ⠍⠁⠛⠊⠉⠁⠇ ⠺⠕⠗⠇⠙⠂ ⠏⠑⠗⠓⠁⠏⠎ ⠝⠕⠞⠂</p>
+                        
+                        <p>⠠⠊⠋ ⠠⠊ ⠞⠑⠇⠇ ⠽⠕⠥ ⠞⠓⠁⠞ ⠠⠉⠁⠗⠊⠎ ⠊⠎ ⠁⠉⠞⠥⠁⠇⠇⠽ ⠁ ⠑⠧⠊⠇⠂ </p>
+                        
+                        <p>⠺⠊⠇⠇ ⠽⠕⠥ ⠎⠞⠊⠇⠇ ⠞⠗⠥⠎⠞ ⠍⠑⠦</p>
+                        
+                        <p>⠠⠏⠇⠑⠁⠎⠑⠂ ⠎⠁⠽ ⠽⠑⠎⠲</p>
+                    </div>
                 </div>
             </div>', 'fluid')
                             
