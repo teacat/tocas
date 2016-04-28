@@ -60,6 +60,9 @@ if(!class_exists('TocasUIDocumention'))
                 extract($data);
                 
                 include('tpl/single-card.tpl.php');
+                
+                if(isset($title)) unset($title);
+                if(isset($wip)) unset($wip);
             }
             
             echo '</div>';

@@ -9,7 +9,8 @@ $TocasUIDoc->pureHeader('普通元素', '沒有特別分類的元素。')
 
                     '核取方塊' => ['class'       => '.ts.checkbox',
                                    'description' => '讓使用者進行勾取、選取動作的核取方塊。',
-                                   'link'        => 'elements/checkbox.html'],
+                                   'link'        => 'elements/checkbox.html',
+                                   'wip'         => true],
                     
                     '分隔線' => ['class'       => '.ts.divider',
                                  'description' => '切分兩個話題或是元件用的分隔線。',
