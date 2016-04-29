@@ -61,56 +61,62 @@
 <!-- / Icon -->
 <title><?= $title; ?> - Tocas UI</title>
 <body>
-    
-    <div class="ts big fluid info gridded jumbotron">
-        <div class="ts container">
-            <nav class="ts secondary relaxed inverted fluid menu">
-                <a class="item" href="//tocas-ui.com/index.html">
-                    <img class="ts small image" src="../img/logo.png" style="margin-top: -.9em">
-                </a>
-                <a class="item" href="//tocas-ui.com/main.html">
-                    <i class="fa fa-file"></i> 主要說明
-                </a>
-                <a class="item" href="//tocas-ui.com/collections.html">
-                    <i class="fa fa-th"></i> 
-                    聚合型
-                </a>
-                <a class="item" href="//tocas-ui.com/elements.html">
-                    <i class="fa fa-cogs"></i> 
-                    普通元素
-                </a>
-                <a class="item" href="//tocas-ui.com/modules.html">
-                    <i class="fa fa-th-large"></i> 
-                    模塊
-                </a>
-                <a class="item" href="//tocas-ui.com/views.html">
-                    <i class="fa fa-eye"></i> 
-                    外觀型
-                </a>
-                <div class="right menu">
-                    <a class="item" target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LLEXZL6CRMC6L">
-                        <i class="fa fa-paypal"></i>
-                        贊助
-                    </a>
-                    <a class="item" href="//github.com/TeaMeow/TocasUI/">
-                        <i class="fa fa-github"></i>
-                        Github
-                    </a>
-                    <a class="item" href="//github.com/TeaMeow/TocasUI/releases">下載</a>
-                </div>
-            </nav>
-        
-            <h1 class="ts header">
-                <?= $title; ?>
-                <div class="sub header"><?= $description; ?></div>
-            </h1>
-        </div>
+    <div class="ts left sidebar vertical menu">
+        <div class="item">A</div>
+        <div class="item">B</div>
+        <div class="item">C</div>
     </div>
     
-    <div class="ts container">
-        <br>
-        <div class="ts stackable relaxed grid">
-            <?php if(!$hideSidebar) { ?>
-            <div class="four wide computer column sixteen wide tablet labelside"></div>
-            <?php } ?>
-            <div class="<?= $hideSidebar ? 'sixteen' : 'twelve'; ?> wide computer sixteen wide tablet sixteen wide mobile column">
+    <div class="pusher">
+        <div class="ts big fluid info gridded jumbotron">
+            <div class="ts container">
+                <nav class="ts secondary relaxed inverted fluid menu">
+                    <a class="item" href="//tocas-ui.com/index.html">
+                        <img class="ts small image" src="../img/logo.png" style="margin-top: -.9em">
+                    </a>
+                    <a class="item" href="//tocas-ui.com/main.html">
+                        <i class="fa fa-file"></i> 主要說明
+                    </a>
+                    <a class="item" href="//tocas-ui.com/collections.html">
+                        <i class="fa fa-th"></i> 
+                        聚合型
+                    </a>
+                    <a class="item" href="//tocas-ui.com/elements.html">
+                        <i class="fa fa-cogs"></i> 
+                        普通元素
+                    </a>
+                    <a class="item" href="//tocas-ui.com/modules.html">
+                        <i class="fa fa-th-large"></i> 
+                        模塊
+                    </a>
+                    <a class="item" href="//tocas-ui.com/views.html">
+                        <i class="fa fa-eye"></i> 
+                        外觀型
+                    </a>
+                    <div class="right menu">
+                        <a class="item" target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LLEXZL6CRMC6L">
+                            <i class="fa fa-paypal"></i>
+                            贊助
+                        </a>
+                        <a class="item" href="//github.com/TeaMeow/TocasUI/">
+                            <i class="fa fa-github"></i>
+                            Github
+                        </a>
+                        <a class="item" href="//github.com/TeaMeow/TocasUI/releases">下載</a>
+                    </div>
+                </nav>
+            
+                <h1 class="ts header">
+                    <?= $title; ?>
+                    <div class="sub header"><?= $description; ?></div>
+                </h1>
+            </div>
+        </div>
+        
+        <div class="ts container">
+            <br>
+            <div class="ts stackable relaxed grid">
+                <?php if(!$hideSidebar) { ?>
+                <div class="four wide computer column sixteen wide tablet labelside"></div>
+                <?php } ?>
+                <div class="<?= $hideSidebar ? 'sixteen' : 'twelve'; ?> wide computer sixteen wide tablet sixteen wide mobile column">

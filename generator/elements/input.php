@@ -77,11 +77,20 @@ $TocasUIDoc ->header('輸入欄位', '再鍵入幾個字就是新的開始。')
             ->groupStart('外觀', '輸入欄位具有不同的外觀。')
             
             /**
-             * 透明
+             * 基礎型
              */
              
-            ->single('透明', '欄位可以是背景、框線透明的。', 
+            ->single('基礎型', '欄位可以是背景、框線透明的一個只留下基礎架構的欄位。', 
            '<div class="ts transparent input">
+                <input type="text" placeholder="文字欄位">
+            </div>', 'transparent')
+            
+            /**
+             * 減少框線
+             */
+             
+            ->single('減少框線', '欄位的框線可以被移除。', 
+           '<div class="ts borderless input">
                 <input type="text" placeholder="文字欄位">
             </div>', 'transparent')
             
