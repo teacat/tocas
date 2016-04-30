@@ -701,6 +701,14 @@ ts.fn.sidebar = function(command)
         {
             ts(this).removeClass('visible')
         }
+        else if(command === 'toggle')
+        {
+            if(ts(this).hasClass('visible'))
+                ts(this).removeClass('visible')
+            else
+                ts(this).addClass('visible')
+            
+        }
     })
     
 }

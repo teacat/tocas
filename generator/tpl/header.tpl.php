@@ -63,9 +63,10 @@
 <title><?= $title; ?> - Tocas UI</title>
 <body>
     <div class="ts left sidebar vertical menu">
-        <div class="item">A</div>
-        <div class="item">B</div>
-        <div class="item">C</div>
+        <a href="#!" class="item">A</a>
+        <a href="#!" class="item">B</a>
+        <a href="#!" class="item">C</a>
+        <a href="#!" class="item">D</a>
     </div>
     
     <div class="pusher">

@@ -37,9 +37,16 @@ if(!class_exists('TocasUIDocumention'))
             return $this;
         }
         
-        function single($title, $description, $sourceCode, $highlight)
+        function single($title, $description, $sourceCode, $highlight, $jsCode = null, $empty = false)
         {
             include('tpl/single.tpl.php');
+            
+            return $this;
+        }
+        
+        function run($sourceCode)
+        {
+            include('tpl/run.tpl.php');
             
             return $this;
         }

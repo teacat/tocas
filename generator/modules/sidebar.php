@@ -3,137 +3,71 @@ if(!class_exists('TocasUIDocumention'))
     require('../generator.php');
 $TocasUIDoc = new TocasUIDocumention();
 
-$TocasUIDoc ->header('側邊欄', '雖然用垂直選單也能達到目的，但總感覺再做一個元素會更好。')
-            ->headerGroup('說明', '<p>進度列可以透過 <span class="ts label">data-percent</span> 來變換進度。</p>
+$TocasUIDoc ->header('側邊欄', '誰在叫我做元素我就咬誰(✿ﾟ▽ﾟ)。')
+            ->headerGroup('說明', '<p>側邊欄通常<strong>帶有一個推動欄位</strong>，用來將整個網頁推向某處</p>
+                                   <p>並且在同一時間顯示側邊欄。</p>
                                    <p>&nbsp;</p>
                                    <p>&nbsp;</p>')
-            ->groupStart('種類', '進度列具有多個不同的種類。')
+            ->groupStart('種類', '側邊欄具有多個不同的種類。')
           
             /**
              * 基本
              */
              
-            ->single('基本', '一個最基本的進度列架構。', 
-           '<div class="ts small progress">
-                <div class="bar">32%</div>
-            </div>', 'progress')
-                
-            /**
-             * 未知
-             */
-             
-            ->single('未知', '顯示一個可能位於準備中的進度列。', 
-           '<div class="ts small indeterminate progress">
-                <div class="bar"></div>
-            </div>', 'indeterminate')
+            ->single('基本', '一個最基本帶有側邊欄的整體網頁架構。', 
+           '<div class="ts sidebar vertical menu">
+                <a href="#!" class="item">A</a>
+                <a href="#!" class="item">B</a>
+                <a href="#!" class="item">C</a>
+                <a href="#!" class="item">D</a>
+            </div>
+            <div class="pusher">
+                <!-- 網頁會被推動的元素 -->
+            </div>
+            ', 'sidebar', "ts('.sidebar').sidebar('toggle');", true)
             
             ->groupEnd()
-            ->groupStart('內容', '進度列的內容有一些不一樣的元素。')
+            ->groupStart('狀態', '側邊欄在不同時候擁有不同狀態。')
             
             /**
-             * 進度列
+             * 顯示
              */
              
-            ->single('進度列', '一個顯示進度最基本的「列」。', 
-           '<div class="ts progress">
-                <div class="bar"></div>
-            </div>', 'bar')
+            ->single('顯示', '側邊欄預設都是隱藏的，直到你手動顯示他。', 
+           '<div class="ts visible sidebar">
+            </div>', 'visible', null, true)
             
             /**
-             * 進度百分比
+             * 淡化推動欄位
              */
              
-            ->single('進度百分比', '專門顯示進度百分比的元素。', 
-           '<div class="ts progress">
-                <div class="bar">
-                    69%
-                </div>
-            </div>', 'progress')
+            ->single('淡化推動欄位', '推動欄位預設不會自動淡化，你可以新增一個淡化樣式給它。', 
+           '<div class="dimmed pusher">
+            </div>', 'dimmed', null, true)
             
             ->groupEnd()
-            ->groupStart('狀態', '進度列的有不同的狀態。')
+            ->groupStart('外觀', '側邊欄的外觀有些可變的樣式。')
             
             /**
-             * 活動中
+             * 方向性
              */
              
-            ->single('活動中', '顯示一個進度列正在進行中。', 
-           '<div class="ts active progress">
-                <div class="bar">&nbsp;</div>
-            </div>', 'active')
+            ->single('方向性', '一個側邊欄可以在上下左右任何一側。', 
+           '<div class="ts left sidebar"></div>
+           <div class="ts right sidebar"></div>
+           <div class="ts top sidebar"></div>
+           <div class="ts bottom sidebar"></div>', 'left, right, top, bottom', null, true)
             
             /**
-             * 成功、正面的
+             * 寬度
              */
              
-            ->single('成功、正面的', '將進度列調整的意義設置為正面的。', 
-           '<div class="ts positive progress">
-                <div class="bar"></div>
-            </div>', 'positive')
-                            
-            /**
-             * 警告
-             */
-             
-            ->single('警告', '將一個進度列的意義設置為警告用。', 
-           '<div class="ts warning progress">
-                <div class="bar"></div>
-            </div>', 'warning')
-                            
-            /**
-             * 錯誤、否定的
-             */
-             
-            ->single('錯誤、否定的', '將一個進度列的意義設置為錯誤、否定的。', 
-           '<div class="ts negative progress">
-                <div class="bar"></div>
-            </div>', 'negative')
+            ->single('寬度', '你可以手動變更側邊欄的寬度。', 
+           '<div class="ts very thin sidebar"></div>
+           <div class="ts thin sidebar"></div>
+           <div class="ts wide sidebar"></div>
+           <div class="ts very wide sidebar"></div>', 'very thin, thin, very wide, wide', null, true)
             
-            ->groupEnd()
-            ->groupStart('外觀', '進度列有多種外觀型態。')
-            
-            /**
-             * 流動
-             */
-             
-            ->single('流動', '讓進度列成為流動模式，適合用在要移除框線的時候。', 
-           '<div class="ts fluid indeterminate progress">
-                正在準備中
-            </div>', 'fluid')
-            
-            /**
-             * 尺寸
-             */
-             
-            ->single('尺寸', '進度列擁有不同的大小。', 
-           '<div class="ts mini progress" data-percent="82%">
-                <div class="bar">82%</div>
-            </div>
-            <div class="ts tiny progress" data-percent="23%">
-                <div class="bar">23%</div>
-            </div>
-            <div class="ts small progress" data-percent="74%">
-                <div class="bar">74%</div>
-            </div>
-            <div class="ts progress" data-percent="16%">
-                <div class="bar">16%</div>
-            </div>
-            <div class="ts medium progress" data-percent="98%">
-                <div class="bar">98%</div>
-            </div>
-            <div class="ts large progress" data-percent="32%">
-                <div class="bar">32%</div>
-            </div>
-            <div class="ts big progress" data-percent="51%">
-                <div class="bar">51%</div>
-            </div>
-            <div class="ts huge progress" data-percent="3%">
-                <div class="bar">3%</div>
-            </div>
-            <div class="ts massive progress" data-percent="41%">
-                <div class="bar">41%</div>
-            </div>', 'mini, tiny, small, medium, large, big, huge, massive')
-         
             ->groupEnd()
             ->footer('modules/sidebar.html');
 ?>
