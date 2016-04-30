@@ -40,5 +40,7 @@ $TocasUIDoc ->header('分隔線', '這裡開啟了另一個話題。')
             <p>很多人看不見。</p>
             <p>但是很多人不說。</p>', 'hidden')
             
+            ->groupEnd()
+            
             ->footer('elements/divider.html');
 ?>

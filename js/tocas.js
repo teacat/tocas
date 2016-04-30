@@ -695,13 +695,11 @@ ts.fn.sidebar = function(command)
                 isTop    = ts(this).hasClass('top'),
                 isBottom = ts(this).hasClass('bottom')
             
-            if(isLeft)
-            {
-                ts(this).cssAnimate('slideInLeft', function()
-                {
-                    
-                })
-            }
+            ts(this).addClass('visible')
+        }
+        else if(command === 'hide')
+        {
+            ts(this).removeClass('visible')
         }
     })
     
