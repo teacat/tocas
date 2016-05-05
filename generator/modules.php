@@ -21,5 +21,10 @@ $TocasUIDoc->pureHeader('模塊', '較獨立的元件。')
                     '吸附'   => ['class'       => '.ts.sticky',
                                  'description' => '當捲軸越過某元素時，可使該元素吸附於頂部而不是離開可視範圍。',
                                  'link'        => 'modules/sticky.html',
+                                 'wip'         => true],
+                    
+                    '側邊欄' => ['class'       => '.ts.sidebar',
+                                 'description' => '可以在網頁的某側出現一個側邊欄，並將整個網頁推向至某個地方。',
+                                 'link'        => 'modules/sidebar.html',
                                  'wip'         => true]])
             ->pureFooter('modules.html'); ?>
