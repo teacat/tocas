@@ -4,10 +4,11 @@ if(!class_exists('TocasUIDocumention'))
 $TocasUIDoc = new TocasUIDocumention();
 
 $TocasUIDoc ->header('網格系統', '用以設計網頁架構，比科技部的表格還要好太多了。')
-            ->headerGroup('說明', '<p>網格系統較 Bootstrap 不同，同時彈性也較大，功能也更多，</p>
+            ->headerGroup('說明', '<p>網格系統較 Bootstrap 不同，同時<strong>彈性也較大，功能也更多</strong>，</p>
                                    <p>但初次接觸可能會令人頭痛。</p>
                                    <p>&nbsp;</p>
                                    <p>網格系統<strong>共有 16 格</strong>，而不是 12 格，</p>
+                                   <p>當你。<strong>要將欄位分成 x 等份，不一定要被 16 整除</strong>，這點請參考下列文件，</p>
                                    <p>在<strong>預設情況下欄位皆沒有響應式功能</strong>，你需要自行手動增加，</p>
                                    <p>如果你嫌太麻煩，你也可以直接在網格系統上設定自動響應式。</p>
                                    <p>&nbsp;</p>
