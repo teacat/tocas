@@ -345,5 +345,62 @@ $TocasUIDoc ->header('聊天室', '雙人，或者多人的聊天場所。')
             </div>', 'list, item')
             
             ->groupEnd()
+            ->groupStart('外觀 ', '你可以改變聊天室的外觀。')
+            
+            /**
+             * 最小化
+             */
+             
+            ->single('最小化', '你可以將聊天室最小化，僅留下標題列。', 
+           '<div class="ts minimized chatroom">
+                <div class="header">
+                    <div class="title">
+                        <div class="ts empty circular positive label"></div>
+                        單身俱樂部
+                    </div>
+                    <div class="actions">
+                        <div class="item">
+                            <i class="fa fa-cog"></i>
+                        </div>
+                        <div class="item">
+                            <i class="fa fa-times"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content">
+                    <div class="right message">
+                        <div class="content">
+                            <p>
+                                哈囉！
+                            </p>
+                            <div class="meta">
+                                <div class="item">
+                                    2:41 PM
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer">
+                    <div class="actions">
+                        <div class="item">
+                            <i class="fa fa-smile-o"></i>
+                        </div>
+                    </div>
+                    <div class="input">
+                        <div class="ts medium fluid input">
+                            <input type="text" placeholder="訊息">
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <div class="item">
+                            <i class="fa fa-paper-plane"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>', 'minimized')
+            
+            ->groupEnd()
             ->footer('views/chatroom.html');
 ?>
