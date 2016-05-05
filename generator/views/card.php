@@ -101,7 +101,7 @@ $TocasUIDoc ->header('卡片', '隨心所欲，像漢堡一樣，拼湊出你喜
             ->single('圖片', '一個用以放置圖片的區塊。', 
            '<div class="ts card">
                 <div class="image">
-                    <img style="height: 200px; width: 100%; object-fit: cover" src="../img/events.png">
+                    <img src="../img/events.png">
                 </div>
                 
                 <div class="content">
@@ -202,7 +202,7 @@ $TocasUIDoc ->header('卡片', '隨心所欲，像漢堡一樣，拼湊出你喜
             ->single('連結', '你可以將一些區塊轉換成連結。', 
            '<div class="ts card">
                 <a class="image" href="#!">
-                    <img style="height: 200px; width: 100%; object-fit: cover" src="../img/infinity-s/05.jpg">
+                    <img src="../img/infinity-s/05.jpg">
                 </a>
                 <div class="content">
                     <a class="header" href="#!">
