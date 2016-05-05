@@ -4,10 +4,9 @@ if(!class_exists('TocasUIDocumention'))
 $TocasUIDoc = new TocasUIDocumention();
 
 $TocasUIDoc ->header('清單', '一個這個，一個那個。')
-            ->headerGroup('說明', '<p>標籤會在沒有內容的時候自動隱藏，</p>
-                                   <p>這也也很適合用來當作一個狀態指標，對於一個色盲使用者而言，</p>
-                                   <p>標籤不應以顏色來引導他人，而是應該以形狀來敘述狀態，</p>
-                                   <p>例如：在線（圓形）、暫離（正方形）、離線（三角形）。</p>
+            ->headerGroup('說明', '<p>清單很像一個選單，</p>
+                                   <p>但是其結構更為簡易，外觀也以純文字居多，</p>
+                                   <p>很適合用在頁腳的那種連結清單。</p>
                                    <p>&nbsp;</p>
                                    <p>&nbsp;</p>')
             ->groupStart('種類', '清單具有不同的種類。')
