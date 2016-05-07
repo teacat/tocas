@@ -1,12 +1,9 @@
+<?php ob_start(); ?>
 <!DOCTYPE HTML>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-<meta name="description" content="一個 HTML5 和 CSS3 的網站設計元素。">
-<meta name="keywords" content="TeaMeow, 茶葉貓, Facebook, 社群網站, Twitter, 茶葉, 貓咪, 小安, Tocas UI, Semantic UI, UX, CSS3, HTML5">
-<meta name="author" content="Yami Odymel">
-<meta name="copyright" content="Caris Events">
 
 <!-- Styles -->
 <link href="//fonts.googleapis.com/earlyaccess/notosanstc.css" rel="stylesheet" type="text/css">
@@ -69,55 +66,74 @@
 
 <body>
 
-<!-- 叢林 -->
-<header id="jungle">
-    
+<div class="ts fluid center aligned container">
     <div class="ts container">
-        
-        <!-- 星星 -->
-        <div class="stars"></div>
-        <div class="stars"></div>
-        <div class="stars"></div>
-        <div class="stars"></div>
-        <div class="stars"></div>
-        <!-- / 星星 -->
-        
-        
-        <!-- 標題 -->
-        <h1 class="ts centered header inverted">
-            Tocas UI
-            <div class="sub header">這裡迎來另一個世界<!--Here comes another world.--></div>
-        </h1>
-        <!-- / 標題 -->
-        
-        
-        <!-- 連結 -->
-        <a href="#" class="ts big basic inverted button">下載</a>
-        <a href="#" class="ts big basic inverted button">閱讀文件</a>
-        <!-- / 連結 -->
-
+        <nav class="ts secondary relaxed inverted menu">
+            <a class="item" href="//tocas-ui.com/index.html">
+                <img class="ts small image" src="../img/logo.png" style="margin-top: -.9em">
+            </a>
+            <a class="item" href="//tocas-ui.com/main.html">
+                <i class="fa fa-file"></i> 主要說明
+            </a>
+            <a class="item" href="//tocas-ui.com/collections.html">
+                <i class="fa fa-th"></i> 
+                聚合型
+            </a>
+            <a class="item" href="//tocas-ui.com/elements.html">
+                <i class="fa fa-cogs"></i> 
+                普通元素
+            </a>
+            <a class="item" href="//tocas-ui.com/modules.html">
+                <i class="fa fa-th-large"></i> 
+                模塊
+            </a>
+            <a class="item" href="//tocas-ui.com/views.html">
+                <i class="fa fa-eye"></i> 
+                外觀型
+            </a>
+            <div class="right menu">
+                <a class="item" target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=LLEXZL6CRMC6L">
+                    <i class="fa fa-paypal"></i>
+                    贊助
+                </a>
+                <a class="item" href="//github.com/TeaMeow/TocasUI/">
+                        <i class="fa fa-github"></i>
+                        Github
+                </a>
+                <a class="item" href="//github.com/TeaMeow/TocasUI/releases">下載</a>
+            </div>
+        </nav>
     </div>
-    
-</header>
-<!-- / 叢林 -->
-
-
-<!-- 內容 -->
-<section class="ts container">
-    
-    <p>&nbsp;</p>
-    
-    <div class="ts relaxed stackable grid">
-        
-        <!-- 區塊 -->
-        <div class="eight wide column">
-            <h2 class="ts header">更有意義</h2>
-            <p>Tocas UI 以更有意義的方式來命名類別名稱，</p>
-            <p>就像是你直接稱呼這個元素一樣地親切。</p>
-            <p>程式已經夠枯燥乏味了，別再讓人生也繼續枯燥下去。</p>
+            
+    <h1 class="ts inverted header">
+        Tocas UI
+        <div class="sub header">
+            這裡迎來新世界 <span class="ts negative label">1.0.0 UNSTABLE</span>
         </div>
-        <!-- / 區塊 -->
+    </h1>
+    <p>現在開始試用！</p>
+    <div class="ts large input">
+        <input onClick="this.setSelectionRange(0, this.value.length)" type="text" value="&lt;link rel=&quot;stylesheet&quot; href=&quot;//cdn.rawgit.com/TeaMeow/TocasUI/master/dist/tocas.css&quot;&gt;">
+    </div>
+</div>
+
+<div class="ts main container">
+    <br>
+    <br>
+    <br>
+    <div class="ts stackable grid">
         
+        <div class="eight wide column">
+            <h3 class="ts header">更有意義</h3>
+            
+            <p>Tocas UI 以更有意義的方式來命名類別名稱，</p>
+
+            <p>就像是你直接稱呼這個元素一樣地親切。</p>
+            
+            <p>程式已經夠枯燥乏味了，別再讓人生也繼續枯燥下去。</p>
+            
+            <br>
+        </div>
         
         <!-- 區塊 -->
         <div class="eight wide column example">
@@ -141,27 +157,32 @@
         </div>
         <!-- / 區塊 -->
         
-        
-        <!-- 分隔線 -->
         <div class="sixteen wide column">
-            <p>&nbsp;</p>
+            <br>
+            <br>
+            <br>
             <div class="ts divider"></div>
-            <p>&nbsp;</p>
+            <br>
+            <br>
+            <br>
         </div>
-        <!-- / 分隔線 -->
         
         
-        <!-- 區塊 -->
         <div class="eight wide column">
-            <h2 class="ts header">自訂顏色只需一行指令</h2>
+            <h3 class="ts header">自訂顏色只需一行指令</h3>
+            
             <p>在 Bootstrap 中，你會看到有人詢問如何更改顏色，</p>
+            
             <p>通常他們的答案是要求你另外寫一段 CSS 來覆蓋原生樣式，</p>
+            
             <p>在 Tocas UI 中，我們都幫你搞定了，甚至會自動替你的顏色配色。</p>
+            
             <p>&nbsp;</p>
+            
             <p>更有趣的是，幾乎每一個 Tocas UI 的元素都支援自訂顏色。</p>
+            
+            <br>
         </div>
-        <!-- / 區塊 -->
-        
         
         <!-- 區塊 -->
         <div class="eight wide column example">
@@ -188,24 +209,41 @@
 
         </div>
         <!-- / 區塊 -->
+        
+    </div>
+    <br>
+    <br>
+    <br>
+</div>
 
-        
-        <!-- 分隔線 -->
-        <div class="sixteen wide column">
-            <p>&nbsp;</p>
-            <div class="ts divider"></div>
-            <p>&nbsp;</p>
-        </div>
-        <!-- / 分隔線 -->
-        
+
+
+<div class="ts fluid demo container">
+    <br>
+    <br>
+    <h1 class="ts centered header">
+        搭拉！
+        <div class="sub header">數分鐘即可做成一個實用介面。</div>
+    </h1>
+    <br>
+    <br>
+    <img class="ts centered image" src="img/browser2.png">
+</div>
+
+
+<div class="ts elements container">
+    <br>
+    <br>
+    <br>
+    <div class="ts relaxed stackable grid">
         
         <!-- 圖示標題 -->
         <div class="sixteen wide column">
-            <h3 class="ts center aligned icon header">
+            <h2 class="ts center aligned icon header">
                 <i class="fa fa-gift" style="font-size: 128px"></i>
                 眾多搭配
                 <div class="sub header">元件除了可以單獨使用，還可以混搭著使用</div>
-            </h3>
+            </h2>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
         </div>
@@ -217,10 +255,9 @@
             
             <!-- 圖片卡片 -->
             <h4 class="ts header">圖片卡片</h4>
-            
             <div class="ts fluid card">
                 <div class="image">
-                    <img style="height: 150px; width: 100%; object-fit: cover" src="http://www.infinity-s.jp/products/novel/TwilightWiz/img/hero-bg.jpg">
+                    <img style="height: 150px; width: 100%; object-fit: cover" src="img/infinity-s/01.png">
                     <div class="dim">黄昏ウィズ</div>
                 </div>
             </div>
@@ -230,9 +267,9 @@
             <!-- 垂直選單 -->
             <h4 class="ts header">垂直選單</h4>
             
-            <div class="ts vertical menu">
+            <div class="ts vertical positive menu">
                    
-                <a class="item"><span class="fa fa-picture-o"></span> 相片<div class="ts label">3</div></a>
+                <a class="item"><span class="fa fa-picture-o"></span> 相片</a>
                 
                 <a class="item"><span class="fa fa-users"></span> 群組</a>
                 
@@ -255,7 +292,7 @@
                         <div class="meta">@infinity_AW</div>
                     </div>
                     <div class="side">
-                        <button class="ts basic icon mini button">
+                        <button class="ts basic primary icon mini button">
                             <span class="fa fa-star"></span>
                         </button>
                     </div>
@@ -269,7 +306,7 @@
                         <div class="meta">@AW_infi</div>
                     </div>
                     <div class="side">
-                        <button class="ts basic icon mini button">
+                        <button class="ts basic positive icon mini button">
                             <span class="fa fa-star"></span>
                         </button>
                     </div>
@@ -283,7 +320,7 @@
                         <div class="meta">@infinityG_Rhia</div>
                     </div>
                     <div class="side">
-                        <button class="ts basic icon mini button">
+                        <button class="ts basic negative icon mini button">
                             <span class="fa fa-star"></span>
                         </button>
                     </div>
@@ -319,13 +356,12 @@
                             </a>
                         </div>
                     </div>
-
-                    <div style="margin-bottom: 16px"></div>
                     
-                    <p>看似最重要的東西卻沒能被妥善利用，</p>
-                    <p>沒有人能發現這一點，因為他們早已活在過去，</p>
-                    <p>才剛開始的序章卻被放在頁尾。</p>
-
+                    <div class="text">
+                        <p>看似最重要的東西卻沒能被妥善利用，</p>
+                        <p>沒有人能發現這一點，因為他們早已活在過去，</p>
+                        <p>才剛開始的序章卻被放在頁尾。</p>
+                    </div>
                 </div>
 
             </div>
@@ -335,16 +371,16 @@
             <!-- 圖案選單 -->
             <h4 class="ts header">圖案選單</h4>
             
-            <div class="ts icon large relaxed borderless menu">
-                <div class="item">
+            <div class="ts icon info relaxed borderless menu">
+                <a href="#!" class="item">
                     <span class="fa fa-bell"></span>
-                </div>
-                <div class="item">
+                </a>
+                <a href="#!" class="item">
                     <span class="fa fa-music"></span>
-                </div>
-                <div class="item">
+                </a>
+                <a href="#!" class="item">
                     <span class="fa fa-search"></span>
-                </div>
+                </a>
             </div>
             <!-- / 圖案選單 -->
             
@@ -356,7 +392,7 @@
                 <button class="ts button">按鈕</button>
                 <button class="ts warning button">小心</button>
                 <button class="ts negative button">不好了！</button>
-                <button class="ts loading button">按鈕</button>
+                <button class="ts loading primary button">按鈕</button>
             </div>
             <!-- / 按鈕群組 -->
             
@@ -375,7 +411,7 @@
                                 <textarea placeholder="你今天學到了什麼？" style="min-height: 100px"></textarea>
                             </div>
                             <br>
-                            <button class="ts tiny floated right positive button">送出</button>
+                            <button class="ts small floated right positive button" style="margin-right: 0">送出</button>
                             <button class="ts tiny basic icon button"><span class="fa fa-smile-o"></span></button>
                             <button class="ts tiny basic icon button"><span class="fa fa-camera"></span></button>
                         </div>
@@ -395,6 +431,7 @@
             <h4 class="ts header">讀取中的段落</h4>
             
             <div class="ts loading segment">
+                <p>&nbsp;</p>
             </div>
             
             <h4 class="ts header">浮起來的段落</h4>
@@ -458,7 +495,7 @@
             <!-- / 留言 -->
             
             
-            <!-- 頁尾清單 -->
+            <!-- 頁尾清單 
             <h4 class="ts header">頁尾清單</h4>
             
             <div class="ts horizontal centered middoted link list">
@@ -472,28 +509,118 @@
                     天野望
                 </a>
             </div>
-            <!-- 頁尾清單 -->
+             頁尾清單 -->
                                 
         </div>
         <!-- / 右側範例 -->
- 
-        
     </div>
-    <p>&nbsp;</p>
-</section>
-<!-- / 內容 -->
+    <br>
+    <br>
+    <br>
+</div>
 
 
-<footer id="footer">
+<div class="ts fluid people container">
+    <br>
+    <br>
+    <h1 class="ts centered header">
+        看看用戶怎麼說
+        <div class="sub header">他們對 Tocas UI 的評價</div>
+    </h1>
+    <br>
+    <br>
+    <div class="ts  container">
+        <div class="ts four column stackable relaxed grid">
+            <div class="center aligned column">
+                <img class="ts centered medium circular bordered image" src="img/user/hiram.png">
+                <h4 class="ts center aligned header">Hiram Huang</h4>
+                <blockquote>
+                    <p>Gan 我快哭了</p>
+                    <p>感動屎了</p>
+                    <p>我的淚</p>
+                </blockquote>
+            </div>
+            <div class="center aligned column">
+                <img class="ts centered medium circular bordered image" src="img/user/tsundere.png">
+                <h4 class="ts center aligned header">Tsundere Chen</h4>
+                <blockquote>
+                    <p>等很久了</p>
+                    <p>請問什麼時候換 TeaMeow v1.0.0？</p>
+                </blockquote>
+            </div>
+            <div class="center aligned column">
+                <img class="ts centered medium circular bordered image" src="img/user/sciuridae.png">
+                <h4 class="ts center aligned header">Sciuridae</h4>
+                <blockquote>
+                    <p>洨安都做好 Tocas UI 了</p>
+                    <p>我們該開個洨安教</p>
+                    <p>信洨安，得永生</p>
+                </blockquote>
+            </div>
+            <div class="center aligned column">
+                <img class="ts centered medium circular bordered image" src="img/user/jasper.png">
+                <h4 class="ts center aligned header">Jasper Yu</h4>
+                <blockquote>
+                    <p>潮爆了 所以我說那個始春呢</p>
+                </blockquote>
+            </div>
+            <div class="center aligned column">
+                <img class="ts centered medium circular bordered image" src="img/user/chris.png">
+                <h4 class="ts center aligned header">Chris</h4>
+                <blockquote>
+                    <p>哪時候 TeaMeow 的 Messenger 會出現</p>
+                </blockquote>
+            </div>
+            <div class="center aligned column">
+                <img class="ts centered medium circular bordered image" src="img/user/sean.png">
+                <h4 class="ts center aligned header">Sean</h4>
+                <blockquote>
+                    <p>One Tocas UI a Page
+                        Keep the Designer away</p>
+                </blockquote>
+            </div>
+            <div class="center aligned column">
+                <img class="ts centered medium circular bordered image" src="img/user/choukai.png">
+                <h4 class="ts center aligned header">Choukai</h4>
+                <blockquote>
+                    <p>快來用 Tocas UI<br>這真是，太潮惹！<br>三朝★身寸☆惹ㄦ</p>
+                </blockquote>
+            </div>
+            <!--
+            <div class="center aligned column">
+                <img class="ts centered medium circular bordered image" src="img/user/koru.png">
+                <h4 class="ts center aligned header">Cliff Chen</h4>
+                <blockquote>
+                    <p>QQ</p>
+                </blockquote>
+            </div>-->
+            <div class="center aligned column">
+                <img class="ts centered medium circular bordered image" src="img/user/henrywu.jpg">
+                <h4 class="ts center aligned header">Henry Wu</h4>
+                <blockquote>
+                    <p>希望2.0趕快出來</p>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+</div>
+
+
+
+<footer id="footer" class="ts inverted fluid segment">
     <div class="ts container">
+        <br>
         <div class="ts stackable grid">
             <div class="eight wide column">
                 <br>
-                <p><img class="ts image" src="img/logo.svg"></p>
+                <img class="ts big image" src="img/logo.png">
+                <br>
             </div>
             <div class="four wide column">
                 <br>
-                <div class="ts header">
+                <div class="ts inverted header">
                     合作夥伴
                 </div>
                 <div class="ts inverted link list">
@@ -503,7 +630,7 @@
             </div>
             <div class="four wide column">
                 <br>
-                <div class="ts header">
+                <div class="ts inverted header">
                     其他連結
                 </div>
                 <div class="ts inverted link list">
@@ -512,8 +639,21 @@
             </div>
             
         </div>
+        <br>
     </div>
 </footer>
-
 </body>
 </html>
+<?php 
+$content = ob_get_contents();
+
+function minify($buffer)
+{
+    $search  = ['/\>[^\S ]+/s','/[^\S ]+\</s','/(\s)+/s'];
+    $replace = ['>','<','\\1'];
+    $buffer  = preg_replace($search, $replace, $buffer);
+    return $buffer;
+}
+
+file_put_contents('index.html', minify($content));
+?>
