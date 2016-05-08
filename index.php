@@ -113,7 +113,7 @@
     </h1>
     <p>現在開始試用！</p>
     <div class="ts large input">
-        <input onClick="this.setSelectionRange(0, this.value.length)" type="text" value="&lt;link rel=&quot;stylesheet&quot; href=&quot;//cdn.rawgit.com/TeaMeow/TocasUI/master/dist/tocas.css&quot;&gt;">
+        <input onClick="this.setSelectionRange(0, this.value.length)" type="text" value="&lt;link rel=&quot;stylesheet&quot; href=&quot;//cdn.rawgit.com/TeaMeow/TocasUI/master/dist/tocas.min.css&quot;&gt;">
     </div>
 </div>
 
