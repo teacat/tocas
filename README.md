@@ -4,7 +4,7 @@
 
 &nbsp;
 
-## TocasUI <img width="120" src="http://i.imgur.com/ds8QHBs.png">
+# TocasUI <img width="120" src="http://i.imgur.com/ds8QHBs.png">
 
 TocasUI 是基於 SASS 和 CSS3 的元件框架，可快速建立大型或小型網站的介面，
 
@@ -14,7 +14,7 @@ TocasUI 是基於 SASS 和 CSS3 的元件框架，可快速建立大型或小型
 
 &nbsp;
 
-## 特色
+# 特色
 
 1. 更簡潔，沒有像 Bootstrap 那樣**雜亂**的樣式名稱。（如：`.m-l-1`, `.p-x-2`, `.p-a-3`）
 
@@ -34,7 +34,7 @@ TocasUI 是基於 SASS 和 CSS3 的元件框架，可快速建立大型或小型
 
 &nbsp;
 
-## 安裝
+# 安裝
 
 透過 `bower` 安裝。
 
@@ -60,7 +60,7 @@ $ git checkout tags/v1.0.0
 
 &nbsp;
 
-## 範例
+# 範例
 
 Tocas UI 的樣式命名方式來自於 Semantic UI 的精神，以意義為主。
 
@@ -78,7 +78,7 @@ Tocas UI 的樣式命名方式來自於 Semantic UI 的精神，以意義為主�
 
 &nbsp;
 
-## 簡短，而且更有意義
+# 簡短，而且更有意義
 
 讓我們展示一些更進階的用法，讓你清楚了解 Tocas UI 和 Bootstrap 之間的差異。
 
