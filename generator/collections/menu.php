@@ -92,15 +92,15 @@ $TocasUIDoc ->header('選單', '從這裡到達任何地方。')
             ->groupStart('內容', '一個選單具有不同內容。')
             
             /**
-             * 標誌
+             * 標題
              */
              
-            ->single('標誌', '項目也可以含有標誌性文字。', 
+            ->single('標題', '項目也可以含有標誌性文字。', 
            '<div class="ts info borderless menu">
-                <div class="brand item">首頁</div>
+                <a href="#!  class="header item">首頁</div>
                 <a href="#!" class="item">關於</a>
                 <a href="#!" class="item">文件</a>
-            </div>', 'brand')
+            </div>', 'header')
             
             /**
              * 重複選單
@@ -128,7 +128,7 @@ $TocasUIDoc ->header('選單', '從這裡到達任何地方。')
                 <a href="#!" class="item">文件</a>
                 <div class="right menu">
                     <div href="#!" class="item">
-                        <div class="ts right icon small transparent inverted input">
+                        <div class="ts right icon small basic inverted input">
                             <input type="text" placeholder="文字欄位">
                             <i class="fa fa-search"></i>
                         </div>
