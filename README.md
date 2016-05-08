@@ -1,16 +1,16 @@
 <p align="center">
-  <img src="tocas-og.png"/>
+  <img src="tocas-og.png">
 </p>
 
 &nbsp;
 
-## TocasUI
+## TocasUI <img width="120" src="http://i.imgur.com/ds8QHBs.png">
 
 TocasUI 是基於 SASS 和 CSS3 的元件框架，可快速建立大型或小型網站的介面，
 
 其用法與 Bootstrap 差異甚多，Tocas UI 以不雜亂，有意義為主。
 
-**相關教學網站仍在製作中。**
+**可至：http://tocas-ui.com/ 觀看教學文件。**
 
 &nbsp;
 
@@ -76,6 +76,8 @@ Tocas UI 的樣式命名方式來自於 Semantic UI 的精神，以意義為主�
 <button class="btn btn-lg btn-primary"></button>
 ```
 
+&nbsp;
+
 ## 簡短，而且更有意義
 
 讓我們展示一些更進階的用法，讓你清楚了解 Tocas UI 和 Bootstrap 之間的差異。
@@ -111,3 +113,17 @@ Tocas UI 的樣式命名方式來自於 Semantic UI 的精神，以意義為主�
 ```
 
 &nbsp;
+
+# 可參考文件
+
+這裡是幾個可能會啟發你創意，或是更能讓你了解這類東西的連結。
+
+[Amaze UI | 中国首个开源 HTML5 跨屏前端框架](http://amazeui.org/)
+
+[Semantic UI](http://semantic-ui.com/)
+
+[Bulma: a modern CSS framework based on Flexbox](http://bulma.io/)
+
+[Bootstrap·The world's most popular mobile-first and responsive front-end framework.](http://v4-alpha.getbootstrap.com/)
+
+[Kule Lazy 3](http://www.kule.tw/)
