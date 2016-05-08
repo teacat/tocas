@@ -1,11 +1,6 @@
 <p align="center">
   <img src="tocas-og.png"/>
 </p>
-&nbsp;
-
-<p align="center">
-  <img src="http://i.imgur.com/VH17MuY.png"/>
-</p>
 
 &nbsp;
 
