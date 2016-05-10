@@ -97,7 +97,7 @@ $TocasUIDoc ->header('選單', '從這裡到達任何地方。')
              
             ->single('標題', '項目也可以含有標誌性文字。', 
            '<div class="ts info borderless menu">
-                <a href="#!  class="header item">首頁</div>
+                <a href="#!" class="header item">首頁</a>
                 <a href="#!" class="item">關於</a>
                 <a href="#!" class="item">文件</a>
             </div>', 'header')
