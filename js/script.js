@@ -37,9 +37,9 @@ $(function()
     utaha({'insertAfterCode': '<div class="ts bottom right attached label">原始碼</div>'})
     
     
-    
-    hljs.initHighlightingOnLoad();
-    
+
+    hljs.initHighlighting();
+
     
     setTimeout(function()
     {

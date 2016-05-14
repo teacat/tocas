@@ -36,7 +36,7 @@ var utaha = function(options)
         var previewContainer = examples[i].querySelectorAll(options.previewContainer)[0]
     
         /** To the next example container if no preview container was found */
-        if(previewContainer == 'undefined')
+        if(typeof previewContainer == 'undefined')
             continue
         
         /** Defined the source container, used to show the source code of the preview container */

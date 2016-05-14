@@ -39,6 +39,29 @@ if(!class_exists('TocasUIDocumention'))
         
         function single($title, $description, $sourceCode, $highlight, $jsCode = null, $empty = false)
         {
+            $isCss = false;
+            $isJs  = false;
+            
+            include('tpl/single.tpl.php');
+            
+            return $this;
+        }
+        
+        function singleJs($title, $description, $sourceCode)
+        {
+            $isCss = false;
+            $isJs  = true;
+            
+            include('tpl/single.tpl.php');
+            
+            return $this;
+        }
+        
+        function singleCss($title, $description, $sourceCode)
+        {
+            $isCss = true;
+            $isJs  = false;
+            
             include('tpl/single.tpl.php');
             
             return $this;
