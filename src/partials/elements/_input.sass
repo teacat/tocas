@@ -1,14 +1,14 @@
-//   ▄▄▄        ▄▄████▄                                                           
+//   ▄▄▄        ▄▄████▄
 // ▄█████▄    ▄██▀    ██
-// ▀█▄   ██▄ ██▀      ██                                                       
-//  ▀██▄▄▄████   ▄▄▄██▀                                                            
-//     ▀▀▀████▀▀▀▀▀                                                              
-//        ██                                                                     
-//       ██          ▄█████▄       █████████████          ▄█             █▄    
-//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+// ▀█▄   ██▄ ██▀      ██
+//  ▀██▄▄▄████   ▄▄▄██▀
+//     ▀▀▀████▀▀▀▀▀
+//        ██
+//       ██          ▄█████▄       █████████████          ▄█             █▄
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
 //      ██        ██         ██    ██         ██        ██  ▀██       ██▀
 //      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
-//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
 //       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
 //
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -30,25 +30,25 @@
         // INPUT, TEXTAREA, DIV[CONTENTEDITABLE]
         //
         //
-          
+
         input, textarea, div[contenteditable]
           +y-padding($padding * ($i / 5))
           +x-padding($padding * ($i / 4))
-          
+
           font-size: $fontSize
-        
-        
-        
+
+
+
         // [&] Icon
         //
         // 帶有圖示的輸入欄位。
-  
+
         &.icon
-          
+
           // [&] NOT Left
           //
           // 圖示不是在左邊的帶圖示欄位。
-          
+
           &:not(.left)
             input, textarea, div[contenteditable]
               +x-padding(x, ($padding * ($i / 4)) * 2 + $fontSize)
@@ -65,7 +65,7 @@
           // [&] Left
           //
           // 圖式於左邊的帶圖示欄位。
-          
+
           &.left
 
             input, textarea, div[contenteditable]
@@ -80,21 +80,23 @@
 
 
 
+
 //**************************************
 //***********   T H E M E   ************
 //**************************************
 
 =inputs-theme($color, $textColor)
   color: $textColor
-  
+
   & .input:hover + .input
     input, textarea, div[contenteditable]
       border-top-color: darken($color, 20%)
-  
+
   & .input input:focus + .input
     input, textarea, div[contenteditable]
       border-top-color: #67D7FF
-      
+
+
 
 
 //**************************************
@@ -103,11 +105,21 @@
 
 .ts.inputs
   +inputs-theme(lighten($defaultColor, 35%), $defaultTextColor)
-  
+  +inline-block
+
+  // [&] Fluid
+  //
+  // 流動寬度
+
+  &.fluid
+    +block
+
+
+
   // [&] Vertical
   //
   // 垂直排序的欄位群組。
-  
+
   &.vertical
     +y-margin($margin)
 
@@ -135,7 +147,7 @@
         input, textarea, div[contenteditable]
           border-radius: 0
           border-bottom-style: none
-          
+
           &:focus
             border-bottom-style: solid
             margin-bottom: -1px
@@ -147,80 +159,83 @@
 
 
 
+
 //**************************************
 //***********   T H E M E   ************
 //**************************************
 
 =input-theme($color, $textColor)
   color: $textColor
-  
+
   // INPUT
   //
   //
-  
+
   input, textarea, div[contenteditable]
     border-color: darken($color, 10%)
     color       : $textColor
-    
+
     // WEBKIT-INPUT-PLACEHOLDER
     //
     // Webkit 的 Placeholder 屬性。
-    
+
     &::-webkit-input-placeholder
       color: $textColor
-    
+
     &:-moz-placeholder,
     &::-moz-placeholder,
     &:-ms-input-placeholder
       color: $textColor
-        
-        
-        
+
+
+
     // EMPTY
     //
     // 空的時候。
-            
+
     &:empty:before
       color: rgba($textColor, 0.6)
-    
-  
-  
+
+
+
     // HOVER
     //
     //
-    
+
     &:hover
       border-color: darken($color, 20%)
-      
 
 
+
   //
   //
   //
-  
+
   &:not(.basic)
-    
-  
+
+
     // INPUT
     //
     //
-    
+
     input, textarea, div[contenteditable]
       background-color: $color
-    
+
       // WEBKIT-INPUT-PLACEHOLDER
       //
       // Webkit 的 Placeholder 屬性。
-      
+
       &::-webkit-input-placeholder
         color: rgba($textColor, 0.6)
-      
+
       &:-moz-placeholder,
       &::-moz-placeholder,
       &:-ms-input-placeholder
         color: rgba($textColor, 0.6)
-        
-        
+
+
+
+
 //**************************************
 //************   M A I N   *************
 //**************************************
@@ -230,72 +245,72 @@
   +input-theme(lighten($defaultColor, 35%), $defaultTextColor)
   +relative
   +inline-block
-  
+
   //
   //
   //
-  
+
   &:only-child
     margin: 0
-   
-  
-  
+
+
+
   // DIV[CONTENTEDITABLE] EMPTY
   //
   // 當可編輯內容的 Div 是空的時候。
-  
+
   div[contenteditable]:empty:before
     cursor: text
-    
-  
-  
+
+
+
   // INPUT, TEXTAREA, DIV[CONTENTEDITABLE]
   //
   //
-  
+
   input, textarea, div[contenteditable]
     +rd
     +border-box
     +normal
     +y-padding($padding)
     +x-padding($padding * 1.3)
-    
+
     width: 100%
     border-width: .1rem
     border-style: solid
     resize      : none
-    
-    
-    
+
+
+
     // WEBKIT-INPUT-PLACEHOLDER
     //
     // Webkit 的 Placeholder 屬性。
-  
+
     &::-webkit-input-placeholder
       font-weight: normal
-    
-    
-    
+
+
+
     // MOZ-PLACEHOLDER, MS-INPUT-PLACEHOLDER
     //
     // Firefox 和微軟的 Placeholder 屬性。
-  
+
     &:-moz-placeholder,
     &:-ms-input-placeholder
       font-weight: normal
 
-    
-    
+
+
     // [&] NOT INPUT
     //
     // 不是輸入欄位屬性。
-    
+
     &:not(input)
       +y-padding($padding * 1)
       +x-padding($padding * 1.3)
-    
-    
-    
+
+
+
     // [&] Disabled, DISABLED
     //
     // 被停用的欄位。
@@ -305,73 +320,73 @@
     &[disabled],
     &.disabled
       +no-poi
-      
+
       opacity: 0.4
-  
-  
-  
+
+
+
   // [&] Icon
   //
   // 帶有圖示的輸入欄位。
-  
+
   &.icon
 
     .icon, .fa
       +block
       +absolute
       +position(50%, x, x, x)
-      
+
       transform: translateY(-50%)
       margin: 0
-      
-      
-      
+
+
+
       // [&] Link
       //
       // 可供點擊、帶連結的圖示。
-      
+
       &:not(.link)
         +no-poi
-      
-      
-      
+
+
+
       // [&] Link
       //
       // 可供點擊、帶連結的圖示。
-      
+
       &.link
         +extend(ease)
-        
+
         opacity: .7
-        
-        
-        
+
+
+
         // HOVER
         //
         //
-        
+
         &:hover
           +poi
-          
+
           opacity: .85
-        
-        
-        
+
+
+
         // ACTIVE
         //
-        // 
-        
+        //
+
         &:active
           +extend(no-ease)
-          
+
           opacity: 1
-      
-      
-      
+
+
+
       // [&] Circular
       //
       // 圓形的圖示。
-      
+
       &.circular
         padding: .4em
         border-radius: 100em
@@ -381,7 +396,7 @@
           line-height: 1px
 
 
-  
+
   // [&] Disabled
   //
   // 已停用的欄位。
@@ -391,9 +406,9 @@
       +no-poi
 
       opacity: 0.4
-  
-  
-  
+
+
+
   // [&] Resizable
   //
   // 可自由伸縮的欄位。
@@ -401,19 +416,19 @@
   &.resizable
     input, textarea, div[contenteditable]
       resize: both
-  
-  
-  
+
+
+
   // [&] Fluid
   //
   // 流動寬度的欄位。
-  
+
   &.fluid
     +block
     width: 100%
-    
-  
-  
+
+
+
   // [&] Basic
   //
   // 背景透明的輸入欄位。
@@ -421,40 +436,40 @@
   &.basic
     input, textarea, div[contenteditable]
       background: transparent
-      
+
     &.borderless
       input, textarea, div[contenteditable]
         border: none
-  
-  
-  
+
+
+
   // [&] Circular
   //
   // 圓形的輸入欄位。
-  
+
   &.circular
     border-radius: 50em
-    
+
     input, textarea, div[contenteditable]
       border-radius: 50em
-  
-  
-  
+
+
+
   // [&] NOT Basic
   //
   // 非背景透明的輸入欄位。
-  
+
   &:not(.basic)
     input, textarea, div[contenteditable]
       transition: box-shadow 0.30s ease-in-out
       outline   : none
-    
-    
-    
+
+
+
     // [&] Focus, FOCUS
     //
     // 聚焦中的欄位。
-  
+
     &.focus input[type=text],
     &.focus input[type=email],
     &.focus input[type=password],
@@ -469,17 +484,17 @@
       border-color: #67D7FF
 
 
-  
+
   // [&] Error
   //
   // 錯誤狀態的欄位。
 
   &.error
- 
+
     // [&] Focus, FOCUS
     //
     // 聚焦中的欄位。
-    
+
     &.focus input[type=text],
     &.focus input[type=email],
     &.focus input[type=password],
@@ -492,27 +507,27 @@
     div[contenteditable]:focus
       box-shadow: 0 0 .5rem rgba(#DE8F8B, 1)
       border-color: #FF9F9A
-    
-    
+
+
     input, textarea, div[contenteditable]
       //color: auten(#FFD9D7)
       background-color: #FDEBEA
-      
-  
+
+
   &.inverted
     +input-theme($invertedColor, $invertedTextColor)
-    
+
   &.primary
     +input-theme($primaryColor, $primaryTextColor)
 
   &.info
     +input-theme($infoColor, $infoTextColor)
-    
+
   &.warning
     +input-theme($warningColor, $warningTextColor)
-    
+
   &.positive
     +input-theme($positiveColor, $positiveTextColor)
-    
+
   &.negative
     +input-theme($negativeColor, $negativeTextColor)
