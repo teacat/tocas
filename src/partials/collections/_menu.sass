@@ -1,14 +1,14 @@
-//   ▄▄▄        ▄▄████▄                                                           
+//   ▄▄▄        ▄▄████▄
 // ▄█████▄    ▄██▀    ██
-// ▀█▄   ██▄ ██▀      ██                                                       
-//  ▀██▄▄▄████   ▄▄▄██▀                                                            
-//     ▀▀▀████▀▀▀▀▀                                                              
-//        ██                                                                     
-//       ██          ▄█████▄       █████████████          ▄█             █▄    
-//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+// ▀█▄   ██▄ ██▀      ██
+//  ▀██▄▄▄████   ▄▄▄██▀
+//     ▀▀▀████▀▀▀▀▀
+//        ██
+//       ██          ▄█████▄       █████████████          ▄█             █▄
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
 //      ██        ██         ██    ██         ██        ██  ▀██       ██▀
 //      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
-//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
 //       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
 //
 //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -21,10 +21,10 @@
 
 =menu-theme($color: #fafafa, $textColor: false)
   //+no-overflow
-  
+
   @if not $textColor
     $textColor: darken($color, 30%)
-    
+
   background          : $color
   border-color: darken($color, 5%)
 
@@ -36,45 +36,48 @@
 
   > a.item,
   > .menu a.item
-    
+
     background-color : $color
     color            : $textColor
-    
+
     +if-parent($thisParent, '.secondary:not(.pointing)')
       background-color: transparent
-    
+
     &:hover
       +poi
-      
+
       +if-parent($thisParent, ':not(.tabbed)')
         background-color : auten($color, 5%)
         color      : $textColor
-      
+
+        .fa, .icon
+          color: $textColor
+
       +if-parent($thisParent, '.secondary:not(.pointing)')
         background-color : rgba(auten($color, 5%), .3)
-        
-      
-        
+
+
+
     &:active
       +extend(no-ease)
       +extend(no-tap)
       background-color: auten($color, 10%)
-      
+
       +if-parent($thisParent, '.secondary:not(.pointing)')
         background-color: rgba(auten($color, 10%), .6)
-  
+
   > div.item
     color: $textColor
-  
+
   &.transparent,
   &.transparent > .menu
     background-color: transparent
-    
 
-    
-    
-    
-    
+
+
+
+
+
     .label:not(.empty):not(.primary):not(.warning):not(.positive):not(.negative):not(.info)
       color     : $textColor
       background-color: if(is_lighter($color), darken($color, 3%), darken($color, 3%))
@@ -92,11 +95,11 @@
   //
 
   &:not(.vertical)
-  
+
     > .item,
     > .menu .item
       border-color: darken($color, 10%)
-  
+
 
 
 
@@ -113,6 +116,13 @@
 
       &:first-child
         border-top: none
+
+      // [&] DIVIDER
+      //
+      //
+
+      &.divider
+        border-top: 0.1rem solid rgba($textColor, 0.3) !important
 
     > a.item,
     > .menu a.item
@@ -182,13 +192,13 @@
 .ts.menu
   white-space: nowrap
   overflow-x : auto
-  
-  
+
+
   &.transparent
     +y-margin(-#{$padding * 1.2})
     +x-margin(-#{$padding * 2})
-  
-  
+
+
 
 .ts.menu,
 .ts.menu .menu
@@ -220,21 +230,21 @@
 
   a
     text-decoration: none
-  
-  
-  
+
+
+
   //
   //
   //
-  
+
   //& + .fluid
   //  margin-bottom: 0
-  
-  
-  
+
+
+
   &.transparent
     border: none
-    
+
 
   // Sub menu
   //
@@ -266,7 +276,7 @@
       +x-padding(1.8rem)
       font-size: 1.8rem
 
-    .icon
+    .icon, .fa
       margin-right: 0
 
 
@@ -290,7 +300,7 @@
 
   &.vertical
     +block
-    
+
     white-space: nowrap
     overflow-x : hidden
     overflow-y : auto
@@ -326,7 +336,7 @@
   &.secondary:not(.pointing)
     border: none
     background: none
-    
+
     .menu
       background: none
 
@@ -371,23 +381,46 @@
     +y-padding($padding * 1.2)
     +x-padding($padding * 2)
 
-    
-    
+
+
+    // Icon
+    //
+    //
+
+    .fa, .icon
+      +extend(ease)
+      font-size: 1.2em
+
+
+
+    // [&] DIVIDER
+    //
+    //
+
+    &.divider
+      +y-margin($padding * 1.2)
+      +x-margin($padding * 2)
+
+      border-radius: 0 !important
+      padding: 0
+
+
+
     // [&] Brand
     //
     // 顯示代表性文字的項目。
-    
+
     &.brand,
     &.header
       font-weight: bold
       font-size  : 1.2em
-    
-    
-    
+
+
+
     // [PARENT] Transparent NOT Fluid
     //
     // 當透明背景的時候加入圓角。
-    
+
     +if-parent($thisParent, '.transparent:not(.fluid)')
       +rd
 
@@ -421,7 +454,7 @@
 
     +if-parent($thisParent, '.secondary:not(.pointing)')
       +rd
-      
+
       border: none
 
       &:not(.active)
@@ -519,12 +552,26 @@
     //
     // 標籤。
 
-    .label
+    .label:not(.empty)
       +x-padding($padding)
       +y-padding($padding / 3)
       +y-margin(-.2rem, x)
-      
+
       float     : right
+
+
+
+    // [&] Aligned
+    //
+    //
+
+    &.aligned
+      &.center
+        text-align: center
+      &.left
+        text-align: left
+      &.right
+        text-align: right
 
 
 
@@ -552,13 +599,13 @@
 
       &.vertically
         +y-padding(0)
-  
-  
-  
+
+
+
   // [&] Compact
   //
   // 縮減版的選單。
-  
+
   &.compact,
   .ts.dropdown &
     +inline-block
@@ -566,30 +613,30 @@
 
     > .item
       border-right: none
-  
 
-      
-      
+
+
+
   //**************************************
   //**********   C O L O R S   ***********
   //**************************************
-  
+
   &.primary
     +menu-theme($primaryColor, $primaryTextColor)
-    
+
   &.info
     +menu-theme($infoColor, $infoTextColor)
-    
+
   &.positive
     +menu-theme($positiveColor, $positiveTextColor)
-    
+
   &.warning
     +menu-theme($warningColor, $warningTextColor)
-    
+
   &.negative
     +menu-theme($negativeColor, $negativeTextColor)
-  
+
   &.inverted
     +menu-theme($invertedColor, $invertedTextColor)
-  
-    
+
+
