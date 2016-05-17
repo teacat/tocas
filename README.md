@@ -4,7 +4,7 @@
 
 &nbsp;
 
-# TocasUI <img src="https://img.shields.io/github/tag/TeaMeow/TocasUI.svg"><img src="https://img.shields.io/bower/v/tocas.svg"> 
+# TocasUI <img src="https://img.shields.io/badge/tag-v1.0%20UNSTABLE-red.svg"> <img src="https://img.shields.io/bower/v/tocas.svg"> 
 
 TocasUI 是基於 SASS 和 CSS3 的元件框架，可快速建立大型或小型網站的介面，
 
