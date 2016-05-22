@@ -1,0 +1,66 @@
+//   ▄▄▄        ▄▄████▄
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██
+//  ▀██▄▄▄████   ▄▄▄██▀
+//     ▀▀▀████▀▀▀▀▀
+//        ██
+//       ██          ▄█████▄       █████████████          ▄█             █▄
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   F O R M   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+=field-generator
+  @for $i from 1 through $columnAmount
+    [class*="#{nth($columnName, $i)} wide"]
+      +border-box
+
+      width: 100% / $columnAmount * $i
+
+  @for $i from 1 through $columnAmount
+    .fields.#{nth($columnName, $i)}
+      > .field
+        width: 100% / $i !important
+
+.ts.form
+  +relative
+  +flex
+
+  width: 100%
+
+  +field-generator
+
+  &.centered
+    margin: 0 auto
+
+  > .fields
+    +relative
+    +flex
+    +flex-row
+
+    flex-wrap: nowrap
+    width: 100%
+
+
+  .field
+    +x-padding($columnPadding)
+    +extend(basicAligns)
+
+    &:first-child
+      padding-left: 0
+
+    &:last-child
+      padding-right: 0
+
+
+  &.relaxed
+
+    .field
+      +x-padding($columnRelaxedPadding)
+
+
