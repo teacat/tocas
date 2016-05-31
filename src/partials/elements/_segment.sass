@@ -24,11 +24,10 @@
   +block
   +normal
   +basic-card
-  +padding(2)
   +y-margin($margin)
 
   background: #FFF
-
+  padding: 1em
 
 
   //
@@ -79,6 +78,17 @@
 
 
 
+  //
+  //
+  //
+
+  &.padded
+    padding: 1.5em
+
+    &.very
+      padding: 3em
+
+
   // [&] Fluid
   //
   // 流動寬度的片段。
@@ -112,12 +122,26 @@
 
 
 
-  // [&] Fitted
+  // [&] Fitted NOT Horizontally NOT Vertically
   //
   // 沒有內距片段。
 
-  &.fitted
+  &.fitted:not(.horizontally):not(.vertically)
     padding: 0
+
+
+
+  //
+  //
+  //
+
+  &.fitted
+
+    &.horizontally
+      +x-padding(0)
+
+    &.vertically
+      +y-padding(0)
 
 
 
