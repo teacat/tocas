@@ -23,15 +23,15 @@
   @for $i from 1 through $inputAmount
     @at-root
       #{&}.#{nth($inputSizes, $i)}
-        +y-margin($padding)
+        //+y-margin($padding)
 
         $fontSize: nth($inputFontSizes, $i)
 
-        // INPUT, TEXTAREA, DIV[CONTENTEDITABLE]
+        // INPUT, TEXTAREA, *[contenteditable]
         //
         //
 
-        input, textarea, div[contenteditable]
+        input, textarea, *[contenteditable]
           +y-padding($padding * ($i / 5))
           +x-padding($padding * ($i / 4))
 
@@ -50,7 +50,7 @@
           // 圖示不是在左邊的帶圖示欄位。
 
           &:not(.left)
-            input, textarea, div[contenteditable]
+            input, textarea, *[contenteditable]
               +x-padding(x, ($padding * ($i / 4)) * 2 + $fontSize)
 
             .icon, .fa
@@ -68,7 +68,7 @@
 
           &.left
 
-            input, textarea, div[contenteditable]
+            input, textarea, *[contenteditable]
               +x-padding(($padding * ($i / 4)) * 2 + $fontSize, x)
 
             .icon, .fa
@@ -89,11 +89,11 @@
   color: $textColor
 
   & .input:hover + .input
-    input, textarea, div[contenteditable]
+    input, textarea, *[contenteditable]
       border-top-color: darken($color, 20%)
 
   & .input input:focus + .input
-    input, textarea, div[contenteditable]
+    input, textarea, *[contenteditable]
       border-top-color: #67D7FF
 
 
@@ -128,13 +128,13 @@
       +y-margin(0)
       +block
 
-      input, textarea, div[contenteditable]
+      input, textarea, *[contenteditable]
         &:focus
           +relative
           +z(2)
 
       &:first-child:not(:last-child)
-        input, textarea, div[contenteditable]
+        input, textarea, *[contenteditable]
           border-bottom-right-radius: 0
           border-bottom-left-radius : 0
           border-bottom-style       : none
@@ -144,7 +144,7 @@
             margin-bottom: -1px
 
       &:not(:first-child):not(:last-child)
-        input, textarea, div[contenteditable]
+        input, textarea, *[contenteditable]
           border-radius: 0
           border-bottom-style: none
 
@@ -153,7 +153,7 @@
             margin-bottom: -1px
 
       &:last-child:not(:first-child)
-        input, textarea, div[contenteditable]
+        input, textarea, *[contenteditable]
           border-top-right-radius: 0
           border-top-left-radius : 0
 
@@ -171,7 +171,7 @@
   //
   //
 
-  input, textarea, div[contenteditable]
+  input, textarea, *[contenteditable]
     border-color: darken($color, 10%)
     color       : $textColor
 
@@ -218,7 +218,7 @@
     //
     //
 
-    input, textarea, div[contenteditable]
+    input, textarea, *[contenteditable]
       background-color: $color
 
       // WEBKIT-INPUT-PLACEHOLDER
@@ -255,20 +255,20 @@
 
 
 
-  // DIV[CONTENTEDITABLE] EMPTY
+  // *[CONTENTEDITABLE] EMPTY
   //
   // 當可編輯內容的 Div 是空的時候。
 
-  div[contenteditable]:empty:before
+  *[contenteditable]:empty:before
     cursor: text
 
 
 
-  // INPUT, TEXTAREA, DIV[CONTENTEDITABLE]
+  // INPUT, TEXTAREA, *[contenteditable]
   //
   //
 
-  input, textarea, div[contenteditable]
+  input, textarea, *[contenteditable]
     +rd
     +border-box
     +normal
@@ -402,7 +402,7 @@
   // 已停用的欄位。
 
   &.disabled
-    input, textarea, div[contenteditable]
+    input, textarea, *[contenteditable]
       +no-poi
 
       opacity: 0.4
@@ -414,7 +414,7 @@
   // 可自由伸縮的欄位。
 
   &.resizable
-    input, textarea, div[contenteditable]
+    input, textarea, *[contenteditable]
       resize: both
 
 
@@ -434,11 +434,11 @@
   // 背景透明的輸入欄位。
 
   &.basic
-    input, textarea, div[contenteditable]
+    input, textarea, *[contenteditable]
       background: transparent
 
     &.borderless
-      input, textarea, div[contenteditable]
+      input, textarea, *[contenteditable]
         border: none
 
 
@@ -450,7 +450,7 @@
   &.circular
     border-radius: 50em
 
-    input, textarea, div[contenteditable]
+    input, textarea, *[contenteditable]
       border-radius: 50em
 
 
@@ -460,7 +460,7 @@
   // 非背景透明的輸入欄位。
 
   &:not(.basic)
-    input, textarea, div[contenteditable]
+    input, textarea, *[contenteditable]
       transition: box-shadow 0.30s ease-in-out
       outline   : none
 
@@ -474,12 +474,12 @@
     &.focus input[type=email],
     &.focus input[type=password],
     &.focus textarea,
-    &.focus div[contenteditable],
+    &.focus *[contenteditable],
     input[type=text]:focus,
     input[type=email]:focus,
     input[type=password]:focus,
     textarea:focus,
-    div[contenteditable]:focus
+    *[contenteditable]:focus
       box-shadow: 0 0 .5rem rgba(81, 203, 238, 1)
       border-color: #67D7FF
 
@@ -499,17 +499,17 @@
     &.focus input[type=email],
     &.focus input[type=password],
     &.focus textarea,
-    &.focus div[contenteditable],
+    &.focus *[contenteditable],
     input[type=text]:focus,
     input[type=email]:focus,
     input[type=password]:focus,
     textarea:focus,
-    div[contenteditable]:focus
+    *[contenteditable]:focus
       box-shadow: 0 0 .5rem rgba(#DE8F8B, 1)
       border-color: #FF9F9A
 
 
-    input, textarea, div[contenteditable]
+    input, textarea, *[contenteditable]
       //color: auten(#FFD9D7)
       background-color: #FDEBEA
 
