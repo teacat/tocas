@@ -59,9 +59,22 @@
   @for $i from 1 through $dropdownAmount
     @at-root
       #{&}.#{nth($dropdownSizes, $i)}
-        +y-margin($padding)
+        //+y-margin($padding)
         +y-padding($padding * ($i / 5))
         +x-padding($padding * ($i / 4), $padding * ($i / 4) * 3)
+
+        &[size]
+          +x-padding($padding * ($i / 4))
+
+          option
+            +rd
+            +y-padding($padding * ($i / 6))
+            +x-padding($padding * ($i / 5))
+
+
+
+
+
 
         font-size: nth($dropdownFontSizes, $i)
         background-position: calc(100% - 20px) calc(#{$padding * ($i / 5)} + 1em - 5px), calc(100% - 15px) calc(#{$padding * ($i / 5)} + 1em - 5px)
@@ -91,6 +104,13 @@
   &::-moz-placeholder,
   &:-ms-input-placeholder
     color: $textColor
+
+
+
+  //
+  //
+  //
+
 
 
 
@@ -164,9 +184,16 @@
   border-width: .1rem
   border-style: solid
 
-  background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%)
-  background-size: 5px 5px, 5px 5px
-  background-repeat: no-repeat
+
+
+  //
+  //
+  //
+
+  &:not([size])
+    background-image: linear-gradient(45deg, transparent 50%, gray 50%), linear-gradient(135deg, gray 50%, transparent 50%)
+    background-size: 5px 5px, 5px 5px
+    background-repeat: no-repeat
 
 
 
