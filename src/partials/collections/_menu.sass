@@ -35,7 +35,9 @@
   //
 
   > a.item,
-  > .menu a.item
+  > .ts.container > .item,
+  > .menu a.item,
+  > .ts.container > .menu a.item
 
     background-color : $color
     color            : $textColor
@@ -97,7 +99,9 @@
   &:not(.vertical)
 
     > .item,
-    > .menu .item
+    > .ts.container > .item,
+    > .menu .item,
+    > .ts.container > .menu .item
       border-color: darken($color, 10%)
 
 
@@ -110,7 +114,9 @@
 
   &.vertical
     > .item,
+    > .ts.container > .item,
     > .menu .item
+    > .ts.container > .menu .item
       border-top-color   : if(is_lighter($color), lighten($color, 1%), lighten($color, 2%))
       border-bottom-color: if(is_lighter($color), darken($color, 3%), darken($color, 3%))
 
@@ -125,7 +131,9 @@
         border-top: 0.1rem solid rgba($textColor, 0.3) !important
 
     > a.item,
-    > .menu a.item
+    > .ts.container > a.item,
+    > .menu a.item,
+    > .ts.container > .menu a.item
       &:hover
         background-color      : auten($color, 1%)
         border-top-color: auten($color, 2%)
@@ -146,7 +154,9 @@
   &.pointing
 
     > .item:after,
+    > .ts.container > .item:after,
     > .menu .item:after
+    > .ts.container > .menu .item:after
       border-color: darken($color, 10%)
 
   &.hidden
@@ -161,7 +171,9 @@
   &.pointing.secondary
 
     > .item,
-    > .menu .item
+    > .ts.container > .item,
+    > .menu .item,
+    > .ts.container > .menu .item
       background-color  : transparent
       border-right-width: 0
       border-left-width : 0
@@ -178,7 +190,9 @@
 
   &.secondary:not(.pointing)
     > .item.active,
-    > .menu .item.active
+    > .ts.container > .item.active,
+    > .menu .item.active,
+    > .ts.container > .menu .item.active
       background: rgba(auten($color, 8%), 0.45)
 
 
@@ -272,7 +286,8 @@
 
   &.icon
 
-    > .item
+    > .item,
+    > .ts.container > .item
       +x-padding(1.8rem)
       font-size: 1.8rem
 
@@ -313,7 +328,8 @@
 
   &.borderless
     .menu
-      > .item
+      > .item,
+      > .ts.container > .item
         border: none !important
 
 
@@ -372,7 +388,8 @@
   //***********   I T E M S   ************
   //**************************************
 
-  > .item
+  > .item,
+  > .ts.container > .item
     +extend(ease-less)
     +normal
     +relative
