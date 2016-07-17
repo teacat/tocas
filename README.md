@@ -4,6 +4,8 @@
 
 &nbsp;
 
+# 請注意目前這個版本並不穩定，Tocas 2 將會有重大改變
+
 # TocasUI <img src="https://img.shields.io/badge/tag-v1.0%20UNSTABLE-red.svg"> <img src="https://img.shields.io/bower/v/tocas.svg"> 
 
 TocasUI 是基於 SASS 和 CSS3 的元件框架，可快速建立大型或小型網站的介面，
