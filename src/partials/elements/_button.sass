@@ -1,0 +1,94 @@
+@import ../../variables/elements/button.variables
+
+@mixin button-variant($color, $backgroundColor, $borderColor)
+    $hoverBackgroundColor: darken($backgroundColor, 5%)
+    $hoverColor          : lighten($color, 5%)
+    
+    $activeBackgroundColor: darken($backgroundColor, 20%)
+    $activeColor          : darken($color, 10%)
+
+    border-color    : $borderColor
+    background-color: $backgroundColor
+    color           : $color
+    
+    &:hover
+        background-color: $hoverBackgroundColor
+        color           : $hoverColor
+        
+    &:active
+        background-color: $activeBackgroundColor
+        color           : $activeColor
+
+    
+
+.ts.button
+    cursor       : pointer
+    padding      : $buttonPadding
+    border-radius: $buttonBorderRadius
+    font-size    : $buttonFontSize
+    font-weight  : $buttonFontWeight
+    
+    +button-variant($defaultTextColor, $defaultBackgroundColor, $defaultBorderColor)
+
+    &.fluid
+        width: 100%
+    
+    &.circular
+        border-radius: 10em
+    
+    &.disabled,
+    &.disabled:hover
+        +extend(no-select)
+        opacity       : $disabledOpacity !important
+        cursor        : not-allowed      !important
+        pointer-events: none             !important
+    
+    //-------------------//
+    //      Floated       
+    //-------------------//
+    
+    &[class*="left floated"]
+        float: left
+    
+    &[class*="right floated"]
+        float: right
+        
+    //-------------------//
+    //       Sizes       
+    //-------------------//
+    
+    &.compact
+        padding: $buttonCompactPadding
+    &.mini
+        font-size: $buttonMiniFontSize
+    &.tiny
+        font-size: $buttonTinyFontSize
+    &.small
+        font-size: $buttonSmallFontSize
+    &.medium
+        font-size: $buttonMediumFontSize
+    &.large
+        font-size: $buttonLargeFontSize
+    &.big
+        font-size: $buttonBigFontSize
+    &.huge
+        font-size: $buttonHugeFontSize
+    &.massive
+        font-size: $buttonMassiveFontSize
+        
+    //-------------------//
+    //      Colors
+    //-------------------//
+    
+    &.primary
+        +button-variant($primaryTextColor, $primaryBackgroundColor, $primaryBorderColor)
+    &.info
+        +button-variant($infoTextColor, $infoBackgroundColor, $infoBorderColor)
+    &.warning
+        +button-variant($warningTextColor, $warningBackgroundColor, $warningBorderColor)
+    &.inverted
+        +button-variant($invertedTextColor, $invertedBackgroundColor, $invertedBorderColor)
+    &.negative
+        +button-variant($negativeTextColor, $negativeBackgroundColor, $negativeBorderColor)
+    &.positive
+        +button-variant($positiveTextColor, $positiveBackgroundColor, $positiveBorderColor)

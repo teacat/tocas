@@ -1,0 +1,551 @@
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
+* {
+  font-family: "Open Sans", "Noto Sans TC", "Meiryo", "微軟正黑體", "Microsoft JhengHei"; }
+
+.ts.button.disabled, .ts.button.disabled:hover {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+html {
+  font-size: 14px; }
+
+/* ----------------------------------------------------------------------------------------------------
+ *Super Form Reset
+ *A couple of things to watch out for:
+ *- IE8: If a text input doesn't have padding on all sides or none the text won't be centered.
+ *- The default border sizes on text inputs in all UAs seem to be slightly different. You're better off using custom borders.
+ *- You NEED to set the font-size and family on all form elements
+ *- Search inputs need to have their appearance reset and the box-sizing set to content-box to match other UAs
+ *- You can style the upload button in webkit using ::-webkit-file-upload-button
+ *- ::-webkit-file-upload-button selectors can't be used in the same selector as normal ones. FF and IE freak out.
+ *- IE: You don't need to fake inline-block with labels and form controls in IE. They function as inline-block.
+ *- By turning off ::-webkit-search-decoration, it removes the extra whitespace on the left on search inputs
+ *---------------------------------------------------------------------------------------------------- */
+input,
+label,
+select,
+button,
+textarea {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  display: inline-block;
+  vertical-align: middle;
+  background: none;
+  line-height: 1;
+  /* Browsers have different default form fonts */
+  font-size: 13px; }
+
+/* Remove the stupid outer glow in Webkit */
+input:focus,
+button:focus,
+select:focus,
+textarea:focus {
+  outline: 0; }
+
+/* Box Sizing Reset
+ *----------------------------------------------- */
+/* All of our custom controls should be what we expect them to be */
+input,
+textarea {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box; }
+
+/* These elements are usually rendered a certain way by the browser */
+button,
+input[type=reset],
+input[type=button],
+input[type=submit],
+input[type=checkbox],
+input[type=radio],
+select {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+/* Text Inputs
+ *----------------------------------------------- */
+/* Button Controls
+ *----------------------------------------------- */
+input[type=checkbox],
+input[type=radio] {
+  width: 13px;
+  height: 13px; }
+
+/* File Uploads
+ *----------------------------------------------- */
+/* Search Input
+ *----------------------------------------------- */
+/* Make webkit render the search input like a normal text field */
+input[type=search] {
+  -webkit-appearance: textfield;
+  -webkit-box-sizing: content-box; }
+
+/* Turn off the recent search for webkit. It adds about 15px padding on the left */
+::-webkit-search-decoration {
+  display: none; }
+
+/* Buttons
+ *----------------------------------------------- */
+button,
+input[type="reset"],
+input[type="button"],
+input[type="submit"] {
+  /* Fix IE7 display bug */
+  overflow: visible;
+  width: auto; }
+
+/* IE8 and FF freak out if this rule is within another selector */
+::-webkit-file-upload-button {
+  padding: 0;
+  border: 0;
+  background: none; }
+
+/* Textarea
+ *----------------------------------------------- */
+textarea {
+  /* Move the label to the top */
+  vertical-align: top;
+  /* Turn off scroll bars in IE unless needed */
+  overflow: auto; }
+
+/* Selects
+ *----------------------------------------------- */
+select[multiple] {
+  /* Move the label to the top */
+  vertical-align: top; }
+
+/*! normalize.css v4.2.0 | MIT License | github.com/necolas/normalize.css */
+/**
+ * 1. Change the default font family in all browsers (opinionated).
+ * 2. Correct the line height in all browsers.
+ * 3. Prevent adjustments of font size after orientation changes in IE and iOS. */
+/* Document
+ * ========================================================================== */
+html {
+  /* 1 */
+  line-height: 1.15;
+  /* 2 */
+  -ms-text-size-adjust: 100%;
+  /* 3 */
+  -webkit-text-size-adjust: 100%;
+  /* 3 */ }
+
+/* Sections
+ * ========================================================================== */
+/**
+ * Remove the margin in all browsers (opinionated). */
+body {
+  margin: 0; }
+
+/**
+ * Add the correct display in IE 9-. */
+article, aside, footer, header, nav, section {
+  display: block; }
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari. */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0; }
+
+/* Grouping content
+ * ========================================================================== */
+/**
+ * Add the correct display in IE 9-.
+ * 1. Add the correct display in IE. */
+figcaption, figure, main {
+  /* 1 */
+  display: block; }
+
+/**
+ * Add the correct margin in IE 8. */
+figure {
+  margin: 1em 40px; }
+
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE. */
+hr {
+  box-sizing: content-box;
+  /* 1 */
+  height: 0;
+  /* 1 */
+  overflow: visible;
+  /* 2 */ }
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers. */
+pre {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */ }
+
+/* Text-level semantics
+ * ========================================================================== */
+/**
+ * 1. Remove the gray background on active links in IE 10.
+ * 2. Remove gaps in links underline in iOS 8+ and Safari 8+. */
+a {
+  background-color: transparent;
+  /* 1 */
+  -webkit-text-decoration-skip: objects;
+  /* 2 */ }
+  a:active, a:hover {
+    outline-width: 0; }
+
+/**
+ * Remove the outline on focused links when they are also active or hovered
+ * in all browsers (opinionated). */
+/**
+ * 1. Remove the bottom border in Firefox 39-.
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari. */
+abbr[title] {
+  border-bottom: none;
+  /* 1 */
+  text-decoration: underline;
+  /* 2 */
+  text-decoration: underline dotted;
+  /* 2 */ }
+
+/**
+ * Prevent the duplicate application of `bolder` by the next rule in Safari 6. */
+b, strong {
+  font-weight: inherit; }
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari. */
+b, strong {
+  font-weight: bolder; }
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers. */
+code, kbd, samp {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */ }
+
+/**
+ * Add the correct font style in Android 4.3-. */
+dfn {
+  font-style: italic; }
+
+/**
+ * Add the correct background and color in IE 9-. */
+mark {
+  background-color: #ff0;
+  color: #000; }
+
+/**
+ * Add the correct font size in all browsers. */
+small {
+  font-size: 80%; }
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers. */
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline; }
+
+sub {
+  bottom: -0.25em; }
+
+sup {
+  top: -0.5em; }
+
+/* Embedded content
+ * ========================================================================== */
+/**
+ * Add the correct display in IE 9-. */
+audio, video {
+  display: inline-block; }
+
+/**
+ * Add the correct display in iOS 4-7. */
+audio:not([controls]) {
+  display: none;
+  height: 0; }
+
+/**
+ * Remove the border on images inside links in IE 10-. */
+img {
+  border-style: none; }
+
+/**
+ * Hide the overflow in IE. */
+svg:not(:root) {
+  overflow: hidden; }
+
+/* Forms
+ * ========================================================================== */
+/**
+ * 1. Change font properties to `inherit` in all browsers (opinionated).
+ * 2. Remove the margin in Firefox and Safari. */
+button, input, optgroup, select, textarea {
+  font: inherit;
+  /* 1 */
+  margin: 0;
+  /* 2 */ }
+
+/**
+ * Restore the font weight unset by the previous rule. */
+optgroup {
+  font-weight: bold; }
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge. */
+button, input {
+  /* 1 */
+  overflow: visible; }
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox. */
+button, select {
+  /* 1 */
+  text-transform: none; }
+
+/**
+ * 1. Prevent a WebKit bug where (2) destroys native `audio` and `video`
+ *    controls in Android 4.
+ * 2. Correct the inability to style clickable types in iOS and Safari. */
+button, html [type="button"], [type="reset"], [type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */ }
+
+/**
+ * Remove the inner border and padding in Firefox. */
+button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-moz-focus-inner, [type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0; }
+
+/**
+ * Restore the focus styles unset by the previous rule. */
+button:-moz-focusring, [type="button"]:-moz-focusring, [type="reset"]:-moz-focusring, [type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText; }
+
+/**
+ * Change the border, margin, and padding in all browsers (opinionated). */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em; }
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers. */
+legend {
+  box-sizing: border-box;
+  /* 1 */
+  color: inherit;
+  /* 2 */
+  display: table;
+  /* 1 */
+  max-width: 100%;
+  /* 1 */
+  padding: 0;
+  /* 3 */
+  white-space: normal;
+  /* 1 */ }
+
+/**
+ * 1. Add the correct display in IE 9-.
+ * 2. Add the correct vertical alignment in Chrome, Firefox, and Opera. */
+progress {
+  display: inline-block;
+  /* 1 */
+  vertical-align: baseline;
+  /* 2 */ }
+
+/**
+ * Remove the default vertical scrollbar in IE. */
+textarea {
+  overflow: auto; }
+
+/**
+ * 1. Add the correct box sizing in IE 10-.
+ * 2. Remove the padding in IE 10-. */
+[type="checkbox"], [type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */ }
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome. */
+[type="number"]::-webkit-inner-spin-button, [type="number"]::-webkit-outer-spin-button {
+  height: auto; }
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari. */
+[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  outline-offset: -2px;
+  /* 2 */ }
+  [type="search"]::-webkit-search-cancel-button, [type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none; }
+
+/**
+ * Remove the inner padding and cancel buttons in Chrome and Safari on OS X. */
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari. */
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  /* 1 */
+  font: inherit;
+  /* 2 */ }
+
+/* Interactive
+ * ========================================================================== */
+/* Add the correct display in IE 9-.
+ * 1. Add the correct display in Edge, IE, and Firefox. */
+details, menu {
+  display: block; }
+
+/* Add the correct display in all browsers. */
+summary {
+  display: list-item; }
+
+/* Scripting
+ * ========================================================================== */
+/**
+ * Add the correct display in IE 9-. */
+canvas {
+  display: inline-block; }
+
+/**
+ * Add the correct display in IE. */
+template, [hidden] {
+  display: none; }
+
+/* Hidden
+ * ========================================================================== */
+/**
+ * Add the correct display in IE 10-. */
+.ts.button {
+  cursor: pointer;
+  padding: 0.78571em 1.5em;
+  border-radius: 0.28571rem;
+  font-size: 1em;
+  font-weight: 700;
+  border-color: #eeeeee;
+  background-color: #F1F1F1;
+  color: #7B7B7B; }
+  .ts.button:hover {
+    background-color: #e4e4e4;
+    color: #888888; }
+  .ts.button:active {
+    background-color: #bebebe;
+    color: #626262; }
+  .ts.button.fluid {
+    width: 100%; }
+  .ts.button.circular {
+    border-radius: 10em; }
+  .ts.button.disabled, .ts.button.disabled:hover {
+    opacity: 0.45 !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important; }
+  .ts.button[class*="left floated"] {
+    float: left; }
+  .ts.button[class*="right floated"] {
+    float: right; }
+  .ts.button.compact {
+    padding: calc(0.78571em   * 0.75) calc(1.5em * 0.75); }
+  .ts.button.mini {
+    font-size: 0.78571em; }
+  .ts.button.tiny {
+    font-size: 0.85714em; }
+  .ts.button.small {
+    font-size: 0.92857em; }
+  .ts.button.medium {
+    font-size: 1em; }
+  .ts.button.large {
+    font-size: 1.14286em; }
+  .ts.button.big {
+    font-size: 1.28571em; }
+  .ts.button.huge {
+    font-size: 1.42857em; }
+  .ts.button.massive {
+    font-size: 1.71429em; }
+  .ts.button.primary {
+    border-color: #1ab9f1;
+    background-color: #1FBAF1;
+    color: #f7fdff; }
+    .ts.button.primary:hover {
+      background-color: #0fafe8;
+      color: white; }
+    .ts.button.primary:active {
+      background-color: #0a79a0;
+      color: #c7eefc; }
+  .ts.button.info {
+    border-color: #76a6b7;
+    background-color: #79A8B9;
+    color: white; }
+    .ts.button.info:hover {
+      background-color: #689db0;
+      color: white; }
+    .ts.button.info:active {
+      background-color: #467586;
+      color: #dee9ee; }
+  .ts.button.warning {
+    border-color: #f5d45d;
+    background-color: #F5D562;
+    color: #8c7009; }
+    .ts.button.warning:hover {
+      background-color: #f3cf4a;
+      color: #a4830a; }
+    .ts.button.warning:active {
+      background-color: #e3b40e;
+      color: #5c4a06; }
+  .ts.button.inverted {
+    border-color: #fcfcfc;
+    background-color: #34495E;
+    color: #FFF; }
+    .ts.button.inverted:hover {
+      background-color: #2b3c4e;
+      color: white; }
+    .ts.button.inverted:active {
+      background-color: #10161c;
+      color: #e6e6e6; }
+  .ts.button.negative {
+    border-color: #cd5b54;
+    background-color: #CE5F58;
+    color: #fcf6f6; }
+    .ts.button.negative:hover {
+      background-color: #c84c44;
+      color: white; }
+    .ts.button.negative:active {
+      background-color: #94322c;
+      color: #f1d0ce; }
+  .ts.button.positive {
+    border-color: #88b76b;
+    background-color: #8BB96E;
+    color: white; }
+    .ts.button.positive:hover {
+      background-color: #7db15d;
+      color: white; }
+    .ts.button.positive:active {
+      background-color: #59823f;
+      color: #e3eedd; }
+
+/*# sourceMappingURL=tocas.css.map */
