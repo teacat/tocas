@@ -1,6 +1,18 @@
 @import ../../variables/elements/segment.variables
 
 //*******************************//
+//            Variations
+//*******************************//
+
+@mixin segment-variant($borderColor)
+    border-top-color: $borderColor
+    
+@mixin segment-inverted-variant($color, $backgroundColor, $borderColor)
+    color           : $color
+    background-color: $backgroundColor
+    border-color    : $borderColor
+
+//*******************************//
 //              Main
 //*******************************//
 
@@ -9,39 +21,97 @@
     display         : block
     padding         : $segment_padding
     margin          : $segment_margin
-    background-color: $segment_backgroundColor
     border          : $segment_border
+    background-color: $segment_backgroundColor
     border-radius   : $segment_borderRadius
     box-shadow      : $segment_boxShadow
+    
+    +segment-variant($borderColor)
     
 .ts.segment:first-child
     margin-top: 0
 .ts.segment:last-child
     margin-bottom: 0
 
+//-------------------//
+//       Raised
+//-------------------//
+
 .ts.segment.raised
-    box-shadow      : $segment_raisedBoxShadow
+    box-shadow: $segment_raisedBoxShadow
 
 //-------------------//
 //      Accents
 //-------------------//
 
-.ts.segment.secondary
+.ts.segment.secondary,
+.ts.segments.secondary .segment
     background-color: $segment_secondaryBackgroundColor
     color           : $segment_secondaryColor
 
-.ts.segment.tertiary
+.ts.segment.tertiary,
+.ts.segments.tertiary .segment
     background-color: $segment_tertiaryBackgroundColor
     color           : $segment_tertiaryColor
 
 //-------------------//
+//       Colors
+//-------------------//
+
+.ts.segment.primary,
+.ts.segments.primary .segment
+    +segment-variant($segment_primaryBorderColor)
+    border-top-width: $segment_coloredTopBorderWidth
+.ts.segment.info,
+.ts.segments.info .segment
+    +segment-variant($segment_infoBorderColor)
+    border-top-width: $segment_coloredTopBorderWidth
+.ts.segment.warning,
+.ts.segments.warning .segment
+    +segment-variant($segment_warningBorderColor)
+    border-top-width: $segment_coloredTopBorderWidth
+.ts.segment.positive,
+.ts.segments.positive .segment
+    +segment-variant($segment_positiveBorderColor)
+    border-top-width: $segment_coloredTopBorderWidth
+.ts.segment.negative,
+.ts.segments.negative .segment
+    +segment-variant($segment_negativeBorderColor)
+    border-top-width: $segment_coloredTopBorderWidth
+
+//-------------------//
+//  Inverted Colors
+//-------------------//
+
+.ts.segment.inverted.primary,
+.ts.segments.inverted.primary .segment
+    +segment-inverted-variant($segment_primaryTextColor, $segment_primaryBackgroundColor, $segment_primaryBorderColor)
+.ts.segment.inverted.info,
+.ts.segments.inverted.info .segment
+    +segment-inverted-variant($segment_infoTextColor, $segment_infoBackgroundColor, $segment_infoBorderColor)
+.ts.segment.inverted.warning,
+.ts.segments.inverted.warning .segment
+    +segment-inverted-variant($segment_warningTextColor, $segment_warningBackgroundColor, $segment_warningBorderColor)
+.ts.segment.inverted.positive,
+.ts.segments.inverted.positive .segment
+    +segment-inverted-variant($segment_positiveTextColor, $segment_positiveBackgroundColor, $segment_positiveBorderColor)
+.ts.segment.inverted.negative,
+.ts.segments.inverted.negative .segment
+    +segment-inverted-variant($segment_negativeTextColor, $segment_negativeBackgroundColor, $segment_negativeBorderColor)
+.ts.segment.inverted,
+.ts.segments.inverted .segment
+    +segment-inverted-variant($segment_invertedTextColor, $segment_invertedBackgroundColor, $segment_invertedBorderColor)
+    
+//-------------------//
 //       Padded
 //-------------------//
 
-.ts.segment.padded
+.ts.segment.padded,
+.ts.segments.padded .segment
     padding: $segment_paddedPadding
 
-.ts.segment.very.padded
+.ts.segment.very.padded,
+.ts.segments.very.padded .segment
     padding: $segment_veryPaddedPadding
 
 //-------------------//
@@ -90,12 +160,23 @@
 //       Aligns
 //-------------------//  
     
-.ts.segment[class*='center aligned']
+.ts.segment[class*='center aligned'],
+.ts.segments[class*='center aligned'] .segment
     text-align: center
-.ts.segment[class*='left aligned']
+.ts.segment[class*='left aligned'],
+.ts.segments[class*='left aligned'] .segment
     text-align: left
-.ts.segment[class*='right aligned']
+.ts.segment[class*='right aligned'],
+.ts.segments[class*='right aligned'] .segment
     text-align: right
+
+//-------------------//
+//       Fluid
+//-------------------//  
+
+.ts.segment.fluid
+    border-radius: 0
+    border       : none
     
 //-------------------//
 //      Compact
@@ -110,14 +191,14 @@
 
 .ts.segment.attached
 
-    &.bottom
+    &:not(.top)
         margin-top: 0
   
         border-top-left-radius : 0
         border-top-right-radius: 0
         border-top-width       : $segment_borderWidth
 
-    &.top
+    &:not(.bottom)
         margin-bottom: 0
 
         border-bottom-left-radius : 0
@@ -131,11 +212,11 @@
 .ts.segments
     font-size: 0
     
-    > .ts.segment
+    > .segment
         font-size: $fontSize
   
     &:not(.horizontal)
-        > .ts.segment
+        > .segment
             &:first-child:not(:last-child)
                 margin-bottom: 0
                 border-bottom: none
@@ -158,12 +239,14 @@
 
 
     &.horizontal
+        display: flex
         margin-top   : $segment_verticalMargin
         margin-bottom: $segment_verticalMargin
   
-        > .ts.segment
+        > .segment
             display: inline-block
-            margin: 0
+            flex   : 1
+            margin : 0
   
             &:first-child:not(:last-child)
                 border-right               : none
