@@ -1,0 +1,505 @@
+@import ../../variables/collections/grid.variables
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.grid
+    position      : relative
+    display       : flex
+    flex-direction: row
+    flex-wrap     : wrap
+    box-sizing    : border-box
+    margin        : -$columnPadding -$columnPadding
+
+    & + .ts.grid
+        margin-top: $columnPadding
+    
+    > .column:not(.row),
+    > .row .column:not(.row)
+        padding: $columnPadding
+      
+    &.relaxed
+        margin-left : -$columnRelaxedPadding
+        margin-right: -$columnRelaxedPadding
+    
+        > .column:not(.row),
+        > .row > .column:not(.row)
+            padding-left : $columnRelaxedPadding
+            padding-right: $columnRelaxedPadding
+
+.ts.grid .column
+    position  : relative
+    box-sizing: border-box
+    
+.ts.grid > .row
+    position      : relative
+    display       : flex
+    flex-direction: row
+    flex-wrap     : nowrap
+    width         :  100%
+    
+    &.doubling
+        flex-wrap: wrap
+
+//-------------------//
+//       Aligns
+//-------------------//
+
+.ts.grid[class*="left aligned"] .column,
+.ts.grid .row[class*="left aligned"] .column,
+.ts.grid .column[class*="left aligned"]
+    text-align: left
+
+.ts.grid[class*="right aligned"] .column,
+.ts.grid .row[class*="right aligned"] .column,
+.ts.grid .column[class*="right aligned"]
+    text-align: right
+    
+.ts.grid.centered,
+.ts.grid .row.centered
+    align-content: center
+    
+//-------------------//
+//        RWD
+//-------------------//
+
+.ts.grid .row[class*="only"],
+.ts.grid .column[class*="only"]
+    display: none
+    
+.ts.grid .row[class*="large screen only"],
+.ts.grid .column[class*="large screen only"]
+    +rwd(large)
+        display: flex !important
+
+.ts.grid .row[class*="computer only"],
+.ts.grid .column[class*="computer only"]
+    +rwd(computer)
+        display: flex !important
+
+.ts.grid .row[class*="tablet only"],
+.ts.grid .column[class*="tablet only"]
+    +rwd(tablet)
+        display: flex !important
+
+.ts.grid .row[class*="mobile only"],
+.ts.grid .column[class*="mobile only"]
+    +rwd-serious(mobile)
+        display: flex !important
+
+//-------------------//
+//      Floated
+//-------------------//
+
+.column[class*="right floated"]
+    margin-left: auto
+.column[class*="left floated"]
+    margin-right: auto
+      
+//-------------------//
+//      Columns
+//-------------------//
+
+.ts.grid .column[class*="one wide"]
+    width: $oneWide
+.ts.grid .column[class*="two wide"]
+    width: $twoWide
+.ts.grid .column[class*="three wide"]
+    width: $threeWide
+.ts.grid .column[class*="four wide"]
+    width: $fourWide
+.ts.grid .column[class*="five wide"]
+    width: $fiveWide
+.ts.grid .column[class*="six wide"]
+    width: $sixWide
+.ts.grid .column[class*="seven wide"]
+    width: $sevenWide
+.ts.grid .column[class*="eight wide"]
+    width: $eightWide
+.ts.grid .column[class*="nine wide"]
+    width: $nineWide
+.ts.grid .column[class*="ten wide"]
+    width: $tenWide
+.ts.grid .column[class*="eleven wide"]
+    width: $elevenWide
+.ts.grid .column[class*="twelve wide"]
+    width: $twelveWide
+.ts.grid .column[class*="thirteen wide"]
+    width: $thirteenWide
+.ts.grid .column[class*="fourteen wide"]
+    width: $fourteenWide
+.ts.grid .column[class*="fifteen wide"]
+    width: $fifteenWide
+.ts.grid .column[class*="sixteen wide"]
+    width: $sixteenWide
+
+//-------------------//
+//   Mobile Columns
+//-------------------// 
+
+.ts.grid [class*="one wide mobile"]
+    +rwd-serious(mobile)
+        width: $oneWide !important
+.ts.grid [class*="two wide mobile"]
+    +rwd-serious(mobile)
+        width: $twoWide !important
+.ts.grid [class*="three wide mobile"]
+    +rwd-serious(mobile)
+        width: $threeWide !important
+.ts.grid [class*="four wide mobile"]
+    +rwd-serious(mobile)
+        width: $fourWide !important
+.ts.grid [class*="five wide mobile"]
+    +rwd-serious(mobile)
+        width: $fiveWide !important
+.ts.grid [class*="six wide mobile"]
+    +rwd-serious(mobile)
+        width: $sixWide !important
+.ts.grid [class*="seven wide mobile"]
+    +rwd-serious(mobile)
+        width: $sevenWide !important
+.ts.grid [class*="eight wide mobile"]
+    +rwd-serious(mobile)
+        width: $eightWide !important
+.ts.grid [class*="nine wide mobile"]
+    +rwd-serious(mobile)
+        width: $nineWide !important
+.ts.grid [class*="ten wide mobile"]
+    +rwd-serious(mobile)
+        width: $tenWide !important
+.ts.grid [class*="eleven wide mobile"]
+    +rwd-serious(mobile)
+        width: $elevenWide !important
+.ts.grid [class*="twelve wide mobile"]
+    +rwd-serious(mobile)
+        width: $twelveWide !important
+.ts.grid [class*="thirteen wide mobile"]
+    +rwd-serious(mobile)
+        width: $thirteenWide !important
+.ts.grid [class*="fourteen wide mobile"]
+    +rwd-serious(mobile)
+        width: $fourteenWide !important
+.ts.grid [class*="fifteen wide mobile"]
+    +rwd-serious(mobile)
+        width: $fifteenWide !important
+.ts.grid [class*="sixteen wide mobile"]
+    +rwd-serious(mobile)
+        width: $sixteenWide !important
+
+//-------------------//
+//   Tablet Columns
+//-------------------// 
+
+.ts.grid [class*="one wide tablet"]
+    +rwd-serious(tablet)
+        width: $oneWide !important
+.ts.grid [class*="two wide tablet"]
+    +rwd-serious(tablet)
+        width: $twoWide !important
+.ts.grid [class*="three wide tablet"]
+    +rwd-serious(tablet)
+        width: $threeWide !important
+.ts.grid [class*="four wide tablet"]
+    +rwd-serious(tablet)
+        width: $fourWide !important
+.ts.grid [class*="five wide tablet"]
+    +rwd-serious(tablet)
+        width: $fiveWide !important
+.ts.grid [class*="six wide tablet"]
+    +rwd-serious(tablet)
+        width: $sixWide !important
+.ts.grid [class*="seven wide tablet"]
+    +rwd-serious(tablet)
+        width: $sevenWide !important
+.ts.grid [class*="eight wide tablet"]
+    +rwd-serious(tablet)
+        width: $eightWide !important
+.ts.grid [class*="nine wide tablet"]
+    +rwd-serious(tablet)
+        width: $nineWide !important
+.ts.grid [class*="ten wide tablet"]
+    +rwd-serious(tablet)
+        width: $tenWide !important
+.ts.grid [class*="eleven wide tablet"]
+    +rwd-serious(tablet)
+        width: $elevenWide !important
+.ts.grid [class*="twelve wide tablet"]
+    +rwd-serious(tablet)
+        width: $twelveWide !important
+.ts.grid [class*="thirteen wide tablet"]
+    +rwd-serious(tablet)
+        width: $thirteenWide !important
+.ts.grid [class*="fourteen wide tablet"]
+    +rwd-serious(tablet)
+        width: $fourteenWide !important
+.ts.grid [class*="fifteen wide tablet"]
+    +rwd-serious(tablet)
+        width: $fifteenWide !important
+.ts.grid [class*="sixteen wide tablet"]
+    +rwd-serious(tablet)
+        width: $sixteenWide !important
+
+//-------------------//
+//  Computer Columns
+//-------------------//
+
+.ts.grid [class*="one wide computer"]
+    +rwd(computer)
+        width: $oneWide !important
+.ts.grid [class*="two wide computer"]
+    +rwd(computer)
+        width: $twoWide !important
+.ts.grid [class*="three wide computer"]
+    +rwd(computer)
+        width: $threeWide !important
+.ts.grid [class*="four wide computer"]
+    +rwd(computer)
+        width: $fourWide !important
+.ts.grid [class*="five wide computer"]
+    +rwd(computer)
+        width: $fiveWide !important
+.ts.grid [class*="six wide computer"]
+    +rwd(computer)
+        width: $sixWide !important
+.ts.grid [class*="seven wide computer"]
+    +rwd(computer)
+        width: $sevenWide !important
+.ts.grid [class*="eight wide computer"]
+    +rwd(computer)
+        width: $eightWide !important
+.ts.grid [class*="nine wide computer"]
+    +rwd(computer)
+        width: $nineWide !important
+.ts.grid [class*="ten wide computer"]
+    +rwd(computer)
+        width: $tenWide !important
+.ts.grid [class*="eleven wide computer"]
+    +rwd(computer)
+        width: $elevenWide !important
+.ts.grid [class*="twelve wide computer"]
+    +rwd(computer)
+        width: $twelveWide !important
+.ts.grid [class*="thirteen wide computer"]
+    +rwd(computer)
+        width: $thirteenWide !important
+.ts.grid [class*="fourteen wide computer"]
+    +rwd(computer)
+        width: $fourteenWide !important
+.ts.grid [class*="fifteen wide computer"]
+    +rwd(computer)
+        width: $fifteenWide !important
+.ts.grid [class*="sixteen wide computer"]
+    +rwd(computer)
+        width: $sixteenWide !important
+
+//-------------------//
+//   Large Columns
+//-------------------//
+
+.ts.grid [class*="one wide large screen"]
+    +rwd(large)
+        width: $oneWide !important
+.ts.grid [class*="two wide large screen"]
+    +rwd(large)
+        width: $twoWide !important
+.ts.grid [class*="three wide large screen"]
+    +rwd(large)
+        width: $threeWide !important
+.ts.grid [class*="four wide large screen"]
+    +rwd(large)
+        width: $fourWide !important
+.ts.grid [class*="five wide large screen"]
+    +rwd(large)
+        width: $fiveWide !important
+.ts.grid [class*="six wide large screen"]
+    +rwd(large)
+        width: $sixWide !important
+.ts.grid [class*="seven wide large screen"]
+    +rwd(large)
+        width: $sevenWide !important
+.ts.grid [class*="eight wide large screen"]
+    +rwd(large)
+        width: $eightWide !important
+.ts.grid [class*="nine wide large screen"]
+    +rwd(large)
+        width: $nineWide !important
+.ts.grid [class*="ten wide large screen"]
+    +rwd(large)
+        width: $tenWide !important
+.ts.grid [class*="eleven wide large screen"]
+    +rwd(large)
+        width: $elevenWide !important
+.ts.grid [class*="twelve wide large screen"]
+    +rwd(large)
+        width: $twelveWide !important
+.ts.grid [class*="thirteen wide large screen"]
+    +rwd(large)
+        width: $thirteenWide !important
+.ts.grid [class*="fourteen wide large screen"]
+    +rwd(large)
+        width: $fourteenWide !important
+.ts.grid [class*="fifteen wide large screen"]
+    +rwd(large)
+        width: $fifteenWide !important
+.ts.grid [class*="sixteen wide large screen"]
+    +rwd(large)
+        width: $sixteenWide !important
+
+//-------------------//
+// Grid Based Columns
+//-------------------//   
+
+.ts.grid[class*="one column"] > .column:not(.row),
+.ts.grid .row[class*="one column"] > .column:not(.row)
+    width: $oneColumn !important
+.ts.grid[class*="two column"] > .column:not(.row),
+.ts.grid .row[class*="two column"] > .column:not(.row)
+    width: $twoColumn !important
+.ts.grid[class*="three column"] > .column:not(.row),
+.ts.grid .row[class*="three column"] > .column:not(.row)
+    width: $threeColumn !important
+.ts.grid[class*="four column"] > .column:not(.row),
+.ts.grid .row[class*="four column"] > .column:not(.row)
+    width: $fourColumn !important
+.ts.grid[class*="five column"] > .column:not(.row),
+.ts.grid .row[class*="five column"] > .column:not(.row)
+    width: $fiveColumn !important
+.ts.grid[class*="six column"] > .column:not(.row),
+.ts.grid .row[class*="six column"] > .column:not(.row)
+    width: $sixColumn !important
+.ts.grid[class*="seven column"] > .column:not(.row),
+.ts.grid .row[class*="seven column"] > .column:not(.row)
+    width: $sevenColumn !important
+.ts.grid[class*="eight column"] > .column:not(.row),
+.ts.grid .row[class*="eight column"] > .column:not(.row)
+    width: $eightColumn !important
+.ts.grid[class*="nine column"] > .column:not(.row),
+.ts.grid .row[class*="nine column"] > .column:not(.row)
+    width: $nineColumn !important
+.ts.grid[class*="ten column"] > .column:not(.row),
+.ts.grid .row[class*="ten column"] > .column:not(.row)
+    width: $tenColumn !important
+.ts.grid[class*="eleven column"] > .column:not(.row),
+.ts.grid .row[class*="eleven column"] > .column:not(.row)
+    width: $elevenColumn !important
+.ts.grid[class*="twelve column"] > .column:not(.row),
+.ts.grid .row[class*="twelve column"] > .column:not(.row)
+    width: $twelveColumn !important
+.ts.grid[class*="thirteen column"] > .column:not(.row),
+.ts.grid .row[class*="thirteen column"] > .column:not(.row)
+    width: $thirteenColumn !important
+.ts.grid[class*="fourteen column"] > .column:not(.row),
+.ts.grid .row[class*="fourteen column"] > .column:not(.row)
+    width: $fourteenColumn !important
+.ts.grid[class*="fifteen column"] > .column:not(.row),
+.ts.grid .row[class*="fifteen column"] > .column:not(.row)
+    width: $fifteenColumn !important
+.ts.grid[class*="sixteen column"] > .column:not(.row),
+.ts.grid .row[class*="sixteen column"] > .column:not(.row)
+    width: $sixteenColumn !important
+
+//-------------------//
+//     Doubling
+//-------------------//   
+
+.ts.grid .row.doubling[class*="two column"] > .column:not(.row),
+.ts.grid.doubling[class*="two column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $oneColumn !important
+    +rwd-serious(tablet)
+        width: $oneColumn !important
+.ts.grid .row.doubling[class*="three column"] > .column:not(.row),
+.ts.grid.doubling[class*="three column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $twoColumn !important
+    +rwd-serious(tablet)
+        width: $twoColumn !important
+.ts.grid .row.doubling[class*="four column"] > .column:not(.row),
+.ts.grid.doubling[class*="four column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $twoColumn !important
+    +rwd-serious(tablet)
+        width: $twoColumn !important
+.ts.grid .row.doubling[class*="five column"] > .column:not(.row),
+.ts.grid.doubling[class*="five column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $twoColumn !important
+    +rwd-serious(tablet)
+        width: $threeColumn !important
+.ts.grid .row.doubling[class*="six column"] > .column:not(.row),
+.ts.grid.doubling[class*="six column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $twoColumn !important
+    +rwd-serious(tablet)
+        width: $threeColumn !important
+.ts.grid .row.doubling[class*="seven column"] > .column:not(.row),
+.ts.grid.doubling[class*="seven column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $twoColumn !important
+    +rwd-serious(tablet)
+        width: $threeColumn !important
+.ts.grid .row.doubling[class*="eight column"] > .column:not(.row),
+.ts.grid.doubling[class*="eight column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $twoColumn !important
+    +rwd-serious(tablet)
+        width: $fourColumn !important
+.ts.grid .row.doubling[class*="nine column"] > .column:not(.row),
+.ts.grid.doubling[class*="nine column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $threeColumn !important
+    +rwd-serious(tablet)
+        width: $fourColumn !important
+.ts.grid .row.doubling[class*="ten column"] > .column:not(.row),
+.ts.grid.doubling[class*="ten column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $threeColumn !important
+    +rwd-serious(tablet)
+        width: $fiveColumn !important
+.ts.grid .row.doubling[class*="eleven column"] > .column:not(.row),
+.ts.grid.doubling[class*="eleven column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $threeColumn !important
+    +rwd-serious(tablet)
+        width: $fiveColumn !important
+.ts.grid .row.doubling[class*="twelve column"] > .column:not(.row),
+.ts.grid.doubling[class*="twelve column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $threeColumn !important
+    +rwd-serious(tablet)
+        width: $sixColumn !important
+.ts.grid .row.doubling[class*="thirteen column"] > .column:not(.row),
+.ts.grid.doubling[class*="thirteen column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $threeColumn !important
+    +rwd-serious(tablet)
+        width: $sixColumn !important
+.ts.grid .row.doubling[class*="fourteen column"] > .column:not(.row),
+.ts.grid.doubling[class*="fourteen column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $fourColumn !important
+    +rwd-serious(tablet)
+        width: $sevenColumn !important
+.ts.grid .row.doubling[class*="fifteen column"] > .column:not(.row),
+.ts.grid.doubling[class*="fifteen column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $fourColumn !important
+    +rwd-serious(tablet)
+        width: $sevenColumn !important
+.ts.grid .row.doubling[class*="sixteen column"] > .column:not(.row),
+.ts.grid.doubling[class*="sixteen column"] > .column:not(.row)
+    +rwd-serious(mobile)
+        width: $fourColumn !important
+    +rwd-serious(tablet)
+        width: $eightColumn !important
+
+//-------------------//
+//     Stackable
+//-------------------//   
+
+.ts.grid.stackable  > .column:not(.row)
+    +rwd-serious(mobile)
+        width: 100% !important
+    
+        

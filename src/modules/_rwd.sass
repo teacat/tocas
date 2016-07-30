@@ -1,0 +1,109 @@
+=rwd($type)
+
+  @if $type == mobile
+    @media (max-width: $rwdMobile)
+      @content
+
+  @else if $type == tablet
+    @media (min-width: $rwdTabletMin)
+      @content
+
+  @else if $type == computer
+    @media (min-width: $rwdComputerMin)
+      @content
+
+  @else if $type == large
+    @media (min-width: $rwdLargeMin)
+      @content
+
+=rwd-serious($type)
+
+  @if $type == mobile
+    @media (max-width: $rwdMobile)
+      @content
+
+  @else if $type == tablet
+    @media (min-width: $rwdTabletMin) and (max-width: $rwdTabletMax)
+      @content
+
+  @else if $type == computer
+    @media (min-width: $rwdComputerMin) and (max-width: $rwdComputerMax)
+      @content
+
+  @else if $type == large
+    @media (min-width: $rwdLargeMin)
+      @content
+
+=rwd-hide($type)
+  +rwd($type)
+    display: none
+    width  : 0px
+
+
+=rwd-size($type, $height: null, $width: null)
+  +rwd($type)
+    +size($height, $width)
+
+
+[class*="mobile only"]
+  +rwd(tablet)
+    display: none
+  +rwd(computer)
+    display: none
+  +rwd(large)
+    display: none
+
+
+
+
+[class*="mobile or tablet only"]
+  +rwd(computer)
+    display: none
+  +rwd(large)
+    display: none
+
+
+
+
+[class*="tablet only"]:not([class*="mobile or"])
+  +rwd(mobile)
+    display: none
+  +rwd(computer)
+    display: none
+  +rwd(large)
+    display: none
+
+
+
+
+[class*="computer only"]
+  +rwd-serious(mobile)
+    display: none
+  +rwd-serious(tablet)
+    display: none
+  +rwd-serious(large)
+    display: none
+
+
+
+
+[class*="tablet or large device only"]
+  +rwd-serious(mobile)
+    display: none
+
+
+
+[class*="large device only"]:not([class*="tablet or"])
+  +rwd-serious(mobile)
+    display: none
+  +rwd-serious(tablet)
+    display: none
+
+
+[class*="large screen only"]
+  +rwd(mobile)
+    display: none
+  +rwd(tablet)
+    display: none
+  +rwd(computer)
+    display: none

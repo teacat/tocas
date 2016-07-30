@@ -445,6 +445,64 @@ template, [hidden] {
  * ========================================================================== */
 /**
  * Add the correct display in IE 10-. */
+@media (min-width: 768px) {
+  [class*="mobile only"] {
+    display: none; } }
+@media (min-width: 992px) {
+  [class*="mobile only"] {
+    display: none; } }
+@media (min-width: 1200px) {
+  [class*="mobile only"] {
+    display: none; } }
+
+@media (min-width: 992px) {
+  [class*="mobile or tablet only"] {
+    display: none; } }
+@media (min-width: 1200px) {
+  [class*="mobile or tablet only"] {
+    display: none; } }
+
+@media (max-width: 767px) {
+  [class*="tablet only"]:not([class*="mobile or"]) {
+    display: none; } }
+@media (min-width: 992px) {
+  [class*="tablet only"]:not([class*="mobile or"]) {
+    display: none; } }
+@media (min-width: 1200px) {
+  [class*="tablet only"]:not([class*="mobile or"]) {
+    display: none; } }
+
+@media (max-width: 767px) {
+  [class*="computer only"] {
+    display: none; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  [class*="computer only"] {
+    display: none; } }
+@media (min-width: 1200px) {
+  [class*="computer only"] {
+    display: none; } }
+
+@media (max-width: 767px) {
+  [class*="tablet or large device only"] {
+    display: none; } }
+
+@media (max-width: 767px) {
+  [class*="large device only"]:not([class*="tablet or"]) {
+    display: none; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  [class*="large device only"]:not([class*="tablet or"]) {
+    display: none; } }
+
+@media (max-width: 767px) {
+  [class*="large screen only"] {
+    display: none; } }
+@media (min-width: 768px) {
+  [class*="large screen only"] {
+    display: none; } }
+@media (min-width: 992px) {
+  [class*="large screen only"] {
+    display: none; } }
+
 .ts.button {
   cursor: pointer;
   padding: 0.78571em 1.5em;
@@ -978,5 +1036,589 @@ h6.ts.header .sub.header {
   border-bottom: 2px solid #FFF; }
   .ts.header.inverted .sub.header {
     color: #FFF; }
+
+.ts.grid {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  margin: -0.8rem; }
+  .ts.grid + .ts.grid {
+    margin-top: 0.4rem; }
+  .ts.grid > .column:not(.row),
+  .ts.grid > .row .column:not(.row) {
+    padding: 0.4rem; }
+  .ts.grid.relaxed {
+    margin-left: -0.8rem;
+    margin-right: -0.8rem; }
+    .ts.grid.relaxed > .column:not(.row),
+    .ts.grid.relaxed > .row > .column:not(.row) {
+      padding-left: 0.8rem;
+      padding-right: 0.8rem; }
+
+.ts.grid .column {
+  position: relative;
+  box-sizing: border-box; }
+
+.ts.grid > .row {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%; }
+  .ts.grid > .row.doubling {
+    flex-wrap: wrap; }
+
+.ts.grid[class*="left aligned"] .column,
+.ts.grid .row[class*="left aligned"] .column,
+.ts.grid .column[class*="left aligned"] {
+  text-align: left; }
+
+.ts.grid[class*="right aligned"] .column,
+.ts.grid .row[class*="right aligned"] .column,
+.ts.grid .column[class*="right aligned"] {
+  text-align: right; }
+
+.ts.grid.centered,
+.ts.grid .row.centered {
+  align-content: center; }
+
+.ts.grid .row[class*="only"],
+.ts.grid .column[class*="only"] {
+  display: none; }
+
+@media (min-width: 1200px) {
+  .ts.grid .row[class*="large screen only"],
+  .ts.grid .column[class*="large screen only"] {
+    display: flex !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid .row[class*="computer only"],
+  .ts.grid .column[class*="computer only"] {
+    display: flex !important; } }
+
+@media (min-width: 768px) {
+  .ts.grid .row[class*="tablet only"],
+  .ts.grid .column[class*="tablet only"] {
+    display: flex !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row[class*="mobile only"],
+  .ts.grid .column[class*="mobile only"] {
+    display: flex !important; } }
+
+.column[class*="right floated"] {
+  margin-left: auto; }
+
+.column[class*="left floated"] {
+  margin-right: auto; }
+
+.ts.grid .column[class*="one wide"] {
+  width: calc(100% / 16 * 1); }
+
+.ts.grid .column[class*="two wide"] {
+  width: calc(100% / 16 * 2); }
+
+.ts.grid .column[class*="three wide"] {
+  width: calc(100% / 16 * 3); }
+
+.ts.grid .column[class*="four wide"] {
+  width: calc(100% / 16 * 4); }
+
+.ts.grid .column[class*="five wide"] {
+  width: calc(100% / 16 * 5); }
+
+.ts.grid .column[class*="six wide"] {
+  width: calc(100% / 16 * 6); }
+
+.ts.grid .column[class*="seven wide"] {
+  width: calc(100% / 16 * 7); }
+
+.ts.grid .column[class*="eight wide"] {
+  width: calc(100% / 16 * 8); }
+
+.ts.grid .column[class*="nine wide"] {
+  width: calc(100% / 16 * 9); }
+
+.ts.grid .column[class*="ten wide"] {
+  width: calc(100% / 16 * 10); }
+
+.ts.grid .column[class*="eleven wide"] {
+  width: calc(100% / 16 * 11); }
+
+.ts.grid .column[class*="twelve wide"] {
+  width: calc(100% / 16 * 12); }
+
+.ts.grid .column[class*="thirteen wide"] {
+  width: calc(100% / 16 * 13); }
+
+.ts.grid .column[class*="fourteen wide"] {
+  width: calc(100% / 16 * 14); }
+
+.ts.grid .column[class*="fifteen wide"] {
+  width: calc(100% / 16 * 15); }
+
+.ts.grid .column[class*="sixteen wide"] {
+  width: calc(100% / 16 * 16); }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="one wide mobile"] {
+    width: calc(100% / 16 * 1) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="two wide mobile"] {
+    width: calc(100% / 16 * 2) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="three wide mobile"] {
+    width: calc(100% / 16 * 3) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="four wide mobile"] {
+    width: calc(100% / 16 * 4) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="five wide mobile"] {
+    width: calc(100% / 16 * 5) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="six wide mobile"] {
+    width: calc(100% / 16 * 6) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="seven wide mobile"] {
+    width: calc(100% / 16 * 7) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="eight wide mobile"] {
+    width: calc(100% / 16 * 8) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="nine wide mobile"] {
+    width: calc(100% / 16 * 9) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="ten wide mobile"] {
+    width: calc(100% / 16 * 10) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="eleven wide mobile"] {
+    width: calc(100% / 16 * 11) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="twelve wide mobile"] {
+    width: calc(100% / 16 * 12) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="thirteen wide mobile"] {
+    width: calc(100% / 16 * 13) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="fourteen wide mobile"] {
+    width: calc(100% / 16 * 14) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="fifteen wide mobile"] {
+    width: calc(100% / 16 * 15) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid [class*="sixteen wide mobile"] {
+    width: calc(100% / 16 * 16) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="one wide tablet"] {
+    width: calc(100% / 16 * 1) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="two wide tablet"] {
+    width: calc(100% / 16 * 2) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="three wide tablet"] {
+    width: calc(100% / 16 * 3) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="four wide tablet"] {
+    width: calc(100% / 16 * 4) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="five wide tablet"] {
+    width: calc(100% / 16 * 5) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="six wide tablet"] {
+    width: calc(100% / 16 * 6) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="seven wide tablet"] {
+    width: calc(100% / 16 * 7) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="eight wide tablet"] {
+    width: calc(100% / 16 * 8) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="nine wide tablet"] {
+    width: calc(100% / 16 * 9) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="ten wide tablet"] {
+    width: calc(100% / 16 * 10) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="eleven wide tablet"] {
+    width: calc(100% / 16 * 11) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="twelve wide tablet"] {
+    width: calc(100% / 16 * 12) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="thirteen wide tablet"] {
+    width: calc(100% / 16 * 13) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="fourteen wide tablet"] {
+    width: calc(100% / 16 * 14) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="fifteen wide tablet"] {
+    width: calc(100% / 16 * 15) !important; } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid [class*="sixteen wide tablet"] {
+    width: calc(100% / 16 * 16) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="one wide computer"] {
+    width: calc(100% / 16 * 1) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="two wide computer"] {
+    width: calc(100% / 16 * 2) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="three wide computer"] {
+    width: calc(100% / 16 * 3) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="four wide computer"] {
+    width: calc(100% / 16 * 4) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="five wide computer"] {
+    width: calc(100% / 16 * 5) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="six wide computer"] {
+    width: calc(100% / 16 * 6) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="seven wide computer"] {
+    width: calc(100% / 16 * 7) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="eight wide computer"] {
+    width: calc(100% / 16 * 8) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="nine wide computer"] {
+    width: calc(100% / 16 * 9) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="ten wide computer"] {
+    width: calc(100% / 16 * 10) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="eleven wide computer"] {
+    width: calc(100% / 16 * 11) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="twelve wide computer"] {
+    width: calc(100% / 16 * 12) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="thirteen wide computer"] {
+    width: calc(100% / 16 * 13) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="fourteen wide computer"] {
+    width: calc(100% / 16 * 14) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="fifteen wide computer"] {
+    width: calc(100% / 16 * 15) !important; } }
+
+@media (min-width: 992px) {
+  .ts.grid [class*="sixteen wide computer"] {
+    width: calc(100% / 16 * 16) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="one wide large screen"] {
+    width: calc(100% / 16 * 1) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="two wide large screen"] {
+    width: calc(100% / 16 * 2) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="three wide large screen"] {
+    width: calc(100% / 16 * 3) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="four wide large screen"] {
+    width: calc(100% / 16 * 4) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="five wide large screen"] {
+    width: calc(100% / 16 * 5) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="six wide large screen"] {
+    width: calc(100% / 16 * 6) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="seven wide large screen"] {
+    width: calc(100% / 16 * 7) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="eight wide large screen"] {
+    width: calc(100% / 16 * 8) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="nine wide large screen"] {
+    width: calc(100% / 16 * 9) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="ten wide large screen"] {
+    width: calc(100% / 16 * 10) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="eleven wide large screen"] {
+    width: calc(100% / 16 * 11) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="twelve wide large screen"] {
+    width: calc(100% / 16 * 12) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="thirteen wide large screen"] {
+    width: calc(100% / 16 * 13) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="fourteen wide large screen"] {
+    width: calc(100% / 16 * 14) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="fifteen wide large screen"] {
+    width: calc(100% / 16 * 15) !important; } }
+
+@media (min-width: 1200px) {
+  .ts.grid [class*="sixteen wide large screen"] {
+    width: calc(100% / 16 * 16) !important; } }
+
+.ts.grid[class*="one column"] > .column:not(.row),
+.ts.grid .row[class*="one column"] > .column:not(.row) {
+  width: calc(1 / 1 * 100%) !important; }
+
+.ts.grid[class*="two column"] > .column:not(.row),
+.ts.grid .row[class*="two column"] > .column:not(.row) {
+  width: calc(1 / 2 * 100%) !important; }
+
+.ts.grid[class*="three column"] > .column:not(.row),
+.ts.grid .row[class*="three column"] > .column:not(.row) {
+  width: calc(1 / 3 * 100%) !important; }
+
+.ts.grid[class*="four column"] > .column:not(.row),
+.ts.grid .row[class*="four column"] > .column:not(.row) {
+  width: calc(1 / 4 * 100%) !important; }
+
+.ts.grid[class*="five column"] > .column:not(.row),
+.ts.grid .row[class*="five column"] > .column:not(.row) {
+  width: calc(1 / 5 * 100%) !important; }
+
+.ts.grid[class*="six column"] > .column:not(.row),
+.ts.grid .row[class*="six column"] > .column:not(.row) {
+  width: calc(1 / 6 * 100%) !important; }
+
+.ts.grid[class*="seven column"] > .column:not(.row),
+.ts.grid .row[class*="seven column"] > .column:not(.row) {
+  width: calc(1 / 7 * 100%) !important; }
+
+.ts.grid[class*="eight column"] > .column:not(.row),
+.ts.grid .row[class*="eight column"] > .column:not(.row) {
+  width: calc(1 / 8 * 100%) !important; }
+
+.ts.grid[class*="nine column"] > .column:not(.row),
+.ts.grid .row[class*="nine column"] > .column:not(.row) {
+  width: calc(1 / 9 * 100%) !important; }
+
+.ts.grid[class*="ten column"] > .column:not(.row),
+.ts.grid .row[class*="ten column"] > .column:not(.row) {
+  width: calc(1 / 10 * 100%) !important; }
+
+.ts.grid[class*="eleven column"] > .column:not(.row),
+.ts.grid .row[class*="eleven column"] > .column:not(.row) {
+  width: calc(1 / 11 * 100%) !important; }
+
+.ts.grid[class*="twelve column"] > .column:not(.row),
+.ts.grid .row[class*="twelve column"] > .column:not(.row) {
+  width: calc(1 / 12 * 100%) !important; }
+
+.ts.grid[class*="thirteen column"] > .column:not(.row),
+.ts.grid .row[class*="thirteen column"] > .column:not(.row) {
+  width: calc(1 / 13 * 100%) !important; }
+
+.ts.grid[class*="fourteen column"] > .column:not(.row),
+.ts.grid .row[class*="fourteen column"] > .column:not(.row) {
+  width: calc(1 / 14 * 100%) !important; }
+
+.ts.grid[class*="fifteen column"] > .column:not(.row),
+.ts.grid .row[class*="fifteen column"] > .column:not(.row) {
+  width: calc(1 / 15 * 100%) !important; }
+
+.ts.grid[class*="sixteen column"] > .column:not(.row),
+.ts.grid .row[class*="sixteen column"] > .column:not(.row) {
+  width: calc(1 / 16 * 100%) !important; }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="two column"] > .column:not(.row),
+  .ts.grid.doubling[class*="two column"] > .column:not(.row) {
+    width: calc(1 / 1 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="two column"] > .column:not(.row),
+  .ts.grid.doubling[class*="two column"] > .column:not(.row) {
+    width: calc(1 / 1 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="three column"] > .column:not(.row),
+  .ts.grid.doubling[class*="three column"] > .column:not(.row) {
+    width: calc(1 / 2 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="three column"] > .column:not(.row),
+  .ts.grid.doubling[class*="three column"] > .column:not(.row) {
+    width: calc(1 / 2 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="four column"] > .column:not(.row),
+  .ts.grid.doubling[class*="four column"] > .column:not(.row) {
+    width: calc(1 / 2 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="four column"] > .column:not(.row),
+  .ts.grid.doubling[class*="four column"] > .column:not(.row) {
+    width: calc(1 / 2 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="five column"] > .column:not(.row),
+  .ts.grid.doubling[class*="five column"] > .column:not(.row) {
+    width: calc(1 / 2 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="five column"] > .column:not(.row),
+  .ts.grid.doubling[class*="five column"] > .column:not(.row) {
+    width: calc(1 / 3 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="six column"] > .column:not(.row),
+  .ts.grid.doubling[class*="six column"] > .column:not(.row) {
+    width: calc(1 / 2 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="six column"] > .column:not(.row),
+  .ts.grid.doubling[class*="six column"] > .column:not(.row) {
+    width: calc(1 / 3 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="seven column"] > .column:not(.row),
+  .ts.grid.doubling[class*="seven column"] > .column:not(.row) {
+    width: calc(1 / 2 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="seven column"] > .column:not(.row),
+  .ts.grid.doubling[class*="seven column"] > .column:not(.row) {
+    width: calc(1 / 3 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="eight column"] > .column:not(.row),
+  .ts.grid.doubling[class*="eight column"] > .column:not(.row) {
+    width: calc(1 / 2 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="eight column"] > .column:not(.row),
+  .ts.grid.doubling[class*="eight column"] > .column:not(.row) {
+    width: calc(1 / 4 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="nine column"] > .column:not(.row),
+  .ts.grid.doubling[class*="nine column"] > .column:not(.row) {
+    width: calc(1 / 3 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="nine column"] > .column:not(.row),
+  .ts.grid.doubling[class*="nine column"] > .column:not(.row) {
+    width: calc(1 / 4 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="ten column"] > .column:not(.row),
+  .ts.grid.doubling[class*="ten column"] > .column:not(.row) {
+    width: calc(1 / 3 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="ten column"] > .column:not(.row),
+  .ts.grid.doubling[class*="ten column"] > .column:not(.row) {
+    width: calc(1 / 5 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="eleven column"] > .column:not(.row),
+  .ts.grid.doubling[class*="eleven column"] > .column:not(.row) {
+    width: calc(1 / 3 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="eleven column"] > .column:not(.row),
+  .ts.grid.doubling[class*="eleven column"] > .column:not(.row) {
+    width: calc(1 / 5 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="twelve column"] > .column:not(.row),
+  .ts.grid.doubling[class*="twelve column"] > .column:not(.row) {
+    width: calc(1 / 3 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="twelve column"] > .column:not(.row),
+  .ts.grid.doubling[class*="twelve column"] > .column:not(.row) {
+    width: calc(1 / 6 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="thirteen column"] > .column:not(.row),
+  .ts.grid.doubling[class*="thirteen column"] > .column:not(.row) {
+    width: calc(1 / 3 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="thirteen column"] > .column:not(.row),
+  .ts.grid.doubling[class*="thirteen column"] > .column:not(.row) {
+    width: calc(1 / 6 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="fourteen column"] > .column:not(.row),
+  .ts.grid.doubling[class*="fourteen column"] > .column:not(.row) {
+    width: calc(1 / 4 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="fourteen column"] > .column:not(.row),
+  .ts.grid.doubling[class*="fourteen column"] > .column:not(.row) {
+    width: calc(1 / 7 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="fifteen column"] > .column:not(.row),
+  .ts.grid.doubling[class*="fifteen column"] > .column:not(.row) {
+    width: calc(1 / 4 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="fifteen column"] > .column:not(.row),
+  .ts.grid.doubling[class*="fifteen column"] > .column:not(.row) {
+    width: calc(1 / 7 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid .row.doubling[class*="sixteen column"] > .column:not(.row),
+  .ts.grid.doubling[class*="sixteen column"] > .column:not(.row) {
+    width: calc(1 / 4 * 100%) !important; } }
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.grid .row.doubling[class*="sixteen column"] > .column:not(.row),
+  .ts.grid.doubling[class*="sixteen column"] > .column:not(.row) {
+    width: calc(1 / 8 * 100%) !important; } }
+
+@media (max-width: 767px) {
+  .ts.grid.stackable > .column:not(.row) {
+    width: 100% !important; } }
 
 /*# sourceMappingURL=tocas.css.map */
