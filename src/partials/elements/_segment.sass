@@ -1,0 +1,182 @@
+@import ../../variables/elements/segment.variables
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.segment
+    position        : relative
+    display         : block
+    padding         : $segment_padding
+    margin          : $segment_margin
+    background-color: $segment_backgroundColor
+    border          : $segment_border
+    border-radius   : $segment_borderRadius
+    box-shadow      : $segment_boxShadow
+    
+.ts.segment:first-child
+    margin-top: 0
+.ts.segment:last-child
+    margin-bottom: 0
+
+.ts.segment.raised
+    box-shadow      : $segment_raisedBoxShadow
+
+//-------------------//
+//      Accents
+//-------------------//
+
+.ts.segment.secondary
+    background-color: $segment_secondaryBackgroundColor
+    color           : $segment_secondaryColor
+
+.ts.segment.tertiary
+    background-color: $segment_tertiaryBackgroundColor
+    color           : $segment_tertiaryColor
+
+//-------------------//
+//       Padded
+//-------------------//
+
+.ts.segment.padded
+    padding: $segment_paddedPadding
+
+.ts.segment.very.padded
+    padding: $segment_veryPaddedPadding
+
+//-------------------//
+//      Cleaning
+//-------------------//
+
+.ts.segment.cleaning:after
+    display: block
+    content: "\00a0"
+    height : 0
+    clear  : both
+    visibility: hidden
+
+//-------------------//
+//       Fitted
+//-------------------//
+
+.ts.segment.fitted:not(.horizontally):not(.vertically)
+    padding: 0
+.ts.segment.fitted.horizontally
+    padding-left : 0
+    padding-right: 0
+.ts.segment.fitted.vertically
+    padding-top   : 0
+    padding-bottom: 0
+    
+//-------------------//
+//       Basic
+//-------------------//
+
+.ts.segment.basic
+    border       : none
+    box-shadow   : none
+    background   : none
+    border-radius: none
+    
+//-------------------//
+//      Disabled
+//-------------------//
+
+.ts.segment.disabled
+    opacity: $disabledOpacity
+    color  : $disabledTextColor
+
+//-------------------//
+//       Aligns
+//-------------------//  
+    
+.ts.segment[class*='center aligned']
+    text-align: center
+.ts.segment[class*='left aligned']
+    text-align: left
+.ts.segment[class*='right aligned']
+    text-align: right
+    
+//-------------------//
+//      Compact
+//-------------------//  
+
+.ts.segment.compact
+    display: table
+
+//-------------------//
+//      Attached
+//-------------------//  
+
+.ts.segment.attached
+
+    &.bottom
+        margin-top: 0
+  
+        border-top-left-radius : 0
+        border-top-right-radius: 0
+        border-top-width       : $segment_borderWidth
+
+    &.top
+        margin-bottom: 0
+
+        border-bottom-left-radius : 0
+        border-bottom-right-radius: 0
+        border-bottom-width       : $segment_borderWidth
+
+//*******************************//
+//            Segments
+//*******************************//
+
+.ts.segments
+    font-size: 0
+    
+    > .ts.segment
+        font-size: $fontSize
+  
+    &:not(.horizontal)
+        > .ts.segment
+            &:first-child:not(:last-child)
+                margin-bottom: 0
+                border-bottom: none
+                border-bottom-right-radius: 0
+                border-bottom-left-radius : 0
+
+            &:not(:last-child):not(:first-child)
+                margin-top   : 0
+                margin-bottom: 0
+                border-bottom: none
+                border-top-right-radius   : 0
+                border-top-left-radius    : 0
+                border-bottom-right-radius: 0
+                border-bottom-left-radius : 0
+    
+            &:last-child
+                margin-top: 0
+                border-top-right-radius: 0
+                border-top-left-radius : 0
+
+
+    &.horizontal
+        margin-top   : $segment_verticalMargin
+        margin-bottom: $segment_verticalMargin
+  
+        > .ts.segment
+            display: inline-block
+            margin: 0
+  
+            &:first-child:not(:last-child)
+                border-right               : none
+                border-top-right-radius    : 0
+                border-bottom-right-radius : 0
+      
+            &:not(:last-child):not(:first-child)
+                border-right              : none
+                border-top-right-radius   : 0
+                border-top-left-radius    : 0
+                border-bottom-right-radius: 0
+                border-bottom-left-radius : 0
+      
+            &:last-child
+                border-top-left-radius    : 0
+                border-bottom-left-radius : 0
