@@ -1,0 +1,158 @@
+@import ../../variables/elements/header.variables
+
+//*******************************//
+//            Variations
+//*******************************///
+
+@mixin header-variant($color, $borderColor)
+    color       : $color
+    border-color: $borderColor
+
+//*******************************//
+//              Main
+//*******************************///
+
+.ts.header
+    margin     : $margin
+    line-height: $lineHeight
+    color      : $textColor
+    font-weight: $fontWeight
+
+    &:first-child
+        margin: $firstMargin
+    
+    &:last-child
+        margin: $lastMargin
+    
+.ts.header .sub.header
+    display    : block
+    font-weight: normal
+    line-height: $subHeaderLineHeight
+    color      : $subHeaderColor
+
+//-------------------//
+//      Disabled       
+//-------------------// 
+
+.ts.header.disabled,
+.ts.header.disabled .sub.header
+    opacity: $disabledOpacity
+
+//-------------------//
+//       Bolder       
+//-------------------// 
+
+.ts.header.bolder
+.ts.header.bolder .sub.header
+    font-weight: $bolderFontWeight
+
+//-------------------//
+//       Aligns       
+//-------------------// 
+
+.ts.header[class*="center aligned"]
+    text-align: center
+.ts.header[class*="left aligned"]
+    text-align: left
+.ts.header[class*="right aligned"]
+    text-align: right
+    
+//-------------------//
+//      Dividing       
+//-------------------//     
+
+.ts.header.dividing
+    padding-bottom: $dividedBorderPadding
+    border-bottom : $dividedBorder
+    
+//-------------------//
+//        Page       
+//-------------------// 
+
+h1.ts.header
+    font-size: $h1
+h2.ts.header
+    font-size: $h2
+h3.ts.header
+    font-size: $h3
+h4.ts.header
+    font-size: $h4
+h5.ts.header
+    font-size: $h5
+h6.ts.header
+    font-size: $h6
+    
+h1.ts.header .sub.header
+    font-size: $h1SubHeaderFontSize
+h2.ts.header .sub.header
+    font-size: $h2SubHeaderFontSize
+h3.ts.header .sub.header
+    font-size: $h3SubHeaderFontSize
+h4.ts.header .sub.header
+    font-size: $h4SubHeaderFontSize
+h5.ts.header .sub.header
+    font-size: $h5SubHeaderFontSize
+h6.ts.header .sub.header
+    font-size: $h6SubHeaderFontSize
+
+//-------------------//
+//   Content Header       
+//-------------------// 
+
+.ts.huge.header
+    min-height: 1em
+    font-size: $hugeFontSize
+.ts.large.header
+    font-size: $largeFontSize
+.ts.medium.header
+    font-size: $mediumFontSize
+.ts.small.header
+    font-size: $smallFontSize
+.ts.tiny.header
+    font-size: $tinyFontSize
+.ts.mini.header
+    font-size: $miniFontSize
+    
+.ts.huge.header .sub.header
+    font-size: $HugeSubHeaderFontSize
+.ts.large.header .sub.header
+    font-size: $LargeSubHeaderFontSize
+.ts.medium.header .sub.header
+    font-size: $MediumSubHeaderFontSize
+.ts.small.header .sub.header
+    font-size: $SmallSubHeaderFontSize
+.ts.tiny.header .sub.header
+    font-size: $TinySubHeaderFontSize
+.ts.mini.header .sub.header
+    font-size: $MiniSubHeaderFontSize
+    
+//-------------------//
+//       Colors       
+//-------------------//    
+
+.ts.header.primary
+    +header-variant($primaryTextColor, $primaryBorderColor)
+    border-bottom: $dividedEmphasizedBorderWidth solid $primaryBorderColor
+
+.ts.header.info
+    +header-variant($infoTextColor, $infoBorderColor)
+    border-bottom: $dividedEmphasizedBorderWidth solid $infoBorderColor
+    
+.ts.header.warning
+    +header-variant($warningTextColor, $warningBorderColor)
+    border-bottom: $dividedEmphasizedBorderWidth solid $warningBorderColor
+    
+.ts.header.positive
+    +header-variant($positiveTextColor, $positiveBorderColor)
+    border-bottom: $dividedEmphasizedBorderWidth solid $positiveBorderColor
+    
+.ts.header.negative
+    +header-variant($negativeTextColor, $negativeBorderColor)
+    border-bottom: $dividedEmphasizedBorderWidth solid $negativeBorderColor
+    
+.ts.header.inverted
+    +header-variant($invertedTextColor, $invertedBorderColor)
+    border-bottom: $dividedEmphasizedBorderWidth solid $invertedBorderColor
+    
+    .sub.header
+        color: $invertedTextColor
