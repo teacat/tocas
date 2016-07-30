@@ -1,12 +1,16 @@
 @import ../../variables/elements/button.variables
 
+//*******************************//
+//            Variations
+//*******************************///
+
 @mixin button-variant($color, $backgroundColor, $borderColor)
     $hoverBackgroundColor: darken($backgroundColor, 5%)
     $hoverColor          : lighten($color, 5%)
     
     $activeBackgroundColor: darken($backgroundColor, 20%)
     $activeColor          : darken($color, 10%)
-
+    
     border-color    : $borderColor
     background-color: $backgroundColor
     color           : $color
@@ -19,76 +23,293 @@
         background-color: $activeBackgroundColor
         color           : $activeColor
 
+//-------------------//
+//       Basic
+//-------------------//
+
+@mixin button-basic-variant($color, $backgroundColor, $borderColor)
+    $activeColor: darken($backgroundColor, 30%)
     
+    border: 1px solid $backgroundColor
+    color : $backgroundColor
+        
+    &:hover
+    &:active
+        color : $activeColor
+
+//-------------------//
+//   Inverted Basic
+//-------------------//
+
+@mixin button-inverted-basic-variant($color, $backgroundColor, $borderColor)
+    $activeBackgroundColor: darken($backgroundColor, 20%)
+    
+    border: 2px solid $backgroundColor
+    color : $backgroundColor
+    
+    &:hover
+        background-color: $backgroundColor
+        color           : $color
+    
+    &:active
+        border-color    : $activeBackgroundColor
+        background-color: $activeBackgroundColor
+        color           : $color
+
+//*******************************//
+//              Main
+//*******************************///
 
 .ts.button
     cursor       : pointer
-    padding      : $buttonPadding
-    border-radius: $buttonBorderRadius
-    font-size    : $buttonFontSize
-    font-weight  : $buttonFontWeight
+    padding      : $padding
+    border-radius: $borderRadius
+    font-size    : $fontSize
+    font-weight  : $fontWeight
     
     +button-variant($defaultTextColor, $defaultBackgroundColor, $defaultBorderColor)
+                
+//-------------------//
+//     Attached       
+//-------------------//  
 
-    &.fluid
-        width: 100%
+.ts.button[class*='top attached'],
+.ts.buttons[class*='top attached'] .button
+    border-bottom-left-radius : 0
+    border-bottom-right-radius: 0
+
+.ts.button[class*='bottom attached'],
+.ts.buttons[class*='bottom attached'] .button
+    border-top-left-radius : 0
+    border-top-right-radius: 0
+
+//-------------------//
+//     Circular       
+//-------------------//  
     
-    &.circular
-        border-radius: 10em
+.ts.button.circular,
+.ts.buttons.circular .button
+    border-radius: 10em
+
+//-------------------//
+//      Disabled       
+//-------------------//
     
-    &.disabled,
-    &.disabled:hover
-        +extend(no-select)
-        opacity       : $disabledOpacity !important
-        cursor        : not-allowed      !important
-        pointer-events: none             !important
+.ts.button.disabled,    
+.ts.button.disabled:hover,
+.ts.buttons.disabled .button,
+.ts.buttons.disabled .button:hover
+    +extend(no-select)
+    opacity       : $disabledOpacity !important
+    cursor        : not-allowed      !important
+    pointer-events: none             !important
     
-    //-------------------//
-    //      Floated       
-    //-------------------//
+//-------------------//
+//      Floated       
+//-------------------//
+
+.ts.button[class*="left floated"],
+.ts.buttons[class*="left floated"]
+    float: left
+
+.ts.button[class*="right floated"],
+.ts.buttons[class*="right floated"]
+    float: right
+
+//-------------------//
+//       Fluid       
+//-------------------//
+
+.ts.button.fluid,
+.ts.buttons.fluid,
+.ts.buttons.fluid .button
+    width: 100%
+       
+//-------------------//
+//       Sizes       
+//-------------------//
     
-    &[class*="left floated"]
-        float: left
-    
-    &[class*="right floated"]
-        float: right
+.ts.button.compact,
+.ts.buttons.compact .button
+    padding: $compactPadding
+.ts.button.mini,
+.ts.buttons.mini .button
+    font-size: $miniFontSize
+.ts.button.tiny,
+.ts.buttons.tiny .button
+    font-size: $tinyFontSize
+.ts.button.small,
+.ts.buttons.small .button
+    font-size: $smallFontSize
+.ts.button.medium,
+.ts.buttons.medium .button
+    font-size: $mediumFontSize
+.ts.button.large,
+.ts.buttons.large .button
+    font-size: $largeFontSize
+.ts.button.big,
+.ts.buttons.big .button
+    font-size: $bigFontSize
+.ts.button.huge,
+.ts.buttons.huge .button
+    font-size: $hugeFontSize
+.ts.button.massive,
+.ts.buttons.massive .button
+    font-size: $massiveFontSize
+
+//-------------------//
+//       Icon
+//-------------------//      
         
-    //-------------------//
-    //       Sizes       
-    //-------------------//
-    
-    &.compact
-        padding: $buttonCompactPadding
-    &.mini
-        font-size: $buttonMiniFontSize
-    &.tiny
-        font-size: $buttonTinyFontSize
-    &.small
-        font-size: $buttonSmallFontSize
-    &.medium
-        font-size: $buttonMediumFontSize
-    &.large
-        font-size: $buttonLargeFontSize
-    &.big
-        font-size: $buttonBigFontSize
-    &.huge
-        font-size: $buttonHugeFontSize
-    &.massive
-        font-size: $buttonMassiveFontSize
+.ts.button.icon,
+.ts.buttons.icon .button
+    padding: $verticalPadding $verticalPadding
         
-    //-------------------//
-    //      Colors
-    //-------------------//
+//-------------------//
+//      Colors
+//-------------------//
+
+.ts.button.inverted,
+.ts.buttons.inverted .button,
+.ts.button.secondary,
+.ts.buttons.secondary .button
+    +button-variant($invertedTextColor, $invertedBackgroundColor, $invertedBorderColor)
+.ts.button.primary,
+.ts.buttons.primary .button
+    +button-variant($primaryTextColor, $primaryBackgroundColor, $primaryBorderColor)
+.ts.button.info,
+.ts.buttons.info .button
+    +button-variant($infoTextColor, $infoBackgroundColor, $infoBorderColor)
+.ts.button.warning,
+.ts.buttons.warning .button
+    +button-variant($warningTextColor, $warningBackgroundColor, $warningBorderColor)
+.ts.button.negative,
+.ts.buttons.negative .button
+    +button-variant($negativeTextColor, $negativeBackgroundColor, $negativeBorderColor)
+.ts.button.positive,
+.ts.buttons.positive .button
+    +button-variant($positiveTextColor, $positiveBackgroundColor, $positiveBorderColor)
     
-    &.primary
-        +button-variant($primaryTextColor, $primaryBackgroundColor, $primaryBorderColor)
-    &.info
-        +button-variant($infoTextColor, $infoBackgroundColor, $infoBorderColor)
-    &.warning
-        +button-variant($warningTextColor, $warningBackgroundColor, $warningBorderColor)
-    &.inverted
-        +button-variant($invertedTextColor, $invertedBackgroundColor, $invertedBorderColor)
-    &.negative
-        +button-variant($negativeTextColor, $negativeBackgroundColor, $negativeBorderColor)
-    &.positive
-        +button-variant($positiveTextColor, $positiveBackgroundColor, $positiveBorderColor)
+//-------------------//
+//       Basic
+//-------------------//
+
+.ts.button.basic,
+.ts.button.basic:hover,
+.ts.button.basic:active,
+.ts.buttons.basic .button,
+.ts.buttons.basic .button:hover,
+.ts.buttons.basic .button:active,
+    background-color: $basicBackgroundColor
+.ts.button.basic,
+.ts.buttons.basic .button
+    +button-basic-variant($basicTextColor, $basicTextColor, $basicBorderColor)
+.ts.button.basic.inverted,
+.ts.buttons.basic.inverted .button,
+.ts.button.basic.secondary,
+.ts.buttons.basic.secondary .button
+    +button-basic-variant($invertedTextColor, $invertedBackgroundColor, $invertedBorderColor)
+.ts.button.basic.primary,
+.ts.buttons.basic.primary .button
+    +button-basic-variant($primaryTextColor, $primaryBackgroundColor, $primaryBorderColor)
+.ts.button.basic.info,
+.ts.buttons.basic.info .button
+    +button-basic-variant($infoTextColor, $infoBackgroundColor, $infoBorderColor)
+.ts.button.basic.warning,
+.ts.buttons.basic.warning .button
+    +button-basic-variant($warningTextColor, $warningBackgroundColor, $warningBorderColor)
+.ts.button.basic.negative,
+.ts.buttons.basic.negative .button
+    +button-basic-variant($negativeTextColor, $negativeBackgroundColor, $negativeBorderColor)
+.ts.button.basic.positive,
+.ts.buttons.basic.positive .button
+    +button-basic-variant($positiveTextColor, $positiveBackgroundColor, $positiveBorderColor)
+    
+//-------------------//
+//   Inverted Basic
+//-------------------//
+
+.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative)
+    +button-inverted-basic-variant($basicInvertedTextColor, $basicInvertedBorderColor, $basicInvertedBorderColor)
+
+.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):hover
+    background-color: $invertedBasicHoverBackgroundColor
+    border-color    : $invertedBasicHoverBackgroundColor
+    color           : $invertedBasicHoverTextColor
+    
+.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):active
+    background-color: $invertedBasicActiveBackgroundColor
+    border-color    : $invertedBasicActiveBackgroundColor
+    color           : $invertedBasicActiveTextColor
+
+.ts.button.basic.inverted,
+.ts.buttons.basic.inverted .button,
+.ts.button.inverted.basic.secondary,
+.ts.buttons.inverted.basic.secondary .button
+    +button-inverted-basic-variant($invertedTextColor, $invertedBackgroundColor, $invertedBorderColor)
+.ts.button.inverted.basic.primary,
+.ts.buttons.inverted.basic.primary .button
+    +button-inverted-basic-variant($primaryTextColor, $primaryBackgroundColor, $primaryBorderColor)
+.ts.button.inverted.basic.info,
+.ts.buttons.inverted.basic.info .button
+    +button-inverted-basic-variant($infoTextColor, $infoBackgroundColor, $infoBorderColor)
+.ts.button.inverted.basic.warning,
+.ts.buttons.inverted.basic.warning .button
+    +button-inverted-basic-variant($warningTextColor, $warningBackgroundColor, $warningBorderColor)
+.ts.button.inverted.basic.negative,
+.ts.buttons.inverted.basic.negative .button
+    +button-inverted-basic-variant($negativeTextColor, $negativeBackgroundColor, $negativeBorderColor)
+.ts.button.inverted.basic.positive,
+.ts.buttons.inverted.basic.positive .button
+    +button-inverted-basic-variant($positiveTextColor, $positiveBackgroundColor, $positiveBorderColor)
+    
+//*******************************//
+//            Buttons
+//*******************************///
+
+.ts.buttons
+    display: inline-flex
+
+    &:not(.vertical) .ts.button
+        display: inline-block
+        
+        &:not(:first-child)
+            border-top-left-radius   : 0
+            border-bottom-left-radius: 0
+            border-left-width        : 0
+        
+        &:not(:last-child)
+            border-top-right-radius   : 0
+            border-bottom-right-radius: 0
+            border-right-width        : 1px
+        
+        &:last-child
+            border-left-width         : 0px
+    
+    &:not(.vertical).inverted.basic .ts.button
+        &:not(:last-child)
+            border-right-width        : 2px
+        
+                
+    &.vertical
+        display: block
+        
+        .ts.button
+            display: block
+            
+            &:not(:first-child)
+                border-top-left-radius : 0
+                border-top-right-radius: 0
+            
+            &:not(:last-child)
+                border-bottom-left-radius : 0
+                border-bottom-right-radius: 0
+    
+    
+    
+    
+
+
+
+
+ 
