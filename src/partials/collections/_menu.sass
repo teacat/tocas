@@ -1,0 +1,256 @@
+@import ../../variables/collections/menu.variables
+
+//*******************************//
+//            Variations
+//*******************************//
+
+@mixin menu-inverted-variant($color, $backgroundColor)
+    background-color: $backgroundColor
+    border-color    : $backgroundColor
+    
+    .item
+        color: $color
+
+//*******************************//
+//              Main
+//*******************************///
+
+.ts.menu
+    display         : flex
+    font-size       : $medium
+    margin          : $menu_margin
+    background-color: $menu_backgroundColor
+    border-radius   : $menu_borderRadius
+    border          : $menu_border
+    box-shadow      : $menu_boxShadow
+    
+    &:first-child
+        margin-top: 0
+    
+    &:last-child
+        margin-bottom: 0
+
+//-------------------//
+//       Raised
+//-------------------// 
+
+.ts.menu.raised
+    box-shadow: $menu_raisedBoxShadow
+
+//-------------------//
+//      Sub Menu       
+//-------------------// 
+
+.ts.menu .menu
+    margin: 0
+
+//-------------------//
+//       Items       
+//-------------------// 
+
+.ts.menu:not(.vertical) .item
+    display: flex
+    align-items: center
+
+.ts.menu .item
+    +extend(no-select)
+    position       : relative
+    vertical-align : middle
+    line-height    : 1
+    padding        : $menu_itemVerticalPadding $menu_itemHorizontalPadding
+    text-decoration: none
+    color          : $menu_itemTextColor
+    font-weight    : $menu_itemFontWeight
+
+.ts.menu .item:before
+    position: absolute
+    content : ''
+    top     : 0
+    right   : 0
+    height  : 100%
+
+    width           : $menu_dividerSize
+    background-color: $menu_dividerBackgroundColor
+    
+.ts.menu .item:last-child:before
+    display: none
+
+.ts.menu a.item:hover
+    cursor          : pointer
+    background-color: $menu_itemHoverBackgroundColor
+    color           : $menu_itemHoverTextColor
+    
+.ts.menu a.item:active,
+.ts.menu .item.active
+    background-color: $menu_itemActiveBackgroundColor
+    color           : $menu_itemActiveTextColor
+    
+.ts.menu .item.disabled
+    pointer-events: none
+    color         : $disabledTextColor
+
+.ts.menu .item.header
+    opacity    : 1
+    font-weight: $menu_itemHeaderFontWeight
+    color      : $menu_itemHeaderTextColor
+    font-size  : $menu_itemHeaderFontSize
+    
+
+//-------------------//
+//       Sizes       
+//-------------------// 
+
+.ts.menu.mini
+    font-size: $mini
+.ts.menu.tiny
+    font-size: $mini
+.ts.menu.small
+    font-size: $small
+.ts.menu.medium
+    font-size: $medium
+.ts.menu.large
+    font-size: $large
+.ts.menu.big
+    font-size: $big
+.ts.menu.huge
+    font-size: $huge
+.ts.menu.massive
+    font-size: $massive
+
+//-------------------//
+//       Colors       
+//-------------------//
+
+.ts.menu.basic
+    +menu-inverted-variant($menu_defaultTextColor, $menu_defaultBackgroundColor)
+    border: 0
+.ts.menu.inverted
+    +menu-inverted-variant($menu_invertedTextColor, $menu_invertedBackgroundColor)
+    border: 0
+.ts.menu.inverted.primary
+    +menu-inverted-variant($menu_primaryTextColor, $menu_primaryBackgroundColor)
+.ts.menu.inverted.info
+    +menu-inverted-variant($menu_infoTextColor, $menu_infoBackgroundColor)
+.ts.menu.inverted.warning
+    +menu-inverted-variant($menu_warningTextColor, $menu_warningBackgroundColor)
+.ts.menu.inverted.positive
+    +menu-inverted-variant($menu_positiveTextColor, $menu_positiveBackgroundColor)
+.ts.menu.inverted.negative
+    +menu-inverted-variant($menu_negativeTextColor, $menu_negativeBackgroundColor)
+.ts.menu.inverted .item.disabled
+    color: $invertedDisabledTextColor
+
+//-------------------//
+//     Borderless       
+//-------------------//
+
+.ts.menu.borderless .item:before
+    display: none
+
+//-------------------//
+//       Aligns       
+//-------------------//
+
+.ts.menu .item[class*="center aligned"]
+    text-align: center
+.ts.menu .item[class*="left aligned"]
+    text-align: left
+.ts.menu .item[class*="right aligned"]
+    text-align: right
+    
+//-------------------//
+//     Stackable       
+//-------------------//
+
+.ts.menu.stackable
+    +rwd-serious(mobile)
+        flex-direction: column
+        
+        .item:before
+            position: absolute
+            content : ''
+            top     : auto
+            bottom  : 0
+            left    : 0
+            height  : $menu_dividerSize
+            width   : 100%
+
+//-------------------//
+//      Vertical       
+//-------------------//
+
+.ts.menu.vertical
+    flex-direction: column
+    
+    .item:before
+        position: absolute
+        content : ''
+        top     : auto
+        bottom  : 0
+        left    : 0
+        height  : $menu_dividerSize
+        width   : 100%
+
+//-------------------//
+//       Fitted       
+//-------------------//
+
+.ts.menu[class*="horizontally fitted"] .item
+    padding-left : 0
+    padding-right: 0
+.ts.menu[class*="vertically fitted"] .item
+    padding-top   : 0
+    padding-bottom: 0
+
+//-------------------//
+//      Compact       
+//-------------------//
+
+.ts.menu.compact
+    display: inline-flex
+    margin : 0
+
+//-------------------//
+//     Secondary       
+//-------------------//
+
+.ts.menu.secondary
+    background-color: $menu_secondaryBackgroundColor
+    margin-left     : -$menu_secondaryItemSpacing
+    margin-right    : -$menu_secondaryItemSpacing
+    border-radius   : 0
+    border          : none
+    box-shadow      : none
+
+.ts.menu.secondary .item
+    padding      : $menu_secondaryItemPadding
+    margin       : $menu_secondaryItemMargin
+    border-radius: $menu_secondaryBorderRadius
+
+.ts.menu.secondary .item:before
+    display: none
+    
+//-------------------//
+// Secondary Pointing 
+//-------------------//
+
+.ts.menu.pointing.secondary
+    margin-left  : 0
+    margin-right : 0
+    border-bottom: $menu_secondaryPointingBorder
+
+.ts.menu.pointing.secondary .item
+    margin       : 0
+    margin-bottom: -$menu_secondaryPointingBorderWidth
+    border-radius: 0
+
+.ts.menu.pointing.secondary .item:hover,
+.ts.menu.pointing.secondary .item:active
+    background-color: transparent
+
+.ts.menu.pointing.secondary .item.active
+    background-color: $menu_secondaryPoingintActiveBackgroundColor
+    border-bottom   : $menu_secondaryPointingActiveBorder
+    color           : $menu_secondaryPointingActiveTextColor
+    font-weight     : $menu_secondaryPointingActiveFontWeight
+    
