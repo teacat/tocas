@@ -1,0 +1,194 @@
+@import ../../variables/elements/input.variables
+
+//*******************************//
+//            Variations
+//*******************************//
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.input
+    position: relative
+    display : inline-block
+    color   : $inputTextColor
+    
+.ts.input input, 
+.ts.input textarea, 
+.ts.input *[contenteditable]
+    transition   : box-shadow 0.10s ease-in-out
+    line-height  : $inputLineHeight
+    border       : $input_border
+    padding      : $input_padding
+    border-radius: $input_borderRadius
+    color        : $inputTextColor
+    
+.ts.input input:hover, 
+.ts.input textarea:hover, 
+.ts.input *[contenteditable]:hover
+    border-color: $input_hoverBorderColor
+    
+.ts.input input:focus, 
+.ts.input textarea:focus, 
+.ts.input *[contenteditable]:focus,
+.ts.input.focus input,
+.ts.input.focus textarea,
+.ts.input.focus *[contenteditable]
+    box-shadow: 0 0 .5rem rgba(81, 203, 238, 1)
+    border-color: #67D7FF
+
+//-------------------//
+//       Fluid       
+//-------------------// 
+
+.ts.input.fluid
+.ts.input.fluid input,
+.ts.input.fluid textarea,
+.ts.input.fluid *[contenteditable]
+    width: 100%
+
+//-------------------//
+//       Sizes       
+//-------------------// 
+
+.ts.mini.inputs .ts.input,
+.ts.mini.input
+    font-size: $relativeMini
+.ts.tiny.inputs .ts.input,
+.ts.tiny.input
+    font-size: $relativeTiny
+.ts.small.inputs .ts.input,
+.ts.small.input
+    font-size: $relativeSmall
+.ts.medium.inputs .ts.input,
+.ts.medium.input,
+.ts.input
+    font-size: $relativeMedium
+.ts.large.inputs .ts.input,
+.ts.large.input
+    font-size: $relativeLarge
+.ts.big.inputs .ts.input,
+.ts.big.input
+    font-size: $relativeBig
+.ts.huge.inputs .ts.input,
+.ts.huge.input
+    font-size: $relativeHuge
+.ts.massive.inputs .ts.input,
+.ts.massive.input
+    font-size: $relativeMassive
+    
+//-------------------//
+//      Coupling       
+//-------------------// 
+
+// In Menu
+
+//*******************************//
+//             Inputs
+//*******************************//
+
+.ts.inputs
+    display: inline-block
+    
+.ts.inputs.fluid,
+.ts.inputs.fluid .ts.input,
+.ts.inputs.fluid .ts.input input,
+.ts.inputs.fluid .ts.input textarea,
+.ts.inputs.fluid .ts.input *[contenteditable]
+    width  : 100%
+    display: block
+    
+.ts.inputs.vertical .ts.input
+    display: block
+    
+.ts.inputs.vertical .ts.input:last-child:not(:first-child)
+    &
+        input, textarea, *[contenteditable]
+            border-top-right-radius: 0
+            border-top-left-radius : 0
+            
+            &:focus
+                position: relative 
+                z-index : 2
+
+.ts.inputs.vertical .ts.input:not(:first-child):not(:last-child)
+    & 
+        input, textarea, *[contenteditable]
+            border-radius      : 0
+            border-bottom-style: none
+        
+            &:focus
+                border-bottom-style: solid
+                margin-bottom: -1px
+
+.ts.inputs.vertical .ts.input:first-child:not(:last-child)
+    &
+        input, textarea, *[contenteditable]
+            border-bottom-right-radius: 0
+            border-bottom-left-radius : 0
+            border-bottom-style       : none
+            
+            &:focus
+                border-bottom-style: solid
+                margin-bottom: -1px
+
+.ts.inputs .input input:focus + .input
+    &
+        input, textarea, *[contenteditable]
+            border-top-color: #FFF
+
+.ts.inputs .input:hover + .input
+    &   
+        input, textarea, *[contenteditable]
+            border-top-color: $input_hoverBorderColor
+
+//-------------------//
+//      Circular       
+//-------------------//
+
+.ts.input.circular
+    & input, textarea, *[contenteditable]
+        border-radius: 10em
+
+//-------------------//
+//      Disabled       
+//-------------------//
+
+.ts.input.disabled,
+.ts.input input[disabled]
+    opacity       : $disabledOpacity
+    pointer-events: none
+
+//-------------------//
+//       Error       
+//-------------------//
+
+.ts.error.input input:focus, 
+.ts.error.input textarea:focus, 
+.ts.error.input *[contenteditable]:focus,
+.ts.error.input.focus input,
+.ts.error.input.focus textarea,
+.ts.error.input.focus *[contenteditable]
+    box-shadow  : $input_errorFocusBoxShadow
+    border-color: $input_errorFocusBorderColor
+
+.ts.error.input input, 
+.ts.error.input textarea, 
+.ts.error.input *[contenteditable]
+    color           : $input_errorTextColor
+    background-color: $input_errorBackgroundColor
+    
+//-------------------//
+//       Colors       
+//-------------------//
+
+.ts.primary.input
+ 
+//-------------------//
+//      Resizable       
+//-------------------//   
+    
+.ts.resizable input, 
+.ts.resizable textarea, 
+.ts.resizable *[contenteditable]
+    resize: both
