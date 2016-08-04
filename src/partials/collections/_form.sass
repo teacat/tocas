@@ -164,6 +164,51 @@
     font-weight   : $form_labelFontWeight
 
 //-------------------//
+//      Disabled
+//-------------------//
+
+.ts.form .disabled.fields .field,
+.ts.form .disabled.field,
+.ts.form .field :disabled
+    pointer-events: none
+    opacity       : $disabledOpacity
+
+.ts.form .field.disabled label
+    opacity: $disabledLabelOpacity
+
+.ts.form .field.disabled :disabled
+    opacity: 1
+
+//-------------------//
+//      Required
+//-------------------//
+
+.ts.form .required.fields:not(.grouped) > .field > label:after,
+.ts.form .required.fields.grouped > label:after,
+.ts.form .required.field > label:after,
+.ts.form .required.fields:not(.grouped) > .field > .checkbox:after,
+.ts.form .required.field > .checkbox:after 
+    margin     : $form_requiredMargin
+    content    : $form_requiredContent
+    color      : $form_requiredColor
+    font-weight: $form_requiredFontWeight
+
+
+.ts.form .required.fields:not(.grouped) > .field > label:after,
+.ts.form .required.fields.grouped > label:after,
+.ts.form .required.field > label:after 
+    display       : inline-block
+    vertical-align: top
+
+
+.ts.form .required.fields:not(.grouped) > .field > .checkbox:after,
+.ts.form .required.field > .checkbox:after 
+    position: absolute
+    top: 0%
+    left: 100%
+
+
+//-------------------//
 //       Sizes
 //-------------------//
 
@@ -200,3 +245,19 @@
 .ts.form.relaxed .fields
     margin-left : -#{$columnRelaxedPadding}
     margin-right: -#{$columnRelaxedPadding}
+    
+//*******************************//
+//               RWD
+//*******************************//
+
+.ts.form
+    +rwd-serious(mobile)
+        .fields
+            margin-left   : 0
+            margin-right  : 0
+            flex-direction: column
+        .fields .field
+            padding-left : 0
+            padding-right: 0
+            width        : 100%
+    
