@@ -10,7 +10,7 @@
 
 .ts.input
     position: relative
-    display : inline-block
+    display : inline-flex
     color   : $inputTextColor
     
 .ts.input input, 
@@ -34,8 +34,64 @@
 .ts.input.focus input,
 .ts.input.focus textarea,
 .ts.input.focus *[contenteditable]
-    box-shadow: 0 0 .5rem rgba(81, 203, 238, 1)
-    border-color: #67D7FF
+    box-shadow  : $input_focusBoxShadow
+    border-color: $input_focusBorderColor
+
+//-------------------//
+//       Basic       
+//-------------------//
+
+.ts.input.basic
+    background-color: transparent
+    
+//-------------------//
+//     Borderless       
+//-------------------//
+
+.ts.input.borderless
+    border: 0
+        
+//-------------------//
+//      Action       
+//-------------------//
+
+.ts.input.action > .button,
+.ts.input.action > .buttons
+    display    : flex
+    align-items: center
+    flex       : 0 0 auto
+//
+//.ts.input.action > .button,
+//.ts.input.action > .buttons > .button
+//    padding-top   : $input_verticalPadding
+//    padding-bottom: $input_verticalPadding
+//    margin        : 0
+
+.ts.input.action > .ts.button
+    border-radius             : $button_borderRadius
+    border-top-right-radius   : 0
+    border-bottom-right-radius: 0
+      
+.ts.input.action input + .ts.button, 
+.ts.input.action input textarea + .ts.button, 
+.ts.input.action input *[contenteditable] + .ts.button
+    border-radius            : $button_borderRadius
+    border-top-left-radius   : 0
+    border-bottom-left-radius: 0
+
+.ts.input.action input,
+.ts.input.action textarea, 
+.ts.input.action *[contenteditable]
+    border-radius             : $input_borderRadius
+    border-top-right-radius   : 0
+    border-bottom-right-radius: 0
+
+.ts.input.action .ts.button + input, 
+.ts.input.action .ts.button + textarea, 
+.ts.input.action .ts.button + *[contenteditable]
+    border-radius            : $input_borderRadius
+    border-top-left-radius   : 0
+    border-bottom-left-radius: 0
 
 //-------------------//
 //       Fluid       
@@ -119,7 +175,7 @@
         
             &:focus
                 border-bottom-style: solid
-                margin-bottom: -1px
+                margin-bottom: -#{$input_borderWidth}
 
 .ts.inputs.vertical .ts.input:first-child:not(:last-child)
     &
@@ -130,7 +186,7 @@
             
             &:focus
                 border-bottom-style: solid
-                margin-bottom: -1px
+                margin-bottom: -#{$input_borderWidth}
 
 .ts.inputs .input input:focus + .input
     &
@@ -141,14 +197,6 @@
     &   
         input, textarea, *[contenteditable]
             border-top-color: $input_hoverBorderColor
-
-//-------------------//
-//      Circular       
-//-------------------//
-
-.ts.input.circular
-    & input, textarea, *[contenteditable]
-        border-radius: 10em
 
 //-------------------//
 //      Disabled       
@@ -192,3 +240,12 @@
 .ts.resizable textarea, 
 .ts.resizable *[contenteditable]
     resize: both
+
+//-------------------//
+//      Circular       
+//-------------------//
+
+.ts.input.circular
+    &
+        input, textarea, *[contenteditable]
+            border-radius: 10em
