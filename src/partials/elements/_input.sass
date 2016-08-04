@@ -13,29 +13,30 @@
     display : inline-flex
     color   : $inputTextColor
     
-.ts.input input, 
-.ts.input textarea, 
-.ts.input *[contenteditable]
-    transition   : box-shadow 0.10s ease-in-out
-    line-height  : $inputLineHeight
-    border       : $input_border
-    padding      : $input_padding
-    border-radius: $input_borderRadius
-    color        : $inputTextColor
+.ts.input,
+.ts.form
+    &
+        input, textarea, *[contenteditable]
+            transition   : box-shadow $input_transitionDuration ease-in-out
+            line-height  : $inputLineHeight
+            border       : $input_border
+            padding      : $input_padding
+            border-radius: $input_borderRadius
+            color        : $inputTextColor
     
-.ts.input input:hover, 
-.ts.input textarea:hover, 
-.ts.input *[contenteditable]:hover
-    border-color: $input_hoverBorderColor
+.ts.input,
+.ts.form
+    &
+        input:hover, textarea:hover, *[contenteditable]:hover
+            border-color: $input_hoverBorderColor
     
-.ts.input input:focus, 
-.ts.input textarea:focus, 
-.ts.input *[contenteditable]:focus,
-.ts.input.focus input,
-.ts.input.focus textarea,
-.ts.input.focus *[contenteditable]
-    box-shadow  : $input_focusBoxShadow
-    border-color: $input_focusBorderColor
+.ts.input,
+.ts.form
+    &
+        input:focus, textarea:focus, *[contenteditable]:focus,
+        input.focus, textarea.focus, *[contenteditable].focus
+            box-shadow  : $input_focusBoxShadow
+            border-color: $input_focusBorderColor
 
 //-------------------//
 //       Basic       
@@ -211,20 +212,20 @@
 //       Error       
 //-------------------//
 
-.ts.error.input input:focus, 
-.ts.error.input textarea:focus, 
-.ts.error.input *[contenteditable]:focus,
-.ts.error.input.focus input,
-.ts.error.input.focus textarea,
-.ts.error.input.focus *[contenteditable]
-    box-shadow  : $input_errorFocusBoxShadow
-    border-color: $input_errorFocusBorderColor
+.ts.input.error,
+.ts.form .field.error
+    &
+        input:focus, textarea:focus, *[contenteditable]:focus,
+        input.focus, textarea.focus, *[contenteditable].focus
+            box-shadow  : $input_errorFocusBoxShadow
+            border-color: $input_errorFocusBorderColor
 
-.ts.error.input input, 
-.ts.error.input textarea, 
-.ts.error.input *[contenteditable]
-    color           : $input_errorTextColor
-    background-color: $input_errorBackgroundColor
+.ts.input.error,
+.ts.form .field.error
+    &
+        input, textarea, *[contenteditable]
+            color           : $input_errorTextColor
+            background-color: $input_errorBackgroundColor
     
 //-------------------//
 //       Colors       
