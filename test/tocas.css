@@ -1,7 +1,8 @@
 @charset "UTF-8";
 @import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
 * {
-  font-family: "Open Sans", "Noto Sans TC", "Meiryo", "微軟正黑體", "Microsoft JhengHei"; }
+  font-family: "Open Sans", "Noto Sans TC", "Meiryo", "微軟正黑體", "Microsoft JhengHei";
+  box-sizing: border-box; }
 
 p:not(:first-child) {
   margin-top: 0.9em;
@@ -66,9 +67,7 @@ textarea:focus {
 /* All of our custom controls should be what we expect them to be */
 input,
 textarea {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box; }
+  box-sizing: border-box; }
 
 /* These elements are usually rendered a certain way by the browser */
 button,
@@ -952,6 +951,9 @@ template, [hidden] {
 .ts.header.disabled,
 .ts.header.disabled .sub.header {
   opacity: 0.45; }
+
+.ts.header.thinner {
+  font-weight: normal; }
 
 .ts.header.bolder .sub.header {
   font-weight: 800; }
@@ -2053,6 +2055,9 @@ h6.ts.header .sub.header {
     height: 1px;
     width: 100%; }
 
+.ts.menu.fluid {
+  border-radius: 0; }
+
 .ts.menu[class*="horizontally fitted"] .item {
   padding-left: 0;
   padding-right: 0; }
@@ -2540,9 +2545,10 @@ h6.ts.header .sub.header {
   display: inline-flex;
   color: rgba(0, 0, 0, 0.88); }
 
-.ts.input input,
-.ts.input textarea,
-.ts.input *[contenteditable] {
+.ts.input input, .ts.input textarea, .ts.input *[contenteditable],
+.ts.form input,
+.ts.form textarea,
+.ts.form *[contenteditable] {
   transition: box-shadow 0.1s ease-in-out;
   line-height: 1.2142em;
   border: 1px solid rgba(34, 36, 38, 0.15);
@@ -2550,17 +2556,20 @@ h6.ts.header .sub.header {
   border-radius: 0.28571rem;
   color: rgba(0, 0, 0, 0.88); }
 
-.ts.input input:hover,
-.ts.input textarea:hover,
-.ts.input *[contenteditable]:hover {
+.ts.input input:hover, .ts.input textarea:hover, .ts.input *[contenteditable]:hover,
+.ts.form input:hover,
+.ts.form textarea:hover,
+.ts.form *[contenteditable]:hover {
   border-color: rgba(34, 36, 38, 0.35); }
 
-.ts.input input:focus,
-.ts.input textarea:focus,
-.ts.input *[contenteditable]:focus,
-.ts.input.focus input,
-.ts.input.focus textarea,
-.ts.input.focus *[contenteditable] {
+.ts.input input:focus, .ts.input textarea:focus, .ts.input *[contenteditable]:focus,
+.ts.input input.focus, .ts.input textarea.focus, .ts.input *[contenteditable].focus,
+.ts.form input:focus,
+.ts.form textarea:focus,
+.ts.form *[contenteditable]:focus,
+.ts.form input.focus,
+.ts.form textarea.focus,
+.ts.form *[contenteditable].focus {
   box-shadow: 0 0 0.5rem #51cbee;
   border-color: #67D7FF; }
 
@@ -2687,18 +2696,21 @@ h6.ts.header .sub.header {
   opacity: 0.45;
   pointer-events: none; }
 
-.ts.error.input input:focus,
-.ts.error.input textarea:focus,
-.ts.error.input *[contenteditable]:focus,
-.ts.error.input.focus input,
-.ts.error.input.focus textarea,
-.ts.error.input.focus *[contenteditable] {
+.ts.input.error input:focus, .ts.input.error textarea:focus, .ts.input.error *[contenteditable]:focus,
+.ts.input.error input.focus, .ts.input.error textarea.focus, .ts.input.error *[contenteditable].focus,
+.ts.form .field.error input:focus,
+.ts.form .field.error textarea:focus,
+.ts.form .field.error *[contenteditable]:focus,
+.ts.form .field.error input.focus,
+.ts.form .field.error textarea.focus,
+.ts.form .field.error *[contenteditable].focus {
   box-shadow: 0 0 0.5rem #de8f8b;
   border-color: #FF9F9A; }
 
-.ts.error.input input,
-.ts.error.input textarea,
-.ts.error.input *[contenteditable] {
+.ts.input.error input, .ts.input.error textarea, .ts.input.error *[contenteditable],
+.ts.form .field.error input,
+.ts.form .field.error textarea,
+.ts.form .field.error *[contenteditable] {
   color: #E64848;
   background-color: #FDEBEA; }
 
@@ -2709,6 +2721,226 @@ h6.ts.header .sub.header {
 
 .ts.input.circular input, .ts.input.circular textarea, .ts.input.circular *[contenteditable] {
   border-radius: 10em; }
+
+.ts.container {
+  max-width: calc(1199px - 1.76rem);
+  margin-left: auto !important;
+  margin-right: auto !important; }
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .ts.container {
+    max-width: calc(991px - 1.76rem); } }
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .ts.container {
+    max-width: calc(767px - 1.76rem);
+    width: auto !important; } }
+
+@media (max-width: 767px) {
+  .ts.container:not(.fluid) {
+    margin-left: 0.88rem !important;
+    margin-right: 0.88rem !important; } }
+
+@media (max-width: 767px) {
+  .ts.container:not(.fluid) {
+    max-width: none !important;
+    width: auto !important; } }
+
+.ts.container.thinner {
+  max-width: 992px !important;
+  width: 992px; }
+
+.ts.container.text {
+  max-width: 860px !important;
+  width: 860px; }
+
+.ts.container[class*="thinner text"] {
+  max-width: 700px !important;
+  width: 700px; }
+
+.ts.container.fluid {
+  max-width: 100% !important;
+  width: 100% !important; }
+
+.ts.container[class*="center aligned"] {
+  text-align: center; }
+
+.ts.container[class*="left aligned"] {
+  text-align: left; }
+
+.ts.container[class*="right aligned"] {
+  text-align: right; }
+
+.ts.container[class*="justified"] {
+  text-align: justify; }
+
+.ts.form {
+  position: relative; }
+
+.ts.form > p {
+  margin: 1em 0; }
+
+.ts.form .inline.fields {
+  align-items: center; }
+
+.ts.form .inline.field label {
+  display: inline-block;
+  width: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  vertical-align: baseline;
+  font-size: 1em;
+  font-weight: normal;
+  color: rgba(0, 0, 0, 0.88); }
+
+.ts.form .inline.field > :first-child,
+.ts.form .inline.fields .field > :first-child {
+  margin: 0 0.85714em 0 0; }
+
+.ts.form .inline.field > :only-child,
+.ts.form .inline.fields .field > :only-child {
+  margin: 0; }
+
+.ts.form .inline.fields .wide.field,
+.ts.form .inline.field {
+  display: flex;
+  align-items: center; }
+
+.ts.form .inline.fields .wide.field input,
+.ts.form .inline.field input {
+  flex: 1; }
+
+.ts.form .field[class*="one wide"] {
+  width: calc(100% / 16 * 1); }
+
+.ts.form .field[class*="two wide"] {
+  width: calc(100% / 16 * 2); }
+
+.ts.form .field[class*="three wide"] {
+  width: calc(100% / 16 * 3); }
+
+.ts.form .field[class*="four wide"] {
+  width: calc(100% / 16 * 4); }
+
+.ts.form .field[class*="five wide"] {
+  width: calc(100% / 16 * 5); }
+
+.ts.form .field[class*="six wide"] {
+  width: calc(100% / 16 * 6); }
+
+.ts.form .field[class*="seven wide"] {
+  width: calc(100% / 16 * 7); }
+
+.ts.form .field[class*="eight wide"] {
+  width: calc(100% / 16 * 8); }
+
+.ts.form .field[class*="nine wide"] {
+  width: calc(100% / 16 * 9); }
+
+.ts.form .field[class*="ten wide"] {
+  width: calc(100% / 16 * 10); }
+
+.ts.form .field[class*="eleven wide"] {
+  width: calc(100% / 16 * 11); }
+
+.ts.form .field[class*="twelve wide"] {
+  width: calc(100% / 16 * 12); }
+
+.ts.form .field[class*="thirteen wide"] {
+  width: calc(100% / 16 * 13); }
+
+.ts.form .field[class*="fourteen wide"] {
+  width: calc(100% / 16 * 14); }
+
+.ts.form .field[class*="fifteen wide"] {
+  width: calc(100% / 16 * 15); }
+
+.ts.form .field[class*="sixteen wide"] {
+  width: calc(100% / 16 * 16); }
+
+.ts.form[class*="equal width"] .field,
+.ts.form.fields[class*="equal width"] .field {
+  width: 100%;
+  flex: 1 1 auto; }
+
+.ts.form.relaxed .field {
+  clear: both; }
+
+.ts.form .field {
+  width: 100%;
+  clear: both;
+  margin: 0em 0em 1em; }
+
+.ts.form .fields > .field {
+  padding-left: 0.4rem;
+  padding-right: 0.4rem; }
+
+.ts.form.relaxed .fields > .field {
+  padding-left: 0.8rem;
+  padding-right: 0.8rem; }
+
+.ts.form > .field:last-child,
+.ts.form .fields:last-child .field {
+  margin-bottom: 0em; }
+
+.ts.form .field input {
+  width: 100%; }
+
+.ts.form.centered {
+  margin: 0 auto; }
+
+.ts.form .field[class*="center aligned"] {
+  text-align: center; }
+
+.ts.form .field[class*="left aligned"] {
+  text-align: left; }
+
+.ts.form .field[class*="right aligned"] {
+  text-align: right; }
+
+.ts.form .field > label {
+  display: block;
+  margin: 0em 0em 0.85714em 0em;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 1em;
+  font-weight: normal; }
+
+.ts.form.mini {
+  font-size: 0.78571rem; }
+
+.ts.form.tiny {
+  font-size: 0.85714rem; }
+
+.ts.form.small {
+  font-size: 0.92857rem; }
+
+.ts.form.medium {
+  font-size: 1rem; }
+
+.ts.form.large {
+  font-size: 1.14286rem; }
+
+.ts.form.big {
+  font-size: 1.28571rem; }
+
+.ts.form.huge {
+  font-size: 1.42857rem; }
+
+.ts.form.massive {
+  font-size: 1.71429rem; }
+
+.ts.form .fields {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin-left: -0.4rem;
+  margin-right: -0.4rem; }
+
+.ts.form.relaxed .fields {
+  margin-left: -0.8rem;
+  margin-right: -0.8rem; }
 
 @font-face {
   font-family: "Icons";
