@@ -1,0 +1,75 @@
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.container
+    max-width   : calc(#{$rwdComputerMax} - #{$columnRelaxedPadding * 2.2})
+    margin-left : auto !important
+    margin-right: auto !important
+
+//-------------------//
+//    Large Screen
+//-------------------//
+
+.ts.container
+    +rwd-serious(computer)
+        max-width: calc(#{$rwdTabletMax} - #{$columnRelaxedPadding * 2.2})
+
+//-------------------//
+//       Tablet
+//-------------------//
+
+.ts.container
+    +rwd-serious(tablet)
+        max-width: calc(#{$rwdMobile} - #{$columnRelaxedPadding * 2.2})
+        width    : auto !important
+
+//-------------------//
+//       Mobile
+//-------------------//
+
+.ts.container:not(.fluid)
+    +rwd-serious(mobile)
+        margin-left : $columnRelaxedPadding * 1.1 !important
+        margin-right: $columnRelaxedPadding * 1.1 !important
+.ts.container:not(.fluid)
+    +rwd-serious(mobile)
+        max-width   : none    !important
+        width       : auto    !important
+
+//-------------------//
+//       Width
+//-------------------//
+
+.ts.container.thinner
+    max-width: $rwdComputerMin !important
+    width    : $rwdComputerMin
+
+.ts.container.text
+    max-width: 860px !important
+    width    : 860px
+
+.ts.container[class*="thinner text"]
+    max-width: 700px !important
+    width    : 700px
+
+//-------------------//
+//       Fluid
+//-------------------//
+
+.ts.container.fluid
+    max-width: 100% !important
+    width    : 100% !important
+
+//-------------------//
+//       Aligns
+//-------------------//
+
+.ts.container[class*="center aligned"]
+    text-align: center
+.ts.container[class*="left aligned"]
+    text-align: left
+.ts.container[class*="right aligned"]
+    text-align: right
+.ts.container[class*="justified"]
+    text-align: justify
