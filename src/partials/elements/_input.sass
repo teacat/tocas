@@ -23,6 +23,13 @@
             padding      : $input_padding
             border-radius: $input_borderRadius
             color        : $inputTextColor
+            
+            &::-webkit-input-placeholder
+                opacity    : $input_placeholderOpacity
+
+            &:-moz-placeholder,
+            &:-ms-input-placeholder
+                opacity    : $input_placeholderOpacity
     
 .ts.input,
 .ts.form
@@ -37,20 +44,32 @@
         input.focus, textarea.focus, *[contenteditable].focus
             box-shadow  : $input_focusBoxShadow
             border-color: $input_focusBorderColor
+            
+            &::-webkit-input-placeholder
+                opacity    : $input_placeholderFocusOpacity
+
+            &:-moz-placeholder,
+            &:-ms-input-placeholder
+                opacity    : $input_placeholderFocusOpacity
 
 //-------------------//
 //       Basic       
 //-------------------//
 
+.ts.form .field.basic,
 .ts.input.basic
-    background-color: transparent
+    &
+        input, textarea, *[contenteditable]
+            background-color: transparent !important
     
 //-------------------//
 //     Borderless       
 //-------------------//
 
 .ts.input.borderless
-    border: 0
+    &
+        input, textarea, *[contenteditable]
+            border: 0
         
 //-------------------//
 //      Action       
@@ -227,13 +246,138 @@
             border-color: $input_errorFocusBorderColor
 
 .ts.input.error,
-.ts.form .field.error
+.ts.form .field.error,
+.ts.input.negative,
+.ts.form .field.negative
     &
         input, textarea, *[contenteditable]
-            color           : $input_errorTextColor
-            background-color: $input_errorBackgroundColor
-            border-color    : $input_errorBorderColor
+            color              : $input_errorTextColor
+            background-color   : $input_errorBackgroundColor
+            border-color       : $input_errorBorderColor
+            background-image   : $input_errorIconURL
+            
+            &::-webkit-input-placeholder
+                color      : $input_errorTextColor
+
+            &:-moz-placeholder,
+            &:-ms-input-placeholder
+                color      : $input_errorTextColor
+
+//-------------------//
+//      Warning       
+//-------------------//
+
+.ts.input.warning,
+.ts.form .field.warning
+    &
+        input:hover, textarea:hover, *[contenteditable]:hover
+            border-color: $input_warningHoverBorderColor
+            
+.ts.input.warning,
+.ts.form .field.warning
+    &
+        input:focus, textarea:focus, *[contenteditable]:focus,
+        input.focus, textarea.focus, *[contenteditable].focus
+            box-shadow  : $input_warningFocusBoxShadow
+            border-color: $input_warningFocusBorderColor
+            
+.ts.input.warning,
+.ts.form .field.warning
+    &
+        input, textarea, *[contenteditable]
+            color              : $input_warningTextColor
+            background-color   : $input_warningBackgroundColor
+            border-color       : $input_warningBorderColor
+            background-image   : $input_warningIconURL
+            
+            &::-webkit-input-placeholder
+                color      : $input_warningTextColor
+
+            &:-moz-placeholder,
+            &:-ms-input-placeholder
+                color      : $input_warningTextColor
+
+//-------------------//
+//      Success       
+//-------------------//
+
+.ts.input.success,
+.ts.form .field.success,
+.ts.input.positive,
+.ts.form .field.positive
+    &
+        input:hover, textarea:hover, *[contenteditable]:hover
+            border-color: $input_successHoverBorderColor
+            
+.ts.input.success,
+.ts.form .field.success,
+.ts.input.positive,
+.ts.form .field.positive
+    &
+        input:focus, textarea:focus, *[contenteditable]:focus,
+        input.focus, textarea.focus, *[contenteditable].focus
+            box-shadow  : $input_successFocusBoxShadow
+            border-color: $input_successFocusBorderColor
+
+.ts.input.success,
+.ts.form .field.success,
+.ts.input.positive,
+.ts.form .field.positive
+    &
+        input, textarea, *[contenteditable]
+            color              : $input_successTextColor
+            background-color   : $input_successBackgroundColor
+            border-color       : $input_successBorderColor
+            background-image   : $input_successIconURL
+            
+            &::-webkit-input-placeholder
+                color      : $input_successTextColor
+
+            &:-moz-placeholder,
+            &:-ms-input-placeholder
+                color      : $input_successTextColor
+
+//-------------------//
+//   Common Styles 
+//-------------------//
+
+.ts.input.error,
+.ts.form .field.error,
+.ts.input.negative,
+.ts.form .field.negative,
+.ts.input.warning,
+.ts.form .field.warning,
+.ts.input.success,
+.ts.form .field.success,
+.ts.input.positive,
+.ts.form .field.positive,
+    &
+        input, textarea, *[contenteditable]    
+            padding-right      : $input_iconPaddingRight
+            background-repeat  : no-repeat
+            background-position: center right $input_backgroundIconPaddingRight
+            background-size    : $input_iconSize $input_iconSize
+            
+            &::-webkit-input-placeholder
+                font-weight: normal
+                opacity    : $input_placeholderOpacity
+
+            &:-moz-placeholder,
+            &:-ms-input-placeholder
+                font-weight: normal
+                opacity    : $input_placeholderOpacity
     
+    &
+        input:focus, textarea:focus, *[contenteditable]:focus,
+        input.focus, textarea.focus, *[contenteditable].focus
+
+            &::-webkit-input-placeholder
+                opacity    : $input_placeholderFocusOpacity
+
+            &:-moz-placeholder,
+            &:-ms-input-placeholder
+                opacity    : $input_placeholderFocusOpacity
+            
 //-------------------//
 //       Colors       
 //-------------------//
