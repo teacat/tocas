@@ -262,7 +262,7 @@ mark {
 /**
  * Add the correct font size in all browsers. */
 small {
-  font-size: 80%; }
+  font-size: 1em; }
 
 /**
  * Prevent `sub` and `sup` elements from affecting the line height in
@@ -935,7 +935,7 @@ template, [hidden] {
 .ts.header {
   margin: calc(2rem - 0.14285em) 0em 1rem;
   line-height: 1.2857em;
-  color: rgba(0, 0, 0, 0.88);
+  color: #777;
   font-weight: bold; }
   .ts.header:first-child {
     margin-top: -0.14285em; }
@@ -1914,7 +1914,7 @@ h6.ts.header .sub.header {
   line-height: 1;
   padding: 0.92857em 1.14286em;
   text-decoration: none;
-  color: rgba(0, 0, 0, 0.88);
+  color: #777;
   font-weight: 400; }
 
 .ts.menu .item:before {
@@ -2120,7 +2120,7 @@ h6.ts.header .sub.header {
   border-bottom: none;
   padding: 0.92857em 1.14286em;
   border-radius: 0.28571rem 0.28571rem 0 0;
-  color: rgba(0, 0, 0, 0.88); }
+  color: #777; }
 
 .ts.menu.tabbed .item:before {
   display: none; }
@@ -2473,7 +2473,7 @@ h6.ts.header .sub.header {
   border-color: #FFF; }
 
 .ts.inverted.dimmer .ts.loader {
-  color: rgba(0, 0, 0, 0.88); }
+  color: #777; }
 
 .ts.inverted.dimmer .ts.loader:before {
   border-color: rgba(0, 0, 0, 0.1); }
@@ -2543,7 +2543,7 @@ h6.ts.header .sub.header {
 .ts.input {
   position: relative;
   display: inline-flex;
-  color: rgba(0, 0, 0, 0.88); }
+  color: #777; }
 
 .ts.input input, .ts.input textarea, .ts.input *[contenteditable],
 .ts.form input,
@@ -2554,7 +2554,7 @@ h6.ts.header .sub.header {
   border: 1px solid rgba(34, 36, 38, 0.15);
   padding: 0.78571em 1em;
   border-radius: 0.28571rem;
-  color: rgba(0, 0, 0, 0.88); }
+  color: #777; }
 
 .ts.input input:hover, .ts.input textarea:hover, .ts.input *[contenteditable]:hover,
 .ts.form input:hover,
@@ -2798,7 +2798,7 @@ h6.ts.header .sub.header {
   vertical-align: baseline;
   font-size: 1em;
   font-weight: normal;
-  color: rgba(0, 0, 0, 0.88); }
+  color: #777; }
 
 .ts.form .inline.field > :first-child,
 .ts.form .inline.fields .field > :first-child {
@@ -2811,11 +2811,23 @@ h6.ts.header .sub.header {
 .ts.form .inline.fields .wide.field,
 .ts.form .inline.field {
   display: flex;
-  align-items: center; }
+  align-items: center;
+  flex-wrap: wrap; }
 
 .ts.form .inline.fields .wide.field input,
 .ts.form .inline.field input {
   flex: 1; }
+
+.ts.form .inline.field .text {
+  padding-top: 0.78571em;
+  padding-bottom: 0.78571em; }
+
+.ts.form .field > small {
+  display: block;
+  margin: 0.5em 0 0 0;
+  opacity: 0.65;
+  color: #777;
+  flex: 0 0 100%; }
 
 .ts.form .field[class*="one wide"] {
   width: calc(100% / 16 * 1); }
@@ -2870,13 +2882,51 @@ h6.ts.header .sub.header {
   width: 100%;
   flex: 1 1 auto; }
 
+.ts.loading.form {
+  position: relative;
+  cursor: default;
+  point-events: none; }
+
+.ts.loading.form:before {
+  position: absolute;
+  content: "";
+  top: 0%;
+  left: 0%;
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  height: 100%;
+  z-index: 100; }
+
+.ts.loading.form:after {
+  position: absolute;
+  content: "";
+  top: 50%;
+  left: 50%;
+  margin: -1.5em 0em 0em -1.5em;
+  width: 3em;
+  height: 3em;
+  animation: form-spin 0.5s linear;
+  animation-iteration-count: infinite;
+  border-radius: 500em;
+  border-color: #888 rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1);
+  border-style: solid;
+  border-width: 0.4em;
+  box-shadow: 0px 0px 0px 1px transparent;
+  visibility: visible;
+  z-index: 101; }
+
+@keyframes form-spin {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
 .ts.form.relaxed .field {
   clear: both; }
 
 .ts.form .field {
   width: 100%;
   clear: both;
-  margin: 0em 0em 1em; }
+  margin: 0 0 1em; }
 
 .ts.form .fields > .field {
   padding-left: 0.4rem;
@@ -2915,7 +2965,7 @@ h6.ts.header .sub.header {
 .ts.form .field > label {
   display: block;
   margin: 0em 0em 0.85714em 0em;
-  color: rgba(0, 0, 0, 0.88);
+  color: #777;
   font-size: 1em;
   font-weight: normal; }
 
