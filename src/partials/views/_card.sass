@@ -11,6 +11,9 @@
     > .content
         .header
             color: rgba($color, $card_headerTextOpacity)
+            
+            .sub.header
+                color: rgba($color, $card_subHeaderTextOpacity)
         .meta
             color: rgba($color, $card_metaTextColorOpacity)
         .description
@@ -85,7 +88,13 @@
     margin-top : $card_headerLineHeightOffset
     line-height: $card_headerLineHeight
     font-weight: $card_headerFontWeight
-
+    
+.ts.card > .content > .header:not(.ts) .sub.header
+    font-size  : $card_subHeaderFontSize
+    margin-top : $card_subHeaderLineHeightOffset
+    line-height: $card_subHeaderLineHeight
+    font-weight: $card_subHeaderFontWeight
+    
 //-------------------//
 //        Meta    
 //-------------------// 
@@ -107,6 +116,45 @@
 
 .ts.card > .content > .meta > *[class*="right floated"]:last-child
     margin-left: 0
+
+//-------------------//
+//      Aligns    
+//-------------------//
+
+.ts.card *[class*="center aligned"]
+    text-align: center
+.ts.card *[class*="left aligned"]
+    text-align: left
+.ts.card *[class*="right aligned"]
+    text-align: right
+
+//-------------------//
+//      Overlay 
+//-------------------// 
+
+.ts.card .overlay.content
+    position: absolute
+    top     : 0
+    left    : 0
+    width   : 100%
+    height  : 100%
+    z-index : 2
+    
+.ts.card .overlay.content > .header,
+.ts.card .overlay.content > .header .sub.header,
+.ts.card .overlay.content,
+.ts.card .overlay.content .description,
+.ts.card .overlay.content .meta
+    color         : $card_overlayTextColor
+    text-rendering: optimizelegibility
+    text-shadow   : $card_overlayTextShadow
+
+//-------------------//
+//      Flatted    
+//-------------------// 
+
+.ts.card.flatted
+    box-shadow: none
 
 //-------------------//
 //       Image    
@@ -294,3 +342,15 @@
         margin : $card_stackableRowSpacing $card_stackableCardSpacing
         padding: 0 !important
         width  : $card_stackableMargin !important
+  
+//-------------------//
+//     Waterfall
+//-------------------// 
+
+.ts.waterfall.cards
+    display: block
+    column-count: 3
+    
+.ts.waterfall.cards > .card
+    display: inline-block
+    width: 100%
