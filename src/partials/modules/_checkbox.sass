@@ -1,0 +1,113 @@
+@import ../../variables/modules/checkbox.variables
+
+//*******************************//
+//            Variations
+//*******************************//
+
+
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.checkbox
+    position: relative
+    font-size: 1rem
+    line-height: 17px
+
+//-------------------//
+//       Radio
+//-------------------//
+
+.ts.radio.checkbox
+
+.ts.radio.checkbox label:before
+    position           : absolute
+    transform          : none
+    width              : $checkbox_radioSize
+    height             : $checkbox_radioSize
+    border-radius      : $circularRadius
+    top                : 0
+    left               : 0
+    content            : ''
+    background-repeat  : no-repeat
+    background-position: center center
+    background-size    : 50% 50%
+    background-color   : $checkbox_radioBackgroundColor
+    border             : $checkbox_radioBorder
+
+
+.ts.radio.checkbox input:checked + label:before
+    background-color: $checkbox_radioCheckedBackgroundColor
+    background-image: $checkbox_radioIndicatorURL
+.ts.radio.checkbox label:hover
+    cursor: pointer
+.ts.radio.checkbox label:hover:before
+    background-color   : $checkbox_radioHoverBackgroundColor
+.ts.radio.checkbox label:active:before
+    background-color: $checkbox_radioActiveBackgroundColor
+
+.ts.radio.checkbox label
+    +extend(no-select)
+    
+    line-height : $checkbox_size
+    position    : relative
+    padding-left: $checkbox_labelDistance
+    font-size   : 1em
+    display     : block
+    
+.ts.radio.checkbox input[type="radio"]
+    display: none
+
+//*******************************//
+//           Checkboxes
+//*******************************// 
+    
+.ts.checkboxes
+
+.ts.checkboxes .ts.checkbox
+    flex : 1
+    
+//-------------------//
+//     Horizontal
+//-------------------//
+
+.ts.checkboxes.horizontal
+    display: flex
+    
+.ts.checkboxes.horizontal .ts.checkbox
+    margin-right: $checkbox_labelDistance
+    
+.ts.checkboxes.horizontal .ts.checkbox:last-child
+    margin-right: 0
+    
+//-------------------//
+//      Compact
+//-------------------//
+
+.ts.checkboxes.compact
+    display: inline-flex
+
+.ts.checkboxes.compact .ts.checkbox
+    flex: initial
+    
+//-------------------//
+//       Aligns
+//-------------------//
+
+.ts.checkboxes[class*="center aligned"]
+    width          : 100%
+    justify-content: center
+.ts.checkboxes[class*="left aligned"]
+    width          : 100%
+    justify-content: flex-start
+.ts.checkboxes[class*="right aligned"]
+    width          : 100%
+    justify-content: flex-end
+    
+//-------------------//
+//      Coupling
+//-------------------//
+
+.ts.form .field .ts.horizontal.checkboxes
+    padding: $input_padding
