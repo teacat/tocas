@@ -103,7 +103,71 @@
     opacity       : $disabledOpacity !important
     cursor        : not-allowed      !important
     pointer-events: none             !important
+
+//-------------------//
+//      Loading       
+//-------------------//
+
+.ts.loading.loading.loading.loading.loading.loading.button 
+    position      : relative
+    cursor        : default
+    text-shadow   : none !important
+    color         : transparent !important
+    opacity       : 1
+    pointer-events: auto
+    transition    : $button_loadingTransition
+
+.ts.loading.button:before 
+    position     : absolute
+    content      : ''
+    top          : 50%
+    left         : 50%
+    margin       : $loaderMargin
+    width        : $loaderSize
+    height       : $loaderSize
+    border-radius: $circularRadius
+    border       : $loaderLineWidth solid $button_coloredLoaderFillColor
+
+.ts.loading.button:before:not(.primary):not(.info):not(.warning):not(.inverted):not(.positive):not(.negative):not(.secondary):before
+    border-color: $button_loaderFillColor
+
+.ts.loading.button:after 
+    position: absolute
+    content : ''
+    top     : 50%
+    left    : 50%
+    margin  : $loaderMargin
+    width   : $loaderSize
+    height  : $loaderSize
+
+    animation: button-spin $loaderSpeed linear
+    animation-iteration-count: infinite
+
+    border-radius: $circularRadius
+    border-color : $button_coloredLoaderLineColor transparent transparent
+    border-style : solid
+    border-width : $loaderLineWidth
+    box-shadow   : 0px 0px 0px 1px transparent
     
+.ts.loading.button:not(.primary):not(.info):not(.warning):not(.inverted):not(.positive):not(.negative):not(.secondary):after 
+    border-color: $button_loaderLineColor transparent transparent
+
+.ts.labeled.icon.loading.button .icon 
+    background-color: transparent
+    box-shadow: none
+
+@keyframes button-spin 
+    from 
+        transform: rotate(0deg)
+    to 
+        transform: rotate(360deg)
+
+.ts.basic.loading.button:not(.inverted):before 
+    border-color: $loaderFillColor
+
+.ts.basic.loading.button:not(.inverted):after 
+    border-top-color: $loaderLineColor
+
 //-------------------//
 //      Floated       
 //-------------------//
