@@ -124,6 +124,101 @@
     width: 100%
 
 //-------------------//
+//      Loading       
+//-------------------//
+
+.ts.loading.loading.input > i.icon:before 
+    position: absolute
+    content: ''
+    top: 50%
+    left: 50%
+
+    margin: $loaderMargin
+    width: $loaderSize
+    height: $loaderSize
+
+    border-radius: $circularRadius
+    border: $loaderLineWidth solid $loaderFillColor
+
+.ts.loading.loading.input > i.icon:after 
+    position: absolute
+    content: ''
+    top: 50%
+    left: 50%
+
+    margin: $loaderMargin
+    width: $loaderSize
+    height: $loaderSize
+
+    animation: button-spin $loaderSpeed linear
+    animation-iteration-count: infinite
+
+    border-radius: $circularRadius
+
+    border-color: $loaderLineColor transparent transparent
+    border-style: solid
+    border-width: $loaderLineWidth
+
+    box-shadow: 0px 0px 0px 1px transparent
+
+//-------------------//
+//       Icon       
+//-------------------//
+
+.ts.icon.input > i.icon 
+    cursor       : default
+    position     : absolute
+    line-height  : 1
+    text-align   : center
+    top          : 0px
+    right        : 0px
+    margin       : 0em
+    height       : 100%
+    width        : $input_iconWidth
+    opacity      : $input_iconOpacity
+    border-radius: 0em $input_borderRadius $input_borderRadius 0em
+
+.ts.icon.input > i.icon:not(.link) 
+    pointer-events: none
+
+.ts.icon.input input 
+    padding-right: $input_iconMargin !important
+
+.ts.icon.input > i.icon:before,
+.ts.icon.input > i.icon:after 
+    left      : 0
+    position  : absolute
+    text-align: center
+    top       : 50%
+    width     : 100%
+    margin-top: $input_iconOffset
+
+.ts.icon.input > i.link.icon 
+    cursor: pointer
+
+.ts.icon.input > i.circular.icon 
+    top  : $input_circularIconVerticalOffset
+    right: $input_circularIconHorizontalOffset
+
+/* Left Icon Input */
+.ts[class*="left icon"].input > i.icon 
+    right        : auto
+    left         : $input_borderWidth
+    border-radius: $input_borderRadius 0em 0em $input_borderRadius
+
+.ts[class*="left icon"].input > i.circular.icon 
+    right: auto
+    left : $input_circularIconHorizontalOffset
+
+.ts[class*="left icon"].input > input 
+    padding-left : $input_iconMargin !important
+    padding-right: $input_horizontalPadding !important
+
+/* Focus */
+.ts.icon.input > input:focus ~ i.icon 
+    opacity: 1
+
+//-------------------//
 //       Sizes       
 //-------------------// 
 
