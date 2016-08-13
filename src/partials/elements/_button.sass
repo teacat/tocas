@@ -154,7 +154,7 @@
 
 .ts.labeled.icon.loading.button .icon 
     background-color: transparent
-    box-shadow: none
+    box-shadow      : none
 
 @keyframes button-spin 
     from 
@@ -167,6 +167,94 @@
 
 .ts.basic.loading.button:not(.inverted):after 
     border-top-color: $loaderLineColor
+
+//-------------------//
+//    Labeled Icon       
+//-------------------//
+
+.ts.labeled.icon.buttons .button,
+.ts.labeled.icon.button 
+    position: relative
+    padding-left: $button_labeledIconPadding !important
+    padding-right: $button_horizontalPadding !important
+
+
+/* Left Labeled */
+.ts.labeled.icon.buttons > .button > .icon,
+.ts.labeled.icon.button > .icon 
+    position: absolute
+    height: 100%
+    line-height: 1
+    border-radius: 0px
+    border-top-left-radius: inherit
+    border-bottom-left-radius: inherit
+    text-align: center
+
+    margin: $button_labeledIconMargin
+    width: $button_labeledIconWidth
+    background-color: $button_labeledIconBackgroundColor
+    color: $button_labeledIconColor
+    box-shadow: $button_labeledIconLeftShadow
+
+
+/* Left Labeled */
+.ts.labeled.icon.buttons > .button > .icon,
+.ts.labeled.icon.button > .icon 
+    top: 0em
+    left: 0em
+
+
+/* Right Labeled */
+.ts[class*="right labeled"].icon.button 
+    padding-right: $button_labeledIconPadding !important
+    padding-left: $button_horizontalPadding !important
+
+.ts[class*="right labeled"].icon.button > .icon 
+    left: auto
+    right: 0em
+    border-radius: 0px
+    border-top-right-radius: inherit
+    border-bottom-right-radius: inherit
+    box-shadow: $button_labeledIconRightShadow
+
+.ts.labeled.icon.buttons > .button > .icon:before,
+.ts.labeled.icon.button > .icon:before,
+.ts.labeled.icon.buttons > .button > .icon:after,
+.ts.labeled.icon.button > .icon:after 
+    display: block
+    position: absolute
+    width: 100%
+    top: 50%
+    text-align: center
+    transform: translateY(-50%)
+
+
+.ts.labeled.icon.buttons .button > .icon 
+    border-radius: 0em
+
+.ts.labeled.icon.buttons .button:first-child > .icon 
+    border-top-left-radius: $button_borderRadius
+    border-bottom-left-radius: $button_borderRadius
+
+.ts.labeled.icon.buttons .button:last-child > .icon 
+    border-top-right-radius: $button_borderRadius
+    border-bottom-right-radius: $button_borderRadius
+
+.ts.vertical.labeled.icon.buttons .button:first-child > .icon 
+    border-radius: 0em
+    border-top-left-radius: $button_borderRadius
+
+.ts.vertical.labeled.icon.buttons .button:last-child > .icon 
+    border-radius: 0em
+    border-bottom-left-radius: $button_borderRadius
+
+
+/* Fluid Labeled */
+.ts.fluid[class*="left labeled"].icon.button,
+.ts.fluid[class*="right labeled"].icon.button 
+    padding-left: $button_horizontalPadding !important
+    padding-right: $button_horizontalPadding !important
+
 
 //-------------------//
 //      Floated       
@@ -222,13 +310,78 @@
     font-size: $button_massiveFontSize
 
 //-------------------//
+//      Labeled
+//-------------------//   
+
+.ts.labeled.button:not(.icon)
+    +extend(no-select)
+
+    display       : inline-flex
+    flex-direction: row
+    background    : none !important
+    padding       : 0px !important
+    border        : none !important
+    box-shadow    : none !important
+    vertical-align: bottom
+
+.ts.labeled.button > .button 
+    //line-height: 1em
+    margin     : 0px
+
+.ts.labeled.button > .label 
+    display     : flex
+    align-items : $button_labeledLabelAlign
+    margin      : 0px 0px 0px $button_labeledLabelBorderOffset !important
+    font-size   : $button_labeledLabelFontSize
+    padding     : $button_labeledLabelPadding
+    font-size   : $button_labeledLabelFontSize
+    border-color: $button_labeledLabelBorderColor
+
+/* Tag */
+.ts.labeled.button > .tag.label:before 
+    width : $button_labeledTagLabelSize
+    height: $button_labeledTagLabelSize
+
+/* Right */
+.ts.labeled.button:not([class*="left labeled"]) > .button 
+    border-top-right-radius   : 0px
+    border-bottom-right-radius: 0px
+
+.ts.labeled.button:not([class*="left labeled"]) > .label 
+    border-top-left-radius   : 0px
+    border-bottom-left-radius: 0px
+
+/* Left Side */
+.ts[class*="left labeled"].button > .button 
+    border-top-left-radius   : 0px
+    border-bottom-left-radius: 0px
+
+.ts[class*="left labeled"].button > .label 
+    border-top-right-radius   : 0px
+    border-bottom-right-radius: 0px
+
+//-------------------//
 //       Icon
 //-------------------//      
-        
+
 .ts.button.icon,
 .ts.buttons.icon .button
     padding: $button_verticalPadding $button_verticalPadding
-        
+
+.ts.button > .icon:not(.button) 
+    height        : $button_iconHeight
+    opacity       : $button_iconOpacity
+    margin        : $button_iconMargin
+    transition    : $button_iconTransition
+    vertical-align: $button_iconVerticalAlign
+    color         : $button_iconColor
+
+.ts.button:not(.icon) > .icon:not(.button) 
+    margin: $button_iconMargin
+
+.ts.button:not(.icon) > .right.icon:not(.button) 
+    margin: $button_rightIconMargin
+
 //-------------------//
 //      Colors
 //-------------------//
@@ -266,6 +419,7 @@
     &:active
         background-color: rgba(0, 0, 0, 0.3)
         color           : #FFF
+        
 .ts.button.secondary.opinion,
 .ts.buttons.secondary.opinion .button
     background-color: rgba(0, 0, 0, 0.15)
