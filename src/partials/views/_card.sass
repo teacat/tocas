@@ -1,3 +1,4 @@
+@charset "UTF-8"
 @import ../../variables/views/card.variables
 
 //*******************************//
@@ -71,6 +72,7 @@
 //-------------------// 
 
 .ts.card > .content
+    position : relative
     padding  : $card_padding
     flex-grow: 1
 
@@ -106,7 +108,7 @@
 //-------------------// 
 
 .ts.card > .content > .meta
-    display  : block
+    display  : flex
     font-size: $card_metaFontSize
    
 .ts.card > .content > .meta > * 
@@ -122,6 +124,22 @@
 
 .ts.card > .content > .meta > *[class*="right floated"]:last-child
     margin-left: 0
+
+//-------------------//
+//    Meta Dotted    
+//-------------------// 
+
+.ts.card > .content > .meta.middoted > *,
+.ts.card > .content > .meta.bulleted > *
+    margin-right: 0
+.ts.card > .content > .meta.middoted > *:not(:first-child):before
+    margin-left : $card_metaSpacing / 2
+    margin-right: $card_metaSpacing / 2
+    content     : '·'
+.ts.card > .content > .meta.bulleted > *:not(:first-child):before
+    margin-left : $card_metaSpacing / 2
+    margin-right: $card_metaSpacing / 2
+    content     : '•'
 
 //-------------------//
 //      Aligns    
@@ -187,7 +205,7 @@
     margin-top: $card_descriptionDistance
 
 .ts.card > .content > .description
-    clear: both
+    clear  : both
 
 //-------------------//
 //       Extra    
@@ -537,3 +555,24 @@
 .ts.waterfall.cards > .card
     display: inline-block
     width  : 100%
+
+//-------------------//
+//     Symbol
+//-------------------// 
+
+.ts.card .symbol
+    height: $card_symbolSpacingHeight
+
+.ts.card .symbol .icon
+    position      : absolute
+    right         : 0
+    bottom        : 0
+    overflow      : hidden
+    width         : $card_symbolWidth
+    height        : $card_symbolHeight
+    margin-left   : 0
+    margin-right  : 0
+    pointer-events: none
+    font-size     : $card_symbolFontSize
+    line-height   : $card_symbolLineHeight
+    opacity       : $card_symbolOpacity
