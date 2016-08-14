@@ -1436,6 +1436,11 @@ h6.ts.header .smaller.sub.header {
 .ts.header > img:only-child {
   margin-right: 0.75rem; }
 
+.ts.header .ts.label {
+  font-size: "";
+  margin-left: 0.5rem;
+  vertical-align: middle; }
+
 .ts.segment {
   position: relative;
   display: block;
@@ -7073,6 +7078,7 @@ i.icon.fa:before {
   box-shadow: 0 2px 4px 0 rgba(24, 26, 27, 0.15), 0 2px 10px 0 rgba(24, 26, 27, 0.15); }
 
 .ts.card > .content {
+  position: relative;
   padding: 1em 1em;
   flex-grow: 1; }
 
@@ -7098,7 +7104,7 @@ i.icon.fa:before {
   font-size: 0.78571em; }
 
 .ts.card > .content > .meta {
-  display: block;
+  display: flex;
   font-size: 1em; }
 
 .ts.card > .content > .meta > * {
@@ -7114,6 +7120,20 @@ i.icon.fa:before {
 
 .ts.card > .content > .meta > *[class*="right floated"]:last-child {
   margin-left: 0; }
+
+.ts.card > .content > .meta.middoted > *,
+.ts.card > .content > .meta.bulleted > * {
+  margin-right: 0; }
+
+.ts.card > .content > .meta.middoted > *:not(:first-child):before {
+  margin-left: 0.15em;
+  margin-right: 0.15em;
+  content: "·"; }
+
+.ts.card > .content > .meta.bulleted > *:not(:first-child):before {
+  margin-left: 0.15em;
+  margin-right: 0.15em;
+  content: "•"; }
 
 .ts.card *[class*="center aligned"] {
   text-align: center; }
@@ -7653,6 +7673,23 @@ i.icon.fa:before {
   display: inline-block;
   width: 100%; }
 
+.ts.card .symbol {
+  height: 1em; }
+
+.ts.card .symbol .icon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  width: 0.8em;
+  height: 0.8em;
+  margin-left: 0;
+  margin-right: 0;
+  pointer-events: none;
+  font-size: 8em;
+  line-height: 1.1em;
+  opacity: 0.2; }
+
 .ts.dropdown {
   position: relative; }
 
@@ -8094,7 +8131,7 @@ a.ts.basic.label:hover {
   margin: 0em 0em 0em -1.5em !important; }
 
 .ts.header > .ts.label {
-  margin-top: -0.5833em / 2; }
+  margin-top: calc(-0.5833em / 2); }
 
 /* Remove border radius on attached segment */
 .ts.attached.segment > .ts.top.left.attached.label,
