@@ -22,7 +22,7 @@ p:last-child:first-child {
 .ts.button, .ts.button.disabled,
 .ts.button.disabled:hover,
 .ts.buttons.disabled .button,
-.ts.buttons.disabled .button:hover, .ts.labeled.button:not(.icon), .ts.menu .item, .ts.radio.checkbox label, .ts.button .ts.label {
+.ts.buttons.disabled .button:hover, .ts.labeled.button:not(.icon), .ts.menu .item, .ts.checkbox:not(.radio) label, .ts.radio.checkbox label, .ts.button .ts.label {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -7833,10 +7833,49 @@ i.icon.fa:before {
   border-radius: 0.28571rem;
   padding: calc(0.78571em / 1.5) calc(1em / 1.5); }
 
+/* Slider & Toggle Handle */
 .ts.checkbox {
   position: relative;
   font-size: 1rem;
   line-height: 17px; }
+
+.ts.checkbox:not(.radio) label:before {
+  position: absolute;
+  transform: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 0.28571rem;
+  top: 0;
+  left: 0;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 60% 60%;
+  background-color: #DDD;
+  border: 0px solid #d4d4d5; }
+
+.ts.checkbox:not(.radio) input:checked + label:before {
+  background-color: #0074d9;
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3E%3C/svg%3E"); }
+
+.ts.checkbox:not(.radio) label:hover {
+  cursor: pointer; }
+
+.ts.checkbox:not(.radio) label:hover:before {
+  background-color: #CCC; }
+
+.ts.checkbox:not(.radio) label:active:before {
+  background-color: #40a6ff; }
+
+.ts.checkbox:not(.radio) label {
+  line-height: 17px;
+  position: relative;
+  padding-left: 1.85714em;
+  font-size: 1em;
+  display: inline-block; }
+
+.ts.checkbox:not(.radio) input[type="checkbox"] {
+  display: none; }
 
 .ts.radio.checkbox label:before {
   position: absolute;
@@ -7861,7 +7900,7 @@ i.icon.fa:before {
   cursor: pointer; }
 
 .ts.radio.checkbox label:hover:before {
-  background-color: #BBB; }
+  background-color: #CCC; }
 
 .ts.radio.checkbox label:active:before {
   background-color: #40a6ff; }
@@ -7871,10 +7910,101 @@ i.icon.fa:before {
   position: relative;
   padding-left: 1.85714em;
   font-size: 1em;
-  display: block; }
+  display: inline-block; }
 
 .ts.radio.checkbox input[type="radio"] {
   display: none; }
+
+.ts.checkbox.disabled,
+.ts.checkbox input[disabled] {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.45; }
+
+.ts.toggle.checkbox {
+  min-height: 1.5rem; }
+
+/* Input */
+.ts.toggle.checkbox input {
+  width: 3.5rem;
+  height: 1.5rem; }
+
+/* Label */
+.ts.toggle.checkbox .box,
+.ts.toggle.checkbox label {
+  min-height: 1.5rem;
+  padding-left: 4.5rem;
+  color: rgba(0, 0, 0, 0.77); }
+
+.ts.toggle.checkbox label {
+  padding-top: 0.15em; }
+
+/* Switch */
+.ts.toggle.checkbox .box:before,
+.ts.toggle.checkbox label:before {
+  display: block;
+  position: absolute;
+  content: "";
+  z-index: 1;
+  transform: none;
+  border: none;
+  background-image: none !important;
+  top: 0rem;
+  background: rgba(0, 0, 0, 0.05);
+  width: 3.5rem;
+  height: 1.5rem;
+  border-radius: 500em; }
+
+/* Handle */
+.ts.toggle.checkbox .box:after,
+.ts.toggle.checkbox label:after {
+  background: #FFF;
+  position: absolute;
+  content: "" !important;
+  opacity: 1;
+  z-index: 2;
+  border: none;
+  box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;
+  width: 1.5rem;
+  height: 1.5rem;
+  top: 0rem;
+  left: 0em;
+  border-radius: 500em;
+  transition: background 0.1s ease, left 0.1s ease; }
+
+.ts.toggle.checkbox input ~ .box:after,
+.ts.toggle.checkbox input ~ label:after {
+  left: -0.05rem; }
+
+/* Focus */
+.ts.toggle.checkbox input:focus ~ .box:before,
+.ts.toggle.checkbox input:focus ~ label:before {
+  background-color: #CCC;
+  border: none; }
+
+/* Hover */
+.ts.toggle.checkbox .box:hover:before,
+.ts.toggle.checkbox label:hover:before {
+  background-color: #CCC;
+  border: none; }
+
+/* Active */
+.ts.toggle.checkbox input:checked ~ .box:before,
+.ts.toggle.checkbox input:checked ~ label:before {
+  background-color: #0074d9 !important; }
+
+.ts.toggle.checkbox input:checked ~ .box:hover:before,
+.ts.toggle.checkbox input:checked ~ label:hover:before {
+  background-color: #005eb0 !important; }
+
+.ts.toggle.checkbox input:checked ~ .box:after,
+.ts.toggle.checkbox input:checked ~ label:after {
+  left: 2.15rem; }
+
+/* Active Focus */
+.ts.toggle.checkbox input:focus:checked ~ .box:before,
+.ts.toggle.checkbox input:focus:checked ~ label:before {
+  background-color: #005eb0 !important; }
 
 .ts.checkboxes .ts.checkbox {
   flex: 1; }
@@ -9219,5 +9349,250 @@ img.ts.bordered.image {
 .ts.divided.comments > .comment:last-child {
   margin-bottom: 0em !important;
   padding-bottom: 0em !important; }
+
+/* Bar */
+/* Progress Bar Label */
+/* Active */
+/* Attached */
+/* Sizing */
+.ts.progress {
+  position: relative;
+  display: flex;
+  max-width: 100%;
+  border: none;
+  margin: 1em 0em 1em;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 0em;
+  border-radius: 0.28571rem; }
+
+.ts.progress:first-child {
+  margin: 0em 0em 1em; }
+
+.ts.progress:last-child {
+  margin: 0em 0em 0; }
+
+/* Activity Bar */
+.ts.progress .bar {
+  display: inline-block;
+  line-height: 1;
+  position: relative;
+  width: 0%;
+  min-width: 2em;
+  background-color: #888888;
+  border-radius: 0.28571rem; }
+
+.ts.progress .bar:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0; }
+
+.ts.progress .bar:last-child:not(:only-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0; }
+
+.ts.progress .bar:not(:last-child):not(:first-child) {
+  border-radius: 0; }
+
+/* Percent Complete */
+.ts.progress .bar > .progress {
+  white-space: nowrap;
+  position: absolute;
+  width: auto;
+  font-size: 0.92857em;
+  top: 50%;
+  right: 0.5em;
+  left: auto;
+  bottom: auto;
+  color: #FFF;
+  margin-top: -0.5em;
+  font-weight: bold;
+  text-align: left; }
+
+.ts.progress.indeterminate {
+  background-size: 40px 40px;
+  background-image: linear-gradient(135deg, #959595 25%, #8b8b8b 25%, #8b8b8b 50%, #959595 50%, #959595 75%, #8b8b8b 75%, #8b8b8b 100%);
+  animation: process-bar-animation 2s linear 0s infinite; }
+@keyframes process-bar-animation {
+  from {
+    background-position: 0px; }
+  to {
+    background-position: 40px; } }
+  .ts.progress.indeterminate .bar {
+    visibility: hidden; }
+
+.ts.active.progress .bar {
+  position: relative;
+  min-width: 2em; }
+
+.ts.progress.active .bar:after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  content: "";
+  background-color: #626262;
+  border-radius: 0.28571rem;
+  animation: process-active 2s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+@keyframes process-active {
+  from {
+    opacity: 0.8;
+    width: 0%; }
+  to {
+    opacity: 0;
+    width: 100%; } }
+.ts.disabled.progress {
+  opacity: 0.35; }
+
+.ts.disabled.progress .bar,
+.ts.disabled.progress .bar::after {
+  animation: none !important; }
+
+.ts.progress.primary .bar,
+.ts.progress .primary.bar {
+  background-color: #1FBAF1; }
+  .ts.progress.primary .bar > .progress,
+  .ts.progress .primary.bar > .progress {
+    color: #f7fdff; }
+  .ts.progress.primary .bar:after,
+  .ts.progress .primary.bar:after {
+    background-color: #0c8bb8; }
+
+.ts.progress.indeterminate.primary {
+  background-image: linear-gradient(135deg, #37c1f3 25%, #24bbf1 25%, #24bbf1 50%, #37c1f3 50%, #37c1f3 75%, #24bbf1 75%, #24bbf1 100%); }
+
+.ts.progress.info .bar,
+.ts.progress .info.bar {
+  background-color: #79A8B9; }
+  .ts.progress.info .bar > .progress,
+  .ts.progress .info.bar > .progress {
+    color: white; }
+  .ts.progress.info .bar:after,
+  .ts.progress .info.bar:after {
+    background-color: #4f8497; }
+
+.ts.progress.indeterminate.info {
+  background-image: linear-gradient(135deg, #8ab3c2 25%, #7caabb 25%, #7caabb 50%, #8ab3c2 50%, #8ab3c2 75%, #7caabb 75%, #7caabb 100%); }
+
+.ts.progress.warning .bar,
+.ts.progress .warning {
+  background-color: #F5D562; }
+  .ts.progress.warning .bar > .progress,
+  .ts.progress .warning > .progress {
+    color: #8c7009; }
+  .ts.progress.warning .bar:after,
+  .ts.progress .warning:after {
+    background-color: #f0c21a; }
+
+.ts.progress.indeterminate.warning {
+  background-image: linear-gradient(135deg, #f7db7a 25%, #f5d667 25%, #f5d667 50%, #f7db7a 50%, #f7db7a 75%, #f5d667 75%, #f5d667 100%); }
+
+.ts.progress.positive .bar,
+.ts.progress.success .bar,
+.ts.progress .success.bar,
+.ts.progress .positive.bar {
+  background-color: #8BB96E; }
+  .ts.progress.positive .bar > .progress,
+  .ts.progress.success .bar > .progress,
+  .ts.progress .success.bar > .progress,
+  .ts.progress .positive.bar > .progress {
+    color: white; }
+  .ts.progress.positive .bar:after,
+  .ts.progress.success .bar:after,
+  .ts.progress .success.bar:after,
+  .ts.progress .positive.bar:after {
+    background-color: #659347; }
+
+.ts.progress.indeterminate.success,
+.ts.progress.indeterminate.positive {
+  background-image: linear-gradient(135deg, #99c17f 25%, #8ebb71 25%, #8ebb71 50%, #99c17f 50%, #99c17f 75%, #8ebb71 75%, #8ebb71 100%); }
+
+.ts.progress.negative .bar,
+.ts.progress.error .bar,
+.ts.progress .error.bar,
+.ts.progress .negative.bar {
+  background-color: #CE5F58; }
+  .ts.progress.negative .bar > .progress,
+  .ts.progress.error .bar > .progress,
+  .ts.progress .error.bar > .progress,
+  .ts.progress .negative.bar > .progress {
+    color: #fcf6f6; }
+  .ts.progress.negative .bar:after,
+  .ts.progress.error .bar:after,
+  .ts.progress .error.bar:after,
+  .ts.progress .negative.bar:after {
+    background-color: #a83831; }
+
+.ts.progress.indeterminate.negative,
+.ts.progress.indeterminate.error {
+  background-image: linear-gradient(135deg, #d4726c 25%, #cf635c 25%, #cf635c 50%, #d4726c 50%, #d4726c 75%, #cf635c 75%, #cf635c 100%); }
+
+/* bottom attached */
+.ts.progress.attached {
+  background: transparent;
+  position: relative;
+  border: none;
+  margin: 0em; }
+
+.ts.progress.attached,
+.ts.progress.attached .bar {
+  display: block;
+  height: 0.2rem;
+  padding: 0px;
+  overflow: hidden;
+  border-radius: 0em 0em 0.28571rem 0.28571rem; }
+
+.ts.progress.attached .bar {
+  border-radius: 0em; }
+
+/* top attached */
+.ts.progress.top.attached,
+.ts.progress.top.attached .bar {
+  top: 0px;
+  border-radius: 0.28571rem 0.28571rem 0em 0em; }
+
+.ts.progress.top.attached .bar {
+  border-radius: 0em; }
+
+.ts.segment > .ts.attached.progress,
+.ts.card > .ts.attached.progress {
+  position: absolute;
+  top: auto;
+  left: 0;
+  bottom: 100%;
+  width: 100%; }
+
+.ts.segment > .ts.bottom.attached.progress,
+.ts.card > .ts.bottom.attached.progress {
+  top: 100%;
+  bottom: auto; }
+
+.ts.tiny.progress {
+  font-size: 0.85714rem; }
+
+.ts.tiny.progress .bar {
+  height: 0.5em; }
+
+.ts.small.progress {
+  font-size: 0.92857rem; }
+
+.ts.small.progress .bar {
+  height: 1em; }
+
+.ts.progress {
+  font-size: 1rem; }
+
+.ts.progress .bar {
+  height: 1.75em; }
+
+.ts.large.progress {
+  font-size: 1.14286rem; }
+
+.ts.large.progress .bar {
+  height: 2.5em; }
+
+.ts.big.progress {
+  font-size: 1.28571rem; }
+
+.ts.big.progress .bar {
+  height: 3.5em; }
 
 /*# sourceMappingURL=tocas.css.map */
