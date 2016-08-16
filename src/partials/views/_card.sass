@@ -188,6 +188,7 @@
     position : relative
     display  : block
     max-width: 100%
+    width: 100%
     
 .ts.card > .image:first-child img
     border-top-left-radius : $card_borderRadius
@@ -363,16 +364,19 @@
 //-------------------// 
 
 +rwd-serious(mobile)
-    .ts.stackable.cards
+    .ts.stackable.cards:not(.waterfall)
         display: block !important
-    .ts.stackable.cards .card
+    .ts.stackable.cards:not(.waterfall) .card
         margin-top: 0 !important
-    .ts.stackable.cards > .card
+    .ts.stackable.cards:not(.waterfall) > .card
         display: block !important
         height : auto !important
         margin : $card_stackableRowSpacing $card_stackableCardSpacing
         padding: 0 !important
         width  : $card_stackableMargin !important
+        
+    .ts.stackable.waterfall.cards
+        column-count: 1
 
 //-------------------//
 //     Doubling
@@ -551,6 +555,7 @@
 .ts.waterfall.cards
     display     : block
     column-count: $card_waterfallColumnCount
+    width       : 100%
     
 .ts.waterfall.cards > .card
     display: inline-block
