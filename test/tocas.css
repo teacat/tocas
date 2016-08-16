@@ -75,7 +75,8 @@ textarea:focus {
 /* All of our custom controls should be what we expect them to be */
 input,
 textarea {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  resize: none; }
 
 /* These elements are usually rendered a certain way by the browser */
 button,
@@ -1483,6 +1484,14 @@ h6.ts.header .smaller.sub.header {
 .ts.segments.tertiary .segment {
   background-color: #d9d9d9;
   color: rgba(0, 0, 0, 0.6); }
+
+.ts.segment.flatted,
+.ts.segments.flatted .segment {
+  box-shadow: none; }
+
+.ts.segment.borderless,
+.ts.segments.borderless .segment {
+  border: 0; }
 
 .ts.loading.segment {
   position: relative;
@@ -3302,6 +3311,9 @@ ol.ts.horizontal.list li:before,
   border-radius: 0;
   margin: 0; }
 
+.ts.menu.fluid .item {
+  border-radius: 0; }
+
 .ts.menu .item[class*="horizontally fitted"] {
   padding-left: 0;
   padding-right: 0; }
@@ -4165,6 +4177,17 @@ ol.ts.horizontal.list li:before,
   .ts.form *[contenteditable].focus:-moz-placeholder,
   .ts.form *[contenteditable].focus:-ms-input-placeholder {
     opacity: 0.9; }
+
+.ts.input.fitted:not(.horizontally):not(.vertically) input, .ts.input.fitted:not(.horizontally):not(.vertically) textarea, .ts.input.fitted:not(.horizontally):not(.vertically) *[contenteditable] {
+  padding: 0; }
+
+.ts.input.fitted.horizontally input, .ts.input.fitted.horizontally textarea, .ts.input.fitted.horizontally *[contenteditable] {
+  padding-left: 0;
+  padding-right: 0; }
+
+.ts.input.fitted.vertically input, .ts.input.fitted.vertically textarea, .ts.input.fitted.vertically *[contenteditable] {
+  padding-top: 0;
+  padding-bottom: 0; }
 
 .ts.form .field.basic input, .ts.form .field.basic textarea, .ts.form .field.basic *[contenteditable],
 .ts.input.basic input,
@@ -7180,7 +7203,8 @@ i.icon.fa:before {
 .ts.card > .image img {
   position: relative;
   display: block;
-  max-width: 100%; }
+  max-width: 100%;
+  width: 100%; }
 
 .ts.card > .image:first-child img {
   border-top-left-radius: 0.28571rem;
@@ -7471,18 +7495,21 @@ i.icon.fa:before {
   margin-right: 0.5em; }
 
 @media (max-width: 767px) {
-  .ts.stackable.cards {
+  .ts.stackable.cards:not(.waterfall) {
     display: block !important; }
 
-  .ts.stackable.cards .card {
+  .ts.stackable.cards:not(.waterfall) .card {
     margin-top: 0 !important; }
 
-  .ts.stackable.cards > .card {
+  .ts.stackable.cards:not(.waterfall) > .card {
     display: block !important;
     height: auto !important;
     margin: 1em 0.75em;
     padding: 0 !important;
-    width: calc(100% - 0.75em * 2) !important; } }
+    width: calc(100% - 0.75em * 2) !important; }
+
+  .ts.stackable.waterfall.cards {
+    column-count: 1; } }
 @media (max-width: 767px) {
   .ts.cards.doubling.two {
     margin-left: 0em;
@@ -7680,7 +7707,8 @@ i.icon.fa:before {
 
 .ts.waterfall.cards {
   display: block;
-  column-count: 3; }
+  column-count: 3;
+  width: 100%; }
 
 .ts.waterfall.cards > .card {
   display: inline-block;
@@ -9611,7 +9639,8 @@ img.ts.bordered.image {
   position: relative;
   margin: 0;
   padding-left: 3em;
-  padding-top: 1em; }
+  padding-top: 1em;
+  opacity: 0.7; }
 
 .ts.quote:before {
   content: "“";
@@ -9626,8 +9655,7 @@ img.ts.bordered.image {
 .ts.quote.secondary {
   padding-left: 1em;
   padding-top: 0;
-  border-left: 3px solid #eceeef;
-  opacity: 0.6; }
+  border-left: 3px solid #eceeef; }
 
 .ts.quote.secondary:before {
   display: none; }
