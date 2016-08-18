@@ -8571,7 +8571,7 @@ a.ts.label.inverted:active {
 /* Spaced */
 /* Floated */
 /* Size */
-.ts.image {
+.ts.image:not(.label) {
   position: relative;
   display: inline-block;
   vertical-align: middle;
@@ -8581,8 +8581,8 @@ a.ts.label.inverted:active {
 img.ts.image {
   display: block; }
 
-.ts.image svg,
-.ts.image img {
+.ts.image:not(.label) svg,
+.ts.image:not(.label) img {
   display: block;
   max-width: 100%;
   height: auto; }
@@ -11322,40 +11322,56 @@ img.ts.bordered.image {
   background-color: #8BB96E;
   color: white; }
 
+.ts.chatroom {
+  position: relative;
+  width: 100%; }
+
 .ts.chatroom > .content .message {
   display: flex;
   flex-direction: row;
-  margin-bottom: 0.4em; }
+  margin-bottom: 0.4em;
+  flex-wrap: wrap; }
+
+.ts.chatroom > .content .message .avatar {
+  box-shadow: 0px 1px 2px 0 gainsboro;
+  height: 0; }
 
 .ts.chatroom > .content .message .avatar img {
   border-radius: 0.28571rem;
-  width: calc(1em + 0.58em * 2 + 1px * 2);
-  height: calc(1em + 0.58em * 2 + 1px * 2); }
+  width: calc(1.3em + 0.58em * 2 + 1px * 2);
+  height: calc(1.3em + 0.58em * 2 + 1px * 2); }
 
 .ts.chatroom > .content .message .content {
   margin-left: 7px;
   margin-right: 0;
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  flex: 1; }
+
+.ts.chatroom > .content .message > .author {
+  padding-left: calc((1.3em + 0.58em * 2 + 1px * 2) + 6px + 7px);
+  width: 100%; }
 
 .ts.chatroom > .content .message .avatar + .content {
   margin-left: 0.8em; }
 
-.ts.chatroom > .content .message p {
+.ts.chatroom > .content .message .text {
   position: relative;
   display: table;
   padding: 0.58em 0.58em;
   word-wrap: normal;
   font-size: 1em;
-  line-height: 1;
+  line-height: 1.3em;
   border: 1px solid gainsboro;
   border-radius: 0.28571rem;
-  margin: 0; }
+  margin: 0;
+  color: #646464;
+  box-shadow: 0px 1px 2px 0 gainsboro; }
 
-.ts.chatroom > .content .message p:first-child:after {
+.ts.chatroom > .content .message .text:first-child:after {
   display: block;
   position: absolute;
-  top: calc(calc(1em + 0.58em * 2 + 1px * 2) / 2 - 7px - 2px);
+  top: calc(calc(1.3em + 0.58em * 2 + 1px * 2) / 2 - 7px - 2px);
   bottom: auto;
   left: -6px;
   width: 0;
@@ -11364,10 +11380,10 @@ img.ts.bordered.image {
   border-color: transparent #fff;
   border-style: solid; }
 
-.ts.chatroom > .content .message p:first-child:before {
+.ts.chatroom > .content .message .text:first-child:before {
   display: block;
   position: absolute;
-  top: calc(calc(1em + 0.58em * 2 + 1px * 2) / 2 - 7px - 2px - 1px);
+  top: calc(calc(1.3em + 0.58em * 2 + 1px * 2) / 2 - 7px - 2px - 1px);
   bottom: auto;
   left: -8px;
   width: 0;
@@ -11405,26 +11421,31 @@ img.ts.bordered.image {
 .ts.chatroom > .content .right.message {
   flex-direction: row-reverse; }
 
+/** Content */
 .ts.chatroom > .content .right.message .content {
   margin-right: 7px;
   margin-left: 0;
   align-items: flex-end; }
 
+/** Content with avatar */
 .ts.chatroom > .content .right.message .avatar + .content {
   margin-right: 0.8em; }
 
-.ts.chatroom > .content .right.message p:first-child:after {
+/** Arrow border */
+.ts.chatroom > .content .right.message .text:first-child:after {
   right: -6px;
   bottom: auto;
   left: auto;
   border-width: 7px 0 7px 7px; }
 
-.ts.chatroom > .content .right.message p:first-child:before {
+/** Fill arrow */
+.ts.chatroom > .content .right.message .text:first-child:before {
   right: -8px;
   bottom: auto;
   left: auto;
   border-width: 8px 0 8px 8px; }
 
+/** Meta */
 .ts.chatroom > .content .right.message .meta {
   margin-left: 0;
   margin-right: 0.58em;
@@ -11440,8 +11461,10 @@ img.ts.bordered.image {
   font-weight: 600;
   font-size: 1em;
   height: auto;
-  line-height: 1; }
+  line-height: 1;
+  opacity: 0.4; }
 
+/** Divider line */
 .ts.chatroom > .content > .divider:before,
 .ts.chatroom > .content > .divider:after {
   position: relative;
@@ -11449,13 +11472,23 @@ img.ts.bordered.image {
   top: 50%;
   content: "";
   width: 50%;
-  opacity: 0.4;
   background-position: right 2em top 50%;
   background-repeat: no-repeat;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABaAAAAACCAYAAACuTHuKAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1OThBRDY4OUNDMTYxMUU0OUE3NUVGOEJDMzMzMjE2NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo1OThBRDY4QUNDMTYxMUU0OUE3NUVGOEJDMzMzMjE2NyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjU5OEFENjg3Q0MxNjExRTQ5QTc1RUY4QkMzMzMyMTY3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU5OEFENjg4Q0MxNjExRTQ5QTc1RUY4QkMzMzMyMTY3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+VU513gAAADVJREFUeNrs0DENACAQBDBIWLGBJQby/mUcJn5sJXQmOQMAAAAAAJqt+2prAAAAAACg2xdgANk6BEVuJgyMAAAAAElFTkSuQmCC); }
 
 .ts.chatroom > .content > .divider:after {
-  background-position: left 1em top 50%; }
+  background-position: left 2em top 50%; }
+
+.ts.chatroom > .content .message .content .text .author,
+.ts.chatroom > .content .message > .author {
+  color: #646464;
+  margin-bottom: 0.3em;
+  font-weight: bold; }
+
+/** Inline author */
+.ts.chatroom > .content .message .content .text .author.inline {
+  margin-bottom: 0;
+  display: inline; }
 
 .ts.chatroom.tiny {
   font-size: 0.85714rem; }
@@ -11472,5 +11505,8 @@ img.ts.bordered.image {
 
 .ts.chatroom.big {
   font-size: 1.28571rem; }
+
+.ts.chatroom > .content .message .content .text .ts.quote {
+  margin-bottom: 0.3em; }
 
 /*# sourceMappingURL=tocas.css.map */

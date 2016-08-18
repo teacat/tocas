@@ -6,54 +6,92 @@
 //*******************************//
 
 .ts.chatroom
+    position: relative
+    width   : 100%
 
-//-------------------//
-//     Header    
-//-------------------//
+//*******************************//
+//             Header
+//*******************************//
 
 .ts.chatroom > .header
 
-//-------------------//
-//     Content    
-//-------------------//
+//*******************************//
+//            Content
+//*******************************//
 
 .ts.chatroom > .content
 
 //*******************************//
-//              Message
+//            Message
 //*******************************//
 
 .ts.chatroom > .content .message
     display       : flex
     flex-direction: row
     margin-bottom : $chatroom_messageMarginBottom
+    flex-wrap     : wrap
+
+//-------------------//
+//       Avatar
+//-------------------//
+
+.ts.chatroom > .content .message .avatar
+    box-shadow   : $chatroom_avatarBoxShadow
+    height       : 0
     
 .ts.chatroom > .content .message .avatar img
     border-radius: $chatroom_messageAvatarBorderRadius
     width        : $chatroom_avatarWidth
     height       : $chatroom_avatarHeight
 
+//-------------------//
+//       Content
+//-------------------//
+
 .ts.chatroom > .content .message .content
     margin-left   : $chatroom_messageNoAvatarDistance
     margin-right  : 0
     display       : flex
     flex-direction: column
-    
+    flex          : 1
+
+//-------------------//
+//    Outer Author
+//-------------------//
+
+.ts.chatroom > .content .message > .author
+    padding-left: calc((#{$chatroom_avatarSizeCalc}) + #{$chatroom_messageArrowDistance} + #{$chatroom_messageArrowSize})
+    width: 100%
+
+//-------------------//
+// Content With Avatar
+//-------------------//
+
 .ts.chatroom > .content .message .avatar + .content 
     margin-left : $chatroom_messageDistance
-    
-.ts.chatroom > .content .message p
+
+//-------------------//
+//        Text
+//-------------------//
+
+.ts.chatroom > .content .message .text
     position     : relative
     display      : table
     padding      : $chatroom_messagePadding
     word-wrap    : normal
     font-size    : $chatroom_messageFontSize
-    line-height  : 1
+    line-height  : $chatroom_messageLineHeight
     border       : $chatroom_messageBorder
     border-radius: $chatroom_messageBorderRadius
     margin       : 0
+    color        : $chatroom_messageTextColor
+    box-shadow   : $chatroom_messageBoxShadow
 
-.ts.chatroom > .content .message p:first-child:after
+//-------------------//
+//   Message Arrow    
+//-------------------//
+
+.ts.chatroom > .content .message .text:first-child:after
     display     : block
     position    : absolute
     top         : $chatroom_messageArrowTop
@@ -65,7 +103,7 @@
     border-color: transparent #fff
     border-style: solid
 
-.ts.chatroom > .content .message p:first-child:before
+.ts.chatroom > .content .message .text:first-child:before
     display     : block
     position    : absolute
     top         : $chatroom_messageArrowFillTop
@@ -78,7 +116,7 @@
     border-style: solid
 
 //-------------------//
-//     Meta    
+//        Meta    
 //-------------------//
 
 .ts.chatroom > .content .message .meta
@@ -94,7 +132,7 @@
     margin-right: $chatroom_messageMetaSpacing
 
 //-------------------//
-//    Meta Dotted    
+//    Dotted Meta 
 //-------------------// 
 
 .ts.chatroom > .content .message .meta.middoted > *,
@@ -109,45 +147,46 @@
     margin-right: $chatroom_messageMetaSpacing / 2
     content     : '•'
 
-
 //-------------------//
-//     Right Message    
+//    Right Message    
 //-------------------//
 
 .ts.chatroom > .content .right.message
     flex-direction: row-reverse
 
+/** Content */
 .ts.chatroom > .content .right.message .content    
     margin-right: $chatroom_messageNoAvatarDistance
     margin-left : 0
     align-items : flex-end
-    
+
+/** Content with avatar */
 .ts.chatroom > .content .right.message .avatar + .content
     margin-right: $chatroom_messageDistance
-    
-.ts.chatroom > .content .right.message p
-    
-    
-.ts.chatroom > .content .right.message p:first-child:after
+
+/** Arrow border */
+.ts.chatroom > .content .right.message .text:first-child:after
     right       : -#{$chatroom_messageArrowDistance}
     bottom      : auto
     left        : auto
     border-width: $chatroom_messageArrowSize 0 $chatroom_messageArrowSize $chatroom_messageArrowSize
-    
-.ts.chatroom > .content .right.message p:first-child:before
+
+/** Fill arrow */
+.ts.chatroom > .content .right.message .text:first-child:before
     right       : -#{$chatroom_messageArrowFillDistance}
     bottom      : auto
     left        : auto
     border-width: $chatroom_messageArrowBorderSize 0 $chatroom_messageArrowBorderSize $chatroom_messageArrowBorderSize
-    
+
+/** Meta */
 .ts.chatroom > .content .right.message .meta
-    margin-left : 0
-    margin-right: $chatroom_messageHorizontalPadding
-    text-align  : right
+    margin-left    : 0
+    margin-right   : $chatroom_messageHorizontalPadding
+    text-align     : right
     justify-content: flex-end
 
 //-------------------//
-//     Divider    
+//      Divider    
 //-------------------//
 
 .ts.chatroom > .content > .divider
@@ -160,32 +199,46 @@
     font-size    : $chatroom_dividerFontSize
     height       : auto
     line-height  : 1
-    
+    opacity      : $chatroom_dividerOpacity
+
+/** Divider line */
 .ts.chatroom > .content > .divider:before,
 .ts.chatroom > .content > .divider:after
-    position: relative
-    display : table-cell
-    top     : 50%
-    content : ''
-    width   : 50%
-    opacity : $chatroom_dividerOpacity
-    
+    position           : relative
+    display            : table-cell
+    top                : 50%
+    content            : ''
+    width              : 50%
     background-position: right $chatroom_dividerDistance top 50%
     background-repeat  : no-repeat
     background-image   : $chatroom_dividerBackgroundURL
       
 .ts.chatroom > .content > .divider:after      
-    background-position: left 1em top 50%
-
+    background-position: left $chatroom_dividerDistance top 50%
 
 //-------------------//
-//     Footer    
+//       Author    
+//-------------------//
+
+.ts.chatroom > .content .message .content .text .author,
+.ts.chatroom > .content .message > .author
+    color        : $chatroom_authorTextColor
+    margin-bottom: .3em
+    font-weight  : bold
+
+/** Inline author */
+.ts.chatroom > .content .message .content .text .author.inline
+    margin-bottom: 0
+    display      : inline
+
+//-------------------//
+//       Footer    
 //-------------------//
 
 .ts.chatroom > .footer
 
 //-------------------//
-//     Sizes    
+//       Sizes    
 //-------------------//
 
 .ts.chatroom.tiny
@@ -203,3 +256,10 @@
 
 .ts.chatroom.big
     font-size: $big
+    
+//-------------------//
+//      Coupling    
+//-------------------//
+
+.ts.chatroom > .content .message .content .text .ts.quote
+    margin-bottom: $chatroom_quoteMarginBottom
