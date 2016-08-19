@@ -4,12 +4,13 @@
 //            Variations
 //*******************************//
 
-@mixin menu-inverted-variant($color, $backgroundColor)
+@mixin menu-inverted-variant($color, $backgroundColor, $borderColor)
     background-color: $backgroundColor
-    border-color    : $backgroundColor
+    border-color    : $borderColor
     
     .item
-        color: $color
+        color       : $color
+        border-color: $borderColor
     .item:active,
     .item:hover
         color: $color
@@ -128,21 +129,21 @@
 //-------------------//
 
 .ts.menu.basic
-    +menu-inverted-variant($menu_defaultTextColor, $menu_defaultBackgroundColor)
+    +menu-inverted-variant($menu_defaultTextColor, $menu_defaultBackgroundColor, $menu_defaultBorderColor)
     border: 0
 .ts.menu.inverted
-    +menu-inverted-variant($menu_invertedTextColor, $menu_invertedBackgroundColor)
+    +menu-inverted-variant($menu_invertedTextColor, $menu_invertedBackgroundColor, $menu_invertedBorderColor)
     border: 0
 .ts.menu.inverted.primary
-    +menu-inverted-variant($menu_primaryTextColor, $menu_primaryBackgroundColor)
+    +menu-inverted-variant($menu_primaryTextColor, $menu_primaryBackgroundColor, $menu_primaryBorderColor)
 .ts.menu.inverted.info
-    +menu-inverted-variant($menu_infoTextColor, $menu_infoBackgroundColor)
+    +menu-inverted-variant($menu_infoTextColor, $menu_infoBackgroundColor, $menu_infoBorderColor)
 .ts.menu.inverted.warning
-    +menu-inverted-variant($menu_warningTextColor, $menu_warningBackgroundColor)
+    +menu-inverted-variant($menu_warningTextColor, $menu_warningBackgroundColor, $menu_warningBorderColor)
 .ts.menu.inverted.positive
-    +menu-inverted-variant($menu_positiveTextColor, $menu_positiveBackgroundColor)
+    +menu-inverted-variant($menu_positiveTextColor, $menu_positiveBackgroundColor, $menu_positiveBorderColor)
 .ts.menu.inverted.negative
-    +menu-inverted-variant($menu_negativeTextColor, $menu_negativeBackgroundColor)
+    +menu-inverted-variant($menu_negativeTextColor, $menu_negativeBackgroundColor, $menu_negativeBorderColor)
 .ts.menu.inverted .item.disabled
     color: $invertedDisabledTextColor
 
@@ -258,6 +259,7 @@
     padding      : $menu_secondaryItemPadding
     margin       : $menu_secondaryItemMargin
     border-radius: $menu_secondaryBorderRadius
+    border-right : 0
 
 .ts.menu.secondary .item:before
     display: none
@@ -473,3 +475,12 @@
     margin-top: 0px
     margin-right: 0px
     width: 100%
+
+//-------------------//
+//  Evenly Divided
+//-------------------// 
+
+.ts.menu[class*="evenly divided"]
+    
+.ts.menu[class*="evenly divided"] .item
+    flex: 1
