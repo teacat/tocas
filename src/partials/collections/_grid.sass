@@ -12,26 +12,25 @@
     box-sizing    : border-box
     margin        : -#{$columnPadding}
 
-    & + .ts.grid
-        margin-top: $columnPadding
+.ts.grid + .ts.grid
+    margin-top: $columnPadding
     
-    > .column:not(.row),
-    > .row .column:not(.row)
-        padding: $columnPadding
-      
-    &.relaxed
-        margin-left : -$columnRelaxedPadding
-        margin-right: -$columnRelaxedPadding
-    
-        > .column:not(.row),
-        > .row > .column:not(.row)
-            padding-left : $columnRelaxedPadding
-            padding-right: $columnRelaxedPadding
+.ts.grid > .column:not(.row),
+.ts.grid > .row .column:not(.row)
+    padding: $columnPadding
+
+//-------------------//
+//       Column
+//-------------------//
 
 .ts.grid .column
     position  : relative
     box-sizing: border-box
-    
+
+//-------------------//
+//        Row
+//-------------------//
+
 .ts.grid > .row
     position      : relative
     display       : flex
@@ -41,6 +40,19 @@
     
     &.doubling
         flex-wrap: wrap
+
+//-------------------//
+//      Relaxed
+//-------------------//
+
+.ts.grid.relaxed
+    margin-left : -#{$columnRelaxedPadding}
+    margin-right: -#{$columnRelaxedPadding}
+
+.ts.grid.relaxed > .column:not(.row),
+.ts.grid.relaxed > .row > .column:not(.row)
+    padding-left : $columnRelaxedPadding
+    padding-right: $columnRelaxedPadding
 
 //-------------------//
 //       Aligns
@@ -55,6 +67,11 @@
 .ts.grid .row[class*="right aligned"] .column,
 .ts.grid .column[class*="right aligned"]
     text-align: right
+    
+.ts.grid[class*="center aligned"] .column,
+.ts.grid .row[class*="center aligned"] .column,
+.ts.grid .column[class*="center aligned"]
+    text-align: center
     
 .ts.grid.centered,
 .ts.grid .row.centered
@@ -96,7 +113,11 @@
     margin-left: auto
 .column[class*="left floated"]
     margin-right: auto
-      
+
+//*******************************//
+//          Column Wides
+//*******************************//
+
 //-------------------//
 //      Columns
 //-------------------//
@@ -501,14 +522,3 @@
 .ts.grid.stackable  > .column:not(.row)
     +rwd-serious(mobile)
         width: 100% !important
-    
-//-------------------//
-//     Aligned
-//-------------------// 
-
-.ts.grid .column[class*="right aligned"]
-    text-align: right
-.ts.grid .column[class*="center aligned"]
-    text-align: center
-.ts.grid .column[class*="left aligned"]
-    text-align: left

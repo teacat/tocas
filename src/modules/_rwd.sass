@@ -1,3 +1,7 @@
+//*******************************//
+//              RWD
+//*******************************//
+
 =rwd($type)
 
   @if $type == mobile
@@ -15,6 +19,10 @@
   @else if $type == large
     @media (min-width: $rwdLargeMin)
       @content
+
+//*******************************//
+//          RWD Serious
+//*******************************//
 
 =rwd-serious($type)
 
@@ -34,16 +42,13 @@
     @media (min-width: $rwdLargeMin)
       @content
 
-=rwd-hide($type)
-  +rwd($type)
-    display: none
-    width  : 0px
+//*******************************//
+//         Helper Classes
+//*******************************//
 
-
-=rwd-size($type, $height: null, $width: null)
-  +rwd($type)
-    +size($height, $width)
-
+//-------------------//
+//    Mobile Only 
+//-------------------//
 
 [class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"]
   +rwd(tablet)
@@ -53,17 +58,19 @@
   +rwd(large)
     display: none
 
-
-
+//-------------------//
+// Mobile Or Tablet Only 
+//-------------------//
 
 [class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"]
   +rwd(computer)
     display: none
   +rwd(large)
     display: none
-
-
-
+    
+//-------------------//
+//    Tablet Only 
+//-------------------//
 
 [class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])
   +rwd(mobile)
@@ -73,8 +80,9 @@
   +rwd(large)
     display: none
 
-
-
+//-------------------//
+//   Computer Only 
+//-------------------//
 
 [class*="computer only"][class*="computer only"][class*="computer only"][class*="computer only"][class*="computer only"][class*="computer only"][class*="computer only"][class*="computer only"][class*="computer only"][class*="computer only"]
   +rwd-serious(mobile)
@@ -84,14 +92,17 @@
   +rwd-serious(large)
     display: none
 
-
-
+//-------------------//
+// Tablet Or Large Only
+//-------------------//
 
 [class*="tablet or large device only"][class*="tablet or large device only"][class*="tablet or large device only"][class*="tablet or large device only"][class*="tablet or large device only"][class*="tablet or large device only"][class*="tablet or large device only"][class*="tablet or large device only"][class*="tablet or large device only"]
   +rwd-serious(mobile)
     display: none
 
-
+//-------------------//
+//    Large Only 
+//-------------------//
 
 [class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])
   +rwd-serious(mobile)
@@ -99,6 +110,9 @@
   +rwd-serious(tablet)
     display: none
 
+//-------------------//
+// Large Screen Only 
+//-------------------//
 
 [class*="large screen only"][class*="large screen only"][class*="large screen only"][class*="large screen only"][class*="large screen only"][class*="large screen only"][class*="large screen only"][class*="large screen only"][class*="large screen only"][class*="large screen only"]
   +rwd(mobile)

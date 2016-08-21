@@ -22,7 +22,11 @@ p:last-child:first-child {
 .ts.button, .ts.button.disabled,
 .ts.button.disabled:hover,
 .ts.buttons.disabled .button,
-.ts.buttons.disabled .button:hover, .ts.labeled.button:not(.icon), .ts.menu .item, .ts.checkbox:not(.radio) label, .ts.radio.checkbox label, .ts.button .ts.label, .ts.divider {
+.ts.buttons.disabled .button:hover, .ts.labeled.button:not(.icon), ul.ts.list li:before,
+.ts.bulleted.list .list > .item:before,
+.ts.bulleted.list > .item:before, ol.ts.list li:before,
+.ts.ordered.list .list > .item:before,
+.ts.ordered.list > .item:before, .ts.menu .item, .ts.checkbox:not(.radio) label, .ts.radio.checkbox label, .ts.button .ts.label, .ts.divider {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -1819,8 +1823,7 @@ ol.ts.list ol li,
   margin: 0em;
   padding-top: calc((1.14286em - 1rem) / 2);
   padding-right: 0.28571em;
-  vertical-align: top;
-  transition: color 0.1s ease; }
+  vertical-align: top; }
 
 .ts.list .list > .item > i.icon:only-child,
 .ts.list > .item > i.icon:only-child {
@@ -2094,10 +2097,9 @@ ol.ts.list ol li,
   cursor: pointer;
   background: transparent;
   padding: 0.5em 0.5em;
-  margin: 0em;
   color: rgba(0, 0, 0, 0.4);
-  border-radius: 0.5em;
-  transition: 0.1s color ease, 0.1s padding-left ease, 0.1s background-color ease; }
+  margin: 0em;
+  border-radius: 0.5em; }
 
 .ts.selection.list .list > .item:last-child,
 .ts.selection.list > .item:last-child {
@@ -2174,7 +2176,6 @@ ul.ts.list li,
 ul.ts.list li:before,
 .ts.bulleted.list .list > .item:before,
 .ts.bulleted.list > .item:before {
-  user-select: none;
   pointer-events: none;
   position: absolute;
   top: auto;
@@ -2236,7 +2237,6 @@ ol.ts.list li:before,
   position: absolute;
   top: auto;
   left: auto;
-  user-select: none;
   pointer-events: none;
   margin-left: -1.25rem;
   counter-increment: ordered;
@@ -2522,18 +2522,13 @@ ol.ts.horizontal.list li:before,
   flex-wrap: wrap;
   box-sizing: border-box;
   margin: -0.4rem; }
-  .ts.grid + .ts.grid {
-    margin-top: 0.4rem; }
-  .ts.grid > .column:not(.row),
-  .ts.grid > .row .column:not(.row) {
-    padding: 0.4rem; }
-  .ts.grid.relaxed {
-    margin-left: -0.8rem;
-    margin-right: -0.8rem; }
-    .ts.grid.relaxed > .column:not(.row),
-    .ts.grid.relaxed > .row > .column:not(.row) {
-      padding-left: 0.8rem;
-      padding-right: 0.8rem; }
+
+.ts.grid + .ts.grid {
+  margin-top: 0.4rem; }
+
+.ts.grid > .column:not(.row),
+.ts.grid > .row .column:not(.row) {
+  padding: 0.4rem; }
 
 .ts.grid .column {
   position: relative;
@@ -2548,6 +2543,15 @@ ol.ts.horizontal.list li:before,
   .ts.grid > .row.doubling {
     flex-wrap: wrap; }
 
+.ts.grid.relaxed {
+  margin-left: -0.8rem;
+  margin-right: -0.8rem; }
+
+.ts.grid.relaxed > .column:not(.row),
+.ts.grid.relaxed > .row > .column:not(.row) {
+  padding-left: 0.8rem;
+  padding-right: 0.8rem; }
+
 .ts.grid[class*="left aligned"] .column,
 .ts.grid .row[class*="left aligned"] .column,
 .ts.grid .column[class*="left aligned"] {
@@ -2557,6 +2561,11 @@ ol.ts.horizontal.list li:before,
 .ts.grid .row[class*="right aligned"] .column,
 .ts.grid .column[class*="right aligned"] {
   text-align: right; }
+
+.ts.grid[class*="center aligned"] .column,
+.ts.grid .row[class*="center aligned"] .column,
+.ts.grid .column[class*="center aligned"] {
+  text-align: center; }
 
 .ts.grid.centered,
 .ts.grid .row.centered {
@@ -3099,15 +3108,6 @@ ol.ts.horizontal.list li:before,
   .ts.grid.stackable > .column:not(.row) {
     width: 100% !important; } }
 
-.ts.grid .column[class*="right aligned"] {
-  text-align: right; }
-
-.ts.grid .column[class*="center aligned"] {
-  text-align: center; }
-
-.ts.grid .column[class*="left aligned"] {
-  text-align: left; }
-
 .ts.menu {
   display: flex;
   font-size: 1rem;
@@ -3604,12 +3604,6 @@ ol.ts.horizontal.list li:before,
   margin-top: 0em; }
 
 .ts.message:last-child {
-  margin-bottom: 0em; }
-
-.ts.message > :first-child {
-  margin-top: 0em; }
-
-.ts.message > :last-child {
   margin-bottom: 0em; }
 
 .ts.message .header {
@@ -4998,10 +4992,7 @@ ol.ts.horizontal.list li:before,
 @media (max-width: 767px) {
   .ts.container:not(.fluid) {
     margin-left: 0.88rem !important;
-    margin-right: 0.88rem !important; } }
-
-@media (max-width: 767px) {
-  .ts.container:not(.fluid) {
+    margin-right: 0.88rem !important;
     max-width: none !important;
     width: auto !important; } }
 
@@ -5158,15 +5149,15 @@ ol.ts.horizontal.list li:before,
   margin: -0.77143em 0em 0em -0.77143em;
   width: 1.14286em;
   height: 1.14286em;
-  animation: form-spin 0.5s linear;
-  animation-iteration-count: infinite;
   border-radius: 500em;
   border-color: #666 rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1);
   border-style: solid;
   border-width: 0.2em;
   box-shadow: 0px 0px 0px 1px transparent;
   visibility: visible;
-  z-index: 101; }
+  z-index: 101;
+  animation: form-spin 0.5s linear;
+  animation-iteration-count: infinite; }
 
 @keyframes form-spin {
   from {
@@ -8221,8 +8212,7 @@ a.ts.label {
 .ts.label > a {
   cursor: pointer;
   color: inherit;
-  opacity: 0.5;
-  transition: 0.1s opacity ease; }
+  opacity: 0.5; }
 
 .ts.label > a:hover {
   opacity: 1; }
@@ -8269,8 +8259,7 @@ a.ts.label {
   max-width: 9999px;
   vertical-align: baseline;
   padding: 0.5833em 0.833em 0.5833em 0.5em;
-  border-radius: 0.28571rem;
-  box-shadow: none; }
+  border-radius: 0.28571rem; }
 
 .ts.image.label img {
   display: inline-block;
@@ -8310,15 +8299,13 @@ a.ts.label {
 .ts.basic.label {
   background: none #FFF;
   border: 1px solid gainsboro;
-  color: #646464;
-  box-shadow: none; }
+  color: #646464; }
 
 /* Link */
 a.ts.basic.label:hover {
   text-decoration: none;
   background: none #FFF;
-  color: #265079;
-  box-shadow: none; }
+  color: #265079; }
 
 /* Pointing */
 .ts.basic.pointing.label:before {
@@ -9556,8 +9543,8 @@ img.ts.bordered.image {
     background-position: 0px; }
   to {
     background-position: 40px; } }
-  .ts.progress.indeterminate .bar {
-    visibility: hidden; }
+.ts.progress.indeterminate .bar {
+  visibility: hidden; }
 
 .ts.active.progress .bar {
   position: relative;
@@ -9572,6 +9559,7 @@ img.ts.bordered.image {
   background-color: #626262;
   border-radius: 0.28571rem;
   animation: process-active 2s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+
 @keyframes process-active {
   from {
     opacity: 0.8;
@@ -9750,12 +9738,12 @@ img.ts.bordered.image {
   font-size: 5em;
   font-family: Georgia, "Times New Roman", Times;
   color: #cccccc;
-  line-height: 1em; }
+  line-height: 5em; }
 
 .ts.quote.secondary {
   padding-left: 1em;
   padding-top: 0;
-  border-left: 3px solid #eceeef; }
+  border-left: 3px solid gainsboro; }
 
 .ts.quote.secondary:before {
   display: none; }
@@ -10168,12 +10156,6 @@ img.ts.bordered.image {
 .ts.table:last-child {
   margin-bottom: 0em; }
 
-/* Table Content */
-.ts.table th,
-.ts.table td {
-  transition: background 0.1s ease, color 0.1s ease; }
-
-/* Headers */
 .ts.table thead th {
   cursor: auto;
   background: #FBFBFB;
@@ -10197,7 +10179,6 @@ img.ts.bordered.image {
 .ts.table thead tr:first-child > th:only-child {
   border-radius: 0.28571rem 0.28571rem 0em 0em; }
 
-/* Footer */
 .ts.table tfoot th {
   cursor: auto;
   border-top: 1px solid gainsboro;
@@ -10319,15 +10300,13 @@ img.ts.bordered.image {
   pointer-events: none;
   background: transparent;
   font-weight: normal;
-  color: rgba(0, 0, 0, 0.4);
-  box-shadow: -1px -1px 0px 1px #FFF; }
+  color: rgba(0, 0, 0, 0.4); }
 
 .ts.definition.table tfoot:not(.full-width) th:first-child {
   pointer-events: none;
   background: transparent;
   font-weight: rgba(0, 0, 0, 0.4);
-  color: normal;
-  box-shadow: 1px 1px 0px 1px #FFF; }
+  color: normal; }
 
 /* Remove Border */
 .ts.celled.definition.table thead:not(.full-width) th:first-child {
@@ -10356,40 +10335,40 @@ img.ts.bordered.image {
 
 .ts.table tr.positive,
 .ts.table td.positive {
-  background: #ebf3e6 !important;
-  color: #8BB96E !important; }
+  color: #8BB96E !important;
+  background-color: #ebf3e6 !important; }
 
 .ts.table tr.negative,
 .ts.table td.negative,
 .ts.table tr.error,
 .ts.table td.error {
-  background: #f6e3e2 !important;
-  color: #CE5F58 !important; }
+  color: #CE5F58 !important;
+  background-color: #f6e3e2 !important; }
 
 .ts.table tr.warning,
 .ts.table td.warning {
-  background: #fdf5da !important;
-  color: #8c7009 !important; }
+  color: #8c7009 !important;
+  background-color: #fdf5da !important; }
 
 .ts.table tr.info,
 .ts.table td.info {
-  background: #eef4f6 !important;
-  color: #79A8B9 !important; }
+  color: #79A8B9 !important;
+  background-color: #eef4f6 !important; }
 
 .ts.table tr.primary,
 .ts.table td.primary {
-  background: #c7eefc !important;
-  color: #1FBAF1 !important; }
+  color: #1FBAF1 !important;
+  background-color: #c7eefc !important; }
 
 .ts.table tr.inverted,
 .ts.table td.inverted {
-  background: #34495E !important;
-  color: #FFF !important; }
+  color: #FFF !important;
+  background-color: #34495E !important; }
 
 .ts.table tr.active,
 .ts.table td.active {
-  background: #E0E0E0 !important;
-  color: #464646 !important; }
+  color: #464646 !important;
+  background-color: #E0E0E0 !important; }
 
 .ts.table tr.disabled td,
 .ts.table tr td.disabled,
@@ -10467,16 +10446,6 @@ img.ts.bordered.image {
   overflow: hidden;
   text-overflow: ellipsis; }
 
-.ts.selectable.table tbody tr:hover,
-.ts.table tbody tr td.selectable:hover {
-  background: rgba(0, 0, 0, 0.05) !important;
-  color: rgba(0, 0, 0, 0.95) !important; }
-
-.ts.selectable.inverted.table tbody tr:hover,
-.ts.inverted.table tbody tr td.selectable:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
-  color: white !important; }
-
 /* Selectable Cell Link */
 .ts.table tbody tr td.selectable {
   padding: 0em; }
@@ -10486,42 +10455,52 @@ img.ts.bordered.image {
   color: inherit;
   padding: 0.78571em 0.78571em; }
 
+.ts.selectable.table tbody tr:hover,
+.ts.table tbody tr td.selectable:hover {
+  color: rgba(0, 0, 0, 0.95) !important;
+  background-color: rgba(0, 0, 0, 0.05) !important; }
+
+.ts.selectable.inverted.table tbody tr:hover,
+.ts.inverted.table tbody tr td.selectable:hover {
+  color: white !important;
+  background-color: rgba(255, 255, 255, 0.08) !important; }
+
 /* Other States */
 .ts.selectable.table tr.warning:hover,
 .ts.table tr td.selectable.warning:hover,
 .ts.selectable.table tr:hover td.warning {
-  background: #fcf1cb !important;
-  color: #7e6408 !important; }
+  color: #7e6408 !important;
+  background-color: #fcf1cb !important; }
 
 .ts.selectable.table tr.info:hover,
 .ts.table tr td.selectable.info:hover,
 .ts.selectable.table tr:hover td.info {
-  background: #e4eef1 !important;
-  color: #6fa1b4 !important; }
+  color: #6fa1b4 !important;
+  background-color: #e4eef1 !important; }
 
 .ts.selectable.table tr.primary:hover,
 .ts.table tr td.selectable.primary:hover,
 .ts.selectable.table tr:hover td.primary {
-  background: #b9e9fb !important;
-  color: #11b6f0 !important; }
+  color: #11b6f0 !important;
+  background-color: #b9e9fb !important; }
 
 .ts.selectable.table tr.inverted:hover,
 .ts.table tr td.selectable.inverted:hover,
 .ts.selectable.table tr:hover td.inverted {
-  background: #2f4154 !important;
-  color: #f7f7f7 !important; }
+  color: #f7f7f7 !important;
+  background-color: #2f4154 !important; }
 
 .ts.selectable.table tr.active:hover,
 .ts.table tr td.selectable.active:hover,
 .ts.selectable.table tr:hover td.active {
-  background: #E0E0E0 !important;
-  color: #464646 !important; }
+  color: #464646 !important;
+  background-color: #E0E0E0 !important; }
 
 .ts.selectable.table tr.positive:hover,
 .ts.table tr td.selectable.positive:hover,
 .ts.selectable.table tr:hover td.positive {
-  background: #e3eedc !important;
-  color: #83b464 !important; }
+  color: #83b464 !important;
+  background-color: #e3eedc !important; }
 
 .ts.selectable.table tr.negative:hover,
 .ts.table tr td.selectable.negative:hover,
@@ -10529,8 +10508,8 @@ img.ts.bordered.image {
 .ts.selectable.table tr.error:hover,
 .ts.table tr td.selectable.error:hover,
 .ts.selectable.table tr:hover td.error {
-  background: #f3d8d6 !important;
-  color: #cb544c !important; }
+  color: #cb544c !important;
+  background-color: #f3d8d6 !important; }
 
 /* Middle */
 .ts.attached.table {
@@ -10546,7 +10525,7 @@ img.ts.bordered.image {
   border-top: none; }
 
 /* Top */
-.ts[class*="top attached"].table {
+.ts.table[class*="top attached"] {
   bottom: 0px;
   margin-bottom: 0em;
   top: 0px;
@@ -10557,14 +10536,14 @@ img.ts.bordered.image {
   margin-top: 0em; }
 
 /* Bottom */
-.ts[class*="bottom attached"].table {
+.ts.table[class*="bottom attached"] {
   bottom: 0px;
   margin-top: 0em;
   top: 0px;
   margin-bottom: 1em;
   border-radius: 0em 0em 0.28571rem 0.28571rem; }
 
-.ts[class*="bottom attached"].table:last-child {
+.ts.table[class*="bottom attached"]:last-child {
   margin-bottom: 0em; }
 
 /* Table Striping */
@@ -10579,8 +10558,8 @@ img.ts.bordered.image {
 
 /* Allow striped active hover */
 .ts.striped.selectable.selectable.selectable.table tbody tr.active:hover {
-  background: #EFEFEF !important;
-  color: rgba(0, 0, 0, 0.95) !important; }
+  color: rgba(0, 0, 0, 0.95) !important;
+  background-color: #EFEFEF !important; }
 
 .ts.table[class*="single line"],
 .ts.table [class*="single line"] {
@@ -10882,17 +10861,26 @@ img.ts.bordered.image {
 .ts[class*="very compact"].table td {
   padding: 0.4em 0.6em; }
 
-/* Small */
+.ts.mini.table {
+  font-size: 0.7em; }
+
+.ts.tiny.table {
+  font-size: 0.8em; }
+
 .ts.small.table {
   font-size: 0.9em; }
 
-/* Standard */
 .ts.table {
   font-size: 1em; }
 
-/* Large */
 .ts.large.table {
   font-size: 1.1em; }
+
+.ts.big.table {
+  font-size: 1.2em; }
+
+.ts.huge.table {
+  font-size: 1.3em; }
 
 .ts.table.borderless,
 .ts.table.borderless tr th,
@@ -11884,6 +11872,9 @@ img.ts.bordered.image {
 .ts.feed > .event > .content .meta > .icon:hover {
   color: rgba(0, 0, 0, 0.95); }
 
+.ts.tiny.feed {
+  font-size: 0.85714rem; }
+
 .ts.small.feed {
   font-size: 0.92857rem; }
 
@@ -11892,5 +11883,8 @@ img.ts.bordered.image {
 
 .ts.large.feed {
   font-size: 1.14286rem; }
+
+.ts.big.feed {
+  font-size: 1.28571rem; }
 
 /*# sourceMappingURL=tocas.css.map */

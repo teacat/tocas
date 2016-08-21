@@ -1,6 +1,18 @@
 @import ../../variables/modules/progress.variables
 
 //*******************************//
+//            Variations
+//*******************************//
+
+@mixin progress-bar-variant($color, $barColor, $activeBarColor)
+    background-color: $barColor
+    
+    > .progress
+        color: $color
+    &:after
+        background-color: $activeBarColor
+    
+//*******************************//
 //            Main
 //*******************************//
 
@@ -19,7 +31,6 @@
 .ts.progress:last-child 
     margin: $progress_lastMargin
 
-
 //*******************************//
 //            Content
 //*******************************//
@@ -34,7 +45,6 @@
     background-color: $progress_defaultBarColor
     border-radius   : $progress_barBorderRadius
 
-
 .ts.progress .bar:not(:last-child)
     border-top-right-radius   : 0
     border-bottom-right-radius: 0
@@ -43,7 +53,6 @@
     border-bottom-left-radius: 0    
 .ts.progress .bar:not(:last-child):not(:first-child)
     border-radius: 0
-
 
 /* Percent Complete */
 .ts.progress .bar > .progress 
@@ -60,21 +69,18 @@
     font-weight: $progress_progressFontWeight
     text-align : $progress_progressTextAlign
 
-
-
-
 //*******************************//
 //            States
 //*******************************//
 
- 
 //-------------------//
-//     Indeterminate       
+//   Indeterminate       
 //-------------------//   
 
 .ts.progress.indeterminate
-    background-size: $progress_indeterminateBackgroundSize $progress_indeterminateBackgroundSize
+    background-size : $progress_indeterminateBackgroundSize $progress_indeterminateBackgroundSize
     background-image: $progress_defaultIndeterminateBackground
+    
     animation: process-bar-animation 2s linear 0s infinite
     @keyframes process-bar-animation
         from
@@ -82,15 +88,15 @@
         to
             background-position: 40px
     
-    .bar
-        visibility: hidden
+.ts.progress.indeterminate .bar
+    visibility: hidden
         
 //-------------------//
-//     Active       
+//       Active       
 //-------------------//
 
 .ts.active.progress .bar 
-    position: relative
+    position : relative
     min-width: $progress_activeMinWidth
 
 .ts.progress.active .bar:after
@@ -102,18 +108,17 @@
     background-color: $progress_defaultActiveBarColor
     border-radius   : $progress_barBorderRadius
     animation       : process-active 2s cubic-bezier(0.4, 0, 0.2, 1) infinite
-    @keyframes process-active
-        from
-            opacity: .8
-            width: 0%
-        to
-            opacity: 0
-            width: 100%
     
-
+@keyframes process-active
+    from
+        opacity: .8
+        width: 0%
+    to
+        opacity: 0
+        width: 100%
 
 //-------------------//
-//     Disabled       
+//      Disabled       
 //-------------------//
 
 .ts.disabled.progress 
@@ -123,39 +128,28 @@
 .ts.disabled.progress .bar::after 
     animation: none !important
 
-
-
 //*******************************//
-//            Variations
+//            Emphasis
 //*******************************//
 
 .ts.progress.primary .bar,
 .ts.progress .primary.bar
-    background-color: $progress_primaryBarColor
-    > .progress
-        color: $progress_primaryTextColor
-    &:after
-        background-color: $progress_primaryActiveBarColor
+    +progress-bar-variant($progress_primaryTextColor, $progress_primaryBarColor, $progress_primaryActiveBarColor)
+        
 .ts.progress.indeterminate.primary
     background-image: $progress_primaryIndeterminateBackground
     
 .ts.progress.info .bar,
 .ts.progress .info.bar
-    background-color: $progress_infoBarColor
-    > .progress
-        color: $progress_infoTextColor
-    &:after
-        background-color: $progress_infoActiveBarColor
+    +progress-bar-variant($progress_infoTextColor, $progress_infoBarColor, $progress_infoActiveBarColor)
+    
 .ts.progress.indeterminate.info
     background-image: $progress_infoIndeterminateBackground
     
 .ts.progress.warning .bar,
 .ts.progress .warning
-    background-color: $progress_warningBarColor
-    > .progress
-        color: $progress_warningTextColor
-    &:after
-        background-color: $progress_warningActiveBarColor
+    +progress-bar-variant($progress_warningTextColor, $progress_warningBarColor, $progress_warningActiveBarColor)
+    
 .ts.progress.indeterminate.warning
     background-image: $progress_warningIndeterminateBackground
     
@@ -163,11 +157,8 @@
 .ts.progress.success .bar,
 .ts.progress .success.bar,
 .ts.progress .positive.bar
-    background-color: $progress_positiveBarColor
-    > .progress
-        color: $progress_positiveTextColor
-    &:after
-        background-color: $progress_positiveActiveBarColor
+    +progress-bar-variant($progress_positiveTextColor, $progress_positiveBarColor, $progress_positiveActiveBarColor)
+    
 .ts.progress.indeterminate.success,
 .ts.progress.indeterminate.positive
     background-image: $progress_positiveIndeterminateBackground
@@ -176,15 +167,11 @@
 .ts.progress.error .bar,
 .ts.progress .error.bar,
 .ts.progress .negative.bar
-    background-color: $progress_negativeBarColor
-    > .progress
-        color: $progress_negativeTextColor
-    &:after
-        background-color: $progress_negativeActiveBarColor
+    +progress-bar-variant($progress_negativeTextColor, $progress_negativeBarColor, $progress_negativeActiveBarColor)
+    
 .ts.progress.indeterminate.negative,
 .ts.progress.indeterminate.error
     background-image: $progress_negativeIndeterminateBackground
-
 
 //-------------------//
 //     Attached       
@@ -193,50 +180,49 @@
 /* bottom attached */
 .ts.progress.attached 
     background: $progress_attachedBackground
-    position: relative
-    border: none
-    margin: 0em
+    position  : relative
+    border    : none
+    margin    : 0em
 
 .ts.progress.attached,
 .ts.progress.attached .bar 
-    display: block
-    height: $progress_attachedHeight
-    padding: 0px
-    overflow: hidden
+    display      : block
+    height       : $progress_attachedHeight
+    padding      : 0px
+    overflow     : hidden
     border-radius: 0em 0em $progress_attachedBorderRadius $progress_attachedBorderRadius
 
 .ts.progress.attached .bar 
     border-radius: 0em
 
-
 /* top attached */
 .ts.progress.top.attached,
 .ts.progress.top.attached .bar 
-    top: 0px
+    top          : 0px
     border-radius: $progress_attachedBorderRadius $progress_attachedBorderRadius 0em 0em
 
 .ts.progress.top.attached .bar 
     border-radius: 0em
 
 //-------------------//
-//     Coupling       
+//      Coupling       
 //-------------------//
 
 .ts.segment > .ts.attached.progress,
 .ts.card > .ts.attached.progress 
     position: absolute
-    top: auto
-    left   : 0
-    bottom: 100%
-    width: 100%
+    top     : auto
+    left    : 0
+    bottom  : 100%
+    width   : 100%
 
 .ts.segment > .ts.bottom.attached.progress,
 .ts.card > .ts.bottom.attached.progress 
-    top: 100%
+    top   : 100%
     bottom: auto
 
 //-------------------//
-//     Sizes       
+//       Sizes       
 //-------------------//
 
 .ts.tiny.progress 
