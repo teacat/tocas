@@ -5,7 +5,7 @@
 //            Variations
 //*******************************//
 
-@mixin message-variant($color, $backgroundColor, $borderColor)
+@mixin chatroom-message-variant($color, $backgroundColor, $borderColor)
     .text
         background-color: $backgroundColor
         color           : $color
@@ -90,7 +90,10 @@
 //        Text
 //-------------------//
 
-.ts.chatroom > .content .message .text
+.ts.chatroom > .content .message .content
+    +chatroom-message-variant($chatroom_messageTextColor, $chatroom_messageBackgroundColor, $chatroom_messageBorderColor)
+    
+.ts.chatroom > .content .message .content .text
     position     : relative
     display      : table
     padding      : $chatroom_messagePadding
@@ -101,8 +104,6 @@
     border-radius: $chatroom_messageBorderRadius
     margin       : 0
     box-shadow   : $chatroom_messageBoxShadow
-    
-    +message-variant($chatroom_messageTextColor, $chatroom_messageBackgroundColor, $chatroom_messageBorderColor)
 
 //-------------------//
 //   Message Arrow    
@@ -172,7 +173,7 @@
     flex-direction: row-reverse
 
 /** Content */
-.ts.chatroom > .content .right.message .content    
+.ts.chatroom > .content .right.message .content
     margin-right: $chatroom_messageNoAvatarDistance
     margin-left : 0
     align-items : flex-end
@@ -291,19 +292,19 @@
 //      Emphasis    
 //-------------------//
 
-.ts.chatroom > .content .primary.message
-    +message-variant($chatroom_primaryTextColor, $chatroom_primaryBackgroundColor, $chatroom_primaryBorderColor)
-.ts.chatroom > .content .info.message
-    +message-variant($chatroom_infoTextColor, $chatroom_infoBackgroundColor, $chatroom_infoBorderColor)
-.ts.chatroom > .content .warning.message
-    +message-variant($chatroom_warningTextColor, $chatroom_warningBackgroundColor, $chatroom_warningBorderColor)
-.ts.chatroom > .content .positive.message
-    +message-variant($chatroom_positiveTextColor, $chatroom_positiveBackgroundColor, $chatroom_positiveBorderColor)
-.ts.chatroom > .content .negative.message
-    +message-variant($chatroom_negativeTextColor, $chatroom_negativeBackgroundColor, $chatroom_negativeBorderColor)
-.ts.chatroom > .content .inverted.message
-    +message-variant($chatroom_invertedTextColor, $chatroom_invertedBackgroundColor, $chatroom_invertedBorderColor)
-.ts.chatroom > .content .secondary.message
-    +message-variant($chatroom_secondaryColor, $chatroom_secondaryBackgroundColor, $chatroom_messageBorderColor)
-.ts.chatroom > .content .tertiary.message
-    +message-variant($chatroom_tertiaryColor, $chatroom_tertiaryBackgroundColor, $chatroom_messageBorderColor)
+.ts.chatroom > .content .primary.message .content
+    +chatroom-message-variant($chatroom_primaryTextColor, $chatroom_primaryBackgroundColor, $chatroom_primaryBorderColor)
+.ts.chatroom > .content .info.message .content
+    +chatroom-message-variant($chatroom_infoTextColor, $chatroom_infoBackgroundColor, $chatroom_infoBorderColor)
+.ts.chatroom > .content .warning.message .content
+    +chatroom-message-variant($chatroom_warningTextColor, $chatroom_warningBackgroundColor, $chatroom_warningBorderColor)
+.ts.chatroom > .content .positive.message .content
+    +chatroom-message-variant($chatroom_positiveTextColor, $chatroom_positiveBackgroundColor, $chatroom_positiveBorderColor)
+.ts.chatroom > .content .negative.message .content
+    +chatroom-message-variant($chatroom_negativeTextColor, $chatroom_negativeBackgroundColor, $chatroom_negativeBorderColor)
+.ts.chatroom > .content .inverted.message .content
+    +chatroom-message-variant($chatroom_invertedTextColor, $chatroom_invertedBackgroundColor, $chatroom_invertedBorderColor)
+.ts.chatroom > .content .secondary.message .content
+    +chatroom-message-variant($chatroom_secondaryColor, $chatroom_secondaryBackgroundColor, $chatroom_messageBorderColor)
+.ts.chatroom > .content .tertiary.message .content
+    +chatroom-message-variant($chatroom_tertiaryColor, $chatroom_tertiaryBackgroundColor, $chatroom_messageBorderColor)
