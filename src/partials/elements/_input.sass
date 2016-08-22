@@ -452,7 +452,47 @@
     &
         input, textarea, *[contenteditable]
             +input-variant($input_invertedTextColor, $input_invertedBackgroundColor, $input_invertedBorderColor, $input_invertedHoverBorderColor, $input_invertedFocusBorderColor)
- 
+
+//-------------------//
+//      Labeled       
+//-------------------//
+
+.ts.labeled.input > .label 
+    flex     : 0 0 auto
+    margin   : 0
+    font-size: $relativeMedium
+
+.ts.labeled.input > .label:not(.corner) 
+    padding-top   : $input_verticalPadding
+    padding-bottom: $input_verticalPadding
+
+/* Regular Label on Left */
+.ts.labeled.input:not([class*="corner labeled"]) .label:first-child 
+    border-top-right-radius   : 0px
+    border-bottom-right-radius: 0px
+
+.ts.labeled.input:not([class*="corner labeled"]) .label:first-child + input 
+    border-top-left-radius   : 0px
+    border-bottom-left-radius: 0px
+    border-left-color        : transparent
+
+.ts.labeled.input:not([class*="corner labeled"]) .label:first-child + input:focus 
+    border-left-color: $input_focusBorderColor
+
+/* Regular Label on Right */
+.ts[class*="right labeled"].input input 
+    border-top-right-radius   : 0px !important
+    border-bottom-right-radius: 0px !important
+    border-right-color        : transparent !important
+
+.ts[class*="right labeled"].input input + .label 
+    border-top-left-radius: 0px
+    border-bottom-left-radius: 0px
+
+
+.ts[class*="right labeled"].input input:focus 
+    border-right-color: $input_focusBorderColor !important
+
 //-------------------//
 //      Resizable       
 //-------------------//   
