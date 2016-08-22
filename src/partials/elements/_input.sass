@@ -16,12 +16,11 @@
     &:-ms-input-placeholder
         color: $color    
     
-    &:hover
-        border-color: $hoverBorderColor
+    &:hover:hover:hover:hover:hover:not(:focus)
+        border-color: $hoverBorderColor !important
     
-    &:focus
+    &:focus:focus:focus:focus:focus
         border-color: $focusBorderBolor
-
 
 //*******************************//
 //              Main
@@ -110,12 +109,6 @@
     display    : flex
     align-items: center
     flex       : 0 0 auto
-//
-//.ts.input.action > .button,
-//.ts.input.action > .buttons > .button
-//    padding-top   : $input_verticalPadding
-//    padding-bottom: $input_verticalPadding
-//    margin        : 0
 
 .ts.input.action > .ts.button
     border-radius             : $button_borderRadius
@@ -142,6 +135,67 @@
     border-radius            : $input_borderRadius
     border-top-left-radius   : 0
     border-bottom-left-radius: 0
+    
+.ts.action.input > .button,
+.ts.action.input > .buttons 
+    display    : flex
+    align-items: center
+    flex       : 0 0 auto
+
+.ts.action.input > .button,
+.ts.action.input > .buttons > .button 
+    padding-top   : $input_verticalPadding
+    padding-bottom: $input_verticalPadding
+    margin        : 0
+
+
+/* Button on Right */
+.ts.action.input:not([class*="left action"]) > 
+    &
+        input, textarea, *[contenteditable]
+            border-top-right-radius   : 0px !important
+            border-bottom-right-radius: 0px !important
+            border-right-color        : transparent !important
+
+.ts.action.input:not([class*="left action"]) > .dropdown:not(:first-child),
+.ts.action.input:not([class*="left action"]) > .button:not(:first-child),
+.ts.action.input:not([class*="left action"]) > .buttons:not(:first-child) > .button 
+    border-radius: 0px
+
+.ts.action.input:not([class*="left action"]) > .dropdown:last-child,
+.ts.action.input:not([class*="left action"]) > .button:last-child,
+.ts.action.input:not([class*="left action"]) > .buttons:last-child > .button 
+    border-radius: 0px $input_borderRadius $input_borderRadius 0px
+
+/* Input Focus */
+.ts.action.input:not([class*="left action"]) 
+    &
+        input:focus, textarea:focus, *[contenteditable]:focus
+            border-right-color: $input_focusBorderColor !important
+
+/* Button on Left */
+.ts[class*="left action"].input >
+    &
+        input:focus, textarea:focus, *[contenteditable]:focus
+            border-top-left-radius   : 0px !important
+            border-bottom-left-radius: 0px !important
+            border-left-color        : transparent !important
+
+.ts[class*="left action"].input > .dropdown,
+.ts[class*="left action"].input > .button,
+.ts[class*="left action"].input > .buttons > .button 
+    border-radius: 0px
+
+.ts[class*="left action"].input > .dropdown:first-child,
+.ts[class*="left action"].input > .button:first-child,
+.ts[class*="left action"].input > .buttons:first-child > .button 
+    border-radius: $input_borderRadius 0px 0px $input_borderRadius
+
+/* Input Focus */
+.ts[class*="left action"].input >
+    &
+        input:focus, textarea:focus, *[contenteditable]:focus
+            border-left-color: $input_focusBorderColor !important
 
 //-------------------//
 //       Fluid       
