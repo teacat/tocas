@@ -1,55 +1,125 @@
+@import ../../variables/elements/container.variables
+
 //*******************************//
 //              Main
 //*******************************//
 
 .ts.container
-    max-width   : calc(#{$rwdComputerMax} - #{$columnRelaxedPadding * 2.2})
-    margin-left : auto !important
-    margin-right: auto !important
-
-//-------------------//
-//    Large Screen
-//-------------------//
-
-.ts.container
-    +rwd-serious(computer)
-        max-width: calc(#{$rwdTabletMax} - #{$columnRelaxedPadding * 2.2})
-
-//-------------------//
-//       Tablet
-//-------------------//
-
-.ts.container
-    +rwd-serious(tablet)
-        max-width: calc(#{$rwdMobile} - #{$columnRelaxedPadding * 2.2})
-        width    : auto !important
+    display  : block
+    max-width: $container_maxWidth
 
 //-------------------//
 //       Mobile
 //-------------------//
 
-.ts.container:not(.fluid)
-    +rwd-serious(mobile)
-        margin-left : $columnRelaxedPadding * 1.1 !important
-        margin-right: $columnRelaxedPadding * 1.1 !important
-        max-width   : none                        !important
-        width       : auto                        !important
++rwd-serious(mobile)
+    .ts.container:not(.narrow)
+        margin-left : $container_mobileGutter !important
+        margin-right: $container_mobileGutter !important
+        width       : $container_mobileWidth  !important
+        
+        &.grid
+            width: $container_mobileGridWidth !important
+            
+        &.relaxed.grid
+            width: $container_mobileRelaxedGridWidth !important
+            
+        &.very.relaxed.grid
+            width: $container_mobileVeryRelaxedGridWidth !important
+
+//-------------------//
+//       Tablet
+//-------------------//
+
++rwd-serious(tablet)
+    .ts.container:not(.narrow)
+        margin-left : $container_tabletGutter !important
+        margin-right: $container_tabletGutter !important
+        width       : $container_tabletWidth
+        
+        &.grid
+            width: $container_tabletGridWidth !important
+            
+        &.relaxed.grid
+            width: $container_tabletRelaxedGridWidth !important
+            
+        &.very.relaxed.grid
+            width: $container_tabletVeryRelaxedGridWidth !important
+
+//-------------------//
+//      Computer
+//-------------------//    
+    
++rwd-serious(computer)
+    .ts.container:not(.narrow)
+        margin-left : $container_computerGutter !important
+        margin-right: $container_computerGutter !important
+        width       : $container_computerWidth 
+        
+        &.grid
+            width: $container_computerGridWidth !important
+            
+        &.relaxed.grid
+            width: $container_computerRelaxedGridWidth !important
+            
+        &.very.relaxed.grid
+            width: $container_computerVeryRelaxedGridWidth !important
+
+//-------------------//
+//    Large Screen
+//-------------------//
+
++rwd-serious(large)
+    .ts.container:not(.narrow)
+        margin-left : $container_largeMonitorGutter !important
+        margin-right: $container_largeMonitorGutter !important
+        width       : $container_largeMonitorWidth 
+        
+        &.grid
+            width: $container_largeMonitorGridWidth !important
+            
+        &.relaxed.grid
+            width: $container_largeMonitorRelaxedGridWidth !important
+            
+        &.very.relaxed.grid
+            width: $container_largeMonitorVeryRelaxedGridWidth !important
 
 //-------------------//
 //       Width
 //-------------------//
 
-.ts.container.thinner
-    max-width: $rwdComputerMin !important
-    width    : $rwdComputerMin
+.ts.container.narrow
+    margin-left : auto
+    margin-right: auto
+    max-width   : $container_narrowWidth !important
+
+.ts.container[class*="very narrow"]
+    margin-left : auto
+    margin-right: auto
+    max-width   : $container_veryNarrowWidth !important
+
+@media (max-width: $container_narrowBreakPoint)
+    .ts.container.narrow:not(.very)
+        margin-left : $container_narrowGutter !important
+        margin-right: $container_narrowGutter !important
+        max-width   : 100% !important
+        width       : auto !important
+        
+@media (max-width: $container_veryNarrowBreakPoint)
+    .ts.container[class*="very narrow"]
+        margin-left : $container_narrowGutter !important
+        margin-right: $container_narrowGutter !important
+        max-width   : 100% !important
+        width       : auto !important
+    
+//-------------------//
+//        Text
+//-------------------//
 
 .ts.container.text
-    max-width: 860px !important
-    width    : 860px
-
-.ts.container[class*="thinner text"]
-    max-width: 700px !important
-    width    : 700px
+    max-width  : $container_textWidth !important
+    line-height: $container_textLineHeight
+    font-size  : $container_textFontSize
 
 //-------------------//
 //       Fluid
