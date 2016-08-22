@@ -511,6 +511,36 @@
     width       : 100%
 
 //-------------------//
+//      Container  
+//-------------------// 
+
+.ts.menu > .ts.container.narrow
+    width: $container_narrowWidth
+    
+.ts.menu > .ts.container[class*="very narrow"]
+    width: $container_veryNarrowWidth
+        
+@media (max-width: $container_narrowBreakPoint)
+    .ts.menu > .ts.container.narrow:not(.very)
+        width: 100% !important
+        
++rwd-serious(mobile)
+    .ts.menu > .ts.container
+        width: 100% !important
+        
+    .ts.menu > .ts.container:not(.narrow)
+        margin-left : 0em !important
+        margin-right: 0em !important
+    
+    .ts.menu.pure > .ts.container:not(.narrow)
+        margin-left : $container_mobileGutter !important
+        margin-right: $container_mobileGutter !important
+
++rwd-serious(tablet)
+    .ts.menu:not(.secondary):not(.text):not(.tabbed):not(.borderless) > .container > .item:not(.right):not(.borderless):first-child
+        border-left: $menu_dividerSize solid $menu_dividerBackgroundColor
+
+//-------------------//
 //   Evenly Divided
 //-------------------// 
 
