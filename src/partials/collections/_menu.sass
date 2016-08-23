@@ -11,6 +11,9 @@
     .item
         color       : $color
         border-color: $borderColor
+    
+    .item.unread:after
+        background-color: $color
         
     .item:active,
     .item:hover
@@ -378,7 +381,8 @@
     width  : auto
 
 .ts.menu.icon .item .icon
-    margin: 0
+    margin   : 0
+    font-size: $menu_iconFontSize
 
 //-------------------//
 //    Labeled Icons       
@@ -509,6 +513,9 @@
     margin-top  : 0px
     margin-right: 0px
     width       : 100%
+    
+.ts.menu .ts.label
+    border: none
 
 //-------------------//
 //      Container  
@@ -545,4 +552,25 @@
 //-------------------// 
 
 .ts.menu[class*="evenly divided"] .item
-    flex: 1
+    flex           : 1
+    align-items    : center
+    justify-content: center
+
+//-------------------//
+//       Unread
+//-------------------//     
+    
+.ts.menu:not(.icon) .item.unread:after,
+.ts.menu.icon .item.unread .icon:after
+    content         : ''
+    background-color: $menu_unreadBackgroundColor
+    border-radius   : 50%
+    font-size       : 0
+    height          : $absolute6px
+    position        : absolute
+    top             : $menu_unreadTop
+    width           : $absolute6px
+    z-index         : 10
+
+.ts.menu.labeled.icon .item.unread .icon:after
+    top: initial
