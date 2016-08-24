@@ -76,9 +76,6 @@
         transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) 
     100%  
         transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)  
-
-
-
     
 //*******************************//
 //            Variations
@@ -94,7 +91,12 @@
 //*******************************//
 
 .ts.dropdown
-    position: relative
+    display    : inline-block
+    position   : relative
+    cursor     : pointer
+    will-change: transform, opacity
+    
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0)
 
 //-------------------//
 //       Basic       
@@ -248,9 +250,6 @@
 //           Dropdown
 //*******************************//
 
-.ts.dropdown
-    cursor: pointer
-
 .ts.dropdown .menu 
     cursor    : auto
     position  : absolute
@@ -273,7 +272,6 @@
     z-index      : $dropdown_menuZIndex
     will-change  : transform, opacity
 
-
 .ts.dropdown .menu > * 
     white-space: nowrap
 
@@ -282,6 +280,7 @@
 //-------------------//
 
 .ts.dropdown > .text
+    +extend(no-select)
     display: inline-block
 
 //-------------------//
@@ -431,13 +430,13 @@
 //     Animation       
 //-------------------//
 
-.ts.dropdown.upward.hidden.animating .menu,
+.ts.dropdown.upward.hidden.animating   .menu,
 .ts.dropdown.downward.hidden.animating .menu
-    animation: dropdown-contract 400ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+    animation: dropdown-contract 300ms cubic-bezier(0.22, 0.61, 0.36, 1) both
 
 .ts.dropdown.downward.visible.animating .menu,
-.ts.dropdown.upward.visible.animating .menu
-    animation: dropdown-expand 400ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+.ts.dropdown.upward.visible.animating   .menu
+    animation: dropdown-expand 300ms cubic-bezier(0.22, 0.61, 0.36, 1) both
 
 .ts.dropdown.downward .menu
     transform-origin: center top 0px
@@ -447,4 +446,28 @@
     
 .ts.dropdown.upward .menu
     bottom: 100%
-    top: initial
+    top   : initial
+    
+    
+.ts.dropdown.rightward .menu
+    left: 0
+    
+.ts.dropdown.leftward .menu
+    right: 0
+    
+//-------------------//
+//     Directions       
+//-------------------//
+
+//-------------------//
+//     Floating       
+//-------------------//
+
+.ts.dropdown.floating .menu
+    box-shadow: $dropdown_floatingMenuBoxShadow
+
+.ts.dropdown.floating.upward .menu
+    margin-bottom: $dropdown_floatingMenuDistance
+    
+.ts.dropdown.floating.downward .menu
+    margin-top: $dropdown_floatingMenuDistance
