@@ -15,14 +15,14 @@
     background-color: $backgroundColor
     color           : $color
     
-    &:not(.visible):hover
-        background-color: $hoverBackgroundColor
-        color           : $hoverColor
-        
-    &:active,
-    &.visible
+    &:active:not(.opinion),
+    &.dropdown.visible
         background-color: $activeBackgroundColor
         color           : $activeColor
+        
+    &:not(.visible):not(.hidden):not(:active):not(.opinion):hover
+        background-color: $hoverBackgroundColor
+        color           : $hoverColor
 
 //-------------------//
 //       Basic
@@ -104,9 +104,11 @@
 //      Disabled       
 //-------------------//
     
+.ts.button[disabled], 
 .ts.button.disabled,    
 .ts.button.disabled:hover,
 .ts.buttons.disabled .button,
+.ts.buttons[disabled] .button,
 .ts.buttons.disabled .button:hover
     +extend(no-select)
     opacity       : $disabledOpacity !important
@@ -119,7 +121,7 @@
 
 .ts.loading.loading.loading.loading.loading.loading.button 
     position      : relative
-    cursor        : default
+    //cursor      : not-allowed
     text-shadow   : none !important
     color         : transparent !important
     opacity       : 1
