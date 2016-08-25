@@ -1,8 +1,10 @@
 @charset "UTF-8";
 @import url(https://fonts.googleapis.com/earlyaccess/notosanstc.css);
-.ts.button, .ts.button.disabled,
+.ts.button, .ts.button[disabled],
+.ts.button.disabled,
 .ts.button.disabled:hover,
 .ts.buttons.disabled .button,
+.ts.buttons[disabled] .button,
 .ts.buttons.disabled .button:hover, .ts.labeled.button:not(.icon), ul.ts.list li:before,
 .ts.bulleted.list .list > .item:before,
 .ts.bulleted.list > .item:before, ol.ts.list li:before,
@@ -524,15 +526,15 @@ template, [hidden] {
   border-style: solid;
   vertical-align: middle;
   text-align: center;
-  border-color: #e9e9e9;
+  border-color: #eeeeee;
   background-color: #F1F1F1;
   color: #7B7B7B; }
-  .ts.button:not(.visible):hover {
-    background-color: #e4e4e4;
-    color: #888888; }
-  .ts.button:active, .ts.button.visible {
+  .ts.button:active:not(.opinion), .ts.button.dropdown.visible {
     background-color: #bebebe;
     color: #626262; }
+  .ts.button:not(.visible):not(.hidden):not(:active):not(.opinion):hover {
+    background-color: #e4e4e4;
+    color: #888888; }
 
 .ts.button[class*='top attached'],
 .ts.buttons[class*='top attached'] .button {
@@ -548,9 +550,11 @@ template, [hidden] {
 .ts.buttons.circular .button {
   border-radius: 10em; }
 
+.ts.button[disabled],
 .ts.button.disabled,
 .ts.button.disabled:hover,
 .ts.buttons.disabled .button,
+.ts.buttons[disabled] .button,
 .ts.buttons.disabled .button:hover {
   opacity: 0.45 !important;
   cursor: not-allowed !important;
@@ -558,7 +562,6 @@ template, [hidden] {
 
 .ts.loading.loading.loading.loading.loading.loading.button {
   position: relative;
-  cursor: default;
   text-shadow: none !important;
   color: transparent !important;
   opacity: 1;
@@ -808,96 +811,96 @@ template, [hidden] {
   border-color: #f7f7f7;
   background-color: #34495E;
   color: #FFF; }
-  .ts.button.inverted:not(.visible):hover,
-  .ts.buttons.inverted .button:not(.visible):hover,
-  .ts.button.secondary:not(.opinion):not(.visible):hover,
-  .ts.buttons.secondary:not(.opinion) .button:not(.visible):hover {
-    background-color: #2b3c4e;
-    color: white; }
-  .ts.button.inverted:active, .ts.button.inverted.visible,
-  .ts.buttons.inverted .button:active,
-  .ts.buttons.inverted .button.visible,
-  .ts.button.secondary:not(.opinion):active,
-  .ts.button.secondary:not(.opinion).visible,
-  .ts.buttons.secondary:not(.opinion) .button:active,
-  .ts.buttons.secondary:not(.opinion) .button.visible {
+  .ts.button.inverted:active:not(.opinion), .ts.button.inverted.dropdown.visible,
+  .ts.buttons.inverted .button:active:not(.opinion),
+  .ts.buttons.inverted .button.dropdown.visible,
+  .ts.button.secondary:not(.opinion):active:not(.opinion),
+  .ts.button.secondary:not(.opinion).dropdown.visible,
+  .ts.buttons.secondary:not(.opinion) .button:active:not(.opinion),
+  .ts.buttons.secondary:not(.opinion) .button.dropdown.visible {
     background-color: #10161c;
     color: #e6e6e6; }
+  .ts.button.inverted:not(.visible):not(.hidden):not(:active):not(.opinion):hover,
+  .ts.buttons.inverted .button:not(.visible):not(.hidden):not(:active):not(.opinion):hover,
+  .ts.button.secondary:not(.opinion):not(.visible):not(.hidden):not(:active):not(.opinion):hover,
+  .ts.buttons.secondary:not(.opinion) .button:not(.visible):not(.hidden):not(:active):not(.opinion):hover {
+    background-color: #2b3c4e;
+    color: white; }
 
 .ts.button.primary,
 .ts.buttons.primary .button {
   border-color: #11b6f0;
   background-color: #1FBAF1;
   color: #f7fdff; }
-  .ts.button.primary:not(.visible):hover,
-  .ts.buttons.primary .button:not(.visible):hover {
-    background-color: #0fafe8;
-    color: white; }
-  .ts.button.primary:active, .ts.button.primary.visible,
-  .ts.buttons.primary .button:active,
-  .ts.buttons.primary .button.visible {
+  .ts.button.primary:active:not(.opinion), .ts.button.primary.dropdown.visible,
+  .ts.buttons.primary .button:active:not(.opinion),
+  .ts.buttons.primary .button.dropdown.visible {
     background-color: #0a79a0;
     color: #c7eefc; }
+  .ts.button.primary:not(.visible):not(.hidden):not(:active):not(.opinion):hover,
+  .ts.buttons.primary .button:not(.visible):not(.hidden):not(:active):not(.opinion):hover {
+    background-color: #0fafe8;
+    color: white; }
 
 .ts.button.info,
 .ts.buttons.info .button {
   border-color: #6fa1b4;
   background-color: #79A8B9;
   color: white; }
-  .ts.button.info:not(.visible):hover,
-  .ts.buttons.info .button:not(.visible):hover {
-    background-color: #689db0;
-    color: white; }
-  .ts.button.info:active, .ts.button.info.visible,
-  .ts.buttons.info .button:active,
-  .ts.buttons.info .button.visible {
+  .ts.button.info:active:not(.opinion), .ts.button.info.dropdown.visible,
+  .ts.buttons.info .button:active:not(.opinion),
+  .ts.buttons.info .button.dropdown.visible {
     background-color: #467586;
     color: #dee9ee; }
+  .ts.button.info:not(.visible):not(.hidden):not(:active):not(.opinion):hover,
+  .ts.buttons.info .button:not(.visible):not(.hidden):not(:active):not(.opinion):hover {
+    background-color: #689db0;
+    color: white; }
 
 .ts.button.warning,
 .ts.buttons.warning .button {
   border-color: #f3cb3c;
   background-color: #F5D562;
   color: #8c7009; }
-  .ts.button.warning:not(.visible):hover,
-  .ts.buttons.warning .button:not(.visible):hover {
-    background-color: #f3cf4a;
-    color: #a4830a; }
-  .ts.button.warning:active, .ts.button.warning.visible,
-  .ts.buttons.warning .button:active,
-  .ts.buttons.warning .button.visible {
+  .ts.button.warning:active:not(.opinion), .ts.button.warning.dropdown.visible,
+  .ts.buttons.warning .button:active:not(.opinion),
+  .ts.buttons.warning .button.dropdown.visible {
     background-color: #e3b40e;
     color: #5c4a06; }
+  .ts.button.warning:not(.visible):not(.hidden):not(:active):not(.opinion):hover,
+  .ts.buttons.warning .button:not(.visible):not(.hidden):not(:active):not(.opinion):hover {
+    background-color: #f3cf4a;
+    color: #a4830a; }
 
 .ts.button.negative,
 .ts.buttons.negative .button {
   border-color: #cb544c;
   background-color: #CE5F58;
   color: #fcf6f6; }
-  .ts.button.negative:not(.visible):hover,
-  .ts.buttons.negative .button:not(.visible):hover {
-    background-color: #c84c44;
-    color: white; }
-  .ts.button.negative:active, .ts.button.negative.visible,
-  .ts.buttons.negative .button:active,
-  .ts.buttons.negative .button.visible {
+  .ts.button.negative:active:not(.opinion), .ts.button.negative.dropdown.visible,
+  .ts.buttons.negative .button:active:not(.opinion),
+  .ts.buttons.negative .button.dropdown.visible {
     background-color: #94322c;
     color: #f1d0ce; }
+  .ts.button.negative:not(.visible):not(.hidden):not(:active):not(.opinion):hover,
+  .ts.buttons.negative .button:not(.visible):not(.hidden):not(:active):not(.opinion):hover {
+    background-color: #c84c44;
+    color: white; }
 
 .ts.button.positive,
 .ts.buttons.positive .button {
   border-color: #83b464;
   background-color: #8BB96E;
   color: white; }
-  .ts.button.positive:not(.visible):hover,
-  .ts.buttons.positive .button:not(.visible):hover {
-    background-color: #7db15d;
-    color: white; }
-  .ts.button.positive:active, .ts.button.positive.visible,
-  .ts.buttons.positive .button:active,
-  .ts.buttons.positive .button.visible {
+  .ts.button.positive:active:not(.opinion), .ts.button.positive.dropdown.visible,
+  .ts.buttons.positive .button:active:not(.opinion),
+  .ts.buttons.positive .button.dropdown.visible {
     background-color: #59823f;
     color: #e3eedd; }
+  .ts.button.positive:not(.visible):not(.hidden):not(:active):not(.opinion):hover,
+  .ts.buttons.positive .button:not(.visible):not(.hidden):not(:active):not(.opinion):hover {
+    background-color: #7db15d;
+    color: white; }
 
 .ts.button.opinion,
 .ts.buttons.opinion .button {
@@ -8008,6 +8011,25 @@ i.icon.fa:before {
   font-size: 8em;
   line-height: 1.1em;
   opacity: 0.2; }
+
+.ts.card .buttons[class*="bottom attached"] .button {
+  border-bottom: 0; }
+
+.ts.card .buttons[class*="top attached"] .button {
+  border-top: 0; }
+
+.ts.card .buttons .button:first-child {
+  border-left: 0; }
+
+.ts.card .buttons .button:only-child {
+  border-left: 0;
+  border-right: 0; }
+
+.ts.card .buttons .button:not(:first-child):not(:last-child):not(:only-child) {
+  border-left: 0; }
+
+.ts.card .buttons .button:last-child {
+  border-right: 0; }
 
 /* Menu */
 /* Text */
