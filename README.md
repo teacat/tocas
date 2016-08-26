@@ -1,43 +1,38 @@
 <p align="center">
   <img src="http://ww4.sinaimg.cn/large/a15b4afegw1f6k20fb3p5j205o05ogli" alt="vuepack" width="60">
-  <br><br><strong>VuePack</strong> is a modern Vue.js starter <br>which uses Vue 2, Vuex, Vue-router and Webpack 2.
+  <br><br><strong>VuePack</strong> 是一個 Vue.js 的初始包 <br>提供了 Vue 2、Vuex、Vue-router 和 Webpack 2。
 </p>
 
-## Features
+## 特色
 
 - Vue 2
-- Latest version of Vuex/Router
+- 最新的 Vuex/Router
 - Webpack 2
 - Babel 6
-- Hot reloading
-- Split vendor code from your app
-- A boilerplate which is small and focusing on client-side apps
+- 熱重啟工作區域（Hot Loader）
+- 可正常建置
+- 支援 SASS、CSS、字體、圖片
+- 一個內建的小型 Vue 樣板
 
-<h2></h2>
-
-For Vue 1 please head to [vue-1](https://github.com/egoist/vuepack/tree/vue-1) branch.
-
-For JSX component please head to [jsx](https://github.com/egoist/vuepack/tree/jsx) branch, it works pretty well but has no built-in hot reloading support for now.
-
-For Isomorphic rendering please head to [vue-isomorphic-starter](https://github.com/egoist/vue-isomorphic-starter).
-
-## Get Started
+## 從這開始
 
 ```bash
-# clone or fork this repo
+# clone（複製）或 fork（分歧）這個倉庫
 $ cd vuepack
 $ npm install
 
-# edit files and start developing
+# 編輯檔案然後進行開發工作
 $ npm run dev
-# bundle all scripts and styles for production use
+# 將所有檔案打包轉成靜態檔案作為正式釋出
 $ npm run build
 ```
 
-### For Windows users
+### 給 Windows 使用者
 
-Install `git with unix tools` before getting started.
+安裝 `git with unix tools` 在你有所行動之前。
 
 ## License
 
 MIT &copy; [EGOIST](https://github.com/egoist)
+
+MIT &copy; [Yami Odymel](https://github.com/YamiOdymel)
