@@ -3,12 +3,14 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-export default new Router({
-  mode: 'hash',
-  routes: [
-    {
-      path: '/',
-      component: require('../views/Home')
-    }
-  ]
+export default new Router
+({
+    mode  : 'history',
+    routes:
+    [
+        {
+            path: '/',
+            component: require('../views/GettingStarted')
+        }
+    ]
 })

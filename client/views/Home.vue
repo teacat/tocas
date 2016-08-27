@@ -1,18 +1,20 @@
 <template>
-  <div class="page">
-    <counter></counter>
-    <p>
-      欲要開始，請編輯 <code>./client</code> 內的檔案並儲存。
-    </p>
-  </div>
+    <div class="page">
+        <doc-header></doc-header>
+        <doc-jumbotron></doc-jumbotron>
+    </div>
 </template>
 
 <script>
-import Counter from '../components/Counter'
+import DocHeader    from '../components/DocHeader'
+import DocJumbotron from '../components/DocJumbotron'
 
-export default {
-  components: {
-    Counter
-  }
+export default 
+{
+    components: 
+    {
+        DocHeader,
+        DocJumbotron
+    }
 }
 </script>
