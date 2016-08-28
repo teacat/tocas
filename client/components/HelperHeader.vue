@@ -3,8 +3,7 @@
         <h2 class="ts header" :class="classes">
             {{ title }}
         </h2>
-        <p v-if="hasSlot">
-            <slot></slot>
+        <p v-if="description" v-html="description">
         </p>
     </div>
     
@@ -68,8 +67,9 @@ export default
     name : 'HelperHeader',
     props:
     {
-        title: {},
-        size : { default: false }
+        title      : {},
+        size       : { default: false },
+        description: { default: false }
     },
     computed:
     {
