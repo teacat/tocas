@@ -8,23 +8,101 @@ var example = 'example'
 
 export default
 {
+    header:
+    {
+        title   : '從這開始',
+        subTitle: 
+        `
+            人生已經很無聊了，別讓你的網頁也再無聊下去
+            <br>
+            從這裡你將會知道如何開始一段新的網頁人生。
+        `
+    },
     anchors:
     [
         {
             text: '引用檔案',
+            link: false
+        },
+        {
+            text: '透過線上 CDN',
             link: '#include'
         },
         {
+            text: '自行下載 Tocas UI',
+            link: '#include'
+        },
+        {
+            text: '全域注意事項',
+            link: false
+        },
+        {
+            text: 'HTML 5 宣告',
+            link: '#html5'
+        },
+        {
+            text: '響應式設計標籤',
+            link: '#rwd'
+        },
+        {
             text: '與其他框架比較',
-            link: '#compare'
+            link: false
+        },
+        {
+            text: 'Bootstrap v4',
+            link: '#compare-to-bootstrap-v4'
+        },
+        {
+            text: 'Semantic UI',
+            link: '#compare-to-semantic-ui'
+        },
+        {
+            text: 'Amaze UI',
+            link: '#compare-to-amaze-ui'
+        },
+        {
+            text: 'Kule Lazy',
+            link: '#compare-to-kule-lazy'
+        },
+        {
+            text: 'Foundation',
+            link: '#compare-to-foundation'
         },
         {
             text: '基本語意',
-            link: '#semantic'
+            link: false
+        },
+        {
+            text: '語氣渲染',
+            link: '#emphasis'
+        },
+        {
+            text: '發音方式',
+            link: '#pronounce'
+        },
+        {
+            text: '外觀尺寸',
+            link: '#sizes'
         },
         {
             text: '命名規範',
-            link: '#naming'
+            link: false
+        },
+        {
+            text: '區塊／容器',
+            link: '#naming-blocks'
+        },
+        {
+            text: '元素',
+            link: '#naming-elements'
+        },
+        {
+            text: '修飾詞',
+            link: '#naming-decorates'
+        },
+        {
+            text: '給 JavaScript 或其他用途',
+            link: '#naming-javascript'
         },
     ],
     html: 
@@ -38,7 +116,66 @@ export default
             type       : normal,
             anchor     : 'include',
             title      : '引用檔案',
-            description: '欲要使用 Tocas UI，先從引用 Tocas UI 的相關文件開始，也請別忘記一同放置 fonts 文件夾。'
+            description: '你需要引用 Tocas UI 的檔案才能夠開始使用，這裡提供兩種方式讓你使用。'
+        },
+        {
+            type       : small,
+            title      : '透過線上 CDN',
+            description: 
+            `
+                這是項免費服務並且提供夠快的服務速度，這使你不需要下載 Tocas UI，只需要將下列標籤放置於 HTML 中的 <span class="ts horizontal label">&lt;head&gt; .. &lt;/head&gt;</span> 處即可，
+                缺點是我們並不保證該伺服器會 100% 處於上線狀態。
+            `
+        },
+        {
+            type: source,
+            code: `<link rel="stylesheet" href="//cdn.rawgit.com/TeaMeow/TocasUI/master/dist/tocas.min.css">`
+        },
+        {
+            type       : small,
+            title      : '自行下載 Tocas UI',
+            description: 
+            `
+                你需要到 <a href="//github.com/TeaMeow/TocasUI">我們的 Github 下載 Tocas UI</a>，然後取出其中的 <span class="ts horizontal label">/dist</span> 資料夾，並像下面這樣引用 Tocas UI 檔案，如此的好處是你可以確保樣式不會因為遠端的伺服器離線而遺失。
+            `
+        },
+        {
+            type: source,
+            code: `<link rel="stylesheet" href="tocas2.min.css">`
+        },
+        {
+            type       : normal,
+            anchor     : 'include',
+            title      : '全域注意事項',
+            description: '你需要注意你的 HTML 和設計上是否有達到這些要求。'
+        },
+        {
+            type       : small,
+            title      : 'HTML 5 宣告',
+            description: 
+            `
+                請確定你有透過 <span class="ts horizontal label">&lt;!DOCTYPE HTML&gt;</span> 將網頁宣告成 HTML5。
+            `
+        },
+        {
+            type: source,
+            code: `<!DOCTYPE HTML>
+<html>
+...
+</html>`
+        },
+        {
+            type       : small,
+            title      : '響應式設計標籤',
+            description: 
+            `
+                Tocas UI 支援響應式設計，為此你需要新增下列一段的標籤在你的 HTML 來告訴行動裝置你的網頁支援響應式設計，
+                利用這個標籤還可以降低並解決行動裝置對於網頁的點擊延遲，請將這段放置於 HTML 中的 <span class="ts horizontal label">&lt;head&gt; .. &lt;/head&gt;</span> 處。
+            `
+        },
+        {
+            type: source,
+            code: `<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">`
         },
         {
             type       : normal,
@@ -53,9 +190,9 @@ export default
             `
                 Bootstrap 是一個十分常見的框架，但卻有個最為嚴重的問題，也是與 Tocas UI 所背馳的理念，就是太多雜亂的樣式名稱，並且不具有意義，
                 像是這樣：<span class="ts horizontal label">m-l-1</span>、<span class="ts horizontal label">m-t-0</span>、<span class="ts horizontal label">p-x-2</span>、<span class="ts horizontal label">m-x-auto</span>、等，
-                並不能夠一眼就看出這些樣式所具備的意義，相較之下 Tocas UI 的 <span class="ts horizontal label">small</span>、<span class="ts horizontal label">right floated</span> 更具有意義。
+                並不能夠一眼就看出這些樣式所具備的意義，相較之下 Tocas UI 的 <span class="ts horizontal label">small</span>、<span class="ts horizontal label">centered</span> 更具有意義。
                 <br><br>
-                此外，在 HTML 結構的部分 Bootstrap
+                此外，在 HTML 結構的部分 Bootstrap 常為了要補足某些缺陷或排列而新增過多不必要的結構，而 Tocas UI 則沒有這方面的問題。在元件的部分 Tocas UI 也較多元化並更具彈性。
             `
         },
         {
@@ -63,6 +200,13 @@ export default
             title      : 'Semantic UI',
             description: 
             `
+                Semantic UI 即是 Tocas UI 的衍生來源，雖然 Semantic UI 具備自訂主題功能，但要改變主題你必須自行手動編譯，會這樣做的人少之又少，
+                預設的 Semantic UI 主題看起來十分地沈重並仰賴過多地白色和黑色，這個問題在 Tocas UI 則有所改善。
+                
+                <br><br>
+                
+                在元件的部分 Semantic UI 過度依賴非原生元件（如下拉式輸入欄位），Tocas UI 在這部分則保留並美化了原生的元件，而不是另外做一個。
+                Tocas UI 還勝過 Semantic UI 一個優點，那就是元件更具有自訂性，舉例來說你可以讓具有陰影的卡片「扁平化」，或是其他更多外觀上的變動。
             `
         },
         {
@@ -70,6 +214,8 @@ export default
             title      : 'Amaze UI',
             description: 
             `
+                Amaze UI 在外觀上較為生硬，和 Bootstrap 一樣不具有語意並擁有 <span class="ts horizontal label">am-</span> 的類別前輟，樣式和元件也過於死板不具彈性，還有一些非直覺的動畫，例如「按鈕」按下時的緩慢感，
+                Tocas UI 讓按鈕和回饋充滿動感，不會讓使用者感到遲鈍，並讓元件多樣化，外觀上也看起來更為簡約。
             `
         },
         {
@@ -77,6 +223,9 @@ export default
             title      : 'Kule Lazy',
             description: 
             `
+                Kule Lazy 在一些結構上使用的是舊型的樣式，Tocas UI 則採用最新並具彈性的 Flexbox，在外觀的配色和陰影也比起 Kule Lazy 還要更加地輕盈，不會令人感到沈重，
+                除此之外 Kule Lazy 的命名方式也和 Bootstrap 有著一樣的問題，且還不只如此， Kule Lazy 在用詞上也較為獨特使人不容易區分和上手，
+                Tocas UI 在這方面則以直覺的方式稱呼元件讓人不感到困惑。
             `
         },
         {
@@ -84,6 +233,8 @@ export default
             title      : 'Foundation',
             description: 
             `
+            Foundation 在外觀上較為生硬，過多的方形設計，按鈕也不具有回饋力，令人按下時感到鈍感，並且在元件樣式上過度依賴標籤選擇器，
+            這將使得你在自訂部分元件時會有所衝突，上述的所有問題都有在 Tocas UI 獲得改善。
             `
         },
         {
