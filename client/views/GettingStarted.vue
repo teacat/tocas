@@ -1,23 +1,25 @@
 <template>
     <div class="page">
         <doc-header></doc-header>
-        <doc-jumbotron title="入門教學">
-            人生已經很無聊了，別讓你的網頁也再無聊下去
-            <br>
-            從這裡你將會知道如何開始一段新的網頁人生。
-        </doc-jumbotron>
+        <doc-jumbotron :title="items.header.title" :subTitle="items.header.subTitle"></doc-jumbotron>
         <div class="ts container">
             <div class="ts relaxed grid">
                 <div class="four wide column">
                     <div class="ts flatted borderless secondary relaxed vertical menu">
-                        <a class="item" :href="anchor.link" v-for="anchor in items.anchors" v-text="anchor.text"></a>
+                        
+                        <template v-for="anchor in items.anchors">
+                            
+                            <span class="item" v-if="!anchor.link" v-text="anchor.text"></span>
+                            <a class="item" :href="anchor.link" v-if="anchor.link" v-text="anchor.text"></a>
+                            
+                        </template>
                     </div>
                 </div>
                 <div class="twelve wide column">
                     
                     <template v-for="item in items.html">
 
-                        <a :name="item.anchor"></a>
+                        <a :name="item.anchor" v-if="item.anchor"></a>
                         
                         <helper-header :title="item.title" size="large" v-if="item.type == 'large'" :description="item.description"></helper-header>
                         
@@ -60,7 +62,25 @@
     border-right  : 2px solid rgba(0, 0, 0, 0.1);
     pointer-events: none;
 }
-.ts.label
+.vertical.menu .item
+{
+    padding: 1.2em;
+}
+.vertical.menu span.item
+{
+    padding-left: 0;
+    display: block;
+    margin: 15px 15px 15px 0px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #005F5F;
+    border-bottom: 1px dashed #B3FFFF;
+    padding-bottom: .8em;
+}
+</style>
+
+<style>
+p > .ts.label
 {
     color: #333 !important;
 }
