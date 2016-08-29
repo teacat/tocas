@@ -4,10 +4,7 @@
             <h1 class="ts left aligned header">
                 {{ title }}
                 <br>
-                <p class="sub header">
-                    {{ subTitle }}
-                    <slot></slot>
-                </p>
+                <p class="sub header" v-html="subTitle"></p>
             </h1>
         </div>
     </div>
