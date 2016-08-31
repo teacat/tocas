@@ -7,10 +7,10 @@
                 <div class="four wide column">
                     <div class="ts flatted borderless secondary relaxed vertical menu">
                         
-                        <template v-for="anchor in items.anchors">
+                        <template v-for="item in items.html">
                             
-                            <span class="item" v-if="!anchor.link" v-text="anchor.text"></span>
-                            <a class="item" :href="anchor.link" v-if="anchor.link" v-text="anchor.text"></a>
+                            <span class="item" v-if="item.link === false" v-text="item.title"></span>
+                            <a class="item" :href="'#' + item.link" v-if="item.link" v-text="item.title"></a>
                             
                         </template>
                     </div>
@@ -19,7 +19,7 @@
                     
                     <template v-for="item in items.html">
 
-                        <a :name="item.anchor" v-if="item.anchor"></a>
+                        <a :name="item.link" v-if="item.link" class="anchor"></a>
                         
                         <doc-header :title="item.title" size="large" v-if="item.type == 'large'" :description="item.description"></doc-header>
                         
@@ -76,6 +76,14 @@
     color: #005F5F;
     border-bottom: 1px dashed #B3FFFF;
     padding-bottom: .8em;
+}
+.anchor
+{
+    visibility: hidden;
+}
+.anchor:first-child + div
+{
+    margin-top: 1em !important;
 }
 </style>
 
