@@ -51,17 +51,30 @@
             &:-ms-input-placeholder
                 opacity    : $input_placeholderOpacity
 
+//-------------------//
+//       Focus
+//-------------------//
+
 .ts.input,
 .ts.form
     &
-        input:focus, textarea:focus, *[contenteditable]:focus,
-        input.focus, textarea.focus, *[contenteditable].focus
+        input:focus, textarea:focus, *[contenteditable]:focus
             &::-webkit-input-placeholder
                 opacity: $input_placeholderFocusOpacity
 
             &:-moz-placeholder,
             &:-ms-input-placeholder
                 opacity: $input_placeholderFocusOpacity
+
+.ts.input.focus input, 
+.ts.input.focus textarea, 
+.ts.input.focus *[contenteditable]
+    &::-webkit-input-placeholder
+        opacity: $input_placeholderFocusOpacity
+        
+    &:-moz-placeholder,
+    &:-ms-input-placeholder
+        opacity: $input_placeholderFocusOpacity
 
 //-------------------//
 //       Fitted
@@ -457,8 +470,7 @@
                 opacity    : $input_placeholderOpacity
     
     &
-        input:focus, textarea:focus, *[contenteditable]:focus,
-        input.focus, textarea.focus, *[contenteditable].focus
+        input:focus, textarea:focus, *[contenteditable]:focus
 
             &::-webkit-input-placeholder
                 opacity    : $input_placeholderFocusOpacity
@@ -466,6 +478,16 @@
             &:-moz-placeholder,
             &:-ms-input-placeholder
                 opacity    : $input_placeholderFocusOpacity
+                
+    &.focus input,
+    &.focus textarea,
+    &.focus *[contenteditable]
+        &::-webkit-input-placeholder
+            opacity    : $input_placeholderFocusOpacity
+            
+        &:-moz-placeholder,
+        &:-ms-input-placeholder
+            opacity    : $input_placeholderFocusOpacity
             
 //-------------------//
 //      Emphasis       
