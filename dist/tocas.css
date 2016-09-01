@@ -456,6 +456,10 @@ template, [hidden] {
  * ========================================================================== */
 /**
  * Add the correct display in IE 10-. */
+div[contenteditable]:empty:not(:focus):before {
+  content: attr(placeholder);
+  display: block; }
+
 @media (min-width: 768px) {
   [class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"] {
     display: none; } }
@@ -526,6 +530,7 @@ template, [hidden] {
   border-style: solid;
   vertical-align: middle;
   text-align: center;
+  position: relative;
   border-color: #eeeeee;
   background-color: #F1F1F1;
   color: #7B7B7B; }
@@ -1230,40 +1235,52 @@ h5.ts.header {
 h6.ts.header {
   font-size: 1.12rem; }
 
-h1.ts.header .sub.header {
+h1.ts.header .sub.header,
+h1.ts.sub.header {
   font-size: 1.14286rem; }
 
-h2.ts.header .sub.header {
+h2.ts.header .sub.header,
+h2.ts.sub.header {
   font-size: 1.14286rem; }
 
-h3.ts.header .sub.header {
+h3.ts.header .sub.header,
+h3.ts.sub.header {
   font-size: 1rem; }
 
-h4.ts.header .sub.header {
+h4.ts.header .sub.header,
+h4.ts.sub.header {
   font-size: 1rem; }
 
-h5.ts.header .sub.header {
+h5.ts.header .sub.header,
+h5.ts.sub.header {
   font-size: 0.92857rem; }
 
-h6.ts.header .sub.header {
+h6.ts.header .sub.header,
+h6.ts.sub.header {
   font-size: 0.92857rem; }
 
-h1.ts.header .smaller.sub.header {
+h1.ts.header .smaller.sub.header,
+h1.ts.smaller.sub.header {
   font-size: 1.14286rem; }
 
-h2.ts.header .smaller.sub.header {
+h2.ts.header .smaller.sub.header,
+h2.ts.smaller.sub.header {
   font-size: 1rem; }
 
-h3.ts.header .smaller.sub.header {
+h3.ts.header .smaller.sub.header,
+h3.ts.smaller.sub.header {
   font-size: 1rem; }
 
-h4.ts.header .smaller.sub.header {
+h4.ts.header .smaller.sub.header,
+h4.ts.smaller.sub.header {
   font-size: 0.92857rem; }
 
-h5.ts.header .smaller.sub.header {
+h5.ts.header .smaller.sub.header,
+h5.ts.smaller.sub.header {
   font-size: 0.92857rem; }
 
-h6.ts.header .smaller.sub.header {
+h6.ts.header .smaller.sub.header,
+h6.ts.smaller.sub.header {
   font-size: calc(0.92857rem / 1.5); }
 
 .ts.massive.header {
@@ -1291,52 +1308,68 @@ h6.ts.header .smaller.sub.header {
 .ts.mini.header {
   font-size: 0.78571em; }
 
-.ts.massive.header .sub.header {
+.ts.massive.header .sub.header,
+.ts.massive.sub.header {
   font-size: 1.14286rem; }
 
-.ts.huge.header .sub.header {
+.ts.huge.header .sub.header,
+.ts.huge.sub.header {
   font-size: 1.14286rem; }
 
-.ts.big.header .sub.header {
+.ts.big.header .sub.header,
+.ts.big.sub.header {
   font-size: 1.14286rem; }
 
-.ts.large.header .sub.header {
+.ts.large.header .sub.header,
+.ts.large.sub.header {
   font-size: 1.14286rem; }
 
-.ts.medium.header .sub.header {
+.ts.medium.header .sub.header,
+.ts.medium.sub.header {
   font-size: 1rem; }
 
-.ts.small.header .sub.header {
+.ts.small.header .sub.header,
+.ts.small.sub.header {
   font-size: 1rem; }
 
-.ts.tiny.header .sub.header {
+.ts.tiny.header .sub.header,
+.ts.tiny.sub.header {
   font-size: 0.92857rem; }
 
-.ts.mini.header .sub.header {
+.ts.mini.header .sub.header,
+.ts.mini.sub.header {
   font-size: 0.92857rem; }
 
-.ts.massive.header .smaller.sub.header {
+.ts.massive.header .smaller.sub.header,
+.ts.massive.smaller.sub.header {
   font-size: 1.14286rem; }
 
-.ts.huge.header .smaller.sub.header {
+.ts.huge.header .smaller.sub.header,
+.ts.huge.smaller.sub.header {
   font-size: 1.14286rem; }
 
-.ts.big.header .smaller.sub.header {
+.ts.big.header .smaller.sub.header,
+.ts.big.smaller.sub.header {
   font-size: 1.14286rem; }
 
-.ts.large.header .smaller.sub.header {
+.ts.large.header .smaller.sub.header,
+.ts.large.smaller.sub.header {
   font-size: 1rem; }
 
-.ts.medium.header .smaller.sub.header {
+.ts.medium.header .smaller.sub.header,
+.ts.medium.smaller.sub.header {
   font-size: 1rem; }
 
-.ts.small.header .smaller.sub.header {
+.ts.small.header .smaller.sub.header,
+.ts.small.smaller.sub.header {
   font-size: 0.92857rem; }
 
-.ts.tiny.header .smaller.sub.header {
+.ts.tiny.header .smaller.sub.header,
+.ts.tiny.smaller.sub.header {
   font-size: 0.92857rem; }
 
-.ts.mini.header .smaller.sub.header {
+.ts.mini.header .smaller.sub.header,
+.ts.mini.smaller.sub.header {
   font-size: calc(0.92857rem / 1.5); }
 
 .ts.header.primary {
@@ -1669,12 +1702,13 @@ h6.ts.header .smaller.sub.header {
 .ts.segment.compact {
   display: table; }
 
-.ts.segment.attached:not(.top) {
+.ts.segment[class*="bottom attached"] {
   margin-top: 0;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   border-top-width: 1px; }
-.ts.segment.attached:not(.bottom) {
+
+.ts.segment[class*="top attached"] {
   margin-bottom: 0;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -4024,7 +4058,7 @@ ol.ts.horizontal.list li:before,
   opacity: 0.45;
   color: rgba(0, 0, 0, 0.2); }
 
-.ts.jumbotron.primar {
+.ts.jumbotron.primary {
   color: #f7fdff;
   background-color: #1FBAF1;
   border-color: #11b6f0; }
@@ -4360,29 +4394,28 @@ ol.ts.horizontal.list li:before,
     opacity: 0.65; }
 
 .ts.input input:focus::-webkit-input-placeholder, .ts.input textarea:focus::-webkit-input-placeholder, .ts.input *[contenteditable]:focus::-webkit-input-placeholder,
-.ts.input input.focus::-webkit-input-placeholder, .ts.input textarea.focus::-webkit-input-placeholder, .ts.input *[contenteditable].focus::-webkit-input-placeholder,
 .ts.form input:focus::-webkit-input-placeholder,
 .ts.form textarea:focus::-webkit-input-placeholder,
-.ts.form *[contenteditable]:focus::-webkit-input-placeholder,
-.ts.form input.focus::-webkit-input-placeholder,
-.ts.form textarea.focus::-webkit-input-placeholder,
-.ts.form *[contenteditable].focus::-webkit-input-placeholder {
+.ts.form *[contenteditable]:focus::-webkit-input-placeholder {
   opacity: 0.9; }
 .ts.input input:focus:-moz-placeholder, .ts.input input:focus:-ms-input-placeholder, .ts.input textarea:focus:-moz-placeholder, .ts.input textarea:focus:-ms-input-placeholder, .ts.input *[contenteditable]:focus:-moz-placeholder, .ts.input *[contenteditable]:focus:-ms-input-placeholder,
-.ts.input input.focus:-moz-placeholder,
-.ts.input input.focus:-ms-input-placeholder, .ts.input textarea.focus:-moz-placeholder, .ts.input textarea.focus:-ms-input-placeholder, .ts.input *[contenteditable].focus:-moz-placeholder, .ts.input *[contenteditable].focus:-ms-input-placeholder,
 .ts.form input:focus:-moz-placeholder,
 .ts.form input:focus:-ms-input-placeholder,
 .ts.form textarea:focus:-moz-placeholder,
 .ts.form textarea:focus:-ms-input-placeholder,
 .ts.form *[contenteditable]:focus:-moz-placeholder,
-.ts.form *[contenteditable]:focus:-ms-input-placeholder,
-.ts.form input.focus:-moz-placeholder,
-.ts.form input.focus:-ms-input-placeholder,
-.ts.form textarea.focus:-moz-placeholder,
-.ts.form textarea.focus:-ms-input-placeholder,
-.ts.form *[contenteditable].focus:-moz-placeholder,
-.ts.form *[contenteditable].focus:-ms-input-placeholder {
+.ts.form *[contenteditable]:focus:-ms-input-placeholder {
+  opacity: 0.9; }
+
+.ts.input.focus input::-webkit-input-placeholder,
+.ts.input.focus textarea::-webkit-input-placeholder,
+.ts.input.focus *[contenteditable]::-webkit-input-placeholder {
+  opacity: 0.9; }
+.ts.input.focus input:-moz-placeholder, .ts.input.focus input:-ms-input-placeholder,
+.ts.input.focus textarea:-moz-placeholder,
+.ts.input.focus textarea:-ms-input-placeholder,
+.ts.input.focus *[contenteditable]:-moz-placeholder,
+.ts.input.focus *[contenteditable]:-ms-input-placeholder {
   opacity: 0.9; }
 
 .ts.input.fitted:not(.horizontally):not(.vertically) input, .ts.input.fitted:not(.horizontally):not(.vertically) textarea, .ts.input.fitted:not(.horizontally):not(.vertically) *[contenteditable] {
@@ -4934,173 +4967,174 @@ ol.ts.horizontal.list li:before,
     font-weight: normal;
     opacity: 0.65; }
 .ts.input.error input:focus::-webkit-input-placeholder, .ts.input.error textarea:focus::-webkit-input-placeholder, .ts.input.error *[contenteditable]:focus::-webkit-input-placeholder,
-.ts.input.error input.focus::-webkit-input-placeholder, .ts.input.error textarea.focus::-webkit-input-placeholder, .ts.input.error *[contenteditable].focus::-webkit-input-placeholder,
 .ts.form .field.error input:focus::-webkit-input-placeholder,
 .ts.form .field.error textarea:focus::-webkit-input-placeholder,
 .ts.form .field.error *[contenteditable]:focus::-webkit-input-placeholder,
-.ts.form .field.error input.focus::-webkit-input-placeholder,
-.ts.form .field.error textarea.focus::-webkit-input-placeholder,
-.ts.form .field.error *[contenteditable].focus::-webkit-input-placeholder,
 .ts.input.negative input:focus::-webkit-input-placeholder,
 .ts.input.negative textarea:focus::-webkit-input-placeholder,
 .ts.input.negative *[contenteditable]:focus::-webkit-input-placeholder,
-.ts.input.negative input.focus::-webkit-input-placeholder,
-.ts.input.negative textarea.focus::-webkit-input-placeholder,
-.ts.input.negative *[contenteditable].focus::-webkit-input-placeholder,
 .ts.form .field.negative input:focus::-webkit-input-placeholder,
 .ts.form .field.negative textarea:focus::-webkit-input-placeholder,
 .ts.form .field.negative *[contenteditable]:focus::-webkit-input-placeholder,
-.ts.form .field.negative input.focus::-webkit-input-placeholder,
-.ts.form .field.negative textarea.focus::-webkit-input-placeholder,
-.ts.form .field.negative *[contenteditable].focus::-webkit-input-placeholder,
 .ts.input.warning input:focus::-webkit-input-placeholder,
 .ts.input.warning textarea:focus::-webkit-input-placeholder,
 .ts.input.warning *[contenteditable]:focus::-webkit-input-placeholder,
-.ts.input.warning input.focus::-webkit-input-placeholder,
-.ts.input.warning textarea.focus::-webkit-input-placeholder,
-.ts.input.warning *[contenteditable].focus::-webkit-input-placeholder,
 .ts.form .field.warning input:focus::-webkit-input-placeholder,
 .ts.form .field.warning textarea:focus::-webkit-input-placeholder,
 .ts.form .field.warning *[contenteditable]:focus::-webkit-input-placeholder,
-.ts.form .field.warning input.focus::-webkit-input-placeholder,
-.ts.form .field.warning textarea.focus::-webkit-input-placeholder,
-.ts.form .field.warning *[contenteditable].focus::-webkit-input-placeholder,
 .ts.input.success input:focus::-webkit-input-placeholder,
 .ts.input.success textarea:focus::-webkit-input-placeholder,
 .ts.input.success *[contenteditable]:focus::-webkit-input-placeholder,
-.ts.input.success input.focus::-webkit-input-placeholder,
-.ts.input.success textarea.focus::-webkit-input-placeholder,
-.ts.input.success *[contenteditable].focus::-webkit-input-placeholder,
 .ts.form .field.success input:focus::-webkit-input-placeholder,
 .ts.form .field.success textarea:focus::-webkit-input-placeholder,
 .ts.form .field.success *[contenteditable]:focus::-webkit-input-placeholder,
-.ts.form .field.success input.focus::-webkit-input-placeholder,
-.ts.form .field.success textarea.focus::-webkit-input-placeholder,
-.ts.form .field.success *[contenteditable].focus::-webkit-input-placeholder,
 .ts.input.positive input:focus::-webkit-input-placeholder,
 .ts.input.positive textarea:focus::-webkit-input-placeholder,
 .ts.input.positive *[contenteditable]:focus::-webkit-input-placeholder,
-.ts.input.positive input.focus::-webkit-input-placeholder,
-.ts.input.positive textarea.focus::-webkit-input-placeholder,
-.ts.input.positive *[contenteditable].focus::-webkit-input-placeholder,
 .ts.form .field.positive input:focus::-webkit-input-placeholder,
 .ts.form .field.positive textarea:focus::-webkit-input-placeholder,
-.ts.form .field.positive *[contenteditable]:focus::-webkit-input-placeholder,
-.ts.form .field.positive input.focus::-webkit-input-placeholder,
-.ts.form .field.positive textarea.focus::-webkit-input-placeholder,
-.ts.form .field.positive *[contenteditable].focus::-webkit-input-placeholder {
+.ts.form .field.positive *[contenteditable]:focus::-webkit-input-placeholder {
   opacity: 0.9; }
 .ts.input.error input:focus:-moz-placeholder, .ts.input.error input:focus:-ms-input-placeholder, .ts.input.error textarea:focus:-moz-placeholder, .ts.input.error textarea:focus:-ms-input-placeholder, .ts.input.error *[contenteditable]:focus:-moz-placeholder, .ts.input.error *[contenteditable]:focus:-ms-input-placeholder,
-.ts.input.error input.focus:-moz-placeholder,
-.ts.input.error input.focus:-ms-input-placeholder, .ts.input.error textarea.focus:-moz-placeholder, .ts.input.error textarea.focus:-ms-input-placeholder, .ts.input.error *[contenteditable].focus:-moz-placeholder, .ts.input.error *[contenteditable].focus:-ms-input-placeholder,
 .ts.form .field.error input:focus:-moz-placeholder,
 .ts.form .field.error input:focus:-ms-input-placeholder,
 .ts.form .field.error textarea:focus:-moz-placeholder,
 .ts.form .field.error textarea:focus:-ms-input-placeholder,
 .ts.form .field.error *[contenteditable]:focus:-moz-placeholder,
 .ts.form .field.error *[contenteditable]:focus:-ms-input-placeholder,
-.ts.form .field.error input.focus:-moz-placeholder,
-.ts.form .field.error input.focus:-ms-input-placeholder,
-.ts.form .field.error textarea.focus:-moz-placeholder,
-.ts.form .field.error textarea.focus:-ms-input-placeholder,
-.ts.form .field.error *[contenteditable].focus:-moz-placeholder,
-.ts.form .field.error *[contenteditable].focus:-ms-input-placeholder,
 .ts.input.negative input:focus:-moz-placeholder,
 .ts.input.negative input:focus:-ms-input-placeholder,
 .ts.input.negative textarea:focus:-moz-placeholder,
 .ts.input.negative textarea:focus:-ms-input-placeholder,
 .ts.input.negative *[contenteditable]:focus:-moz-placeholder,
 .ts.input.negative *[contenteditable]:focus:-ms-input-placeholder,
-.ts.input.negative input.focus:-moz-placeholder,
-.ts.input.negative input.focus:-ms-input-placeholder,
-.ts.input.negative textarea.focus:-moz-placeholder,
-.ts.input.negative textarea.focus:-ms-input-placeholder,
-.ts.input.negative *[contenteditable].focus:-moz-placeholder,
-.ts.input.negative *[contenteditable].focus:-ms-input-placeholder,
 .ts.form .field.negative input:focus:-moz-placeholder,
 .ts.form .field.negative input:focus:-ms-input-placeholder,
 .ts.form .field.negative textarea:focus:-moz-placeholder,
 .ts.form .field.negative textarea:focus:-ms-input-placeholder,
 .ts.form .field.negative *[contenteditable]:focus:-moz-placeholder,
 .ts.form .field.negative *[contenteditable]:focus:-ms-input-placeholder,
-.ts.form .field.negative input.focus:-moz-placeholder,
-.ts.form .field.negative input.focus:-ms-input-placeholder,
-.ts.form .field.negative textarea.focus:-moz-placeholder,
-.ts.form .field.negative textarea.focus:-ms-input-placeholder,
-.ts.form .field.negative *[contenteditable].focus:-moz-placeholder,
-.ts.form .field.negative *[contenteditable].focus:-ms-input-placeholder,
 .ts.input.warning input:focus:-moz-placeholder,
 .ts.input.warning input:focus:-ms-input-placeholder,
 .ts.input.warning textarea:focus:-moz-placeholder,
 .ts.input.warning textarea:focus:-ms-input-placeholder,
 .ts.input.warning *[contenteditable]:focus:-moz-placeholder,
 .ts.input.warning *[contenteditable]:focus:-ms-input-placeholder,
-.ts.input.warning input.focus:-moz-placeholder,
-.ts.input.warning input.focus:-ms-input-placeholder,
-.ts.input.warning textarea.focus:-moz-placeholder,
-.ts.input.warning textarea.focus:-ms-input-placeholder,
-.ts.input.warning *[contenteditable].focus:-moz-placeholder,
-.ts.input.warning *[contenteditable].focus:-ms-input-placeholder,
 .ts.form .field.warning input:focus:-moz-placeholder,
 .ts.form .field.warning input:focus:-ms-input-placeholder,
 .ts.form .field.warning textarea:focus:-moz-placeholder,
 .ts.form .field.warning textarea:focus:-ms-input-placeholder,
 .ts.form .field.warning *[contenteditable]:focus:-moz-placeholder,
 .ts.form .field.warning *[contenteditable]:focus:-ms-input-placeholder,
-.ts.form .field.warning input.focus:-moz-placeholder,
-.ts.form .field.warning input.focus:-ms-input-placeholder,
-.ts.form .field.warning textarea.focus:-moz-placeholder,
-.ts.form .field.warning textarea.focus:-ms-input-placeholder,
-.ts.form .field.warning *[contenteditable].focus:-moz-placeholder,
-.ts.form .field.warning *[contenteditable].focus:-ms-input-placeholder,
 .ts.input.success input:focus:-moz-placeholder,
 .ts.input.success input:focus:-ms-input-placeholder,
 .ts.input.success textarea:focus:-moz-placeholder,
 .ts.input.success textarea:focus:-ms-input-placeholder,
 .ts.input.success *[contenteditable]:focus:-moz-placeholder,
 .ts.input.success *[contenteditable]:focus:-ms-input-placeholder,
-.ts.input.success input.focus:-moz-placeholder,
-.ts.input.success input.focus:-ms-input-placeholder,
-.ts.input.success textarea.focus:-moz-placeholder,
-.ts.input.success textarea.focus:-ms-input-placeholder,
-.ts.input.success *[contenteditable].focus:-moz-placeholder,
-.ts.input.success *[contenteditable].focus:-ms-input-placeholder,
 .ts.form .field.success input:focus:-moz-placeholder,
 .ts.form .field.success input:focus:-ms-input-placeholder,
 .ts.form .field.success textarea:focus:-moz-placeholder,
 .ts.form .field.success textarea:focus:-ms-input-placeholder,
 .ts.form .field.success *[contenteditable]:focus:-moz-placeholder,
 .ts.form .field.success *[contenteditable]:focus:-ms-input-placeholder,
-.ts.form .field.success input.focus:-moz-placeholder,
-.ts.form .field.success input.focus:-ms-input-placeholder,
-.ts.form .field.success textarea.focus:-moz-placeholder,
-.ts.form .field.success textarea.focus:-ms-input-placeholder,
-.ts.form .field.success *[contenteditable].focus:-moz-placeholder,
-.ts.form .field.success *[contenteditable].focus:-ms-input-placeholder,
 .ts.input.positive input:focus:-moz-placeholder,
 .ts.input.positive input:focus:-ms-input-placeholder,
 .ts.input.positive textarea:focus:-moz-placeholder,
 .ts.input.positive textarea:focus:-ms-input-placeholder,
 .ts.input.positive *[contenteditable]:focus:-moz-placeholder,
 .ts.input.positive *[contenteditable]:focus:-ms-input-placeholder,
-.ts.input.positive input.focus:-moz-placeholder,
-.ts.input.positive input.focus:-ms-input-placeholder,
-.ts.input.positive textarea.focus:-moz-placeholder,
-.ts.input.positive textarea.focus:-ms-input-placeholder,
-.ts.input.positive *[contenteditable].focus:-moz-placeholder,
-.ts.input.positive *[contenteditable].focus:-ms-input-placeholder,
 .ts.form .field.positive input:focus:-moz-placeholder,
 .ts.form .field.positive input:focus:-ms-input-placeholder,
 .ts.form .field.positive textarea:focus:-moz-placeholder,
 .ts.form .field.positive textarea:focus:-ms-input-placeholder,
 .ts.form .field.positive *[contenteditable]:focus:-moz-placeholder,
-.ts.form .field.positive *[contenteditable]:focus:-ms-input-placeholder,
-.ts.form .field.positive input.focus:-moz-placeholder,
-.ts.form .field.positive input.focus:-ms-input-placeholder,
-.ts.form .field.positive textarea.focus:-moz-placeholder,
-.ts.form .field.positive textarea.focus:-ms-input-placeholder,
-.ts.form .field.positive *[contenteditable].focus:-moz-placeholder,
-.ts.form .field.positive *[contenteditable].focus:-ms-input-placeholder {
+.ts.form .field.positive *[contenteditable]:focus:-ms-input-placeholder {
+  opacity: 0.9; }
+.ts.input.error.focus input::-webkit-input-placeholder, .ts.input.error.focus textarea::-webkit-input-placeholder, .ts.input.error.focus *[contenteditable]::-webkit-input-placeholder,
+.ts.form .field.error.focus input::-webkit-input-placeholder,
+.ts.form .field.error.focus textarea::-webkit-input-placeholder,
+.ts.form .field.error.focus *[contenteditable]::-webkit-input-placeholder,
+.ts.input.negative.focus input::-webkit-input-placeholder,
+.ts.input.negative.focus textarea::-webkit-input-placeholder,
+.ts.input.negative.focus *[contenteditable]::-webkit-input-placeholder,
+.ts.form .field.negative.focus input::-webkit-input-placeholder,
+.ts.form .field.negative.focus textarea::-webkit-input-placeholder,
+.ts.form .field.negative.focus *[contenteditable]::-webkit-input-placeholder,
+.ts.input.warning.focus input::-webkit-input-placeholder,
+.ts.input.warning.focus textarea::-webkit-input-placeholder,
+.ts.input.warning.focus *[contenteditable]::-webkit-input-placeholder,
+.ts.form .field.warning.focus input::-webkit-input-placeholder,
+.ts.form .field.warning.focus textarea::-webkit-input-placeholder,
+.ts.form .field.warning.focus *[contenteditable]::-webkit-input-placeholder,
+.ts.input.success.focus input::-webkit-input-placeholder,
+.ts.input.success.focus textarea::-webkit-input-placeholder,
+.ts.input.success.focus *[contenteditable]::-webkit-input-placeholder,
+.ts.form .field.success.focus input::-webkit-input-placeholder,
+.ts.form .field.success.focus textarea::-webkit-input-placeholder,
+.ts.form .field.success.focus *[contenteditable]::-webkit-input-placeholder,
+.ts.input.positive.focus input::-webkit-input-placeholder,
+.ts.input.positive.focus textarea::-webkit-input-placeholder,
+.ts.input.positive.focus *[contenteditable]::-webkit-input-placeholder,
+.ts.form .field.positive.focus input::-webkit-input-placeholder,
+.ts.form .field.positive.focus textarea::-webkit-input-placeholder,
+.ts.form .field.positive.focus *[contenteditable]::-webkit-input-placeholder {
+  opacity: 0.9; }
+.ts.input.error.focus input:-moz-placeholder, .ts.input.error.focus input:-ms-input-placeholder, .ts.input.error.focus textarea:-moz-placeholder, .ts.input.error.focus textarea:-ms-input-placeholder, .ts.input.error.focus *[contenteditable]:-moz-placeholder, .ts.input.error.focus *[contenteditable]:-ms-input-placeholder,
+.ts.form .field.error.focus input:-moz-placeholder,
+.ts.form .field.error.focus input:-ms-input-placeholder,
+.ts.form .field.error.focus textarea:-moz-placeholder,
+.ts.form .field.error.focus textarea:-ms-input-placeholder,
+.ts.form .field.error.focus *[contenteditable]:-moz-placeholder,
+.ts.form .field.error.focus *[contenteditable]:-ms-input-placeholder,
+.ts.input.negative.focus input:-moz-placeholder,
+.ts.input.negative.focus input:-ms-input-placeholder,
+.ts.input.negative.focus textarea:-moz-placeholder,
+.ts.input.negative.focus textarea:-ms-input-placeholder,
+.ts.input.negative.focus *[contenteditable]:-moz-placeholder,
+.ts.input.negative.focus *[contenteditable]:-ms-input-placeholder,
+.ts.form .field.negative.focus input:-moz-placeholder,
+.ts.form .field.negative.focus input:-ms-input-placeholder,
+.ts.form .field.negative.focus textarea:-moz-placeholder,
+.ts.form .field.negative.focus textarea:-ms-input-placeholder,
+.ts.form .field.negative.focus *[contenteditable]:-moz-placeholder,
+.ts.form .field.negative.focus *[contenteditable]:-ms-input-placeholder,
+.ts.input.warning.focus input:-moz-placeholder,
+.ts.input.warning.focus input:-ms-input-placeholder,
+.ts.input.warning.focus textarea:-moz-placeholder,
+.ts.input.warning.focus textarea:-ms-input-placeholder,
+.ts.input.warning.focus *[contenteditable]:-moz-placeholder,
+.ts.input.warning.focus *[contenteditable]:-ms-input-placeholder,
+.ts.form .field.warning.focus input:-moz-placeholder,
+.ts.form .field.warning.focus input:-ms-input-placeholder,
+.ts.form .field.warning.focus textarea:-moz-placeholder,
+.ts.form .field.warning.focus textarea:-ms-input-placeholder,
+.ts.form .field.warning.focus *[contenteditable]:-moz-placeholder,
+.ts.form .field.warning.focus *[contenteditable]:-ms-input-placeholder,
+.ts.input.success.focus input:-moz-placeholder,
+.ts.input.success.focus input:-ms-input-placeholder,
+.ts.input.success.focus textarea:-moz-placeholder,
+.ts.input.success.focus textarea:-ms-input-placeholder,
+.ts.input.success.focus *[contenteditable]:-moz-placeholder,
+.ts.input.success.focus *[contenteditable]:-ms-input-placeholder,
+.ts.form .field.success.focus input:-moz-placeholder,
+.ts.form .field.success.focus input:-ms-input-placeholder,
+.ts.form .field.success.focus textarea:-moz-placeholder,
+.ts.form .field.success.focus textarea:-ms-input-placeholder,
+.ts.form .field.success.focus *[contenteditable]:-moz-placeholder,
+.ts.form .field.success.focus *[contenteditable]:-ms-input-placeholder,
+.ts.input.positive.focus input:-moz-placeholder,
+.ts.input.positive.focus input:-ms-input-placeholder,
+.ts.input.positive.focus textarea:-moz-placeholder,
+.ts.input.positive.focus textarea:-ms-input-placeholder,
+.ts.input.positive.focus *[contenteditable]:-moz-placeholder,
+.ts.input.positive.focus *[contenteditable]:-ms-input-placeholder,
+.ts.form .field.positive.focus input:-moz-placeholder,
+.ts.form .field.positive.focus input:-ms-input-placeholder,
+.ts.form .field.positive.focus textarea:-moz-placeholder,
+.ts.form .field.positive.focus textarea:-ms-input-placeholder,
+.ts.form .field.positive.focus *[contenteditable]:-moz-placeholder,
+.ts.form .field.positive.focus *[contenteditable]:-ms-input-placeholder {
   opacity: 0.9; }
 
 .ts.inverted.primary.input input, .ts.inverted.primary.input textarea, .ts.inverted.primary.input *[contenteditable] {
@@ -8784,15 +8818,15 @@ a.ts.label {
   border-radius: 500em;
   width: 1em;
   height: 1em;
-  padding: .5em; }
+  padding: 0.5em; }
 
 .ts.label.empty.triangle {
   border-radius: 0;
   border-top: none;
   background-color: transparent !important;
   padding: 0;
-  border-left: .5em solid transparent;
-  border-right: .5em solid transparent;
+  border-left: 0.5em solid transparent;
+  border-right: 0.5em solid transparent;
   border-left-color: transparent !important;
   border-right-color: transparent !important;
   border-top-color: transparent !important;
@@ -8801,7 +8835,7 @@ a.ts.label {
 
 .ts.label.empty.square {
   border-radius: 0;
-  padding: .5em; }
+  padding: 0.5em; }
 
 .ts.basic.label {
   background: none #FFF;
@@ -9104,6 +9138,7 @@ a.ts.label.inverted:active {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABaAAAAACCAYAAACuTHuKAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1OThBRDY4OUNDMTYxMUU0OUE3NUVGOEJDMzMzMjE2NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo1OThBRDY4QUNDMTYxMUU0OUE3NUVGOEJDMzMzMjE2NyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjU5OEFENjg3Q0MxNjExRTQ5QTc1RUY4QkMzMzMyMTY3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU5OEFENjg4Q0MxNjExRTQ5QTc1RUY4QkMzMzMyMTY3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+VU513gAAADVJREFUeNrs0DENACAQBDBIWLGBJQby/mUcJn5sJXQmOQMAAAAAAJqt+2prAAAAAACg2xdgANk6BEVuJgyMAAAAAElFTkSuQmCC); }
 
 .ts.hidden.divider {
+  visibility: hidden;
   border-color: transparent !important; }
 
 .ts.hidden.divider:before,
