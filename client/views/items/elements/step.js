@@ -148,6 +148,23 @@ export default
         },
         {
             type       : small,
+            title      : '標題',
+            description: `步驟裡面可以有標題。`,
+            link       : 'title'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts steps">
+    <div class="step">
+        <div class="content">
+            <div class="title">運送</div>
+        </div>
+    </div>
+</div>`,
+            mark: 'title'
+        },
+        {
+            type       : small,
             title      : '註釋',
             description: `步驟裡面可以包含註釋。`,
             link       : 'description'
@@ -156,8 +173,10 @@ export default
             type: 'example',
             code: `<div class="ts steps">
     <div class="step">
-        <div class="title">運送</div>
-        <div class="description">選擇你的運送方式</div>
+        <div class="content">
+            <div class="title">運送</div>
+            <div class="description">選擇你的運送方式</div>
+        </div>
     </div>
 </div>`,
             mark: 'description'
