@@ -5,6 +5,7 @@
 </template>
 
 <style>
+@import "asserts/tocas.css";
 body
 {
     margin: 0;
