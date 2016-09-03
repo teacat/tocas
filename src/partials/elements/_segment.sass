@@ -63,12 +63,25 @@
     box-shadow: none
     
 //-------------------//
-//      Borderless
+//     Borderless
 //-------------------//
 
 .ts.segment.borderless,
 .ts.segments.borderless .segment
     border: 0
+    
+//-------------------//
+//      Floated
+//-------------------//
+
+.ts.segment.floated,
+.ts.segment[class*="left floated"]
+    float       : left
+    margin-right: $segment_floatedDistance
+
+.ts.segment[class*="right floated"]
+    float       : right
+    margin-left: $segment_floatedDistance
 
 //-------------------//
 //      Loading
@@ -255,6 +268,7 @@
 //      Compact
 //-------------------//  
 
+.ts.segments.compact .segment,
 .ts.segment.compact
     display: table
 
@@ -272,6 +286,17 @@
 .ts.segment[class*="top attached"]
     margin-bottom: 0
     
+    border-bottom-left-radius : 0
+    border-bottom-right-radius: 0
+    border-bottom-width       : $segment_borderWidth
+    
+.ts.segment.attached:not(.top):not(.bottom)
+    margin-top   : 0
+    margin-bottom: 0
+ 
+    border-top-left-radius    : 0
+    border-top-right-radius   : 0
+    border-top-width          : $segment_borderWidth
     border-bottom-left-radius : 0
     border-bottom-right-radius: 0
     border-bottom-width       : $segment_borderWidth
