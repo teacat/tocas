@@ -1,7 +1,7 @@
 <template>
     <div class="ts example flatted segments">
         <div class="ts clearing preview segment" v-html="code" v-if="hasExample"></div>
-        <pre class="ts secondary padded segment code"><code class="hljs" :data-utaha-hightlight="mark" :data-utaha-remove="remove">{{ code }}</code>
+        <pre class="ts secondary padded segment code"><code class="hljs" :data-utaha-hightlight="mark" :data-utaha-tag-hightlight="tagMark" :data-utaha-remove="remove">{{ code }}</code>
         <div class="ts bottom right attached label">原始碼</div></pre>
     </div>
 </template>
@@ -134,6 +134,36 @@ $(() =>
             }
         }
     }
+    
+    for(var el in examples)
+    {
+        var el = examples[el]
+        
+        if(typeof el === 'number' || typeof el === 'function')
+            continue
+            
+        var hightlights = el.getAttribute('data-utaha-tag-hightlight')
+            console.log(hightlights)
+        if(hightlights === null)
+            continue
+        
+        var hightlights = hightlights.split(', ')
+         
+        for(var hightlight in hightlights)
+        {
+            var thisPart    = hightlights[hightlight]
+            var strings     = el.querySelectorAll('.hljs-name')
+            var replacePart = '<span class="hljs-important-class">' + thisPart + '</span>'
+    
+            for(var j = 0; j < strings.length; j++)
+            {
+                if(strings[j].innerHTML.indexOf(thisPart) == -1)
+                    continue
+    
+                strings[j].innerHTML = strings[j].innerHTML.replace(thisPart, replacePart)
+            }
+        }
+    }
 })
 
 export default 
@@ -143,6 +173,7 @@ export default
     {
         code      : { default: ''   },
         mark      : { default: null },
+        tagMark   : { default: null },
         remove    : { default: null },
         hasExample: { default: true }
     }

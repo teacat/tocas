@@ -31,11 +31,13 @@
                         
                         <doc-example :code="item.code" 
                                           :mark="item.mark"
+                                          :tagMark="item.tagMark"
                                           :remove="item.remove"
                                           v-if="item.type == 'example'"></doc-example>
                     
                         <doc-example :code="item.code" 
                                           :mark="item.mark"
+                                          :tagMark="item.tagMark"
                                           :hasExample="false"
                                           v-if="item.type == 'source'"></doc-example>
                     </template>
