@@ -31,6 +31,7 @@
     border-radius   : $menu_borderRadius
     border          : $menu_border
     box-shadow      : $menu_boxShadow
+    overflow-x      : auto
     
     &:first-child
         margin-top: 0
@@ -72,6 +73,7 @@
     color          : $menu_itemTextColor
     font-weight    : $menu_itemFontWeight
     border         : $menu_itemBorder
+    white-space    : nowrap
 
 .ts.menu:not(.vertical) .item,
 .ts.menu:not(.vertical) .menu .item
@@ -187,8 +189,13 @@
 
 .ts.menu.stackable
     +rwd-serious(mobile)
+        overflow-x    : hidden
         flex-direction: column
         
+        .item
+            margin-left : 0 !important
+            margin-right: 0 !important
+            
         .item:before
             position: absolute
             content : ''
@@ -197,6 +204,11 @@
             left    : 0
             height  : $menu_dividerSize
             width   : 100%
+        
+        .right.menu
+            flex-direction: column
+            float         : left
+            margin-left   : initial !important
 
 //-------------------//
 //      Vertical       
@@ -420,7 +432,8 @@
 .ts.menu.pure .menu .item:first-child
     margin-left: 0
     
-.ts.menu.pure .item:not(.header):hover
+.ts.menu.pure .item:not(.header):hover,
+.ts.menu.pure a.item.header:hover
     background-color: initial !important
     opacity         : $menu_pureItemHoverOpacity
 
