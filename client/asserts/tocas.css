@@ -624,7 +624,7 @@ div[contenteditable]:empty:not(:focus):before {
 .ts.labeled.icon.buttons .button,
 .ts.labeled.icon.button {
   position: relative;
-  padding-left: calc(1.5em + calc(1em + 0.78571em * 2)) !important;
+  padding-left: calc(1.5em + 1em + 0.78571em * 2) !important;
   padding-right: 1.5em !important; }
 
 /* Left Labeled */
@@ -651,7 +651,7 @@ div[contenteditable]:empty:not(:focus):before {
 
 /* Right Labeled */
 .ts[class*="right labeled"].icon.button {
-  padding-right: calc(1.5em + calc(1em + 0.78571em * 2)) !important;
+  padding-right: calc(1.5em + 1em + 0.78571em * 2) !important;
   padding-left: 1.5em !important; }
 
 .ts[class*="right labeled"].icon.button > .icon {
@@ -1171,7 +1171,7 @@ div[contenteditable]:empty:not(:focus):before {
   vertical-align: middle; }
 
 /* With Text Node */
-.ts.header .icon:only-child {
+.ts.header > .icon:only-child {
   display: inline-block;
   padding: 0em;
   margin-right: 0.75rem; }
@@ -1497,6 +1497,9 @@ h6.ts.smaller.sub.header {
   font-size: "";
   margin-left: 0.5rem;
   vertical-align: middle; }
+
+.ts.header .ts.horizontal.label {
+  margin-left: 0; }
 
 .ts.segment {
   position: relative;
@@ -2632,30 +2635,6 @@ ol.ts.horizontal.list li:before,
 .ts.grid .row.centered {
   align-content: center; }
 
-.ts.grid .row[class*="only"],
-.ts.grid .column[class*="only"] {
-  display: none; }
-
-@media (min-width: 1200px) {
-  .ts.grid .row[class*="large screen only"],
-  .ts.grid .column[class*="large screen only"] {
-    display: flex !important; } }
-
-@media (min-width: 992px) {
-  .ts.grid .row[class*="computer only"],
-  .ts.grid .column[class*="computer only"] {
-    display: flex !important; } }
-
-@media (min-width: 768px) {
-  .ts.grid .row[class*="tablet only"],
-  .ts.grid .column[class*="tablet only"] {
-    display: flex !important; } }
-
-@media (max-width: 767px) {
-  .ts.grid .row[class*="mobile only"],
-  .ts.grid .column[class*="mobile only"] {
-    display: flex !important; } }
-
 .column[class*="right floated"] {
   margin-left: auto; }
 
@@ -3267,7 +3246,8 @@ ol.ts.horizontal.list li:before,
   background-color: #FFF;
   border-radius: 0.28571rem;
   border: 1px solid #f0f0f0;
-  box-shadow: 0px 1px 2px 0 #f0f0f0; }
+  box-shadow: 0px 1px 2px 0 #f0f0f0;
+  overflow-x: auto; }
   .ts.menu:first-child {
     margin-top: 0; }
   .ts.menu:last-child {
@@ -3292,7 +3272,8 @@ ol.ts.horizontal.list li:before,
   text-decoration: none;
   color: #646464;
   font-weight: 400;
-  border: 1px solid #f0f0f0; }
+  border: 1px solid #f0f0f0;
+  white-space: nowrap; }
 
 .ts.menu:not(.vertical) .item,
 .ts.menu:not(.vertical) .menu .item {
@@ -3455,7 +3436,11 @@ ol.ts.horizontal.list li:before,
 
 @media (max-width: 767px) {
   .ts.menu.stackable {
+    overflow-x: hidden;
     flex-direction: column; }
+    .ts.menu.stackable .item {
+      margin-left: 0 !important;
+      margin-right: 0 !important; }
     .ts.menu.stackable .item:before {
       position: absolute;
       content: "";
@@ -3463,7 +3448,11 @@ ol.ts.horizontal.list li:before,
       bottom: 0;
       left: 0;
       height: 1px;
-      width: 100%; } }
+      width: 100%; }
+    .ts.menu.stackable .right.menu {
+      flex-direction: column;
+      float: left;
+      margin-left: initial !important; } }
 
 .ts.menu.vertical {
   flex-direction: column; }
@@ -3645,7 +3634,8 @@ ol.ts.horizontal.list li:before,
 .ts.menu.pure .menu .item:first-child {
   margin-left: 0; }
 
-.ts.menu.pure .item:not(.header):hover {
+.ts.menu.pure .item:not(.header):hover,
+.ts.menu.pure a.item.header:hover {
   background-color: initial !important;
   opacity: 0.8; }
 
@@ -5635,7 +5625,7 @@ i.massive.icons {
 
 i.icon.fitted {
   width: auto;
-  margin: 0em; }
+  margin: 0em !important; }
 
 i.icons.disabled .icon,
 i.icon.disabled {
@@ -8364,6 +8354,9 @@ a.ts.flatted.card:hover,
   border-radius: 0.28571rem;
   padding: calc(0.78571em / 1.5) calc(1em / 1.5); }
 
+.ts.dropdown:not(.basic) {
+  z-index: 11; }
+
 .ts.dropdown .menu {
   cursor: auto;
   position: absolute;
@@ -9314,8 +9307,7 @@ img.ts.bordered.image {
   margin-right: 0.25em;
   display: inline-block;
   width: 2em;
-  height: 2em;
-  border-radius: 500em; }
+  height: 2em; }
 
 .ts.spaced.image {
   display: inline-block !important;
@@ -9874,7 +9866,8 @@ img.ts.bordered.image {
 .ts.comments .comment .author {
   font-size: 1em;
   color: #646464;
-  font-weight: bold; }
+  font-weight: bold;
+  margin-right: 0.5em; }
 
 .ts.comments .comment a.author {
   cursor: pointer; }
@@ -9884,7 +9877,6 @@ img.ts.bordered.image {
 
 .ts.comments .comment .metadata {
   display: inline-flex;
-  margin-left: 0.5em;
   color: #c8c8c8;
   font-size: 0.875em; }
 
