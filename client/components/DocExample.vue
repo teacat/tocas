@@ -72,6 +72,15 @@ code.hljs.javascript .hljs-string
 }
 </style>
 
+<style style="sass" scoped>
+pre
+{
+    overflow-y: auto;
+    overflow-x: auto;
+    max-height: 800px;
+}
+</style>
+
 <script>
 $(() =>
 {

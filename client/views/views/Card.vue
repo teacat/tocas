@@ -4,6 +4,13 @@
     </div>
 </template>
 
+<style>
+.ts.card
+{
+    width: 300px;
+}
+</style>
+
 <script>
 import DocBasic from '../../components/DocBasic'
 import items    from '../items/views/card'
