@@ -1,5 +1,5 @@
 <template>
-    <div class="ts horizontally fitted extra padded jumbotron">
+    <div class="ts fluid horizontally fitted extra padded jumbotron">
         <div class="ts container">
             <h1 class="ts left aligned header">
                 {{ title }}
