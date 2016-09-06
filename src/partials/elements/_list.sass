@@ -1,829 +1,320 @@
-@import ../../variables/elements/list.variables
-
-//*******************************//
-//              Main
-//*******************************//
-
-ul.ts.list,
-ol.ts.list,
-.ts.list 
-    list-style-type: $list_listStyleType
-    margin         : $list_margin
-    padding        : $list_verticalPadding $list_horizontalPadding
-    color          : $textColor
-
-ul.ts.list:first-child,
-ol.ts.list:first-child,
-.ts.list:first-child 
-    margin-top : 0em
-    padding-top: 0em
-
-ul.ts.list:last-child,
-ol.ts.list:last-child,
-.ts.list:last-child 
-    margin-bottom : 0em
-    padding-bottom: 0em
-
-//-------------------//
-//      Content
-//-------------------//
-
-/* List Item */
-ul.ts.list li,
-ol.ts.list li,
-.ts.list > .item,
-.ts.list .list > .item 
-    display            : list-item
-    table-layout       : fixed
-    list-style-type    : $list_listStyleType
-    list-style-position: $list_listStylePosition
-    padding            : $list_itemPadding
-    line-height        : $list_itemLineHeight
-
-ul.ts.list > li:first-child:after,
-ol.ts.list > li:first-child:after,
-.ts.list > .list > .item,
-.ts.list > .item:after 
-    content   : ''
-    display   : block
-    height    : 0
-    clear     : both
-    visibility: hidden
-
-ul.ts.list li:first-child,
-ol.ts.list li:first-child,
-.ts.list .list > .item:first-child,
-.ts.list > .item:first-child 
-    padding-top: 0em
-
-ul.ts.list li:last-child,
-ol.ts.list li:last-child,
-.ts.list .list > .item:last-child,
-.ts.list > .item:last-child 
-    padding-bottom: 0em
-
-/* Child List */
-ul.ts.list ul,
-ol.ts.list ol,
-.ts.list .list 
-    clear  : both
-    margin : 0em
-    padding: $list_childListPadding
-
-/* Child Item */
-ul.ts.list ul li,
-ol.ts.list ol li,
-.ts.list .list > .item 
-    padding    : $list_childItemPadding
-    line-height: $list_childItemLineHeight
-
-/* Icon */
-.ts.list .list > .item > i.icon,
-.ts.list > .item > i.icon 
-    display       : table-cell
-    margin        : 0em
-    padding-top   : $list_iconOffset
-    padding-right : $list_iconDistance
-    vertical-align: $list_iconContentVerticalAlign
-
-.ts.list .list > .item > i.icon:only-child,
-.ts.list > .item > i.icon:only-child 
-    display       : inline-block
-    vertical-align: $list_iconVerticalAlign
-
-/* Image */
-.ts.list .list > .item > .image,
-.ts.list > .item > .image 
-    display         : table-cell
-    background-color: transparent
-    margin          : 0em
-    vertical-align  : $list_imageAlign
-
-.ts.list .list > .item > .image:not(:only-child):not(img),
-.ts.list > .item > .image:not(:only-child):not(img) 
-    padding-right: $list_imageDistance
-
-.ts.list .list > .item > .image img,
-.ts.list > .item > .image img 
-    vertical-align: $list_imageAlign
-
-.ts.list .list > .item > img.image,
-.ts.list .list > .item > .image:only-child,
-.ts.list > .item > img.image,
-.ts.list > .item > .image:only-child 
-    display: inline-block
-
-/* Content */
-.ts.list .list > .item > .content,
-.ts.list > .item > .content 
-    line-height: $list_contentLineHeight
-
-.ts.list .list > .item > .image + .content,
-.ts.list .list > .item > .icon + .content,
-.ts.list > .item > .image + .content,
-.ts.list > .item > .icon + .content 
-    display       : table-cell
-    padding       : 0em 0em 0em $list_contentDistance
-    vertical-align: $list_contentVerticalAlign
-
-.ts.list .list > .item > img.image + .content,
-.ts.list > .item > img.image + .content 
-    display: inline-block
-
-.ts.list .list > .item > .content > .list,
-.ts.list > .item > .content > .list 
-    margin-left : 0em
-    padding-left: 0em
-
-/* Header */
-.ts.list .list > .item .header,
-.ts.list > .item .header 
-    display    : block
-    margin     : 0em
-    font-weight: $list_itemHeaderFontWeight
-    color      : $list_itemHeaderColor
-
-/* Description */
-.ts.list .list > .item .description,
-.ts.list > .item .description 
-    display: block
-    color  : $list_itemDescriptionColor
-
-/* Child Link */
-.ts.list > .item a,
-.ts.list .list > .item a 
-    cursor: pointer
-
-/* Linking Item */
-.ts.list .list > a.item,
-.ts.list > a.item 
-    cursor: pointer
-    color : $list_itemLinkColor
-
-.ts.list .list > a.item:hover,
-.ts.list > a.item:hover 
-    color: $list_itemLinkHoverColor
-
-/* Linked Item Icons */
-.ts.list .list > a.item i.icon,
-.ts.list > a.item i.icon 
-    color: $list_itemLinkIconColor
-
-/* Header Link */
-.ts.list .list > .item a.header,
-.ts.list > .item a.header 
-    cursor: pointer
-    color : $list_itemHeaderLinkColor !important
-
-.ts.list .list > .item a.header:hover,
-.ts.list > .item a.header:hover 
-    color: $list_itemHeaderLinkHoverColor !important
-
-/* Floated Content */
-.ts[class*="left floated"].list 
-    float: left
-
-.ts[class*="right floated"].list 
-    float: right
-
-.ts.list .list > .item [class*="left floated"],
-.ts.list > .item [class*="left floated"] 
-    float : left
-    margin: $list_leftFloatMargin
-
-.ts.list .list > .item [class*="right floated"],
-.ts.list > .item [class*="right floated"] 
-    float : right
-    margin: $list_rightFloatMargin
-
-//-------------------//
-//      Coupling
-//-------------------//
-
-.ts.menu .ts.list > .item,
-.ts.menu .ts.list .list > .item 
-    display            : list-item
-    table-layout       : fixed
-    background-color   : transparent
-    list-style-type    : $list_listStyleType
-    list-style-position: $list_listStylePosition
-    padding            : $list_itemVerticalPadding $list_itemHorizontalPadding
-    line-height        : $list_itemLineHeight
-
-.ts.menu .ts.list .list > .item:before,
-.ts.menu .ts.list > .item:before 
-    border    : none
-    background: none
-
-.ts.menu .ts.list .list > .item:first-child,
-.ts.menu .ts.list > .item:first-child 
-    padding-top: 0em
-
-.ts.menu .ts.list .list > .item:last-child,
-.ts.menu .ts.list > .item:last-child 
-    padding-bottom: 0em
-
-//-------------------//
-//     Horizontal
-//-------------------//
-
-.ts.horizontal.list 
-    display  : inline-block
-    font-size: 0em
-
-.ts.horizontal.list > .item 
-    display    : inline-block
-    margin-left: $list_horizontalSpacing
-    font-size  : 1rem
-
-.ts.horizontal.list:not(.celled) > .item:first-child 
-    margin-left : 0em !important
-    padding-left: 0em !important
-
-.ts.horizontal.list .list 
-    padding-left : 0em
-    padding-bottom: 0em
-
-.ts.horizontal.list > .item > .image,
-.ts.horizontal.list .list > .item > .image,
-.ts.horizontal.list > .item > .icon,
-.ts.horizontal.list .list > .item > .icon,
-.ts.horizontal.list > .item > .content,
-.ts.horizontal.list .list > .item > .content 
-    vertical-align: $list_horizontalVerticalAlign
-
-/* Padding on all elements */
-.ts.horizontal.list > .item:first-child,
-.ts.horizontal.list > .item:last-child 
-    padding-top   : $list_itemVerticalPadding
-    padding-bottom: $list_itemVerticalPadding
-
-/* Horizontal List */
-.ts.horizontal.list > .item > i.icon 
-    margin : 0em
-    padding: 0em $list_horizontalIconDistance 0em 0em
-
-.ts.horizontal.list > .item > .icon,
-.ts.horizontal.list > .item > .icon + .content 
-    float  : none
-    display: inline-block
-
-//-------------------//
-//      Disabled
-//-------------------//
-
-.ts.list .list > .disabled.item,
-.ts.list > .disabled.item 
-    pointer-events: none
-    color         : $list_disabledColor !important
-
-.ts.inverted.list .list > .disabled.item,
-.ts.inverted.list > .disabled.item 
-    color: $list_invertedDisabledColor !important
-
-//-------------------//
-//       Hover
-//-------------------//
-
-.ts.list .list > a.item:hover .icon,
-.ts.list > a.item:hover .icon 
-    color: $list_itemLinkIconHoverColor
-
-//-------------------//
-//      Inverted
-//-------------------//
-
-.ts.inverted.list .list > a.item > .icon,
-.ts.inverted.list > a.item > .icon 
-    color: $list_invertedIconLinkColor
-
-.ts.inverted.list .list > .item .header,
-.ts.inverted.list > .item .header 
-    color: $list_invertedHeaderColor
-
-.ts.inverted.list .list > .item .description,
-.ts.inverted.list > .item .description 
-    color: $list_invertedDescriptionColor
-
-/* Item Link */
-.ts.inverted.list .list > a.item,
-.ts.inverted.list > a.item 
-    cursor: pointer
-    color : $list_invertedItemLinkColor
-
-.ts.inverted.list .list > a.item:hover,
-.ts.inverted.list > a.item:hover 
-    color: $list_invertedItemLinkHoverColor
-
-/* Linking Content */
-.ts.inverted.list .item a:not(.ts) 
-    color: $list_invertedItemLinkColor !important
-
-.ts.inverted.list .item a:not(.ts):hover 
-    color: $list_invertedItemLinkHoverColor !important
-
-//-------------------//
-//      Aligned
-//-------------------//
-
-.ts.list[class*="top aligned"] .image,
-.ts.list[class*="top aligned"] .content,
-.ts.list [class*="top aligned"] 
-    vertical-align: top !important
-
-.ts.list[class*="middle aligned"] .image,
-.ts.list[class*="middle aligned"] .content,
-.ts.list [class*="middle aligned"] 
-    vertical-align: middle !important
-
-.ts.list[class*="bottom aligned"] .image,
-.ts.list[class*="bottom aligned"] .content,
-.ts.list [class*="bottom aligned"] 
-    vertical-align: bottom !important
-
-//-------------------//
-//       Link
-//-------------------//
-
-.ts.link.list .item,
-.ts.link.list a.item,
-.ts.link.list .item a:not(.ts) 
-    color     : $list_linkListItemColor
-    transition: $list_linkListTransition
-
-.ts.link.list a.item:hover,
-.ts.link.list .item a:not(.ts):hover 
-    color: $list_linkListItemHoverColor
-
-.ts.link.list a.item:active,
-.ts.link.list .item a:not(.ts):active 
-    color: $list_linkListItemDownColor
-
-.ts.link.list .active.item,
-.ts.link.list .active.item a:not(.ts) 
-    color: $list_linkListItemActiveColor
-
-/* Inverted */
-.ts.inverted.link.list .item,
-.ts.inverted.link.list a.item,
-.ts.inverted.link.list .item a:not(.ts) 
-    color: $list_invertedLinkListItemColor
-
-.ts.inverted.link.list a.item:hover,
-.ts.inverted.link.list .item a:not(.ts):hover 
-    color: $list_invertedLinkListItemHoverColor
-
-.ts.inverted.link.list a.item:active,
-.ts.inverted.link.list .item a:not(.ts):active 
-    color: $list_invertedLinkListItemDownColor
-
-.ts.inverted.link.list a.active.item,
-.ts.inverted.link.list .active.item a:not(.ts) 
-    color: $list_invertedLinkListItemActiveColor
-
-//-------------------//
-//      Selection
-//-------------------//
-
-.ts.selection.list .list > .item,
-.ts.selection.list > .item 
-    cursor       : pointer
-    background   : $list_selectionListBackground
-    padding      : $list_selectionListItemVerticalPadding $list_selectionListItemHorizontalPadding
-    color        : $list_selectionListColor
-    margin       : $list_selectionListItemMargin
-    border-radius: $list_selectionListItemBorderRadius
-    
-.ts.selection.list .list > .item:last-child,
-.ts.selection.list > .item:last-child 
-    margin-bottom: 0em
-
-.ts.selection.list.list >    .item:hover,
-.ts.selection.list > .item:hover 
-    background: $list_selectionListHoverBackground
-    color     : $list_selectionListHoverColor
-
-.ts.selection.list .list > .item:active,
-.ts.selection.list > .item:active 
-    background: $list_selectionListDownBackground
-    color     : $list_selectionListDownColor
-
-.ts.selection.list .list > .item.active,
-.ts.selection.list > .item.active 
-    background: $list_selectionListActiveBackground
-    color     : $list_selectionListActiveColor
-
-/* Inverted */
-.ts.inverted.selection.list > .item,
-.ts.inverted.selection.list > .item 
-    background: $list_invertedSelectionListBackground
-    color     : $list_invertedSelectionListColor
-
-.ts.inverted.selection.list > .item:hover,
-.ts.inverted.selection.list > .item:hover 
-    background: $list_invertedSelectionListHoverBackground
-    color     : $list_invertedSelectionListHoverColor
-
-.ts.inverted.selection.list > .item:active,
-.ts.inverted.selection.list > .item:active 
-    background: $list_invertedSelectionListDownBackground
-    color     : $list_invertedSelectionListDownColor
-
-.ts.inverted.selection.list > .item.active,
-.ts.inverted.selection.list > .item.active 
-    background: $list_invertedSelectionListActiveBackground
-    color     : $list_invertedSelectionListActiveColor
-
-/* Celled / Divided Selection List */
-.ts.celled.selection.list .list > .item,
-.ts.divided.selection.list .list > .item,
-.ts.celled.selection.list > .item,
-.ts.divided.selection.list > .item 
-    border-radius: 0em
-
-//-------------------//
-//      Animated
-//-------------------//
-
-.ts.animated.list > .item 
-    transition: $list_animatedListTransition
-
-.ts.animated.list:not(.horizontal) > .item:hover 
-    padding-left: $list_animatedListIndent
-
-//-------------------//
-//      Fitted
-//-------------------//
-.ts.fitted.list:not(.selection) .list > .item,
-.ts.fitted.list:not(.selection) > .item 
-    padding-left : 0em
-    padding-right: 0em
-
-.ts.fitted.selection.list .list > .item,
-.ts.fitted.selection.list > .item 
-    margin-left : -#{$list_selectionListItemHorizontalPadding}
-    margin-right: -#{$list_selectionListItemHorizontalPadding}
-
-//-------------------//
-//      Bulleted
-//-------------------//
-
-ul.ts.list,
-.ts.bulleted.list 
-    margin-left: $list_bulletDistance
-
-ul.ts.list li,
-.ts.bulleted.list .list > .item,
-.ts.bulleted.list > .item 
-    position: relative
-
-ul.ts.list li:before,
-.ts.bulleted.list .list > .item:before,
-.ts.bulleted.list > .item:before 
-    +extend(no-select)
-    
-    pointer-events: none
-    position      : absolute
-    top           : auto
-    left          : auto
-    font-weight   : normal
-    margin-left   : $list_bulletOffset
-    content       : $list_bulletCharacter
-    opacity       : $list_bulletOpacity
-    color         : $list_bulletColor
-    vertical-align: $list_bulletVerticalAlign
-
-ul.ts.list li:before,
-.ts.bulleted.list .list > a.item:before,
-.ts.bulleted.list > a.item:before 
-    color: $list_bulletLinkColor
-
-ul.ts.list ul,
-.ts.bulleted.list .list 
-    padding-left: $list_bulletChildDistance
-
-/* Horizontal Bulleted */
-ul.ts.horizontal.bulleted.list,
-.ts.horizontal.bulleted.list 
-    margin-left: 0em
-
-ul.ts.horizontal.bulleted.list li,
-.ts.horizontal.bulleted.list > .item 
-    margin-left: $list_horizontalBulletSpacing
-
-ul.ts.horizontal.bulleted.list li:first-child,
-.ts.horizontal.bulleted.list > .item:first-child 
-    margin-left: 0em
-
-ul.ts.horizontal.bulleted.list li::before,
-.ts.horizontal.bulleted.list > .item::before 
-    color: $list_horizontalBulletColor
-
-ul.ts.horizontal.bulleted.list li:first-child::before,
-.ts.horizontal.bulleted.list > .item:first-child::before 
-    display: none
-
-//-------------------//
-//      Ordered
-//-------------------//
-
-ol.ts.list,
-.ts.ordered.list,
-.ts.ordered.list .list,
-ol.ts.list ol 
-    counter-reset  : ordered
-    margin-left    : $list_orderedCountDistance
-    list-style-type: none
-
-ol.ts.list li,
-.ts.ordered.list .list > .item,
-.ts.ordered.list > .item 
-    list-style-type: none
-    position       : relative
-
-ol.ts.list li:before,
-.ts.ordered.list .list > .item:before,
-.ts.ordered.list > .item:before 
-    +extend(no-select)
-    position         : absolute
-    top              : auto
-    left             : auto
-    pointer-events   : none
-    margin-left      : -#{$list_orderedCountDistance}
-    counter-increment: $list_orderedCountName
-    content          : $list_orderedCountContent
-    text-align       : $list_orderedCountTextAlign
-    color            : $list_orderedCountColor
-    vertical-align   : $list_orderedCountVerticalAlign
-    opacity          : $list_orderedCountOpacity
-
-ol.ts.inverted.list li:before,
-.ts.ordered.inverted.list .list > .item:before,
-.ts.ordered.inverted.list > .item:before 
-    color: $list_orderedInvertedCountColor
-
-/* Value */
-.ts.ordered.list > .list > .item[data-value],
-.ts.ordered.list > .item[data-value] 
-    content: attr(data-value)
-
-ol.ts.list li[value]:before 
-    content: attr(value)
-
-/* Child Lists */
-ol.ts.list ol,
-.ts.ordered.list .list 
-    margin-left: $list_orderedChildCountDistance
-
-ol.ts.list ol li:before,
-.ts.ordered.list .list > .item:before 
-    margin-left: $list_orderedChildCountOffset
-
-/* Horizontal Ordered */
-ol.ts.horizontal.list,
-.ts.ordered.horizontal.list 
-    margin-left: 0em
-
-ol.ts.horizontal.list li:before,
-.ts.ordered.horizontal.list .list > .item:before,
-.ts.ordered.horizontal.list > .item:before 
-    position: static
-    margin  : 0em $list_horizontalOrderedCountDistance 0em 0em
-
-//-------------------//
-//      Divided
-//-------------------//
-
-.ts.divided.list > .item 
-    border-top: $list_dividedBorder
-
-.ts.divided.list .list > .item 
-    border-top: $list_dividedChildListBorder
-
-.ts.divided.list .item .list > .item 
-    border-top: $list_dividedChildItemBorder
-
-.ts.divided.list .list > .item:first-child,
-.ts.divided.list > .item:first-child 
-    border-top: none
-
-/* Sub Menu */
-.ts.divided.list:not(.horizontal) .list > .item:first-child 
-    border-top-width: $list_dividedBorderWidth
-
-/* Divided bulleted */
-.ts.divided.bulleted.list:not(.horizontal),
-.ts.divided.bulleted.list .list 
-    margin-left : 0em
-    padding-left: 0em
-
-.ts.divided.bulleted.list > .item:not(.horizontal) 
-    padding-left: $list_bulletDistance
-
-/* Divided Ordered */
-.ts.divided.ordered.list 
-    margin-left: 0em
-
-.ts.divided.ordered.list .list > .item,
-.ts.divided.ordered.list > .item 
-    padding-left: $list_orderedCountDistance
-
-.ts.divided.ordered.list .item .list 
-    margin-left   : 0em
-    margin-right  : 0em
-    padding-bottom: $list_itemVerticalPadding
-
-.ts.divided.ordered.list .item .list > .item 
-    padding-left: $list_orderedChildCountDistance
-
-/* Divided Selection */
-.ts.divided.selection.list .list > .item,
-.ts.divided.selection.list > .item 
-    margin       : 0em
-    border-radius: 0em
-
-/* Divided horizontal */
-.ts.divided.horizontal.list 
-    margin-left: 0em
-
-.ts.divided.horizontal.list > .item:not(:first-child) 
-    padding-left: $list_horizontalDividedSpacing
-
-.ts.divided.horizontal.list > .item:not(:last-child) 
-    padding-right: $list_horizontalDividedSpacing
-
-.ts.divided.horizontal.list > .item 
-    border-top : none
-    border-left: $list_dividedBorder
-    margin     : 0em
-    line-height: $list_horizontalDividedLineHeight
-
-.ts.horizontal.divided.list > .item:first-child 
-    border-left: none
-
-/* Inverted */
-.ts.divided.inverted.list > .item,
-.ts.divided.inverted.list > .list,
-.ts.divided.inverted.horizontal.list > .item 
-    border-color: $list_dividedInvertedBorderColor
-
-//-------------------//
-//      Celled
-//-------------------//
-
-.ts.celled.list > .item,
-.ts.celled.list > .list 
-    border-top   : $list_celledBorder
-    padding-left : $list_celledHorizontalPadding
-    padding-right: $list_celledHorizontalPadding
-
-.ts.celled.list > .item:last-child 
-    border-bottom: $list_celledBorder
-
-/* Padding on all elements */
-.ts.celled.list > .item:first-child,
-.ts.celled.list > .item:last-child 
-    padding-top   : $list_itemVerticalPadding
-    padding-bottom: $list_itemVerticalPadding
-
-/* Sub Menu */
-.ts.celled.list .item .list > .item 
-    border-width: 0px
-
-.ts.celled.list .list > .item:first-child 
-    border-top-width: 0px
-
-/* Celled Bulleted */
-.ts.celled.bulleted.list 
-    margin-left: 0em
-
-.ts.celled.bulleted.list .list > .item,
-.ts.celled.bulleted.list > .item 
-    padding-left: ($list_bulletDistance)
-
-.ts.celled.bulleted.list .item .list 
-    margin-left   : -#{$list_bulletDistance}
-    margin-right  : -#{$list_bulletDistance}
-    padding-bottom: $list_itemVerticalPadding
-
-/* Celled Ordered */
-.ts.celled.ordered.list 
-    margin-left: 0em
-
-.ts.celled.ordered.list .list > .item,
-.ts.celled.ordered.list > .item 
-    padding-left: $list_orderedCountDistance
-
-.ts.celled.ordered.list .item .list 
-    margin-left   : 0em
-    margin-right  : 0em
-    padding-bottom: $list_itemVerticalPadding
-
-.ts.celled.ordered.list .list > .item 
-    padding-left: $list_orderedChildCountDistance
-
-/* Celled Horizontal */
-.ts.horizontal.celled.list 
-    margin-left: 0em
-
-.ts.horizontal.celled.list .list > .item,
-.ts.horizontal.celled.list > .item 
-    border-top   : none
-    border-left  : $list_celledBorder
-    margin       : 0em
-    padding-left : $list_horizontalCelledSpacing
-    padding-right: $list_horizontalCelledSpacing
-    line-height  : $list_horizontalCelledLineHeight
-
-.ts.horizontal.celled.list .list > .item:last-child,
-.ts.horizontal.celled.list > .item:last-child 
-    border-bottom: none
-    border-right : $list_celledBorder
-
-/* Inverted */
-.ts.celled.inverted.list > .item,
-.ts.celled.inverted.list > .list 
-    border-color: $list_celledInvertedBorder
-
-.ts.celled.inverted.horizontal.list .list > .item,
-.ts.celled.inverted.horizontal.list > .item 
-    border-color: $list_celledInvertedBorder
-
-//-------------------//
-//      Relaxed
-//-------------------//
-
-.ts.relaxed.list:not(.horizontal) > .item:not(:first-child) 
-    padding-top: $list_relaxedItemVerticalPadding
-
-.ts.relaxed.list:not(.horizontal) > .item:not(:last-child) 
-    padding-bottom: $list_relaxedItemVerticalPadding
-
-.ts.horizontal.relaxed.list .list > .item:not(:first-child),
-.ts.horizontal.relaxed.list > .item:not(:first-child) 
-    padding-left: $list_relaxedHorizontalPadding
-
-.ts.horizontal.relaxed.list .list > .item:not(:last-child),
-.ts.horizontal.relaxed.list > .item:not(:last-child) 
-    padding-right: $list_relaxedHorizontalPadding
-
-/* Very Relaxed */
-.ts[class*="very relaxed"].list:not(.horizontal) > .item:not(:first-child) 
-    padding-top: $list_veryRelaxedItemVerticalPadding
-
-.ts[class*="very relaxed"].list:not(.horizontal) > .item:not(:last-child) 
-    padding-bottom: $list_veryRelaxedItemVerticalPadding
-
-.ts.horizontal[class*="very relaxed"].list .list > .item:not(:first-child),
-.ts.horizontal[class*="very relaxed"].list > .item:not(:first-child) 
-    padding-left: $list_veryRelaxedHorizontalPadding
-
-.ts.horizontal[class*="very relaxed"].list .list > .item:not(:last-child),
-.ts.horizontal[class*="very relaxed"].list > .item:not(:last-child) 
-    padding-right: $list_veryRelaxedHorizontalPadding
-
-//-------------------//
-//       Sizes
-//-------------------//
-
-.ts.mini.list 
-    font-size: $relativeMini
-.ts.tiny.list 
-    font-size: $relativeTiny
-.ts.small.list 
-    font-size: $relativeSmall
-.ts.list 
-    font-size: $relativeMedium
-.ts.large.list 
-    font-size: $relativeLarge
-.ts.big.list 
-    font-size: $relativeBig
-.ts.huge.list 
-    font-size: $relativeHuge
-.ts.massive.list 
-    font-size: $relativeMassive
-
-.ts.mini.horizontal.list .list > .item,
-.ts.mini.horizontal.list > .item 
-    font-size: $absoluteMini
-.ts.tiny.horizontal.list .list > .item,
-.ts.tiny.horizontal.list > .item 
-    font-size: $absoluteTiny
-.ts.small.horizontal.list .list > .item,
-.ts.small.horizontal.list > .item 
-    font-size: $absoluteSmall
-.ts.horizontal.list .list > .item,
-.ts.horizontal.list > .item 
-    font-size: $absoluteMedium
-.ts.large.horizontal.list .list > .item,
-.ts.large.horizontal.list > .item 
-    font-size: $absoluteLarge
-.ts.big.horizontal.list .list > .item,
-.ts.big.horizontal.list > .item 
-    font-size: $absoluteBig
-.ts.huge.horizontal.list .list > .item,
-.ts.huge.horizontal.list > .item 
-    font-size: $absoluteHuge
-.ts.massive.horizontal.list .list > .item,
-.ts.massive.horizontal.list > .item 
-    font-size: $absoluteMassive
+//   ▄▄▄        ▄▄████▄
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██
+//  ▀██▄▄▄████   ▄▄▄██▀
+//     ▀▀▀████▀▀▀▀▀
+//        ██
+//       ██          ▄█████▄       █████████████          ▄█             █▄
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   L I S T   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+//**************************************
+//***********   T H E M E   ************
+//**************************************
+
+=list-theme($color: #808080, $fontSize: 1.4rem)
+
+  // Item, LI
+  //
+  //
+
+  .item, li
+    color: $color
+
+
+
+  // [&] Middoted, [&] Bulleted
+  //
+  // 帶有點的清單。
+
+  &.middoted,
+  &.bulleted
+
+    .item:not(:first-child):before
+    li:not(:first-child):before
+      color: rgba($color, 0.8)
+
+
+
+
+//**************************************
+//*******   G E N E R A T O R   ********
+//**************************************
+
+=list-generator
+  @for $i from 1 through $listAmount
+    @at-root
+      #{&}.#{nth($listSizes, $i)}
+
+        $fontSize  : nth($listFontSizes, $i)
+        font-size: $fontSize
+
+
+
+//**************************************
+//************   M A I N   *************
+//**************************************
+
+.ts.list
+  +list-theme
+  +list-generator
+  +inline-block
+  +x-padding(0, x)
+
+  margin: 0
+
+  &:not(.horizontal)
+    .item, li
+      +y-margin($margin)
+
+    .item:not(:first-child)
+    li:not(:first-child)
+      +y-padding($padding / 2, x)
+
+
+
+  // Item, LI
+  //
+  //
+
+  .item, li
+    +flex
+
+    // Image
+    //
+    //
+
+    .image
+      +extend(aligns)
+
+      img
+        +block
+        +rd
+        max-height: 4rem
+
+
+
+    // Content
+    //
+    //
+
+    .content
+      +extend(aligns)
+
+      flex: 1
+      padding-left: $padding
+
+
+
+      // Header
+      //
+      //
+
+      .header
+        +y-margin(-.3rem, x)
+
+        color      : #676767
+        font-weight: 600
+
+
+
+      // Meta
+      //
+      //
+
+      .meta
+        +small
+        +y-margin($margin / 4, x)
+
+        color: #888
+
+
+
+      // Description
+      //
+      //
+
+      .description
+        +normal
+        +y-margin($margin / 4, x)
+
+        color: #333
+
+
+
+      // Extra
+      //
+      //
+
+      .extra
+        +y-margin($margin / 4, x)
+
+
+
+  // Centered
+  //
+  //
+
+  &.centered
+    text-align: center
+
+
+
+  // [&] Inverted
+  //
+  // 反色調的清單。
+
+  &.inverted
+    +list-theme($invertedTextColor)
+
+
+
+  // [&] Link
+  //
+  // 可供點擊回饋的連結清單。
+
+  &.link
+    .item, li
+      //opacity: 0.8
+      text-decoration: none
+
+      &.active
+        opacity: 1
+
+      &:hover
+        opacity: 1
+
+
+
+  // [&] Relaxed
+  //
+  // 較寬鬆的清單。
+
+  &.relaxed
+    .item, li
+      margin-bottom: $margin
+
+      &:last-child
+        margin-bottom: 0
+
+
+
+  // [&] Horizontal
+  //
+  // 水平清單
+
+  &.horizontal
+
+    // Item, LI
+    //
+    //
+
+    .item, li
+      +inline-flex
+      +y-margin(x, 0)
+      +x-margin($margin, x)
+
+      &:first-child
+        +x-margin(0, x)
+
+      &:not(:first-child):before
+        +x-padding($margin / 4)
+        +size(x, .6em)
+
+
+
+    // [&] Relaxed
+    //
+    // 較寬鬆的水平清單。
+
+    &.relaxed
+
+      .item, li
+        +x-margin(x, $margin)
+
+        &:last-child
+          +x-margin(x, 0)
+
+
+
+    // Content
+    //
+    //
+
+    .content
+      +inline-block
+      +x-margin($margin / 2, x)
+
+
+
+    // [&] Middoted
+    //
+    // 帶有「置中點」的清單。
+
+    &.middoted
+
+      .item:not(:first-child):before,
+      li:not(:first-child):before
+        content: '·'
+
+
+
+    // [&] Bulleted
+    //
+    // 帶有「重形點」的清單。
+
+    &.bulleted
+
+      .item:not(:first-child):before,
+      li:not(:first-child):before
+        content: '•'
+        width: .1rem
+
+
+
+    // Middoted / Bulleted Item, LI
+    //
+    // 移除水平清單在這些點左邊多餘的邊距。
+
+    &.middoted .item,
+    &.bulleted .item,
+    &.middoted li,
+    &.bulleted li
+      margin-left: 0
+
+
+
+  // [&] NOT Horizontal
+  //
+  // 不是水平清單（也就是垂直清單）。
+
+  &:not(.horizontal)
+
+    // [&] Middoted
+    //
+    // 帶有「置中點」的清單。
+
+    &.middoted
+
+      .item:before,
+      li:before
+        content: '·'
+
+
+
+    // [&] Bulleted
+    //
+    // 帶有「重形點」的清單。
+
+    &.bulleted
+
+      .item:before,
+      li:before
+        content: '•'

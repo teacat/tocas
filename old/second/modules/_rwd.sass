@@ -1,0 +1,88 @@
+// RWD
+//
+// The main content of the RWD.
+
+=rwd($type)
+
+  @if $type == xs
+    @media (max-width: $rwd-xs)
+      @content
+      
+  @else if $type == sm
+    @media (min-width: $rwd-sm-min) and (max-width: $rwd-sm-max)
+      @content
+      
+  @else if $type == md
+    @media (min-width: $rwd-md-min) and (max-width: $rwd-md-max)
+      @content
+      
+  @else if $type == lg
+    @media (min-width: $rwd-lg-min)
+      @content
+
+
+
+
+// RWD Hide
+//
+// Hide when it match some kind of the device of the RWD rules.
+
+=rwd-hide($type)
+  +rwd($type)
+    display: none
+    width  : 0px
+
+
+
+
+// RWD Position
+//
+// Change the position when the RWD rules was changed.
+
+=rwd-pos($type, $pos, $xy: null)
+  +rwd($type)
+    +pos($pos, $xy)
+
+
+
+
+// RWD Size
+//
+// Change the size when the RWD rules was changed.
+
+=rwd-size($type, $width: null, $height: null)
+  +rwd($type)
+    +size($width, $height)
+
+
+
+
+// RWD Font
+//
+// Change the font size and options when the RWD rules was changed.
+
+=rwd-font($type, $size, $color: null, $weight: null)
+  +rwd($type)
+    +font($size, $color, $weight)
+
+
+
+
+// RWD Margin
+//
+// Change the margin and options when the RWD rules was changed.
+
+=rwd-mar($type, $margin)
+  +rwd($type)
+    margin: $margin
+
+
+
+
+// RWD Padding
+//
+// Change the margin and options when the RWD rules was changed.
+
+=rwd-pad($type, $padding)
+  +rwd($type)
+    padding: $padding

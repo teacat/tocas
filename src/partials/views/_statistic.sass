@@ -1,382 +1,79 @@
-@import ../../variables/views/statistic.variables
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@   S T A T I S T I C   @@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-//*******************************//
-//              Main
-//*******************************//
+.ts.statistics
+  margin: -1em -2em
+  
+  .statistic
+    margin: 1em 2em
+  
+  &.horizontal
+    margin: -2em -1em
+  
+    .statistic
+      +flex
+      
+      +flex-row
+      
+      margin: 2em 1em
+      
+      .value
+        margin-right: .3em
 
-.ts.statistic 
-    display       : inline-flex
-    flex-direction: column
-    margin        : $statistic_margin
-    max-width     : $statistic_maxWidth
-
-.ts.statistic + .ts.statistic 
-    margin: 0em 0em 0em $statistic_horizontalSpacing
-
-.ts.statistic:first-child 
-    margin-top: 0em
-
-.ts.statistic:last-child 
-    margin-bottom: 0em
-
-//*******************************//
-//              Group
-//*******************************//
-
-/* Grouped */
-.ts.statistics 
-    display    : flex
-    align-items: flex-start
-    flex-wrap  : wrap
-
-.ts.statistics > .statistic 
-    display       : inline-flex
-    flex          : 0 1 auto
-    flex-direction: column
-    margin        : $statistic_elementMargin
-    max-width     : $statistic_elementMaxWidth
-
-.ts.statistics 
-    display: flex
-    margin : $statistic_groupMargin
-
-/* Clearing */
-.ts.statistics:after 
-    display   : block
-    content   : ' '
-    height    : 0px
-    clear     : both
-    overflow  : hidden
-    visibility: hidden
-
-.ts.statistics:first-child 
-    margin-top: 0em
-
-.ts.statistics:last-child 
-    margin-bottom: 0em
-
-//*******************************//
-//            Content
-//*******************************//
-
-//-------------------//
-//       Value
-//-------------------// 
-
-.ts.statistics .statistic > .value,
-.ts.statistic > .value 
-    font-size  : $statistic_valueSize
-    font-weight: $statistic_valueFontWeight
-    line-height: $statistic_valueLineHeight
-    color      : $statistic_valueColor
-    text-align : $statistic_textAlign
-
-//-------------------//
-//       Label
-//-------------------// 
-
-.ts.statistics .statistic > .label,
-.ts.statistic > .label 
-    font-size  : $statistic_labelSize
-    font-weight: $statistic_labelFontWeight
-    color      : $statistic_labelColor
-    text-align : $statistic_textAlign
-
-/* Top Label */
-.ts.statistics .statistic > .label ~ .value,
-.ts.statistic > .label ~ .value 
-    margin-top: $statistic_topLabelDistance
-
-/* Bottom Label */
-.ts.statistics .statistic > .value ~ .label,
-.ts.statistic > .value ~ .label 
-    margin-top: $statistic_bottomLabelDistance
-
-//*******************************//
-//              Types
-//*******************************//
-
-//-------------------//
-//       Icon Value
-//-------------------// 
-
-.ts.statistics .statistic > .value .icon,
-.ts.statistic > .value .icon 
-    opacity: 1
-    width  : auto
-    margin : 0em
-
-//-------------------//
-//    Text Values
-//-------------------// 
-
-.ts.statistics .statistic > .text.value,
-.ts.statistic > .text.value 
-    line-height: $statistic_textValueLineHeight
-    min-height : $statistic_textValueMinHeight
-    font-weight: $statistic_textValueFontWeight
-    text-align : center
-
-.ts.statistics .statistic > .text.value + .label,
-.ts.statistic > .text.value + .label 
+.ts.statistic, 
+.ts.statistics .statistic
+  +inline-flex
+  +flex-content-center
+  +flex-items-center
+  +flex-column
+  
+  &.horizontal
+    +flex-row
+    
+    .value
+      margin-right: .3em
+  
+  vertical-align: top
+  
+  .label
+    margin-bottom: .6em
+ 
+  .value + .label
+    margin-bottom: 0
+    margin-top: .6em
+ 
+  .value
+    line-height: 1
+    font-size: 3em
+    font-weight: 500
     text-align: center
-
-//-------------------//
-//    Image Value
-//-------------------// 
-
-.ts.statistics .statistic > .value img,
-.ts.statistic > .value img 
-    max-height    : $statistic_imageHeight
-    vertical-align: $statistic_imageVerticalAlign
-
-//*******************************//
-//           Variations
-//*******************************//
-
-//-------------------//
-//       Count
-//-------------------// 
-
-.ts.ten.statistics 
-    margin: $statistic_itemGroupMargin
-
-.ts.ten.statistics .statistic 
-    min-width: $tenColumn
-    margin   : $statistic_itemMargin
-
-.ts.nine.statistics 
-    margin: $statistic_itemGroupMargin
-
-.ts.nine.statistics .statistic 
-    min-width: $nineColumn
-    margin   : $statistic_itemMargin
-
-.ts.eight.statistics 
-    margin: $statistic_itemGroupMargin
-
-.ts.eight.statistics .statistic 
-    min-width: $eightColumn
-    margin   : $statistic_itemMargin
-
-.ts.seven.statistics 
-    margin: $statistic_itemGroupMargin
-
-.ts.seven.statistics .statistic 
-    min-width: $sevenColumn
-    margin   : $statistic_itemMargin
-
-.ts.six.statistics 
-    margin: $statistic_itemGroupMargin
-
-.ts.six.statistics .statistic 
-    min-width: $sixColumn
-    margin   : $statistic_itemMargin
-
-.ts.five.statistics 
-    margin: $statistic_itemGroupMargin
-
-.ts.five.statistics .statistic 
-    min-width: $fiveColumn
-    margin   : $statistic_itemMargin
-
-.ts.four.statistics 
-    margin: $statistic_itemGroupMargin
-
-.ts.four.statistics .statistic 
-    min-width: $fourColumn
-    margin   : $statistic_itemMargin
-
-.ts.three.statistics 
-    margin: $statistic_itemGroupMargin
-
-.ts.three.statistics .statistic 
-    min-width: $threeColumn
-    margin   : $statistic_itemMargin
-
-.ts.two.statistics 
-    margin: $statistic_itemGroupMargin
-
-.ts.two.statistics .statistic 
-    min-width: $twoColumn
-    margin   : $statistic_itemMargin
-
-.ts.one.statistics 
-    margin: $statistic_itemGroupMargin
-
-.ts.one.statistics .statistic 
-    min-width: $oneColumn
-    margin   : $statistic_itemMargin
-
-//-------------------//
-//     Horizontal
-//-------------------// 
-
-.ts.horizontal.statistic 
-    flex-direction: row
-    align-items   : center
-
-.ts.horizontal.statistics 
-    flex-direction: column
-    margin        : 0em
-    max-width     : none
-
-.ts.horizontal.statistics .statistic 
-    flex-direction: row
-    align-items   : center
-    max-width     : none
-    margin        : $statistic_horizontalGroupElementMargin
-
-.ts.horizontal.statistic > .text.value,
-.ts.horizontal.statistics > .statistic > .text.value 
-    min-height: 0em !important
-
-.ts.horizontal.statistics .statistic > .value .icon,
-.ts.horizontal.statistic > .value .icon 
-    width: $iconWidth
-
-.ts.horizontal.statistics .statistic > .value,
-.ts.horizontal.statistic > .value 
-    display       : inline-block
-    vertical-align: middle
-
-.ts.horizontal.statistics .statistic > .label,
-.ts.horizontal.statistic > .label 
-    display       : inline-block
-    vertical-align: middle
-    margin        : 0em 0em 0em $statistic_horizontalLabelDistance
-
-//-------------------//
-//      Inverted
-//-------------------// 
-
-.ts.inverted.statistics .statistic > .value,
-.ts.statistics .inverted.statistic > .value,
-.ts.inverted.statistic > .value 
-    color: $statistic_invertedColor
     
-.ts.inverted.statistics .statistic > .label,
-.ts.inverted.statistic .label
-    color: $statistic_invertedLabelColor
+    &.text
+      font-size: 1.5em
+      height: 2em
     
-//-------------------//
-//       Colors
-//-------------------// 
-
-.ts.primary.statistics .statistic > .value,
-.ts.statistics .primary.statistic > .value,
-.ts.primary.statistic > .value 
-    color: $statistic_primaryColor
-.ts.info.statistics .statistic > .value,
-.ts.statistics .info.statistic > .value,
-.ts.info.statistic > .value 
-    color: $statistic_infoColor
-.ts.warning.statistics .statistic > .value,
-.ts.statistics .warning.statistic > .value,
-.ts.warning.statistic > .value 
-    color: $statistic_warningColor
-.ts.positive.statistics .statistic > .value,
-.ts.statistics .positive.statistic > .value,
-.ts.positive.statistic > .value 
-    color: $statistic_positiveColor
-.ts.negative.statistics .statistic > .value,
-.ts.statistics .negative.statistic > .value,
-.ts.negative.statistic > .value 
-    color: $statistic_negativeColor
+    .icon, .fa
+      max-height: 1px
+      
     
-//-------------------//
-//       Floated
-//-------------------// 
-
-.ts[class*="left floated"].statistic 
-    float : left
-    margin: $statistic_leftFloatedMargin
-
-.ts[class*="right floated"].statistic 
-    float : right
-    margin: $statistic_rightFloatedMargin
-
-.ts.floated.statistic:last-child 
-    margin-bottom: 0em
-
-//-------------------//
-//       Sizes
-//-------------------// 
-
-/* Mini */
-.ts.mini.statistics .statistic > .value,
-.ts.mini.statistic > .value 
-    font-size: $statistic_miniValueSize !important
-
-.ts.mini.horizontal.statistics .statistic > .value,
-.ts.mini.horizontal.statistic > .value 
-    font-size: $statistic_miniHorizontalValueSize !important
-
-.ts.mini.statistics .statistic > .text.value,
-.ts.mini.statistic > .text.value 
-    font-size: $statistic_miniTextValueSize !important
-
-/* Tiny */
-.ts.tiny.statistics .statistic > .value,
-.ts.tiny.statistic > .value 
-    font-size: $statistic_tinyValueSize !important
-
-.ts.tiny.horizontal.statistics .statistic > .value,
-.ts.tiny.horizontal.statistic > .value 
-    font-size: $statistic_tinyHorizontalValueSize !important
-
-.ts.tiny.statistics .statistic > .text.value,
-.ts.tiny.statistic > .text.value 
-    font-size: $statistic_tinyTextValueSize !important
-
-/* Small */
-.ts.small.statistics .statistic > .value,
-.ts.small.statistic > .value 
-    font-size: $statistic_smallValueSize !important
-
-.ts.small.horizontal.statistics .statistic > .value,
-.ts.small.horizontal.statistic > .value 
-    font-size: $statistic_smallHorizontalValueSize !important
-
-.ts.small.statistics .statistic > .text.value,
-.ts.small.statistic > .text.value 
-    font-size: $statistic_smallTextValueSize !important
-
-/* Medium */
-.ts.statistics .statistic > .value,
-.ts.statistic > .value 
-    font-size: $statistic_valueSize !important
-
-.ts.horizontal.statistics .statistic > .value,
-.ts.horizontal.statistic > .value 
-    font-size: $statistic_horizontalValueSize !important
-
-.ts.statistics .statistic > .text.value,
-.ts.statistic > .text.value 
-    font-size: $statistic_textValueSize !important
-
-/* Large */
-.ts.large.statistics .statistic > .value,
-.ts.large.statistic > .value 
-    font-size: $statistic_largeValueSize !important
-
-.ts.large.horizontal.statistics .statistic > .value,
-.ts.large.horizontal.statistic > .value 
-    font-size: $statistic_largeHorizontalValueSize !important
-
-.ts.large.statistics .statistic > .text.value,
-.ts.large.statistic > .text.value 
-    font-size: $statistic_largeTextValueSize !important
-
-/* Huge */
-.ts.huge.statistics .statistic > .value,
-.ts.huge.statistic > .value 
-    font-size: $statistic_hugeValueSize !important
-
-.ts.huge.horizontal.statistics .statistic > .value,
-.ts.huge.horizontal.statistic > .value 
-    font-size: $statistic_hugeHorizontalValueSize !important
-
-.ts.huge.statistics .statistic > .text.value,
-.ts.huge.statistic > .text.value 
-    font-size: $statistic_hugeTextValueSize !important
+    .ts.image
+      max-height: 1em
+      vertical-align: baseline
+    
+  .label
+    font-size: 1em
+    opacity: 0.6

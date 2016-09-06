@@ -1,310 +1,445 @@
-@charset "UTF-8"
-@import ../../variables/views/chatroom.variables
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@   C H A T R O O M   @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-//*******************************//
-//            Variations
-//*******************************//
-
-@mixin chatroom-message-variant($color, $backgroundColor, $borderColor)
-    .text
-        background-color: $backgroundColor
-        color           : $color
-        border-color    : $borderColor
-    
-        &:first-child
-            &:before
-                border-color: transparent $borderColor
-            &:after
-                border-color: transparent $backgroundColor
-
-//*******************************//
-//              Main
-//*******************************//
+//**************************************
+//************   M A I N   *************
+//**************************************
 
 .ts.chatroom
-    position: relative
-    width   : 100%
+  +basic-card
 
-//*******************************//
-//             Header
-//*******************************//
+  max-width: 280px
+  
+  
+  
+  // [&] Minimized
+  //
+  // 已經縮小的。
+  
+  &.minimized
+    border-bottom-width: 0
 
-.ts.chatroom > .header
+    > .notification,
+    > .content,
+    > .footer
+      +none
+  
+  
+  
+  // [&] Fluid
+  //
+  // 流動寬度的聊天室。
 
-//*******************************//
-//            Content
-//*******************************//
+  &.fluid
+    max-width: 100%
+    width: 100%
+  
+  
+  
+  // > Header
+  //
+  // 聊天室的標題列。
 
-.ts.chatroom > .content
+  > .header
+    +flex
+    +rd
 
-//*******************************//
-//            Message
-//*******************************//
-
-.ts.chatroom > .content .message
-    display       : flex
-    flex-direction: row
-    margin-bottom : $chatroom_messageMarginBottom
-    flex-wrap     : wrap
-
-//-------------------//
-//       Avatar
-//-------------------//
-
-.ts.chatroom > .content .message .avatar
-    box-shadow   : $chatroom_avatarBoxShadow
-    height       : 0
+    border-bottom-left-radius: 0
+    border-bottom-right-radius: 0
+    background-color: #00ADEA
+    color: #FFF
+    font-size: 1.4rem
     
-.ts.chatroom > .content .message .avatar img
-    border-radius: $chatroom_messageAvatarBorderRadius
-    width        : $chatroom_avatarWidth
-    height       : $chatroom_avatarHeight
-
-//-------------------//
-//       Content
-//-------------------//
-
-.ts.chatroom > .content .message .content
-    margin-left   : $chatroom_messageNoAvatarDistance
-    margin-right  : 0
-    display       : flex
-    flex-direction: column
-    flex          : 1
-
-//-------------------//
-//    Outer Author
-//-------------------//
-
-.ts.chatroom > .content .message > .author
-    padding-left: calc((#{$chatroom_avatarSizeCalc}) + #{$chatroom_messageArrowDistance} + #{$chatroom_messageArrowSize})
-    width       : 100%
-
-//-------------------//
-// Content With Avatar
-//-------------------//
-
-.ts.chatroom > .content .message .avatar + .content 
-    margin-left: $chatroom_messageDistance
-
-//-------------------//
-//        Text
-//-------------------//
-
-.ts.chatroom > .content .message .content
-    +chatroom-message-variant($chatroom_messageTextColor, $chatroom_messageBackgroundColor, $chatroom_messageBorderColor)
     
-.ts.chatroom > .content .message .content .text
-    position     : relative
-    display      : table
-    padding      : $chatroom_messagePadding
-    word-wrap    : normal
-    font-size    : $chatroom_messageFontSize
-    line-height  : $chatroom_messageLineHeight
-    border       : $chatroom_messageBorder
-    border-radius: $chatroom_messageBorderRadius
-    margin       : 0
-    box-shadow   : $chatroom_messageBoxShadow
-
-//-------------------//
-//   Message Arrow    
-//-------------------//
-
-.ts.chatroom > .content .message .text:first-child:after
-    display     : block
-    position    : absolute
-    top         : $chatroom_messageArrowTop
-    bottom      : auto
-    left        : -#{$chatroom_messageArrowDistance}
-    width       : 0
-    content     : ''
-    border-width: $chatroom_messageArrowSize $chatroom_messageArrowSize $chatroom_messageArrowSize 0
-    border-color: transparent #fff
-    border-style: solid
-
-.ts.chatroom > .content .message .text:first-child:before
-    display     : block
-    position    : absolute
-    top         : $chatroom_messageArrowFillTop
-    bottom      : auto
-    left        : -#{$chatroom_messageArrowFillDistance}
-    width       : 0
-    content     : ""
-    border-width: $chatroom_messageArrowBorderSize $chatroom_messageArrowBorderSize $chatroom_messageArrowBorderSize 0
-    border-color: transparent lighten(#808080, 40%)
-    border-style: solid
-
-//-------------------//
-//        Meta    
-//-------------------//
-
-.ts.chatroom > .content .message .meta
-    margin-left: $chatroom_messageHorizontalPadding
-    margin-top : $chatroom_messageMetaMarginTop
-    font-size  : $relativeTiny
-    opacity    : $chatroom_messageMetaOpacity
-    text-align : left
-    clear      : both
-    display    : flex
     
-.ts.chatroom > .content .message .meta > *
-    margin-right: $chatroom_messageMetaSpacing
+    // > Title
+    //
+    // 標題列中的標題區塊。
+  
+    > .title
+      +flex
+      +flex-row
+      +flex-items-center
+      +x-padding(.8em)
+      +y-padding($padding / 2)
+      +no-overflow
 
-//-------------------//
-//    Dotted Meta 
-//-------------------// 
-
-.ts.chatroom > .content .message .meta.middoted > *,
-.ts.chatroom > .content .message .meta.bulleted > *
-    margin-right: 0
-.ts.chatroom > .content .message .meta.middoted > *:not(:first-child):before
-    margin-left : $chatroom_messageMetaSpacing / 2
-    margin-right: $chatroom_messageMetaSpacing / 2
-    content     : '·'
-.ts.chatroom > .content .message .meta.bulleted > *:not(:first-child):before
-    margin-left : $chatroom_messageMetaSpacing / 2
-    margin-right: $chatroom_messageMetaSpacing / 2
-    content     : '•'
-
-//-------------------//
-//    Right Message    
-//-------------------//
-
-.ts.chatroom > .content .right.message
-    flex-direction: row-reverse
-
-/** Content */
-.ts.chatroom > .content .right.message .content
-    margin-right: $chatroom_messageNoAvatarDistance
-    margin-left : 0
-    align-items : flex-end
-
-/** Author */
-.ts.chatroom > .content .right.message > .author
-    padding-right: calc((#{$chatroom_avatarSizeCalc}) + #{$chatroom_messageArrowDistance} + #{$chatroom_messageArrowSize})
-    text-align   : right
-    
-/** Content with avatar */
-.ts.chatroom > .content .right.message .avatar + .content
-    margin-right: $chatroom_messageDistance
-
-/** Arrow border */
-.ts.chatroom > .content .right.message .text:first-child:after
-    right       : -#{$chatroom_messageArrowDistance}
-    bottom      : auto
-    left        : auto
-    border-width: $chatroom_messageArrowSize 0 $chatroom_messageArrowSize $chatroom_messageArrowSize
-
-/** Fill arrow */
-.ts.chatroom > .content .right.message .text:first-child:before
-    right       : -#{$chatroom_messageArrowFillDistance}
-    bottom      : auto
-    left        : auto
-    border-width: $chatroom_messageArrowBorderSize 0 $chatroom_messageArrowBorderSize $chatroom_messageArrowBorderSize
-
-/** Meta */
-.ts.chatroom > .content .right.message .meta
-    margin-left    : 0
-    margin-right   : $chatroom_messageHorizontalPadding
-    text-align     : right
-    justify-content: flex-end
-
-//-------------------//
-//      Divider    
-//-------------------//
-
-.ts.chatroom > .content > .divider
-    display      : table
-    margin-bottom: $chatroom_dividerMarginBottom
-    white-space  : nowrap
-    overflow     : hidden
-    text-align   : center
-    font-weight  : $chatroom_dividerFontWeight
-    font-size    : $chatroom_dividerFontSize
-    height       : auto
-    line-height  : 1
-    opacity      : $chatroom_dividerOpacity
-
-/** Divider line */
-.ts.chatroom > .content > .divider:before,
-.ts.chatroom > .content > .divider:after
-    position           : relative
-    display            : table-cell
-    top                : 50%
-    content            : ''
-    width              : 50%
-    background-position: right $chatroom_dividerDistance top 50%
-    background-repeat  : no-repeat
-    background-image   : $chatroom_dividerBackgroundURL
+      flex: 1
+      text-overflow: ellipsis
       
-.ts.chatroom > .content > .divider:after      
-    background-position: left $chatroom_dividerDistance top 50%
-
-//-------------------//
-//       Author    
-//-------------------//
-
-.ts.chatroom > .content .message .content .text .author,
-.ts.chatroom > .content .message > .author
-    color        : $chatroom_authorTextColor
-    margin-bottom: .3em
-    font-weight  : bold
-
-/** Inline author */
-.ts.chatroom > .content .message .content .text .author.inline
-    margin-bottom: 0
-    display      : inline
-
-//-------------------//
-//       Footer    
-//-------------------//
-
-.ts.chatroom > .footer
-
-//-------------------//
-//       Sizes    
-//-------------------//
-
-.ts.chatroom.tiny
-    font-size: $tiny
+      
+      
+      // > Label
+      //
+      // 標題列中的標籤元素。
+      
+      > .label
+        +x-margin(x, .8em)
     
-.ts.chatroom.small
-    font-size: $small
-
-.ts.chatroom.medium,
-.ts.chatroom
-    font-size: $medium
     
-.ts.chatroom.large
-    font-size: $large
-
-.ts.chatroom.big
-    font-size: $big
     
-//-------------------//
-//      Coupling    
-//-------------------//
+    // > Actions
+    //
+    // 標題列中的動作區塊。
 
-.ts.chatroom > .content .message .content .text .ts.quote
-    margin-bottom: $chatroom_quoteMarginBottom
-    padding-left : $chatroom_quotePaddingLeft
+    > .actions
+      +flex
+      +flex-row
+      //font-size: 1.8rem
 
-//-------------------//
-//      Emphasis    
-//-------------------//
+      
+      
+      // > Item
+      //
+      // 標題列中動作區塊的項目。
+    
+      > .item
+        +flex
+        +flex-items-center
+        +x-padding(.7em)
+        +y-padding($padding / 2)
+        
+        .icon, .fa
+          margin-right: 0
 
-.ts.chatroom > .content .primary.message .content
-    +chatroom-message-variant($chatroom_primaryTextColor, $chatroom_primaryBackgroundColor, $chatroom_primaryBorderColor)
-.ts.chatroom > .content .info.message .content
-    +chatroom-message-variant($chatroom_infoTextColor, $chatroom_infoBackgroundColor, $chatroom_infoBorderColor)
-.ts.chatroom > .content .warning.message .content
-    +chatroom-message-variant($chatroom_warningTextColor, $chatroom_warningBackgroundColor, $chatroom_warningBorderColor)
-.ts.chatroom > .content .positive.message .content
-    +chatroom-message-variant($chatroom_positiveTextColor, $chatroom_positiveBackgroundColor, $chatroom_positiveBorderColor)
-.ts.chatroom > .content .negative.message .content
-    +chatroom-message-variant($chatroom_negativeTextColor, $chatroom_negativeBackgroundColor, $chatroom_negativeBorderColor)
-.ts.chatroom > .content .inverted.message .content
-    +chatroom-message-variant($chatroom_invertedTextColor, $chatroom_invertedBackgroundColor, $chatroom_invertedBorderColor)
-.ts.chatroom > .content .secondary.message .content
-    +chatroom-message-variant($chatroom_secondaryColor, $chatroom_secondaryBackgroundColor, $chatroom_messageBorderColor)
-.ts.chatroom > .content .tertiary.message .content
-    +chatroom-message-variant($chatroom_tertiaryColor, $chatroom_tertiaryBackgroundColor, $chatroom_messageBorderColor)
+        &:hover
+          +poi
+          +extend(ease)
+          background-color: darken(#00ADEA, 5%)
+
+        &:active
+          +extend(no-ease)
+          background-color: darken(#00ADEA, 15%)
+          color: darken(#FFF, 5%)
+  
+  
+  
+  // > Notification
+  //
+  // 聊天室中的通知區塊。
+    
+  > .notification
+    +x-padding(.8em)
+    +y-padding($padding / 2)
+
+    font-size: 1.2rem
+    background: lighten(#EEE, 5%)
+    border-bottom: 1px solid darken(lighten(#EEE, 5%), 5%)
+
+
+  
+  // > Content
+  //
+  // 聊天室中的內容區塊。
+
+  > .content
+    +padding
+
+    overflow-y: auto
+    
+    
+    
+    // > Divider
+    //
+    // 內容區塊的分隔線。
+    
+    > .divider
+      +table
+      +y-margin(x, .8em)
+      +no-wrap
+      +no-overflow
+      
+      text-align: center
+      font-weight: 600
+      font-size: 1.3rem
+
+      height: auto
+      line-height: 1
+      
+      
+      
+      // [&] BEFORE, [&] AFTER
+      //
+      //
+      
+      &:before, &:after
+        +relative
+        +table-cell
+        +position(50%, x, x, x)
+
+        content: ''
+        width: 50%
+        opacity: 0.4
+        background-position: right 1em top 50%
+        background-repeat  : no-repeat
+        background-image   : url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABaAAAAACCAYAAACuTHuKAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1OThBRDY4OUNDMTYxMUU0OUE3NUVGOEJDMzMzMjE2NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo1OThBRDY4QUNDMTYxMUU0OUE3NUVGOEJDMzMzMjE2NyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjU5OEFENjg3Q0MxNjExRTQ5QTc1RUY4QkMzMzMyMTY3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU5OEFENjg4Q0MxNjExRTQ5QTc1RUY4QkMzMzMyMTY3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+VU513gAAADVJREFUeNrs0DENACAQBDBIWLGBJQby/mUcJn5sJXQmOQMAAAAAAJqt+2prAAAAAACg2xdgANk6BEVuJgyMAAAAAElFTkSuQmCC)
+      
+      
+      
+      // [&] AFTER
+      //
+      //
+      
+      &:after
+        background-position: left 1em top 50%
+
+    
+    
+    // > Message
+    //
+    // 訊息區塊。
+
+    > .message
+      +flex
+      +flex-row
+      +y-margin(x, .4em)
+      
+      $messageParent: '.message'
+      
+      
+      // > Avatar
+      //
+      // 訊息區塊中的頭像區塊。
+      
+      > .avatar
+        
+        // Img
+        //
+        //
+        
+        img
+          +rd
+          +size(32px)
+
+      
+      
+      // > Content
+      //
+      // 訊息區塊中真正包含內容的區塊。
+
+      > .content
+        +x-margin(.8em, 0)
+        
+        // [PARENT] Right
+        //
+        // 由右邊的人說出來的話。
+          
+        +if-parent($messageParent, '.right')
+          +x-margin(0, .8em)
+        
+        
+        
+        // > P
+        //
+        // 文字節點。
+        
+        > p
+          +relative
+          +basic-card
+          +x-padding(.6em)
+          +y-padding(.3em)
+          +word-wrap
+
+          font-size: 1.3rem
+          line-height: 1.6rem
+          
+          
+          
+          // [PARENT] Right
+          //
+          // 由右邊的人說出來的話。
+          
+          +if-parent($messageParent, '.right')
+            float: right
+          
+          
+          
+          // [&] AFTER
+          //
+          //
+          
+          &:after
+            +block
+            +absolute
+            +position(5px, x, auto, -6px)
+
+            width: 0
+            content: ""
+            border-width: 7px 7px 7px 0px
+            border-color: transparent #fff
+            border-style: solid
+            
+            // [PARENT] Right
+            //
+            // 由右邊的人說出來的話。
+          
+            +if-parent($messageParent, '.right')
+              +position(5px, -6px, auto, auto)
+              
+              border-width: 7px 0px 7px 7px
+          
+          
+          
+          // [&] BEFORE
+          //
+          //
+          
+          &:before
+            +block
+            +absolute
+            +position(4px, x, auto, -8px)
+
+            width: 0
+            content: ""
+            border-width: 8px 8px 8px 0
+            border-color: transparent lighten(#808080, 40%)
+            border-style: solid
+            
+            
+            
+            // [PARENT] Right
+            //
+            // 由右邊的人說出來的話。
+          
+            +if-parent($messageParent, '.right')
+              +position(4px, -8px, auto, auto)
+
+              border-width: 8px 0px 8px 8px
+
+        
+        
+        // > Meta
+        //
+        // 內容區塊中的中繼資料區塊。
+        
+        > .meta
+          +x-margin(.6em, x)
+          
+          font-size: 12px
+          opacity: .5
+          text-align: left
+          
+          
+          
+          // [PARENT] Right
+          //
+          // 由右邊的人說出來的話。
+    
+          +if-parent($messageParent, '.right')
+            +x-margin(x, .6em)
+            
+            text-align: right
+      
+
+      
+      // [&] Right
+      //
+      // 由右邊的人說出來的話。
+
+      &.right
+        +flex-row-reverse
+
+  
+  
+  // > Footer
+  //
+  // 聊天室的底部區塊。
+
+  > .footer
+    +padding
+    +flex
+    +flex-row
+
+    border-top: 1px solid darken(lighten(#EEE, 5%), 5%)
+    
+    
+    
+    // > Input 
+    //
+    // 輸入欄位區塊。
+    
+    > .input
+      +flex
+      +flex-row
+      +flex-items-center
+      
+      flex: 1
+
+      &:not(:only-child)
+        +x-padding(x, $padding)
+      
+      
+      
+      // TS Input
+      //
+      // TocasUI 輸入欄位。
+      
+      .ts.input
+        margin: 0
+
+      &:not(:first-child)
+        +x-padding($padding, $padding)
+    
+    
+    
+    // > Actions
+    //
+    // 動作區塊。
+    
+    > .actions
+      +flex
+      +flex-row
+      +flex-items-center
+
+      font-size: 2rem
+      
+      
+      
+      // > Item
+      //
+      // 動作區塊內的項目。
+      
+      > .item
+        +rd
+        +x-padding(.4em)
+        +y-padding($padding / 2)
+      
+        *
+          margin-right: 0
+        
+        
+        
+        // [&] HOVER
+        //
+        //
+        
+        &:hover
+          +poi
+          +extend(ease)
+          
+          background-color: darken(#FFF, 5%)
+        
+        
+        
+        // [&] ACTIVE
+        //
+        //
+        
+        &:active
+          +extend(no-ease)
+          
+          background-color: darken(#FFF, 15%)

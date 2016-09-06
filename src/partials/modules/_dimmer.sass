@@ -1,41 +1,82 @@
-@import ../../variables/modules/dimmer.variables
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   D I M M E R   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-//*******************************//
-//              Main
-//*******************************//
+//**************************************
+//************   M A I N   *************
+//**************************************
 
 .ts.dimmer
-    display         : flex
-    position        : absolute
-    left            : 0
-    right           : 0
-    top             : 0
-    bottom          : 0
-    z-index         : 3
-    justify-content : center
-    align-items     : center
-    background-color: rgba(0, 0, 0, 0.8)
+  +flex
+  +flex-all-center
+  +absolute
+  +position(0, 0, 0, 0)
+  +z(3)
+  
+  background: rgba(0, 0, 0, 0.8)
+  
+  
+  
+  // [&] Inverted
+  //
+  // 相反色的淡化幕。
+  
+  &.inverted
+    background: rgba(255, 255, 255, 0.5)
     
-//-------------------//
-//       Active       
-//-------------------//
-
-.ts.dimmer:not(.active)
-    display: none
-
-//-------------------//
-//      Inverted       
-//-------------------//
-
-.ts.inverted.dimmer
-    background-color: rgba(255, 255, 255, 0.5)
+    // Loader
+    //
+    // 淡化幕中的讀取器。
+  
+    .ts.loader
+      +loader-theme
+  
+  
+  
+  // [&] NOT Active
+  //
+  // 不是正在啟用的淡化幕。
+  
+  &:not(.active)
+    +none
+  
+  
+  
+  // [&] Active
+  //
+  // 正在啟用的淡化幕。
+  
+  &.active
+    .ts.loader
+      display: block !important
+  
+  
+  
+  // Loader
+  //
+  // 淡化幕中的讀取器。
+  
+  .ts.loader
+    +relative
+    +position(0 !important, 0 !important, 0 !important, 0 !important)
+  
+    // [&] Text
+    //
+    // 帶有文字的讀取器。
     
-//-------------------//
-//      Coupling       
-//-------------------//
+    &.text
+      max-width: none
 
-.ts.dimmer.active .ts.loader
-    display: block !important
-    
-.ts.dimmer .ts.loader.text
-    max-width: none

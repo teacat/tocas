@@ -1,0 +1,36 @@
+.table
+  display        : table
+  width          : 100%
+  border-collapse: collapse
+  
+  tr
+    border: #ededed 2px solid
+    
+    // Construct
+    @each $class, $color in $colors
+      &.#{$class}
+        color     : auten($color)
+        background: $color
+
+    td
+      +padding
+
+      
+  &.table-border
+  
+    tr:first-child
+      td
+        border-bottom-width: 2px
+        
+    td
+      border: #CCC 1px solid
+      
+  &.table-striped
+  
+    tr:nth-child(even)
+      background-color: $nullColor
+      
+  &.table-hover
+  
+    tr:hover
+      background-color: darken($nullColor, 2%)

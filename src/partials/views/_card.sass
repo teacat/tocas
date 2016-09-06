@@ -1,639 +1,435 @@
-@charset "UTF-8"
-@import ../../variables/views/card.variables
+//   ▄▄▄        ▄▄████▄
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██
+//  ▀██▄▄▄████   ▄▄▄██▀
+//     ▀▀▀████▀▀▀▀▀
+//        ██
+//       ██          ▄█████▄       █████████████          ▄█             █▄
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   C A R D   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-//*******************************//
-//            Variations
-//*******************************//
+//**************************************
+//******   B A S I C   C A R D   *******
+//**************************************
 
-@mixin card-inverted-variant($color, $backgroundColor, $borderColor)
-    background-color: $backgroundColor
-    border-color    : $borderColor
-    
+=basic-card($color: #808080, $bgColor: #FFF)
+  $borderColor: lighten($color, 40%)
+
+  color     : $color
+  background: $bgColor
+  //overflow  : hidden
+
+  +rd
+  box-shadow: 0 0px 1px 0 lighten($borderColor, 4%),0 0 0 0px lighten($borderColor, 4%)
+  border: 1px solid $borderColor
+  border-bottom-width: 2px
+
+  &.raised
+    box-shadow: 0 2px 4px 0 darken($borderColor, 4%),0 2px 10px 0 darken($borderColor, 4%)
+    border-bottom-width: 1px
+
+  &.translucent
+    background-color: rgba($bgColor, 0.85)
+    border-color    : rgba($bgColor, 0.3)
+
+
+
+
+//**************************************
+//***********   T H E M E   ************
+//**************************************
+
+=card-theme($color: #808080, $bgColor: #FFF, $extraColor: #F5F5F5)
+  +basic-card($color, $bgColor)
+
+  // [&] Basic
+  //
+  // 最基本款式，僅底線有顏色。
+
+  &.basic
+    +basic-card(#808080, #FFF)
+
+    border-bottom-color: $bgColor
+
+
+
+  // [&] NOT Basic
+  //
+  // 不是基本款式。
+
+  &:not(.basic)
+
+    // > Content
+    //
+    // 內容區塊。
+
     > .content
-        .header
-            color: rgba($color, $card_headerTextOpacity)
-            
-            .sub.header
-                color: rgba($color, $card_subHeaderTextOpacity)
-        .meta
-            color: rgba($color, $card_metaTextColorOpacity)
-        .description
-            color: rgba($color, $card_descriptionTextOpacity)
-            
-    > .extra.content
-        color: rgba($color, $card_extraTextOpacity)
-    > .secondary.extra.content
-        background-color: darken($backgroundColor, 5%)
-        color: rgba($color, $card_secondaryExtraTextOpacity)
-    > .tertiary.extra.content
-        background-color: darken($backgroundColor, 10%)
-        color: rgba($color, $card_tertiaryExtraTextOpacity)
-    
-//*******************************//
-//              Main
-//*******************************///
+      color: $color
 
-.ts.card
-    position        : relative
-    display         : flex
-    flex-direction  : column
-    margin          : $card_margin
-    border          : $card_border
-    border-radius   : $card_borderRadius
-    box-shadow      : $card_boxShadow
-    transition      : $card_transition
-    
-    +card-inverted-variant($card_textColor, $card_backgroundColor, $card_borderColor)
+      border-top-color: auten($bgColor, 10%)
 
-.ts.card [class*="right floated"]
-    float: right
 
-.ts.card:first-child
-    margin-top: 0
-.ts.card:last-child
-    margin-bottom: 0
 
-.ts.card > .content:after
-    display   : block
-    content   : ' '
-    height    : 0px
-    clear     : both
-    overflow  : hidden
-    visibility: hidden
-    
-//-------------------//
-//       Raised    
-//-------------------//
+      // [&] NOT Extra *
+      //
+      // 任何不在額外資訊區塊的元素。
 
-.ts.card.raised
-    box-shadow: $card_raisedBoxShadow
-    
-//-------------------//
-//      Content    
-//-------------------// 
+      &:not(.extra) *:not(.ts)
+        color: $color
 
-.ts.card > .content
-    position : relative
-    padding  : $card_padding
-    flex-grow: 1
 
-//-------------------//
-//       Header    
-//-------------------// 
 
-.ts.card > .content > .header
-    display: block
-    //margin : $card_headerMargin
-    //color  : $card_headerTextColor
-    
-.ts.card > .content > .header:not(.ts)
-    font-size  : $card_headerFontSize
-    margin-top : $card_headerLineHeightOffset
-    line-height: $card_headerLineHeight
-    font-weight: $card_headerFontWeight
-    
-.ts.card > .content > .header:not(.ts) .sub.header
-    font-size  : $card_subHeaderFontSize
-    margin-top : $card_subHeaderLineHeightOffset
-    line-height: $card_subHeaderLineHeight
-    font-weight: $card_subHeaderFontWeight
+      // Header
+      //
+      // 標題區塊。
 
-.ts.card > .content > .header.smaller:not(.ts)
-    font-size: $card_smallerHeaderFontSize
+      .header
+        color: darken($color, 10%)
 
-.ts.card > .content > .header.smaller:not(.ts) .sub.header
-    font-size: $card_smallerSubHeaderFontSize
-    
-//-------------------//
-//        Meta    
-//-------------------// 
 
-.ts.card > .content > .meta
-    display  : flex
-    font-size: $card_metaFontSize
-   
-.ts.card > .content > .meta > * 
-    display     : inline-block
-    margin-right: $card_metaSpacing
 
-.ts.card > .content > .meta > *:last-child
-    margin-right: 0
-    
-.ts.card > .content > .meta > *[class*="right floated"]
-    margin-right: 0
-    margin-left : $card_metaSpacing
+      // Textnode
+      //
+      // 文字節點區塊。
 
-.ts.card > .content > .meta > *[class*="right floated"]:last-child
-    margin-left: 0
+      .text:not(.ts)
+        +y-margin(1em, x)
+        font-size: 14px
+        color: darken($color, 20%)
 
-//-------------------//
-//    Meta Dotted    
-//-------------------// 
 
-.ts.card > .content > .meta.middoted > *,
-.ts.card > .content > .meta.bulleted > *
-    margin-right: 0
-.ts.card > .content > .meta.middoted > *:not(:first-child):before
-    margin-left : $card_metaSpacing / 2
-    margin-right: $card_metaSpacing / 2
-    content     : '·'
-.ts.card > .content > .meta.bulleted > *:not(:first-child):before
-    margin-left : $card_metaSpacing / 2
-    margin-right: $card_metaSpacing / 2
-    content     : '•'
 
-//-------------------//
-//       Aligns    
-//-------------------//
+      // [&] Extra
+      //
+      // 額外的內容區塊。
 
-.ts.card *[class*="center aligned"]
-    text-align: center
-.ts.card *[class*="left aligned"]
-    text-align: left
-.ts.card *[class*="right aligned"]
-    text-align: right
+      &.extra
+        border-top-color: lighten($color, 40%)
+        background: $extraColor
 
-//-------------------//
-//      Overlay 
-//-------------------// 
 
-.ts.card .overlay.content
-    position: absolute
-    top     : 0
-    left    : 0
-    width   : 100%
-    height  : 100%
-    z-index : 2
-    
-.ts.card .overlay.content > .header,
-.ts.card .overlay.content > .header .sub.header,
-.ts.card .overlay.content,
-.ts.card .overlay.content .description,
-.ts.card .overlay.content .meta
-    color         : $card_overlayTextColor
-    text-rendering: optimizelegibility
-    text-shadow   : $card_overlayTextShadow
 
-//-------------------//
-//      Flatted    
-//-------------------// 
+        // Comments
+        //
+        // 留言區塊。
 
-.ts.card.flatted
-    box-shadow: none
+        .ts.comments
+          +comment-theme($extraColor)
 
-//-------------------//
-//       Image    
-//-------------------// 
 
-.ts.card > .image img
-    position : relative
-    display  : block
-    max-width: 100%
-    width    : 100%
-    
-.ts.card > .image:first-child img
-    border-top-left-radius : $card_borderRadius
-    border-top-right-radius: $card_borderRadius
-.ts.card > .image:last-child img
-    border-bottom-left-radius : $card_borderRadius
-    border-bottom-right-radius: $card_borderRadius
 
-//-------------------//
-//    Description    
-//-------------------// 
+      // Meta *
+      //
+      // 中繼資料內的任何元素。
 
-.ts.card > .content > .meta + .description,
-.ts.card > .content > .header + .description
-    margin-top: $card_descriptionDistance
+      .meta *
+        color: lighten($color, 20%)
 
-.ts.card > .content > .description
-    clear: both
 
-//-------------------//
-//       Extra    
-//-------------------// 
 
-.ts.card > .extra.content
-    border-top: $card_extraBorder
-    flex-grow : 0
-    min-height: 0 !important
+    // Buttons
+    //
+    // 卡片裡的按鈕群組。
 
-.ts.card > .extra.content:first-child:not(:last-child)
-    border-top-width: 0
-    border-bottom   : $card_extraBorder
+    .buttons
+      border-top-color: darken($bgColor, 4%)
 
-.ts.card > .extra.content:not(:first-child):not(:last-child)
-    border-top-width: $card_extraBorder
-    border-bottom   : $card_extraBorder
-    
-//-------------------//
-//      Emphasis  
-//-------------------// 
+      .positive
+        +button-theme(darken($bgColor, 1%), $color)
 
-.ts.card.primary
-    border-bottom-width: $card_coloredBorderWidth
-    border-bottom-color: $card_primaryBorderColor
-.ts.card.info
-    border-bottom-width: $card_coloredBorderWidth
-    border-bottom-color: $card_infoBorderColor
-.ts.card.warning
-    border-bottom-width: $card_coloredBorderWidth
-    border-bottom-color: $card_warningBorderColor
-.ts.card.positive
-    border-bottom-width: $card_coloredBorderWidth
-    border-bottom-color: $card_positiveBorderColor
-.ts.card.negative
-    border-bottom-width: $card_coloredBorderWidth
-    border-bottom-color: $card_negativeBorderColor
-    
-//-------------------//
-//  Inverted Colors
-//-------------------// 
-    
-.ts.card.basic
-    +card-inverted-variant($card_defaultTextColor, $card_defaultBackgroundColor, $card_defaultBorderColor)
-.ts.card.inverted
-    border-bottom-width: $card_borderWidth
-    +card-inverted-variant($card_invertedTextColor, $card_invertedBackgroundColor, $card_invertedBorderColor)
-.ts.card.inverted.primary
-    +card-inverted-variant($card_primaryTextColor, $card_primaryBackgroundColor, $card_primaryBorderColor)
-.ts.card.inverted.info
-    +card-inverted-variant($card_infoTextColor, $card_infoBackgroundColor, $card_infoBorderColor)
-.ts.card.inverted.warning
-    +card-inverted-variant($card_warningTextColor, $card_warningBackgroundColor, $card_warningBorderColor)
-.ts.card.inverted.positive
-    +card-inverted-variant($card_positiveTextColor, $card_positiveBackgroundColor, $card_positiveBorderColor)
-.ts.card.inverted.negative
-    +card-inverted-variant($card_negativeTextColor, $card_negativeBackgroundColor, $card_negativeBorderColor)
+      .negative
+        +button-theme(darken($bgColor, 3%), $color)
 
-//-------------------//
-//      Disabled
-//-------------------//
 
-.ts.card.disabled
-    opacity: $disabledOpacity
+    //
+    //
+    //
 
-//-------------------//
-//      Centered
-//-------------------// 
+    &.primary, &.positive, &.negative, &.warning, &.info, &.inverted
+      .header
+        +y-margin(x, 1em)
+        font-size: 1.5em
+        color    : $color
 
-.ts.card.centered
-    margin-left : auto
-    margin-right: auto
 
-//-------------------//
-//       Cards
-//-------------------// 
+
+//**************************************
+//***********   C A R D S   ************
+//**************************************
 
 .ts.cards
-    display  : flex
-    flex-wrap: wrap
-    margin   : $card_groupMargin
-    
-.ts.cards > .card
-    display: flex
-    margin : $card_groupCardMargin
-    
-.ts.cards ~ .ts.cards
-    margin-top: $card_onsecutiveGroupDistance
-    
-.ts.one.cards
-    margin-left : $card_oneCardOffset
-    margin-right: $card_oneCardOffset
-.ts.one.cards > .card
-    width: $card_oneCard
-.ts.two.cards
-    margin-left : $card_twoCardOffset
-    margin-right: $card_twoCardOffset
-.ts.two.cards > .card
-    width: $card_twoCard
-    margin-left : $card_twoCardSpacing
-    margin-right: $card_twoCardSpacing
-.ts.three.cards
-    margin-left : $card_threeCardOffset
-    margin-right: $card_threeCardOffset
-.ts.three.cards > .card
-    width       : $card_threeCard
-    margin-left : $card_threeCardSpacing
-    margin-right: $card_threeCardSpacing
-.ts.four.cards
-    margin-left : $card_fourCardOffset
-    margin-right: $card_fourCardOffset
-.ts.four.cards > .card
-    width: $card_fourCard
-    margin-left : $card_fourCardSpacing
-    margin-right: $card_fourCardSpacing
-.ts.five.cards
-    margin-left : $card_fiveCardOffset
-    margin-right: $card_fiveCardOffset
-.ts.five.cards > .card
-    width: $card_fiveCard
-    margin-left : $card_fiveCardSpacing
-    margin-right: $card_fiveCardSpacing
-.ts.six.cards
-    margin-left : $card_sixCardOffset
-    margin-right: $card_sixCardOffset
-.ts.six.cards > .card
-    width: $card_sixCard
-    margin-left : $card_sixCardSpacing
-    margin-right: $card_sixCardSpacing
-.ts.seven.cards
-    margin-left : $card_sevenCardOffset
-    margin-right: $card_sevenCardOffset
-.ts.seven.cards > .card
-    width: $card_sevenCard
-    margin-left : $card_sevenCardSpacing
-    margin-right: $card_sevenCardSpacing
-.ts.eight.cards
-    margin-left : $card_eightCardOffset
-    margin-right: $card_eightCardOffset
-.ts.eight.cards > .card
-    width: $card_eightCard
-    margin-left : $card_eightCardSpacing
-    margin-right: $card_eightCardSpacing
-.ts.nine.cards
-    margin-left : $card_nineCardOffset
-    margin-right: $card_nineCardOffset
-.ts.nine.cards > .card
-    width: $card_nineCard
-    margin-left : $card_nineCardSpacing
-    margin-right: $card_nineCardSpacing
-.ts.ten.cards
-    margin-left : $card_tenCardOffset
-    margin-right: $card_tenCardOffset
-.ts.ten.cards > .card
-    width: $card_tenCard
-    margin-left : $card_tenCardSpacing
-    margin-right: $card_tenCardSpacing
+  +flex
 
-//-------------------//
-//     Stackable
-//-------------------// 
+  flex-wrap: wrap
 
-+rwd-serious(mobile)
-    .ts.stackable.cards:not(.waterfall)
-        display: block !important
-    .ts.stackable.cards:not(.waterfall) .card
-        margin-top: 0 !important
-    .ts.stackable.cards:not(.waterfall) > .card
-        display: block !important
-        height : auto !important
-        margin : $card_stackableRowSpacing $card_stackableCardSpacing
-        padding: 0 !important
-        width  : $card_stackableMargin !important
-        
-    .ts.stackable.waterfall.cards
-        column-count: 1
+  .ts.card
+    +margin
 
-//-------------------//
-//     Doubling
-//-------------------// 
 
-.ts.cards.doubling.two
-    +rwd-serious(mobile)
-        margin-left : $card_oneCardOffset
-        margin-right: $card_oneCardOffset
-        > .card
-            width: $card_oneCard
-    +rwd-serious(tablet)
-        margin-left : $card_oneCardOffset
-        margin-right: $card_oneCardOffset
-        > .card
-            width: $card_oneCard
-.ts.cards.doubling.three
-    +rwd-serious(mobile)
-        margin-left : $card_twoCardOffset
-        margin-right: $card_twoCardOffset
-        > .card
-            width: $card_twoCard
-    +rwd-serious(tablet)
-        margin-left : $card_twoCardOffset
-        margin-right: $card_twoCardOffset
-        > .card
-            width: $card_twoCard
-.ts.cards.doubling.four
-    +rwd-serious(mobile)
-        margin-left : $card_twoCardOffset
-        margin-right: $card_twoCardOffset
-        > .card
-            width: $card_twoCard
-    +rwd-serious(tablet)
-        margin-left : $card_twoCardOffset
-        margin-right: $card_twoCardOffset
-        > .card
-            width: $card_twoCard
-.ts.cards.doubling.five
-    +rwd-serious(mobile)
-        margin-left : $card_twoCardOffset
-        margin-right: $card_twoCardOffset
-        > .card
-            width: $card_twoCard
-    +rwd-serious(tablet)
-        margin-left : $card_threeCardOffset
-        margin-right: $card_threeCardOffset
-        > .card
-            width: $card_threeCard
-.ts.cards.doubling.six
-    +rwd-serious(mobile)
-        margin-left : $card_twoCardOffset
-        margin-right: $card_twoCardOffset
-        > .card
-            width: $card_twoCard
-    +rwd-serious(tablet)
-        margin-left : $card_threeCardOffset
-        margin-right: $card_threeCardOffset
-        > .card
-            width: $card_threeCard
-.ts.cards.doubling.seven
-    +rwd-serious(mobile)
-        margin-left : $card_twoCardOffset
-        margin-right: $card_twoCardOffset
-        > .card
-            width: $card_twoCard
-    +rwd-serious(tablet)
-        margin-left : $card_threeCardOffset
-        margin-right: $card_threeCardOffset
-        > .card
-            width: $card_threeCard
-.ts.cards.doubling.eight
-    +rwd-serious(mobile)
-        margin-left : $card_twoCardOffset
-        margin-right: $card_twoCardOffset
-        > .card
-            width: $card_twoCard
-    +rwd-serious(tablet)
-        margin-left : $card_fourCardOffset
-        margin-right: $card_fourCardOffset
-        > .card
-            width: $card_fourCard
-.ts.cards.doubling.nine
-    +rwd-serious(mobile)
-        margin-left : $card_threeCardOffset
-        margin-right: $card_threeCardOffset
-        > .card
-            width: $card_threeCard
-    +rwd-serious(tablet)
-        margin-left : $card_fourCardOffset
-        margin-right: $card_fourCardOffset
-        > .card
-            width: $card_fourCard
-.ts.cards.doubling.ten
-    +rwd-serious(mobile)
-        margin-left : $card_threeCardOffset
-        margin-right: $card_threeCardOffset
-        > .card
-            width: $card_threeCard
-    +rwd-serious(tablet)
-        margin-left : $card_fiveCardOffset
-        margin-right: $card_fiveCardOffset
-        > .card
-            width: $card_fiveCard
-.ts.cards.doubling.eleven
-    +rwd-serious(mobile)
-        margin-left : $card_threeCardOffset
-        margin-right: $card_threeCardOffset
-        > .card
-            width: $card_threeCard
-    +rwd-serious(tablet)
-        margin-left : $card_fiveCardOffset
-        margin-right: $card_fiveCardOffset
-        > .card
-            width: $card_fiveCard
-.ts.cards.doubling.twelve
-    +rwd-serious(mobile)
-        margin-left : $card_threeCardOffset
-        margin-right: $card_threeCardOffset
-        > .card
-            width: $card_threeCard
-    +rwd-serious(tablet)
-        margin-left : $card_sixCardOffset
-        margin-right: $card_sixCardOffset
-        > .card
-            width: $card_sixCard
-.ts.cards.doubling.thirteen
-    +rwd-serious(mobile)
-        margin-left : $card_threeCardOffset
-        margin-right: $card_threeCardOffset
-        > .card
-            width: $card_threeCard
-    +rwd-serious(tablet)
-        margin-left : $card_sixCardOffset
-        margin-right: $card_sixCardOffset
-        > .card
-            width: $card_sixCard
-.ts.cards.doubling.fourteen
-    +rwd-serious(mobile)
-        margin-left : $card_fourCardOffset
-        margin-right: $card_fourCardOffset
-        > .card
-            width: $card_fourCard
-    +rwd-serious(tablet)
-        margin-left : $card_sevenCardOffset
-        margin-right: $card_sevenCardOffset
-        > .card
-            width: $card_sevenCard
-.ts.cards.doubling.fifteen
-    +rwd-serious(mobile)
-        margin-left : $card_fourCardOffset
-        margin-right: $card_fourCardOffset
-        > .card
-            width: $card_fourCard
-    +rwd-serious(tablet)
-        margin-left : $card_sevenCardOffset
-        margin-right: $card_sevenCardOffset
-        > .card
-            width: $card_sevenCard
-.ts.cards.doubling.sixteen
-    +rwd-serious(mobile)
-        margin-left : $card_fourCardOffset
-        margin-right: $card_fourCardOffset
-        > .card
-            width: $card_fourCard
-    +rwd-serious(tablet)
-        margin-left : $card_eightCardOffset
-        margin-right: $card_eightCardOffset
-        > .card
-            width: $card_eightCard
 
-//-------------------//
-//     Waterfall
-//-------------------// 
 
-.ts.waterfall.cards
-    display     : block
-    column-count: $card_waterfallColumnCount
-    width       : 100%
-    
-.ts.waterfall.cards > .card
-    display: inline-block
-    width  : 100%
+//**************************************
+//************   M A I N   *************
+//**************************************
 
-//-------------------//
-//       Symbol
-//-------------------// 
+a.ts.card
+  +inline-block
+  text-decoration: none
 
-.ts.card .symbol
-    height: $card_symbolSpacingHeight
+  // [&] HOVER
+  //
+  //
 
-.ts.card .symbol .icon
-    position      : absolute
-    right         : 0
-    bottom        : 0
-    overflow      : hidden
-    width         : $card_symbolWidth
-    height        : $card_symbolHeight
-    margin-left   : 0
-    margin-right  : 0
-    pointer-events: none
-    font-size     : $card_symbolFontSize
-    line-height   : $card_symbolLineHeight
-    opacity       : $card_symbolOpacity
+  &:hover
+    +z(1)
+    +poi
 
-//-------------------//
-//        Link  
-//-------------------// 
+    transform: translateY(-3px)
 
-.ts.cards a.card,
-.ts.link.cards .card,
-a.ts.card,
-.ts.link.card
-    transform: none
+.ts.card
+  +card-theme
+  +relative
+  +border-box
+  +flex
+  +flex-column
+  +word-wrap
+  +extend(ease)
 
-.ts.cards a.card:hover,
-.ts.link.cards .card:hover,
-a.ts.card:hover,
-.ts.link.card:hover
-    cursor    : pointer
-    z-index   : $card_linkHoverZIndex
-    border    : $card_linkHoverBorder
-    box-shadow: $card_linkHoverBoxShadow
-    transform : $card_linkHoverTransform
+  z-index: 1
+  width    : $cardSize
+  max-width: $cardSize
 
-.ts.flatted.cards a.card:hover,
-.ts.flatted.link.cards .card:hover,
-a.ts.flatted.card:hover,
-.ts.flatted.link.card:hover    
-    box-shadow: $card_flattedShadowHoverBoxShadow
 
-//-------------------//
-//      Coupling
-//-------------------// 
 
-.ts.card .buttons[class*="bottom attached"] .button
-    border-bottom: 0
-    
-.ts.card .buttons[class*="top attached"] .button
-    border-top: 0
-    
-.ts.card .buttons .button:first-child
-    border-left: 0
+  // [&] Centered
+  //
+  // 水平置中的卡片。
 
-.ts.card .buttons .button:only-child
-    border-left : 0
-    border-right: 0
+  &.centered
+    +x-margin(auto)
 
-.ts.card .buttons .button:not(:first-child):not(:last-child):not(:only-child)
-    border-left : 0
-    
-.ts.card .buttons .button:last-child
-    border-right: 0
+
+
+  // [&] Fluid
+  //
+  // 流動寬度的卡片。
+
+  &.fluid
+    max-width: 100%
+    width: 100%
+
+
+
+  // Image
+  //
+  // 卡片中的圖片區塊。
+
+  .image
+    +relative
+
+    // IMG
+    //
+    // 圖片區塊內的圖片。
+
+    img
+      +block
+      +relative
+      +rd
+
+      max-width: 100%
+
+
+
+    // Dim
+    //
+    // 圖片區塊內的淡化區塊。
+
+    .dim
+      +absolute
+      +fill
+      +padding
+      +border-box
+      +position(0, 0, 0, 0)
+      +flex
+      +rd
+
+      align-items: flex-end
+      align-self: flex-end
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6))
+      text-shadow: 0 .1rem 0 black
+      color: #FFF
+
+
+
+  // Bottom Nav
+  //
+  // 底部導航欄。
+
+  .bottom.nav
+    +relative
+
+    .ts.menu
+      +y-margin(0)
+
+      border-radius: 0
+      border: none
+      border-bottom: none
+      border-left: none
+      border-right: none
+
+
+
+  // > Content
+  //
+  // 內容區塊。
+
+  > .content
+    +y-padding($padding * 1.3)
+    +x-padding($padding * 1.5)
+    +word-wrap
+    +relative
+
+    border-top-style: solid
+    border-top-width: 0px
+
+    &:not(:first-child)
+      border-top-width: 1px
+
+
+    // Header
+    //
+    // 標題區塊。
+
+    .header
+      +y-margin(x, $margin / 2)
+      +bold-weight
+
+      line-height: 1em
+      text-decoration: none
+
+
+
+    // Description
+    //
+    // 說明區塊。
+
+    .description
+      +normal
+      +y-margin(1em, x)
+
+
+
+    // Meta
+    //
+    // 中繼資料區塊。
+
+    .meta
+      +small
+      +y-margin($margin / 3, x)
+
+
+
+      // List
+      //
+      // 中繼資料區塊裡的清單。
+
+      .list
+        +small
+
+
+
+      // > * NOT List
+      //
+      // 任何在中繼資料裡第一層不是清單的元素。
+
+      > *:not(.list)
+        text-decoration: none
+        margin-right: $margin / 2
+
+        &.floated.right:last-child
+          +x-margin(x, 0)
+
+        &.floated.left:last-child
+          +x-margin(0, x)
+
+
+
+    // Symbol
+    //
+    // 卡片代表的圖示。
+
+    .symbol
+      +size(1em, x)
+
+      .icon, .fa
+        +absolute
+        +position(x, 0, 0, x)
+        +no-overflow
+        +size(.8em)
+        +x-margin(0)
+        +no-poi
+
+        font-size  : 13rem
+        line-height: 1.1em
+        opacity    : 0.2
+
+
+
+    // Extra
+    //
+    // 額外資訊區塊。
+
+    &.extra
+      +extend(basicAligns)
+
+      border-top-style: solid
+      border-top-width: 1px
+
+
+
+  // Buttons Attached
+  //
+  // 附著於卡片某處的按鈕群錊。
+
+  .ts.buttons.attached
+    border-top-style: solid
+    border-top-width: 1px
+
+    &.top .button
+      border-top: none
+
+    &.bottom .button
+      border-top: none
+      border-bottom: none
+
+
+
+
+  //**************************************
+  //**********   C O L O R S   ***********
+  //**************************************
+
+  &.primary
+    +card-theme($primaryTextColor, $primaryColor)
+
+  &.warning
+    +card-theme($warningTextColor, $warningColor)
+
+  &.info
+    +card-theme($infoTextColor, $infoColor)
+
+  &.inverted
+    +card-theme($invertedTextColor, $invertedColor)
+
+  &.positive
+    +card-theme($positiveTextColor, $positiveColor)
+
+  &.negative
+    +card-theme($negativeTextColor, $negativeColor)

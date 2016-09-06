@@ -1,143 +1,111 @@
-@import ../../variables/elements/container.variables
-
-//*******************************//
-//              Main
-//*******************************//
+//   ▄▄▄        ▄▄████▄
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██
+//  ▀██▄▄▄████   ▄▄▄██▀
+//     ▀▀▀████▀▀▀▀▀
+//        ██
+//       ██          ▄█████▄       █████████████          ▄█             █▄
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@   C O N T A I N E R   @@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 .ts.container
-    display  : block
-    max-width: $container_maxWidth
+  max-width   : calc(#{$rwd-computer-max} - #{$columnRelaxedPadding * 2.2})
+  margin-left : auto !important
+  margin-right: auto !important
 
-//-------------------//
-//       Mobile
-//-------------------//
 
-+rwd-serious(mobile)
-    .ts.container:not(.narrow)
-        margin-left : $container_mobileGutter !important
-        margin-right: $container_mobileGutter !important
-        width       : $container_mobileWidth  !important
-        
-        &.grid
-            width: $container_mobileGridWidth !important
-            
-        &.relaxed.grid
-            width: $container_mobileRelaxedGridWidth !important
-            
-        &.very.relaxed.grid
-            width: $container_mobileVeryRelaxedGridWidth !important
 
-//-------------------//
-//       Tablet
-//-------------------//
+  // Computer
+  //
+  // 小型螢幕。
 
-+rwd-serious(tablet)
-    .ts.container:not(.narrow)
-        margin-left : $container_tabletGutter !important
-        margin-right: $container_tabletGutter !important
-        width       : $container_tabletWidth
-        
-        &.grid
-            width: $container_tabletGridWidth !important
-            
-        &.relaxed.grid
-            width: $container_tabletRelaxedGridWidth !important
-            
-        &.very.relaxed.grid
-            width: $container_tabletVeryRelaxedGridWidth !important
+  +rwd-serious(computer)
+    max-width: calc(#{$rwd-tablet-max} - #{$columnRelaxedPadding * 2.2})
 
-//-------------------//
-//      Computer
-//-------------------//    
-    
-+rwd-serious(computer)
-    .ts.container:not(.narrow)
-        margin-left : $container_computerGutter !important
-        margin-right: $container_computerGutter !important
-        width       : $container_computerWidth 
-        
-        &.grid
-            width: $container_computerGridWidth !important
-            
-        &.relaxed.grid
-            width: $container_computerRelaxedGridWidth !important
-            
-        &.very.relaxed.grid
-            width: $container_computerVeryRelaxedGridWidth !important
 
-//-------------------//
-//    Large Screen
-//-------------------//
+  // Tablet
+  //
+  // 平板。
 
-+rwd-serious(large)
-    .ts.container:not(.narrow)
-        margin-left : $container_largeMonitorGutter !important
-        margin-right: $container_largeMonitorGutter !important
-        width       : $container_largeMonitorWidth 
-        
-        &.grid
-            width: $container_largeMonitorGridWidth !important
-            
-        &.relaxed.grid
-            width: $container_largeMonitorRelaxedGridWidth !important
-            
-        &.very.relaxed.grid
-            width: $container_largeMonitorVeryRelaxedGridWidth !important
+  +rwd-serious(tablet)
+    max-width: calc(#{$rwd-mobile} - #{$columnRelaxedPadding * 2.2})
+    width    : auto !important
 
-//-------------------//
-//       Width
-//-------------------//
 
-.ts.container.narrow
-    margin-left : auto
-    margin-right: auto
-    max-width   : $container_narrowWidth !important
 
-.ts.container[class*="very narrow"]
-    margin-left : auto
-    margin-right: auto
-    max-width   : $container_veryNarrowWidth !important
+  // Mobile
+  //
+  // 行動裝置。
 
-@media (max-width: $container_narrowBreakPoint)
-    .ts.container.narrow:not(.very)
-        margin-left : $container_narrowGutter !important
-        margin-right: $container_narrowGutter !important
-        max-width   : 100% !important
-        width       : auto !important
-        
-@media (max-width: $container_veryNarrowBreakPoint)
-    .ts.container[class*="very narrow"]
-        margin-left : $container_narrowGutter !important
-        margin-right: $container_narrowGutter !important
-        max-width   : 100% !important
-        width       : auto !important
-    
-//-------------------//
-//        Text
-//-------------------//
+  +rwd-serious(mobile)
+    &:not(.fluid)
+      margin-left : $columnRelaxedPadding * 1.1 !important
+      margin-right: $columnRelaxedPadding * 1.1 !important
 
-.ts.container.text
-    max-width  : $container_textWidth !important
-    line-height: $container_textLineHeight
-    font-size  : $container_textFontSize
+    max-width   : none    !important
+    width       : auto    !important
 
-//-------------------//
-//       Fluid
-//-------------------//
 
-.ts.container.fluid
+
+  //
+  //
+  //
+
+  &.thinner
+    max-width: $rwd-computer-min !important
+    width    : $rwd-computer-min
+
+
+
+  // [&] Text
+  //
+  // 適合文字使用的容器。
+
+  &.text
+    max-width: 860px !important
+    width    : 860px
+
+
+
+  //
+  //
+  //
+
+  &[class*="thinner text"]
+    max-width: 700px !important
+    width    : 700px
+
+
+
+  // [&] Fluid
+  //
+  // 浮動寬度的容器。
+
+  &.fluid
     max-width: 100% !important
     width    : 100% !important
 
-//-------------------//
-//       Aligns
-//-------------------//
 
-.ts.container[class*="center aligned"]
+
+  // [&] Aligned
+  //
+  // 文字對齊。
+
+  &[class*="center aligned"]
     text-align: center
-.ts.container[class*="left aligned"]
+
+  &[class*="left aligned"]
     text-align: left
-.ts.container[class*="right aligned"]
+
+  &[class*="right aligned"]
     text-align: right
-.ts.container[class*="justified"]
+
+  &[class*="justified"]
     text-align: justify

@@ -1,280 +1,231 @@
-@import ../../variables/elements/image.variables
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   I M A G E   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-//*******************************//
-//           Variations
-//*******************************//
+//**************************************
+//*******   G E N E R A T O R   ********
+//**************************************
+
+=image-generator
+  @for $i from 1 through $imageAmount
+    @at-root
+      #{&}.#{nth($imageSizes, $i)}
+        min-width: nth($imageFontSizes, $i)
+        width: nth($imageFontSizes, $i)
+        height: auto
+
+      #{&}.#{nth($imageSizes, $i)}.squared
+        width: nth($imageFontSizes, $i)
+        height: nth($imageFontSizes, $i)
+        object-fit: cover
+
+      #{&}.#{nth($imageSizes, $i)}.covered.fluid
+        width: 100%
+        height: nth($imageFontSizes, $i)
+        object-fit: cover
 
 
-//*******************************//
-//              Main
-//*******************************//
+
+//**************************************
+//***********   S I Z E S   ************
+//**************************************
+
+@for $i from 1 through $imageAmount
+  @at-root
+    .ts.images.#{nth($imageSizes, $i)} img
+      +size(auto, nth($imageFontSizes, $i))
+    
+    
+    
+    // Squared
+    //
+    // 正方形圖片。
+    
+    .ts.images.#{nth($imageSizes, $i)}.squared img
+      +size(nth($imageFontSizes, $i))
+
+      object-fit: cover
+
+
+
+
+//**************************************
+//**********   I m a g e s   ***********
+//**************************************
+
+.ts.images
+  
+  // [&] Inline
+  //
+  // 單一行的圖片群組。
+  
+  &.inline
+    img
+      +inline-block
+
+
+
+
+//**************************************
+//************   M a i n   *************
+//**************************************
 
 .ts.image:not(.label)
-    position        : relative
-    display         : inline-block
-    vertical-align  : middle
-    max-width       : 100%
-    background-color: $image_placeholderColor
+  +image-generator
+  +block
 
-img.ts.image 
-    display: block
-
-.ts.image:not(.label) svg,
-.ts.image:not(.label) img 
-    display  : block
-    max-width: 100%
-    height   : auto
-
-//*******************************//
-//             States
-//*******************************//
-
-.ts.hidden.images,
-.ts.hidden.image 
-    display: none
-
-.ts.hidden.transition.images,
-.ts.hidden.transition.image 
-    display   : block
-    visibility: hidden
-
-.ts.disabled.images,
-.ts.disabled.image 
-    cursor : default
-    opacity: $disabledOpacity
-
-//*******************************//
-//            Variations
-//*******************************//
-
-//-------------------//
-//       Inline
-//-------------------//
-
-.ts.inline.image,
-.ts.inline.image svg,
-.ts.inline.image img 
-    display: inline-block
-
-//-------------------//
-//  Vertical Aligned
-//-------------------//
-
-.ts.top.aligned.images .image,
-.ts.top.aligned.image,
-.ts.top.aligned.image svg,
-.ts.top.aligned.image img 
-    display       : inline-block
-    vertical-align: top
-
-.ts.middle.aligned.images .image,
-.ts.middle.aligned.image,
-.ts.middle.aligned.image svg,
-.ts.middle.aligned.image img 
-    display       : inline-block
-    vertical-align: middle
-
-.ts.bottom.aligned.images .image,
-.ts.bottom.aligned.image,
-.ts.bottom.aligned.image svg,
-.ts.bottom.aligned.image img 
-    display       : inline-block
-    vertical-align: bottom
-
-//-------------------//
-//       Rounded
-//-------------------//
-
-.ts.rounded.images .image,
-.ts.rounded.image,
-.ts.rounded.images .image > *,
-.ts.rounded.image > * 
-    border-radius: $image_roundedBorderRadius
-
-//-------------------//
-//      Bordered
-//-------------------//
-
-.ts.bordered.images .image,
-.ts.bordered.images img,
-.ts.bordered.images svg,
-.ts.bordered.image img,
-.ts.bordered.image svg,
-img.ts.bordered.image 
-    border: $image_imageBorder
-
-//-------------------//
-//      Circular
-//-------------------//
-
-.ts.circular.images,
-.ts.circular.image 
-    overflow: hidden
-
-.ts.circular.images .image,
-.ts.circular.image,
-.ts.circular.images .image > *,
-.ts.circular.image > *
-    border-radius: $circularRadius
-    
-//-------------------//
-//       Fluid
-//-------------------//
-
-.ts.fluid.images,
-.ts.fluid.image,
-.ts.fluid.images img,
-.ts.fluid.images svg,
-.ts.fluid.image svg,
-.ts.fluid.image img 
-    display: block
-    width  : 100%
-    height : auto
-    
-//-------------------//
-//       Avatar
-//-------------------//
-
-.ts.avatar.images .image,
-.ts.avatar.images img,
-.ts.avatar.images svg,
-.ts.avatar.image img,
-.ts.avatar.image svg,
-.ts.avatar.image 
-    margin-right : $image_avatarMargin
-    display      : inline-block
-    width        : $image_avatarSize
-    height       : $image_avatarSize
-    //border-radius: $circularRadius
-
-//-------------------//
-//       Spaced
-//-------------------//
-
-.ts.spaced.image 
-    display     : inline-block !important
-    margin-left : $image_spacedDistance
-    margin-right: $image_spacedDistance
-
-.ts[class*="left spaced"].image 
-    margin-left : $image_spacedDistance
-    margin-right: 0em
-
-.ts[class*="right spaced"].image 
-    margin-left : 0em
-    margin-right: $image_spacedDistance
-
-//-------------------//
-//     Object Fit
-//-------------------//
-
-.ts.image[class*="covered"]
+  max-width: 100%
+  
+  
+  
+  //
+  //
+  //
+  
+  &.inline
+    +inline-block
+  
+  
+  
+  // [&] Covered
+  //
+  // 隱藏被覆蓋的地方。
+  
+  &.covered
     object-fit: cover
+  
+  
+  
+  // [&] Hidden
+  //
+  // 隱藏。
+  
+  &.hidden
+    +none
+    
+    
+  
+  // [&] Disabled
+  //
+  // 已停用的圖片。
 
-//-------------------//
-//       Floated
-//-------------------//
+  &.disabled
+    opacity: 0.3
+  
+  
+  
+  // [&] Avatar
+  //
+  // 頭像。
+  
+  &.avatar
+    +x-margin(x, .4em)
+    +inline-block
+    +size(2em)
 
-.ts.floated.image,
-.ts.floated.images 
-    float        : left
-    margin-right : $image_floatedHorizontalMargin
-    margin-bottom: $image_floatedVerticalMargin
+    vertical-align: middle
+  
+  
+  
+  // [&] Bordered
+  //
+  // 戴有框線的。
+  
+  &.bordered
+    border: 1px solid $defaultColor
+  
+  
+  
+  // [&] Fluid
+  //
+  // 寬度為流動的圖片。
+  
+  &.fluid
+    +block
 
-.ts.right.floated.images,
-.ts.right.floated.image 
-    float        : right
-    margin-right : 0em
-    margin-bottom: $image_floatedVerticalMargin
-    margin-left  : $image_floatedHorizontalMargin
+    width : 100%
+    height: auto
+  
+  
+  
+  // [&] Rounded
+  //
+  // 帶圓角邊框的圖片。
+  
+  &.rounded
+    +rd
+  
+  
+  
+  //
+  //
+  //
+  
+  .ts.label
+    +absolute
 
-.ts.floated.images:last-child,
-.ts.floated.image:last-child 
-    margin-bottom: 0em
+    top: $padding
 
-.ts.centered.images,
-.ts.centered.image 
+    &:not(.right)
+      left: calc(-#{$padding} + (-#{$segmentBorderWidth} * 2))
+
+    &.right
+      left: calc(100% + #{$padding} + #{$segmentBorderWidth} * 2)
+  
+  
+  
+  // [&] Centered
+  //
+  // 水平置中。
+  
+  &.centered
     margin-left : auto
     margin-right: auto
 
-//-------------------//
-//       Sizes
-//-------------------//
+  
+  
+  // [&] Circular
+  //
+  // 圓形圖片。
+  
+  &.circular
+    border-radius: 100rem
+  
+  
+  
+  // [&] Spaced
+  //
+  // 左右帶有空白邊距的圖片。
 
-.ts.mini.images .image,
-.ts.mini.images img,
-.ts.mini.images svg,
-.ts.mini.image 
-    width    : $image_miniWidth
-    height   : auto
-    font-size: $mini
+  &.spaced
+    +x-margin(.8em)
+    +inline-block
+  
+  
+  
+  // [&] Aligned
+  //
+  // 對齊。
+  
+  &.aligned
+    +inline-block
 
-.ts.tiny.images .image,
-.ts.tiny.images img,
-.ts.tiny.images svg,
-.ts.tiny.image 
-    width    : $image_tinyWidth
-    height   : auto
-    font-size: $tiny
-
-.ts.small.images .image,
-.ts.small.images img,
-.ts.small.images svg,
-.ts.small.image 
-    width    : $image_smallWidth
-    height   : auto
-    font-size: $small
-
-.ts.medium.images .image,
-.ts.medium.images img,
-.ts.medium.images svg,
-.ts.medium.image 
-    width    : $image_mediumWidth
-    height   : auto
-    font-size: $medium
-
-.ts.large.images .image,
-.ts.large.images img,
-.ts.large.images svg,
-.ts.large.image 
-    width    : $image_largeWidth
-    height   : auto
-    font-size: $large
-
-.ts.big.images .image,
-.ts.big.images img,
-.ts.big.images svg,
-.ts.big.image 
-    width    : $image_bigWidth
-    height   : auto
-    font-size: $big
-
-.ts.huge.images .image,
-.ts.huge.images img,
-.ts.huge.images svg,
-.ts.huge.image 
-    width    : $image_hugeWidth
-    height   : auto
-    font-size: $huge
-
-.ts.massive.images .image,
-.ts.massive.images img,
-.ts.massive.images svg,
-.ts.massive.image 
-    width    : $image_massiveWidth
-    height   : auto
-    font-size: $massive
-
-//*******************************//
-//             Groups
-//*******************************//
-
-.ts.images 
-    font-size: 0em
-    margin   : 0em -#{$image_imageHorizontalMargin} 0rem
-
-.ts.images .image,
-.ts.images img,
-.ts.images svg 
-    display: inline-block
-    margin : 0em $image_imageHorizontalMargin $image_imageVerticalMargin
+    &.top
+      vertical-align: top
+    &.bottom
+      vertical-align: bottom
+    &.middle
+      vertical-align: middle

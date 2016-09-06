@@ -1,251 +1,230 @@
-@charset "UTF-8"
-@import ../../variables/collections/message.variables
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   M E S S A G E   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-//*******************************//
-//            Variations
-//*******************************//
+//**************************************
+//***********   T H E M E   ************
+//**************************************
 
-@mixin message-variant($color, $backgroundColor, $borderColor)
-    color           : $color
-    background-color: $backgroundColor
-    border-color    : $borderColor
-    
-//*******************************//
-//              Main
-//*******************************//
+=message-theme($color: #808080, $bgColor: #F5F5F5)
+  +basic-card($color, $bgColor)
+
+
+
+
+//**************************************
+//*******   G E N E R A T O R   ********
+//**************************************
+
+=message-generator
+  @for $i from 1 through $messageAmount
+    @at-root
+      #{&}.#{nth($messageSizes, $i)}
+        +y-padding($padding * ($i / 5))
+        +x-padding($padding * ($i / 2))
+
+        font-size: nth($messageFontSizes, $i)
+
+        .header
+          font-size: nth($messageFontSizes, $i) + 0.2
+
+
+
+
+//**************************************
+//************   M A I N   *************
+//**************************************
 
 .ts.message
-    position        : relative
-    display         : block
-    padding         : $message_padding
-    margin          : $message_margin
-    border          : $message_border
-    background-color: $message_backgroundColor
-    border-radius   : $message_borderRadius
-    color           : $message_textColor
-
-.ts.message:first-child 
-    margin-top: 0em
-.ts.message:last-child
-    margin-bottom: 0em
-
-//-------------------//
-//       Header
-//-------------------//
-
-.ts.message .header
-    display    : block
-    font-weight: $message_headerFontWeight
-    margin     : $message_headerMargin
+  +rd
+  +relative
+  +y-padding($padding)
+  +x-padding($padding * 1.5)
+  +message-theme
+  +message-generator
+  +border-box
+  
+  &:not(:first-child)
+    +y-margin($margin)
+  
+  
+  
+  // [&] Icon
+  //
+  // 帶圖示的訊息。
+  
+  &.icon
+    +flex
     
-.ts.message .header:not(.ts)
-    font-size: $message_headerFontSize    
+    // ICON, FA
+    //
+    //
     
-//-------------------//
-//       Icon
-//-------------------//
-
-.ts.message.icon
-    display    : flex
-    width      : 100%
-    align-items: center
-
-.ts.message.icon > .icon:not(.close)
-    display       : block
-    flex          : 0 0 auto
-    width         : auto
-    line-height   : 1
-    vertical-align: $message_iconVerticalAlign
-    font-size     : $message_iconSize
-    opacity       : $message_iconOpacity
-
-.ts.icon.message > .content
-    display       : block
-    flex          : 1 1 auto
-    vertical-align: $message_iconVerticalAlign
-
-.ts.icon.message .icon:not(.close) + .content
-    padding-left: $message_iconContentDistance
-
-.ts.icon.message .circular.icon
-    width: 1em
-
-.ts.message > .icon
-    margin-right: $message_iconDistance
+    .icon, .fa
+      +x-margin(x, $margin * 2)
+      font-size: 5rem
     
-//-------------------//
-//      Floating
-//-------------------//
-
-.ts.message.floating
-    box-shadow      : $message_boxShadow
     
-//-------------------//
-//       Hidden
-//-------------------//
+    // Content
+    //
+    // 文字內容。
 
-.ts.message.hidden
-    display: none
-
-//-------------------//
-//      Visible
-//-------------------//
-
-.ts.message.visible
-    display: block
-
-//-------------------//
-//     Close Icon
-//-------------------//
-
-.ts.message > .close.icon
-    cursor    : pointer
-    position  : absolute
-    margin    : 0em
-    top       : $message_closeTopDistance
-    right     : $message_closeRightDistance
-    opacity   : $message_closeOpacity
-
-.ts.message > .close.icon:hover
-    opacity: 1
+    .content
+      +flex
+      +flex-column
 
 
-//-------------------//
-//      Emphasis
-//-------------------//
 
-.ts.message.primary
-    +message-variant($message_primaryTextColor, $message_primaryBackgroundColor, $message_primaryBorderColor)
-.ts.message.info
-    +message-variant($message_infoTextColor, $message_infoBackgroundColor, $message_infoBorderColor)
-.ts.message.warning
-    +message-variant($message_warningTextColor, $message_warningBackgroundColor, $message_warningBorderColor)
-.ts.message.positive
-    +message-variant($message_positiveTextColor, $message_positiveBackgroundColor, $message_positiveBorderColor)
-.ts.message.negative
-    +message-variant($message_negativeTextColor, $message_negativeBackgroundColor, $message_negativeBorderColor)
-.ts.message.inverted
-    +message-variant($message_invertedTextColor, $message_invertedBackgroundColor, $message_invertedBorderColor)
- 
-//-------------------//
-// Inverted Emphasis
-//-------------------//
+  // [&] Dismissable
+  //
+  // 可關閉式的訊息。
 
-.ts.message.primary.inverted
-    +message-variant($message_invertedPrimaryTextColor, $message_invertedPrimaryBackgroundColor, $message_invertedPrimaryBorderColor)
-.ts.message.info.inverted
-    +message-variant($message_invertedInfoTextColor, $message_invertedInfoBackgroundColor, $message_invertedInfoBorderColor)
-.ts.message.warning.inverted
-    +message-variant($message_invertedWarningTextColor, $message_invertedWarningBackgroundColor, $message_invertedWarningBorderColor)
-.ts.message.positive.inverted
-    +message-variant($message_invertedPositiveTextColor, $message_invertedPositiveBackgroundColor, $message_invertedPositiveBorderColor)
-.ts.message.negative.inverted
-    +message-variant($message_invertedNegativeTextColor, $message_invertedNegativeBackgroundColor, $message_invertedNegativeBorderColor)
+  &.dismissable
+    +x-padding(x, $padding * 1.8 + $padding * 1.5)
     
-//-------------------//
-//        Sizes
-//-------------------//
-
-.ts.message.mini
-    font-size: $relativeMini
-.ts.message.tiny
-    font-size: $relativeTiny
-.ts.message.small
-    font-size: $relativeSmall
-.ts.message.medium
-    font-size: $relativeMedium
-.ts.message.large
-    font-size: $relativeLarge
-.ts.message.big
-    font-size: $relativeBig
-.ts.message.huge
-    font-size: $relativeHuge
-.ts.message.massive
-    font-size: $relativeMassive
     
-//-------------------//
-//        Faded
-//-------------------//
-
-.ts.message.faded
-    opacity: $message_fadedOpacity
     
-//-------------------//
-//       Basic
-//-------------------//
-
-.ts.message.basic
-    background-color: transparent
-    border          : none
+    // Close
+    //
+    // 關閉按鈕。
     
-//-------------------//
-//     Borderless
-//-------------------//
+    .close
+      opacity: 0.6
+      
+      
+      
+      // [&] BEFORE
+      //
+      //
+      
+      &:before
+        +large
+        +absolute
+        +position($padding * 2.1, $padding * 1.5, x, x)
+        +border-box
 
-.ts.message.borderless
+        line-height: 0
+        content    : '✖'
+      
+      
+      
+      // [&] HOVER
+      //
+      //
+      
+      &:hover
+        opacity: 0.8
+      
+      
+      
+      // [&] ACTIVE
+      //
+      //
+      
+      &:active
+        opacity: 1
+  
+  
+  
+  // [&] Compact
+  //
+  // 縮減版。
+  
+  &.compact
+    +inline-block
+
+  
+  
+  // Header
+  //
+  // 標題列。
+  
+  .header
+    +large
+    +medium-weight
+  
+  
+  
+  // List
+  //
+  // 清單元素。
+  
+  .list
+    li
+      +y-margin($margin, x)
+
+  
+  
+  // [&] Hidden
+  //
+  // 隱藏。
+  
+  &.hidden
+    +none
+
+  
+  
+  //**************************************
+  //**********   C O L O R S   ***********
+  //**************************************
+  
+  &.primary
+    +message-theme($primaryTextColor, $primaryColor)
+
+  &.warning
+    +message-theme($warningTextColor, $warningColor)
+
+  &.info
+    +message-theme($infoTextColor, $infoColor)
+
+  &.negative
+    +message-theme($negativeTextColor, $negativeColor)
+
+  &.positive
+    +message-theme($positiveTextColor, $positiveColor)
+  
+  
+  
+  // [&] Fluid
+  //
+  // 流動寬度。
+  
+  &.fluid
+    +flex
+    +flex-items-center
+    +flex-content-center
+
+    width: 100%
+    margin: 0
     border: none
-    
-//-------------------//
-//       Compact
-//-------------------//
+    border-radius: 0
+  
+  
+  
+  // [&] Attached
+  //
+  // 吸附於其他容器的某一端。
+  
+  &.attached
+    &[class*="top attached"]
+      margin-bottom: 0
+      border-bottom-left-radius : 0
+      border-bottom-right-radius: 0
 
-.ts.message.compact
-    display: inline-block
-    
-//-------------------//
-//       Fitted
-//-------------------//
-
-.ts.message[class*="horizontally fitted"]
-    padding-left : 0
-    padding-right: 0
-.ts.message[class*="vertically fitted"]
-    padding-top   : 0
-    padding-bottom: 0
-.ts.message:not(.horizontally):not(.vertically).fitted
-    padding: 0
-
-//-------------------//
-//       Aligns
-//-------------------//
-
-.ts.message[class*="center aligned"]
-    text-align: center
-.ts.message[class*="left aligned"]
-    text-align: left
-.ts.message[class*="right aligned"]
-    text-align: right
-
-//-------------------//
-//        List
-//-------------------//
-
-.ts.message .list:not(.ts) 
-    text-align         : left
-    padding            : 0em
-    opacity            : $message_listOpacity
-    list-style-position: $message_listStylePosition
-    margin             : $message_listMargin 0em 0em
-
-.ts.message .list:not(.ts):first-child 
-    margin-top: 0em
-
-.ts.message .list:not(.ts):last-child 
-    margin-bottom: 0em
-
-.ts.message .list:not(.ts) li 
-    position       : relative
-    list-style-type: none
-    margin         : 0em 0em $message_listItemMargin $message_listItemIndent
-    padding        : 0em
-
-.ts.message .list:not(.ts) li:before 
-    position      : absolute
-    content       : '•'
-    font-weight   : bold
-    left          : -1em
-    height        : 100%
-    vertical-align: baseline
-
-.ts.message .list:not(.ts) li:last-child 
-    margin-bottom: 0em
+    &[class*="bottom attached"]
+      margin-top: 0
+      border-top-left-radius : 0
+      border-top-right-radius: 0

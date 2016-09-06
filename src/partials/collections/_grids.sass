@@ -1,0 +1,285 @@
+//   ▄▄▄        ▄▄████▄
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██
+//  ▀██▄▄▄████   ▄▄▄██▀
+//     ▀▀▀████▀▀▀▀▀
+//        ██
+//       ██          ▄█████▄       █████████████          ▄█             █▄
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   G R I D   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+//**************************************
+//*******   G E N E R A T O R   ********
+//**************************************
+
+=column-generator
+  @for $i from 1 through $columnAmount
+    [class*="#{nth($columnName, $i)} wide"]
+      +border-box
+
+      width: 100% / $columnAmount * $i
+
+  @for $i from 1 through $columnAmount
+    [class*="#{nth($columnName, $i)} wide mobile"]
+      +rwd-serious(mobile)
+        width: 100% / $columnAmount * $i !important
+
+  @for $i from 1 through $columnAmount
+    [class*="#{nth($columnName, $i)} wide tablet"]
+      +rwd-serious(tablet)
+        width: 100% / $columnAmount * $i !important
+
+  @for $i from 1 through $columnAmount
+    [class*="#{nth($columnName, $i)} wide computer"]
+      +rwd(computer)
+        width: 100% / $columnAmount * $i !important
+
+  @for $i from 1 through $columnAmount
+    [class*="#{nth($columnName, $i)} wide large screen"]
+      +rwd(large)
+        width: 100% / $columnAmount * $i !important
+
+  @for $i from 1 through $columnAmount
+    &[class*="#{nth($columnName, $i)} column"],
+    & .row[class*="#{nth($columnName, $i)} column"]
+      > .column:not(.row)
+        width: 100% / $i !important
+
+  @for $i from 1 through $columnAmount
+    & .row.doubling[class*="#{nth($columnName, $i)} column"],
+    &.doubling[class*="#{nth($columnName, $i)} column"]
+      > .column:not(.row)
+        +rwd-serious(mobile)
+          width: if((100% / $columnAmount * $i) * 4 < 50%, (100% / $columnAmount * $i) * 4, 50%) !important
+
+        +rwd-serious(tablet)
+          width: if((100% / $columnAmount * $i) * 2 < 50%, (100% / $columnAmount * $i) * 2, 50%) !important
+
+
+
+
+//**************************************
+//************   M A I N   *************
+//**************************************
+
+.ts.grid
+  +relative
+  +flex
+  +flex-row
+  +border-box
+  +y-margin(-#{$columnPadding})
+  +x-margin(-#{$columnPadding})
+
+  flex-wrap: wrap
+
+  //width: 100%
+
+
+  //
+  //
+  //
+
+  & + .ts.grid
+    +y-margin($columnPadding, x)
+
+
+  [class*="left aligned"] .column,
+  .row[class*="left aligned"] .column,
+  .column[class*="left aligned"]
+    text-align: left
+
+  [class*="right aligned"] .column,
+  .row[class*="right aligned"] .column,
+  .column[class*="right aligned"]
+    text-align: right
+
+
+
+  .row[class*="only"],
+  .column[class*="only"]
+    display: none
+
+
+
+  //**************************************
+  //*****   R W D   H E L P E R S   ******
+  //**************************************
+
+  .row[class*="large screen only"],
+  .column[class*="large screen only"]
+    +rwd(large)
+      display: flex !important
+
+  .row[class*="computer only"],
+  .column[class*="computer only"]
+    +rwd(computer)
+      display: flex !important
+
+  .row[class*="tablet only"],
+  .column[class*="tablet only"]
+    +rwd(tablet)
+      display: flex !important
+
+  .row[class*="mobile only"],
+  .column[class*="mobile only"]
+    +rwd-serious(mobile)
+      display: flex !important
+
+
+
+  // Column
+  //
+  // 欄位（但不僅是單純的欄位）。
+
+  .column
+    &[class*="right floated"]
+      margin-left: auto
+
+    &[class*="left floated"]
+      margin-right: auto
+
+
+
+  // [&] Centered, Row Cntered
+  //
+  // 置中對齊的網格系統。
+
+  &.centered,
+  .row.centered
+    +flex-content-center
+    //margin: 0px auto !important
+
+
+
+  // [&] Start
+  //
+  // 對齊 Flex 開頭。
+
+  &.start
+    justify-content: flex-start
+
+
+
+  // [&] End
+  //
+  // 對齊 Flex 結尾。
+
+  &.end
+    justify-content: flex-end
+
+
+
+  // [>] Row
+  //
+  // 行。
+
+  > .row
+    +relative
+    +flex
+    +flex-row
+
+    flex-wrap: nowrap
+    width: 100%
+
+
+
+    // [&] Horizontally Fitted
+    //
+    // 水平縮減。
+
+    //&[class*="horizontally fitted"]
+    //  > .column:first-child
+    //    +x-padding(0, x)
+
+    //  > .column:last-child
+    //    +x-padding(x, 0)
+
+
+
+    // [&] Doubling
+    //
+    // 雙倍數的折疊網格。
+
+    &.doubling
+      flex-wrap: wrap
+
+
+
+  // [>] Column
+  //
+  // 欄位。
+
+  > .column:not(.row),
+  > .row .column:not(.row)
+    +relative
+    +border-box
+    +extend(basicAligns)
+    //+y-margin(x, $margin * 1.8)
+
+    padding: $columnPadding
+
+
+
+  // [&] Relaxed
+  //
+  // 較寬鬆的網格。
+
+  &.relaxed
+    //+y-margin(-#{$columnRelaxedPadding})
+    +x-margin(-#{$columnRelaxedPadding})
+
+    > .column:not(.row),
+    > .row > .column:not(.row)
+      //+y-padding($columnRelaxedPadding)
+      +x-padding($columnRelaxedPadding)
+
+
+
+
+
+
+
+
+  //
+  //
+  //
+
+  +column-generator
+
+
+
+  // [&] Columns Fitted
+  //
+  // 縮減欄位的外距。
+
+  //&[class*="columns fitted"]
+  //  > .column:not(.row)
+  //    margin: 0
+
+
+
+  // [&] Stackable
+  //
+  // 可疊式網格系統。
+
+  &.stackable
+    > .column:not(.row)
+      +rwd-serious(mobile)
+        width  : 100% !important
+
+
+
+.ts.segment
+  .ts.grid
+    width: calc(100% + #{$columnPadding} * 2)
+
+
+    &.relaxed
+      width: calc(100% + #{$columnRelaxedPadding} * 2)

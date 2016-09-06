@@ -1,567 +1,592 @@
-@import ../../variables/elements/button.variables
+//   ▄▄▄        ▄▄████▄
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██
+//  ▀██▄▄▄████   ▄▄▄██▀
+//     ▀▀▀████▀▀▀▀▀
+//        ██
+//       ██          ▄█████▄       █████████████          ▄█             █▄
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   B U T T O N   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-//*******************************//
-//            Variations
-//*******************************//
+//**************************************
+//***********   T H E M E   ************
+//**************************************
 
-@mixin button-variant($color, $backgroundColor, $borderColor)
-    $hoverBackgroundColor: darken($backgroundColor, 5%)
-    $hoverColor          : lighten($color, 5%)
-    
-    $activeBackgroundColor: darken($backgroundColor, 20%)
-    $activeColor          : darken($color, 10%)
-    
-    border-color    : $borderColor
-    background-color: $backgroundColor
-    color           : $color
-    
-    &:active:not(.opinion),
-    &.dropdown.visible
-        background-color: $activeBackgroundColor
-        color           : $activeColor
-        
-    &:not(.visible):not(.hidden):not(:active):not(.opinion):hover
-        background-color: $hoverBackgroundColor
-        color           : $hoverColor
+=button-theme($color: #EEE, $textColor: false)
 
-//-------------------//
-//       Basic
-//-------------------//
+  $thisParent: '.ts.button'
+  $hover     : '&:hover:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled)'
+  $active    : '&:active:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled), &.active:not([disabled="disabled"]):not([disabled="true"]):not([disabled]):not(.disabled)'
 
-@mixin button-basic-variant($color, $backgroundColor, $borderColor)
-    $activeColor: darken($backgroundColor, 30%)
-    
-    border: 1px solid $backgroundColor
-    color : $backgroundColor
-        
+  @if not $textColor
+    $textColor: lighten($color, 40%)
+
+  background  : $color
+  border-color: darken($color, 1%)
+  color       : $textColor
+
+
+
+  // [&] Basic
+  //
+  // 基本、最簡化樣式按鈕。
+
+  &.basic
+    background-color: transparent
+    border-color    : darken($color, 10%)
+    text-shadow     : none
+    color           : darken($color, 10%)
+
+
+
+  // [&] Labeled Icon
+  //
+  // 帶有圖示的標籤按鈕。
+
+  &.labeled.icon
+    .icon, .fa
+      background-color: darken($color, 5%)
+
+
+
+  // [&] HOVER
+  //
+  //
+
+  #{$hover}
+    +poi
+
+    color: lighten($textColor, 5%)
+
+
+
+    // [&] Basic
+    //
+    // 基本、最簡化樣式按鈕。
+
+    &.basic
+      background-color: $color
+      border-color    : $color
+      color           : $textColor
+      opacity         : 1
+
+
+
+    // [&] NOT Transparent
+    //
+    // 非透明的按鈕。
+
+    &:not(.transparent)
+      background-color: darken($color, 5%)
+
+
+
+    // [&] Labeled Icon
+    //
+    // 帶有圖示的標籤按鈕。
+
+    &.labeled.icon
+      .icon, .fa
+        background-color: darken($color, 10%)
+
+
+
+  // [&] ACTIVE
+  //
+  //
+
+  #{$active}
+    +extend(no-ease)
+    +extend(no-tap)
+
+    .label
+      opacity: 1
+
+    color: darken($textColor, 10%)
+
+
+
+    // [&] NOT Transparent
+    //
+    // 非透明的按鈕。
+
+    &:not(.transparent)
+
+      background-color: darken($color, 17%)
+      border-color    : darken($color, 17%)
+
+
+
+      // [&] Basic
+      //
+      // 基本、最簡化樣式按鈕。
+
+      &.basic
+        background-color: darken($color, 13%)
+        border-color    : darken($color, 13%)
+        opacity         : 1
+        box-shadow      : none
+
+
+
+    // [&] Labeled Icon
+    //
+    // 帶有圖示的標籤按鈕。
+
+    &.labeled.icon
+      .icon, .fa
+        +extend(no-ease)
+
+        background-color: darken($color, 22%)
+
+
+
+    // [&] Raised
+    //
+    // 抬舉版本的按鈕。
+
+    &.raised
+      box-shadow: 0 .1rem .2rem 0 lighten($color, 5%), 0 .1rem .5rem 0 lighten($color, 5%)
+
+  // [&] Raised
+  //
+  // 抬舉版本的按鈕。
+
+  &.raised
+    box-shadow         : 0 .2rem .4rem 0 darken($color, 4%), 0 .2rem 1rem 0 darken($color, 4%)
+    border-color       : darken($color, 2%)
+    border-bottom-width: .1rem
+
+
+
+  // [&] Loading
+  //
+  // 讀取中的按鈕。
+
+  &.loading
+    +loader-color($textColor)
+
+
+
+  // [&] DISABLED
+  //
+  // 已停用的按鈕。
+
+  &[disabled="disabled"],
+  &[disabled="true"]
+  &[disabled],
+  &.disabled
+    opacity: 0.45
+
     &:hover
-    &:active
-        color: $activeColor
+      cursor: not-allowed
 
-//-------------------//
-//   Inverted Basic
-//-------------------//
 
-@mixin button-inverted-basic-variant($color, $backgroundColor, $borderColor)
-    $activeBackgroundColor: darken($backgroundColor, 20%)
-    
-    border: 2px solid $backgroundColor
-    color : $backgroundColor
-    
-    &:hover
-        background-color: $backgroundColor
-        color           : $color
-    
-    &:active
-        border-color    : $activeBackgroundColor
-        background-color: $activeBackgroundColor
-        color           : $color
 
-//*******************************//
-//              Main
-//*******************************//
+
+//**************************************
+//*******   G E N E R A T O R   ********
+//**************************************
+
+=button-generator
+  @for $i from 1 through $buttonAmount
+    @at-root
+      #{&}.#{nth($buttonSizes, $i)}
+        +y-padding($padding * ($i / 5))
+        +x-padding($padding * ($i / 2))
+
+
+        $fontSize  : nth($buttonFontSizes, $i)
+        $loaderSize: $fontSize * 1.2
+
+        min-width: $fontSize * 3
+        font-size: $fontSize
+
+
+
+        // [&] Icon NOT Labeled
+        //
+        // 純圖示按鈕。
+
+        &.icon:not(.labeled)
+          font-size: $fontSize + .2
+          padding  : $padding / 1.2
+
+
+
+        // [&] Labeled Icon
+        //
+        // 帶標籤並且有圖示的按鈕。
+
+        &.labeled.icon
+          +x-padding($fontSize + .2 + $padding / 1.2 + $padding * 2, x)
+
+
+
+          // Icon
+          //
+          // 圖示。
+
+          .icon, .fa
+            +absolute
+            +position(0, x, 0, 0)
+            +extend(ease)
+            +y-padding($padding / 1.2)
+            +x-padding($padding / 1.2)
+            +size(x, 1em)
+
+            font-size: $fontSize + .2
+
+
+
+            &:before
+              +block
+              +absolute
+              +position(50%, x, x, x)
+
+              transform: translateY(-50%)
+
+
+
+          // [&] Right
+          //
+          // 圖示位於右側的標籤圖示按鈕。
+
+          &.right
+            .icon, .fa
+              +position(0, 0, 0, x)
+
+
+
+        // [&] Compact
+        //
+        // 縮減版按鈕。
+
+        &.compact
+          +y-padding($padding * ($i / 6))
+          +x-padding($padding * ($i / 3))
+
+
+
+        // [&] Loading
+        //
+        // 讀取中的按鈕。
+
+        &.loading
+          +loader-theme($loaderSize, .2rem)
+
+          &:before, &:after
+            top: calc(50% - #{$loaderSize} / 2)
+
+
+
+
+//**************************************
+//************   M A I N   *************
+//**************************************
 
 .ts.button
-    +extend(no-select)
+  +relative
+  +border-box
+  +inline-block
+  +button-theme($defaultColor, $defaultTextColor)
+  +extend(ease)
+  +rd
+  +normal
+  +y-padding($padding * 0.8)
+  +x-padding($padding * 2)
+  +button-generator
+
+  border-width: .1rem
+  border-style: solid
+  text-decoration: none
+
+
+  &:not(:last-child)
+    margin-right: $margin / 2
+
+
+
+  // [&] Loading
+  //
+  // 讀取時的按鈕。
+
+  &.loading
+    +relative
+    +loader-theme(1.9rem, .2rem)
+    +loader-resource
+
+    color      : transparent !important
+    text-shadow: none        !important
+
+
+
+    &:before,
+    &:after
+      top: calc(50% - 1.9rem / 2)
+
+
+
+  // [&] Fluid
+  //
+  // 流動寬度按鈕。
+
+  &.fluid
+    width: 100%
+  
+  
+  
+  // [&] Floated
+  //
+  // 浮動置左或置右。
+  
+  &.floated
+    +x-margin(0)
     
-    cursor        : pointer
-    padding       : $button_padding
-    border-radius : $button_borderRadius
-    font-size     : $button_fontSize
-    font-weight   : $button_fontWeight
-    display       : inline-block
-    line-height   : $inputLineHeight
-    border-width  : 1px
-    border-style  : solid
-    vertical-align: middle
-    text-align    : center
-    position      : relative
-    
-    +button-variant($button_defaultTextColor, $button_defaultBackgroundColor, $button_defaultBorderColor)
-                
-//-------------------//
-//      Attached       
-//-------------------//  
+    &.right
+      +x-margin($margin / 2, x)
+      float: right
+  
+    &.left
+      +x-margin(x, $margin / 2)
+      float: left
+  
 
-.ts.button[class*='top attached'],
-.ts.buttons[class*='top attached'] .button
-    border-bottom-left-radius : 0
-    border-bottom-right-radius: 0
 
-.ts.button[class*='bottom attached'],
-.ts.buttons[class*='bottom attached'] .button
-    border-top-left-radius : 0
-    border-top-right-radius: 0
+  // [&] Compact
+  //
+  // 縮減版按鈕。
 
-//-------------------//
-//      Circular       
-//-------------------//  
-    
-.ts.button.circular,
-.ts.buttons.circular .button
-    border-radius: 10em
+  &.compact
+    +y-padding($padding * 0.6)
+    +x-padding($padding * 1.8)
 
-//-------------------//
-//      Disabled       
-//-------------------//
-    
-.ts.button[disabled], 
-.ts.button.disabled,    
-.ts.button.disabled:hover,
-.ts.buttons.disabled .button,
-.ts.buttons[disabled] .button,
-.ts.buttons.disabled .button:hover
-    +extend(no-select)
-    opacity       : $disabledOpacity !important
-    cursor        : not-allowed      !important
-    pointer-events: none             !important
 
-//-------------------//
-//      Loading       
-//-------------------//
 
-.ts.loading.loading.loading.loading.loading.loading.button 
-    position      : relative
-    //cursor      : not-allowed
-    text-shadow   : none !important
-    color         : transparent !important
-    opacity       : 1
-    pointer-events: auto
-    transition    : $button_loadingTransition
+  // [&] Icon NOT Labeled
+  //
+  // 純圖示按鈕。
 
-.ts.loading.button:before 
-    position     : absolute
-    content      : ''
-    top          : 50%
-    left         : 50%
-    margin       : $loaderMargin
-    width        : $loaderSize
-    height       : $loaderSize
-    border-radius: $circularRadius
-    border       : $loaderLineWidth solid $button_coloredLoaderFillColor
+  &.icon:not(.labeled)
+    +padding
 
-.ts.loading.button:before:not(.primary):not(.info):not(.warning):not(.inverted):not(.positive):not(.negative):not(.secondary):before
-    border-color: $button_loaderFillColor
+    line-height: .1rem
+    min-width: 0
 
-.ts.loading.button:after 
-    position: absolute
-    content : ''
-    top     : 50%
-    left    : 50%
-    margin  : $loaderMargin
-    width   : $loaderSize
-    height  : $loaderSize
+    .icon
+      margin: 0 !important
 
-    animation                : button-spin $loaderSpeed linear
-    animation-iteration-count: infinite
 
-    border-radius: $circularRadius
-    border-color : $button_coloredLoaderLineColor transparent transparent
-    border-style : solid
-    border-width : $loaderLineWidth
-    box-shadow   : 0px 0px 0px 1px transparent
-    
-.ts.loading.button:not(.primary):not(.info):not(.warning):not(.inverted):not(.positive):not(.negative):not(.secondary):after 
-    border-color: $button_loaderLineColor transparent transparent
 
-.ts.labeled.icon.loading.button .icon 
+  // [&] Circular
+  //
+  // 圓形按鈕。
+
+  &.circular
+    border-radius: 10rem
+
+
+
+  // [&] Transparent
+  //
+  // 透明背景按鈕。
+
+  &.transparent
     background-color: transparent
-    box-shadow      : none
-
-@keyframes button-spin 
-    from 
-        transform: rotate(0deg)
-    to 
-        transform: rotate(360deg)
-
-.ts.basic.loading.button:not(.inverted):before 
-    border-color: $loaderFillColor
-
-.ts.basic.loading.button:not(.inverted):after 
-    border-top-color: $loaderLineColor
-
-//-------------------//
-//    Labeled Icon       
-//-------------------//
-
-.ts.labeled.icon.buttons .button,
-.ts.labeled.icon.button 
-    position     : relative
-    padding-left : $button_labeledIconPadding !important
-    padding-right: $button_horizontalPadding !important
+    border          : none
 
 
-/* Left Labeled */
-.ts.labeled.icon.buttons > .button > .icon,
-.ts.labeled.icon.button > .icon 
-    position                 : absolute
-    height                   : 100%
-    line-height              : 1
-    border-radius            : 0px
-    border-top-left-radius   : inherit
-    border-bottom-left-radius: inherit
-    text-align               : center
-    margin                   : $button_labeledIconMargin
-    width                    : $button_labeledIconWidth
-    background-color         : $button_labeledIconBackgroundColor
-    color                    : $button_labeledIconColor
-    box-shadow               : $button_labeledIconLeftShadow
 
-/* Left Labeled */
-.ts.labeled.icon.buttons > .button > .icon,
-.ts.labeled.icon.button > .icon 
-    top : 0em
-    left: 0em
+  // [&] Pure
+  //
+  // 純按鈕、無邊界、陰影。
 
-/* Right Labeled */
-.ts[class*="right labeled"].icon.button 
-    padding-right: $button_labeledIconPadding !important
-    padding-left: $button_horizontalPadding !important
+  &.pure
+    padding    : 0    !important
+    text-shadow: none !important
 
-.ts[class*="right labeled"].icon.button > .icon 
-    left: auto
-    right: 0em
-    border-radius: 0px
-    border-top-right-radius: inherit
-    border-bottom-right-radius: inherit
-    box-shadow: $button_labeledIconRightShadow
 
-.ts.labeled.icon.buttons > .button > .icon:before,
-.ts.labeled.icon.button > .icon:before,
-.ts.labeled.icon.buttons > .button > .icon:after,
-.ts.labeled.icon.button > .icon:after 
-    display: block
-    position: absolute
+
+  // [&] Attached
+  //
+  // 吸附於某邊緣的按鈕。
+
+  &.attached
     width: 100%
-    top: 50%
-    text-align: center
-    transform: translateY(-50%)
-
-.ts.labeled.icon.buttons .button > .icon 
-    border-radius: 0em
-
-.ts.labeled.icon.buttons .button:first-child > .icon 
-    border-top-left-radius: $button_borderRadius
-    border-bottom-left-radius: $button_borderRadius
-
-.ts.labeled.icon.buttons .button:last-child > .icon 
-    border-top-right-radius: $button_borderRadius
-    border-bottom-right-radius: $button_borderRadius
-
-.ts.vertical.labeled.icon.buttons .button:first-child > .icon 
-    border-radius: 0em
-    border-top-left-radius: $button_borderRadius
-
-.ts.vertical.labeled.icon.buttons .button:last-child > .icon 
-    border-radius: 0em
-    border-bottom-left-radius: $button_borderRadius
 
 
-/* Fluid Labeled */
-.ts.fluid[class*="left labeled"].icon.button,
-.ts.fluid[class*="right labeled"].icon.button 
-    padding-left: $button_horizontalPadding !important
-    padding-right: $button_horizontalPadding !important
 
-//-------------------//
-//      Floated       
-//-------------------//
+    // [&] Bottom
+    //
+    // 吸附於底部。
 
-.ts.button[class*="left floated"],
-.ts.buttons[class*="left floated"]
-    float: left
+    &.bottom
+      border-top-left-radius : 0
+      border-top-right-radius: 0
 
-.ts.button[class*="right floated"],
-.ts.buttons[class*="right floated"]
-    float: right
 
-//-------------------//
-//       Fluid       
-//-------------------//
 
-.ts.button.fluid,
-.ts.buttons.fluid,
-.ts.buttons.fluid .button
-    width: 100%
-       
-//-------------------//
-//       Sizes       
-//-------------------//
-    
-.ts.button.compact,
-.ts.buttons.compact .button
-    padding: $button_compactPadding
-.ts.button.mini,
-.ts.buttons.mini .button
-    font-size: $button_miniFontSize
-.ts.button.tiny,
-.ts.buttons.tiny .button
-    font-size: $button_tinyFontSize
-.ts.button.small,
-.ts.buttons.small .button
-    font-size: $button_smallFontSize
-.ts.button.medium,
-.ts.buttons.medium .button
-    font-size: $button_mediumFontSize
-.ts.button.large,
-.ts.buttons.large .button
-    font-size: $button_largeFontSize
-.ts.button.big,
-.ts.buttons.big .button
-    font-size: $button_bigFontSize
-.ts.button.huge,
-.ts.buttons.huge .button
-    font-size: $button_hugeFontSize
-.ts.button.massive,
-.ts.buttons.massive .button
-    font-size: $button_massiveFontSize
+    // [&] Top
+    //
+    // 吸附於頂部。
 
-//-------------------//
-//      Labeled
-//-------------------//   
+    &.top
+      border-bottom-left-radius : 0
+      border-bottom-right-radius: 0
 
-.ts.labeled.button:not(.icon)
-    +extend(no-select)
 
-    display       : inline-flex
-    flex-direction: row
-    background    : none !important
-    padding       : 0px !important
-    border        : none !important
-    box-shadow    : none !important
-    vertical-align: bottom
 
-.ts.labeled.button > .button
-    margin     : 0px
+  // [&] Labeled
+  //
+  // 帶標籤按鈕。
 
-.ts.labeled.button > .label 
-    display     : flex
-    align-items : $button_labeledLabelAlign
-    margin      : 0px 0px 0px $button_labeledLabelBorderOffset !important
-    font-size   : $button_labeledLabelFontSize
-    padding     : $button_labeledLabelPadding
-    font-size   : $button_labeledLabelFontSize
-    border-color: $button_labeledLabelBorderColor
+  &.labeled
 
-/* Tag */
-.ts.labeled.button > .tag.label:before 
-    width : $button_labeledTagLabelSize
-    height: $button_labeledTagLabelSize
+  //&.labeled
+  //  +inline-flex
+  //
+  //  padding         : 0
+  //  border          : none
+  //  background-color: transparent
+  //  outline         : none
+  //
+  //  .ts.button,
+  //  .ts.label
+  //    //+flex-center
+  //
+  //  .ts.label
+  //    text-shadow: none
+  //
+  //  &.left
+  //    .ts.label
+  //      border-right              : none
+  //      border-top-right-radius   : 0
+  //      border-bottom-right-radius: 0
+  //
+  //    .ts.button
+  //      border-top-left-radius   : 0
+  //      border-bottom-left-radius: 0
+  //
+  //  &:hover
+  //    background-color: transparent
+  //
+  //  &:active
+  //    background-color: transparent
+  //    box-shadow      : none
 
-/* Right */
-.ts.labeled.button:not([class*="left labeled"]) > .button 
-    border-top-right-radius   : 0px
-    border-bottom-right-radius: 0px
 
-.ts.labeled.button:not([class*="left labeled"]) > .label 
-    border-top-left-radius   : 0px
-    border-bottom-left-radius: 0px
 
-/* Left Side */
-.ts[class*="left labeled"].button > .button 
-    border-top-left-radius   : 0px
-    border-bottom-left-radius: 0px
 
-.ts[class*="left labeled"].button > .label 
-    border-top-right-radius   : 0px
-    border-bottom-right-radius: 0px
+  //**************************************
+  //**********   C O L O R S   ***********
+  //**************************************
 
-//-------------------//
-//       Icon
-//-------------------//      
+  &.positive
+    +button-theme($positiveColor, $positiveTextColor)
 
-.ts.button.icon,
-.ts.buttons.icon .button
-    padding: $button_verticalPadding $button_verticalPadding
+  &.negative
+    +button-theme($negativeColor, $negativeTextColor)
 
-.ts.button > .icon:not(.button) 
-    height        : $button_iconHeight
-    opacity       : $button_iconOpacity
-    margin        : $button_iconMargin
-    transition    : $button_iconTransition
-    vertical-align: $button_iconVerticalAlign
-    color         : $button_iconColor
+  &.primary
+    +button-theme($primaryColor, $primaryTextColor)
 
-.ts.button:not(.icon) > .icon:not(.button) 
-    margin: $button_iconMargin
+  &.warning
+    +button-theme($warningColor, $warningTextColor)
 
-.ts.button:not(.icon) > .right.icon:not(.button) 
-    margin: $button_rightIconMargin
+  &.info
+    +button-theme($infoColor, $infoTextColor)
 
-//-------------------//
-//      Emphasis
-//-------------------//
+  &.basic.inverted
+    +button-theme($invertedColor, $invertedTextColor)
+    border-width: .2rem
 
-.ts.button.inverted,
-.ts.buttons.inverted .button,
-.ts.button.secondary:not(.opinion),
-.ts.buttons.secondary:not(.opinion) .button
-    +button-variant($button_invertedTextColor, $button_invertedBackgroundColor, $button_invertedBorderColor)
-.ts.button.primary,
-.ts.buttons.primary .button
-    +button-variant($button_primaryTextColor, $button_primaryBackgroundColor, $button_primaryBorderColor)
-.ts.button.info,
-.ts.buttons.info .button
-    +button-variant($button_infoTextColor, $button_infoBackgroundColor, $button_infoBorderColor)
-.ts.button.warning,
-.ts.buttons.warning .button
-    +button-variant($button_warningTextColor, $button_warningBackgroundColor, $button_warningBorderColor)
-.ts.button.negative,
-.ts.buttons.negative .button
-    +button-variant($button_negativeTextColor, $button_negativeBackgroundColor, $button_negativeBorderColor)
-.ts.button.positive,
-.ts.buttons.positive .button
-    +button-variant($button_positiveTextColor, $button_positiveBackgroundColor, $button_positiveBorderColor)
+  &.inverted:not(.basic)
+    +button-theme(#000, #CCC)
 
-//-------------------//
-//      Opinion
-//-------------------//
 
-.ts.button.opinion,
-.ts.buttons.opinion .button
-    border-color    : transparent
-    background-color: rgba(0, 0, 0, 0.05)
-    color           : #FFF
 
-    &:hover
-        background-color: rgba(0, 0, 0, 0.1)
-        color           : #FFF
-    &:active
-        background-color: rgba(0, 0, 0, 0.3)
-        color           : #FFF
-        
-.ts.button.secondary.opinion,
-.ts.buttons.secondary.opinion .button
-    background-color: rgba(0, 0, 0, 0.15)
-    color           : #FFF
-    
-    &:hover
-        background-color: rgba(0, 0, 0, 0.2)
-        color           : #FFF
-    &:active
-        background-color: rgba(0, 0, 0, 0.4)
-        color           : #FFF
-    
-//-------------------//
-//       Basic
-//-------------------//
 
-.ts.button.basic,
-.ts.button.basic:hover,
-.ts.button.basic:active,
-.ts.buttons.basic .button,
-.ts.buttons.basic .button:hover,
-.ts.buttons.basic .button:active,
-    background-color: $button_basicBackgroundColor
-.ts.button.basic,
-.ts.buttons.basic .button
-    +button-basic-variant($button_basicTextColor, $button_basicTextColor, $button_basicBorderColor)
-.ts.button.basic.inverted,
-.ts.buttons.basic.inverted .button,
-.ts.button.basic.secondary,
-.ts.buttons.basic.secondary .button
-    +button-basic-variant($button_invertedTextColor, $button_invertedBackgroundColor, $button_invertedBorderColor)
-.ts.button.basic.primary,
-.ts.buttons.basic.primary .button
-    +button-basic-variant($button_primaryTextColor, $button_primaryBackgroundColor, $button_primaryBorderColor)
-.ts.button.basic.info,
-.ts.buttons.basic.info .button
-    +button-basic-variant($button_infoTextColor, $button_infoBackgroundColor, $button_infoBorderColor)
-.ts.button.basic.warning,
-.ts.buttons.basic.warning .button
-    +button-basic-variant($button_warningTextColor, $button_warningBackgroundColor, $button_warningBorderColor)
-.ts.button.basic.negative,
-.ts.buttons.basic.negative .button
-    +button-basic-variant($button_negativeTextColor, $button_negativeBackgroundColor, $button_negativeBorderColor)
-.ts.button.basic.positive,
-.ts.buttons.basic.positive .button
-    +button-basic-variant($button_positiveTextColor, $button_positiveBackgroundColor, $button_positiveBorderColor)
-    
-//-------------------//
-//   Inverted Basic
-//-------------------//
-
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative)
-    +button-inverted-basic-variant($button_basicInvertedTextColor, $button_basicInvertedBorderColor, $button_basicInvertedBorderColor)
-
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):hover
-    background-color: $button_invertedBasicHoverBackgroundColor
-    border-color    : $button_invertedBasicHoverBackgroundColor
-    color           : $button_invertedBasicHoverTextColor
-    
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):active
-    background-color: $button_invertedBasicActiveBackgroundColor
-    border-color    : $button_invertedBasicActiveBackgroundColor
-    color           : $button_invertedBasicActiveTextColor
-
-.ts.button.basic.inverted,
-.ts.buttons.basic.inverted .button,
-.ts.button.inverted.basic.secondary,
-.ts.buttons.inverted.basic.secondary .button
-    +button-inverted-basic-variant($button_invertedTextColor, $button_invertedBackgroundColor, $button_invertedBorderColor)
-.ts.button.inverted.basic.primary,
-.ts.buttons.inverted.basic.primary .button
-    +button-inverted-basic-variant($button_primaryTextColor, $button_primaryBackgroundColor, $button_primaryBorderColor)
-.ts.button.inverted.basic.info,
-.ts.buttons.inverted.basic.info .button
-    +button-inverted-basic-variant($button_infoTextColor, $button_infoBackgroundColor, $button_infoBorderColor)
-.ts.button.inverted.basic.warning,
-.ts.buttons.inverted.basic.warning .button
-    +button-inverted-basic-variant($button_warningTextColor, $button_warningBackgroundColor, $button_warningBorderColor)
-.ts.button.inverted.basic.negative,
-.ts.buttons.inverted.basic.negative .button
-    +button-inverted-basic-variant($button_negativeTextColor, $button_negativeBackgroundColor, $button_negativeBorderColor)
-.ts.button.inverted.basic.positive,
-.ts.buttons.inverted.basic.positive .button
-    +button-inverted-basic-variant($button_positiveTextColor, $button_positiveBackgroundColor, $button_positiveBorderColor)
-    
-//*******************************//
-//            Buttons
-//*******************************///
+//**************************************
+//*********   B U T T O N S   **********
+//**************************************
 
 .ts.buttons
-    display: inline-flex
+  +inline-flex
 
-    &:not(.vertical) .ts.button
-        display: inline-block
-        
-        &:not(:first-child)
-            border-top-left-radius   : 0
-            border-bottom-left-radius: 0
-            border-left-width        : 0
-        
-        &:not(:last-child)
-            border-top-right-radius   : 0
-            border-bottom-right-radius: 0
-            border-right-width        : 1px
-        
-        &:last-child
-            border-left-width         : 0px
-    
-    &:not(.vertical).inverted.basic .ts.button
-        &:not(:last-child)
-            border-right-width        : 2px
-        
-                
-    &.vertical
-        display: block
-        
-        .ts.button
-            display: block
-            
-            &:not(:first-child)
-                border-top-left-radius : 0
-                border-top-right-radius: 0
-                border-bottom-width    : 0
-            
-            &:not(:last-child)
-                border-bottom-left-radius : 0
-                border-bottom-right-radius: 0
-                border-bottom-width       : 0px
-            
-            &:last-child
-                border-bottom-width       : 1px
-    
-    &.vertical.inverted.basic .ts.button
-        &:last-child
-            border-bottom-width           : 2px
+
+
+  // [&] Fluid
+  //
+  // 流動寬度的按鈕群組。
+
+  &.fluid
+    width: 100%
+
+    .button
+      width: 100%
+
+
+
+  // [>] .button
+  //
+  //
+
+  > .button
+    +flex
+    +flex-content-center
+    +x-margin(x, 0)
+
+    border-radius  : 0
+
+    &:first-child
+      border-top-left-radius   : .4rem
+      border-bottom-left-radius: .4rem
+
+    &:last-child
+      border-top-right-radius   : .4rem
+      border-bottom-right-radius: .4rem
+
+    &:first-child:not(:last-child),
+    &:not(:last-child):not(:first-child)
+      border-right: none
+
+
+
+  // [&] Attached
+  //
+  // 吸附於某一邊緣的按鈕群組。
+
+  &.attached
+    width: 100%
+
+    .button
+      width: 100%
+
+
+
+    // [&] Top
+    //
+    // 吸附於頂部。
+
+    &.top
+      .button
+        border-bottom-right-radius: 0px
+        border-bottom-left-radius : 0px
+
+
+
+    // [&] Bottom
+    //
+    // 吸附於底部。
+
+    &.bottom
+      .button
+        border-top-right-radius: 0px
+        border-top-left-radius : 0px

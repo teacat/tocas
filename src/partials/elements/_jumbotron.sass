@@ -1,126 +1,130 @@
-@import ../../variables/elements/jumbotron.variables
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@   J U M B O T R O N   @@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-//*******************************//
-//            Variations
-//*******************************//
+.ts.container > .ts.jumbotron
 
-@mixin jumbotron-variant($color, $backgroundColor, $borderColor)
-    color           : $color
-    background-color: $backgroundColor
-    border-color    : $borderColor
+=jumbotron-generator
+  @for $i from 1 through $jumbotronAmount
+    @at-root
+      #{&}.#{nth($jumbotronSizes, $i)}
+        +y-padding($padding * 2 * ($i / 2))
+        
+=jumbotron-theme($color: false, $textColor: false)
+
+  @if not $textColor
+    $textColor: darken($color, 30%)
     
-//*******************************//
-//              Main
-//*******************************//
+  background-color: $color
+  color: $textColor
+  
+  .ts.header
+    color: $textColor
+  
+  
+  &.gradient
+    $topLeft    : darken(saturate(adjust-hue($color, -10deg), 10%), 10%)
+    $bottomRight: lighten(saturate(adjust-hue($color, 10deg), 5%), 5%)
+    
+    background-image: linear-gradient(140deg, $topLeft 0%, $color 70%, $bottomRight 100%)
+  
+  
 
 .ts.jumbotron
-    position     : relative
-    display      : block
-    padding      : $jumbotron_padding
-    margin       : $jumbotron_margin
-    border       : $jumbotron_border
-    border-radius: $jumbotron_borderRadius
-    box-shadow   : $jumbotron_boxShadow
+  +relative
+  +basic-card
+  +padding(2)
+  +extend(aligns)
+  +jumbotron-theme(auten(#FFF, 10%))
+  +jumbotron-generator
+  +border-box
+  //+flex
+  +y-margin(2em)
+  
+  width: 100%
+  
+  &[class*="right aligned"]
+    text-align: right
     
-    +jumbotron-variant($jumbotron_defaultTextColor, $jumbotron_defaultBackgroundColor, $jumbotron_defaultBorderColor)
+  &[class*="left aligned"]
+    text-align: left
+  
+  &[class*="center aligned"]
+    text-align: center
+  
+  //.ts.menu + &
+  //  +y-margin(0)
+  
+  &.fluid
+    +y-margin(0)
     
-.ts.jumbotron .ts.header
-    color: $jumbotron_headerTextColor
-.ts.jumbotron .ts.header .sub.header
-    color  : $jumbotron_subHeaderTextColor
-    opacity: $jumbotron_subHeaderOpacity
-
-//-------------------//
-//       Fluid
-//-------------------//
-
-.ts.jumbotron.fluid
+    border: none
     border-radius: 0
 
-//-------------------//
-//       Basic
-//-------------------//
+  
+  &.secondary
+    +jumbotron-theme(auten(#FFF, 15%))
 
-.ts.jumbotron.basic
-    border    : 0
-    box-shadow: none
-
-//-------------------//
-//       Aligns
-//-------------------//
-
-.ts.jumbotron[class*="left aligned"]
-    text-align: left
-.ts.jumbotron[class*="right aligned"]
-    text-align: right
-.ts.jumbotron[class*="center aligned"]
-    text-align: center
-
-//-------------------//
-//      Accents
-//-------------------//
-
-.ts.jumbotron.secondary
-    background-color: $jumbotron_secondaryBackgroundColor
-    color           : $jumbotron_secondaryColor
-.ts.jumbotron.tertiary
-    background-color: $jumbotron_tertiaryBackgroundColor
-    color           : $jumbotron_tertiaryColor
-
-//-------------------//
-//      Disabled
-//-------------------//
-
-.ts.jumbotron.disabled
-    opacity: $disabledOpacity
-    color  : $disabledTextColor
+  
+  &.tertiary
+    +jumbotron-theme(auten(#FFF, 20%))
+  
+  &.disabled
+    opacity: 0.3
+  
+  &.gridded
+  
+    $c: #D9D9D9
+    $b: rgba(255,255,255,.2)
+    $t: rgba(255,255,255,.1)
+    $n: transparent
     
-//-------------------//
-//      Emphasis
-//-------------------//
-
-.ts.jumbotron.primary
-    +jumbotron-variant($jumbotron_primaryTextColor, $jumbotron_primaryBackgroundColor, $jumbotron_primaryBorderColor)
-.ts.jumbotron.info
-    +jumbotron-variant($jumbotron_infoTextColor, $jumbotron_infoBackgroundColor, $jumbotron_infoBorderColor)
-.ts.jumbotron.warning
-    +jumbotron-variant($jumbotron_warningTextColor, $jumbotron_warningBackgroundColor, $jumbotron_warningBorderColor)
-.ts.jumbotron.positive
-    +jumbotron-variant($jumbotron_positiveTextColor, $jumbotron_positiveBackgroundColor, $jumbotron_positiveBorderColor)
-.ts.jumbotron.negative
-    +jumbotron-variant($jumbotron_negativeTextColor, $jumbotron_negativeBackgroundColor, $jumbotron_negativeBorderColor)
-.ts.jumbotron.inverted
-    +jumbotron-variant($jumbotron_invertedTextColor, $jumbotron_invertedBackgroundColor, $jumbotron_invertedBorderColor)
+    background-image: linear-gradient(0deg, $n 0%, $n 9px, $b 9px, $b 10px, $n 10px, $n 19px, $t 19px, $t 20px, $n 20px, $n 29px, $t 29px, $t 30px, $n 30px, $n 39px, $t 39px, $t 40px, $n 40px, $n 49px, $t 49px, $t 50px), linear-gradient(-90deg, $n 0%, $n 9px, $b 9px, $b 10px, $n 10px, $n 19px, $t 19px, $t 20px, $n 20px, $n 29px, $t 29px, $t 30px, $n 30px, $n 39px, $t 39px, $t 40px, $n 40px, $n 49px, $t 49px, $t 50px)
+    background-size: 50px 50px
+  
+  &[class*="full page"]
+    +flex
+    +flex-items-center
+    +flex-content-center
+    height: 100vh
+    //+y-padding(50vh)
     
-//-------------------//
-//     Borderless
-//-------------------//
+  
+  &.info
+    +jumbotron-theme($infoColor, $infoTextColor)
+    
+  &.primary
+    +jumbotron-theme($primaryColor, $primaryTextColor)
+    
+  &.positive
+    +jumbotron-theme($positiveColor, $positiveTextColor)
+    
+  &.negative
+    +jumbotron-theme($negativeColor, $negativeTextColor)
+  
+  &.inverted
+    +jumbotron-theme(invert($invertedColor), invert(invert($invertedTextColor)))
+    
+  &.warning
+    +jumbotron-theme($warningColor, $warningTextColor)
+  
 
-.ts.jumbotron.borderless
+  &.basic
+    background: transparent
     border: 0
-    
-//-------------------//
-//       Padded
-//-------------------//
-
-.ts.jumbotron.padded
-    padding: $jumbotron_paddedPadding
-
-.ts.jumbotron.very.padded,
-    padding: $jumbotron_veryPaddedPadding
-
-.ts.jumbotron.extra.padded,
-    padding: $jumbotron_extraPaddedPadding
-    
-//-------------------//
-//       Fitted
-//-------------------//
-
-.ts.jumbotron.fitted:not(.horizontally):not(.vertically)
-    padding: 0
-.ts.jumbotron.fitted.horizontally
-    padding-left : 0
-    padding-right: 0
-.ts.jumbotron.fitted.vertically
-    padding-top   : 0
-    padding-bottom: 0
+    box-shadow: none
+  
+  

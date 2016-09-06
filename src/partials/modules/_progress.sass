@@ -1,258 +1,238 @@
-@import ../../variables/modules/progress.variables
+//   ▄▄▄        ▄▄████▄
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██
+//  ▀██▄▄▄████   ▄▄▄██▀
+//     ▀▀▀████▀▀▀▀▀
+//        ██
+//       ██          ▄█████▄       █████████████          ▄█             █▄
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@   P R O G R E S S   @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-//*******************************//
-//            Variations
-//*******************************//
+//**************************************
+//******   A N I M A T I O N S   *******
+//**************************************
 
-@mixin progress-bar-variant($color, $barColor, $activeBarColor)
-    background-color: $barColor
-    
-    > .progress
-        color: $color
-    &:after
-        background-color: $activeBarColor
-    
-//*******************************//
-//            Main
-//*******************************//
+@keyframes process-bar-animation
+  from
+    background-position: 0px
+  to
+    background-position: 40px
 
-.ts.progress 
-    position        : relative
-    display         : flex
-    max-width       : 100%
-    border          : $progress_border
-    margin          : $progress_margin
-    background-color: $progress_background
-    padding         : $progress_padding
-    border-radius   : $progress_borderRadius
 
-.ts.progress:first-child 
-    margin: $progress_firstMargin
-.ts.progress:last-child 
-    margin: $progress_lastMargin
 
-//*******************************//
-//            Content
-//*******************************//
 
-/* Activity Bar */
-.ts.progress .bar 
-    display         : inline-block
-    line-height     : 1
-    position        : $progress_barPosition
-    width           : $progress_barInitialWidth
-    min-width       : $progress_barMinWidth
-    background-color: $progress_defaultBarColor
-    border-radius   : $progress_barBorderRadius
+//**************************************
+//***********   T H E M E   ************
+//**************************************
 
-.ts.progress .bar:not(:last-child)
-    border-top-right-radius   : 0
-    border-bottom-right-radius: 0
-.ts.progress .bar:last-child:not(:only-child)
-    border-top-left-radius   : 0
-    border-bottom-left-radius: 0    
-.ts.progress .bar:not(:last-child):not(:first-child)
+=progress-theme($color, $textColor: #FFF)
+
+  color: $textColor
+
+  // Bar
+  //
+  // 主要的進度條。
+
+  .bar
+    color: $textColor
+    background: $color
+
+
+
+  // [&] Indeterminate
+  //
+  // 還在未知狀態的進度條。
+
+  &.indeterminate
+    background-image: linear-gradient(135deg, auten($color, 5%) 25%, auten($color, 1%) 25%, auten($color, 1%) 50%, auten($color, 5%) 50%, auten($color, 5%) 75%, auten($color, 1%) 75%, auten($color, 1%) 100%)
+    text-shadow: 0 1px 1px darken($color, 8%)
+
+
+
+  // [&] Active
+  //
+  // 一個帶有正在進行動畫的進度條。
+
+  &.active
+    .bar:after
+      background: auten($color, 15%)
+
+
+
+
+//**************************************
+//*******   G E N E R A T O R   ********
+//**************************************
+
+=progress-generator
+  @for $i from 1 through $progressAmount
+    @at-root
+      #{&}.#{nth($progressSizes, $i)}
+
+        $fontSize  : nth($progressFontSizes, $i)
+
+        // Bar
+        //
+        // 主要的進度條。
+
+        .bar
+          +y-padding(calc(.2em * #{$i / 5}))
+          +x-padding(.5em, .5em)
+
+          height   :  calc(1em + (.2em * #{$i / 5}) * 2 )
+          line-height: 1em
+          font-size: $fontSize
+
+          //&:empty:after
+          //  margin: calc(-.2em * #{$i / 5}) calc(-1em  * #{$i / 6})
+
+
+
+        // [&] Indeterminate
+        //
+        // 還在未知狀態的進度條。
+
+        &.indeterminate
+          +y-padding($padding * ($i / 5))
+          +x-padding($padding * ($i / 4))
+
+
+
+
+//**************************************
+//************   M A I N   *************
+//**************************************
+
+.ts.progress
+  +rd
+  +block
+  +relative
+  +border-box
+  +no-overflow
+  +progress-generator
+  +progress-theme($defaultColor, $defaultTextColor)
+  +y-margin(1em)
+  width: 100%
+  border: 1px solid #EEE
+
+
+
+  @for $i from 0 through 100
+    &[data-percent="#{$i + '%'}"]
+      .bar
+        width: calc(#{$i + '%'} + 1em)
+
+
+  //**************************************
+  //**********   C O L O R S   ***********
+  //**************************************
+
+  &.positive
+    +progress-theme($positiveColor, $positiveTextColor)
+
+  &.warning
+    +progress-theme($warningColor, $warningTextColor)
+
+  &.negative
+    +progress-theme($negativeColor, $negativeTextColor)
+
+  &.info
+    +progress-theme($infoColor, $infoTextColor)
+
+  &.primary
+    +progress-theme($primaryColor, $primaryTextColor)
+
+
+
+  // Fluid
+  //
+  // 流動的進度條，移除了邊框和圓角。
+
+  &.fluid
     border-radius: 0
+    border       : none
 
-/* Percent Complete */
-.ts.progress .bar > .text 
-    white-space: nowrap
-    position   : $progress_progressPosition
-    width      : $progress_progressWidth
-    font-size  : $progress_progressSize
-    top        : $progress_progressTop
-    right      : $progress_progressRight
-    left       : $progress_progressLeft
-    bottom     : $progress_progressBottom
-    color      : $progress_defaultTextColor
-    margin-top : $progress_progressOffset
-    font-weight: $progress_progressFontWeight
-    text-align : $progress_progressTextAlign
 
-//*******************************//
-//            States
-//*******************************//
 
-//-------------------//
-//   Indeterminate       
-//-------------------//   
+  // Bar
+  //
+  // 主要的進度條。
 
-.ts.progress.indeterminate
-    background-size : $progress_indeterminateBackgroundSize $progress_indeterminateBackgroundSize
-    background-image: $progress_defaultIndeterminateBackground
-    
-    animation: process-bar-animation 2s linear 0s infinite
-    @keyframes process-bar-animation
+  .bar
+    +rd
+    +relative
+    +size(x, 30%)
+
+    box-sizing: content-box
+    height: 1em
+    text-align: right
+    max-width: 100%
+
+    // [&] AFTER
+    //
+    //
+
+    //&:after
+    //  content: '\200B'
+
+
+
+  // [&] Active
+  //
+  // 一個帶有正在進行動畫的進度條。
+
+  &.active
+
+    .bar:after
+      +absolute
+      +position(0, x, 0, 0)
+
+      content: '\200B'
+
+      animation: process-active 2s ease infinite
+      @keyframes process-active
         from
-            background-position: 0px
+          opacity: .8
+          width: 0%
         to
-            background-position: 40px
-    
-.ts.progress.indeterminate .bar
-    visibility: hidden
-        
-//-------------------//
-//       Active       
-//-------------------//
+          opacity: 0
+          width: 100%
 
-.ts.active.progress .bar 
-    position : relative
-    min-width: $progress_activeMinWidth
 
-.ts.progress.active .bar:after
-    position        : absolute
-    top             : 0
-    bottom          : 0 
-    left            : 0
-    content         : ''
-    background-color: $progress_defaultActiveBarColor
-    border-radius   : $progress_barBorderRadius
-    animation       : process-active 2s cubic-bezier(0.4, 0, 0.2, 1) infinite
-    
-@keyframes process-active
-    from
-        opacity: .8
-        width: 0%
-    to
-        opacity: 0
-        width: 100%
 
-//-------------------//
-//      Disabled       
-//-------------------//
+  // [&] Indeterminate
+  //
+  // 還在未知狀態的進度條。
 
-.ts.disabled.progress 
-    opacity: 0.35
+  &.indeterminate
+    +flex
+    +flex-items-center
+    +flex-content-center
 
-.ts.disabled.progress .bar,
-.ts.disabled.progress .bar::after 
-    animation: none !important
+    background-size: 40px 40px
+    animation: process-bar-animation 2s linear 0s infinite
 
-//*******************************//
-//            Emphasis
-//*******************************//
 
-.ts.progress.primary .bar,
-.ts.progress .primary.bar
-    +progress-bar-variant($progress_primaryTextColor, $progress_primaryBarColor, $progress_primaryActiveBarColor)
-        
-.ts.progress.indeterminate.primary
-    background-image: $progress_primaryIndeterminateBackground
-    
-.ts.progress.info .bar,
-.ts.progress .info.bar
-    +progress-bar-variant($progress_infoTextColor, $progress_infoBarColor, $progress_infoActiveBarColor)
-    
-.ts.progress.indeterminate.info
-    background-image: $progress_infoIndeterminateBackground
-    
-.ts.progress.warning .bar,
-.ts.progress .warning
-    +progress-bar-variant($progress_warningTextColor, $progress_warningBarColor, $progress_warningActiveBarColor)
-    
-.ts.progress.indeterminate.warning
-    background-image: $progress_warningIndeterminateBackground
-    
-.ts.progress.positive .bar,
-.ts.progress.success .bar,
-.ts.progress .success.bar,
-.ts.progress .positive.bar
-    +progress-bar-variant($progress_positiveTextColor, $progress_positiveBarColor, $progress_positiveActiveBarColor)
-    
-.ts.progress.indeterminate.success,
-.ts.progress.indeterminate.positive
-    background-image: $progress_positiveIndeterminateBackground
-    
-.ts.progress.negative .bar,
-.ts.progress.error .bar,
-.ts.progress .error.bar,
-.ts.progress .negative.bar
-    +progress-bar-variant($progress_negativeTextColor, $progress_negativeBarColor, $progress_negativeActiveBarColor)
-    
-.ts.progress.indeterminate.negative,
-.ts.progress.indeterminate.error
-    background-image: $progress_negativeIndeterminateBackground
 
-//-------------------//
-//     Attached       
-//-------------------//
+    // [&] AFTER
+    //
+    //
 
-/* bottom attached */
-.ts.progress.attached 
-    background: $progress_attachedBackground
-    position  : relative
-    border    : none
-    margin    : 0em
+    &:after
+      content: '\200B'
 
-.ts.progress.attached,
-.ts.progress.attached .bar 
-    display      : block
-    height       : $progress_attachedHeight
-    padding      : 0px
-    overflow     : hidden
-    border-radius: 0em 0em $progress_attachedBorderRadius $progress_attachedBorderRadius
 
-.ts.progress.attached .bar 
-    border-radius: 0em
 
-/* top attached */
-.ts.progress.top.attached,
-.ts.progress.top.attached .bar 
-    top          : 0px
-    border-radius: $progress_attachedBorderRadius $progress_attachedBorderRadius 0em 0em
+    // Bar
+    //
+    // 主要的進度條。
 
-.ts.progress.top.attached .bar 
-    border-radius: 0em
-
-//-------------------//
-//      Coupling       
-//-------------------//
-
-.ts.segment > .ts.attached.progress,
-.ts.card > .ts.attached.progress 
-    position: absolute
-    top     : auto
-    left    : 0
-    bottom  : 100%
-    width   : 100%
-
-.ts.segment > .ts.bottom.attached.progress,
-.ts.card > .ts.bottom.attached.progress 
-    top   : 100%
-    bottom: auto
-
-//-------------------//
-//       Fluid       
-//-------------------//
-
-.ts.progress.fluid
-    border-radius: 0
-
-//-------------------//
-//       Sizes       
-//-------------------//
-
-.ts.tiny.progress 
-    font-size: $tiny
-.ts.tiny.progress .bar 
-    height: $progress_tinyBarHeight
-
-.ts.small.progress 
-    font-size: $small
-.ts.small.progress .bar 
-    height: $progress_smallBarHeight
-
-.ts.progress 
-    font-size: $medium
-.ts.progress .bar 
-    height: $progress_barHeight
-
-.ts.large.progress 
-    font-size: $large
-.ts.large.progress .bar 
-    height: $progress_largeBarHeight
-
-.ts.big.progress 
-    font-size: $big
-.ts.big.progress .bar 
-    height: $progress_bigBarHeight
+    .bar
+      +none

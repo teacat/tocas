@@ -1,0 +1,207 @@
+//   ▄▄▄        ▄▄████▄
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██
+//  ▀██▄▄▄████   ▄▄▄██▀
+//     ▀▀▀████▀▀▀▀▀
+//        ██
+//       ██          ▄█████▄       █████████████          ▄█             █▄
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@   C H E C K B O X   @@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+
+
+
+=checkbox-selectable-theme($color: #808080, $textColor: #FFF)
+
+  [type="checkbox"]:checked + .ts.segment
+    +extend(no-ease)
+
+    background: $color
+    border-color: $color
+
+
+
+    *
+      color: $textColor
+
+  &.raised
+    [type="checkbox"]:checked + .ts.segment
+      box-shadow: 0 5px 30px -5px rgba(37,45,51, .5)
+
+  &.gradient
+    [type="checkbox"]:checked + .ts.segment
+      $topLeft    : darken(saturate(adjust-hue($color, -10deg), 10%), 10%)
+      $bottomRight: lighten(saturate(adjust-hue($color, 10deg), 5%), 5%)
+
+      background-image: linear-gradient(140deg, $topLeft 0%, $color 70%, $bottomRight 100%)
+
+  .ts.segment:hover
+    +extend(ease)
+
+    border-color: rgba($color, 0.6)
+
+
+
+.ts.checkbox
+  +relative
+  +extend(no-select)
+  +y-margin(.3em, 1em)
+  +x-padding(calc(.7em + 1.4em), x)
+
+
+
+  //
+  //
+  //
+
+  +block
+
+
+  // [&] HOVER
+  //
+  //
+
+  &:hover
+    +poi
+    +extend(ease)
+
+    opacity: 1
+
+
+
+  // [&] ACTIVE
+  //
+  //
+
+  &:active
+    +extend(no-ease)
+
+    opacity: 0.9
+
+
+
+  //
+  //
+  //
+
+  &.selectable
+    +x-padding(0)
+    +checkbox-selectable-theme(#e6e6e6, #444)
+
+    [type="checkbox"]
+      +none
+
+    &.primary
+      +checkbox-selectable-theme($primaryColor, $primaryTextColor)
+
+    &.positive
+      +checkbox-selectable-theme($positiveColor, $positiveTextColor)
+
+    &.negative
+      +checkbox-selectable-theme($negativeColor, $negativeTextColor)
+
+    &.warning
+      +checkbox-selectable-theme($warningColor, $warningTextColor)
+
+    &.info
+      +checkbox-selectable-theme($infoColor, $infoTextColor)
+
+    &.inverted
+      +checkbox-selectable-theme(#444, #e6e6e6)
+
+    .ts.segment
+      +y-margin(0)
+
+      &:hover
+        +poi
+
+
+
+  // Checkbox
+  //
+  // 核取方塊本體。
+
+  [type="checkbox"]
+    +rd
+    +absolute
+    +position(-.2em, x, x, 0)
+    +x-margin(x, .7em)
+    +size(1.4em, 1.4em)
+
+    -webkit-appearance: none
+    background-color  : #FFF
+    border: 1px solid $defaultColor
+    vertical-align: -.3em
+
+
+
+    // [&] HOVER
+    //
+    //
+
+    &:hover
+      +poi
+      +extend(ease)
+      border: 1px solid darken($defaultColor, 10%)
+
+
+
+    // [&] ACTIVE
+    //
+    //
+
+    &:active
+      +extend(no-ease)
+      border: 1px solid darken($defaultColor, 30%)
+      //background-color: darken($defaultColor, 20%)
+
+
+
+    // [&] CHECKED
+    //
+    //
+
+    &:checked
+      +extend(no-ease)
+      //+extend(ease)
+      //background-color: $defaultColor
+      border: 1px solid darken($defaultColor, 30%)
+
+
+
+      &:after
+        +absolute
+        +block
+        +position(calc(1.4em / 2 - .4em), x, x, calc(1.4em / 2 - .5em))
+        +size(.3em, .6em)
+        +no-poi
+
+        text-shadow: 0 0 3px rgba(0,0,0,.8)
+        border       : 3px solid $defaultTextColor
+        border-radius: 1px 0px 1px 1px
+        border-right : 0
+        border-top   : 0
+        content      : " "
+        opacity      : 1
+        transform    : rotate(-45deg) scale(1)
+
+
+
+//
+//
+//
+
+.column
+  .selectable.checkbox:first-child
+    margin-top: 0
+
+  .selectable.checkbox:only-child
+    margin-top: 0
+    margin-bottom: 0

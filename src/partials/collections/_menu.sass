@@ -1,589 +1,659 @@
-@import ../../variables/collections/menu.variables
+//   ▄▄▄        ▄▄████▄
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██
+//  ▀██▄▄▄████   ▄▄▄██▀
+//     ▀▀▀████▀▀▀▀▀
+//        ██
+//       ██          ▄█████▄       █████████████          ▄█             █▄
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   M E N U   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-//*******************************//
-//            Variations
-//*******************************//
+//**************************************
+//***********   T H E M E   ************
+//**************************************
 
-@mixin menu-inverted-variant($color, $backgroundColor, $borderColor)
-    background-color: $backgroundColor
-    border-color    : $borderColor
-    
-    .item
-        color       : $color
-        border-color: $borderColor
-    
-    .item.unread:after
-        background-color: $color
-        
-    .item:active,
-    .item:hover
-        color: $color
+=menu-theme($color: #fafafa, $textColor: false)
+  //+no-overflow
 
-//*******************************//
-//              Main
-//*******************************//
+  @if not $textColor
+    $textColor: darken($color, 30%)
 
-.ts.menu
-    display         : flex
-    font-size       : $medium
-    margin          : $menu_margin
-    background-color: $menu_backgroundColor
-    border-radius   : $menu_borderRadius
-    border          : $menu_border
-    box-shadow      : $menu_boxShadow
-    overflow-x      : auto
-    
-    &:first-child
-        margin-top: 0
-    
-    &:last-child
-        margin-bottom: 0
+  background          : $color
+  border-color: darken($color, 5%)
 
-//-------------------//
-//       Raised
-//-------------------// 
+  $thisParent: '.ts.menu'
 
-.ts.menu.raised
-    box-shadow: $menu_raisedBoxShadow
+  // Item
+  //
+  //
 
-//-------------------//
-//       Pagination
-//-------------------// 
+  > a.item,
+  > .ts.container > .item,
+  > .menu a.item,
+  > .ts.container > .menu a.item
 
-.ts.menu.pagination
-    margin: 0
-    display: inline-flex
+    background-color : $color
+    color            : $textColor
+
+    +if-parent($thisParent, '.secondary:not(.pointing)')
+      background-color: transparent
+
+    &:hover
+      +poi
+
+      +if-parent($thisParent, ':not(.tabbed)')
+        background-color : auten($color, 5%)
+        color      : $textColor
+
+        .fa, .icon
+          color: $textColor
+
+      +if-parent($thisParent, '.secondary:not(.pointing)')
+        background-color : rgba(auten($color, 5%), .3)
 
 
-//-------------------//
-//       Items       
-//-------------------// 
 
-.ts.menu:not(.vertical) .item
-    display    : flex
-    align-items: center
+    &:active
+      +extend(no-ease)
+      +extend(no-tap)
+      background-color: auten($color, 10%)
 
-.ts.menu .item
-    +extend(no-select)
-    position       : relative
-    vertical-align : middle
-    line-height    : 1
-    padding        : $menu_itemVerticalPadding $menu_itemHorizontalPadding
-    text-decoration: none
-    color          : $menu_itemTextColor
-    font-weight    : $menu_itemFontWeight
-    border         : $menu_itemBorder
-    white-space    : nowrap
+      +if-parent($thisParent, '.secondary:not(.pointing)')
+        background-color: rgba(auten($color, 10%), .6)
 
-.ts.menu:not(.vertical) .item,
-.ts.menu:not(.vertical) .menu .item
-    border-top     : none
-    border-bottom  : none
-    
-.ts.menu .item:first-child,
-.ts.menu .item:not(:first-child)
-    border-left: none
+  > div.item
+    color: $textColor
 
-.ts.menu .item:first-child
-    border-radius             : $menu_borderRadius
-    border-top-right-radius   : 0
-    border-bottom-right-radius: 0
-
-.ts.menu a.item:hover
-    cursor          : pointer
-    background-color: $menu_itemHoverBackgroundColor
-    color           : $menu_itemHoverTextColor
-
-//-------------------//
-//       Active       
-//-------------------// 
-
-.ts.menu a.item:active,
-.ts.menu .item.active
-    background-color: $menu_itemActiveBackgroundColor
-    color           : $menu_itemActiveTextColor
-
-//-------------------//
-//      Disabled       
-//-------------------// 
-
-.ts.menu .item.disabled
-    pointer-events: none
-    color         : $disabledTextColor
-
-//-------------------//
-//       Header       
-//-------------------// 
-
-.ts.menu .item.header
-    opacity    : 1
-    font-weight: $menu_itemHeaderFontWeight
-    color      : $menu_itemHeaderTextColor
-    font-size  : $menu_itemHeaderFontSize
-
-//-------------------//
-//       Sizes       
-//-------------------// 
-
-.ts.menu.mini
-    font-size: $mini
-.ts.menu.tiny
-    font-size: $mini
-.ts.menu.small
-    font-size: $small
-.ts.menu.medium
-    font-size: $medium
-.ts.menu.large
-    font-size: $large
-.ts.menu.big
-    font-size: $big
-.ts.menu.huge
-    font-size: $huge
-.ts.menu.massive
-    font-size: $massive
-
-//-------------------//
-//      Emphasis       
-//-------------------//
-
-.ts.menu.basic
-    +menu-inverted-variant($menu_defaultTextColor, $menu_defaultBackgroundColor, $menu_defaultBorderColor)
-    border: 0
-.ts.menu.inverted
-    +menu-inverted-variant($menu_invertedTextColor, $menu_invertedBackgroundColor, $menu_invertedBorderColor)
-    border: 0
-.ts.menu.inverted.primary
-    +menu-inverted-variant($menu_primaryTextColor, $menu_primaryBackgroundColor, $menu_primaryBorderColor)
-.ts.menu.inverted.info
-    +menu-inverted-variant($menu_infoTextColor, $menu_infoBackgroundColor, $menu_infoBorderColor)
-.ts.menu.inverted.warning
-    +menu-inverted-variant($menu_warningTextColor, $menu_warningBackgroundColor, $menu_warningBorderColor)
-.ts.menu.inverted.positive
-    +menu-inverted-variant($menu_positiveTextColor, $menu_positiveBackgroundColor, $menu_positiveBorderColor)
-.ts.menu.inverted.negative
-    +menu-inverted-variant($menu_negativeTextColor, $menu_negativeBackgroundColor, $menu_negativeBorderColor)
-.ts.menu.inverted .item.disabled
-    color: $invertedDisabledTextColor
-
-//-------------------//
-//     Borderless       
-//-------------------//
-
-.ts.menu.borderless .item
-    border: none
-
-//-------------------//
-//       Aligns       
-//-------------------//
-
-.ts.menu .item[class*="center aligned"]
-    text-align: center
-.ts.menu .item[class*="left aligned"]
-    text-align: left
-.ts.menu .item[class*="right aligned"]
-    text-align: right
-    
-//-------------------//
-//     Stackable       
-//-------------------//
-
-.ts.menu.stackable
-    +rwd-serious(mobile)
-        overflow-x    : hidden
-        flex-direction: column
-        
-        .item
-            margin-left : 0 !important
-            margin-right: 0 !important
-            
-        .item:before
-            position: absolute
-            content : ''
-            top     : auto
-            bottom  : 0
-            left    : 0
-            height  : $menu_dividerSize
-            width   : 100%
-        
-        .right.menu
-            flex-direction: column
-            float         : left
-            margin-left   : initial !important
-
-//-------------------//
-//      Vertical       
-//-------------------//
-
-.ts.menu.vertical
-    flex-direction: column
-
-.ts.menu.vertical > .item
-    border-left : none
-    border-right: none
-    
-.ts.menu.vertical > .item:first-child,
-.ts.menu.vertical > .item:not(:first-child)
-    border-top: none
-.ts.menu.vertical > .item:last-child
-    border-bottom: none
-.ts.menu.vertical > .item:first-child
-    border-radius             : $menu_borderRadius
-    border-bottom-left-radius : 0
-    border-bottom-right-radius: 0
-.ts.menu.vertical > .item:last-child
-    border-radius          : $menu_borderRadius
-    border-top-left-radius : 0
-    border-top-right-radius: 0
-    
-//-------------------//
-//       Fluid       
-//-------------------//
-
-.ts.menu.fluid
-    border-radius: 0
-    margin: 0
-    
-.ts.menu.fluid .item
-    border-radius: 0
-
-//-------------------//
-//       Fitted       
-//-------------------//
-
-.ts.menu .item[class*="horizontally fitted"]
-    padding-left : 0
-    padding-right: 0
-.ts.menu .item[class*="vertically fitted"]
-    padding-top   : 0
-    padding-bottom: 0
-.ts.menu .item.fitted:not(.vertically):not(.horizontally)
-    padding: 0
-
-//-------------------//
-//      Compact       
-//-------------------//
-
-.ts.menu.compact
-    display: inline-flex
-    margin : 0
-.ts.menu.compact .item:last-child
-    border-right              : 0
-    border-top-right-radius   : $menu_borderRadius
-    border-bottom-right-radius: $menu_borderRadius
-
-//-------------------//
-//     Secondary       
-//-------------------//
-
-.ts.menu.secondary
-    background-color: $menu_secondaryBackgroundColor
-    margin-left     : -$menu_secondaryItemSpacing
-    margin-right    : -$menu_secondaryItemSpacing
-    border-radius   : 0
-    border          : none
-    box-shadow      : none
-
-.ts.menu.secondary .item
-    padding      : $menu_secondaryItemPadding
-    margin       : $menu_secondaryItemMargin
-    border-radius: $menu_secondaryBorderRadius
-    border-right : 0
-
-.ts.menu.secondary .item:before
-    display: none
-
-.ts.menu.vertical.secondary .item
-    margin: $menu_secondaryVerticalItemMargin
-    
-//-------------------//
-// Secondary Pointing 
-//-------------------//
-
-.ts.menu.pointing.secondary
-    margin-left  : 0
-    margin-right : 0
-    border-bottom: $menu_secondaryPointingBorder
-
-.ts.menu.pointing.secondary .item
-    margin       : 0
-    margin-bottom: -$menu_secondaryPointingBorderWidth
-    border-radius: 0
-
-.ts.menu.pointing.secondary .item:hover,
-.ts.menu.pointing.secondary .item:active
+  &.transparent,
+  &.transparent > .menu
     background-color: transparent
 
-.ts.menu.pointing.secondary .item.active
-    background-color: $menu_secondaryPoingintActiveBackgroundColor
-    border-bottom   : $menu_secondaryPointingActiveBorder
-    color           : $menu_secondaryPointingActiveTextColor
-    font-weight     : $menu_secondaryPointingActiveFontWeight
 
-//-------------------//
-//       Tabbed       
-//-------------------//  
 
-.ts.menu.tabbed
-    box-shadow      : none
-    border          : none
-    border-radius   : 0
-    background-color: $menu_tabbedMenuBackgroundColor
-    border-bottom   : $menu_tabbedMenuBorderWidth solid $menu_tabbedMenuBorderColor
 
-.ts.menu.tabbed .item
-    border       : $menu_tabbedMenuBorderWidth solid transparent
-    border-bottom: none
-    padding      : $menu_tabbedItemPadding
-    border-radius: $menu_tabbedItemBorderRadius $menu_tabbedItemBorderRadius 0 0
-    color        : $menu_tabbedMenuTextColor
-    
-.ts.menu.tabbed .item:before
-    display: none
- 
-.ts.menu.tabbed .item.active
-    background-color: $menu_tabbedMenuActiveBackgroundColor
-    border-color    : $menu_tabbedMenuActiveBorderColor
-    margin-bottom   : -$menu_tabbedMenuBorderWidth
-    font-weight     : $menu_tabbedMenuActiveFontWeight
-    color           : $menu_tabbedMenuActiveTextColor
 
-.ts.menu.tabbed a.item:hover
-    cursor          : pointer
-    background-color: $menu_tabbedItemHoverBackgroundColor
-    color           : $menu_tabbedItemHoverTextColor
-    
-.ts.menu.tabbed a.item:active
-    background-color: $menu_tabbedItemActiveBackgroundColor
-    color           : $menu_tabbedItemActiveTextColor
-    
-.ts.menu .item.disabled
-    pointer-events: none
-    color         : $disabledTextColor
 
-//-------------------//
-//      Flatted       
-//-------------------//
+    .label:not(.empty):not(.primary):not(.warning):not(.positive):not(.negative):not(.info)
+      color     : $textColor
+      background-color: if(is_lighter($color), darken($color, 3%), darken($color, 3%))
+      border    : none
 
-.ts.menu.flatted
-    box-shadow: none
+    &.active,
+    &.active:after
+      background-color: auten($color, 8%)
 
-//-------------------//
-//      Divider       
-//-------------------//     
 
-.ts.menu .divider.item
-    padding      : 0
-    border-right : $menu_dividerSize solid $menu_dividerBackgroundColor
-    border-radius: 0
-    
-.ts.menu.vertical .divider.item
-    border-right : none
-    border-bottom: $menu_dividerSize solid $menu_dividerBackgroundColor
-    
-.ts.menu.vertical.secondary .divider.item
-    box-sizing: border-box
-    margin    : $menu_secondaryVerticalDividerMargin
 
-//-------------------//
-//       Icons       
-//-------------------//    
 
-.ts.menu.vertical.icon
-    display: inline-flex
-    width  : auto
+  // NOT vertical
+  //
+  //
 
-.ts.menu.icon .item .icon
-    margin   : 0
-    font-size: $menu_iconFontSize
+  &:not(.vertical)
 
-//-------------------//
-//    Labeled Icons       
-//-------------------// 
+    > .item,
+    > .ts.container > .item,
+    > .menu .item,
+    > .ts.container > .menu .item
+      border-color: darken($color, 10%)
 
-.ts.menu.labeled.icon
-    text-align: center
-    
-.ts.menu.labeled.icon .item
-    min-width     : $menu_labeledIconMinWidth
-    display       : flex
-    flex-direction: column
-    align-items   : center
 
-.ts.menu.labeled.icon .item > .icon:not(.dropdown)  
-    height       : 1em
-    display      : block
-    font-size    : $menu_labeledIconSize
-    margin-bottom: $menu_labeledIconTextMargin
 
-//-------------------//
-//        Pure
-//-------------------//
 
-.ts.menu.pure .item
-    padding-left : 0
-    padding-right: 0
-    margin-right : $menu_itemVerticalPadding * 2
 
-.ts.menu.pure .menu .item
-    margin-left : $menu_itemVerticalPadding * 2
-    margin-right: 0
-    
-.ts.menu.pure .menu .item:only-child,
-.ts.menu.pure .menu .item:first-child
-    margin-left: 0
-    
-.ts.menu.pure .item:not(.header):hover,
-.ts.menu.pure a.item.header:hover
-    background-color: initial !important
-    opacity         : $menu_pureItemHoverOpacity
+  // Veritcal
+  //
+  //
 
-//-------------------//
-//        Label
-//-------------------// 
+  &.vertical
+    > .item,
+    > .ts.container > .item,
+    > .menu .item,
+    > .ts.container > .menu .item
+      border-top-color   : if(is_lighter($color), lighten($color, 1%), lighten($color, 2%))
+      border-bottom-color: if(is_lighter($color), darken($color, 3%), darken($color, 3%))
 
-.ts.menu .item > .label 
-    background : $menu_labelBackground
-    color      : $menu_labelTextColor
-    margin-left: $menu_labelTextMargin
-    padding    : $menu_labelVerticalPadding $menu_labelHorizontalPadding
+      &:first-child
+        border-top: none
 
-.ts.vertical.menu .item > .label 
-    background   : $menu_labelBackground
-    color        : $menu_labelTextColor
-    margin-top   : $menu_labelOffset
-    margin-bottom: $menu_labelOffset
-    padding      : $menu_labelVerticalPadding $menu_labelHorizontalPadding
+      // [&] DIVIDER
+      //
+      //
 
-.ts.menu .item > .floating.label 
-    padding: $menu_labelVerticalPadding $menu_labelHorizontalPadding
+      &.divider
+        border-top: 0.1rem solid rgba($textColor, 0.3) !important
 
-.ts.vertical.menu .item > .label
-    float     : right
-    text-align: center
+    > a.item,
+    > .ts.container > a.item,
+    > .menu a.item,
+    > .ts.container > .menu a.item
+      &:hover
+        background-color      : auten($color, 1%)
+        border-top-color: auten($color, 2%)
 
-.ts.vertical.menu:not(.left.aligned) .item > .icon
-    float      : $menu_verticalIconFloat
-    margin-left: $menu_verticalIconMargin
-    
-.ts.vertical.menu.left.aligned .item > .icon
-    float       : left
-    margin-right: $menu_verticalIconMargin
+      &:active
+        +extend(no-ease)
+        +extend(no-tap)
 
-//-------------------//
-//  Container & Grid
-//-------------------// 
+        background-color      : auten($color, 8%)
+        border-top-color: auten($color, 8%)
 
-.ts.menu > .grid,
-.ts.menu > .container
-    display       : flex
-    align-items   : inherit
-    flex-direction: inherit
 
-//*******************************//
-//            Sub Menu
-//*******************************//
 
+  // Pointing
+  //
+  //
+
+  &.pointing
+
+    > .item:after,
+    > .ts.container > .item:after,
+    > .menu .item:after,
+    > .ts.container > .menu .item:after
+      border-color: darken($color, 10%)
+
+  &.hidden
+    +none
+
+
+
+  // Pointing secondary
+  //
+  //
+
+  &.pointing.secondary
+
+    > .item,
+    > .ts.container > .item,
+    > .menu .item,
+    > .ts.container > .menu .item
+      background-color  : transparent
+      border-right-width: 0
+      border-left-width : 0
+
+    > .item.active,
+    > .menu .item.active
+      border-bottom: .2rem solid darken($color, 10%)
+
+
+
+  // Secondary NOT pointing
+  //
+  //
+
+  &.secondary:not(.pointing)
+    > .item.active,
+    > .ts.container > .item.active,
+    > .menu .item.active,
+    > .ts.container > .menu .item.active
+      background: rgba(auten($color, 8%), 0.45)
+
+
+
+
+//**************************************
+//************   M A I N   *************
+//**************************************
+
+
+.ts.menu
+  //white-space: nowrap
+  overflow-x : auto
+
+
+  &.transparent
+    +y-margin(-#{$padding * 1.2})
+    +x-margin(-#{$padding * 2})
+
+
+
+.ts.menu,
 .ts.menu .menu
-    display: flex
-    margin : 0
+  $thisParent: '.ts.menu'
 
-.ts.menu .menu:not(.right) > .item:first-child,
-.ts.menu .menu:not(.right) > .item:not(:first-child)
-    border-left: none
+  +flex
+  +menu-theme(#fafafa)
+  +rd
+  +border-box
 
-//-------------------//
-//     Right Menu      
-//-------------------// 
+  margin-top   : $margin
+  margin-bottom: $margin
+  border-width: .1rem
+  border-style: solid
 
-.ts.menu .right.menu
-    float      : right
-    margin-left: auto !important
-    
-.ts.menu .right.menu > .item:not(:first-child)
-    border-left: none
-.ts.menu .right.menu > .item:last-child
-    border-right             : none
-    border-radius            : $menu_borderRadius
-    border-top-left-radius   : 0
-    border-bottom-left-radius: 0
 
-//-------------------//
-//      Attached  
-//-------------------//
+  .ts.input
+    margin: 0
 
-.ts.menu[class*="top attached"]
-    margin-bottom: 0
-.ts.menu[class*="bottom attached"]
 
-//-------------------//
-//      Coupling  
-//-------------------// 
+  &:first-child
+    margin-top: 0
 
-.ts.tabbed.menu + .attached:not(.top).segment,
-.ts.tabbed.menu + .attached:not(.top).segment + .attached:not(.top).segment
-    border-top  : none
-    margin-left : 0px
-    margin-top  : 0px
-    margin-right: 0px
-    width       : 100%
-    
-.ts.menu .ts.label
+
+
+  // A
+  //
+  // 作為連結的選項而不是用 Div 來當作選項。
+
+  a
+    text-decoration: none
+
+
+
+  //
+  //
+  //
+
+  //& + .fluid
+  //  margin-bottom: 0
+
+
+
+  &.transparent
     border: none
 
-//-------------------//
-//      Container  
-//-------------------// 
 
-.ts.menu > .ts.container.narrow
-    width: $container_narrowWidth
-    
-.ts.menu > .ts.container[class*="very narrow"]
-    width: $container_veryNarrowWidth
-        
-@media (max-width: $container_narrowBreakPoint)
-    .ts.menu > .ts.container.narrow:not(.very)
-        width: 100% !important
-        
-+rwd-serious(mobile)
-    .ts.menu > .ts.container
-        width: 100% !important
-        
-    .ts.menu > .ts.container:not(.narrow)
-        margin-left : 0em !important
-        margin-right: 0em !important
-    
-    .ts.menu.pure > .ts.container:not(.narrow)
-        margin-left : $container_mobileGutter !important
-        margin-right: $container_mobileGutter !important
+  // Sub menu
+  //
+  // 選單中的選單，也就是子選單。
 
-+rwd-serious(tablet)
-    .ts.menu:not(.secondary):not(.text):not(.tabbed):not(.borderless) > .container > .item:not(.right):not(.borderless):first-child
-        border-left: $menu_dividerSize solid $menu_dividerBackgroundColor
+  .menu
+    margin-bottom: 0
+    margin-top   : 0
+    border-radius: 0
+    border       : none
+    background: none
 
-//-------------------//
-//   Evenly Divided
-//-------------------// 
+    &.right
+      margin-left: auto !important
 
-.ts.menu[class*="evenly divided"] .item
-    flex           : 1
-    align-items    : center
-    justify-content: center
+      .item:first-child
+        border-left-width: .1rem
+        border-left-style: solid
 
-//-------------------//
-//       Unread
-//-------------------//     
-    
-.ts.menu:not(.icon) .item.unread:after,
-.ts.menu.icon .item.unread .icon:after
-    content         : ''
-    background-color: $menu_unreadBackgroundColor
-    border-radius   : 50%
-    font-size       : 0
-    height          : $absolute6px
-    position        : absolute
-    top             : $menu_unreadTop
-    width           : $absolute6px
-    z-index         : 10
 
-.ts.menu.labeled.icon .item.unread .icon:after
-    top: initial
+
+  // [&] Icon
+  //
+  // 擺放圖示用的選單。
+
+  &.icon
+
+    > .item,
+    > .ts.container > .item
+      +x-padding(1.8rem)
+      font-size: 1.8rem
+
+    .icon, .fa
+      margin-right: 0
+
+
+
+
+  // [&] Fluid
+  //
+  // 流動寬度選單。
+
+  &.fluid
+    border-radius: 0
+    border       : none
+    width        : 100%
+
+
+
+
+  // [&] Vertical
+  //
+  // 垂直選單。
+
+  &.vertical
+    +block
+
+    //white-space: nowrap
+    overflow-x : hidden
+    overflow-y : auto
+
+
+
+  // [&] Borderless
+  //
+  // 更少框線的選單。
+
+  &.borderless
+    .menu
+      > .item,
+      > .ts.container > .item
+        border: none !important
+
+
+
+  // [&] Pointing secondary
+  //
+  // 備用且帶有指針的選單。
+
+  &.pointing.secondary
+    border: none
+    background: none
+
+
+
+
+  // [&] Secondary NOT pointing
+  //
+  // 備用但非指針的選單。
+
+  &.secondary:not(.pointing)
+    border: none
+    background: none
+
+    .menu
+      background: none
+
+
+  &:not(.vertical).tabbed
+    background: none
+    border-top-width: 0
+    border-left-width: 0
+    border-right-width: 0
+    border-bottom-width: 1px
+
+    & .item
+      +rd
+
+      &:first-child:not(:last-child)
+        border-bottom-left-radius: 0
+        border-bottom-right-radius: 0
+
+      &:not(:last-child):not(:first-child)
+        border-bottom-left-radius: 0
+        border-bottom-right-radius: 0
+
+      &:last-child
+        border-bottom-left-radius: 0
+        border-bottom-right-radius: 0
+
+      &:not(.active)
+        background-color: transparent
+        border: none
+
+
+  //**************************************
+  //***********   I T E M S   ************
+  //**************************************
+
+  > .item,
+  > .ts.container > .item
+    +extend(ease-less)
+    +normal
+    +relative
+    +flex
+    +flex-items-center
+    +y-padding($padding * 1.2)
+    +x-padding($padding * 2)
+
+
+
+    // Icon
+    //
+    //
+
+    > .fa, > .icon:not(.button)
+      +extend(ease)
+      font-size: 1.2em
+
+
+
+    // [&] DIVIDER
+    //
+    //
+
+    &.divider
+      +y-margin($padding * 1.2)
+      +x-margin($padding * 2)
+
+      border-radius: 0 !important
+      padding: 0
+
+
+
+    // [&] Brand
+    //
+    // 顯示代表性文字的項目。
+
+    &.brand,
+    &.header
+      font-weight: bold
+      font-size  : 1.2em
+
+
+
+    // [PARENT] Transparent NOT Fluid
+    //
+    // 當透明背景的時候加入圓角。
+
+    +if-parent($thisParent, '.transparent:not(.fluid)')
+      +rd
+
+
+
+    // [PARENT] Small
+    //
+    // 迷你版選單。
+
+    +if-parent($thisParent, '.small')
+      +small
+      +x-padding($padding)
+      +y-padding($padding * 1.5)
+
+
+
+    // [PARENT] Large
+    //
+    // 較大版選單。
+
+    +if-parent($thisParent, '.large')
+      +base
+      +x-padding($padding * 2.3)
+      +y-padding($padding * 1.3)
+
+
+
+    // [PARENT] Secondary NOT pointing
+    //
+    // 備用但非指針選單。
+
+    +if-parent($thisParent, '.secondary:not(.pointing)')
+      +rd
+
+      border: none
+
+      &:not(.active)
+        background: none
+
+
+
+    // [PARENT] Pointing NOT secondary
+    //
+    // 指針但非備用選單。
+
+    +if-parent($thisParent, '.pointing:not(.secondary)')
+      &.active:after
+        +absolute
+        +position(100%, x, x, 50%)
+        +size($padding)
+        +z(2)
+
+        content: ''
+        transform: translateX(-50%) translateY(-50%) rotate(45deg)
+
+        //margin-top: .5rem
+
+        border-bottom-width: .1rem
+        border-bottom-style: solid
+        border-right-width : .1rem
+        border-right-style : solid
+        transition: background 0.1s ease
+
+
+
+    // [PARENT] Pointing secondary
+    //
+    // 具有指針且備用。
+
+    +if-parent($thisParent, '.pointing.secondary')
+      //text-shadow: none
+      background : none
+
+      &.active
+        font-weight: bold
+
+
+
+    // [PARENT] Vertical
+    //
+    // 垂直選單。
+
+    +if-parent($thisParent, '.vertical')
+      +block
+      border-width: .1rem 0
+      border-style: solid
+
+
+
+    // [PARENT] Relaxed
+    //
+    // 較寬闊的高度和寬度。
+
+    +if-parent($thisParent, '.relaxed')
+      &:not(.image)
+        +y-padding($padding * 1.8)
+        +x-padding($padding * 2.3)
+
+
+
+
+    // [PARENT] NOT vertical
+    //
+    // 非垂直的 Menu 選單。
+
+    +if-parent($thisParent, ':not(.vertical)')
+      +flex
+      +flex-content-center
+
+      border-right-width: .1rem
+      border-right-style: solid
+
+      &:last-child
+        border-right-width: 0
+
+
+
+    // [PARENT] Borderless
+    //
+    // 較少框線。
+
+    +if-parent($thisParent, '.borderless')
+      text-shadow: none
+      border     : none
+
+
+
+    // Label
+    //
+    // 標籤。
+
+    .label:not(.empty)
+      +x-padding($padding)
+      +y-padding($padding / 3)
+      +y-margin(-.2rem, x)
+
+      float     : right
+
+
+
+    // [&] Aligned
+    //
+    //
+
+    &.aligned
+      &.center
+        text-align: center
+      &.left
+        text-align: left
+      &.right
+        text-align: right
+
+
+
+    // [&] Image
+    //
+    // 放置圖片用的。
+
+    &.image
+      border-style  : none
+      padding       : 0
+      vertical-align: top
+
+      img
+        +block
+
+
+
+    // [&] Fitted
+    //
+    // 沒有水平或是垂直內距。
+
+    &.fitted
+      &.horizontally
+        +x-padding(0)
+
+      &.vertically
+        +y-padding(0)
+
+
+
+  // [&] Compact
+  //
+  // 縮減版的選單。
+
+  &.compact,
+  .ts.dropdown &
+    +inline-block
+    +no-overflow
+
+    > .item
+      border-right: none
+
+
+
+
+  //**************************************
+  //**********   C O L O R S   ***********
+  //**************************************
+
+  &.primary
+    +menu-theme($primaryColor, $primaryTextColor)
+
+  &.info
+    +menu-theme($infoColor, $infoTextColor)
+
+  &.positive
+    +menu-theme($positiveColor, $positiveTextColor)
+
+  &.warning
+    +menu-theme($warningColor, $warningTextColor)
+
+  &.negative
+    +menu-theme($negativeColor, $negativeTextColor)
+
+  &.inverted
+    +menu-theme($invertedColor, $invertedTextColor)
+
+

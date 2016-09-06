@@ -1,584 +1,570 @@
-@import ../../variables/elements/input.variables
+//   ▄▄▄        ▄▄████▄
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██
+//  ▀██▄▄▄████   ▄▄▄██▀
+//     ▀▀▀████▀▀▀▀▀
+//        ██
+//       ██          ▄█████▄       █████████████          ▄█             █▄
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   I N P U T   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-//*******************************//
-//            Variations
-//*******************************//
+//**************************************
+//*******   G E N E R A T O R   ********
+//**************************************
 
-@mixin input-variant($color, $backgroundColor, $borderColor, $hoverBorderColor, $focusBorderBolor)
-    color           : $color
-    background-color: $backgroundColor
-    border-color    : $borderColor
-    
-    &::-webkit-input-placeholder
-        color: $color
-    
-    &:-moz-placeholder,
-    &:-ms-input-placeholder
-        color: $color    
-    
-    &:hover:hover:hover:hover:hover:not(:focus)
-        border-color: $hoverBorderColor !important
-    
-    &:focus:focus:focus:focus:focus:focus:focus:focus:focus
-        border-color       : $focusBorderBolor
-        border-bottom-color: $focusBorderBolor
+=input-generator
+  @for $i from 1 through $inputAmount
+    @at-root
+      #{&}.#{nth($inputSizes, $i)}
+        //+y-margin($padding)
 
-//*******************************//
-//              Main
-//*******************************//
+        $fontSize: nth($inputFontSizes, $i)
 
-.ts.input
-    position: relative
-    display : inline-flex
-    color   : $inputTextColor
-    
-.ts.input,
-.ts.form
-    &
+        // INPUT, TEXTAREA, *[contenteditable]
+        //
+        //
+
         input, textarea, *[contenteditable]
-            transition   : box-shadow $input_transitionDuration ease-in-out
-            line-height  : $inputLineHeight
-            border       : $input_border
-            padding      : $input_padding
-            border-radius: $input_borderRadius
-            
-            +input-variant($inputTextColor, $input_backgroundColor, $input_borderColor, $input_hoverBorderColor, $input_focusBorderColor)
-            
-            &::-webkit-input-placeholder
-                opacity    : $input_placeholderOpacity
+          +y-padding($padding * ($i / 5))
+          +x-padding($padding * ($i / 4))
 
-            &:-moz-placeholder,
-            &:-ms-input-placeholder
-                opacity    : $input_placeholderOpacity
-
-//-------------------//
-//       Focus
-//-------------------//
-
-.ts.input,
-.ts.form
-    &
-        input:focus, textarea:focus, *[contenteditable]:focus
-            &::-webkit-input-placeholder
-                opacity: $input_placeholderFocusOpacity
-
-            &:-moz-placeholder,
-            &:-ms-input-placeholder
-                opacity: $input_placeholderFocusOpacity
-
-.ts.input.focus input, 
-.ts.input.focus textarea, 
-.ts.input.focus *[contenteditable]
-    &::-webkit-input-placeholder
-        opacity: $input_placeholderFocusOpacity
-        
-    &:-moz-placeholder,
-    &:-ms-input-placeholder
-        opacity: $input_placeholderFocusOpacity
-
-//-------------------//
-//       Fitted
-//-------------------//
-
-.ts.input.fitted:not(.horizontally):not(.vertically)
-    &
-        input, textarea, *[contenteditable]
-            padding: 0
-.ts.input.fitted.horizontally
-    &
-        input, textarea, *[contenteditable]
-            padding-left : 0
-            padding-right: 0
-.ts.input.fitted.vertically
-    &
-        input, textarea, *[contenteditable]
-            padding-top   : 0
-            padding-bottom: 0
-    
-//-------------------//
-//       Basic       
-//-------------------//
-
-.ts.form .field.basic,
-.ts.input.basic
-    &
-        input, textarea, *[contenteditable]
-            background-color: transparent !important
-    
-//-------------------//
-//     Borderless       
-//-------------------//
-
-.ts.input.borderless
-    &
-        input, textarea, *[contenteditable]
-            border: 0
-        
-//-------------------//
-//      Action       
-//-------------------//
-
-.ts.input.action > .button,
-.ts.input.action > .buttons
-    display    : flex
-    align-items: center
-    flex       : 0 0 auto
-
-.ts.input.action > .ts.button
-    border-radius             : $button_borderRadius
-    border-top-right-radius   : 0
-    border-bottom-right-radius: 0
-      
-.ts.input.action input + .ts.button, 
-.ts.input.action input textarea + .ts.button, 
-.ts.input.action input *[contenteditable] + .ts.button
-    border-radius            : $button_borderRadius
-    border-top-left-radius   : 0
-    border-bottom-left-radius: 0
-
-.ts.input.action input,
-.ts.input.action textarea, 
-.ts.input.action *[contenteditable]
-    border-radius             : $input_borderRadius
-    border-top-right-radius   : 0
-    border-bottom-right-radius: 0
-
-.ts.input.action .ts.button + input, 
-.ts.input.action .ts.button + textarea, 
-.ts.input.action .ts.button + *[contenteditable]
-    border-radius            : $input_borderRadius
-    border-top-left-radius   : 0
-    border-bottom-left-radius: 0
-    
-.ts.action.input > .button,
-.ts.action.input > .buttons 
-    display    : flex
-    align-items: center
-    flex       : 0 0 auto
-
-.ts.action.input > .button,
-.ts.action.input > .buttons > .button 
-    padding-top   : $input_verticalPadding
-    padding-bottom: $input_verticalPadding
-    margin        : 0
+          font-size: $fontSize
 
 
-/* Button on Right */
-.ts.action.input:not([class*="left action"]) > 
-    &
-        input, textarea, *[contenteditable]
-            border-top-right-radius   : 0px !important
-            border-bottom-right-radius: 0px !important
-            border-right-color        : transparent !important
 
-.ts.action.input:not([class*="left action"]) > .dropdown:not(:first-child),
-.ts.action.input:not([class*="left action"]) > .button:not(:first-child),
-.ts.action.input:not([class*="left action"]) > .buttons:not(:first-child) > .button 
-    border-radius: 0px
+        // [&] Icon
+        //
+        // 帶有圖示的輸入欄位。
 
-.ts.action.input:not([class*="left action"]) > .dropdown:last-child,
-.ts.action.input:not([class*="left action"]) > .button:last-child,
-.ts.action.input:not([class*="left action"]) > .buttons:last-child > .button 
-    border-radius: 0px $input_borderRadius $input_borderRadius 0px
+        &.icon
 
-/* Input Focus */
-.ts.action.input:not([class*="left action"]) 
-    &
-        input:focus, textarea:focus, *[contenteditable]:focus
-            border-right-color: $input_focusBorderColor !important
+          // [&] NOT Left
+          //
+          // 圖示不是在左邊的帶圖示欄位。
 
-/* Button on Left */
-.ts[class*="left action"].input >
-    &
-        input:focus, textarea:focus, *[contenteditable]:focus
-            border-top-left-radius   : 0px !important
-            border-bottom-left-radius: 0px !important
-            border-left-color        : transparent !important
+          &:not(.left)
+            input, textarea, *[contenteditable]
+              +x-padding(x, ($padding * ($i / 4)) * 2 + $fontSize)
 
-.ts[class*="left action"].input > .dropdown,
-.ts[class*="left action"].input > .button,
-.ts[class*="left action"].input > .buttons > .button 
-    border-radius: 0px
+            .icon, .fa
+              font-size: $fontSize
+              right: $padding * ($i / 3)
 
-.ts[class*="left action"].input > .dropdown:first-child,
-.ts[class*="left action"].input > .button:first-child,
-.ts[class*="left action"].input > .buttons:first-child > .button 
-    border-radius: $input_borderRadius 0px 0px $input_borderRadius
+              &.circular
+                right: calc(#{$padding * ($i / 3)} - .4em)
 
-/* Input Focus */
-.ts[class*="left action"].input >
-    &
-        input:focus, textarea:focus, *[contenteditable]:focus
-            border-left-color: $input_focusBorderColor !important
 
-//-------------------//
-//       Fluid       
-//-------------------// 
 
-.ts.input.fluid,
-.ts.input.fluid input,
-.ts.input.fluid textarea,
-.ts.input.fluid *[contenteditable]
-    width: 100%
+          // [&] Left
+          //
+          // 圖式於左邊的帶圖示欄位。
 
-//-------------------//
-//      Loading       
-//-------------------//
+          &.left
 
-.ts.loading.loading.input > i.icon:before 
-    position     : absolute
-    content      : ''
-    top          : 50%
-    left         : 50%
-    margin       : $loaderMargin
-    width        : $loaderSize
-    height       : $loaderSize
-    border-radius: $circularRadius
-    border       : $loaderLineWidth solid $loaderFillColor
+            input, textarea, *[contenteditable]
+              +x-padding(($padding * ($i / 4)) * 2 + $fontSize, x)
 
-.ts.loading.loading.input > i.icon:after 
-    position: absolute
-    content : ''
-    top     : 50%
-    left    : 50%
-    margin  : $loaderMargin
-    width   : $loaderSize
-    height  : $loaderSize
+            .icon, .fa
+              font-size: $fontSize
+              left: $padding * ($i / 3)
 
-    animation: button-spin $loaderSpeed linear
-    animation-iteration-count: infinite
+              &.circular
+                left: calc(#{$padding * ($i / 3)} - .4em)
 
-    border-radius: $circularRadius
 
-    border-color: $loaderLineColor transparent transparent
-    border-style: solid
-    border-width: $loaderLineWidth
 
-    box-shadow: 0px 0px 0px 1px transparent
 
-//-------------------//
-//       Icon       
-//-------------------//
+//**************************************
+//***********   T H E M E   ************
+//**************************************
 
-.ts.icon.input > i.icon 
-    cursor       : default
-    position     : absolute
-    line-height  : 1
-    text-align   : center
-    top          : 0px
-    right        : 0px
-    margin       : 0em
-    height       : 100%
-    width        : $input_iconWidth
-    opacity      : $input_iconOpacity
-    border-radius: 0em $input_borderRadius $input_borderRadius 0em
+=inputs-theme($color, $textColor)
+  color: $textColor
 
-.ts.icon.input > i.icon:not(.link) 
-    pointer-events: none
+  & .input:hover + .input
+    input, textarea, *[contenteditable]
+      border-top-color: darken($color, 20%)
 
-.ts.icon.input input 
-    padding-right: $input_iconMargin !important
+  & .input input:focus + .input
+    input, textarea, *[contenteditable]
+      border-top-color: #67D7FF
 
-.ts.icon.input > i.icon:before,
-.ts.icon.input > i.icon:after 
-    left      : 0
-    position  : absolute
-    text-align: center
-    top       : 50%
-    width     : 100%
-    margin-top: $input_iconOffset
 
-.ts.icon.input > i.link.icon 
-    cursor: pointer
 
-.ts.icon.input > i.circular.icon 
-    top  : $input_circularIconVerticalOffset
-    right: $input_circularIconHorizontalOffset
 
-/* Left Icon Input */
-.ts[class*="left icon"].input > i.icon 
-    right        : auto
-    left         : $input_borderWidth
-    border-radius: $input_borderRadius 0em 0em $input_borderRadius
-
-.ts[class*="left icon"].input > i.circular.icon 
-    right: auto
-    left : $input_circularIconHorizontalOffset
-
-.ts[class*="left icon"].input > input 
-    padding-left : $input_iconMargin !important
-    padding-right: $input_horizontalPadding !important
-
-/* Focus */
-.ts.icon.input > input:focus ~ i.icon 
-    opacity: 1
-
-//-------------------//
-//       Sizes       
-//-------------------// 
-
-.ts.mini.inputs .ts.input,
-.ts.mini.input
-    font-size: $relativeMini
-.ts.tiny.inputs .ts.input,
-.ts.tiny.input
-    font-size: $relativeTiny
-.ts.small.inputs .ts.input,
-.ts.small.input
-    font-size: $relativeSmall
-.ts.medium.inputs .ts.input,
-.ts.medium.input,
-.ts.input
-    font-size: $relativeMedium
-.ts.large.inputs .ts.input,
-.ts.large.input
-    font-size: $relativeLarge
-.ts.big.inputs .ts.input,
-.ts.big.input
-    font-size: $relativeBig
-.ts.huge.inputs .ts.input,
-.ts.huge.input
-    font-size: $relativeHuge
-.ts.massive.inputs .ts.input,
-.ts.massive.input
-    font-size: $relativeMassive
-
-//*******************************//
-//             Inputs
-//*******************************//
+//**************************************
+//**********   I N P U T S   ***********
+//**************************************
 
 .ts.inputs
-    display: inline-block
-    
-.ts.inputs.fluid,
-.ts.inputs.fluid .ts.input,
-.ts.inputs.fluid .ts.input input,
-.ts.inputs.fluid .ts.input textarea,
-.ts.inputs.fluid .ts.input *[contenteditable]
-    width  : 100%
-    display: block
-    
-.ts.inputs.vertical .ts.input
-    display: block
-    
-.ts.inputs.vertical .ts.input:last-child:not(:first-child)
-    &
+  +inputs-theme(lighten($defaultColor, 35%), $defaultTextColor)
+  +inline-block
+
+  // [&] Fluid
+  //
+  // 流動寬度
+
+  &.fluid
+    +block
+
+
+
+  // [&] Vertical
+  //
+  // 垂直排序的欄位群組。
+
+  &.vertical
+    +y-margin($margin)
+
+    .ts.input
+      +rd
+      +y-margin(0)
+      +block
+
+      input, textarea, *[contenteditable]
+        &:focus
+          +relative
+          +z(2)
+
+      &:first-child:not(:last-child)
         input, textarea, *[contenteditable]
-            border-top-right-radius: 0
-            border-top-left-radius : 0
-            
-            &:focus
-                position: relative 
-                z-index : 2
+          border-bottom-right-radius: 0
+          border-bottom-left-radius : 0
+          border-bottom-style       : none
 
-.ts.inputs.vertical .ts.input:not(:first-child):not(:last-child)
-    & 
+          &:focus
+            border-bottom-style: solid
+            margin-bottom: -1px
+
+      &:not(:first-child):not(:last-child)
         input, textarea, *[contenteditable]
-            border-radius      : 0
-            border-bottom-color: transparent
-        
-            &:focus
-                //border-bottom-style: initial
+          border-radius: 0
+          border-bottom-style: none
 
-.ts.inputs.vertical .ts.input:first-child:not(:last-child)
-    &
+          &:focus
+            border-bottom-style: solid
+            margin-bottom: -1px
+
+      &:last-child:not(:first-child)
         input, textarea, *[contenteditable]
-            border-bottom-right-radius: 0
-            border-bottom-left-radius : 0
-            border-bottom-color: transparent
-            
-            &:focus
-                //border-bottom-color: initial
+          border-top-right-radius: 0
+          border-top-left-radius : 0
 
-//-------------------//
-//      Disabled       
-//-------------------//
 
-.ts.input.disabled,
-.ts.input input[disabled]
-    opacity       : $disabledOpacity
-    pointer-events: none
 
-//-------------------//
-//       Error       
-//-------------------//
 
-.ts.input.error,
-.ts.form .field.error,
-.ts.input.negative,
-.ts.form .field.negative
-    &
-        input, textarea, *[contenteditable]
-            +input-variant($input_errorTextColor, $input_errorBackgroundColor, $input_errorBorderColor, $input_errorHoverBorderColor, $input_errorFocusBorderColor)
-            
-            background-image: $input_errorIconURL
+//**************************************
+//***********   T H E M E   ************
+//**************************************
 
-//-------------------//
-//      Warning       
-//-------------------//
+=input-theme($color, $textColor)
+  color: $textColor
 
-.ts.input.warning,
-.ts.form .field.warning
-    &
-        input, textarea, *[contenteditable]
-            +input-variant($input_warningTextColor, $input_warningBackgroundColor, $input_warningBorderColor, $input_warningHoverBorderColor, $input_warningFocusBorderColor)
+  // INPUT
+  //
+  //
 
-            background-image: $input_warningIconURL
+  input, textarea, *[contenteditable]
+    border-color: darken($color, 10%)
+    color       : $textColor
 
-//-------------------//
-//      Success       
-//-------------------//
+    // WEBKIT-INPUT-PLACEHOLDER
+    //
+    // Webkit 的 Placeholder 屬性。
 
-.ts.input.success,
-.ts.form .field.success,
-.ts.input.positive,
-.ts.form .field.positive
-    &
-        input, textarea, *[contenteditable]
-            +input-variant($input_successTextColor, $input_successBackgroundColor, $input_successBorderColor, $input_successHoverBorderColor, $input_successFocusBorderColor)
+    &::-webkit-input-placeholder
+      color: $textColor
 
-            background-image: $input_successIconURL
+    &:-moz-placeholder,
+    &::-moz-placeholder,
+    &:-ms-input-placeholder
+      color: $textColor
 
-//-------------------//
-//   Common Styles 
-//-------------------//
 
-.ts.input.error,
-.ts.form .field.error,
-.ts.input.negative,
-.ts.form .field.negative,
-.ts.input.warning,
-.ts.form .field.warning,
-.ts.input.success,
-.ts.form .field.success,
-.ts.input.positive,
-.ts.form .field.positive,
-    &
-        input, textarea, *[contenteditable]    
-            padding-right      : $input_iconPaddingRight
-            background-repeat  : no-repeat
-            background-position: center right $input_backgroundIconPaddingRight
-            background-size    : $input_iconSize $input_iconSize
-            
-            &::-webkit-input-placeholder
-                font-weight: normal
-                opacity    : $input_placeholderOpacity
 
-            &:-moz-placeholder,
-            &:-ms-input-placeholder
-                font-weight: normal
-                opacity    : $input_placeholderOpacity
-    
-    &
-        input:focus, textarea:focus, *[contenteditable]:focus
+    // EMPTY
+    //
+    // 空的時候。
 
-            &::-webkit-input-placeholder
-                opacity    : $input_placeholderFocusOpacity
+    &:empty:before
+      color: rgba($textColor, 0.6)
 
-            &:-moz-placeholder,
-            &:-ms-input-placeholder
-                opacity    : $input_placeholderFocusOpacity
-                
-    &.focus input,
+
+
+    // HOVER
+    //
+    //
+
+    &:hover
+      border-color: darken($color, 20%)
+
+
+
+  //
+  //
+  //
+
+  &:not(.basic)
+
+
+    // INPUT
+    //
+    //
+
+    input, textarea, *[contenteditable]
+      background-color: $color
+
+      // WEBKIT-INPUT-PLACEHOLDER
+      //
+      // Webkit 的 Placeholder 屬性。
+
+      &::-webkit-input-placeholder
+        color: rgba($textColor, 0.6)
+
+      &:-moz-placeholder,
+      &::-moz-placeholder,
+      &:-ms-input-placeholder
+        color: rgba($textColor, 0.6)
+
+
+
+
+//**************************************
+//************   M A I N   *************
+//**************************************
+
+.ts.input
+  +input-generator
+  +input-theme(lighten($defaultColor, 35%), $defaultTextColor)
+  +relative
+  +inline-block
+
+
+  &.action
+    +inline-flex
+
+    .ts.button
+      +rd
+      +no-wrap
+      +x-margin(x, 0)
+
+      border-top-right-radius   : 0
+      border-bottom-right-radius: 0
+
+
+    input + .ts.button, textarea + .ts.button, *[contenteditable] + .ts.button
+      +rd
+      +no-wrap
+      border-top-left-radius   : 0
+      border-bottom-left-radius: 0
+
+    input, textarea, *[contenteditable]
+      +rd
+      border-top-right-radius   : 0
+      border-bottom-right-radius: 0
+
+    .ts.button + input, .ts.button + textarea, .ts.button + *[contenteditable]
+      +rd
+      border-top-left-radius   : 0
+      border-bottom-left-radius: 0
+
+
+
+
+
+
+
+  //
+  //
+  //
+
+  &:only-child
+    margin: 0
+
+
+
+  // *[CONTENTEDITABLE] EMPTY
+  //
+  // 當可編輯內容的 Div 是空的時候。
+
+  *[contenteditable]:empty:before
+    cursor: text
+
+
+
+  // INPUT, TEXTAREA, *[contenteditable]
+  //
+  //
+
+  input, textarea, *[contenteditable]
+    +rd
+    +border-box
+    +normal
+    +y-padding($padding)
+    +x-padding($padding * 1.3)
+
+    width: 100%
+    border-width: .1rem
+    border-style: solid
+    resize      : none
+
+
+
+    // WEBKIT-INPUT-PLACEHOLDER
+    //
+    // Webkit 的 Placeholder 屬性。
+
+    &::-webkit-input-placeholder
+      font-weight: normal
+
+
+
+    // MOZ-PLACEHOLDER, MS-INPUT-PLACEHOLDER
+    //
+    // Firefox 和微軟的 Placeholder 屬性。
+
+    &:-moz-placeholder,
+    &:-ms-input-placeholder
+      font-weight: normal
+
+
+
+    // [&] NOT INPUT
+    //
+    // 不是輸入欄位屬性。
+
+    &:not(input)
+      +y-padding($padding * 1)
+      +x-padding($padding * 1.3)
+
+
+
+    // [&] Disabled, DISABLED
+    //
+    // 被停用的欄位。
+
+    &[disabled="disabled"],
+    &[disabled="true"]
+    &[disabled],
+    &.disabled
+      +no-poi
+
+      opacity: 0.4
+
+
+
+  // [&] Icon
+  //
+  // 帶有圖示的輸入欄位。
+
+  &.icon
+
+    .icon, .fa
+      +block
+      +absolute
+      +position(50%, x, x, x)
+
+      transform: translateY(-50%)
+      margin: 0
+
+
+
+      // [&] Link
+      //
+      // 可供點擊、帶連結的圖示。
+
+      &:not(.link)
+        +no-poi
+
+
+
+      // [&] Link
+      //
+      // 可供點擊、帶連結的圖示。
+
+      &.link
+        +extend(ease)
+
+        opacity: .7
+
+
+
+        // HOVER
+        //
+        //
+
+        &:hover
+          +poi
+
+          opacity: .85
+
+
+
+        // ACTIVE
+        //
+        //
+
+        &:active
+          +extend(no-ease)
+
+          opacity: 1
+
+
+
+      // [&] Circular
+      //
+      // 圓形的圖示。
+
+      &.circular
+        padding: .4em
+        border-radius: 100em
+        border: 1px solid #CCC
+
+        &:before
+          line-height: 1px
+
+
+
+  // [&] Disabled
+  //
+  // 已停用的欄位。
+
+  &.disabled
+    input, textarea, *[contenteditable]
+      +no-poi
+
+      opacity: 0.4
+
+
+
+  // [&] Resizable
+  //
+  // 可自由伸縮的欄位。
+
+  &.resizable
+    input, textarea, *[contenteditable]
+      resize: both
+
+
+
+  // [&] Fluid
+  //
+  // 流動寬度的欄位。
+
+  &.fluid
+    width: 100%
+
+  &.fluid:not(.action)
+    +block
+
+
+
+  // [&] Basic
+  //
+  // 背景透明的輸入欄位。
+
+  &.basic
+    input, textarea, *[contenteditable]
+      background: transparent
+
+    &.borderless
+      input, textarea, *[contenteditable]
+        border: none
+
+
+
+  // [&] Circular
+  //
+  // 圓形的輸入欄位。
+
+  &.circular
+    border-radius: 50em
+
+    input, textarea, *[contenteditable]
+      border-radius: 50em
+
+
+
+  // [&] NOT Basic
+  //
+  // 非背景透明的輸入欄位。
+
+  &:not(.basic)
+    input, textarea, *[contenteditable]
+      transition: box-shadow 0.30s ease-in-out
+      outline   : none
+
+
+
+    // [&] Focus, FOCUS
+    //
+    // 聚焦中的欄位。
+
+    &.focus input[type=text],
+    &.focus input[type=email],
+    &.focus input[type=password],
     &.focus textarea,
-    &.focus *[contenteditable]
-        &::-webkit-input-placeholder
-            opacity    : $input_placeholderFocusOpacity
-            
-        &:-moz-placeholder,
-        &:-ms-input-placeholder
-            opacity    : $input_placeholderFocusOpacity
-            
-//-------------------//
-//      Emphasis       
-//-------------------//
-
-.ts.inverted.primary.input
-    &
-        input, textarea, *[contenteditable]
-            +input-variant($input_invertedPrimaryTextColor, $input_invertedPrimaryBackgroundColor, $input_invertedPrimaryBorderColor, $input_invertedPrimaryHoverBorderColor, $input_invertedPrimaryFocusBorderColor)
-.ts.inverted.info.input
-    &
-        input, textarea, *[contenteditable]
-            +input-variant($input_invertedInfoTextColor, $input_invertedInfoBackgroundColor, $input_invertedInfoBorderColor, $input_invertedInfoHoverBorderColor, $input_invertedInfoFocusBorderColor)
-.ts.inverted.warning.input
-    &
-        input, textarea, *[contenteditable]
-            +input-variant($input_invertedWarningTextColor, $input_invertedWarningBackgroundColor, $input_invertedWarningBorderColor, $input_invertedWarningHoverBorderColor, $input_invertedWarningFocusBorderColor)
-.ts.inverted.positive.input
-    &
-        input, textarea, *[contenteditable]
-            +input-variant($input_invertedPositiveTextColor, $input_invertedPositiveBackgroundColor, $input_invertedPositiveBorderColor, $input_invertedPositiveHoverBorderColor, $input_invertedPositiveFocusBorderColor)
-.ts.inverted.negative.input
-    &
-        input, textarea, *[contenteditable]
-            +input-variant($input_invertedNegativeTextColor, $input_invertedNegativeBackgroundColor, $input_invertedNegativeBorderColor, $input_invertedNegativeHoverBorderColor, $input_invertedNegativeFocusBorderColor)
-.ts.inverted.input:not(.primary):not(.info):not(.warning):not(.positive):not(.negative)
-    &
-        input, textarea, *[contenteditable]
-            +input-variant($input_invertedTextColor, $input_invertedBackgroundColor, $input_invertedBorderColor, $input_invertedHoverBorderColor, $input_invertedFocusBorderColor)
-
-//-------------------//
-//      Labeled       
-//-------------------//
-
-.ts.labeled.input > .label 
-    flex     : 0 0 auto
-    margin   : 0
-    font-size: $relativeMedium
-
-.ts.labeled.input > .label:not(.corner) 
-    padding-top   : $input_verticalPadding
-    padding-bottom: $input_verticalPadding
-
-/* Regular Label on Left */
-.ts.labeled.input:not([class*="corner labeled"]) .label:first-child 
-    border-top-right-radius   : 0px
-    border-bottom-right-radius: 0px
-
-.ts.labeled.input:not([class*="corner labeled"]) .label:first-child + input 
-    border-top-left-radius   : 0px
-    border-bottom-left-radius: 0px
-    border-left-color        : transparent
-
-.ts.labeled.input:not([class*="corner labeled"]) .label:first-child + input:focus 
-    border-left-color: $input_focusBorderColor
-
-/* Regular Label on Right */
-.ts[class*="right labeled"].input input 
-    border-top-right-radius   : 0px !important
-    border-bottom-right-radius: 0px !important
-    border-right-color        : transparent !important
-
-.ts[class*="right labeled"].input input + .label 
-    border-top-left-radius: 0px
-    border-bottom-left-radius: 0px
+    &.focus *[contenteditable],
+    input[type=text]:focus,
+    input[type=email]:focus,
+    input[type=password]:focus,
+    textarea:focus,
+    *[contenteditable]:focus
+      box-shadow: 0 0 .5rem rgba(81, 203, 238, 1)
+      border-color: #67D7FF
 
 
-.ts[class*="right labeled"].input input:focus 
-    border-right-color: $input_focusBorderColor !important
 
-//-------------------//
-//      Resizable       
-//-------------------//   
-    
-.ts.resizable input, 
-.ts.resizable textarea, 
-.ts.resizable *[contenteditable]
-    resize: both
+  // [&] Error
+  //
+  // 錯誤狀態的欄位。
 
-//-------------------//
-//      Circular       
-//-------------------//
+  &.error
 
-.ts.input.circular
-    &
-        input, textarea, *[contenteditable]
-            border-radius: 10em
-            
-//-------------------//
-//       Aligns       
-//-------------------//
+    // [&] Focus, FOCUS
+    //
+    // 聚焦中的欄位。
 
-.ts.input.centered
-    margin: 0 auto
+    &.focus input[type=text],
+    &.focus input[type=email],
+    &.focus input[type=password],
+    &.focus textarea,
+    &.focus *[contenteditable],
+    input[type=text]:focus,
+    input[type=email]:focus,
+    input[type=password]:focus,
+    textarea:focus,
+    *[contenteditable]:focus
+      box-shadow: 0 0 .5rem rgba(#DE8F8B, 1)
+      border-color: #FF9F9A
+
+
+    input, textarea, *[contenteditable]
+      //color: auten(#FFD9D7)
+      background-color: #FDEBEA
+
+
+  &.inverted
+    +input-theme($invertedColor, $invertedTextColor)
+
+  &.primary
+    +input-theme($primaryColor, $primaryTextColor)
+
+  &.info
+    +input-theme($infoColor, $infoTextColor)
+
+  &.warning
+    +input-theme($warningColor, $warningTextColor)
+
+  &.positive
+    +input-theme($positiveColor, $positiveTextColor)
+
+  &.negative
+    +input-theme($negativeColor, $negativeTextColor)

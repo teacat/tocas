@@ -1,123 +1,182 @@
-//*******************************//
-//              RWD
-//*******************************//
+//   ▄▄▄        ▄▄████▄                                                           
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██                                                       
+//  ▀██▄▄▄████   ▄▄▄██▀                                                            
+//     ▀▀▀████▀▀▀▀▀                                                              
+//        ██                                                                     
+//       ██          ▄█████▄       █████████████          ▄█             █▄    
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀     
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀ 
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   R W D S   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+//**************************************
+//*******   F U N C T I O N S    *******
+//**************************************
+
+// RWD
+//
+// 基本的 RWD 規定。
 
 =rwd($type)
 
   @if $type == mobile
-    @media (max-width: $rwdMobile)
+    @media (max-width: $rwd-mobile)
       @content
 
   @else if $type == tablet
-    @media (min-width: $rwdTabletMin)
+    @media (min-width: $rwd-tablet-min)
       @content
 
   @else if $type == computer
-    @media (min-width: $rwdComputerMin)
+    @media (min-width: $rwd-computer-min)
       @content
 
   @else if $type == large
-    @media (min-width: $rwdLargeMin)
+    @media (min-width: $rwd-large-min)
       @content
 
-//*******************************//
-//          RWD Serious
-//*******************************//
+
+
+// RWD Serious
+//
+// 更嚴格的 RWD 規定。
 
 =rwd-serious($type)
 
   @if $type == mobile
-    @media (max-width: $rwdMobile)
+    @media (max-width: $rwd-mobile)
       @content
 
   @else if $type == tablet
-    @media (min-width: $rwdTabletMin) and (max-width: $rwdTabletMax)
+    @media (min-width: $rwd-tablet-min) and (max-width: $rwd-tablet-max)
       @content
 
   @else if $type == computer
-    @media (min-width: $rwdComputerMin) and (max-width: $rwdComputerMax)
+    @media (min-width: $rwd-computer-min) and (max-width: $rwd-computer-max)
       @content
 
   @else if $type == large
-    @media (min-width: $rwdLargeMin)
+    @media (min-width: $rwd-large-min)
       @content
 
-//*******************************//
-//         Helper Classes
-//*******************************//
 
-//-------------------//
-//    Mobile Only 
-//-------------------//
 
-[class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"][class*="mobile only"]
+// RWD Hide
+//
+// 在某個裝置的時候隱藏元素。
+
+=rwd-hide($type)
+  +rwd($type)
+    display: none
+    width  : 0px
+
+
+
+// RWD Size
+//
+// 在某個裝置的時候更換元素大小。
+
+=rwd-size($type, $height: null, $width: null)
+  +rwd($type)
+    +size($height, $width)
+
+
+
+
+//**************************************
+//*********   H E L P E R S    *********
+//**************************************
+
+// Mobile Only
+//
+// 僅有行動裝置。
+
+[class*="mobile only"]
   +rwd(tablet)
-    display: none
+    +none
   +rwd(computer)
-    display: none
+    +none
   +rwd(large)
-    display: none
+    +none
 
-//-------------------//
-// Mobile Or Tablet Only 
-//-------------------//
 
-[class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"][class*="mobile or tablet only"]
+
+// Mobile Or Table Only
+//
+// 僅有行動裝置或平板。
+
+[class*="mobile or tablet only"]
   +rwd(computer)
-    display: none
+    +none
   +rwd(large)
-    display: none
-    
-//-------------------//
-//    Tablet Only 
-//-------------------//
+    +none
 
-[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])[class*="tablet only"]:not([class*="mobile or"])
+
+
+// Table Only
+//
+// 僅有平板。
+
+[class*="tablet only"]:not([class*="mobile or"])
   +rwd(mobile)
-    display: none
+    +none
   +rwd(computer)
-    display: none
+    +none
   +rwd(large)
-    display: none
+    +none
 
-//-------------------//
-//   Computer Only 
-//-------------------//
 
-[class*="computer only"][class*="computer only"][class*="computer only"][class*="computer only"][class*="computer only"][class*="computer only"][class*="computer only"][class*="computer only"][class*="computer only"][class*="computer only"]
+
+// Computer Only
+//
+// 僅有電腦裝置。
+
+[class*="computer only"]
   +rwd-serious(mobile)
-    display: none
+    +none
   +rwd-serious(tablet)
-    display: none
+    +none
   +rwd-serious(large)
-    display: none
+    +none
 
-//-------------------//
-// Tablet Or Large Only
-//-------------------//
 
-[class*="tablet or large device only"][class*="tablet or large device only"][class*="tablet or large device only"][class*="tablet or large device only"][class*="tablet or large device only"][class*="tablet or large device only"][class*="tablet or large device only"][class*="tablet or large device only"][class*="tablet or large device only"]
+
+// Tablet Or Large Device Only
+//
+// 僅有平板或大型裝置（包含電腦）。
+
+[class*="tablet or large device only"]
   +rwd-serious(mobile)
-    display: none
+    +none
 
-//-------------------//
-//    Large Only 
-//-------------------//
 
-[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])[class*="large device only"]:not([class*="tablet or"])
+
+// Large Device Only
+//
+// 僅有大型裝置（包含電腦）。
+
+[class*="large device only"]:not([class*="tablet or"])
   +rwd-serious(mobile)
-    display: none
+    +none
   +rwd-serious(tablet)
-    display: none
+    +none
 
-//-------------------//
-// Large Screen Only 
-//-------------------//
 
-[class*="large screen only"][class*="large screen only"][class*="large screen only"][class*="large screen only"][class*="large screen only"][class*="large screen only"][class*="large screen only"][class*="large screen only"][class*="large screen only"][class*="large screen only"]
+
+// Large Device Only
+//
+// 僅有大型螢幕。
+
+[class*="large screen only"]
   +rwd(mobile)
-    display: none
+    +none
   +rwd(tablet)
-    display: none
+    +none
   +rwd(computer)
-    display: none
+    +none

@@ -1,106 +1,91 @@
-@import ../../variables/elements/divider.variables
+//   ▄▄▄        ▄▄████▄
+// ▄█████▄    ▄██▀    ██
+// ▀█▄   ██▄ ██▀      ██
+//  ▀██▄▄▄████   ▄▄▄██▀
+//     ▀▀▀████▀▀▀▀▀
+//        ██
+//       ██          ▄█████▄       █████████████          ▄█             █▄
+//      ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+//      ██        ██         ██    ██         ██        ██  ▀██       ██▀
+//      ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+//      ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+//       ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄██▓       █▀
+//
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   D I V I D E R   @@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
-//*******************************//
-//              Main
-//*******************************//
+//**************************************
+//***********   T H E M E   ************
+//**************************************
+
+=divider-theme($color)
+  border-top: .1rem solid $color
+
+
+
+//**************************************
+//************   M A I N   *************
+//**************************************
 
 .ts.divider
-    +extend(no-select)
-    
-    margin        : $divider_margin
-    line-height   : 1
-    height        : 0em
-    font-weight   : $divider_fontWeight
-    letter-spacing: $divider_letterSpacing
-    color         : $divider_color
-    
-.ts.divider:not(.vertical):not(.horizontal)
-    border-top   : $divider_shadowWidth    solid $divider_shadowColor
-    border-bottom: $divider_highlightWidth solid $divider_highlightColor
+  +divider-theme(#CCC)
+  +y-margin(1em)
 
-//-------------------//
-//     Horizontal 
-//-------------------//  
 
-.ts.horizontal.divider 
-    display    : table
-    white-space: nowrap
-    height     : auto
-    margin     : $divider_horizontalMargin
-    line-height: 1
+
+  //
+  //
+  //
+
+  &.section
+    +y-margin(2em)
+
+
+
+  //
+  //
+  //
+
+  &.hidden
+    +y-margin(1rem)
+    display: block !important
+    visibility: hidden
+
+
+
+  // [&] Horizontal
+  //
+  //
+
+  &.horizontal
+    +table
+    +no-wrap
+    +no-overflow
+    +size(auto, x)
+
+    border-top: none !important
     text-align : center
+    font-weight: 600
+    font-size  : 1.3rem
+    line-height: 1
 
-.ts.horizontal.divider:before,
-.ts.horizontal.divider:after 
-    content          : ''
-    display          : table-cell
-    position         : relative
-    top              : 50%
-    width            : 50%
-    background-repeat: no-repeat
 
-.ts.horizontal.divider:before 
-    background-position: right $divider_horizontalDividerMargin top 50%
-    background-image   : $divider_horizontalDividerBackgroundImage
 
-.ts.horizontal.divider:after 
-    background-position: left $divider_horizontalDividerMargin top 50%
-    background-image   : $divider_horizontalDividerBackgroundImage
+    &:before,
+    &:after
+      +relative
+      +table-cell
+      +position(50%, x, x, x)
+      +size(x, 50%)
 
-//-------------------//
-//       Hidden 
-//-------------------//  
-    
-.ts.hidden.divider
-    visibility  : hidden
-    border-color: transparent !important
+      content: ''
+      opacity: 0.4
+      background-position: right 1em top 50%
+      background-repeat  : no-repeat
+      background-image   : url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABaAAAAACCAYAAACuTHuKAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDo1OThBRDY4OUNDMTYxMUU0OUE3NUVGOEJDMzMzMjE2NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDo1OThBRDY4QUNDMTYxMUU0OUE3NUVGOEJDMzMzMjE2NyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjU5OEFENjg3Q0MxNjExRTQ5QTc1RUY4QkMzMzMyMTY3IiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU5OEFENjg4Q0MxNjExRTQ5QTc1RUY4QkMzMzMyMTY3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+VU513gAAADVJREFUeNrs0DENACAQBDBIWLGBJQby/mUcJn5sJXQmOQMAAAAAAJqt+2prAAAAAACg2xdgANk6BEVuJgyMAAAAAElFTkSuQmCC)
 
-.ts.hidden.divider:before,
-.ts.hidden.divider:after
-    display: none
 
-//-------------------//
-//       Fitted 
-//-------------------// 
 
-.ts.divider.fitted
-    margin: 0em
-    
-//-------------------//
-//      Clearing 
-//-------------------// 
-
-.ts.divider.clearing
-    clear: both
-    
-//-------------------//
-//      Section 
-//-------------------// 
-
-.ts.divider.section
-    margin-top   : $divider_sectionMargin
-    margin-bottom: $divider_sectionMargin
-
-//-------------------//
-//       Sizes 
-//-------------------// 
-
-.ts.divider
-    font-size: $divider_medium
-
-//-------------------//
-//      Inverted 
-//-------------------// 
-
-.ts.divider.inverted,
-.ts.vertical.inverted.divider,
-.ts.horizontal.inverted.divider 
-    color: $invertedTextColor
- 
-.ts.divider.inverted,
-.ts.divider.inverted:after,
-.ts.divider.inverted:before
-    border-top-color   : $divider_invertedShadowColor    !important
-    border-left-color  : $divider_invertedShadowColor    !important
-    border-bottom-color: $divider_invertedHighlightColor !important
-    border-right-color : $divider_invertedHighlightColor !important
+    &:after
+      background-position: left 1em top 50%
