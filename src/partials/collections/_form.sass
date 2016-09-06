@@ -1,0 +1,325 @@
+@import ../../variables/collections/form.variables
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.form
+    position: relative
+
+.ts.form > p
+    margin: $form_paragraphMargin
+
+//-------------------//
+//       Inline
+//-------------------//
+
+.ts.form .inline.fields
+    align-items: center
+
+.ts.form .inline.field label
+    display       : inline-block
+    width         : auto
+    margin-top    : 0
+    margin-bottom : 0
+    vertical-align: baseline
+    font-size     : $form_inlineLabelFontSize
+    font-weight   : $form_inlineLabelFontWeight
+    color         : $form_inlineLabelColor
+
+.ts.form .inline.field > :first-child,
+.ts.form .inline.fields .field > :first-child
+    margin: 0 $form_inlineLabelDistance 0 0
+    
+.ts.form .inline.field > :only-child,
+.ts.form .inline.fields .field > :only-child   
+    margin: 0
+    
+.ts.form .inline.fields .wide.field,
+.ts.form .inline.field
+    display    : flex
+    align-items: center
+    flex-wrap  : wrap
+
+.ts.form .inline.fields .wide.field input,
+.ts.form .inline.field input
+    flex: 1
+
+//-------------------//
+//        Text
+//-------------------//
+
+.ts.form .inline.field .text
+    padding-top   : $form_staticTextVerticalPadding
+    padding-bottom: $form_staticTextVerticalPadding
+
+//-------------------//
+//    Helper Text
+//-------------------//
+
+.ts.form .field > small
+    display  : block
+    margin   : $form_fieldHelperTextMargin
+    opacity  : $form_fieldHelperOpacity
+    color    : $form_fieldHelperTextColor
+    font-size: $form_fieldHelperFontSize
+    flex     : 0 0 100%
+    
+//-------------------//
+//        Wide
+//-------------------//
+
+.ts.form .field[class*="one wide"]
+    width: $oneWide
+.ts.form .field[class*="two wide"]
+    width: $twoWide
+.ts.form .field[class*="three wide"]
+    width: $threeWide
+.ts.form .field[class*="four wide"]
+    width: $fourWide
+.ts.form .field[class*="five wide"]
+    width: $fiveWide
+.ts.form .field[class*="six wide"]
+    width: $sixWide
+.ts.form .field[class*="seven wide"]
+    width: $sevenWide
+.ts.form .field[class*="eight wide"]
+    width: $eightWide
+.ts.form .field[class*="nine wide"]
+    width: $nineWide
+.ts.form .field[class*="ten wide"]
+    width: $tenWide
+.ts.form .field[class*="eleven wide"]
+    width: $elevenWide
+.ts.form .field[class*="twelve wide"]
+    width: $twelveWide
+.ts.form .field[class*="thirteen wide"]
+    width: $thirteenWide
+.ts.form .field[class*="fourteen wide"]
+    width: $fourteenWide
+.ts.form .field[class*="fifteen wide"]
+    width: $fifteenWide
+.ts.form .field[class*="sixteen wide"]
+    width: $sixteenWide
+
+//-------------------//
+//    Equal Width
+//-------------------//
+
+.ts.form[class*="equal width"] .field,
+.ts.form.fields[class*="equal width"] .field
+    width: 100%
+    flex : 1 1 auto
+
+//-------------------//
+//      Loading
+//-------------------//
+
+.ts.loading.form 
+    position    : relative
+    cursor      : default
+    point-events: none
+
+.ts.loading.form:before 
+    position        : absolute
+    content         : ''
+    top             : 0%
+    left            : 0%
+    background-color: $form_loaderDimmerBackgroundColor
+    width           : 100%
+    height          : 100%
+    z-index         : $form_loaderDimmerZIndex
+
+.ts.loading.form:after 
+    position     : absolute
+    content      : ''
+    top          : 50%
+    left         : 50%
+    margin       : $loaderMargin
+    width        : $form_loaderSize
+    height       : $form_loaderSize
+    border-radius: $circularRadius
+    border-color : $loaderLineColor $loaderFillColor $loaderFillColor $loaderFillColor
+    border-style : solid
+    border-width : $loaderLineWidth
+    box-shadow   : 0px 0px 0px 1px transparent
+    visibility   : visible
+    z-index      : $form_loaderLineZIndex
+    
+    animation                : form-spin $loaderSpeed linear
+    animation-iteration-count: infinite
+
+@keyframes form-spin 
+    from 
+        transform: rotate(0deg)
+    to 
+        transform: rotate(360deg)
+    
+//-------------------//
+//      Relaxed
+//-------------------//
+    
+.ts.form.relaxed .field
+    clear: both
+
+//-------------------//
+//       Field
+//-------------------//
+
+.ts.form .field
+    width : 100%
+    clear : both
+    margin: $form_fieldMargin
+    
+.ts.form .fields > .field
+    padding-left : $columnPadding
+    padding-right: $columnPadding
+    
+.ts.form.relaxed .fields > .field
+    padding-left : $columnRelaxedPadding
+    padding-right: $columnRelaxedPadding
+
+.ts.form > .field:last-child,
+.ts.form .fields:last-child .field
+    margin-bottom: 0em
+    
+.ts.form .field input:not([type="radio"])
+    width: 100%
+
+//-------------------//
+//      Centered
+//-------------------//
+
+.ts.form.centered
+    margin: 0 auto
+
+//-------------------//
+//       Error
+//-------------------//
+
+.ts.form .field.error,
+.ts.form .field.error label
+    color: $form_errorTextColor
+.ts.form .field.error label
+    font-weight: $form_errorLabelFontWeight
+
+//-------------------//
+//       Aligns
+//-------------------//
+
+.ts.form .field[class*="center aligned"]
+    text-align: center
+.ts.form .field[class*="left aligned"]
+    text-align: left
+.ts.form .field[class*="right aligned"]
+    text-align: right
+
+//-------------------//
+//       Labels
+//-------------------//
+
+.ts.form .field > label
+    display       : block
+    margin        : $form_labelMargin
+    color         : $form_labelColor
+    font-size     : $form_labelFontSize
+    font-weight   : $form_labelFontWeight
+
+//-------------------//
+//      Disabled
+//-------------------//
+
+.ts.form .disabled.fields .field,
+.ts.form .disabled.field,
+.ts.form .field :disabled
+    pointer-events: none
+    opacity       : $disabledOpacity
+
+.ts.form .field.disabled label
+    opacity: $disabledLabelOpacity
+
+.ts.form .field.disabled :disabled
+    opacity: 1
+
+//-------------------//
+//      Required
+//-------------------//
+
+.ts.form .required.fields:not(.grouped) > .field > label:after,
+.ts.form .required.fields.grouped > label:after,
+.ts.form .required.field > label:after,
+.ts.form .required.fields:not(.grouped) > .field > .checkbox:after,
+.ts.form .required.field > .checkbox:after 
+    margin     : $form_requiredMargin
+    content    : $form_requiredContent
+    color      : $form_requiredColor
+    font-weight: $form_requiredFontWeight
+
+.ts.form .required.fields:not(.grouped) > .field > label:after,
+.ts.form .required.fields.grouped > label:after,
+.ts.form .required.field > label:after 
+    display       : inline-block
+    vertical-align: top
+
+.ts.form .required.fields:not(.grouped) > .field > .checkbox:after,
+.ts.form .required.field > .checkbox:after 
+    position: absolute
+    top     : 0%
+    left    : 100%
+
+//-------------------//
+//       Sizes
+//-------------------//
+
+.ts.form.mini
+    font-size: $mini
+.ts.form.tiny
+    font-size: $tiny
+.ts.form.small
+    font-size: $small
+.ts.form.medium
+    font-size: $medium
+.ts.form.large
+    font-size: $large
+.ts.form.big
+    font-size: $big
+.ts.form.huge
+    font-size: $huge
+.ts.form.massive
+    font-size: $massive
+
+//*******************************//
+//             Fields
+//*******************************//
+
+.ts.form .fields
+    position      : relative
+    display       : flex
+    flex-direction: row
+    flex-wrap     : nowrap
+    width         : 100%
+    margin-left   : -#{$columnPadding}
+    margin-right  : -#{$columnPadding}
+    width         : calc(100% + #{$columnPadding} * 2)
+    
+.ts.form.relaxed .fields
+    margin-left : -#{$columnRelaxedPadding}
+    margin-right: -#{$columnRelaxedPadding}
+    width       : calc(100% + #{$columnRelaxedPadding} * 2)
+    
+//*******************************//
+//               RWD
+//*******************************//
+
+.ts.form
+    +rwd-serious(mobile)
+        .fields, .relaxed.fields
+            margin-left   : 0 !important
+            margin-right  : 0 !important
+            flex-direction: column
+        .fields,
+        .fields .field
+            padding-left : 0    !important
+            padding-right: 0    !important
+            width        : 100% !important
+    
