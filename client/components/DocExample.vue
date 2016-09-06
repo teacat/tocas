@@ -2,7 +2,7 @@
     <div class="ts example flatted segments">
         <div class="ts clearing preview segment" v-html="code" v-if="hasExample"></div>
         <pre class="ts secondary padded segment code"><code class="hljs" :data-utaha-hightlight="mark" :data-utaha-tag-hightlight="tagMark" :data-utaha-remove="remove">{{ code }}</code>
-        <div class="ts bottom right attached label">原始碼</div></pre>
+        <div class="ts top right attached label">原始碼</div></pre>
     </div>
 </template>
 
