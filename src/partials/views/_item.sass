@@ -1,0 +1,394 @@
+@import ../../variables/views/item.variables
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.items > .item 
+    display      : $item_display
+    margin       : $item_itemSpacing 0em
+    width        : $item_width
+    min-height   : $item_minHeight
+    background   : $item_background
+    padding      : $item_padding
+    border       : $item_border
+    border-radius: $item_borderRadius
+    box-shadow   : $item_boxShadow
+    transition   : $item_transition
+    z-index      : $item_zIndex
+
+.ts.items > .item a 
+    cursor: pointer
+
+//-------------------//
+//       Items
+//-------------------// 
+
+.ts.items 
+    margin: $item_groupMargin
+
+.ts.items:first-child 
+    margin-top: 0em !important
+
+.ts.items:last-child 
+    margin-bottom: 0em !important
+
+//-------------------//
+//       Item
+//-------------------// 
+
+.ts.items > .item:after 
+    display   : block
+    content   : ' '
+    height    : 0px
+    clear     : both
+    overflow  : hidden
+    visibility: hidden
+
+.ts.items > .item:first-child 
+    margin-top: 0em
+
+.ts.items > .item:last-child 
+    margin-bottom: 0em
+
+//-------------------//
+//       Image
+//-------------------// 
+
+.ts.items > .item > .image 
+    position  : relative
+    flex      : 0 0 auto
+    display   : $item_imageDisplay
+    float     : $item_imageFloat
+    margin    : $item_imageMargin
+    padding   : $item_imagePadding
+    max-height: $item_imageMaxHeight
+    align-self: $item_imageVerticalAlign
+
+.ts.items > .item > .image > img 
+    display      : block
+    width        : 100%
+    height       : auto
+    border-radius: $item_imageBorderRadius
+    border       : $item_imageBorder
+
+.ts.items > .item > .image:only-child > img 
+    border-radius: $item_borderRadius
+
+//-------------------//
+//      Content
+//-------------------// 
+
+.ts.items > .item > .content 
+    display      : block
+    flex         : 1 1 auto
+    background   : $item_contentBackground
+    margin       : $item_contentMargin
+    padding      : $item_contentPadding
+    box-shadow   : $item_contentBoxShadow
+    font-size    : $item_contentFontSize
+    border       : $item_contentBorder
+    border-radius: $item_contentBorderRadius
+
+.ts.items > .item > .content:after 
+    display   : block
+    content   : ' '
+    height    : 0px
+    clear     : both
+    overflow  : hidden
+    visibility: hidden
+
+.ts.items > .item > .image + .content 
+    min-width   : 0
+    width       : $item_contentWidth
+    display     : $item_contentDisplay
+    margin-left : $item_contentOffset
+    align-self  : $item_contentVerticalAlign
+    padding-left: $item_contentImageDistance
+
+.ts.items > .item > .content > .header 
+    display    : inline-block
+    margin     : $item_headerMargin
+    font-weight: $item_headerFontWeight
+    color      : $item_headerColor
+
+/* Default Header Size */
+.ts.items > .item > .content > .header:not(.ts) 
+    font-size: $item_headerFontSize
+
+//-------------------//
+//       Floated
+//-------------------// 
+
+.ts.items > .item [class*="left floated"] 
+    float: left
+
+.ts.items > .item [class*="right floated"] 
+    float: right
+
+//-------------------//
+//   Content Image
+//-------------------// 
+
+.ts.items > .item .content img 
+    align-self: $item_contentImageVerticalAlign
+    width     : $item_contentImageWidth
+
+.ts.items > .item img.avatar,
+.ts.items > .item .avatar img 
+    width        : $item_avatarSize
+    height       : $item_avatarSize
+    border-radius: $item_avatarBorderRadius
+
+//-------------------//
+//    Description
+//-------------------// 
+
+.ts.items > .item > .content > .description 
+    margin-top : $item_descriptionDistance
+    max-width  : $item_descriptionMaxWidth
+    font-size  : $item_descriptionFontSize
+    line-height: $item_descriptionLineHeight
+    color      : $item_descriptionColor
+
+//-------------------//
+//     Paragraph
+//-------------------// 
+
+.ts.items > .item > .content p 
+    margin: 0em 0em $item_paragraphDistance
+
+.ts.items > .item > .content p:last-child 
+    margin-bottom: 0em
+
+//-------------------//
+//        Meta
+//-------------------// 
+
+.ts.items > .item .meta 
+    margin     : $item_metaMargin
+    font-size  : $item_metaFontSize
+    line-height: $item_metaLineHeight
+    color      : $item_metaColor
+
+.ts.items > .item .meta * 
+    margin-right: $item_metaSpacing
+
+.ts.items > .item .meta :last-child 
+    margin-right: 0em
+
+.ts.items > .item .meta [class*="right floated"] 
+    margin-right: 0em
+    margin-left : $item_metaSpacing
+
+.ts.items > .item .meta.inline
+    margin-left: $item_metaSpacing
+    display    : inline-block
+
+//-------------------//
+//       Links
+//-------------------// 
+
+/* Generic */
+.ts.items > .item > .content a:not(.ts) 
+    color     : $item_contentLinkColor
+    transition: $item_contentLinkTransition
+
+.ts.items > .item > .content a:not(.ts):hover 
+    color: $item_contentLinkHoverColor
+
+/* Header */
+.ts.items > .item > .content > a.header 
+    color: $item_headerLinkColor
+
+.ts.items > .item > .content > a.header:hover 
+    color: $item_headerLinkHoverColor
+
+/* Meta */
+.ts.items > .item .meta > a:not(.ts) 
+    color: $item_metaLinkColor
+
+.ts.items > .item .meta > a:not(.ts):hover 
+    color: $item_metaLinkHoverColor
+
+//-------------------//
+//       Labels
+//-------------------// 
+
+/*-----Star----- */
+
+/* Icon */
+.ts.items > .item > .content .favorite.icon 
+    cursor    : pointer
+    opacity   : $item_actionOpacity
+    transition: $item_actionTransition
+
+.ts.items > .item > .content .favorite.icon:hover 
+    opacity: $item_actionHoverOpacity
+    color  : $item_favoriteColor
+
+.ts.items > .item > .content .active.favorite.icon 
+    color: $item_favoriteActiveColor
+
+/*-----Like----- */
+
+/* Icon */
+.ts.items > .item > .content .like.icon 
+    cursor    : pointer
+    opacity   : $item_actionOpacity
+    transition: $item_actionTransition
+
+.ts.items > .item > .content .like.icon:hover 
+    opacity: $item_actionHoverOpacity
+    color  : $item_likeColor
+
+.ts.items > .item > .content .active.like.icon 
+    color: $item_likeActiveColor
+
+//-------------------//
+//   Extra Content
+//-------------------// 
+
+.ts.items > .item .extra 
+    display   : $item_extraDisplay
+    position  : $item_extraPosition
+    background: $item_extraBackground
+    margin    : $item_extraMargin
+    width     : $item_extraWidth
+    padding   : $item_extraPadding
+    top       : $item_extraTop
+    left      : $item_extraLeft
+    color     : $item_extraColor
+    box-shadow: $item_extraBoxShadow
+    transition: $item_extraTransition
+    border-top: $item_extraDivider
+
+.ts.items > .item .extra > * 
+    margin: ($item_extraRowSpacing / 2) $item_extraHorizontalSpacing ($item_extraRowSpacing / 2) 0em
+
+.ts.items > .item .extra > [class*="right floated"] 
+    margin: ($item_extraRowSpacing / 2) 0em ($item_extraRowSpacing / 2) $item_extraHorizontalSpacing
+
+.ts.items > .item .extra:after 
+    display   : block
+    content   : ' '
+    height    : 0px
+    clear     : both
+    overflow  : hidden
+    visibility: hidden
+
+//*******************************//
+//          Responsive
+//*******************************//
+
+/* Default Image Width */
+.ts.items > .item > .image:not(.ts):not(.flexible)
+    width: $item_imageWidth
+
+/* Tablet Only */
+.ts.items.stackable
+    +rwd-serious(tablet)
+        > .item 
+            margin: $item_tabletItemSpacing 0em
+        
+        > .item > .image:not(.ts):not(.flexible)
+            width: $item_tabletImageWidth
+        
+        > .item > .image + .content 
+            display: block
+            padding: 0em 0em 0em $item_tabletContentImageDistance
+    
+/* Mobile Only */
+.ts.items.stackable
+    +rwd-serious(mobile)
+        > .item 
+            flex-direction: column
+            margin: $item_mobileItemSpacing 0em
+        
+        > .item > .image 
+            display: block
+            margin-left: auto
+            margin-right: auto
+        
+        > .item > .image,
+        > .item > .image > img 
+            max-width: 100% !important
+            width: $item_mobileImageWidth !important
+            max-height: $item_mobileImageMaxHeight !important
+        
+        > .item > .image + .content 
+            display: block
+            padding: $item_mobileContentImageDistance 0em 0em
+
+//*******************************//
+//           Variations
+//*******************************//
+
+//-------------------//
+//       Aligned
+//-------------------// 
+
+.ts.items > .item > .image + [class*="top aligned"].content 
+    align-self: flex-start
+
+.ts.items > .item > .image + [class*="middle aligned"].content 
+    align-self: center
+
+.ts.items > .item > .image + [class*="bottom aligned"].content 
+    align-self: flex-end
+
+//-------------------//
+//       Relaxed
+//-------------------// 
+
+.ts.relaxed.items > .item 
+    margin: $item_relaxedItemSpacing 0em
+
+.ts[class*="very relaxed"].items > .item 
+    margin: $item_veryRelaxedItemSpacing 0em
+
+//-------------------//
+//       Divided
+//-------------------// 
+
+.ts.divided.items > .item 
+    border-top: $item_dividedBorder
+    margin    : $item_dividedMargin
+    padding   : $item_dividedPadding
+
+.ts.divided.items > .item:first-child 
+    border-top : none
+    margin-top : $item_dividedFirstLastMargin !important
+    padding-top: $item_dividedFirstLastPadding !important
+
+.ts.divided.items > .item:last-child 
+    margin-bottom : $item_dividedFirstLastMargin !important
+    padding-bottom: $item_dividedFirstLastPadding !important
+
+/* Relaxed Divided */
+.ts.relaxed.divided.items > .item 
+    margin : 0em
+    padding: $item_relaxedItemSpacing 0em
+
+.ts[class*="very relaxed"].divided.items > .item 
+    margin : 0em
+    padding: $item_veryRelaxedItemSpacing 0em
+
+//-------------------//
+//       Link
+//-------------------// 
+
+.ts.items a.item:hover,
+.ts.link.items > .item:hover 
+    cursor: pointer
+
+.ts.items a.item:hover .content .header,
+.ts.link.items > .item:hover .content .header 
+    color: $item_headerLinkHoverColor
+
+//-------------------//
+//       Size
+//-------------------// 
+
+.ts.items > .item 
+    font-size: $item_medium
