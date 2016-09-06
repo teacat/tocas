@@ -247,8 +247,7 @@ export default
             type: 'example',
             code: `<div class="ts card">
     <div class="content">
-        【お知らせ】 冬コミで頒布した新作ブランケット、新刊同人誌、本編ディスク、
-        過去グッズ等すべての通信販売を開始しました！ http://shop.infinity-s.jp
+        人的生命有兩次，一次是你沒發現的時候，一次是你發現的時候。
     </div>
 </div>`,
             mark: 'content'
@@ -473,7 +472,27 @@ export default
 </div>`,
             mark: 'extra content, secondary, tertiary'
         },
-        
+        {
+            type       : small,
+            title      : '重疊內容',
+            description: `內容可以重疊在整張卡片的上面。`,
+            link       : 'overlapped'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts card">
+    <div class="image">
+        <img style="opacity: 0.2" src="${infinityPicture5}">
+    </div>
+    <div class="overlapped content">
+        <div class="description">
+            【お知らせ】 冬コミで頒布した新作ブランケット、新刊同人誌、本編ディスク、
+            過去グッズ等すべての通信販売を開始しました！ http://shop.infinity-s.jp
+        </div>
+    </div>
+</div>`,
+            mark  : 'overlapped content',
+        },
         {
             type       : small,
             title      : '自由排列',
