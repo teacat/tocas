@@ -9,6 +9,7 @@ var infinityPicture2 = require('../../images/infinity-s/02.png')
 var infinityPicture3 = require('../../images/infinity-s/03.png')
 var infinityPicture4 = require('../../images/infinity-s/04.png')
 var infinityPicture5 = require('../../images/infinity-s/05.jpg')
+var defaultAvatar = require('../../images/default.jpg')
 
 export default
 {
@@ -178,15 +179,15 @@ export default
             code: `<div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="${infinityPicture3}">
+            <img src="${defaultAvatar}">
         </div>
         <div class="content">
-            <a class="author">infinity-G™</a>
+            <a class="author">Yami Odymel</a>
             <div class="bulleted metadata">
                 <div>3 天前</div>
                 <div>5 個讚</div>
             </div>
-            <div class="text">入稿版冬コミ新作ブランケットです。よろしくね。</div>
+            <div class="text">發現自己做不到是進步過程中的一環。</div>
         </div>
     </div>
     <div class="comment">
@@ -245,11 +246,11 @@ export default
             code: `<div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="${infinityPicture4}">
+            <img src="${defaultAvatar}">
         </div>
         <div class="content">
             <a class="author">Yami Odymel</a>
-            <div class="text">這些頭貼都是由 Infinity-Sama 所提供的！</div>
+            <div class="text">輸的時候失去最多的就是理智。</div>
             <div class="bulleted actions">
                 <a>檢舉</a>
                 <a>編輯</a>
@@ -259,11 +260,11 @@ export default
     </div>
     <div class="comment">
         <div class="avatar">
-            <img src="${infinityPicture3}">
+            <img src="${defaultAvatar}">
         </div>
         <div class="content">
-            <a class="author">Karisu</a>
-            <div class="text">搭啦啦啦！下面的動作以「中點」來區分。</div>
+            <a class="author">Yami Odymel</a>
+            <div class="text">對這個世界感到失望，是躍出舞台的第一步。</div>
             <div class="middoted actions">
                 <a>回覆</a>
                 <a>移除</a>
