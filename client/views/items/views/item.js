@@ -309,9 +309,9 @@ export default
         <div class="content">
             <div class="header">廢除博愛座</div>
             <div class="description">
-                每個座位都應當是博愛座不應該強制賦予某些人責任，
-                且心理和非顯性疾病是不容易看出的，
-                這可能導致部分民眾遭受謾罵。
+                近年來，台灣一般民眾之文化水準已明顯提高，
+                在公共運輸工具上讓座給有需要的人已經成為一個常見的行為。
+                不僅僅局限於博愛座，一般座位也常見讓座這樣的行為。
             </div>
             <div class="extra">
                 <i class="check icon"></i>
