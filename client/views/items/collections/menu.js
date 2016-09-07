@@ -623,5 +623,55 @@ export default
 </div>`,
             mark: 'stackable'
         },
+        {
+            type       : small,
+            title      : '尺寸',
+            description: `選單提供了多種尺寸。`,
+            link       : 'sizes'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts mini menu">
+    <a class="item">執行</a>
+    <a class="item">工具</a>
+    <a class="item">視窗</a>
+</div>
+<div class="ts tiny menu">
+    <a class="item">執行</a>
+    <a class="item">工具</a>
+    <a class="item">視窗</a>
+</div>
+<div class="ts small menu">
+    <a class="item">執行</a>
+    <a class="item">工具</a>
+    <a class="item">視窗</a>
+</div>
+<div class="ts medium menu">
+    <a class="item">執行</a>
+    <a class="item">工具</a>
+    <a class="item">視窗</a>
+</div>
+<div class="ts large menu">
+    <a class="item">執行</a>
+    <a class="item">工具</a>
+    <a class="item">視窗</a>
+</div>
+<div class="ts big menu">
+    <a class="item">執行</a>
+    <a class="item">工具</a>
+    <a class="item">視窗</a>
+</div>
+<div class="ts huge menu">
+    <a class="item">執行</a>
+    <a class="item">工具</a>
+    <a class="item">視窗</a>
+</div>
+<div class="ts massive menu">
+    <a class="item">執行</a>
+    <a class="item">工具</a>
+    <a class="item">視窗</a>
+</div>`,
+            mark: 'mini, tiny, small, medium, large, big, huge, massive'
+        },
     ]
 }
