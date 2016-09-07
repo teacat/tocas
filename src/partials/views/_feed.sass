@@ -48,9 +48,6 @@
     font-size    : $feed_iconLabelSize
     width        : $feed_iconLabelWidth
     padding      : $feed_iconLabelPadding
-    background   : $feed_iconLabelBackground
-    border       : $feed_iconLabelBorder
-    border-radius: $feed_iconLabelBorderRadius
     color        : $feed_iconLabelColor
 
 .ts.feed > .event > .label img 
@@ -66,6 +63,9 @@
 
 .ts.feed.divided > .event
     border-top: $feed_eventDivider
+    
+.ts.feed.divided > .event:first-child
+    border-top: 0
 
 //-------------------//
 //      Relaxed             
@@ -190,10 +190,8 @@
     display      : $feed_metadataDisplay
     font-size    : $feed_metadataFontSize
     margin       : $feed_metadataMargin
-    background   : $feed_metadataBackground
     border       : $feed_metadataBorder
     border-radius: $feed_metadataBorderRadius
-    box-shadow   : $feed_metadataBoxShadow
     padding      : $feed_metadataPadding
     color        : $feed_metadataColor
 
@@ -201,31 +199,9 @@
     position   : relative
     margin-left: $feed_metadataElementSpacing
 
-.ts.feed > .event > .content .meta > *:after 
-    content       : $feed_metadataDivider
-    color         : $feed_metadataDividerColor
-    top           : 0em
-    left          : $feed_metadataDividerOffset
-    opacity       : 1
-    position      : absolute
-    vertical-align: top
-
-.ts.feed > .event > .content .meta .like 
-    color     : $feed_likeColor
-    transition: $feed_likeTransition
-
-.ts.feed > .event > .content .meta .like:hover .icon 
-    color: $feed_likeHoverColor
-
-.ts.feed > .event > .content .meta .active.like .icon 
-    color: $feed_likeActiveColor
-
 /* First element */
 .ts.feed > .event > .content .meta > :first-child 
-    margin-left: 0em
-
-.ts.feed > .event > .content .meta > :first-child::after 
-    display: none
+    margin-left: 0
 
 /* Action */
 .ts.feed > .event > .content .meta a,
@@ -233,13 +209,32 @@
     cursor    : $feed_metadataActionCursor
     opacity   : $feed_metadataActionOpacity
     color     : $feed_metadataActionColor
-    transition: $feed_metadataActionTransition
 
 .ts.feed > .event > .content .meta a:hover,
 .ts.feed > .event > .content .meta a:hover .icon,
 .ts.feed > .event > .content .meta > .icon:hover 
     color: $feed_metadataActionHoverColor
+    
+    &:before
+        color: $feed_metadataActionColor
 
+//-------------------//
+//    Dotted Meta
+//-------------------//
+
+.ts.feed > .event > .content .meta.middoted > *,
+.ts.feed > .event > .content .meta.bulleted > *
+    margin-left: 0
+
+.ts.feed > .event > .content .meta.middoted > *:not(:first-child):before
+    margin-left : $feed_metadataElementSpacing / 2
+    margin-right: $feed_metadataElementSpacing / 2
+    content     : '·'
+.ts.feed > .event > .content .meta.bulleted > *:not(:first-child):before
+    margin-left : $feed_metadataElementSpacing / 2
+    margin-right: $feed_metadataElementSpacing / 2
+    content     : '•'
+    
 //*******************************//
 //           Variations
 //*******************************//
