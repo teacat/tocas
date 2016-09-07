@@ -70,6 +70,10 @@ code.hljs.javascript .hljs-string
 {
     opacity: 0.7;
 }
+.ts.example.flatted.segments + .ts.example.flatted.segments
+{
+    margin-top: 50px;
+}
 </style>
 
 <style style="sass" scoped>
