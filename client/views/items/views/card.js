@@ -9,6 +9,12 @@ var infinityPicture2 = require('../../images/infinity-s/02.png')
 var infinityPicture3 = require('../../images/infinity-s/03.png')
 var infinityPicture4 = require('../../images/infinity-s/04.png')
 var infinityPicture5 = require('../../images/infinity-s/05.jpg')
+var imgPlaceholderSquare = require('../../images/image_placeholder_1-1.png')
+var imgPlaceholderWide   = require('../../images/image_placeholder_16-9.png')
+var imgPlaceholderLegacy = require('../../images/image_placeholder_4-3.png')
+var imgPlaceholderUser   = require('../../images/image_placeholder_user.png')
+var imgPlaceholderUser2  = require('../../images/image_placeholder_user2.png')
+var imgPlaceholderUser3  = require('../../images/image_placeholder_user3.png')
 
 export default
 {
@@ -367,13 +373,12 @@ export default
             type: 'example',
             code: `<div class="ts card">
     <a class="image" href="#!">
-        <img src="${infinityPicture5}">
+        <img src="${imgPlaceholderLegacy}">
     </a>
     <div class="content">
-        <a class="header" href="#!">いんふぃ™</a>
+        <a class="header" href="#!">iPhone 7 開賣！</a>
         <div class="meta">
-            <a href="#!">@AW_infi</a>
-            <a href="#!">Jan 2</a>
+            <a href="#!">兩天前</a>
         </div>
     </div>
 </div>`,
@@ -482,7 +487,7 @@ export default
             type: 'example',
             code: `<div class="ts card">
     <div class="image">
-        <img style="opacity: 0.2" src="${infinityPicture5}">
+        <img style="opacity: 0.2" src="${imgPlaceholderLegacy}">
     </div>
     <div class="overlapped content">
         <div class="description">
@@ -668,7 +673,15 @@ export default
             code: `<div class="ts four cards">
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser2}">
+        </div>
+        <div class="content">
+            <a class="header">Karen</a>
+        </div>
+    </div>
+    <div class="ts card">
+        <div class="image">
+            <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
             <a class="header">Infinity-S</a>
@@ -676,58 +689,50 @@ export default
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture2}">
+            <img src="${imgPlaceholderUser3}">
         </div>
         <div class="content">
-            <a class="header">Infinity-S</a>
+            <a class="header">Imperium</a>
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture3}">
+            <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
-            <a class="header">Infinity-S</a>
+            <a class="header">Natsuki</a>
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture4}">
+            <img src="${imgPlaceholderUser3}">
         </div>
         <div class="content">
-            <a class="header">Infinity-S</a>
+            <a class="header">Avane</a>
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture3}">
+            <img src="${imgPlaceholderUser2}">
         </div>
         <div class="content">
-            <a class="header">Infinity-S</a>
+            <a class="header">Eneko</a>
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture4}">
+            <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
-            <a class="header">Infinity-S</a>
+            <a class="header">Iknore</a>
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture2}">
+            <img src="${imgPlaceholderUser3}">
         </div>
         <div class="content">
-            <a class="header">Infinity-S</a>
-        </div>
-    </div>
-    <div class="ts card">
-        <div class="image">
-            <img src="${infinityPicture1}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <a class="header">Aira</a>
         </div>
     </div>
 </div>`,
@@ -744,50 +749,32 @@ export default
             code: `<div class="ts stackable three cards">
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture1}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <img src="${imgPlaceholderLegacy}">
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture2}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <img src="${imgPlaceholderLegacy}">
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture3}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <img src="${imgPlaceholderLegacy}">
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture4}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <img src="${imgPlaceholderLegacy}">
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture3}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <img src="${imgPlaceholderLegacy}">
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture4}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <img src="${imgPlaceholderLegacy}">
         </div>
     </div>
 </div>`,
@@ -804,66 +791,42 @@ export default
             code: `<div class="ts doubling four cards">
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture1}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <img src="${imgPlaceholderLegacy}">
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture2}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <img src="${imgPlaceholderLegacy}">
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture3}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <img src="${imgPlaceholderLegacy}">
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture4}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <img src="${imgPlaceholderLegacy}">
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture3}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <img src="${imgPlaceholderLegacy}">
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture4}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <img src="${imgPlaceholderLegacy}">
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture2}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <img src="${imgPlaceholderLegacy}">
         </div>
     </div>
     <div class="ts card">
         <div class="image">
-            <img src="${infinityPicture1}">
-        </div>
-        <div class="content">
-            <a class="header">Infinity-S</a>
+            <img src="${imgPlaceholderLegacy}">
         </div>
     </div>
 </div>`,
