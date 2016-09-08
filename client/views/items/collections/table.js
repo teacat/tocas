@@ -1151,5 +1151,181 @@ export default
 </table>`,
             mark: 'celled'
         },
+        {
+            type       : small,
+            title      : '增加內距',
+            description: `你可以增加欄位的內距。`,
+            link       : 'padded'
+        },
+        {
+            type: 'example',
+            code: `<table class="ts padded table">
+    <thead>
+        <tr>
+            <th>文章名稱</th>
+            <th>註釋</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Lorem Ipsum</td>
+            <td>Etiam aliquet pulvinar sapien, et venenatis orci placerat vitae. Sed posuere bibendum ante et porttitor. Fusce auctor.</td>
+        </tr>
+        <tr>
+            <td>Etiam aliquet</td>
+            <td>Nulla sed ex eget ligula gravida condimentum non id dui. Donec rutrum accumsan augue vitae pretium.</td>
+        </tr>
+        <tr>
+            <td>Aliquam</td>
+            <td>Curabitur volutpat tristique erat ut pulvinar. Aliquam varius, mi ut convallis rhoncus, nunc dolor feugiat mi.</td>
+        </tr>
+    </tbody>
+</table>`,
+            mark: 'padded'
+        },
+        {
+            type: 'example',
+            code: `<table class="ts very padded table">
+    <thead>
+        <tr>
+            <th>文章名稱</th>
+            <th>註釋</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Lorem Ipsum</td>
+            <td>Etiam aliquet pulvinar sapien, et venenatis orci placerat vitae. Sed posuere bibendum ante et porttitor. Fusce auctor.</td>
+        </tr>
+        <tr>
+            <td>Etiam aliquet</td>
+            <td>Nulla sed ex eget ligula gravida condimentum non id dui. Donec rutrum accumsan augue vitae pretium.</td>
+        </tr>
+        <tr>
+            <td>Aliquam</td>
+            <td>Curabitur volutpat tristique erat ut pulvinar. Aliquam varius, mi ut convallis rhoncus, nunc dolor feugiat mi.</td>
+        </tr>
+    </tbody>
+</table>`,
+            mark: 'very padded'
+        },
+        {
+            type       : small,
+            title      : '縮減',
+            description: `表格的內距可以稍微縮減用以呈現更多的行數。`,
+            link       : 'compact'
+        },
+        {
+            type: 'example',
+            code: `<table class="ts compact table">
+    <thead>
+        <tr>
+            <th>檔案名稱</th>
+            <th>分類</th>
+            <th>說明</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>file.php</td>
+            <td>Controller</td>
+            <td>用來處理檔案相關程式。</td>
+        </tr>
+        <tr>
+            <td>star.php</td>
+            <td>Controller</td>
+            <td>處理星號程式。</td>
+        </tr>
+        <tr>
+            <td>favorite.php</td>
+            <td>Model</td>
+            <td>處理最愛的項目。</td>
+        </tr>
+        <tr>
+            <td>user.php</td>
+            <td>View</td>
+            <td>處理使用者頁面的模板視圖。</td>
+        </tr>
+        <tr>
+            <td>database.php</td>
+            <td>Model</td>
+            <td>和資料庫負責聯繫的模型。</td>
+        </tr>
+    </tbody>
+</table>`,
+            mark: 'compact'
+        },{
+            type       : small,
+            title      : '尺寸',
+            description: `表格有不同的尺寸可供選擇。`,
+            link       : 'sizes'
+        },
+        {
+            type: 'example',
+            code: `<table class="ts mini celled table">
+    <tbody>
+        <tr>
+            <td>mini</td>
+            <td>迷你</td>
+            <td>這是一個迷你的表格。</td>
+        </tr>
+    </tbody>
+</table>
+<table class="ts tiny celled table">
+    <tbody>
+        <tr>
+            <td>tiny</td>
+            <td>微小</td>
+            <td>這是一個微小的表格。</td>
+        </tr>
+    </tbody>
+</table>
+<table class="ts small celled table">
+    <tbody>
+        <tr>
+            <td>small</td>
+            <td>小的</td>
+            <td>這是一個小的表格。</td>
+        </tr>
+    </tbody>
+</table>
+<table class="ts medium celled table">
+    <tbody>
+        <tr>
+            <td>medium</td>
+            <td>適中</td>
+            <td>這是一個適中的表格。</td>
+        </tr>
+    </tbody>
+</table>
+<table class="ts large celled table">
+    <tbody>
+        <tr>
+            <td>large</td>
+            <td>大的</td>
+            <td>這是一個大的表格。</td>
+        </tr>
+    </tbody>
+</table>
+<table class="ts big celled table">
+    <tbody>
+        <tr>
+            <td>big</td>
+            <td>大型</td>
+            <td>這是一個大型的表格。</td>
+        </tr>
+    </tbody>
+</table>
+<table class="ts huge celled table">
+    <tbody>
+        <tr>
+            <td>huge</td>
+            <td>巨大</td>
+            <td>這是一個巨大的表格。</td>
+        </tr>
+    </tbody>
+</table>`,
+            mark: 'mini, tiny, small, medium, large, big, huge'
+        },
     ]
 }
