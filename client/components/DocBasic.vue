@@ -2,7 +2,7 @@
     <div>
         <doc-nav></doc-nav>
         <doc-jumbotron :title="items.header.title" :subTitle="items.header.subTitle"></doc-jumbotron>
-        <div class="ts container">
+        <div class="ts narrow container">
             <div class="ts relaxed grid">
                 <div class="four wide column">
                     <div class="ts flatted borderless secondary relaxed vertical menu">
