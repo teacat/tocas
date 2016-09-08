@@ -1,8 +1,21 @@
 <template>
-    <div class="ts example segments">
-        <div class="ts clearing preview segment" v-html="code" v-if="hasExample"></div>
-        <pre class="ts secondary padded segment code"><code class="hljs" :data-utaha-hightlight="mark" :data-utaha-tag-hightlight="tagMark" :data-utaha-remove="remove">{{ code }}</code>
-        <div class="ts top right attached label">原始碼</div></pre>
+    <div>
+        <button class="ts mini labeled icon button" style="    position: absolute;
+    margin-top: -4.5em;
+    right: 1em;" @click="test">
+            <i class="code icon" v-show="!showingCode"></i>
+            <i class="hide icon" v-show="showingCode"></i>
+            <span v-show="showingCode">隱藏原始碼</span>
+            <span v-show="!showingCode">檢視原始碼</span>
+        </button>
+        <div v-html="code" v-show="!showingCode">
+            
+        </div>
+        <div class="ts example segments" v-show="showingCode">
+            <div class="ts clearing preview segment" v-html="code" v-if="hasExample"></div>
+            <pre class="ts secondary padded segment code"><code class="hljs" :data-utaha-hightlight="mark" :data-utaha-tag-hightlight="tagMark" :data-utaha-remove="remove">{{ code }}</code>
+            <div class="ts top right attached label">原始碼</div></pre>
+        </div>
     </div>
 </template>
 
@@ -79,9 +92,7 @@ code.hljs.javascript .hljs-string
 <style style="sass" scoped>
 pre
 {
-    overflow-y: auto;
     overflow-x: auto;
-    max-height: 800px;
 }
 </style>
 
@@ -184,11 +195,22 @@ export default
     name : 'ExampleSegments',
     props:
     {
-        code      : { default: ''   },
-        mark      : { default: null },
-        tagMark   : { default: null },
-        remove    : { default: null },
-        hasExample: { default: true }
+        code       : { default: ''    },
+        mark       : { default: null  },
+        tagMark    : { default: null  },
+        remove     : { default: null  },
+        hasExample : { default: true  },
+        showingCode: { default: false }
+    },
+    methods:
+    {
+        test()
+        {
+            if(this.showingCode)
+                this.showingCode = false
+            else
+                this.showingCode = true
+        }
     }
 }
 </script>
