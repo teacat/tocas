@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <button class="ts mini labeled icon button" style="    position: absolute;
-    margin-top: -4.5em;
-    right: 1em;" @click="test">
-            <i class="code icon" v-show="!showingCode"></i>
-            <i class="hide icon" v-show="showingCode"></i>
-            <span v-show="showingCode">隱藏原始碼</span>
-            <span v-show="!showingCode">檢視原始碼</span>
-        </button>
+    <div class="example preview">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 1.5em">
+            <button class="ts mini labeled icon button"  @click="test">
+                <i class="code icon" v-show="!showingCode"></i>
+                <i class="hide icon" v-show="showingCode"></i>
+                <span v-show="showingCode">隱藏原始碼</span>
+                <span v-show="!showingCode">檢視原始碼</span>
+            </button>
+        </div>
         <div v-html="code" v-show="!showingCode">
             
         </div>
