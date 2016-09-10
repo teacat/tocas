@@ -118,7 +118,7 @@
     padding-right: 4rem !important;
     
     /** 左側欄位邊線 */
-    :after
+    &:after
     {
         content       : "";
         position      : absolute;
