@@ -1,61 +1,109 @@
 <template>
-    <div :class="classes">
-        <h2 class="ts header" :class="classes">
-            {{ title }}
-        </h2>
-        <p v-if="description" v-html="description">
-        </p>
+    <div class="tocas section header" :class="size">
+
+        <!-- 標題 -->
+        <h2 class="ts dividing header" v-if="size == 'large'"  v-html="title"></h2>
+        <h3 class="ts dividing header" v-if="size == 'normal'" v-html="title"></h3>
+        <h4 class="ts header"          v-if="size == 'small'"  v-html="title"></h4>
+        <h5 class="ts header"          v-if="size == 'tiny'"   v-html="title"></h5>
+        <!-- / 標題 -->
+            
+        <!-- 註釋 -->
+        <p class="description" v-if="description" v-html="description"></p>
+        <!-- / 註釋 -->
+        
+        <!-- 檢視原始碼按鈕 -->
+        <button class="ts expand tiny labeled icon button" 
+                v-if="expandableExample && size != 'large' && size != 'normal'" 
+                @click="expand">
+            <i class="code icon"></i>
+            <span>原始碼</span>
+        </button>
+        <!-- / 檢視原始碼按鈕 -->
+        
     </div>
-    
-    
 </template>
 
-<style style="sass" scoped>
+<style lang="sass">
+.tocas.section.header,
+.tocas.section.header p
+{
+    clear         : both;
+    position      : relative;
+    font-size     : 16px;
+    line-height   : 28px;
+    letter-spacing: 0.08px;
+    color         : #6f6e6e;
+    
+    &.small,
+    &.tiny
+    {
+        margin-bottom: 1.5em;
+    }
+    
+    .description
+    {
+        margin-top: 0 !important;
+        
+        .ts.label
+        {
+            color: #676767 !important;
+        }
+    }
+}
+
+.tocas.section.header.normal:first-child
+{
+    font-size: 28px;
+    margin-top: -4em;
+}
+</style>
+
+<style lang="sass" scoped>
 h2
 {
-    font-size          : 2em !important;
-    border-bottom-width: 2px !important;
+    font-size    : 32px !important;
+    line-height  : 1.8em             !important;
+    border-bottom: 2px solid #d9d9d9 !important;
+    color: #636262 !important;
 }
-div
+h3
 {
-    margin-top   : 3em !important;
-    margin-bottom: 1.5em !important;
+    font-size    : 28px !important;
+    color        : #606060           !important;
+    margin-top   : 4em               !important;
+    line-height  : 1.5em             !important;
+    border-bottom: 2px solid #d9d9d9 !important;
 }
-div:first-child
+h4
 {
-    margin-top   : 1em !important;
-}
-div.small
-{
+    font-size : 24px !important;
+    color     : #606060 !important;
     margin-top: 4em !important;
+    display   : inline-block;
+    
+    & + .description,
+    & + .description p
+    {
+        font-size: 15px !important;
+    }
 }
-.large:not(div)
+h5
 {
-    font-size: 2.5em !important;
+    margin-top: 3em !important;
+    
+    & + .description,
+    & + .description p
+    {
+        font-size: 15px !important;
+    }
 }
-.large:not(div) + p
+.button
 {
-    font-size  : 1.2em;
-    line-height: 1.8em;
-}
-.small:not(div)
-{
-    font-size: 1.7em !important;
-}
-.tiny:not(div)
-{
-    font-size: 1.3em !important;
-    opacity: 0.9 !important;
-}
-p
-{
-    opacity: 0.7;
-    font-size  : 1.1em;
-    line-height: 1.8em;
-}
-.tiny:not(div) + p
-{
-    opacity: 0.6;
+    position : absolute !important;
+    right    : 0;
+    top      : 6.7em;
+    transform: scale(0.9);
 }
 </style>
 
@@ -65,24 +113,18 @@ export default
     name : 'DocHeader',
     props:
     {
-        title      : {},
-        size       : { default: false },
-        description: { default: false }
+        title            : {},
+        size             : { default: false },
+        description      : { default: false },
+        expandableExample: { default: true  }
     },
-    computed:
+    methods:
     {
-        classes()
+        expand()
         {
-            let classes = [this.size]
+            var $next = $(this.$el).next()
             
-            if(this.size === 'large' || !this.size)
-                classes.push('dividing')
-                
-            return classes
-        },
-        hasSlot()
-        {
-            return this.$slots !== null
+            $next.toggleClass('expanded')
         }
     }
 }
