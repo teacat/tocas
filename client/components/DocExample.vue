@@ -1,21 +1,35 @@
 <template>
     <div class="example preview">
-        <div style="display: flex; justify-content: flex-end; margin-bottom: 1.5em">
-            <button class="ts mini labeled icon button"  @click="test">
-                <i class="code icon" v-show="!showingCode"></i>
-                <i class="hide icon" v-show="showingCode"></i>
-                <span v-show="showingCode">隱藏原始碼</span>
-                <span v-show="!showingCode">檢視原始碼</span>
-            </button>
+        
+        <!-- 無框實際範例 -->
+        <div class="real example" v-html="code" v-if="hasExample"></div>
+        <!-- / 無框實際範例 -->
+        
+        
+        <!-- 原始碼片段 -->
+        <div class="ts padded secondary segment" v-if="!hasExample">
+            <pre class="code"><code class="hljs" :data-utaha-hightlight="mark" :data-utaha-tag-hightlight="tagMark" :data-utaha-remove="remove">{{ code }}</code></pre>
         </div>
-        <div v-html="code" v-show="!showingCode">
+        <!-- / 原始碼片段 -->
+        
+        
+        <!-- 範例片段 -->
+        <div class="ts example segments" v-if="hasExample">
+            
+            <!-- 實際範例 -->
+            <div class="ts clearing preview segment" v-html="code"></div>
+            <!-- / 實際範例 -->
+            
+            
+            <!-- 原始碼 -->
+            <div class="ts padded secondary segment">
+                <pre class="code"><code class="hljs" :data-utaha-hightlight="mark" :data-utaha-tag-hightlight="tagMark" :data-utaha-remove="remove">{{ code }}</code></pre>
+            </div>
+            <!-- / 原始碼 -->
             
         </div>
-        <div class="ts example segments" v-show="showingCode">
-            <div class="ts clearing preview segment" v-html="code" v-if="hasExample"></div>
-            <pre class="ts secondary padded segment code"><code class="hljs" :data-utaha-hightlight="mark" :data-utaha-tag-hightlight="tagMark" :data-utaha-remove="remove">{{ code }}</code>
-            <div class="ts top right attached label">原始碼</div></pre>
-        </div>
+        <!-- / 範例片段 -->
+        
     </div>
 </template>
 
@@ -89,106 +103,39 @@ code.hljs.javascript .hljs-string
 }
 </style>
 
-<style style="sass" scoped>
+<style lang="sass" scoped>
 pre
 {
     overflow-x: auto;
+    margin: 0;
+}
+.example.preview
+{
+    .real.example
+    {
+        display: block;
+    }
+    .ts.example.segments
+    {
+        display: none;
+    }
+    
+    &.expanded
+    {
+        .real.example
+        {
+            display: none;
+        }
+        .ts.example.segments
+        {
+            display: block;
+        }
+    }
 }
 </style>
 
 <script>
-$(() =>
-{
-    var examples = document.querySelectorAll('.hljs');
-    
-    for(var el in examples)
-    {
-        var el = examples[el]
-        
-        if(typeof el === 'number' || typeof el === 'function')
-            continue
-            
-        var removes = el.getAttribute('data-utaha-remove')
-        
-        if(removes === null)
-            continue
-            
-        var removes = removes.split(', ')
-        
-        for(var remove in removes)
-        {
-            var thisPart = removes[remove]
-            var regEx    = new RegExp(thisPart, 'g')
-            
-            if(el.innerText.indexOf(thisPart) == -1)
-                continue
-                    
-            el.innerText = el.innerText.replace(regEx, '')
-        }
-    }
-    
-    hljs.initHighlighting();
-    
-    for(var el in examples)
-    {
-        var el = examples[el]
-        
-        if(typeof el === 'number' || typeof el === 'function')
-            continue
-            
-        var hightlights = el.getAttribute('data-utaha-hightlight')
-            
-        if(hightlights === null)
-            continue
-        
-        var hightlights = hightlights.split(', ')
-         
-        for(var hightlight in hightlights)
-        {
-            var thisPart    = hightlights[hightlight]
-            var strings     = el.querySelectorAll('.hljs-string')
-            var replacePart = '<span class="hljs-important-class">' + thisPart + '</span>'
-    
-            for(var j = 0; j < strings.length; j++)
-            {
-                if(strings[j].innerHTML.indexOf(thisPart) == -1)
-                    continue
-    
-                strings[j].innerHTML = strings[j].innerHTML.replace(thisPart, replacePart)
-            }
-        }
-    }
-    
-    for(var el in examples)
-    {
-        var el = examples[el]
-        
-        if(typeof el === 'number' || typeof el === 'function')
-            continue
-            
-        var hightlights = el.getAttribute('data-utaha-tag-hightlight')
-            console.log(hightlights)
-        if(hightlights === null)
-            continue
-        
-        var hightlights = hightlights.split(', ')
-         
-        for(var hightlight in hightlights)
-        {
-            var thisPart    = hightlights[hightlight]
-            var strings     = el.querySelectorAll('.hljs-name')
-            var replacePart = '<span class="hljs-important-class">' + thisPart + '</span>'
-    
-            for(var j = 0; j < strings.length; j++)
-            {
-                if(strings[j].innerHTML.indexOf(thisPart) == -1)
-                    continue
-    
-                strings[j].innerHTML = strings[j].innerHTML.replace(thisPart, replacePart)
-            }
-        }
-    }
-})
+
 
 export default 
 {
@@ -201,16 +148,6 @@ export default
         remove     : { default: null  },
         hasExample : { default: true  },
         showingCode: { default: false }
-    },
-    methods:
-    {
-        test()
-        {
-            if(this.showingCode)
-                this.showingCode = false
-            else
-                this.showingCode = true
-        }
     }
 }
 </script>
