@@ -9,8 +9,24 @@ export default new Router
     routes:
     [
         {
-            path     : '/',
+            path     : '/getting-started/',
             component: require('../views/GettingStarted')
+        },
+        {
+            path     : '/elements/',
+            component: require('../views/Elements')
+        },
+        {
+            path     : '/collections/',
+            component: require('../views/Collections')
+        },
+        {
+            path     : '/modules/',
+            component: require('../views/Modules')
+        },
+        {
+            path     : '/views/',
+            component: require('../views/Views')
         },
         {
             path     : '/elements/button',
