@@ -17,6 +17,10 @@ export default
     data()
     {
         return { items: items }        
+    },
+    beforeCreate()
+    {
+        document.title = '容器 | Tocas UI'
     }
 }
 </script>

@@ -24,6 +24,10 @@ export default
     data()
     {
         return { items: items }        
+    },
+    beforeCreate()
+    {
+        document.title = '卡片 | Tocas UI'
     }
 }
 </script>

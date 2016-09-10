@@ -17,6 +17,10 @@ export default
     data()
     {
         return { items: items }        
+    },
+    beforeCreate()
+    {
+        document.title = '輸入欄位 | Tocas UI'
     }
 }
 </script>

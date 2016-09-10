@@ -17,6 +17,10 @@ export default
     data()
     {
         return { items: items }        
+    },
+    beforeCreate()
+    {
+        document.title = '讀取指示器 | Tocas UI'
     }
 }
 </script>

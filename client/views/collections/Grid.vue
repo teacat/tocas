@@ -97,6 +97,10 @@ export default
     data()
     {
         return { items: items }        
+    },
+    beforeCreate()
+    {
+        document.title = '網格系統 | Tocas UI'
     }
 }
 </script>

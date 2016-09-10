@@ -23,6 +23,10 @@ export default
     data()
     {
         return { items: items }        
+    },
+    beforeCreate()
+    {
+        document.title = '下拉式選單 | Tocas UI'
     }
 }
 </script>

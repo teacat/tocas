@@ -17,6 +17,10 @@ export default
     data()
     {
         return { items: items }        
+    },
+    beforeCreate()
+    {
+        document.title = '聚焦看板 | Tocas UI'
     }
 }
 </script>
