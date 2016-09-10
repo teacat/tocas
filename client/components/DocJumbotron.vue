@@ -1,13 +1,13 @@
 <template>
-    <div class="ts fluid horizontally fitted extra padded jumbotron">
-        <div class="ts container">
+    <header class="ts fluid horizontally fitted extra padded jumbotron">
+        <div class="ts narrow container">
             <h1 class="ts left aligned header">
                 {{ title }}
                 <br>
-                <p class="sub header" v-html="subTitle"></p>
+                <small class="sub header" v-html="subTitle"></small>
             </h1>
         </div>
-    </div>
+    </header>
 </template>
 
 <style style="sass" scoped>
@@ -17,7 +17,8 @@ h1
 }
 h1 .sub.header
 {
-    font-size: 0.45em !important;
+    margin-top: .8em;
+    font-size : 0.45em !important;
 }
 .jumbotron
 {
