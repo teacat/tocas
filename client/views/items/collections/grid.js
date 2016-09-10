@@ -23,7 +23,8 @@ export default
             title      : '說明',
             description:
             `
-                <p>Tocas UI 的網格系統和 Bootstrap 的較為不同，且更具彈性與更強大的功能不僅如此，還更加地自動化。</p>
+                <p>Tocas UI 的網格系統和 Bootstrap 的較為不同，</p>
+                <p>比起 Bootstrap來說，Tocas UI 且更具彈性與更強大的功能還更加地自動化。</p>
                 <p>為了方便展示網格系統，我們將背景加上了灰色，在實際應用中將會是透明的。</p>
             `
         },
