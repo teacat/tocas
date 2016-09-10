@@ -78,19 +78,17 @@ export default
     <a class="section">註冊程序</a>
     <span class="divider">/</span>
     <div class="active section">個人資料</div>
-</div>`,
-            mark: 'divider'
-        },
-        {
-            type: 'example',
-            code: `<div class="ts breadcrumb">
+</div>
+<br><br>
+<div class="ts breadcrumb">
     <a class="section">首頁</a>
     <i class="right chevron icon divider"></i>
     <a class="section">註冊程序</a>
     <i class="right chevron icon divider"></i>
     <div class="active section">個人資料</div>
 </div>`,
-            mark: 'divider, icon'
+            mark  : 'divider',
+            remove: '<br>'
         },
         {
             type       : small,
