@@ -13,7 +13,27 @@
     </article>
 </template>
 
-<style>
+<style lang="sass" scoped>
+.card
+{
+    .content
+    {
+        .header
+        {
+            color: #5d5d5d;
+        }
+        
+        .meta
+        {
+            color: #a5a5a5;
+        }
+        
+        .description
+        {
+            color: #888888;
+        }
+    }
+}
 </style>
 
 <script>
