@@ -1,13 +1,26 @@
 <template>
     <main>
-        <doc-nav></doc-nav>
-        <doc-jumbotron :title="title" :subTitle="subTitle"></doc-jumbotron>
-        <section class="ts narrow container">
-            <doc-cards :cards="cards"></doc-cards>
-        </section>
+        <div class="fill height wrapper">
+            <doc-nav></doc-nav>
+            <doc-jumbotron :title="title" :subTitle="subTitle"></doc-jumbotron>
+            <section class="ts narrow container">
+                <doc-cards :cards="cards"></doc-cards>
+            </section>
+        </div>
         <doc-footer></doc-footer>
     </main>
 </template>
+
+<style lang="sass" scoped>
+main
+{
+    height: 100%;
+}
+.fill.height.wrapper
+{
+    min-height: calc(100% - 225px);
+}
+</style>
 
 <script>
 import DocJumbotron from '../components/DocJumbotron'
