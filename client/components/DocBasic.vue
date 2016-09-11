@@ -151,7 +151,7 @@
     {
         padding-left  : 0;
         display       : block;
-        margin        : 15px 15px 15px 4px;
+        margin        : 0px 0px 15px 6px !important;
         font-size     : 18px;
         font-weight   : 500;
         color         : #005F5F;
