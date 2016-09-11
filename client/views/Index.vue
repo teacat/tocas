@@ -215,6 +215,7 @@
                 </div>
             </div>
         </section>
+        <doc-footer></doc-footer>
     </main>
 </template>
 
@@ -260,14 +261,16 @@ nav.homepage
 
 
 <script>
-import DocNav from '../components/DocNav'
+import DocNav    from '../components/DocNav'
+import DocFooter from '../components/DocFooter'
 
 export default 
 {
     name      : 'Index',
     components: 
     {
-        DocNav
+        DocNav,
+        DocFooter
     },
     beforeCreate()
     {
