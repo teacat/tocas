@@ -85,12 +85,12 @@
                     標籤
                 </div>
                 <div class="ts image label">
-                    <img src="./images/infinity-s/01.png">infinity-G™</div>
+                    <img src="./images/image_placeholder_user.png">Yami Odymel</div>
                 <div class="ts image label">
-                    <img src="./images/infinity-s/02.png">いんふぃ™</div>
+                    <img src="./images/image_placeholder_user2.png">Xiaoan</div>
                 <div class="ts image label">
-                    <img src="./images/infinity-s/03.png">Rhia™
-                    <div class="detail">作曲担当</div>
+                    <img src="./images/image_placeholder_user3.png">卡莉絲
+                    <div class="detail">實況主</div>
                 </div>
                 <div class="ts circular primary label">9</div>
 <div class="ts circular info label">14</div>
@@ -181,10 +181,10 @@
                     <div class="ts comments">
                         <div class="comment">
                             <a class="avatar">
-                                <img src="./images/infinity-s/01.png">
+                                <img src="./images/image_placeholder_user.png">
                             </a>
                             <div class="content">
-                                <a class="author">infinity-G™</a>
+                                <a class="author">Mac Taylor</a>
                                 <div class="metadata">
                                     <div>2 天前</div>
                                     <div>
@@ -193,21 +193,22 @@
                                     </div>
                                 </div>
                                 <div class="text">
-                                    入稿版冬コミ新作ブランケットです。よろしくね。
+                                    如果你有去釣魚大賽，你可能會被禁止進入：<br>
+                                    「我們不歡迎職業選手」
                                 </div>
                             </div>
                         </div>
                         <div class="comment">
                             <a class="avatar">
-                                <img src="./images/infinity-s/02.png">
+                                <img src="./images/image_placeholder_user2.png">
                             </a>
                             <div class="content">
-                                <a class="author">いんふぃ™</a>
+                                <a class="author">Yami Odymel</a>
                                 <div class="metadata">
                                     <div>42 分鐘前</div>
                                 </div>
                                 <div class="text">
-                                    普通に知ってる
+                                    你很機車人
                                 </div>
                             </div>
                         </div>

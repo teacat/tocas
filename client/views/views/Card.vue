@@ -5,7 +5,7 @@
 </template>
 
 <style>
-.card.documentation .ts.card
+.card.documentation *:not(.three):not(.four):not(.stackable):not(.waterfall) > .ts.card
 {
     width: 300px;
 }

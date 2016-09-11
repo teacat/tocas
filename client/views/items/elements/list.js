@@ -4,9 +4,12 @@ var small   = 'small'
 var tiny    = 'tiny'
 var source  = 'source'
 var example = 'example'
-var infinityPicture1 = require('../../images/infinity-s/01.png')
-var infinityPicture2 = require('../../images/infinity-s/02.png')
-var infinityPicture3 = require('../../images/infinity-s/03.png')
+var imgPlaceholderSquare = require('../../images/image_placeholder_1-1.png')
+var imgPlaceholderWide   = require('../../images/image_placeholder_16-9.png')
+var imgPlaceholderLegacy = require('../../images/image_placeholder_4-3.png')
+var imgPlaceholderUser   = require('../../images/image_placeholder_user.png')
+var imgPlaceholderUser2  = require('../../images/image_placeholder_user2.png')
+var imgPlaceholderUser3  = require('../../images/image_placeholder_user3.png')
 
 export default
 {
@@ -173,24 +176,24 @@ export default
             type: 'example',
             code: `<div class="ts list">
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture1}">
+        <img class="ts avatar image" src="${imgPlaceholderUser}">
         <div class="content">
-            <a class="header">infinity-G™</a>
-            <div class="description">正在遊玩 <a><b>黄昏ウィズ</b></a>。</div>
+            <a class="header">Yami Odymel</a>
+            <div class="description">正在遊玩 <a><b>Battlefield 1</b></a>。</div>
         </div>
     </div>
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture2}">
+        <img class="ts avatar image" src="${imgPlaceholderUser2}">
         <div class="content">
-            <a class="header">いんふぃ™</a>
-            <div class="description">正在研發 <a><b>BluePrints～ミライへのミチしるべ～</b></a>。</div>
+            <a class="header">Mac Taylor</a>
+            <div class="description">正在研發 <a><b>Alan Wakeup</b></a>。</div>
         </div>
     </div>
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture3}">
+        <img class="ts avatar image" src="${imgPlaceholderUser3}">
         <div class="content">
-            <a class="header">Rhia™</a>
-            <div class="description">正在觀看 <a><b>偽りのリレーション Relation of Deceit</b></a>。</div>
+            <a class="header">Karisu</a>
+            <div class="description">正在觀看 <a><b>麻辣鮮師</b></a>。</div>
         </div>
     </div>
 </div>`,
@@ -236,16 +239,16 @@ export default
             type: 'example',
             code: `<div class="ts list">
     <div class="item">
-        <div class="header">infinity-G™☆3日目東ユ46b</div>
-        『黄昏ウィズ - Twilight Invocation -』もストアにて大好評配信中！
+        <div class="header">巫師聯盟總部</div>
+        電腦專家俱樂部 // 巫術實驗室
     </div>
     <div class="item">
-        <div class="header">いんふぃ™☆3日目東ユ-46b</div>
-        更新情報や最新情報は@infinity_AWをご確認ください。
+        <div class="header">YSITD</div>
+        Young Students' IT Discussion
     </div>
     <div class="item">
-        <div class="header">Rhia™☆3日目東ユ-46b</div>
-        『黄昏ウィズ』をスマホとPCへリリース中。
+        <div class="header">HentaiDB</div>
+        Official supergroup of @HentaiDB project.
     </div>
 </div>`,
             mark  : 'header'
@@ -306,24 +309,24 @@ export default
             type: 'example',
             code: `<div class="ts horizontal list">
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture1}">
+        <img class="ts avatar image" src="${imgPlaceholderUser}">
         <div class="content">
-          <div class="header">infinity-G™</div>
-          很可愛的日本人
+            <div class="header">Yami Odymel</div>
+            研發 2016 始春的人
         </div>
     </div>
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture2}">
+        <img class="ts avatar image" src="${imgPlaceholderUser2}">
         <div class="content">
-          <div class="header">いんふぃ™</div>
-          喜歡釋出免費遊戲
+            <div class="header">Mac Taylor</div>
+            好基友
         </div>
     </div>
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture3}">
+        <img class="ts avatar image" src="${imgPlaceholderUser3}">
         <div class="content">
-          <div class="header">Rhia™</div>
-          3日目東ユ-46b
+            <div class="header">Val Pyen</div>
+            OSU! 喜好者
         </div>
     </div>
 </div>`,
@@ -338,24 +341,24 @@ export default
             type: 'example',
             code: `<div class="ts ordered horizontal list">
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture1}">
+        <img class="ts avatar image" src="${imgPlaceholderUser}">
         <div class="content">
-          <div class="header">infinity-G™</div>
-          很可愛的日本人
+            <div class="header">Yami Odymel</div>
+            研發 2016 始春的人
         </div>
     </div>
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture2}">
+        <img class="ts avatar image" src="${imgPlaceholderUser2}">
         <div class="content">
-          <div class="header">いんふぃ™</div>
-          喜歡釋出免費遊戲
+            <div class="header">Mac Taylor</div>
+            好基友
         </div>
     </div>
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture3}">
+        <img class="ts avatar image" src="${imgPlaceholderUser3}">
         <div class="content">
-          <div class="header">Rhia™</div>
-          3日目東ユ-46b
+            <div class="header">Val Pyen</div>
+            OSU! 喜好者
         </div>
     </div>
 </div>`,
@@ -423,21 +426,21 @@ export default
             type: 'example',
             code: `<div class="ts middle aligned selection list">
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture1}">
+        <img class="ts avatar image" src="${imgPlaceholderUser}">
         <div class="content">
-            <div class="header">infinity-G™</div>
+            <div class="header">Yami Odymel</div>
         </div>
     </div>
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture2}">
+        <img class="ts avatar image" src="${imgPlaceholderUser2}">
         <div class="content">
-            <div class="header">いんふぃ™</div>
+            <div class="header">Mac Taylor</div>
         </div>
     </div>
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture3}">
+        <img class="ts avatar image" src="${imgPlaceholderUser3}">
         <div class="content">
-            <div class="header">Rhia™</div>
+            <div class="header">Ruby</div>
         </div>
     </div>
 </div>`,
@@ -586,19 +589,19 @@ export default
             type: 'example',
             code: `<div class="ts horizontal list">
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture1}">
+        <img class="ts avatar image" src="${imgPlaceholderUser}">
         <div class="top aligned content">
             向上置齊
         </div>
     </div>
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture2}">
+        <img class="ts avatar image" src="${imgPlaceholderUser2}">
         <div class="middle aligned content">
             置中
         </div>
     </div>
     <div class="item">
-        <img class="ts avatar image" src="${infinityPicture3}">
+        <img class="ts avatar image" src="${imgPlaceholderUser3}">
         <div class="bottom aligned content">
             向下置齊
         </div>
@@ -619,27 +622,27 @@ export default
         <div class="right floated content">
             <div class="ts button">新增</div>
         </div>
-        <img class="ts avatar image" src="${infinityPicture1}">
+        <img class="ts avatar image" src="${imgPlaceholderUser}">
         <div class="content">
-            infinity-G™
+            Aoi
         </div>
     </div>
     <div class="item">
         <div class="right floated content">
             <div class="ts button">新增</div>
         </div>
-        <img class="ts avatar image" src="${infinityPicture2}">
+        <img class="ts avatar image" src="${imgPlaceholderUser2}">
         <div class="content">
-            いんふぃ™
+            Orenji
         </div>
     </div>
     <div class="item">
         <div class="right floated content">
             <div class="ts button">新增</div>
         </div>
-        <img class="ts avatar image" src="${infinityPicture3}">
+        <img class="ts avatar image" src="${imgPlaceholderUser3}">
         <div class="content">
-            Rhia™
+            Shirone
         </div>
     </div>
 </div>`,

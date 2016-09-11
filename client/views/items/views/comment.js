@@ -4,12 +4,12 @@ var small   = 'small'
 var tiny    = 'tiny'
 var source  = 'source'
 var example = 'example'
-var infinityPicture1 = require('../../images/infinity-s/01.png')
-var infinityPicture2 = require('../../images/infinity-s/02.png')
-var infinityPicture3 = require('../../images/infinity-s/03.png')
-var infinityPicture4 = require('../../images/infinity-s/04.png')
-var infinityPicture5 = require('../../images/infinity-s/05.jpg')
-var defaultAvatar = require('../../images/default.jpg')
+var imgPlaceholderSquare = require('../../images/image_placeholder_1-1.png')
+var imgPlaceholderWide   = require('../../images/image_placeholder_16-9.png')
+var imgPlaceholderLegacy = require('../../images/image_placeholder_4-3.png')
+var imgPlaceholderUser   = require('../../images/image_placeholder_user.png')
+var imgPlaceholderUser2  = require('../../images/image_placeholder_user2.png')
+var imgPlaceholderUser3  = require('../../images/image_placeholder_user3.png')
 
 export default
 {
@@ -49,10 +49,10 @@ export default
             code: `<div class="ts comments">
     <div class="comment">
         <a class="avatar">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser}">
         </a>
         <div class="content">
-            <a class="author">infinity-G™</a>
+            <a class="author">Yami Odymel</a>
             <div class="metadata">
                 <div>2 天前</div>
                 <div>
@@ -61,21 +61,21 @@ export default
                 </div>
             </div>
             <div class="text">
-                入稿版冬コミ新作ブランケットです。よろしくね。
+                你的思想不應該只屬於現在這個時間。
             </div>
         </div>
     </div>
     <div class="comment">
         <a class="avatar">
-            <img src="${infinityPicture2}">
+            <img src="${imgPlaceholderUser2}">
         </a>
         <div class="content">
-            <a class="author">いんふぃ™</a>
+            <a class="author">Karisu</a>
             <div class="metadata">
                 <div>42 分鐘前</div>
             </div>
             <div class="text">
-                普通に知ってる
+                有反對的聲音，世界才能中立。
             </div>
         </div>
     </div>
@@ -99,7 +99,7 @@ export default
             code: `<div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser3}">
         </div>
     </div>
 </div>`,
@@ -116,10 +116,10 @@ export default
             code: `<div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="${infinityPicture2}">
+            <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
-            <div class="author">いんふぃ™</div>
+            <div class="author">Yami Odymel</div>
         </div>
     </div>
 </div>`,
@@ -136,11 +136,11 @@ export default
             code: `<div class="ts comments">
     <div class="comment">     
         <div class="avatar">
-            <img src="${infinityPicture3}">
+            <img src="${imgPlaceholderUser2}">
         </div>
         <div class="content">
-            <a class="author">infinity-G™</a>
-            <div class="text">入稿版冬コミ新作ブランケットです。よろしくね。</div>
+            <a class="author">Karisu</a>
+            <div class="text">發現自己做不到是進步過程中的一環。</div>
         </div>
     </div>
 </div>`,
@@ -157,10 +157,10 @@ export default
             code: `<div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser3}">
         </div>
         <div class="content">
-            <a class="author">infinity-G™</a>
+            <a class="author">亞凡芽</a>
             <div class="metadata">
                 <div> 42 分鐘前 </div>
             </div>
@@ -179,7 +179,7 @@ export default
             code: `<div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
             <a class="author">Yami Odymel</a>
@@ -187,15 +187,15 @@ export default
                 <div>3 天前</div>
                 <div>5 個讚</div>
             </div>
-            <div class="text">發現自己做不到是進步過程中的一環。</div>
+            <div class="text">直到你成功之前，人們都是瞎子。</div>
         </div>
     </div>
     <div class="comment">
         <div class="avatar">
-            <img src="${infinityPicture2}">
+            <img src="${imgPlaceholderUser2}">
         </div>
         <div class="content">
-            <a class="author">いんふぃ™</a>
+            <a class="author">比爾蓋飯</a>
             <div class="middoted metadata">
                 <div>1 月前</div>
                 <div>已收藏</div>
@@ -216,16 +216,15 @@ export default
             code: `<div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="${infinityPicture2}">
+            <img src="${imgPlaceholderUser3}">
         </div>
         <div class="content">
-            <a class="author">いんふぃ™</a>
+            <a class="author">吳雨藍</a>
             <div class="metadata">
                 <div>42 分鐘前</div>
             </div>
             <div class="text">
-                冬コミで頒布した新作ブランケット、新刊同人誌、
-                本編ディスク、 過去グッズ等すべての通信販売を開始しました！
+                成功的開始不在於創意，而是現在。
             </div>
             <div class="actions">
                 <a>回覆</a>
@@ -246,7 +245,7 @@ export default
             code: `<div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
             <a class="author">Yami Odymel</a>
@@ -260,7 +259,7 @@ export default
     </div>
     <div class="comment">
         <div class="avatar">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser2}">
         </div>
         <div class="content">
             <a class="author">Yami Odymel</a>
@@ -291,12 +290,12 @@ export default
             code: `<div class="ts comments">
     <div class="comment">
         <a class="avatar">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser3}">
         </a>
         <div class="content">
-            <a class="author">infinity-G™</a>
+            <a class="author">橙希</a>
             <div class="inline text">
-                入稿版冬コミ新作ブランケットです。よろしくね。
+                我的信仰是自己，你呢？
             </div>
             <div class="middoted actions">
                 <a class="reply">回應</a>
@@ -322,35 +321,33 @@ export default
             code: `<div class="ts threaded comments">
     <div class="comment">
         <a class="avatar">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser}">
         </a>
         <div class="content">
-            <a class="author">infinity-G™</a>
+            <a class="author">Yami Odymel</a>
             <div class="text">
-                入稿版冬コミ新作ブランケットです。よろしくね。
+                準備向令一個平行世界的你道歉，因為你將在這個世界有所作為。
             </div>
         </div>
         <div class="comments">
             <div class="comment">
                 <div class="avatar">
-                    <img src="${infinityPicture2}">
+                    <img src="${imgPlaceholderUser2}">
                 </div>
                 <div class="content">
-                    <a class="author">いんふぃ™</a>
+                    <a class="author">橙希</a>
                     <div class="text">
-                        映画のように没入できる『シネマティックノベル』をリリースしている
-                        『infinity-G™』および『いんふぃ™』です。
+                        把 S 鍵拔掉，看是要向著 A 或 D 橫走，還是直接朝著 W 的方向前進？
                     </div>
                 </div>
                 <div class="comment">
                     <div class="avatar">
-                        <img src="${infinityPicture2}">
+                        <img src="${imgPlaceholderUser3}">
                     </div>
                     <div class="content">
-                        <a class="author">いんふぃ™</a>
+                        <a class="author">吳雨藍</a>
                         <div class="text">
-                            今のゲーム制作用PCをPV制作もできるようリプレースするためには
-                            最低20万円の投資が必要だと判明した
+                            第一個覺得檸檬是食物的人一定是個被虐狂。
                         </div>
                     </div>
                 </div>
@@ -371,36 +368,35 @@ export default
             code: `<div class="ts divided comments">
     <div class="comment">
         <a class="avatar">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser}">
         </a>
         <div class="content">
-            <a class="author">infinity-G™</a>
+            <a class="author">Mac Taylor</a>
             <div class="text">
-                入稿版冬コミ新作ブランケットです。よろしくね。
+                你是一個漁夫。
             </div>
         </div>
     </div>
     <div class="comment">
         <div class="avatar">
-            <img src="${infinityPicture2}">
+            <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
-            <a class="author">いんふぃ™</a>
+            <a class="author">Mac Taylor</a>
             <div class="text">
-                映画のように没入できる『シネマティックノベル』をリリースしている
-                『infinity-G™』および『いんふぃ™』です。
+                如果你有去釣魚大賽，你可能會被禁止進入：<br>
+                「我們不歡迎職業選手」
             </div>
         </div>
     </div>
     <div class="comment">
         <div class="avatar">
-            <img src="${infinityPicture2}">
+            <img src="${imgPlaceholderUser3}">
         </div>
         <div class="content">
-            <a class="author">いんふぃ™</a>
+            <a class="author">Yami Odymel</a>
             <div class="text">
-                今のゲーム制作用PCをPV制作もできるようリプレースするためには
-                最低20万円の投資が必要だと判明した
+                你很機車人
             </div>
         </div>
     </div>
@@ -418,12 +414,12 @@ export default
             code: `<div class="ts tiny comments">
     <div class="comment">
         <a class="avatar">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser}">
         </a>
         <div class="content">
-            <a class="author">infinity-G™</a>
+            <a class="author">Mac Taylor</a>
             <div class="inline text">
-                入稿版冬コミ新作ブランケットで...
+                你是一個漁夫。
             </div>
             <div class="middoted actions">
                 <a class="reply">回應</a>
@@ -439,12 +435,12 @@ export default
 <div class="ts small comments">
     <div class="comment">
         <a class="avatar">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser2}">
         </a>
         <div class="content">
-            <a class="author">infinity-G™</a>
+            <a class="author">Mac Taylor</a>
             <div class="inline text">
-                入稿版冬コミ新作ブランケットで...
+                你是一個漁夫。
             </div>
             <div class="middoted actions">
                 <a class="reply">回應</a>
@@ -460,12 +456,12 @@ export default
 <div class="ts medium comments">
     <div class="comment">
         <a class="avatar">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser3}">
         </a>
         <div class="content">
-            <a class="author">infinity-G™</a>
+            <a class="author">Mac Taylor</a>
             <div class="inline text">
-                入稿版冬コミ新作ブランケットで...
+                你是一個漁夫。
             </div>
             <div class="middoted actions">
                 <a class="reply">回應</a>
@@ -481,12 +477,12 @@ export default
 <div class="ts large comments">
     <div class="comment">
         <a class="avatar">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser}">
         </a>
         <div class="content">
-            <a class="author">infinity-G™</a>
+            <a class="author">Mac Taylor</a>
             <div class="inline text">
-                入稿版冬コミ新作ブランケットで...
+                你是一個漁夫。
             </div>
             <div class="middoted actions">
                 <a class="reply">回應</a>
@@ -502,12 +498,12 @@ export default
 <div class="ts big comments">
     <div class="comment">
         <a class="avatar">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser2}">
         </a>
         <div class="content">
-            <a class="author">infinity-G™</a>
+            <a class="author">Mac Taylor</a>
             <div class="inline text">
-                入稿版冬コミ新作ブランケットで...
+                你是一個漁夫。
             </div>
             <div class="middoted actions">
                 <a class="reply">回應</a>
@@ -523,12 +519,12 @@ export default
 <div class="ts huge comments">
     <div class="comment">
         <a class="avatar">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser3}">
         </a>
         <div class="content">
-            <a class="author">infinity-G™</a>
+            <a class="author">Mac Taylor</a>
             <div class="inline text">
-                入稿版冬コミ新作ブランケットで...
+                你是一個漁夫。
             </div>
             <div class="middoted actions">
                 <a class="reply">回應</a>

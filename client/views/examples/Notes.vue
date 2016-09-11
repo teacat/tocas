@@ -74,16 +74,16 @@
                         <!-- 單張卡片 -->
                         <div class="ts card">
                             <div class="content">
-                                <div class="header">Infinity-Sama</div>
+                                <div class="header">史萊姆</div>
                                 <div class="meta">
                                     <div>一天前</div>
                                 </div>
                             </div>
                             <div class="image">
-                                <img src="../images/infinity-s/01.png">
+                                <img src="../images/image_placeholder_4-3.png">
                             </div>
                             <div class="content">
-                                <div class="description">可愛的日本人 :D</div>
+                                <div class="description">我家養的史萊姆 :D</div>
                             </div>
                         </div>
                         <!-- / 單張卡片 -->
@@ -205,8 +205,6 @@
 </template>
 
 <script>
-var infinityPicture1 = require('../images/infinity-s/01.png')
-
 export default 
 {
     beforeCreate()

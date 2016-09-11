@@ -185,7 +185,7 @@ export default
         </div>
         <div class="content">
             <div class="header">
-                Infinity-S
+                戳戳洨洨安
             </div>
             <div class="meta">
                 <span>Android</span>

@@ -4,15 +4,12 @@ var small   = 'small'
 var tiny    = 'tiny'
 var source  = 'source'
 var example = 'example'
-var infinityPicture1 = require('../../images/infinity-s/01.png')
-var infinityPicture2 = require('../../images/infinity-s/02.png')
-var infinityPicture3 = require('../../images/infinity-s/03.png')
-var infinityPicture4 = require('../../images/infinity-s/04.png')
-var infinityPicture5 = require('../../images/infinity-s/05.jpg')
-var justAPerson1 = require('../../images/justaperson-01.png')
-var justAPerson2 = require('../../images/justaperson-02.png')
-var justAPerson3 = require('../../images/justaperson-03.png')
-var justAPerson4 = require('../../images/justaperson-04.png')
+var imgPlaceholderSquare = require('../../images/image_placeholder_1-1.png')
+var imgPlaceholderWide   = require('../../images/image_placeholder_16-9.png')
+var imgPlaceholderLegacy = require('../../images/image_placeholder_4-3.png')
+var imgPlaceholderUser   = require('../../images/image_placeholder_user.png')
+var imgPlaceholderUser2  = require('../../images/image_placeholder_user2.png')
+var imgPlaceholderUser3  = require('../../images/image_placeholder_user3.png')
 
 export default
 {
@@ -49,7 +46,7 @@ export default
         },
         {
             type: 'example',
-            code: `<img class="ts small image" src="${infinityPicture1}">`,
+            code: `<img class="ts small image" src="${imgPlaceholderLegacy}">`,
             mark: 'image'
         },
         {
@@ -61,7 +58,7 @@ export default
         {
             type: 'example',
             code: `<a href="http://google.com" class="ts small image">
-    <img src="${infinityPicture3}">
+    <img src="${imgPlaceholderLegacy}">
 </a>`,
             mark: 'image'
         },
@@ -79,7 +76,7 @@ export default
         },
         {
             type: 'example',
-            code: `<img class="ts hidden image" src="${infinityPicture2}">`,
+            code: `<img class="ts hidden image" src="${imgPlaceholderLegacy}">`,
             mark: 'hidden'
         },
         {
@@ -90,7 +87,7 @@ export default
         },
         {
             type: 'example',
-            code: `<img class="ts disabled small image" src="${infinityPicture2}">`,
+            code: `<img class="ts disabled small image" src="${imgPlaceholderLegacy}">`,
             mark: 'disabled'
         },
         {
@@ -107,8 +104,8 @@ export default
         },
         {
             type: 'example',
-            code: `<img class="ts avatar image" src="${infinityPicture2}">
-<span>いんふぃ</span>`,
+            code: `<img class="ts avatar image" src="${imgPlaceholderSquare}">
+<span>Yami Odymel</span>`,
             mark: 'avatar'
         },
         {
@@ -119,7 +116,7 @@ export default
         },
         {
             type: 'example',
-            code: `<img class="ts small bordered image" src="${justAPerson1}">`,
+            code: `<img class="ts small bordered image" src="${imgPlaceholderSquare}">`,
             mark: 'bordered'
         },
         {
@@ -130,7 +127,7 @@ export default
         },
         {
             type: 'example',
-            code: `<img class="ts fluid image" src="${infinityPicture1}">`,
+            code: `<img class="ts fluid image" src="${imgPlaceholderLegacy}">`,
             mark: 'fluid'
         },
         {
@@ -141,7 +138,7 @@ export default
         },
         {
             type: 'example',
-            code: `<img class="ts small rounded image" src="${infinityPicture3}">`,
+            code: `<img class="ts small rounded image" src="${imgPlaceholderLegacy}">`,
             mark: 'rounded'
         },
         {
@@ -152,7 +149,7 @@ export default
         },
         {
             type: 'example',
-            code: `<img class="ts small circular image" src="${infinityPicture4}">`,
+            code: `<img class="ts small circular image" src="${imgPlaceholderSquare}">`,
             mark: 'circular'
         },
         {
@@ -163,11 +160,11 @@ export default
         },
         {
             type: 'example',
-            code: `<img class="ts mini top aligned image" src="${infinityPicture1}">垂直置頂
+            code: `<img class="ts mini top aligned image" src="${imgPlaceholderSquare}">垂直置頂
 <div class="ts divider"></div>
-<img class="ts mini middle aligned image" src="${infinityPicture2}">垂直置中
+<img class="ts mini middle aligned image" src="${imgPlaceholderSquare}">垂直置中
 <div class="ts divider"></div>
-<img class="ts mini bottom aligned image" src="${infinityPicture3}">垂直置障`,
+<img class="ts mini bottom aligned image" src="${imgPlaceholderSquare}">垂直置障`,
             mark: 'top aligned, middle aligned, bottom aligned'
         },
         {
@@ -178,7 +175,7 @@ export default
         },
         {
             type: 'example',
-            code: `<img class="ts small centered image" src="${infinityPicture4}">`,
+            code: `<img class="ts small centered image" src="${imgPlaceholderSquare}">`,
             mark: 'centered'
         },
         {
@@ -189,9 +186,9 @@ export default
         },
         {
             type: 'example',
-            code: `亞凡芽 <img class="ts mini spaced image" src="${infinityPicture1}"> 是一個基於 PHP 的模板引擎， 很適合用在具有 MVC 架構的大型應用程式中，其中亞凡芽還支援了動態 CSS 名稱，你可以隨機命名類別名稱，
+            code: `亞凡芽 <img class="ts mini spaced image" src="${imgPlaceholderSquare}"> 是一個基於 PHP 的模板引擎， 很適合用在具有 MVC 架構的大型應用程式中，其中亞凡芽還支援了動態 CSS 名稱，你可以隨機命名類別名稱，
 或者是將類別名稱轉換成 Emoji（表情符號），也可以將 JavaScript 檔案匯集成一個檔案。 Tocas 是一個基於 CSS3 的
-<img class="ts mini spaced image" src="${infinityPicture3}"> 網頁介面框架， 以行動裝置為主，同時也支援自訂顏色，還有更具有語意的類別名稱。`,
+<img class="ts mini spaced image" src="${imgPlaceholderSquare}"> 網頁介面框架， 以行動裝置為主，同時也支援自訂顏色，還有更具有語意的類別名稱。`,
             mark: 'spaced'
         },
         {
@@ -202,12 +199,12 @@ export default
         },
         {
             type: 'example',
-            code: `<img class="ts tiny left floated image" src="${infinityPicture2}">
+            code: `<img class="ts tiny left floated image" src="${imgPlaceholderSquare}">
 <p>
     保障任何人的著作權，其中包括二次創作，二次創作僅可在原作者未聲明否決下進行發佈和創作， 在未經原作允許下衍生任何具有原作之內容，基於衍生理念與內容為判決要點，
     原作必須基於合理使用之理念提出移除、上訴任何非符合合理使用概念的衍生內容， 合理使用的理念如下： 使用目的及性質 其著重點在於內容是否有所轉化，如衍生創作另有新意，非僅複製原作內容。
     版權作品性質
-    <img class="ts tiny right floated image" src="${infinityPicture4}"> 以真實、事實所闡述之作品較虛構作品來的能夠符合合理使用。 使用版權作品的多寡 引用少量的原創著作比起引用大量來要的符合合理使用，但倘若原創著作成為衍生著作之核心內容，
+    <img class="ts tiny right floated image" src="${imgPlaceholderSquare}"> 以真實、事實所闡述之作品較虛構作品來的能夠符合合理使用。 使用版權作品的多寡 引用少量的原創著作比起引用大量來要的符合合理使用，但倘若原創著作成為衍生著作之核心內容，
     即使少量的原創著作被引用，也較不可能符合合理使用之原則。 使用行為對於版權作品的市場或價值之影響 透過原創著作的內容而進行獲利並造成原創著作部分損害，較不符合合理使用之原則。
 </p>`,
             mark: 'left floated, right floated'
@@ -220,10 +217,10 @@ export default
         },
         {
             type: 'example',
-            code: `<img class="ts mini image" src="${justAPerson1}">
-<img class="ts tiny image" src="${justAPerson2}">
-<img class="ts small image" src="${justAPerson3}">
-<img class="ts medium image" src="${justAPerson4}">`,
+            code: `<img class="ts mini image" src="${imgPlaceholderSquare}">
+<img class="ts tiny image" src="${imgPlaceholderSquare}">
+<img class="ts small image" src="${imgPlaceholderSquare}">
+<img class="ts medium image" src="${imgPlaceholderSquare}">`,
             mark: 'mini, tiny, small, medium'
         },
         {
@@ -241,9 +238,9 @@ export default
         {
             type: 'example',
             code: `<div class="ts tiny images">
-    <img src="${justAPerson2}">
-    <img src="${justAPerson3}">
-    <img src="${justAPerson4}">
+    <img src="${imgPlaceholderSquare}">
+    <img src="${imgPlaceholderSquare}">
+    <img src="${imgPlaceholderSquare}">
 </div>`,
             mark: 'images'
         },

@@ -4,16 +4,12 @@ var small   = 'small'
 var tiny    = 'tiny'
 var source  = 'source'
 var example = 'example'
-var infinityPicture1 = require('../../images/infinity-s/01.png')
-var infinityPicture2 = require('../../images/infinity-s/02.png')
-var infinityPicture3 = require('../../images/infinity-s/03.png')
-var infinityPicture4 = require('../../images/infinity-s/04.png')
-var infinityPicture5 = require('../../images/infinity-s/05.jpg')
-var justAPerson1 = require('../../images/justaperson-01.png')
-var justAPerson2 = require('../../images/justaperson-02.png')
-var justAPerson3 = require('../../images/justaperson-03.png')
-var justAPerson4 = require('../../images/justaperson-04.png')
-var defaultAvatar = require('../../images/default.jpg')
+var imgPlaceholderSquare = require('../../images/image_placeholder_1-1.png')
+var imgPlaceholderWide   = require('../../images/image_placeholder_16-9.png')
+var imgPlaceholderLegacy = require('../../images/image_placeholder_4-3.png')
+var imgPlaceholderUser   = require('../../images/image_placeholder_user.png')
+var imgPlaceholderUser2  = require('../../images/image_placeholder_user2.png')
+var imgPlaceholderUser3  = require('../../images/image_placeholder_user3.png')
 
 export default
 {
@@ -44,7 +40,7 @@ export default
             code: `<div class="ts feed">
     <div class="event">
         <div class="label">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
             <div class="summary">
@@ -60,18 +56,18 @@ export default
     </div>
     <div class="event">
         <div class="label">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser2}">
         </div>
         <div class="content">
             <div class="summary">
-                <a>Yami Odymel</a> 在他牆上分享了這則貼文。
+                <a>羽田白音</a> 在他牆上分享了這則貼文。
                 <div class="date">
                     3 小時前
                 </div>
             </div>
             <div class="extra images">
-                <a><img src="${infinityPicture1}"></a>
-                <a><img src="${infinityPicture2}"></a>
+                <a><img src="${imgPlaceholderLegacy}"></a>
+                <a><img src="${imgPlaceholderLegacy}"></a>
             </div>
             <div class="meta">
                 <a><i class="like icon"></i> 1 個讚</a>
@@ -80,7 +76,7 @@ export default
     </div>
     <div class="event">
         <div class="label">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser3}">
         </div>
         <div class="content">
             <div class="summary">
@@ -138,14 +134,14 @@ export default
     <div class="event">
         <div class="content">
             <div class="summary">
-                <a>Yami Odymel</a> 追蹤了 <a>infinity-G™</a>。
+                <a>Yami Odymel</a> 追蹤了 <a>吳雨藍</a>。
             </div>
         </div>
     </div>
     <div class="event">
         <div class="content">
             <div class="summary">
-                <a>infinity-G™</a> 和 <a>Yami Odymel</a> 目前是朋友了。
+                <a>吳雨藍</a> 和 <a>Yami Odymel</a> 目前是朋友了。
             </div>
         </div>
     </div>
@@ -163,7 +159,7 @@ export default
             code: `<div class="ts feed">
     <div class="event">
         <div class="label">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
             <div class="summary">
@@ -194,7 +190,7 @@ export default
             code: `<div class="ts feed">
     <div class="event">
         <div class="label">
-            <img class="ts circular image" src="${defaultAvatar}">
+            <img class="ts circular image" src="${imgPlaceholderUser2}">
         </div>
         <div class="content">
             <div class="date">
@@ -232,24 +228,24 @@ export default
             code: `<div class="ts feed">
     <div class="event">
         <div class="label">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser3}">
         </div>
         <div class="content">
             <div class="date">
                 51 分鐘前
             </div>
             <div class="summary">
-                你追蹤了 <a>infinity-G™</a>。
+                你追蹤了 <a>橙希</a>。
             </div>
         </div>
     </div>
     <div class="event">
         <div class="label">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
             <div class="summary">
-                你和 <a>infinity-G™</a> 成為朋友了。
+                你和 <a>卡莉絲</a> 成為朋友了。
                 <div class="date">今天</div>
             </div>
         </div>
@@ -268,7 +264,7 @@ export default
             code: `<div class="ts feed">
     <div class="event">
         <div class="label">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser2}">
         </div>
         <div class="content">
             <div class="date">
@@ -278,14 +274,14 @@ export default
                 <a>Yami Odymel</a> 分享了兩張照片。
             </div>
             <div class="extra images">
-                <a><img src="${infinityPicture1}"></a>
-                <a><img src="${infinityPicture2}"></a>
+                <a><img src="${imgPlaceholderLegacy}"></a>
+                <a><img src="${imgPlaceholderLegacy}"></a>
             </div>
         </div>
     </div>
     <div class="event">
         <div class="label">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
             <div class="date">
@@ -313,7 +309,7 @@ export default
             code: `<div class="ts feed">
     <div class="event">
         <div class="label">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser2}">
         </div>
         <div class="content">
             <div class="summary">
@@ -387,7 +383,7 @@ export default
             code: `<div class="ts divided feed">
     <div class="event">
         <div class="label">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser3}">
         </div>
         <div class="content">
             <div class="summary">
@@ -419,24 +415,24 @@ export default
             code: `<div class="ts relaxed feed">
     <div class="event">
         <div class="label">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
             <div class="date">
                 51 分鐘前
             </div>
             <div class="summary">
-                你追蹤了 <a>infinity-G™</a>。
+                你追蹤了 <a>吳雨藍</a>。
             </div>
         </div>
     </div>
     <div class="event">
         <div class="label">
-            <img src="${infinityPicture1}">
+            <img src="${imgPlaceholderUser2}">
         </div>
         <div class="content">
             <div class="summary">
-                你和 <a>infinity-G™</a> 成為朋友了。
+                你和 <a>吳雨藍</a> 成為朋友了。
                 <div class="date">今天</div>
             </div>
         </div>
@@ -455,7 +451,7 @@ export default
             code: `<div class="ts tiny feed">
     <div class="event">
         <div class="label">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
             <div class="summary">
@@ -467,7 +463,7 @@ export default
 <div class="ts small feed">
     <div class="event">
         <div class="label">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser2}">
         </div>
         <div class="content">
             <div class="summary">
@@ -479,7 +475,7 @@ export default
 <div class="ts medium feed">
     <div class="event">
         <div class="label">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser3}">
         </div>
         <div class="content">
             <div class="summary">
@@ -491,7 +487,7 @@ export default
 <div class="ts large feed">
     <div class="event">
         <div class="label">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
             <div class="summary">
@@ -503,7 +499,7 @@ export default
 <div class="ts big feed">
     <div class="event">
         <div class="label">
-            <img src="${defaultAvatar}">
+            <img src="${imgPlaceholderUser2}">
         </div>
         <div class="content">
             <div class="summary">

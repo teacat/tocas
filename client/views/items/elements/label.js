@@ -4,9 +4,12 @@ var small   = 'small'
 var tiny    = 'tiny'
 var source  = 'source'
 var example = 'example'
-var infinityPicture1 = require('../../images/infinity-s/01.png')
-var infinityPicture2 = require('../../images/infinity-s/02.png')
-var infinityPicture3 = require('../../images/infinity-s/03.png')
+var imgPlaceholderSquare = require('../../images/image_placeholder_1-1.png')
+var imgPlaceholderWide   = require('../../images/image_placeholder_16-9.png')
+var imgPlaceholderLegacy = require('../../images/image_placeholder_4-3.png')
+var imgPlaceholderUser   = require('../../images/image_placeholder_user.png')
+var imgPlaceholderUser2  = require('../../images/image_placeholder_user2.png')
+var imgPlaceholderUser3  = require('../../images/image_placeholder_user3.png')
 
 export default
 {
@@ -60,12 +63,12 @@ export default
         {
             type: 'example',
             code: `<div class="ts image label">
-    <img src="${infinityPicture1}">infinity-G™</div>
+    <img src="${imgPlaceholderUser}">Yami Odymel</div>
 <div class="ts image label">
-    <img src="${infinityPicture2}">いんふぃ™</div>
+    <img src="${imgPlaceholderUser2}">Xiaoan</div>
 <div class="ts image label">
-    <img src="${infinityPicture3}">Rhia™
-    <div class="detail">作曲担当</div>
+    <img src="${imgPlaceholderUser3}">卡莉絲
+    <div class="detail">實況主</div>
 </div>`,
             mark  : 'image'
         },

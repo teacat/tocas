@@ -4,15 +4,12 @@ var small   = 'small'
 var tiny    = 'tiny'
 var source  = 'source'
 var example = 'example'
-var infinityPicture1 = require('../../images/infinity-s/01.png')
-var infinityPicture2 = require('../../images/infinity-s/02.png')
-var infinityPicture3 = require('../../images/infinity-s/03.png')
-var infinityPicture4 = require('../../images/infinity-s/04.png')
-var infinityPicture5 = require('../../images/infinity-s/05.jpg')
-var justAPerson1 = require('../../images/justaperson-01.png')
-var justAPerson2 = require('../../images/justaperson-02.png')
-var justAPerson3 = require('../../images/justaperson-03.png')
-var justAPerson4 = require('../../images/justaperson-04.png')
+var imgPlaceholderSquare = require('../../images/image_placeholder_1-1.png')
+var imgPlaceholderWide   = require('../../images/image_placeholder_16-9.png')
+var imgPlaceholderLegacy = require('../../images/image_placeholder_4-3.png')
+var imgPlaceholderUser   = require('../../images/image_placeholder_user.png')
+var imgPlaceholderUser2  = require('../../images/image_placeholder_user2.png')
+var imgPlaceholderUser3  = require('../../images/image_placeholder_user3.png')
 
 export default
 {
@@ -193,7 +190,7 @@ export default
     <div class="content">
         <div class="left message">
             <div class="avatar">
-                <img src="${infinityPicture1}">
+                <img src="${imgPlaceholderUser}">
             </div>
             <div class="content">
                 <div class="text">
@@ -220,7 +217,7 @@ export default
                 Yami Odymel
             </div>
             <div class="avatar">
-                <img src="${infinityPicture1}">
+                <img src="${imgPlaceholderUser}">
             </div>
             <div class="content">
                 <div class="text">
@@ -243,7 +240,7 @@ export default
     <div class="content">
         <div class="left message">
             <div class="avatar">
-                <img src="${infinityPicture3}">
+                <img src="${imgPlaceholderUser2}">
             </div>
             <div class="content">
                 <div class="text">
@@ -256,12 +253,12 @@ export default
         </div>
         <div class="left message">
             <div class="avatar">
-                <img src="${infinityPicture2}">
+                <img src="${imgPlaceholderUser3}">
             </div>
             <div class="content">
                 <div class="text">
                     <div class="author">
-                        Yami Odymel
+                        Haneda Shirone
                     </div>
                     囉哈！
                 </div>
@@ -283,7 +280,7 @@ export default
     <div class="content">
         <div class="left message">
             <div class="avatar">
-                <img src="${infinityPicture1}">
+                <img src="${imgPlaceholderUser}">
             </div>
             <div class="content">
                 <div class="text">

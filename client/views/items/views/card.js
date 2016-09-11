@@ -4,11 +4,6 @@ var small   = 'small'
 var tiny    = 'tiny'
 var source  = 'source'
 var example = 'example'
-var infinityPicture1 = require('../../images/infinity-s/01.png')
-var infinityPicture2 = require('../../images/infinity-s/02.png')
-var infinityPicture3 = require('../../images/infinity-s/03.png')
-var infinityPicture4 = require('../../images/infinity-s/04.png')
-var infinityPicture5 = require('../../images/infinity-s/05.jpg')
 var imgPlaceholderSquare = require('../../images/image_placeholder_1-1.png')
 var imgPlaceholderWide   = require('../../images/image_placeholder_16-9.png')
 var imgPlaceholderLegacy = require('../../images/image_placeholder_4-3.png')
@@ -62,17 +57,17 @@ export default
             type: 'example',
             code: `<div class="ts card">
     <div class="image">
-        <img src="${infinityPicture5}">
+        <img src="${imgPlaceholderLegacy}">
     </div>
     <div class="content">
-        <div class="header">いんふぃ™</div>
+        <div class="header">Tocas Collection</div>
         <div class="meta">
-            <a>@AW_infi</a>
-            <a>Jan 2</a>
+            <a>@ts_collection</a>
         </div>
         <div class="description">
-            【お知らせ】 冬コミで頒布した新作ブランケット、新刊同人誌、本編ディスク、
-            過去グッズ等すべての通信販売を開始しました！ http://shop.infinity-s.jp
+            <p>在同個屋簷下，做著那一成不變的事情，</p>
+            <p>就算沒有外星人來襲擊，</p>
+            <p>偶爾也會發生一些意想之外的事情。</p>
         </div>
     </div>
 </div>`,
@@ -226,11 +221,12 @@ export default
     <div class="ts card">
         <div class="content">
             <div class="header">
-                いんふぃ™
+                小安網站
             </div>
             <div class="description">
-                infinity-S最新作、『黄昏ウィズ - Twilight Invocation』 
-                Google PlayおよびApp Storeにて好評配信中！
+                你將會在這裡看見一個魔法師的日常生活，
+                沒錯，只要你能夠單身三十年，
+                你也可以跟我一樣成為魔法師。
             </div>
         </div>
     </div>
@@ -268,11 +264,12 @@ export default
             type: 'example',
             code: `<div class="ts card">
     <div class="image">
-        <img src="${infinityPicture5}">
+        <img src="${imgPlaceholderLegacy}">
     </div>
     <div class="content">
-        【お知らせ】 冬コミで頒布した新作ブランケット、新刊同人誌、本編ディスク、
-        過去グッズ等すべての通信販売を開始しました！ http://shop.infinity-s.jp
+        你將會在這裡看見一個魔法師的日常生活，
+        沒錯，只要你能夠單身三十年，
+        你也可以跟我一樣成為魔法師。
     </div>
 </div>`,
             mark: 'image'
@@ -287,9 +284,12 @@ export default
             type: 'example',
             code: `<div class="ts card">
     <div class="content">
-        <div class="header">いんふぃ™</div>
+        <div class="header">The Place Where Only We Know</div>
         <div class="description">
-            冬コミの売り上げも底をつき、当サークル運用資金が0円になりました。
+            <p>I must going to find you out,</p>
+            <p>to the place where only we know,</p>
+            <p>if I can still alive till tomorrow,</p>
+            <p>please hold me tight.</p>
         </div>
     </div>
 </div>`,
@@ -324,13 +324,15 @@ export default
             type: 'example',
             code: `<div class="ts card">
     <div class="content">
-        <div class="header">いんふぃ™</div>
+        <div class="header">小安網站</div>
         <div class="meta">
-            <a>@AW_infi</a>
-            <a>Jan 2</a>
+            <a>@xiaoan</a>
+            <a>七月</a>
         </div>
         <div class="description">
-            <p>映画のように没入できる『シネマティックノベル』をリリースしている『infinity-G™』および『いんふぃ™』です。 最新作『ALLiWs』を2016年8月リリース予定。</p>
+            你將會在這裡看見一個魔法師的日常生活，
+            沒錯，只要你能夠單身三十年，
+            你也可以跟我一樣成為魔法師。
         </div>
     </div>
 </div>`,
@@ -345,19 +347,19 @@ export default
             type: 'example',
             code: `<div class="ts card">
     <div class="content">
-        <div class="header">いんふぃ™</div>
+        <div class="header">小安網站</div>
         <div class="bulleted meta">
-            <a>@AW_infi</a>
-            <a>Jan 2</a>
+            <a>@xiaoan</a>
+            <a>七月</a>
         </div>
     </div>
 </div>
 <div class="ts card">
     <div class="content">
-        <div class="header">いんふぃ™</div>
+        <div class="header">小安網站</div>
         <div class="middoted meta">
-            <a>@AW_infi</a>
-            <a>Jan 2</a>
+            <a>@xiaoan</a>
+            <a>七月</a>
         </div>
     </div>
 </div>`,
@@ -397,10 +399,11 @@ export default
         <button class="ts button">編輯</button>
     </div>
     <div class="content">
-        <div class="header">いんふぃ™</div>
+        <div class="header">Tocas Collection</div>
         <div class="description">
-            今のゲーム制作用PCをPV制作もできるようリプレースするためには
-            最低20万円の投資が必要だと判明した(ヨドバシ基..
+            <p>在同個屋簷下，做著那一成不變的事情，</p>
+            <p>就算沒有外星人來襲擊，</p>
+            <p>偶爾也會發生一些意想之外的事情。</p>
         </div>
     </div>
     <div class="ts fluid bottom attached buttons">
@@ -513,8 +516,11 @@ export default
     </div>
     <div class="overlapped content">
         <div class="description">
-            【お知らせ】 冬コミで頒布した新作ブランケット、新刊同人誌、本編ディスク、
-            過去グッズ等すべての通信販売を開始しました！ http://shop.infinity-s.jp
+            <p>這是一個來自台灣的社群網站，</p>
+            <p>在這裡，我們並沒有「讚」，或是「已讀」。</p>
+            <p>取而代之的，是一個「星號」，</p>
+            <p>你可以假裝沒看見你朋友發給你的訊息，</p>
+            <p>或者——你可以按下「星號」，告訴對方你知道了。</p>
         </div>
     </div>
 </div>`,
@@ -530,18 +536,19 @@ export default
             type: 'example',
             code: `<div class="ts card">
      <div class="content">
-        <div class="header">いんふぃ™</div>
+        <div class="header">伊繁星最高協議</div>
         <div class="meta">
-            <div>@AW_infi</div>
+            <div>@ce_laws</div>
         </div>
     </div>
     <div class="image">
-        <img src="${infinityPicture5}">
+        <img src="${imgPlaceholderLegacy}">
     </div>
     <div class="content">
         <div class="description">
-            【お知らせ】 冬コミで頒布した新作ブランケット、新刊同人誌、本編ディスク、
-            過去グッズ等すべての通信販売を開始しました！ http://shop.infinity-s.jp
+            <p>任何已發布或是計畫中之產品及服務，</p>
+            <p>皆不得用來刻意偏頗大眾想法、喜好、甚至混淆視聽，</p>
+            <p>且該產品及服務不得擁有自我立場。</p>
         </div>
     </div>
 </div>
@@ -637,10 +644,10 @@ export default
             type: 'example',
             code: `<div class="ts centered card">
     <div class="image">
-        <img src="${infinityPicture3}">
+        <img src="${imgPlaceholderLegacy}">
     </div>
     <div class="content">
-        <a class="header">Infinity-S</a>
+        <a class="header">Yami Odymel</a>
     </div>
 </div>`,
             mark: 'centered'
@@ -655,10 +662,10 @@ export default
             type: 'example',
             code: `<div class="ts raised card">
     <div class="image">
-        <img src="${infinityPicture1}">
+        <img src="${imgPlaceholderLegacy}">
     </div>
     <div class="content">
-        <a class="header">Infinity-S</a>
+        <a class="header">Yami Odymel</a>
     </div>
 </div>`,
             mark: 'raised'
@@ -673,17 +680,19 @@ export default
             type: 'example',
             code: `<a class="ts card" href="http://www.dog.com">
     <div class="content">
-        <div class="header">いんふぃ™</div>
+        <div class="header">關於我</div>
         <div class="meta">
-            <div>@AW_infi</div>
+            <div>@Xiaoan</div>
         </div>
         <div class="description">
-            映画のように没入できる『シネマティックノベル』をリリースしている『infinity-G™』および『いんふぃ™』です。 
+            你將會在這裡看見一個魔法師的日常生活，
+            沒錯，只要你能夠單身三十年，
+            你也可以跟我一樣成為魔法師。
         </div>
     </div>
     <div class="extra content">
         <div class="right floated author">
-            <img class="ts circular avatar image" src="${infinityPicture3}"> いんふぃ™
+            <img class="ts circular avatar image" src="${imgPlaceholderUser}"> 小安
         </div>
     </div>
 </a>`,
@@ -730,7 +739,7 @@ export default
             <img src="${imgPlaceholderUser}">
         </div>
         <div class="content">
-            <a class="header">Infinity-S</a>
+            <a class="header">Caris</a>
         </div>
     </div>
     <div class="ts card">
