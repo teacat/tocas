@@ -411,6 +411,28 @@ export default
         },
         {
             type       : small,
+            title      : '偏見按鈕',
+            description: `卡片中可以插入偏見按鈕來營造一個類似問答的卡片。`,
+            link       : 'opinion'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts inverted primary card">
+    <div class="content">
+        <div class="header">尺寸問題</div>
+        <div class="description">
+            你有達到 30 公分，正所謂鄉民標準尺寸嗎？
+        </div>
+    </div>
+    <div class="ts fluid bottom attached buttons">
+        <button class="ts opinion button">有的</button>
+        <button class="ts secondary opinion button">沒有</button>
+    </div>
+</div>`,
+            mark: 'opinion, secondary opinion'
+        },
+        {
+            type       : small,
             title      : '代表性符號',
             description: `放入一個代表這張卡片性質的符號。`,
             link       : 'symbol'
@@ -547,6 +569,30 @@ export default
             title      : '外觀',
             description: '卡片具有不同的外觀。',
             link       : false
+        },
+        {
+            type       : small,
+            title      : '簡潔問答',
+            description: `一個將按鈕獨立擺放的問答。`,
+            link       : 'question'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts postive card">
+    <div class="content">
+        <div class="header">請問</div>
+        <div class="description">
+            <p>比起小明，您是否更喜歡小安？</p>
+        </div>
+        <div class="symbol">
+            <i class="question circle icon"></i>
+        </div>
+    </div>
+    <div class="right aligned secondary extra content">
+        <button class="ts primary button">是的</button>
+        <button class="ts button">不是</button>
+    </div>
+</div>`
         },
         {
             type       : small,
