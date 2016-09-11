@@ -71,6 +71,17 @@ export default
         },
         {
             type       : small,
+            title      : '網頁字型',
+            description: 
+            `
+                Tocas UI 為了統一所有裝置的字型所以使用了 Google 的 Web Font 網頁字型 <strong>Noto Sans CJK</strong>，
+                預設支援英文、日本語、韓文、簡體中文和正體中文共五種字型，
+            `,
+            link             : 'web-font',
+            expandableExample: false
+        },
+        {
+            type       : small,
             title      : 'HTML 5 宣告',
             description: 
             `
