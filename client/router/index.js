@@ -9,12 +9,40 @@ export default new Router
     routes:
     [
         {
+            path     : '/',
+            component: require('../views/Index')
+        },
+        {
             path     : '/getting-started/',
             component: require('../views/GettingStarted')
         },
         {
             path     : '/examples/',
             component: require('../views/Examples')
+        },
+        {
+            path     : '/examples/blog',
+            component: require('../views/examples/Blog')
+        },
+        {
+            path     : '/examples/login',
+            component: require('../views/examples/Login')
+        },
+        {
+            path     : '/examples/registration',
+            component: require('../views/examples/Registration')
+        },
+        {
+            path     : '/examples/gallery',
+            component: require('../views/examples/Gallery')
+        },
+        {
+            path     : '/examples/chatroom',
+            component: require('../views/examples/Chatroom')
+        },
+        {
+            path     : '/examples/notes',
+            component: require('../views/examples/Notes')
         },
         {
             path     : '/about/',
