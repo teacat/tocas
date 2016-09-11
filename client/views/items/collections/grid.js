@@ -401,7 +401,7 @@ export default
             description: 
             `  
                 <p>你可以自訂在不同裝置上欄位所佔的格數，你總共有這些裝置可供選擇。</p>
-                <table class="ts small definition table">
+                <table class="ts small stackable definition table">
                     <thead>
                         <tr>
                             <th></th>
