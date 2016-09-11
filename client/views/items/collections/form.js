@@ -57,12 +57,9 @@ export default
         </div>
     </div>
     <button class="ts button">送出</button>
-</form>`,
-            mark: 'form'
-        },
-        {
-            type: 'example',
-            code: `<form class="ts form">
+</form>
+<br><br>
+<form class="ts form">
     <h4 class="ts dividing header">結帳資訊</h4>
     <div class="field">
         <label>真實姓名</label>
@@ -88,7 +85,8 @@ export default
     </div>
     <button class="ts button">送出</button>
 </form>`,
-            mark: 'form'
+            mark  : 'form',
+            remove: '<br><br>'
         },
         {
             type       : normal,
@@ -305,14 +303,14 @@ export default
             code: `<div class="ts form">
     <div class="field">
         <label>您所使用的系統版本為何？</label>
-        <select class="ts basic dropdown">
+        <select>
             <option>macOS</option>
             <option>Windows</option>
             <option>Linux</option>
         </select>
     </div>
 </div>`,
-            mark: 'field'
+            tagMark: 'select'
         },
         {
             type       : small,
@@ -377,7 +375,7 @@ export default
     </div>
     <div class="field error">
       <label>性別</label>
-      <select class="ts basic dropdown">
+      <select>
             <option>男性</option>
             <option>女性</option>
             <option>第三性</option>
