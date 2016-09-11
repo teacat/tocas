@@ -31,7 +31,7 @@ export default
         {
             title      : '選單',
             class      : '.ts.menu',
-            link       : '/elements/header/',
+            link       : '/collections/menu/',
             description: '一個能夠提供網頁導覽或是功能的選單。'
         },
         {
