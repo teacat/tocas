@@ -19,7 +19,7 @@
             <div class="ts relaxed stackable grid">
                 
                 <!-- 左側索引 -->
-                <div class="four wide column">
+                <div class="four wide column" v-if="sidebar">
                     
                     <!-- 選單 -->
                     <div class="ts flatted borderless secondary relaxed vertical menu">
@@ -45,7 +45,7 @@
                 
                 
                 <!-- 右側文件內容 -->
-                <div class="twelve wide column">
+                <div :class="{'twelve wide column': sidebar, 'sixteen wide column': !sidebar}">
                     
                     <template v-for="item in items.html">
                         
@@ -112,6 +112,12 @@
 </template>
 
 <style lang="sass" scoped>
+.ts.narrow.container
+{
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
 /** 左側欄位 */
 .four.column
 {
@@ -216,7 +222,8 @@ export default
     },
     props:
     {
-        items: { default: null }
+        items  : { default: null },
+        sidebar: { default: true }
     },
     beforeCreate()
     {
