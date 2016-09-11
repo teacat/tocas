@@ -287,13 +287,33 @@ export default
         <div class="header">The Place Where Only We Know</div>
         <div class="description">
             <p>I must going to find you out,</p>
-            <p>to the place where only we know,</p>
-            <p>if I can still alive till tomorrow,</p>
-            <p>please hold me tight.</p>
+            <p>to the place where only we know.</p>
         </div>
     </div>
 </div>`,
             mark: 'header'
+        },
+        {
+            type       : small,
+            title      : '副標題',
+            description: `你可以用副標題來詮釋你的大標題。`,
+            link       : 'sub-header'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts card">
+    <div class="content">
+        <div class="header">
+            三十公分
+            <div class="sub header">人人都渴望的尺寸。</div>
+        </div>
+        <div class="description">
+            <p>所謂的標準鄉民尺寸三十公分，</p>
+            <p>無論是誰都會想要擁有。</p>
+        </div>
+    </div>
+</div>`,
+            mark: 'sub header'
         },
         {
             type       : small,
