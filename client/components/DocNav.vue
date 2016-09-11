@@ -8,8 +8,8 @@
             <router-link class="item" to="/modules/">模塊</router-link>
             <router-link class="item" to="/views/">視圖型</router-link>
             <div class="right menu">
-                <a class="item" href="https://patreon.com/yamiodymel">贊助</a>
-                <a class="item" href="https://github.com/TeaMeow/TocasUI/">Github</a>
+                <a class="item" href="//patreon.com/yamiodymel">贊助</a>
+                <a class="item" href="//github.com/TeaMeow/TocasUI/">Github</a>
             </div>
         </div>
     </nav>
