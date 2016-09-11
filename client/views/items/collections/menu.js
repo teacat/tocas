@@ -70,7 +70,7 @@ export default
         },
         {
             type: 'example',
-            code: `<div class="ts pure basic menu">
+            code: `<div class="ts pure basic borderless menu">
     <a class="item">合作</a>
     <a class="item">外框</a>
     <a class="item">除錯器</a>
