@@ -2,9 +2,20 @@
     <footer class="ts very padded horizontally fitted fluid secondary segment">
         <div class="ts narrow container">
             <ul class="ts relaxed link list">
-                <li><a href="#">Github</a></li>
-                <li><a href="#">實際範例</a></li>
-                <li><a href="#">關於</a></li>
+                <li>
+                    <a class="to top" href="#!" @click="toTop()">
+                        <i class="arrow up icon"></i> 回到頂部
+                    </a>
+                </li>
+                <li>
+                    <a href="//github.com/TeaMeow/TocasUI/">Github</a>
+                </li>
+                <li>
+                    <router-link to="/examples/">實際範例</router-link>
+                </li>
+                <li>
+                    <router-link to="/about/">關於</router-link>
+                </li>
             </ul>
             <p>
                 由 <a href="http://www.facebook.com/yamiodymel">Yami Odymel</a> 所設計，
@@ -49,7 +60,11 @@ ul.ts.list li:before
             }
         }
     }
-   
+    
+    .to.top
+    {
+        opacity: 0.7;
+    }
 }
 
 p
@@ -71,14 +86,21 @@ p
 
 .render.time
 {
-    margin-top: 2em;
-    opacity: 0.6;
+    margin-top: 3em;
+    opacity   : 0.6;
 }
 </style>
 
 <script>
 export default
 {
-    name: 'DocFooter'
+    name   : 'DocFooter',
+    methods:
+    {
+        toTop()
+        {
+            $(document).scrollTop(0);
+        }
+    }
 }
 </script>
