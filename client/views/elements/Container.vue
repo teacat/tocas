@@ -1,6 +1,6 @@
 <template>
     <div>
-        <doc-basic :items="items"></doc-basic>
+        <doc-basic :items="items" :sidebar="false"></doc-basic>
     </div>
 </template>
 
