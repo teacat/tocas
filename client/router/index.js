@@ -13,6 +13,14 @@ export default new Router
             component: require('../views/GettingStarted')
         },
         {
+            path     : '/examples/',
+            component: require('../views/Examples')
+        },
+        {
+            path     : '/about/',
+            component: require('../views/About')
+        },
+        {
             path     : '/elements/',
             component: require('../views/Elements')
         },
