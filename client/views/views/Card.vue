@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <div class="card documentation">
         <doc-basic :items="items"></doc-basic>
     </div>
 </template>
 
 <style>
-.ts.card
+.card.documentation .ts.card
 {
     width: 300px;
 }
