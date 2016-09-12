@@ -112,12 +112,9 @@ export default
             <td>Aoi</td>
         </tr>
     </tbody>
-</table>`,
-            mark: 'celled'
-        },
-        {
-            type: 'example',
-            code: `<table class="ts very basic collapsing celled table">
+</table>
+<br>
+<table class="ts very basic collapsing celled table">
     <thead>
         <tr>
             <th>員工</th>
@@ -154,12 +151,9 @@ export default
             </td>
         </tr>
     </tbody>
-</table>`,
-            mark: 'celled'
-        },
-        {
-            type: 'example',
-            code: `<table class="ts celled striped table">
+</table>
+<br>
+<table class="ts celled striped table">
     <thead>
         <tr><th colspan="3">
             Git 倉庫
@@ -203,7 +197,8 @@ export default
         </tr>
     </tbody>
 </table>`,
-            mark: 'celled'
+            mark  : 'celled',
+            remove: '<br>'
         },
         {
             type       : small,
@@ -233,12 +228,9 @@ export default
             <td>於網頁最底部輸出內容，可同時儲存內容至一個檔案。</td>
         </tr>
     </tbody>
-</table>`,
-            mark: 'definition'
-        },
-        {
-            type: 'example',
-            code: `<table class="ts compact celled definition table">
+</table>
+<br>
+<table class="ts compact celled definition table">
     <thead>
         <tr>
             <th></th>
@@ -303,7 +295,8 @@ export default
         </tr>
     </tfoot>
 </table>`,
-            mark: 'definition'
+            mark  : 'definition',
+            remove: '<br>'
         },
         {
             type       : small,
@@ -728,12 +721,9 @@ export default
             <td>尚未確認</td>
         </tr>
     </tbody>
-</table>`,
-            mark: 'selectable'
-        },
-        {
-            type: 'example',
-            code: `<table class="ts inverted selectable table">
+</table>
+<br>
+<table class="ts inverted selectable table">
     <thead>
         <tr>
             <th>工作區域</th>
@@ -755,7 +745,8 @@ export default
         </tr>
     </tbody>
 </table>`,
-            mark: 'selectable'
+            mark  : 'selectable',
+            remove: '<br>'
         },
         {
             type       : small,
@@ -966,12 +957,9 @@ export default
             <td>處理最愛的項目。</td>
         </tr>
     </tbody>
-</table>`,
-            mark: 'basic'
-        },
-        {
-            type: 'example',
-            code: `<table class="ts very basic table">
+</table>
+<br>
+<table class="ts very basic table">
     <thead>
         <tr>
             <th>檔案名稱</th>
@@ -997,7 +985,8 @@ export default
         </tr>
     </tbody>
 </table>`,
-            mark: 'very basic'
+            mark  : 'very basic, basic',
+            remove: '<br>'
         },
         {
             type       : small,
@@ -1180,12 +1169,9 @@ export default
             <td>Curabitur volutpat tristique erat ut pulvinar. Aliquam varius, mi ut convallis rhoncus, nunc dolor feugiat mi.</td>
         </tr>
     </tbody>
-</table>`,
-            mark: 'padded'
-        },
-        {
-            type: 'example',
-            code: `<table class="ts very padded table">
+</table>
+<br>
+<table class="ts very padded table">
     <thead>
         <tr>
             <th>文章名稱</th>
@@ -1207,7 +1193,8 @@ export default
         </tr>
     </tbody>
 </table>`,
-            mark: 'very padded'
+            mark  : 'very padded, padded',
+            remove: '<br>'
         },
         {
             type       : small,
