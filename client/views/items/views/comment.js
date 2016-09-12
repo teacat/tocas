@@ -187,9 +187,8 @@ export default
                 <div>3 天前</div>
                 <div>5 個讚</div>
             </div>
-            <div class="text">直到你成功之前，人們都是瞎子。</div>
         </div>
-    </div>
+    </div><br>
     <div class="comment">
         <div class="avatar">
             <img src="${imgPlaceholderUser2}">
@@ -203,7 +202,8 @@ export default
         </div>
     </div>
 </div>`,
-            mark: 'bulleted metadata, middoted metadata'
+            mark  : 'bulleted metadata, middoted metadata',
+            remove: '<br>'
         },
         {
             type       : small,
