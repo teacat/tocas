@@ -50,7 +50,8 @@ module.exports = merge(config,
             {
                 warnings: false
             },
-            comments: false
+            sourceMap: false,
+            comments : false
         }),
         
         // extract vendor chunks
