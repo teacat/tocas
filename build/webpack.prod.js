@@ -7,6 +7,8 @@ const merge              = require('webpack-merge')
 const config             = require('./webpack.base')
 const pkg                = require('../package')
 
+config.output.publicPath = 'http://tocas-ui.com/assets'
+
 module.exports = merge(config, 
 {
     output:
