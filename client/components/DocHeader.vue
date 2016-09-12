@@ -41,6 +41,14 @@
         margin-bottom: 1.5em;
     }
     
+    &.tiny
+    {
+        .tiny.button
+        {
+            top: -.5em !important;
+        }
+    }
+    
     .description
     {
         margin-top: 0 !important;
