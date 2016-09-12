@@ -147,6 +147,22 @@ export default
         },
         {
             type       : small,
+            title      : '圓角',
+            description: `日曆的邊角可以是稍微圓角的。`,
+            link       : 'rounded'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts rounded calendar">
+    <div class="header">七月</div>
+    <div class="content">
+        <div class="date">13</div>
+    </div>
+</div>`,
+            mark: 'rounded'
+        },
+        {
+            type       : small,
             title      : '尺寸',
             description: `日曆的尺寸可以改變。`,
             link       : 'sizes'
