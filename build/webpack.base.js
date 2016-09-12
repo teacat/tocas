@@ -85,6 +85,18 @@ module.exports =
             template: __dirname + '/index.html',
             filename: '../index.html'
         }),
+        new HtmlWebpackPlugin
+        ({
+            title   : 'Tocas UI',
+            template: __dirname + '/index.html',
+            filename: '../404.html'
+        }),
+        new HtmlWebpackPlugin
+        ({
+            title   : 'Tocas UI',
+            template: __dirname + '/index.html',
+            filename: '../200.html'
+        }),
         new ExtractTextPlugin("[name].css")
     ]
 }
