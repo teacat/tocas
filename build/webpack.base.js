@@ -81,7 +81,7 @@ module.exports =
     [
         new HtmlWebpackPlugin
         ({
-            title   : 'VuePack',
+            title   : 'Tocas UI',
             template: __dirname + '/index.html',
             filename: '../index.html'
         }),
