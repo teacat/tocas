@@ -9,11 +9,6 @@ import DocBasic from '../../components/DocBasic'
 import items    from '../items/modules/dropdown'
 import '../../asserts/tocas.js'
 
-setTimeout(() =>
-{
-    ts('.ts.dropdown:not(.basic)').dropdown()
-}, 1000)
-
 export default 
 {
     components: 
@@ -27,6 +22,10 @@ export default
     beforeCreate()
     {
         document.title = '下拉式選單 | Tocas UI'
+    },
+    mounted()
+    {
+        ts('.ts.dropdown:not(.basic)').dropdown()
     }
 }
 </script>
