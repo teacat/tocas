@@ -395,7 +395,7 @@ export default
         </div>
     </div>
 </div>
-<div class="ts attached segment">
+<div class="ts flatted attached segment">
     <p>月月，搭拉安！</p>
     <p>月月，搭拉安！</p>
     <p>月月，搭拉安！</p>
