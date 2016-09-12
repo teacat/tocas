@@ -258,17 +258,15 @@ export default
     <a class="unread item">動態軸</a>
     <a class="item">好友</a>
     <a class="item">設定</a>
-</div>`,
-            mark: 'unread'
-        },
-        {
-            type: 'example',
-            code: `<div class="ts icon menu">
+</div>
+<br>
+<div class="ts icon menu">
     <a class="item"><i class="icon user"></i></a>
     <a class="unread item"><i class="icon comment"></i></a>
     <a class="item"><i class="icon star"></i></a>
 </div>`,
-            mark: 'unread'
+            mark  : 'unread',
+            remove: '<br>'
         },
         {
             type       : small,
@@ -330,19 +328,16 @@ export default
     <a class="item">關於</a>
     <a class="item">文件</a>
     <div class="right menu">
-        <div class="item">
-            <div class="ts right icon inverted primary input">
+        <div class="fitted item">
+            <div class="ts borderless right icon inverted primary input">
                 <input type="text" placeholder="文字欄位">
                 <i class="search icon"></i>
             </div>
         </div>
     </div>
-</div>`,
-            mark: 'input'
-        },
-        {
-            type: 'example',
-            code: `<div class="ts vertical inverted info borderless menu">
+</div>
+<br>
+<div class="ts vertical compact inverted info borderless menu">
     <div class="item">
         <div class="ts fluid right icon inverted info input">
             <input type="text" placeholder="搜尋">
@@ -359,7 +354,8 @@ export default
         </div>
     </div>
 </div>`,
-            mark: 'input'
+            mark: 'input',
+            remove: '<br>'
         },
         {
             type       : small,
