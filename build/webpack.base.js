@@ -20,7 +20,7 @@ module.exports =
     },
     output:
     {
-        path      : path.join(__dirname, '../dist/assets'),
+        path      : path.join(__dirname, '../assets'),
         filename  : '[name].js',
         publicPath: './assets'
     },
@@ -47,7 +47,7 @@ module.exports =
                 query :
                 {
                   limit: 10000,
-                  name: 'img/tocas[hash:2].[ext]'
+                  name: '/img/tocas[hash:2].[ext]'
                 }
             },
             {
