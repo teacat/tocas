@@ -236,6 +236,31 @@ export default
             mark: 'middoted meta, bulleted meta'
         },
         {
+            type       : tiny,
+            title      : '同行中繼資料',
+            description: `中繼資料可以和標題是同一行。`
+        },
+        {
+            type: 'example',
+            code: `<div class="ts items">
+    <div class="item">
+        <div class="ts tiny image">
+            <img src="${imgPlaceholderSquare}">
+        </div>
+        <div class="content">
+            <div class="header">
+                標題
+            </div>
+            <div class="inline meta">
+                <span>同行</span>
+                <span>中繼資料</span>
+            </div>
+        </div>
+    </div>
+</div>`,
+            mark: 'inline'
+        },
+        {
             type       : small,
             title      : '註釋',
             description: `項目中可以帶有註釋來詮釋整個項目。`,
