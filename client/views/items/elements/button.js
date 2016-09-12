@@ -279,7 +279,7 @@ export default
         {
             type: 'example',
             code: `<button class="ts fluid top attached button">附著於上</button>
-<div class="ts top attached bottom attached segment">
+<div class="ts flatted attached segment">
     <p>TeaMeow 是一個社群網站，就像是你正在使用的 Facebook 或是 Twitter，</p>
     <p>不過我們強調的是「自由」和「日常」，我們不會整天刪你文章。</p>
 </div>
