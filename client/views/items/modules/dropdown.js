@@ -432,5 +432,20 @@ export default
 </select>`,
             mark: 'fluid'
         },
+        {
+            type       : small,
+            title      : '無邊框',
+            description: `下拉式選單可以沒有邊框。`,
+            link       : 'borderless'
+        },
+        {
+            type: 'example',
+            code: `<select class="ts borderless basic dropdown">
+    <option>1998</option>
+    <option>1999</option>
+    <option>2000</option>
+</select>`,
+            mark: 'borderless'
+        },
     ]
 }
