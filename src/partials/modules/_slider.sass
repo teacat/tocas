@@ -1,0 +1,62 @@
+@import ../../variables/modules/slider.variables
+
+//*******************************//
+//           Variations
+//*******************************//
+
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.slider:not(.vertical)
+    height: $slider_thumbSize
+    
+.ts.slider input[type="range"]
+    appearance        : none
+    -webkit-appearance: none
+
+input[type=range]::-webkit-slider-runnable-track
+    width           : 100%
+    height          : $slider_trackHeight
+    cursor          : pointer
+    background-color: $slider_trackColor
+    border-radius   : $defaultBorderRadius
+    border          : none
+    
+input[type=range]::-webkit-slider-thumb 
+    -webkit-appearance: none
+    box-shadow        : $checkbox_handleBoxShadow
+    height            : $slider_thumbSize
+    width             : $slider_thumbSize
+    border-radius     : $circularRadius
+    background-color  : $slider_thumbColor
+    cursor            : pointer
+    margin-top        : $slider_thumbMarginTop
+
+input[type=range]:active::-webkit-slider-thumb 
+    background-color: $slider_thumbActiveColor
+
+//-------------------//
+//      Vertical 
+//-------------------//
+
+.ts.vertical.slider
+    transform: rotate(270deg)
+
+//-------------------//
+//       Fluid
+//-------------------//
+
+.ts.slider.fluid,
+.ts.slider.fluid input[type="range"]
+    width: 100%
+
+//-------------------//
+//      Disabled
+//-------------------//
+
+.ts.slider.disabled,
+.ts.slider input[disabled]
+    opacity       : $disabledOpacity
+    pointer-events: none
