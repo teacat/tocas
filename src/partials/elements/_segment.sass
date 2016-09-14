@@ -25,6 +25,7 @@
     background-color: $segment_backgroundColor
     border-radius   : $segment_borderRadius
     box-shadow      : $segment_boxShadow
+    color           : $textColor
     
     +segment-variant($borderColor)
     
@@ -94,16 +95,20 @@
     text-shadow   : none !important
     color         : transparent !important
     transition    : all 0s linear
-    border-color  : transparent
+    //border-color  : transparent
 
 .ts.loading.segment:before 
     position     : absolute
     content      : ''
-    top          : -#{$segment_coloredTopBorderWidth + $segment_borderWidth}
-    left         : -#{$segment_borderWidth}
+    //top          : -#{$segment_coloredTopBorderWidth + $segment_borderWidth}
+    //left         : -#{$segment_borderWidth}
+    top          : 0
+    left         : 0
+    bottom       : 0
+    right        : 0
     background   : $segment_loaderDimmerColor
-    width        : calc(100% + #{$segment_borderWidth * 2})
-    height       : calc(100% + #{$segment_coloredTopBorderWidth + $segment_borderWidth})
+    //width        : calc(100% + #{$segment_borderWidth * 2})
+    //height       : calc(100% + #{$segment_coloredTopBorderWidth + $segment_borderWidth})
     border-radius: $segment_borderRadius
     z-index      : $segment_loaderDimmerZIndex
 
@@ -116,7 +121,8 @@
     content : ''
     top     : 50%
     left    : 50%
-    margin  : $loaderMargin
+    //margin  : $loaderMargin
+    margin  : -#{$segment_loaderSize / 2 + $loaderLineWidth} 0 0 -#{$segment_loaderSize / 2 + $loaderLineWidth}
     width   : $segment_loaderSize
     height  : $segment_loaderSize
 
