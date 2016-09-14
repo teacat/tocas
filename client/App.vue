@@ -13,7 +13,7 @@ body, html, body > div
 </style>
 
 <script>
-import './asserts/jAsper.js'
+import './asserts/jAsper-minified.js'
 
 export default
 {
