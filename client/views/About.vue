@@ -89,7 +89,7 @@ export default
     mounted()
     {
         /** 將網頁捲至頂部　*/
-        $(document).scrollTop(0);
+        window.scrollTo(0, 0);
         
         this.$store.dispatch('CALCULATE_RENDER_TIME', {time       : new Date().getTime(), 
                                                        startedTime: window.RENDER_STARTED_TIME})

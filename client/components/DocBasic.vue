@@ -232,7 +232,7 @@ export default
     mounted()
     {
         /** 將網頁捲至頂部　*/
-        $(document).scrollTop(0);
+        window.scrollTo(0, 0);
         
         /** 取得所有 Hightlight JS 元素 */
         var examples = document.querySelectorAll('.hljs');

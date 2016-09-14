@@ -13,6 +13,8 @@ body, html, body > div
 </style>
 
 <script>
+import './asserts/jAsper.js'
+
 export default
 {
     name: 'App'

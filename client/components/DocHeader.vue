@@ -130,7 +130,7 @@ export default
     {
         expand()
         {
-            var $next = $(this.$el).next()
+            var $next = jA(this.$el).next()
             
             $next.toggleClass('expanded')
         }
