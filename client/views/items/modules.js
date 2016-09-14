@@ -46,5 +46,11 @@ export default
             link       : '/modules/progress/',
             description: '用以呈現進度或者是一個總體配額。'
         },
+        {
+            title      : '滑桿',
+            class      : '.ts.slider',
+            link       : '/modules/slider/',
+            description: '以滑桿來取代輸入欄位設定數值。'
+        },
     ]
 }

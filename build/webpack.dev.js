@@ -14,7 +14,7 @@ module.exports = merge(config,
 {
     output:
     {
-        publicPath: '/assets/'
+        publicPath: '/assets'
     },
     plugins:
     [

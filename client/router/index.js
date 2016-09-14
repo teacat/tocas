@@ -199,5 +199,9 @@ export default new Router
             path     : '/modules/progress',
             component: require('../views/modules/Progress')
         },
+        {
+            path     : '/modules/slider',
+            component: require('../views/modules/Slider')
+        },
     ]
 })
