@@ -95,8 +95,6 @@
     position   : relative
     cursor     : pointer
     will-change: transform, opacity
-    
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0)
 
 //-------------------//
 //       Basic       
@@ -116,7 +114,8 @@
     background-size    : $dropdown_arrowSize
     background-repeat  : no-repeat
     padding-right      : calc(#{$dropdown_horizontalPadding} + #{$dropdown_arrowSize} * 2 + #{$dropdown_horizontalPadding})
-    background-position: right #{$dropdown_horizontalPadding} top calc(#{$dropdown_verticalPadding} + #{$dropdown_arrowSize} - (1em / 2) + (#{$dropdown_lineHeight} - 1em ))
+    //background-position: right #{$dropdown_horizontalPadding} top calc(#{$dropdown_verticalPadding} + #{$dropdown_arrowSize} - (1em / 2) + (#{$dropdown_lineHeight} - 1em ))
+    background-position: right #{$dropdown_horizontalPadding} center
     
     +basic-dropdown-variant($dropdown_textColor, $dropdown_backgroundColor, $dropdown_borderColor, $dropdown_arrowBackgroundURL)
 
@@ -308,7 +307,7 @@
     
     position  : relative
     cursor    : pointer
-    display   : block
+    display   : flex
     border    : $dropdown_itemBorder
     height    : $dropdown_itemHeight
     text-align: $dropdown_itemTextAlign
@@ -395,9 +394,11 @@
 
 .ts.dropdown > .text > .description,
 .ts.dropdown .menu > .item > .description
-    float : $dropdown_itemDescriptionFloat
-    margin: $dropdown_itemDescriptionMargin
-    color : $dropdown_itemDescriptionColor
+    //float : $dropdown_itemDescriptionFloat
+    margin    : $dropdown_itemDescriptionMargin
+    flex      : 1
+    text-align: right
+    color     : $dropdown_itemDescriptionColor
 
 //-------------------//
 //       Image       
