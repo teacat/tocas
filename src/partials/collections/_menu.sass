@@ -8,7 +8,8 @@
     background-color: $backgroundColor
     border-color    : $borderColor
     
-    .item
+    .item,
+    .item .menu .item
         color       : $color
         border-color: $borderColor
     
@@ -16,7 +17,8 @@
         background-color: $color
         
     .item:active,
-    .item:hover
+    .item:hover,
+    .item .menu .item:hover
         color: $color
 
 //*******************************//
@@ -122,6 +124,11 @@
     font-weight: $menu_itemHeaderFontWeight
     color      : $menu_itemHeaderTextColor
     font-size  : $menu_itemHeaderFontSize
+    
+.ts.vertical.menu .item > .header:not(.ts)
+    margin     : $menu_verticalHeaderMargin
+    font-size  : $menu_verticalHeaderFontSize
+    font-weight: $menu_verticalHeaderFontWeight
 
 //-------------------//
 //       Sizes       
@@ -425,6 +432,7 @@
     padding-left : 0
     padding-right: 0
     margin-right : $menu_itemVerticalPadding * 2
+    border       : 0
 
 .ts.menu.pure .menu .item
     margin-left : $menu_itemVerticalPadding * 2
@@ -438,6 +446,11 @@
 .ts.menu.pure a.item.header:hover
     background-color: initial !important
     opacity         : $menu_pureItemHoverOpacity
+
+.ts.menu.pure .item:not(.header):active,
+.ts.menu.pure a.item.header:active
+    background-color: initial !important
+    opacity         : $menu_pureItemActiveOpacity
 
 //-------------------//
 //        Label
@@ -510,6 +523,45 @@
     border-bottom-left-radius: 0
 
 //-------------------//
+//     Item Menu
+//-------------------// 
+
+.ts.vertical.menu .item > .menu
+    display: block
+    margin : $menu_subMenuMargin
+ 
+.ts.vertical.menu .item > .menu .item
+    border       : 0
+    display      : block
+    border-radius: 0
+    padding      : $menu_subMenuVerticalPadding $menu_subMenuHorizontalPadding
+    font-size    : $menu_subMenuFontSize
+
+.ts.vertical.menu:not(.inverted) .item > .menu .item    
+    color: $menu_subMenuTextColor
+
+.ts.vertical.menu.inverted .item > .menu .item
+    opacity: $menu_invertedSubMenuItemOpacity
+    
+.ts.vertical.menu .item > .menu .item:hover
+    background-color: transparent
+    opacity         : 1
+    
+.ts.vertical.menu:not(.inverted) .item > .menu .item:hover    
+    color: $darkTextColor
+
+.ts.vertical.menu .item > .menu .item:active
+    background-color: transparent
+
+.ts.vertical.menu .item > .menu .item.active
+    background-color: transparent
+    font-weight     : $menu_subMenuActiveFontWeight
+    opacity         : 1
+
+.ts.vertical.menu:not(.inverted) .item > .menu .item.active
+    color: $menu_subMenuActiveTextColor
+
+//-------------------//
 //      Attached  
 //-------------------//
 
@@ -536,12 +588,15 @@
 //      Container  
 //-------------------// 
 
+.ts.menu > .ts.container > .item:first-child
+    border-radius: 0
+    
 .ts.menu > .ts.container.narrow
     width: $container_narrowWidth
     
 .ts.menu > .ts.container[class*="very narrow"]
     width: $container_veryNarrowWidth
-        
+
 @media (max-width: $container_narrowBreakPoint)
     .ts.menu > .ts.container.narrow:not(.very)
         width: 100% !important
