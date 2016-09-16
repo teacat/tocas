@@ -125,8 +125,8 @@ export default
             新增
         </div>
         <div class="item">
-            <span class="description">ctrl + r</span>
             重新命名
+            <span class="description">ctrl + r</span>
         </div>
         <div class="item">
             <i class="folder icon"></i>
@@ -320,16 +320,16 @@ export default
     <span class="text">移至資料夾</span>
     <div class="menu">
         <div class="item">
-            <span class="description">今天上午</span>
             <span class="text">圖片</span>
+            <span class="description">今天上午</span>
         </div>
         <div class="item">
-            <span class="description">未曾變動</span>
             <span class="text">音樂</span>
+            <span class="description">未曾變動</span>
         </div>
         <div class="item">
-            <span class="description">一年前</span>
             <span class="text">備份</span>
+            <span class="description">一年前</span>
         </div>
     </div>
 </div>`,
