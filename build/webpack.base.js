@@ -47,7 +47,7 @@ module.exports =
                 query :
                 {
                   limit: 10000,
-                  name: '/img/[hash:7].[ext]'
+                  name: 'img/[hash:7].[ext]'
                 }
             },
             {
