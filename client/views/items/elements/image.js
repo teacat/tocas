@@ -244,5 +244,45 @@ export default
 </div>`,
             mark: 'images'
         },
+        {
+            type       : small,
+            title      : '網格的',
+            description: `群組可以看起來是像是一個有網格結構。`,
+            link       : 'celled'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts one celled images">
+    <img src="${imgPlaceholderSquare}">
+</div>
+<br>
+<div class="ts two celled images">
+    <img src="${imgPlaceholderSquare}">
+    <img src="${imgPlaceholderSquare}">
+</div>
+<br>
+<div class="ts three celled images">
+    <img src="${imgPlaceholderSquare}">
+    <img src="${imgPlaceholderSquare}">
+    <img src="${imgPlaceholderSquare}">
+</div>
+<br>
+<div class="ts four celled images">
+    <img src="${imgPlaceholderSquare}">
+    <img src="${imgPlaceholderSquare}">
+    <img src="${imgPlaceholderSquare}">
+    <img src="${imgPlaceholderSquare}">
+</div>
+<br>
+<div class="ts five celled images">
+    <img src="${imgPlaceholderSquare}">
+    <img src="${imgPlaceholderSquare}">
+    <img src="${imgPlaceholderSquare}">
+    <img src="${imgPlaceholderSquare}">
+    <img src="${imgPlaceholderSquare}">
+</div>`,
+            mark  : 'celled, one, two, three, four, five',
+            remove: '<br>'
+        },
     ]
 }
