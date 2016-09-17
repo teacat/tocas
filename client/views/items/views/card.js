@@ -910,12 +910,12 @@ export default
         {
             type       : small,
             title      : '瀑布流',
-            description: `卡片群組可以是呈現一個瀑布流的樣式。`,
+            description: `卡片群組可以是呈現一個瀑布流的樣式，你可以透過 <span class="ts horizontal label">one</span> 到 <span class="ts horizontal label">ten</span> 指定瀑布流的排數。`,
             link       : 'waterfall'
         },
         {
             type: 'example',
-            code: `<div class="ts waterfall cards">
+            code: `<div class="ts three waterfall cards">
     <div class="ts card">
         <div class="content">
             Lorem ipsum dolor sit amet, 
@@ -977,7 +977,7 @@ export default
         </div>
     </div>
 </div>`,
-            mark: 'waterfall'
+            mark: 'three, waterfall'
         },
     ]
 }
