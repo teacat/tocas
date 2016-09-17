@@ -374,24 +374,36 @@ export default
         {
             type       : small,
             title      : '雙倍層疊',
-            description: `這會讓你的欄位在手機和平板上以雙倍的寬度增加，例如一個<strong>四格寬</strong>的欄位會在平板上成為<strong>八格寬</strong>。`,
+            description: `這會讓你的欄位在手機和平板上以雙倍的寬度增加，例如一個<strong>八個欄位</strong>的行會在平板上成為<strong>四個欄位</strong>然後手機上會是<strong>兩個欄位</strong>。`,
             link       : 'doubling'
         },
         {
             type: 'example',
-            code: `<div class="ts doubling grid">
-    <div class="two wide column"></div>
-    <div class="two wide column"></div>
-    <div class="two wide column"></div>
-    <div class="two wide column"></div>
-    <div class="two wide column"></div>
-    <div class="two wide column"></div>
-    <div class="two wide column"></div>
-    <div class="two wide column"></div>
-    <div class="four wide column"></div>
-    <div class="four wide column"></div>
-    <div class="four wide column"></div>
-    <div class="four wide column"></div>
+            code: `<div class="ts grid">
+    <div class="doubling eight column row">
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+    </div>
+    <div class="doubling six column row">
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+    </div>
+    <div class="doubling four column row">
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+    </div>
 </div>`,
             mark: 'doubling'
         },
