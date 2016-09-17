@@ -382,6 +382,35 @@ export default
             mark: 'label'
         },
         {
+            type       : small,
+            title      : '子選單',
+            description: `選單的項目內還可以再有一層選單。`,
+            link       : 'sub-menu'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts vertical compact menu">
+    <div class="item">
+        <div class="ts fluid right icon input">
+            <input type="text" placeholder="搜尋">
+            <i class="search icon"></i>
+        </div>
+    </div>
+    <div class="item">
+        首頁功能
+        <div class="menu">
+            <a class="active item">搜尋</a>
+            <a class="item">新增</a>
+            <a class="item">移除</a>
+        </div>
+    </div>
+    <div class="item">瀏覽</div>
+    <div class="item">訊息</div>
+    <div class="item">更多</div>
+</div>`,
+            mark: 'menu'
+        },
+        {
             type       : normal,
             title      : '外觀',
             description: '選單具有不同的外觀。',
