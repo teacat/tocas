@@ -32,7 +32,10 @@
                             
                             
                             <!-- 連結文字 -->
-                            <a class="item" :href="'#' + item.link" v-if="item.link" v-text="item.title"></a>
+                            <a class="item" :href="'#' + item.link" v-if="item.link">
+                                <span v-if="item.wip">{{item.title}} <span class="ts warning horizontal label">未完成</span></span>
+                                <span v-if="!item.wip">{{item.title}}</span>
+                            </a>
                             <!-- / 連結文字 -->
                             
                         </template>
@@ -58,21 +61,25 @@
                         <doc-header :title="item.title" 
                                     :description="item.description"
                                     :expandableExample="item.expandableExample"
+                                    :wip="item.wip"
                                     size="large"  
                                     v-if="item.type == 'large'"></doc-header>
                         <doc-header :title="item.title" 
                                     :description="item.description"
                                     :expandableExample="item.expandableExample"
+                                    :wip="item.wip"
                                     size="normal"
                                     v-if="item.type == 'normal'"></doc-header>
                         <doc-header :title="item.title" 
                                     :description="item.description"
                                     :expandableExample="item.expandableExample"
+                                    :wip="item.wip"
                                     size="tiny"
                                     v-if="item.type == 'tiny'"></doc-header>
                         <doc-header :title="item.title" 
                                     :description="item.description"
                                     :expandableExample="item.expandableExample"
+                                    :wip="item.wip"
                                     size="small"
                                     v-if="item.type == 'small'"></doc-header>
                         <!-- / 標題 -->
@@ -116,6 +123,11 @@
 {
     overflow-x: hidden;
     overflow-y: hidden;
+}
+
+.ts.warning.horizontal.label
+{
+    margin-left: 8px !important;
 }
 
 /** 左側欄位 */

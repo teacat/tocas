@@ -248,7 +248,8 @@ export default
             type       : small,
             title      : '網格的',
             description: `群組可以看起來是像是一個有網格結構。`,
-            link       : 'celled'
+            link       : 'celled',
+            wip        : true
         },
         {
             type: 'example',

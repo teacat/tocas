@@ -213,8 +213,8 @@
                                 Yami Odymel
                             </div>
                             <div class="bulleted meta">
-                                <div> @yamiodymel </div>
-                                <div> 2 mins      </div>
+                                <div>@yamiodymel</div>
+                                <div>2 mins     </div>
                             </div>
                             <div class="description">
                                 <p>看似最重要的東西卻沒能被妥善利用，</p>

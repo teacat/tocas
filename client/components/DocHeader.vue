@@ -2,10 +2,18 @@
     <div class="tocas section header" :class="size">
 
         <!-- 標題 -->
-        <h2 class="ts dividing header" v-if="size == 'large'"  v-html="title"></h2>
-        <h3 class="ts dividing header" v-if="size == 'normal'" v-html="title"></h3>
-        <h4 class="ts header"          v-if="size == 'small'"  v-html="title"></h4>
-        <h5 class="ts header"          v-if="size == 'tiny'"   v-html="title"></h5>
+        <h2 class="ts dividing header" v-if="size == 'large'">
+            <span v-html="title"></span> <span v-if="wip" class="ts warning horizontal label">未完成</span>
+        </h2>
+        <h3 class="ts dividing header" v-if="size == 'normal'">
+            <span v-html="title"></span> <span v-if="wip" class="ts warning horizontal label">未完成</span>
+        </h3>
+        <h4 class="ts header"          v-if="size == 'small'">
+            <span v-html="title"></span> <span v-if="wip" class="ts warning horizontal label">未完成</span>
+        </h4>
+        <h5 class="ts header"          v-if="size == 'tiny'">
+            <span v-html="title"></span> <span v-if="wip" class="ts warning horizontal label">未完成</span>
+        </h5>
         <!-- / 標題 -->
             
         <!-- 註釋 -->
@@ -124,7 +132,8 @@ export default
         title            : {},
         size             : { default: false },
         description      : { default: false },
-        expandableExample: { default: true  }
+        expandableExample: { default: true  },
+        wip              : { default: false }
     },
     methods:
     {
