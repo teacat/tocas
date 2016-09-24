@@ -76,9 +76,15 @@ $button_verticalPadding  : $inputVerticalPadding
 $button_horizontalPadding: 1.5em
 $button_padding          : $button_verticalPadding $button_horizontalPadding
 
-$button_compactVerticalPadding  : calc(#{$button_verticalPadding}   * 0.75)
-$button_compactHorizontalPadding: calc(#{$button_horizontalPadding} * 0.75)
+$button_compactPercentage       : 0.75
+$button_compactVerticalPadding  : calc(#{$button_verticalPadding}   * #{$button_compactPercentage})
+$button_compactHorizontalPadding: calc(#{$button_horizontalPadding} * #{$button_compactPercentage})
 $button_compactPadding          : $button_compactVerticalPadding $button_compactHorizontalPadding
+
+$button_veryCompactPercentage       : 0.6
+$button_veryCompactVerticalPadding  : calc(#{$button_verticalPadding}   * #{$button_veryCompactPercentage})
+$button_veryCompactHorizontalPadding: calc(#{$button_horizontalPadding} * #{$button_veryCompactPercentage})
+$button_veryCompactPadding          : $button_veryCompactVerticalPadding $button_veryCompactHorizontalPadding
 
 $button_borderRadius: $defaultBorderRadius
 $button_fontSize    : $button_mediumFontSize
@@ -107,6 +113,14 @@ $button_labeledIconBackgroundColor : rgba(0, 0, 0, 0.05)
 $button_labeledIconPadding         : calc(#{$button_horizontalPadding} + #{$button_labeledIconWidthCalculation})
 $button_labeledIconBorder          : transparent
 $button_labeledIconColor           : ''
+
+$button_compactLabeledIconWidthCalculation: unquote("1em + #{$button_verticalPadding} * 1.8")
+$button_compactLabeledIconWidth           : calc(#{$button_compactLabeledIconWidthCalculation})
+$button_compactLabeledIconPadding         : calc(#{$button_horizontalPadding} * #{$button_compactPercentage} + #{$button_compactLabeledIconWidthCalculation})
+
+$button_veryCompactLabeledIconWidthCalculation: unquote("1em + #{$button_verticalPadding} * 1.6")
+$button_veryCompactLabeledIconWidth           : calc(#{$button_veryCompactLabeledIconWidthCalculation})
+$button_veryCompactLabeledIconPadding         : calc(#{$button_horizontalPadding} * #{$button_veryCompactPercentage} + #{$button_veryCompactLabeledIconWidthCalculation})
 
 $button_labeledIconLeftShadow: -1px 0px 0px 0px $button_labeledIconBorder inset
 $button_labeledIconRightShadow: 1px 0px 0px 0px $button_labeledIconBorder inset
