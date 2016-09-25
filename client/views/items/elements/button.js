@@ -294,9 +294,10 @@ export default
         },
         {
             type: 'example',
-            code: `<button class="ts mini compact button">迷你按鈕</button>
-<button class="ts compact button">按鈕</button>`,
-            mark: 'compact'
+            code: `<button class="ts mini very compact button">非常輕巧</button>
+<button class="ts mini compact button">迷你輕巧</button>
+<button class="ts compact button">輕巧按鈕</button>`,
+            mark: 'very compact, compact'
         },
         {
             type       : small,
