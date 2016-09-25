@@ -123,7 +123,7 @@ export default
     <div class="header">此文章已被刪除</div>
     <p>你欲拜訪的文章因違反規定而遭到刪除。</p>
 </div>`,
-            mark: 'positive, negative'
+            mark: 'inverted'
         },
         {
             type       : small,
