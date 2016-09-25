@@ -184,6 +184,19 @@ export default
             expandableExample: false
         },
         {
+            type       : small,
+            title      : 'Tachyons',
+            description: 
+            `
+            Tachyons 並沒有「元件觀念」，這意味著你將需要透過 Tachyons 內建的輔助樣式自行建立需要的元件，Tachyons 在樣式命名上有著與 Bootstrap 一樣厭垢並且更難以令人捉摸的問題，
+            如 <span class="ts horizontal label">mr3</span> 但其實是 <span class="ts horizontal label">margin-right: 1rem;</span>，
+            並且在元素上使用過多的樣式如：<span class="ts horizontal label">fw6 f3 f2-ns lh-title mt0 mb3</span>，這些都將導致未來整合有所困難，
+            同時也意味著當你需要重複使用元件時，你的原始碼大小也會急劇地增加。
+            `,
+            link             : 'foundation',
+            expandableExample: false
+        },
+        {
             type       : normal,
             title      : '基本語意',
             description: 'Tocas UI 以更有意義的方式來命名類別名稱，就像是你直接稱呼這個元素一樣地親切。',
