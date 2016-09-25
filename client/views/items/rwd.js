@@ -25,8 +25,8 @@ export default
         },
         {
             type             : normal,
-            title            : '輔助樣式',
-            description      : '這裡會介紹各種可用的輔助樣式。',
+            title            : '說明和工具',
+            description      : '你可以在這個段落看見一些詳細的判斷基準和偵測工具來檢測你的螢幕符合何種樣式。',
             link             : false,
             expandableExample: false
         },
@@ -62,7 +62,7 @@ export default
                         </tr>
                         <tr>
                             <td><span class="ts horizontal label">computer only</span></td>
-                            <td>僅電腦螢幕</td>
+                            <td>僅小型電腦螢幕</td>
                             <td>&gt; 992 && &lt; 1200px</td>
                         </tr>
                         <tr>
@@ -83,6 +83,30 @@ export default
                     </tbody>
                 </table>`,
             link             : 'helper-classes',
+            expandableExample: false
+        },
+        {
+            type       : small,
+            title      : '目前裝置偵測',
+            description: 
+            `
+                <p>下方會顯示你目前螢幕正符合哪種輔助樣式。</p>
+                <span class="mobile only"><span class="ts large info label" style="color: #FFF !important">行動裝置</span></span>
+                <span class="mobile or tablet only"><span class="ts large info label" style="color: #FFF !important">行動裝置或平板裝置</span></span>
+                <span class="tablet only"><span class="ts large info label" style="color: #FFF !important">平板裝置</span></span>
+                <span class="computer only"><span class="ts large info label" style="color: #FFF !important">僅小型電腦螢幕</span></span>
+                <span class="tablet or large device only"><span class="ts large info label" style="color: #FFF !important">平板或大型裝置</span></span>
+                <span class="large device only"><span class="ts large info label" style="color: #FFF !important">大型裝置</span></span>
+                <span class="large screen only"><span class="ts large info label" style="color: #FFF !important">大型螢幕</span></span>
+            `,
+            link             : 'mobile-only',
+            expandableExample: false
+        },
+        {
+            type             : normal,
+            title            : '樣式用法',
+            description      : '這裡會逐一解釋各個輔助樣式的用法。',
+            link             : false,
             expandableExample: false
         },
         {
@@ -133,10 +157,10 @@ export default
         },
         {
             type       : small,
-            title      : '僅電腦螢幕',
+            title      : '僅小型電腦螢幕',
             description: 
             `
-                套用後僅會在電腦螢幕上看見該元素、容器，所謂的電腦螢幕即是<strong>筆記型電腦等小型螢幕</strong>，
+                套用後僅會在小型電腦螢幕上看見該元素、容器，所謂的小型電腦螢幕即是<strong>比傳統筆記型電腦還要小的螢幕</strong>，
                 而<strong>非</strong>家用桌機的 21～24 寸或電視螢幕。
             `,
             link             : 'computer-only',
@@ -144,7 +168,7 @@ export default
         },
         {
             type: source,
-            code: `<div class="computer only">你只能在電腦螢幕上看見我。</div>`,
+            code: `<div class="computer only">你只能在小型電腦螢幕上看見我。</div>`,
             mark: 'computer only'
         },
         {
@@ -183,14 +207,14 @@ export default
             title      : '僅大型螢幕',
             description: 
             `
-                「大型螢幕」和「大型裝置」<strong>有所不同</strong>，大型螢幕意指<strong>筆記型電腦以上的螢幕</strong>（如：家用桌機的寬型螢幕、電視機）。
+                「大型螢幕」和「大型裝置」<strong>有所不同</strong>，大型螢幕更為嚴謹（要求的螢幕尺寸更大），不過現今的筆記型電腦幾乎都被概括在內。
             `,
             link             : 'large-screen-only',
             expandableExample: false
         },
         {
             type: source,
-            code: `<div class="large screen only">我只會出現在大型螢幕裡（不會出現在筆記型電腦中）！</div>`,
+            code: `<div class="large screen only">我會出現在大型螢幕中（如果你的筆電不小的話也會 :D）！</div>`,
             mark: 'large screen only'
         },
     ]
