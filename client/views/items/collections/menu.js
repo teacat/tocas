@@ -383,6 +383,28 @@ export default
         },
         {
             type       : small,
+            title      : '分隔線',
+            description: `你可以在選單中放置分隔線用以區隔項目。`,
+            link       : 'divider'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts vertical compact borderless menu">
+    <a class="item">
+        <i class="picture icon"></i> 相簿
+    </a>
+    <a class="item">
+        <i class="music icon"></i> 音樂
+    </a>
+    <div class="divider item"></div>
+    <a class="item">
+        <i class="sign out icon"></i> 登出
+    </a>
+</div>`,
+            mark: 'divider'
+        },
+        {
+            type       : small,
             title      : '子選單',
             description: `選單的項目內還可以再有一層選單。`,
             link       : 'sub-menu'
@@ -481,7 +503,7 @@ export default
         {
             type       : small,
             title      : '流動',
-            description: `選單的寬度可以是流動的，用來服貼容器的寬度（水平選單預設即是流動寬度）。`,
+            description: `選單的寬度可以是流動的，用來貼齊容器左右邊並且移除邊角。`,
             link       : 'fluid'
         },
         {
