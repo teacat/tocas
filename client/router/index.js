@@ -203,5 +203,9 @@ export default new Router
             path     : '/modules/slider',
             component: require('../views/modules/Slider')
         },
+        { 
+            path    : '*', 
+            redirect: '/'
+        }
     ]
 })
