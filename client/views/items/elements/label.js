@@ -226,6 +226,18 @@ export default
         },
         {
             type       : small,
+            title      : '縮減',
+            description: `標籤內距可以縮減。`,
+            link       : 'compact'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts compact label">1,624</div>
+<div class="ts compact primary label">315</div>`,
+            mark: 'compact'
+        },
+        {
+            type       : small,
             title      : '圓形',
             description: `將標籤變成圓形。`,
             link       : 'circular'
