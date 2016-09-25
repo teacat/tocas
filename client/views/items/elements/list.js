@@ -619,30 +619,30 @@ export default
             type: 'example',
             code: `<div class="ts middle aligned divided list">
     <div class="item">
-        <div class="right floated content">
-            <div class="ts button">新增</div>
-        </div>
         <img class="ts avatar image" src="${imgPlaceholderUser}">
         <div class="content">
             Aoi
         </div>
-    </div>
-    <div class="item">
         <div class="right floated content">
             <div class="ts button">新增</div>
         </div>
+    </div>
+    <div class="item">
         <img class="ts avatar image" src="${imgPlaceholderUser2}">
         <div class="content">
             Orenji
         </div>
-    </div>
-    <div class="item">
         <div class="right floated content">
             <div class="ts button">新增</div>
         </div>
+    </div>
+    <div class="item">
         <img class="ts avatar image" src="${imgPlaceholderUser3}">
         <div class="content">
             Shirone
+        </div>
+        <div class="right floated content">
+            <div class="ts button">新增</div>
         </div>
     </div>
 </div>`,
