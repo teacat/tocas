@@ -203,6 +203,14 @@ export default new Router
             path     : '/modules/slider',
             component: require('../views/modules/Slider')
         },
+        {
+            path     : '/animation/',
+            component: require('../views/Animation')
+        },
+        {
+            path     : '/rwd/',
+            component: require('../views/RWD')
+        },
         { 
             path    : '*', 
             redirect: '/'

@@ -7,6 +7,8 @@
             <router-link class="item" to="/collections/">聚合型</router-link>
             <router-link class="item" to="/modules/">模塊</router-link>
             <router-link class="item" to="/views/">視圖型</router-link>
+            <!--<router-link class="item" to="/animation/">動畫</router-link>-->
+            <router-link class="item" to="/rwd/">響應式</router-link>
             <div class="right menu">
                 <a class="item" href="//patreon.com/yamiodymel">贊助</a>
                 <a class="item" href="//github.com/TeaMeow/TocasUI/">Github</a>
