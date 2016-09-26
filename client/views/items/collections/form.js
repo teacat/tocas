@@ -257,7 +257,7 @@ export default
             code: `<div class="ts form">
     <div class="field">
         <label>您最喜愛的食物？</label>
-        <div class="ts horizontal checkboxes">
+        <div class="ts compact horizontal checkboxes">
             <div class="ts radio checkbox">
                 <input type="radio" name="fruits" id="mango">
                 <label for="mango">芒果</label>
