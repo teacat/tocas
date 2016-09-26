@@ -397,19 +397,19 @@ export default
         <div class="item">
             <div class="content">
                 <div class="header">Cloud 9</div>
-                還不錯的線上 IDE 和雲端服務。
+                <div class="description">還不錯的線上 IDE 和雲端服務。</div>
             </div>
         </div>
         <div class="item">
             <div class="content">
                 <div class="header">Facebook</div>
-                你認真的嗎？
+                <div class="description">你認真的嗎？</div>
             </div>
         </div>
         <div class="item">
             <div class="content">
                 <div class="header">ВКонтакте</div>
-                朝向獨裁邁進的俄羅斯社群平台。
+                <div class="description">朝向獨裁邁進的俄羅斯社群平台。</div>
             </div>
         </div>
     </div>
