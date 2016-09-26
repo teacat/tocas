@@ -35,6 +35,7 @@ ol.ts.list li,
 .ts.list > .item,
 .ts.list .list > .item 
     display            : flex
+    flex-wrap          : wrap
     table-layout       : fixed
     list-style-type    : $list_listStyleType
     list-style-position: $list_listStylePosition
@@ -67,9 +68,10 @@ ol.ts.list li:last-child,
 ul.ts.list ul,
 ol.ts.list ol,
 .ts.list .list 
-    clear  : both
-    margin : 0em
-    padding: $list_childListPadding
+    clear     : both
+    margin    : 0em
+    padding   : $list_childListPadding
+    flex-basis: 100%
 
 /* Child Item */
 ul.ts.list ul li,
@@ -140,6 +142,7 @@ ol.ts.list ol li,
 .ts.list .list > .item .header,
 .ts.list > .item .header 
     display    : block
+    flex-basis : 100%
     margin     : 0em
     font-weight: $list_itemHeaderFontWeight
     color      : $list_itemHeaderColor
@@ -206,6 +209,7 @@ ol.ts.list ol li,
 .ts.menu .ts.list > .item,
 .ts.menu .ts.list .list > .item 
     display            : flex
+    flex-wrap          : wrap
     table-layout       : fixed
     background-color   : transparent
     list-style-type    : $list_listStyleType
@@ -337,6 +341,7 @@ ol.ts.list ol li,
 .ts.list [class*="top aligned"] 
     vertical-align: top !important
     align-items   : flex-start
+    margin-bottom : auto
 
 .ts.list[class*="middle aligned"] .item,
 .ts.list[class*="middle aligned"] .image,
@@ -351,6 +356,7 @@ ol.ts.list ol li,
 .ts.list [class*="bottom aligned"] 
     vertical-align: bottom !important
     align-items   : flex-end
+    margin-top    : auto
 
 //-------------------//
 //       Link
@@ -479,82 +485,44 @@ ol.ts.list ol li,
 //      Bulleted
 //-------------------//
 
-ul.ts.list,
-.ts.bulleted.list,
-.ts.middoted.list
-    margin-left: $list_bulletDistance
-
-ul.ts.list li,
-.ts.bulleted.list .list > .item,
-.ts.bulleted.list > .item,
-.ts.middoted.list .list > .item,
-.ts.middoted.list > .item,
-    position: relative
-
-ul.ts.list li:before,
-.ts.bulleted.list .list > .item:before,
-.ts.bulleted.list > .item:before,
-.ts.middoted.list .list > .item:before,
-.ts.middoted.list > .item:before 
-    +extend(no-select)
-    
-    pointer-events: none
-    position      : absolute
-    top           : auto
-    left          : auto
-    font-weight   : normal
-    margin-left   : $list_bulletOffset
-    content       : '•'
-    opacity       : $list_bulletOpacity
-    color         : $list_bulletColor
-    vertical-align: $list_bulletVerticalAlign
-
-.ts.middoted.list .list > .item:before,
-.ts.middoted.list > .item:before 
-    content: '·'
-    
-ul.ts.list li:before,
 .ts.bulleted.list .list > a.item:before,
-.ts.bulleted.list > a.item:before,
-.ts.middoted.list .list > a.item:before,
-.ts.middoted.list > a.item:before 
-    color: $list_bulletLinkColor
+.ts.bulleted.list > a.item:before,  
+    color: $textColor
 
-ul.ts.list ul,
-.ts.bulleted.list .list,
-.ts.middoted.list .list 
-    padding-left: $list_bulletChildDistance
+.ts.bulleted.list.inverted .list > a.item:before,
+.ts.bulleted.list.inverted > a.item:before,  
+    color: $list_invertedDescriptionColor
+    
+ul.ts.list:not(.horizontal) li:before,
+.ts.bulleted.list:not(.horizontal) .list > .item:before,
+.ts.bulleted.list:not(.horizontal) > .item:before,   
+    margin-right: calc(#{$list_horizontalBulletSpacing})
+    content     : '•'
+    
+.ts.middoted.list:not(.horizontal) .list > .item:before,
+.ts.middoted.list:not(.horizontal) > .item:before 
+    margin-right: calc(#{$list_horizontalBulletSpacing})
+    content     : '·'
 
 /* Horizontal Bulleted */
-ul.ts.horizontal.bulleted.list,
-.ts.horizontal.bulleted.list,
-ul.ts.horizontal.middoted.list,
-.ts.horizontal.middoted.list 
-    margin-left: 0em
-
 ul.ts.horizontal.bulleted.list li,
 .ts.horizontal.bulleted.list > .item,
 ul.ts.horizontal.middoted.list li,
-.ts.horizontal.middoted.list > .item 
-    margin-left: $list_horizontalBulletSpacing
-
-ul.ts.horizontal.bulleted.list li:first-child,
-.ts.horizontal.bulleted.list > .item:first-child,
-ul.ts.horizontal.middoted.list li:first-child,
-.ts.horizontal.middoted.list > .item:first-child 
-    margin-left: 0em
-
-ul.ts.horizontal.bulleted.list li::before,
-.ts.horizontal.bulleted.list > .item::before,
-ul.ts.horizontal.middoted.list li::before,
-.ts.horizontal.middoted.list > .item::before 
-    color: $list_horizontalBulletColor
-
-ul.ts.horizontal.bulleted.list li:first-child::before,
-.ts.horizontal.bulleted.list > .item:first-child::before,
-ul.ts.horizontal.middoted.list li:first-child::before,
-.ts.horizontal.middoted.list > .item:first-child::before 
-    display: none
+.ts.horizontal.middoted.list > .item
+    margin-left : 0
+    margin-right: 0
+    
+ul.ts.horizontal.middoted.list li:not(:first-child):before,
+.ts.horizontal.middoted.list > .item:not(:first-child):before
+    margin-left : calc(#{$list_horizontalBulletSpacing} / 2)
+    margin-right: calc(#{$list_horizontalBulletSpacing} / 2)
+    content     : '·'
+    
+ul.ts.horizontal.bulleted.list li:not(:first-child):before,
+.ts.horizontal.bulleted.list > .item:not(:first-child):before,
+    margin-left : calc(#{$list_horizontalBulletSpacing} / 2)
+    margin-right: calc(#{$list_horizontalBulletSpacing} / 2)
+    content     : '•'
 
 //-------------------//
 //      Ordered
@@ -786,7 +754,7 @@ ol.ts.horizontal.list li:before,
 //      Relaxed
 //-------------------//
 
-.ts.relaxed.list:not(.horizontal) > .item:not(:first-child) 
+.ts.relaxed.list:not(.horizontal) > .item:not(:first-child)
     padding-top: $list_relaxedItemVerticalPadding
 
 .ts.relaxed.list:not(.horizontal) > .item:not(:last-child) 
@@ -797,7 +765,7 @@ ol.ts.horizontal.list li:before,
     padding-left: $list_relaxedHorizontalPadding
 
 .ts.horizontal.relaxed.list .list > .item:not(:last-child),
-.ts.horizontal.relaxed.list > .item:not(:last-child) 
+.ts.horizontal.relaxed.list > .item:not(:last-child)
     padding-right: $list_relaxedHorizontalPadding
 
 /* Very Relaxed */
