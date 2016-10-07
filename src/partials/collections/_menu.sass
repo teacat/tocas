@@ -8,7 +8,7 @@
     background-color: $backgroundColor
     border-color    : $borderColor
     
-    .item,
+    .item.item,
     .item .menu .item
         color       : $color
         border-color: $borderColor
@@ -16,10 +16,35 @@
     .item.unread:after
         background-color: $color
         
-    .item:active,
+    .item.item:active,
     .item:hover,
     .item .menu .item:hover
         color: $color
+
+@mixin menu-pure-variant($color, $backgroundColor, $borderColor)
+    background-color: $backgroundColor
+    border-color    : $borderColor
+    
+    .item,
+    .item .menu .item,
+        color       : $color
+        border-color: $borderColor
+    
+    .item.unread:after
+        background-color: $color
+    
+    a.item:hover:not(.active),
+    a.item .menu .item:hover:not(.active),
+    .item.dropdown.dropdown.dropdown:hover
+        color: lighten($color, 14%)
+    
+    a.item.item:active,
+    a.item.active,
+    a.item .menu .item:active,
+    a.item .menu .item.active,
+    .item.active,
+    .item.dropdown.visible.visible.visible
+        color: darken($color, 10%)
 
 //*******************************//
 //              Main
@@ -40,7 +65,7 @@
     &:last-child
         margin-bottom: 0
 
-.ts.menu:not(.secondary):not(.pointing):not(.tabbed)
+.ts.menu[class*="horizontally scrollable"]:not(.secondary):not(.pointing):not(.tabbed)
     overflow-x: auto
     
 //-------------------//
@@ -102,8 +127,13 @@
 //       Active       
 //-------------------// 
 
-.ts.menu a.item:active,
-.ts.menu .item.active
+.ts.menu:not(.pure) a.item:active,
+.ts.menu:not(.pure) .item.active,
+.ts.menu:not(.pure) .item.dropdown.visible
+    background-color: $menu_itemActiveBackgroundColor
+
+.ts.menu:not(.pure) a.item:active,
+.ts.menu:not(.pure) .item.active,
     background-color: $menu_itemActiveBackgroundColor
     color           : $menu_itemActiveTextColor
 
@@ -172,6 +202,23 @@
 .ts.menu.inverted.negative
     +menu-inverted-variant($menu_negativeTextColor, $menu_negativeBackgroundColor, $menu_negativeBorderColor)
 .ts.menu.inverted .item.disabled
+    color: $invertedDisabledTextColor
+    
+.ts.menu.basic
+    +menu-pure-variant($menu_defaultTextColor, $menu_defaultBackgroundColor, $menu_defaultBorderColor)
+.ts.menu.inverted.pure
+    +menu-pure-variant($menu_invertedTextColor, $menu_invertedBackgroundColor, $menu_invertedBorderColor)
+.ts.menu.inverted.primary.pure
+    +menu-pure-variant($menu_primaryTextColor, $menu_primaryBackgroundColor, $menu_primaryBorderColor)
+.ts.menu.inverted.info.pure
+    +menu-pure-variant($menu_infoTextColor, $menu_infoBackgroundColor, $menu_infoBorderColor)
+.ts.menu.inverted.warning.pure
+    +menu-pure-variant($menu_warningTextColor, $menu_warningBackgroundColor, $menu_warningBorderColor)
+.ts.menu.inverted.positive.pure
+    +menu-pure-variant($menu_positiveTextColor, $menu_positiveBackgroundColor, $menu_positiveBorderColor)
+.ts.menu.inverted.negative.pure
+    +menu-pure-variant($menu_negativeTextColor, $menu_negativeBackgroundColor, $menu_negativeBorderColor)
+.ts.menu.inverted.pure .item.disabled
     color: $invertedDisabledTextColor
 
 //-------------------//
@@ -361,7 +408,7 @@
 .ts.menu.tabbed .item:before
     display: none
  
-.ts.menu.tabbed .item.active
+.ts.menu.tabbed .item.active.active
     background-color: $menu_tabbedMenuActiveBackgroundColor
     border-color    : $menu_tabbedMenuActiveBorderColor
     margin-bottom   : -$menu_tabbedMenuBorderWidth
@@ -455,15 +502,17 @@
     margin-left: 0
     
 .ts.menu.pure .item:not(.header):hover,
-.ts.menu.pure a.item.header:hover
+.ts.menu.pure a.item.header:hover,
     background-color: initial !important
-    opacity         : $menu_pureItemHoverOpacity
 
 .ts.menu.pure .item:not(.header):active,
 .ts.menu.pure a.item.header:active
     background-color: initial !important
-    opacity         : $menu_pureItemActiveOpacity
 
+.ts.menu.pure .item.active,
+.ts.menu.pure .item.dropdown.visible
+    font-weight: $menu_pureActiveFontWeight
+    
 //-------------------//
 //        Label
 //-------------------// 
