@@ -50,7 +50,7 @@ function expandDropdown(target)
 
 
 /**
- * Contract tge dropdown menu.
+ * Contract the dropdown menu.
  * 
  * @param {HTMLElement} target   The dropdown to contract.
  */
@@ -84,10 +84,22 @@ function detectDropdown(target, event)
     var parentIsItem      = ts(event.target).parent().hasClass('item')
     var targetIsDropdown  = ts(event.target).hasClass('dropdown')
     var isItem            = ts(event.target).hasClass('item')
-
-    if((isDropdown && isItem) || (isDropdown && parentIsItem))
+    var isTsMenuItem      = ts(event.target).closest('.ts.menu')
+    
+    console.log(isDropdown, isDropdownText, hasDropdownParent, parentIsItem, targetIsDropdown, isItem)
+    console.log(target)
+    
+    if((isTsMenuItem && isDropdown && parentIsItem && targetIsDropdown) || 
+       (isTsMenuItem && isDropdown && !parentIsItem && targetIsDropdown) ||
+       (isTsMenuItem && isDropdown && hasDropdownParent && parentIsItem))
+        expandDropdown(target)
+    
+    else if((isDropdown && isItem) || (isDropdown && parentIsItem))
         contractDropdown('.ts.dropdown.visible')
-
+        
+    else if(isDropdown && isTsMenuItem)
+        expandDropdown(target)
+        
     else if(isDropdown && targetIsDropdown)
         expandDropdown(target)
 
