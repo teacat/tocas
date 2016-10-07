@@ -271,7 +271,8 @@
     display   : none
     outline   : none
     top       : 100%
-    min-width : max-content
+    //min-width : max-content
+    min-width : $dropdown_menuMinWidth
     transform : translateZ(0px)
     
     margin    : $dropdown_menuMargin
@@ -302,7 +303,7 @@
 //        Item       
 //-------------------//
 
-.ts.dropdown .menu > .item 
+.ts.dropdown .menu > .item.item.item.item.item.item
     +extend(no-select)
     
     position  : relative
@@ -322,6 +323,10 @@
     text-transform: $dropdown_itemTextTransform
     font-weight   : $dropdown_itemFontWeight
     box-shadow    : $dropdown_itemBoxShadow
+    
+    // .ts.menu override
+    margin-left : 0 !important
+    margin-right: 0 !important
     
     -webkit-touch-callout: none
 
@@ -363,12 +368,12 @@
     font-weight   : $dropdown_menuHeaderFontWeight
     text-transform: $dropdown_menuHeaderTextTransform
 
-
 .ts.dropdown .menu > .divider 
     border-top: $dropdown_menuDividerBorder
     height    : 0em
-    margin    : $dropdown_menuDividerMargin
 
+.ts.dropdown .menu > .section.divider 
+    margin    : $dropdown_menuSectionDividerMargin
 
 .ts.dropdown .menu > .input 
     width    : auto
@@ -425,23 +430,23 @@
 //       Hover       
 //-------------------//
 
-.ts.dropdown .menu > .item:hover
-    background: $dropdown_hoveredItemBackground
-    color     : $dropdown_hoveredItemColor
-    z-index   : $dropdown_hoveredZIndex
+.ts.dropdown .menu > .item.item:hover
+    background-color: $dropdown_hoveredItemBackground !important
+    color           : $dropdown_hoveredItemColor
+    z-index         : $dropdown_hoveredZIndex
 
 //-------------------//
 //       Active       
 //-------------------//
 
 .ts.dropdown .menu .active.item
-    background : $dropdown_activeItemBackground
-    font-weight: $dropdown_activeItemFontWeight
-    color      : $dropdown_activeItemColor
-    z-index    : $dropdown_activeItemZIndex
+    background-color: $dropdown_activeItemBackground !important
+    font-weight     : $dropdown_activeItemFontWeight
+    color           : $dropdown_activeItemColor
+    z-index         : $dropdown_activeItemZIndex
     
-.ts.dropdown .menu > .item:active
-    background : $dropdown_activeItemBackground
+.ts.dropdown .menu > .item.item:active
+    background-color: $dropdown_activeItemBackground !important
 
 //-------------------//
 //     Animation       
@@ -461,9 +466,11 @@
 
 .ts.dropdown.downward .menu
     transform-origin: center top 0px
+    box-shadow      : $dropdown_downwardRaisedShadow
     
 .ts.dropdown.upward .menu
     transform-origin: center bottom 0px
+    box-shadow      : $dropdown_upwardRaisedShadow
     
 .ts.dropdown.upward .menu
     bottom: 100%
@@ -487,3 +494,15 @@
     
 .ts.dropdown.floating.downward .menu
     margin-top: $dropdown_floatingMenuDistance
+    
+//-------------------//
+//      Coupling       
+//-------------------//
+
+.ts.menu .ts.dropdown.upward .menu
+    border-bottom-left-radius : 0
+    border-bottom-right-radius: 0
+  
+.ts.menu .ts.dropdown.downward .menu  
+    border-top-left-radius : 0
+    border-top-right-radius: 0
