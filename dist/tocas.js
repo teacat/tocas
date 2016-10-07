@@ -86,10 +86,7 @@ function detectDropdown(target, event)
     var isItem            = ts(event.target).hasClass('item')
     var isTsMenuItem      = ts(event.target).closest('.ts.menu')
     
-    console.log(isDropdown, isDropdownText, hasDropdownParent, parentIsItem, targetIsDropdown, isItem)
-    console.log(target)
-    
-    if((isTsMenuItem && isDropdown && parentIsItem && targetIsDropdown) || 
+    if((isTsMenuItem && isDropdown && parentIsItem && targetIsDropdown)  || 
        (isTsMenuItem && isDropdown && !parentIsItem && targetIsDropdown) ||
        (isTsMenuItem && isDropdown && hasDropdownParent && parentIsItem))
         expandDropdown(target)
