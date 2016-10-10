@@ -2,7 +2,7 @@
     
     <div>
         <!-- 穹頂 -->
-        <nav class="ts inverted large flatted borderless fluid basic menu">
+        <nav class="ts pure inverted large flatted borderless fluid menu">
             <div class="ts thinner container">
                 <a href="#!" class="item">
                     相簿
