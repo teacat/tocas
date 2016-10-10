@@ -452,7 +452,7 @@ export default
         <button class="ts secondary opinion button">沒有</button>
     </div>
 </div>`,
-            mark: 'opinion, secondary opinion'
+            mark: 'secondary opinion, opinion'
         },
         {
             type       : small,
