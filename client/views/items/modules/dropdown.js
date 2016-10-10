@@ -282,6 +282,30 @@ export default
             mark: 'divider'
         },
         {
+            type       : tiny,
+            title      : '區段分隔線',
+            description: `分隔線的間距可以更大，用以加強分隔區段。`
+        },
+        {
+            type: 'example',
+            code: `<div class="ts floating dropdown button">
+    <span class="text">選擇人物</span>
+    <div class="menu">
+        <div class="item">
+            橙希
+        </div>
+        <div class="item">
+            吳雨藍
+        </div>
+        <div class="section divider"></div>
+        <div class="item">
+            羽田白音
+        </div>
+    </div>
+</div>`,
+            mark: 'section divider'
+        },
+        {
             type       : small,
             title      : '圖示',
             description: `選單內可以有圖示點綴。`,
