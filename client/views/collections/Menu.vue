@@ -21,6 +21,10 @@ export default
     beforeCreate()
     {
         document.title = '選單 | Tocas UI'
+    },
+    mounted()
+    {
+        ts('.ts.dropdown:not(.basic)').dropdown()
     }
 }
 </script>
