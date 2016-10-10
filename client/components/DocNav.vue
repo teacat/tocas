@@ -1,5 +1,5 @@
 <template>
-    <nav class="ts large fluid borderless pure basic menu">
+    <nav class="ts horizontally scrollable large fluid borderless pure basic menu">
         <div class="ts narrow container">
             <router-link class="item" to="/">Tocas UI</router-link>
             <router-link class="item" to="/getting-started/">從這開始</router-link>
