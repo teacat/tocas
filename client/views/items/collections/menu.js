@@ -433,6 +433,32 @@ export default
             mark: 'menu'
         },
         {
+            type       : small,
+            title      : '下拉式功能選單',
+            description: `你可以在選單內擺置幾個下拉式功能選單，這部分請參考下拉式選單元件。`,
+            link       : 'dropdown-menu'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts menu">
+    <a class="item">首頁</a>
+    <div class="ts item dropdown">
+        <div class="text">
+            元件
+        </div>
+        <i class="dropdown icon"></i>
+        <div class="menu">
+            <a class="item">按鈕</a>
+            <div class="divider"></div>
+            <a class="item">表單</a>
+            <a class="item">導航列</a>
+        </div>
+    </div>
+    <a class="item">文件</a>
+</div>`,
+            mark: 'ts item dropdown'
+        },
+        {
             type       : normal,
             title      : '外觀',
             description: '選單具有不同的外觀。',
@@ -669,6 +695,32 @@ export default
     <a class="item">項目</a>
 </div>`,
             mark: 'stackable'
+        },
+        {
+            type       : small,
+            title      : '可水平捲動的',
+            description: `當選單項目過多的時候你可以讓選單支援水平捲動，避免項目溢出來。`,
+            link       : 'horizontally-scrollable'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts horizontally scrollable menu">
+    <a class="item">項目</a>
+    <a class="item">項目</a>
+    <a class="item">項目</a>
+    <a class="item">項目</a>
+    <a class="item">項目</a>
+    <a class="item">項目</a>
+    <a class="item">項目</a>
+    <a class="item">項目</a>
+    <a class="item">項目</a>
+    <a class="item">項目</a>
+    <a class="item">項目</a>
+    <a class="item">項目</a>
+    <a class="item">項目</a>
+    <a class="item">項目</a>
+</div>`,
+            mark: 'horizontally scrollable'
         },
         {
             type       : small,
