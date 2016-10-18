@@ -46,8 +46,8 @@ $ git clone https://github.com/TeaMeow/TocasUI.git
 $ git clone https://github.com/TeaMeow/TocasUI.git
 $ git fetch --tags
 $ git tag -l
-> v2.0.0-rc.7
-$ git checkout tags/v2.0.0-rc.7
+> v2.0.2
+$ git checkout tags/v2.0.2
 ```
 
 &nbsp;
@@ -157,3 +157,5 @@ Commit 可以是英文或是中文（English is allowed :D），有時間就會�
 [Pure](http://purecss.io/)
 
 [Milligram](https://milligram.github.io/)
+
+[Element](http://element.eleme.io/)
