@@ -114,7 +114,9 @@ Tocas UI 的樣式命名方式來自於 Semantic UI 的精神，以意義為主�
 
 我們很高興接受任何 Pull Request（如果是新功能的話要符合相關理念 :D），
 
-Commit 可以是英文或是中文（English is allowed :D），有時間就會去檢查。
+Commit 可以是英文或是中文，有時間就會去檢查。
+
+Commits written in English are welcomed.
 
 &nbsp;
 
