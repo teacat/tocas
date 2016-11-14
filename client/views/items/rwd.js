@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '響應式',
-        subTitle: 
+        subTitle:
         `
             協助你能夠在不同裝置上更加地得心應手。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,
@@ -33,7 +33,7 @@ export default
         {
             type       : small,
             title      : '樣式列表',
-            description: 
+            description:
             `
                 <p>這裡是輔助樣式的螢幕尺寸判斷基準表格。</p>
                 <table class="ts small stackable table">
@@ -88,7 +88,7 @@ export default
         {
             type       : small,
             title      : '目前裝置偵測',
-            description: 
+            description:
             `
                 <p>下方會顯示你目前螢幕正符合哪種輔助樣式。</p>
                 <span class="mobile only"><span class="ts large info label" style="color: #FFF !important">行動裝置</span></span>
@@ -112,7 +112,7 @@ export default
         {
             type       : small,
             title      : '僅行動裝置',
-            description: 
+            description:
             `
                 套用了這個樣式的容器僅會出現在<strong>行動裝置</strong>（手機、掌上型遊戲機）的橫和直立畫面。
             `,
@@ -127,7 +127,7 @@ export default
         {
             type       : small,
             title      : '行動裝置或平板',
-            description: 
+            description:
             `
                 這將會使你的容器出現在<strong>行動裝置</strong>或是<strong>平板螢幕</strong>（如 Nexus 7、iPad）上，
                 在其他裝置時則會隱藏容器。
@@ -143,7 +143,7 @@ export default
         {
             type       : small,
             title      : '僅平板裝置',
-            description: 
+            description:
             `
                 套用此樣式後容器、元素僅會出現在平板螢幕上。
             `,
@@ -158,7 +158,7 @@ export default
         {
             type       : small,
             title      : '僅小型電腦螢幕',
-            description: 
+            description:
             `
                 套用後僅會在小型電腦螢幕上看見該元素、容器，所謂的小型電腦螢幕即是<strong>比傳統筆記型電腦還要小的螢幕</strong>，
                 而<strong>非</strong>家用桌機的 21～24 寸或電視螢幕。
@@ -174,7 +174,7 @@ export default
         {
             type       : small,
             title      : '平板或大型裝置',
-            description: 
+            description:
             `
                 這個樣式將會讓你的元素、容器僅出現在<strong>平板螢幕</strong>或者是<strong>大型裝置</strong>中，
                 大型裝置為<strong>電腦螢幕和大於電腦螢幕以上寬度的顯示裝置</strong>（如電視）。
@@ -190,7 +190,7 @@ export default
         {
             type       : small,
             title      : '僅大型裝置',
-            description: 
+            description:
             `
                 套用此樣式將會讓你的元素或是容器僅出現在大型裝置（如：電腦螢幕、電視）中。
             `,
@@ -205,7 +205,7 @@ export default
         {
             type       : small,
             title      : '僅大型螢幕',
-            description: 
+            description:
             `
                 「大型螢幕」和「大型裝置」<strong>有所不同</strong>，大型螢幕更為嚴謹（要求的螢幕尺寸更大），不過現今的筆記型電腦幾乎都被概括在內。
             `,

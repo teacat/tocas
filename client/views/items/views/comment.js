@@ -16,12 +16,12 @@ export default
     header:
     {
         title   : '留言',
-        subTitle: 
+        subTitle:
         `
             如何引發網路戰爭？一，留言；二，等待。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,
@@ -134,7 +134,7 @@ export default
         {
             type: 'example',
             code: `<div class="ts comments">
-    <div class="comment">     
+    <div class="comment">
         <div class="avatar">
             <img src="${imgPlaceholderUser2}">
         </div>

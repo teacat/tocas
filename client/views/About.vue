@@ -42,18 +42,18 @@
     </main>
 </template>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
 section
 {
     padding-top   : .2em;
     padding-bottom: 1.5em;
-    
+
     h2
     {
         font-size  : 34px;
         color      : #656565;
         line-height: 1.3em;
-        
+
         &:not(:first-child)
         {
             margin-top: 2em;
@@ -73,9 +73,9 @@ import DocJumbotron from '../components/DocJumbotron'
 import DocNav      from '../components/DocNav'
 import DocFooter   from '../components/DocFooter'
 
-export default 
+export default
 {
-    components: 
+    components:
     {
         DocNav,
         DocFooter,
@@ -90,8 +90,8 @@ export default
     {
         /** 將網頁捲至頂部　*/
         window.scrollTo(0, 0);
-        
-        this.$store.dispatch('CALCULATE_RENDER_TIME', {time       : new Date().getTime(), 
+
+        this.$store.dispatch('CALCULATE_RENDER_TIME', {time       : new Date().getTime(),
                                                        startedTime: window.RENDER_STARTED_TIME})
     }
 }

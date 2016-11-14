@@ -1,39 +1,39 @@
 <template>
     <div class="example preview">
-        
+
         <!-- 無框實際範例 -->
         <div class="real example" v-html="code" v-if="hasExample"></div>
         <!-- / 無框實際範例 -->
-        
-        
+
+
         <!-- 原始碼片段 -->
         <div class="ts padded secondary segment" v-if="!hasExample">
             <pre class="code"><code class="hljs" :data-utaha-hightlight="mark" :data-utaha-tag-hightlight="tagMark" :data-utaha-remove="remove">{{ code }}</code></pre>
         </div>
         <!-- / 原始碼片段 -->
-        
-        
+
+
         <!-- 範例片段 -->
         <div class="ts example segments" v-if="hasExample">
-            
+
             <!-- 實際範例 -->
             <div class="ts clearing preview segment" v-html="code"></div>
             <!-- / 實際範例 -->
-            
-            
+
+
             <!-- 原始碼 -->
             <div class="ts padded secondary segment">
                 <pre class="code"><code class="hljs" :data-utaha-hightlight="mark" :data-utaha-tag-hightlight="tagMark" :data-utaha-remove="remove">{{ code }}</code></pre>
             </div>
             <!-- / 原始碼 -->
-            
+
         </div>
         <!-- / 範例片段 -->
-        
+
     </div>
 </template>
 
-<style style="sass">
+<style>
 .hljs
 {
     background  : none    !important;
@@ -76,7 +76,7 @@
     border-radius   : 4px;
     color           : #FFF !important;
 }
-.hljs .hljs-important-class * 
+.hljs .hljs-important-class *
 {
    color: #FFF !important;
 }
@@ -87,7 +87,7 @@
 }
 code.hljs.javascript
 {
-    color: #008076 !important; 
+    color: #008076 !important;
 }
 code.hljs.javascript .hljs-string
 {
@@ -103,7 +103,7 @@ code.hljs.javascript .hljs-string
 }
 </style>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
 pre
 {
     overflow-x: auto;
@@ -119,7 +119,7 @@ pre
     {
         display: none;
     }
-    
+
     &.expanded
     {
         .real.example
@@ -137,7 +137,7 @@ pre
 <script>
 
 
-export default 
+export default
 {
     name : 'ExampleSegments',
     props:

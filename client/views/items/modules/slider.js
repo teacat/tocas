@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '滑桿',
-        subTitle: 
+        subTitle:
         `
             省去手動輸入數值的麻煩。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,

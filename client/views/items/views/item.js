@@ -16,12 +16,12 @@ export default
     header:
     {
         title   : '項目',
-        subTitle: 
+        subTitle:
         `
             用來陳列商品或者是一些項目都很不錯用。
         `
     },
-    html: 
+    html:
     [
         {
             type       : normal,
@@ -493,9 +493,9 @@ export default
                 Cum sociis
             </div>
             <div class="description">
-                Quisque gravida dictum justo, 
+                Quisque gravida dictum justo,
                 vitae dignissim est luctus a. Phasellus placerat,
-                nunc eget hendrerit dictum, 
+                nunc eget hendrerit dictum,
                 orci urna iaculis enim.
             </div>
         </div>
@@ -584,9 +584,9 @@ export default
                 Cum sociis
             </div>
             <div class="description">
-                Quisque gravida dictum justo, 
+                Quisque gravida dictum justo,
                 vitae dignissim est luctus a. Phasellus placerat,
-                nunc eget hendrerit dictum, 
+                nunc eget hendrerit dictum,
                 orci urna iaculis enim.
             </div>
             <div class="extra">

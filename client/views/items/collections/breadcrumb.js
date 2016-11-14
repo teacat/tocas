@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '麵包屑',
-        subTitle: 
+        subTitle:
         `
             留下導覽的痕跡。
         `
     },
-    html: 
+    html:
     [
         {
             type       : normal,

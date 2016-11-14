@@ -13,7 +13,7 @@
     </article>
 </template>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
 .card
 {
     .content
@@ -22,12 +22,12 @@
         {
             color: #5d5d5d;
         }
-        
+
         .meta
         {
             color: #a5a5a5;
         }
-        
+
         .description
         {
             color: #888888;

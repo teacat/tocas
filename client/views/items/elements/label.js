@@ -16,17 +16,17 @@ export default
     header:
     {
         title   : '標籤',
-        subTitle: 
+        subTitle:
         `
             那個 5 元，然後這個——無價。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,
             title      : '說明',
-            description: 
+            description:
             `
                 <p>標籤會在沒有內容的時候自動隱藏，</p>
                 <p>這也很適合用來當作一個狀態指標，對於一個色盲使用者而言，</p>

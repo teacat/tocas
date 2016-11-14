@@ -4,7 +4,7 @@
     </div>
 </template>
 
-<style lang="sass">
+<style lang="scss">
 .example .ts.grid:not(.three)
 {
     &:before
@@ -18,18 +18,18 @@
         content: '';
         border: 1px solid #929292;
     }
-    
+
     &.relaxed:before
     {
         left: calc(0.88rem - 1px);
         right: calc(0.88rem - 1px);
     }
-    
+
     .grid:before
     {
         border-width: 2px
     }
-    
+
     .row:before
     {
         position: absolute;
@@ -53,7 +53,7 @@
     color: #909090;
     background-clip: content-box;
 }
-    
+
 .example .ts.grid:not(.three)  .column:not(.row):not(.grid):after
 {
     box-shadow: 0px 0px 0px 1px rgba(86, 61, 124, 0.2) inset;
@@ -64,13 +64,13 @@
     right: 0.44rem;
     bottom: 0.44rem;
     left: 0.44rem;
-}   
+}
 
 .example .ts.relaxed.grid:not(.three)  .column:not(.row):not(.grid):after
 {
     right: 0.88rem;
     left: 0.88rem;
-}    
+}
 
 
 .example .ts.grid.two
@@ -88,15 +88,15 @@
 import DocBasic from '../../components/DocBasic'
 import items    from '../items/collections/grid'
 
-export default 
+export default
 {
-    components: 
+    components:
     {
         DocBasic
     },
     data()
     {
-        return { items: items }        
+        return { items: items }
     },
     beforeCreate()
     {

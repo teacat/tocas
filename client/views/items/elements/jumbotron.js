@@ -11,17 +11,17 @@ export default
     header:
     {
         title   : '聚焦看板',
-        subTitle: 
+        subTitle:
         `
             現在是時候閃耀了。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,
             title      : '說明',
-            description: 
+            description:
             `
                 <p>聚焦看板不應該被拿來當作擺放很多元素的容器，</p>
                 <p>這應該只被拿來當作頁頭，用來當作擺放標題或少許元件的地方。</p>

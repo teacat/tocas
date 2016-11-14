@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '進度列',
-        subTitle: 
+        subTitle:
         `
             讓使用者知道他還要等多久，前提是不會卡在 99%。
         `
     },
-    html: 
+    html:
     [
         {
             type       : normal,

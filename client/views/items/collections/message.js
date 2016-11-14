@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '訊息',
-        subTitle: 
+        subTitle:
         `
             傳遞訊息至遠方。
         `
     },
-    html: 
+    html:
     [
         {
             type       : normal,

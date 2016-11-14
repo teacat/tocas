@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '日曆',
-        subTitle: 
+        subTitle:
         `
             哇，2016 始春。
         `
     },
-    html: 
+    html:
     [
         {
             type       : normal,

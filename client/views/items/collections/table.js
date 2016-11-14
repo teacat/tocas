@@ -16,12 +16,12 @@ export default
     header:
     {
         title   : '表格',
-        subTitle: 
+        subTitle:
         `
             呈現統計資料的好方法。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,

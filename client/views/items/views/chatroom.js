@@ -16,17 +16,17 @@ export default
     header:
     {
         title   : '聊天室',
-        subTitle: 
+        subTitle:
         `
             跨國交際的好場所。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,
             title      : '說明',
-            description: 
+            description:
             `
                 <p>聊天室目前僅有訊息元件，而不像 Tocas UI 1 擁有完整的聊天室元件，</p>
                 <p>主要原因是利用卡片和聊天室元件搭配有著更大的效益。</p>
@@ -245,7 +245,7 @@ export default
             <div class="content">
                 <div class="text">
                     <div class="inline author">
-                        Yami Odymel: 
+                        Yami Odymel:
                     </div>
                     嗨！早安。
                 </div>

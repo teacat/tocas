@@ -11,17 +11,17 @@ export default
     header:
     {
         title   : '片段',
-        subTitle: 
+        subTitle:
         `
             碎片化的文字聚集地。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,
             title      : '說明',
-            description: 
+            description:
             `
                 <p>片段通常可以拿來包裝文章內容，</p>
                 <p>但他不適合獨立當作一個卡片使用。</p>

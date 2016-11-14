@@ -11,7 +11,7 @@
     </main>
 </template>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
 main
 {
     height: 100%;
@@ -29,10 +29,10 @@ import DocNav      from '../components/DocNav'
 import DocExample  from '../components/DocExample'
 import DocFooter   from '../components/DocFooter'
 
-export default 
+export default
 {
     name      : 'DocList',
-    components: 
+    components:
     {
         DocCards,
         DocNav,
@@ -51,7 +51,7 @@ export default
     },
     mounted()
     {
-        this.$store.dispatch('CALCULATE_RENDER_TIME', {time       : new Date().getTime(), 
+        this.$store.dispatch('CALCULATE_RENDER_TIME', {time       : new Date().getTime(),
                                                        startedTime: window.RENDER_STARTED_TIME})
     }
 }

@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '輸入欄位',
-        subTitle: 
+        subTitle:
         `
             再鍵入幾個字就是新的開始。
         `
     },
-    html: 
+    html:
     [
         {
             type       : normal,

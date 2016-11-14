@@ -3,7 +3,7 @@ export default
     header:
     {
         title   : '聚合型',
-        subTitle: 
+        subTitle:
         `
             專門收藏、集合資料用的元件。
         `

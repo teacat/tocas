@@ -16,12 +16,12 @@ export default
     header:
     {
         title   : '統計數據',
-        subTitle: 
+        subTitle:
         `
             平均可能不超過 8 —— 公分。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,
@@ -192,7 +192,7 @@ export default
     </div>
     <div class="statistic">
         <div class="value">
-            <img class="ts circular image" src="${imgPlaceholderUser3}"> 
+            <img class="ts circular image" src="${imgPlaceholderUser3}">
             Infinity-S
         </div>
         <div class="label">人氣最高</div>

@@ -16,12 +16,12 @@ export default
     header:
     {
         title   : '動態',
-        subTitle: 
+        subTitle:
         `
             你朋友剛到你家拜訪，五分鐘前，對了，他還把你的 PS4 幹走了。
         `
     },
-    html: 
+    html:
     [
         {
             type       : normal,

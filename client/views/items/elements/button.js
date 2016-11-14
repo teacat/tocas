@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '按鈕',
-        subTitle: 
+        subTitle:
         `
             一個重要的按鈕，我們將它視為核彈按鈕般，精心設計和呵護。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,

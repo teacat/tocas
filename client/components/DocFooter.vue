@@ -31,7 +31,7 @@
     </footer>
 </template>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
 .segment
 {
     margin-top: 3em !important;

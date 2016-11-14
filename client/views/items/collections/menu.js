@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '選單',
-        subTitle: 
+        subTitle:
         `
             從這裡到達任何地方。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,

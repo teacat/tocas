@@ -3,7 +3,7 @@ export default
     header:
     {
         title   : '一般元素',
-        subTitle: 
+        subTitle:
         `
             沒有特別分類的元素。
         `

@@ -9,7 +9,7 @@ const compiler      = webpack(config)
 const devMiddleWare = require('webpack-dev-middleware')(compiler,
 {
     publicPath: config.output.publicPath,
-    stats: 
+    stats:
     {
         colors      : true,
         modules     : false,
@@ -22,17 +22,17 @@ const devMiddleWare = require('webpack-dev-middleware')(compiler,
 app.use(devMiddleWare)
 app.use(require('webpack-hot-middleware')(compiler))
 
-app.get('*', (req, res) => 
+app.get('*', (req, res) =>
 {
     const fs = devMiddleWare.fileSystem
-    
-    devMiddleWare.waitUntilValid(() => 
+
+    devMiddleWare.waitUntilValid(() =>
     {
         res.end(fs.readFileSync(path.join(config.output.path, '../index.html')))
     })
 })
 
-app.listen(8080, () => 
+app.listen(8080, () =>
 {
     console.log(`【正位於 http://localhost:8080 監聽中】`)
 })

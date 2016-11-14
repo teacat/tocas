@@ -16,17 +16,17 @@ export default
     header:
     {
         title   : '清單',
-        subTitle: 
+        subTitle:
         `
             一個這個，一個那個。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,
             title      : '說明',
-            description: 
+            description:
             `
                 <p>清單很像一個選單，但是其結構更為簡易，外觀也以純文字居多，</p>
                 <p>很適合用在頁腳的那種連結清單。</p>

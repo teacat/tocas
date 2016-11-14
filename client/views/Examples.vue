@@ -1,5 +1,5 @@
 <template>
-    <doc-list :cards="cards.cards" 
+    <doc-list :cards="cards.cards"
               :title="cards.header.title"
               :subTitle="cards.header.subTitle"></doc-list>
 </template>
@@ -8,15 +8,15 @@
 import DocList from '../components/DocList'
 import cards   from './items/examples'
 
-export default 
+export default
 {
-    components: 
+    components:
     {
         DocList
     },
     data()
     {
-        return { cards: cards }        
+        return { cards: cards }
     },
     beforeCreate()
     {

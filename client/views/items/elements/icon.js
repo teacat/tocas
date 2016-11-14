@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '圖示',
-        subTitle: 
+        subTitle:
         `
             讓網頁不再只有純文字。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,

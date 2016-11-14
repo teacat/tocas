@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '步驟',
-        subTitle: 
+        subTitle:
         `
             告訴別人下一步會是什麼。
         `
     },
-    html: 
+    html:
     [
         {
             type       : normal,

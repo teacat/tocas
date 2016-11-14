@@ -3,7 +3,7 @@ export default
     header:
     {
         title   : '範例',
-        subTitle: 
+        subTitle:
         `
             以 Tocas UI 所打造的範例頁面。
         `

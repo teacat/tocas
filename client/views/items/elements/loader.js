@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '讀取指示器',
-        subTitle: 
+        subTitle:
         `
             讓使用者能夠稍微在等待你一下。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,

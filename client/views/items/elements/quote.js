@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '引言',
-        subTitle: 
+        subTitle:
         `
             複製別人的話然後不犯法的方式。
         `
     },
-    html: 
+    html:
     [
         {
             type       : normal,

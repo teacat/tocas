@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '淡化幕',
-        subTitle: 
+        subTitle:
         `
             國防布。
         `
     },
-    html: 
+    html:
     [
         {
             type       : normal,

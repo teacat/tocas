@@ -16,12 +16,12 @@ export default
     header:
     {
         title   : '卡片',
-        subTitle: 
+        subTitle:
         `
             隨心所欲，像漢堡一樣，拼湊出你喜歡的。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,
@@ -29,15 +29,15 @@ export default
             description:
             `
                 <p>卡片的內容可以是由各式各樣的元素組成，</p>
-    
+
                 <p>這一個特點請參考「內容」的介紹區塊。</p>
-                
+
                 <p>&nbsp;</p>
-                
+
                 <p>卡片和片段事實上外觀相同（它們來自同個樣式），</p>
-                
+
                 <p>但你不應該因為外觀一樣，就將原本應該用卡片顯示的內容以片段代替，</p>
-                
+
                 <p>請別忘記：雖然外觀一樣，但是內在卻不一樣。</p>
             `
         },
@@ -579,11 +579,11 @@ export default
     </div>
     <div class="content">
         <div class="description">
-            Sed vitae egestas ex. 
-            Lorem ipsum dolor sit amet, 
-            consectetur adipiscing elit. 
-            Sed et felis eleifend, 
-            molestie dolor in, 
+            Sed vitae egestas ex.
+            Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit.
+            Sed et felis eleifend,
+            molestie dolor in,
             scelerisque sapien.
         </div>
     </div>
@@ -729,9 +729,9 @@ export default
             type: 'example',
             code: `<div class="ts flatted card">
     <div class="content">
-        Lorem ipsum dolor sit amet, 
-        consectetur adipiscing elit. 
-        Sed et felis eleifend, 
+        Lorem ipsum dolor sit amet,
+        consectetur adipiscing elit.
+        Sed et felis eleifend,
         molestie dolor in, scelerisque sapien.
     </div>
 </div>`,
@@ -918,33 +918,33 @@ export default
             code: `<div class="ts three waterfall cards">
     <div class="ts card">
         <div class="content">
-            Lorem ipsum dolor sit amet, 
-            consectetur adipiscing elit. 
-            Sed et felis eleifend, molestie dolor in, 
+            Lorem ipsum dolor sit amet,
+            consectetur adipiscing elit.
+            Sed et felis eleifend, molestie dolor in,
             scelerisque sapien.
         </div>
     </div>
     <div class="ts card">
         <div class="content">
             Nullam sed turpis vel purus consectetur elementum a sed ante.
-            In venenatis ligula nisl, 
-            sed dapibus felis ultrices eu. 
-            Curabitur finibus leo dolor, 
-            eu euismod mi elementum ut. 
+            In venenatis ligula nisl,
+            sed dapibus felis ultrices eu.
+            Curabitur finibus leo dolor,
+            eu euismod mi elementum ut.
             Donec ac interdum urna.
         </div>
     </div>
     <div class="ts card">
         <div class="content">
-            Class aptent taciti sociosqu ad litora 
-            torquent per conubia nostra, 
-            per inceptos himenaeos. 
-            Morbi rhoncus porta mi et finibus. 
-            Pellentesque nisi massa, 
-            imperdiet ac egestas ut, 
-            ullamcorper sit amet urna. 
-            Fusce maximus vitae orci vel hendrerit. 
-            Pellentesque habitant morbi tristique senectus 
+            Class aptent taciti sociosqu ad litora
+            torquent per conubia nostra,
+            per inceptos himenaeos.
+            Morbi rhoncus porta mi et finibus.
+            Pellentesque nisi massa,
+            imperdiet ac egestas ut,
+            ullamcorper sit amet urna.
+            Fusce maximus vitae orci vel hendrerit.
+            Pellentesque habitant morbi tristique senectus
             et netus et malesuada fames ac turpis egestas.
         </div>
     </div>
@@ -955,24 +955,24 @@ export default
     </div>
     <div class="ts card">
         <div class="content">
-            Curabitur vel arcu tortor. 
-            Sed sed libero pellentesque, 
-            venenatis justo a, lobortis velit. 
-            Ut cursus, turpis nec sodales posuere, 
-            libero orci maximus lectus, 
+            Curabitur vel arcu tortor.
+            Sed sed libero pellentesque,
+            venenatis justo a, lobortis velit.
+            Ut cursus, turpis nec sodales posuere,
+            libero orci maximus lectus,
             sed tincidunt eros diam vel urna.
         </div>
     </div>
     <div class="ts card">
         <div class="content">
-            Pellentesque nisi massa, 
+            Pellentesque nisi massa,
             imperdiet ac egestas ut,
             ullamcorper sit amet urna.
-            Fusce maximus vitae orci vel hendrerit. 
-            Pellentesque habitant morbi tristique 
-            senectus et netus et malesuada fames ac turpis egestas. 
+            Fusce maximus vitae orci vel hendrerit.
+            Pellentesque habitant morbi tristique
+            senectus et netus et malesuada fames ac turpis egestas.
             Donec vel sagittis purus.
-            Morbi ultrices, 
+            Morbi ultrices,
             quam et feugiat dignissim
         </div>
     </div>

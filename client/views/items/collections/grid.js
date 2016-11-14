@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '網格系統',
-        subTitle: 
+        subTitle:
         `
             用以設計網頁架構，比科技部的表格還要好太多了。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,
@@ -53,7 +53,7 @@ export default
         {
             type       : small,
             title      : '欄位',
-            description: 
+            description:
             `
                 <p>我們稱被劃分開來的區塊為「欄位」，而每個欄位的寬度都是可以自己決定的。</p>
                 <p>一個網格系統被劃分為<strong>十六格</strong>，這將使的你的網格系統更加地具有彈性，</p>
@@ -62,7 +62,7 @@ export default
                 <p>而四格寬的欄位共有<strong>四個</strong>，那就是 <span class="ts horizontal label">4 * 4 = 16 </span> 也就剛好符合了一行所能夠承受的<strong>最大格數（十六格）</strong>，</p>
                 <br>
                 而另一行是則是由<strong>兩格寬</strong>、<strong>八格寬</strong>還有<strong>六格寬</strong>的欄位所組成，這意味著 <span class="ts horizontal label">2 + 8 + 6 = 16 </span>，也就剛好達到了一行的最大格數。</p>
-                
+
             `,
             link: 'column'
         },
@@ -82,7 +82,7 @@ export default
         {
             type       : small,
             title      : '列',
-            description: 
+            description:
             `
                 <p>「列」用來確保「欄位」<strong>不會因為超過十六格而自動換行</strong>。</p>
                 <p>同時「列」也可以確保自己是獨立的一行。</p>
@@ -160,7 +160,7 @@ export default
         {
             type       : small,
             title      : '內容',
-            description: 
+            description:
             `
                 <p>欄位<strong>不應該被套用任何自訂的樣式</strong>，欄位只是一個容器，</p>
                 <p>你應該在裡面放入你要的元素和樣式，而<strong>不是直接在欄位上更改</strong>。</p>
@@ -185,8 +185,8 @@ export default
         {
             type       : small,
             title      : '寬度',
-            description: 
-            `   
+            description:
+            `
                 <p>欄位的寬度由 <span class="ts horizontal label">* wide</span> 決定，例如 <span class="ts horizontal label">one wide</span> 就是一格，<span class="ts horizontal label">sixteen wide</span> 則是十六格。</p>
                 <p>十六格剛好會符合一行最大的寬度，八格則是填滿一行的一半。</p>
             `,
@@ -216,7 +216,7 @@ export default
         {
             type       : small,
             title      : '寬度細分',
-            description: 
+            description:
             `
                 <p>你可以在「列」裡面規劃這一列應該要有幾個欄位，</p>
                 <p>例如 <span class="ts horizontal label">two column</span> 就能夠指定這一列有<strong>兩個欄位</strong>，也就是一格欄位有<strong>八格寬</strong>，
@@ -287,7 +287,7 @@ export default
         {
             type       : small,
             title      : '寬度細分',
-            description: 
+            description:
             `
                 <p>這和「列」的寬度細分相同，但你可以<strong>直接在網格上進行細分</strong>，</p>
                 <p>例如 <span class="ts horizontal label">four column</span> 就能夠指定網格系統的一行會有<strong>四個欄位</strong>，也就是一格欄位有<strong>四格寬</strong>，
@@ -327,7 +327,7 @@ export default
         {
             type       : small,
             title      : '內容對齊',
-            description: 
+            description:
             `
                 <p>網格系統內的欄位內容可以對齊左右，</p>
                 <p>這個設定可以配置於整個網格系統、單列、甚至單個欄位。</p>
@@ -348,7 +348,7 @@ export default
         {
             type       : normal,
             title      : '響應式網格',
-            description: 
+            description:
             `
                 <p>響應式網格可以在行動裝置或小型螢幕上自動縮放，</p>
                 <p>你甚至只需要加一個樣式，其他讓我們來就好了。</p>
@@ -410,8 +410,8 @@ export default
         {
             type       : small,
             title      : '手動調整',
-            description: 
-            `  
+            description:
+            `
                 <p>你可以自訂在不同裝置上欄位所佔的格數，你總共有這些裝置可供選擇。</p>
                 <table class="ts small stackable definition table">
                     <thead>
@@ -461,7 +461,7 @@ export default
         {
             type       : small,
             title      : '手動隱藏',
-            description: 
+            description:
             `
                 你可以透過 <span class="ts horizontal label">[裝置] only</span> 在不同裝置上隱藏特定列、欄位。
             `,

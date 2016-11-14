@@ -8,15 +8,15 @@
 import DocBasic from '../components/DocBasic'
 import items    from './items/animation'
 
-export default 
+export default
 {
-    components: 
+    components:
     {
         DocBasic
     },
     data()
     {
-        return { items: items }        
+        return { items: items }
     },
     beforeCreate()
     {

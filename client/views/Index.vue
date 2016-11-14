@@ -1,7 +1,7 @@
 <template>
     <main>
         <doc-nav class="homepage"></doc-nav>
-        
+
         <!-- 聚焦看板 -->
         <header class="ts fluid horizontally fitted extra padded jumbotron">
             <div class="ts center aligned narrow container">
@@ -26,13 +26,13 @@
             </div>
         </header>
         <!-- / 聚焦看板 -->
-        
-        
+
+
         <!-- 開場白 -->
         <section id="openWhiteDesu">
-            
+
             <div class="ts narrow container relaxed stackable grid">
-                
+
                 <!-- 左側說明 -->
                 <div class="eight wide column">
                     <h2 class="ts header">更有意義</h2>
@@ -42,8 +42,8 @@
                     <p>&nbsp;</p>
                 </div>
                 <!-- / 左側說明 -->
-                
-                
+
+
                 <!-- 右側示範 -->
                 <div class="eight wide column">
                     <h3 class="ts header">HTML</h3>
@@ -59,15 +59,15 @@
                     </div>
                 </div>
                 <!-- / 右側示範 -->
-                
-                
+
+
                 <!-- 分割線欄位 -->
                 <div class="sixteen wide column">
                     <div class="ts section divider"></div>
                 </div>
                 <!-- / 分割線欄位 -->
-                
-                
+
+
                 <!-- 左側說明 -->
                 <div class="sixteen wide column">
                     <h2 class="ts header">更具結構性</h2>
@@ -77,8 +77,8 @@
                     <p>&nbsp;</p>
                 </div>
                 <!-- / 左側說明 -->
-                
-                
+
+
                 <!-- 左側示範 -->
                 <div class="eight wide column">
                     <h3 class="ts header">Tocas UI</h3>
@@ -92,8 +92,8 @@
                     <p>&nbsp;</p>
                 </div>
                 <!-- / 左側示範 -->
-                
-                
+
+
                 <!-- 右側示範 -->
                 <div class="eight wide column">
                     <h3 class="ts header">Bootstrap v4</h3>
@@ -116,21 +116,21 @@
 &lt;/nav&gt;</code></pre>
                 </div>
                 <!-- / 右側示範 -->
-                
+
             </div>
-                
+
         </section>
         <!-- / 開場白 -->
 
 
         <!-- 展示元件 -->
         <section id="components">
-            
+
             <!-- 展示網格 -->
             <div class="ts narrow container relaxed stackable grid">
-                
+
                 <div class="sixteen wide column">
-                    
+
                     <!-- 區塊標題 -->
                     <h2 class="ts center aligned icon header">
                         <i class="gift icon" style="font-size: 128px"></i>
@@ -140,12 +140,12 @@
                         </small>
                     </h2>
                     <!-- / 區塊標題 -->
-                    
+
                 </div>
-                
+
                 <!-- 左側展示欄位 -->
                 <div class="four wide column">
-                    
+
                     <!-- 圖片卡片 -->
                     <h4 class="ts header">圖片卡片</h4>
                     <div class="ts card">
@@ -160,8 +160,8 @@
                         </div>
                     </div>
                     <!-- / 圖片卡片 -->
-                    
-                    
+
+
                     <!-- 垂直選單 -->
                     <h4 class="ts header">垂直選單</h4>
                     <div class="ts vertical inverted positive menu">
@@ -176,8 +176,8 @@
                         </a>
                     </div>
                     <!-- / 垂直選單 -->
-                    
-                    
+
+
                     <!-- 標籤 -->
                     <h4 class="ts header">標籤</h4>
                     <div class="ts label">
@@ -197,14 +197,14 @@
                     <div class="ts warning label">7</div>
                     <div class="ts positive label">13</div>
                     <!-- / 標籤 -->
-                    
+
                 </div>
                 <!-- / 左側展示欄位 -->
-                
-                
+
+
                 <!-- 中間展示欄位 -->
                 <div class="eight wide column">
-                    
+
                     <!-- 文章卡片 -->
                     <h4 class="ts header">文章卡片</h4>
                     <div class="ts card">
@@ -224,8 +224,8 @@
                         </div>
                     </div>
                     <!-- / 文章卡片 -->
-                    
-                    
+
+
                     <!-- 圖案選單 -->
                     <h4 class="ts header">圖案選單</h4>
                     <div class="ts icon inverted info borderless menu">
@@ -240,8 +240,8 @@
                         </a>
                     </div>
                     <!-- / 圖案選單 -->
-                    
-                    
+
+
                     <!-- 按鈕群組 -->
                     <h4 class="ts header">按鈕群組</h4>
                     <div class="ts fluid buttons">
@@ -251,8 +251,8 @@
                         <button class="ts loading primary button">按鈕</button>
                     </div>
                     <!-- / 按鈕群組 -->
-                    
-                    
+
+
                     <!-- 表單 -->
                     <h4 class="ts header">表單</h4>
                     <div class="ts segment">
@@ -272,14 +272,14 @@
                         </form>
                     </div>
                     <!-- / 表單 -->
-                    
+
                 </div>
                 <!-- / 中間展示欄位 -->
-                
-                
+
+
                 <!-- 右側展示欄位 -->
                 <div class="four wide column">
-                    
+
                     <!-- 讀取中的段落 -->
                     <h4 class="ts header">讀取中的段落</h4>
                     <div class="ts loading segment">
@@ -288,8 +288,8 @@
                         <p>&nbsp;</p>
                     </div>
                     <!-- / 讀取中的段落 -->
-                    
-                    
+
+
                     <!-- 浮起來的段落 -->
                     <h4 class="ts header">浮起段落和引言</h4>
                     <div class="ts raised segment">
@@ -300,8 +300,8 @@
                         </blockquote>
                     </div>
                     <!-- / 浮起來的段落 -->
-                    
-                    
+
+
                     <!-- 留言 -->
                     <h4 class="ts header">留言</h4>
                     <div class="ts segment">
@@ -342,21 +342,21 @@
                         </div>
                     </div>
                     <!-- / 留言 -->
-                    
+
                 </div>
                 <!-- / 右側展示欄位 -->
-            
+
             </div>
             <!-- / 展示網格 -->
-            
+
         </section>
         <!-- / 展示元件 -->
-        
-        
+
+
         <!-- 客戶引言 -->
         <section id="quotes">
             <div class="ts narrow container">
-                
+
                 <!-- 區塊標題 -->
                 <h2 class="ts center aligned icon header">
                     <i class="smile icon" style="font-size: 128px"></i>
@@ -366,24 +366,24 @@
                     </small>
                 </h2>
                 <!-- / 區塊標題 -->
-                
-                
+
+
                 <!-- 使用者網格 -->
                 <div class="ts four column stackable grid">
-                    
+
                     <!-- 單個使用者 -->
                     <div class="center aligned column">
-                        
+
                         <!-- 頭像 -->
                         <img class="ts bordered small circular image" src="./images/users/hiram.png">
                         <!-- / 頭像 -->
-                        
-                        
+
+
                         <!-- 名稱 -->
                         <h4 class="ts header">Hiram Huang</h4>
                         <!-- / 名稱 -->
-                        
-                        
+
+
                         <!-- 引言 -->
                         <blockquote>
                             <p>Gan 我快哭了</p>
@@ -391,48 +391,48 @@
                             <p>我的淚</p>
                         </blockquote>
                         <!-- / 引言 -->
-                        
+
                     </div>
                     <!-- / 單個使用者 -->
-                    
-                    
+
+
                      <!-- 單個使用者 -->
                     <div class="center aligned column">
-                        
+
                         <!-- 頭像 -->
                         <img class="ts bordered small circular image" src="./images/users/tsundere.png">
                         <!-- / 頭像 -->
-                        
-                        
+
+
                         <!-- 名稱 -->
                         <h4 class="ts header">Tsundere Chen</h4>
                         <!-- / 名稱 -->
-                        
-                        
+
+
                         <!-- 引言 -->
                         <blockquote>
                             <p>等很久了</p>
                             <p>請問什麼時候換 TeaMeow v1.0.0？</p>
                         </blockquote>
                         <!-- / 引言 -->
-                        
+
                     </div>
                     <!-- / 單個使用者 -->
-                    
-                    
+
+
                      <!-- 單個使用者 -->
                     <div class="center aligned column">
-                        
+
                         <!-- 頭像 -->
                         <img class="ts bordered small circular image" src="./images/users/sciuridae.png">
                         <!-- / 頭像 -->
-                        
-                        
+
+
                         <!-- 名稱 -->
                         <h4 class="ts header">Sciuridae</h4>
                         <!-- / 名稱 -->
-                        
-                        
+
+
                         <!-- 引言 -->
                         <blockquote>
                             <p>洨安都做好 Tocas UI 了</p>
@@ -440,93 +440,93 @@
                             <p>信洨安，得永生</p>
                         </blockquote>
                         <!-- / 引言 -->
-                        
+
                     </div>
                     <!-- / 單個使用者 -->
-                    
-                    
+
+
                      <!-- 單個使用者 -->
                     <div class="center aligned column">
-                        
+
                         <!-- 頭像 -->
                         <img class="ts bordered small circular image" src="./images/users/jasper.png">
                         <!-- / 頭像 -->
-                        
-                        
+
+
                         <!-- 名稱 -->
                         <h4 class="ts header">Jasper Yu</h4>
                         <!-- / 名稱 -->
-                        
-                        
+
+
                         <!-- 引言 -->
                         <blockquote>
                             <p>潮爆了 所以我說那個始春呢</p>
                         </blockquote>
                         <!-- / 引言 -->
-                        
+
                     </div>
                     <!-- / 單個使用者 -->
-                    
-                    
+
+
                      <!-- 單個使用者 -->
                     <div class="center aligned column">
-                        
+
                         <!-- 頭像 -->
                         <img class="ts bordered small circular image" src="./images/users/chris.png">
                         <!-- / 頭像 -->
-                        
-                        
+
+
                         <!-- 名稱 -->
                         <h4 class="ts header">Chris</h4>
                         <!-- / 名稱 -->
-                        
-                        
+
+
                         <!-- 引言 -->
                         <blockquote>
                             <p>哪時候 TeaMeow 的 Messenger 會出現</p>
                         </blockquote>
                         <!-- / 引言 -->
-                        
+
                     </div>
                     <!-- / 單個使用者 -->
-                    
-                    
+
+
                      <!-- 單個使用者 -->
                     <div class="center aligned column">
-                        
+
                         <!-- 頭像 -->
                         <img class="ts bordered small circular image" src="./images/users/sean.png">
                         <!-- / 頭像 -->
-                        
-                        
+
+
                         <!-- 名稱 -->
                         <h4 class="ts header">Sean</h4>
                         <!-- / 名稱 -->
-                        
-                        
+
+
                         <!-- 引言 -->
                         <blockquote>
                             <p>One Tocas UI a Page Keep the Designer away</p>
                         </blockquote>
                         <!-- / 引言 -->
-                        
+
                     </div>
                     <!-- / 單個使用者 -->
-                    
-                    
+
+
                      <!-- 單個使用者 -->
                     <div class="center aligned column">
-                        
+
                         <!-- 頭像 -->
                         <img class="ts bordered small circular image" src="./images/users/choukai.png">
                         <!-- / 頭像 -->
-                        
-                        
+
+
                         <!-- 名稱 -->
                         <h4 class="ts header">Choukai</h4>
                         <!-- / 名稱 -->
-                        
-                        
+
+
                         <!-- 引言 -->
                         <blockquote>
                             <p>快來用 Tocas UI</p>
@@ -534,52 +534,52 @@
                             <p>三朝★身寸☆惹ㄦ</p>
                         </blockquote>
                         <!-- / 引言 -->
-                        
+
                     </div>
                     <!-- / 單個使用者 -->
-                    
-                    
+
+
                      <!-- 單個使用者 -->
                     <div class="center aligned column">
-                        
+
                         <!-- 頭像 -->
                         <img class="ts bordered small circular image" src="./images/users/henry.jpg">
                         <!-- / 頭像 -->
-                        
-                        
+
+
                         <!-- 名稱 -->
                         <h4 class="ts header">Henry Wu</h4>
                         <!-- / 名稱 -->
-                        
-                        
+
+
                         <!-- 引言 -->
                         <blockquote>
                             <p>希望2.0趕快出來</p>
                         </blockquote>
                         <!-- / 引言 -->
-                        
+
                     </div>
                     <!-- / 單個使用者 -->
-                    
+
                 </div>
                 <!-- / 使用者網格 -->
-                
+
             </div>
         </section>
         <!-- / 客戶引言 -->
-        
+
         <doc-footer></doc-footer>
     </main>
 </template>
 
-<style lang="sass" scoped>
+<style lang="scss" scoped>
 header
 {
     padding-top   : 7em !important;
     padding-bottom: 7em !important;
     background    : linear-gradient(to bottom, #e7eae3 0%,#f9fcf7 100%) !important;
     margin-bottom : 3.5em !important;
-    
+
     p
     {
         color    : #656565;
@@ -589,19 +589,19 @@ header
     h1
     {
         font-size: 5rem !important;
-        
+
         small
         {
             font-size: 2rem !important;
         }
     }
-    
+
     @media (max-width: 767px)
     {
         h1
         {
             font-size: 3em !important;
-            
+
             small
             {
                 font-size: .5em !important;
@@ -624,11 +624,11 @@ section
     {
         margin-bottom: -3em;
     }
-    
+
     h2
     {
         margin-bottom: 1em !important;
-        
+
         &.icon.header
         {
             margin-bottom: 2em !important;
@@ -638,18 +638,18 @@ section
 #openWhiteDesu
 {
     background-color: #fff;
-    
+
     .ts.header
     {
         color: #646464;
     }
-    
+
     p
     {
         color    : #848181;
         font-size: 16px;
     }
-    
+
     .padded.segment
     {
         overflow-x: auto;
@@ -658,7 +658,7 @@ section
 #components
 {
     background-color: #fbfbfb;
-    
+
     .ts.header
     {
         .sub.header
@@ -671,27 +671,27 @@ section
 {
     background-color: #616161;
     padding-bottom  : 4em;
-    
+
     .ts.header
     {
         color: #EEE;
     }
-    
+
     h2.ts.header
     {
         color: #FFF;
-        
+
         .sub.header
         {
             color: #dadada;
         }
     }
-    
+
     .ts.small.image
     {
         width: 130px;
     }
-    
+
     blockquote
     {
         text-align   : left !important;
@@ -708,7 +708,7 @@ section
         border       : 3px solid #525252;
         background   : #525252;
         border-radius: 5px;
-        
+
         &:after
         {
             display     : block;
@@ -726,7 +726,7 @@ section
 }
 </style>
 
-<style lang="sass">
+<style lang="scss">
 nav.homepage
 {
     background-color: #e7eae3 !important;
@@ -738,10 +738,10 @@ nav.homepage
 import DocNav    from '../components/DocNav'
 import DocFooter from '../components/DocFooter'
 
-export default 
+export default
 {
     name      : 'Index',
-    components: 
+    components:
     {
         DocNav,
         DocFooter
@@ -756,8 +756,8 @@ export default
         /** 重新 Hightlight 程式碼 */
         hljs.initHighlighting.called = false;
         hljs.initHighlighting()
-        
-        this.$store.dispatch('CALCULATE_RENDER_TIME', {time       : new Date().getTime(), 
+
+        this.$store.dispatch('CALCULATE_RENDER_TIME', {time       : new Date().getTime(),
                                                        startedTime: window.RENDER_STARTED_TIME})
     }
 }

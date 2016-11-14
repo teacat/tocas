@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '下拉式選單',
-        subTitle: 
+        subTitle:
         `
             打開之後會顛覆你先前以為不能的想法。
         `
     },
-    html: 
+    html:
     [
         {
             type       : normal,

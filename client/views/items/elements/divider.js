@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '分隔線',
-        subTitle: 
+        subTitle:
         `
             這裡開啟了另一個話題。
         `
     },
-    html: 
+    html:
     [
         {
             type       : normal,

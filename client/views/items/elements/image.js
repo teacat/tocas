@@ -16,17 +16,17 @@ export default
     header:
     {
         title   : '圖片',
-        subTitle: 
+        subTitle:
         `
             搭拉，這看起來跟你本人不太像。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,
             title      : '說明',
-            description: 
+            description:
             `
                 <p>圖片在不指定大小的情況下，</p>
                 <p>預設最大至少可以填滿整個容器。</p>

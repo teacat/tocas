@@ -12,12 +12,12 @@ export default
     header:
     {
         title   : '容器',
-        subTitle: 
+        subTitle:
         `
             協助你保持身材。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,

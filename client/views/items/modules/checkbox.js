@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '核取方塊',
-        subTitle: 
+        subTitle:
         `
             好的。
         `
     },
-    html: 
+    html:
     [
         {
             type       : normal,

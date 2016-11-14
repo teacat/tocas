@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '表單',
-        subTitle: 
+        subTitle:
         `
             以最有條理的方式送出資料。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,

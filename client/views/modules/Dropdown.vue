@@ -9,15 +9,15 @@ import DocBasic from '../../components/DocBasic'
 import items    from '../items/modules/dropdown'
 import '../../asserts/tocas.js'
 
-export default 
+export default
 {
-    components: 
+    components:
     {
         DocBasic
     },
     data()
     {
-        return { items: items }        
+        return { items: items }
     },
     beforeCreate()
     {

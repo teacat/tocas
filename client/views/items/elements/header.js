@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '標題',
-        subTitle: 
+        subTitle:
         `
             那數公分的大小落差，就足以形容事態的嚴重。
         `
     },
-    html: 
+    html:
     [
         {
             type       : normal,

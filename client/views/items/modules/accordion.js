@@ -11,12 +11,12 @@ export default
     header:
     {
         title   : '手風琴',
-        subTitle: 
+        subTitle:
         `
             叭啦叭叭叭叭，喔不好意思那是小喇叭。
         `
     },
-    html: 
+    html:
     [
         {
             type       : large,
