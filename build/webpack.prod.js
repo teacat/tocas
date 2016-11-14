@@ -9,7 +9,7 @@ const pkg                = require('../package')
 
 config.output.publicPath = 'https://tocas-ui.com/assets/'
 
-module.exports = merge(config, 
+module.exports = merge(config,
 {
     output:
     {
@@ -17,22 +17,12 @@ module.exports = merge(config,
     },
     entry:
     {
-        vendor: Object.keys(pkg.dependencies).filter(name => 
+        vendor: Object.keys(pkg.dependencies).filter(name =>
         {
             // update the code if you want to
             // remove some dependencies you don't need in the vendor bundle
             return true
         })
-    },
-    module:
-    {
-        //loaders:
-        //[
-        //    {
-        //        test  : /\.css$/,
-        //        loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader' })
-        //    }
-        //]
     },
     plugins:
     [
@@ -55,23 +45,28 @@ module.exports = merge(config,
             sourceMap: false,
             comments : false
         }),
-        
+
         // extract vendor chunks
         new webpack.optimize.CommonsChunkPlugin
         ({
             name    : 'vendor',
             filename: 'vendor.[chunkhash:8].js'
+        }),
+
+        new webpack.LoaderOptionsPlugin
+        ({
+            vue:
+            {
+                loaders:
+                {
+                    css: ExtractTextPlugin.extract
+                    ({
+                        loader        : 'css-loader',
+                        fallbackLoader: 'vue-style-loader'
+                    }),
+                    scss: "vue-style-loader!css-loader!sass-loader"
+                }
+            }
         })
-    ],
-    vue:
-    {
-        loaders:
-        {
-            css: ExtractTextPlugin.extract
-            ({
-                loader        : 'css-loader',
-                fallbackLoader: 'vue-style-loader'
-            })
-        }
-    }
+    ]
 })

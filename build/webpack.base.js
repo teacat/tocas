@@ -1,10 +1,11 @@
 'use strict'
 
 const path              = require('path')
+const webpack           = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-const postcss = 
+const postcss =
 [
     require('autoprefixer')
     ({
@@ -14,7 +15,7 @@ const postcss =
 
 module.exports =
 {
-    entry: 
+    entry:
     {
         client: './client/index.js'
     },
@@ -26,24 +27,24 @@ module.exports =
     },
     resolve:
     {
-        extensions: ['', '.js', '.vue', '.css', '.json'],
+        extensions: ['.js', '.vue', '.css', '.json'],
     },
     module:
     {
-        loaders: 
+        loaders:
         [
             {
                 test: /\.vue$/,
-                loaders: ['vue']
+                loader: 'vue-loader'
             },
             {
                 test: /\.js$/,
-                loaders: ['babel'],
+                loader: 'babel-loader',
                 exclude: [/node_modules/]
             },
             {
                 test  : /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-                loader: 'url',
+                loader: 'url-loader',
                 query :
                 {
                   limit: 10000,
@@ -52,33 +53,39 @@ module.exports =
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-                loader: 'url'
+                loader: 'url-loader'
             },
             {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader' })
             },
-            {
-                test: /\.sass$/, 
-                loader: 'sass-loader'
-            }
         ]
-    },
-    babel:
-    {
-        babelrc: false,
-        presets: 
-        [
-            ['es2015', {modules: false}], 'stage-1'
-        ]
-    },
-    postcss,
-    vue:
-    {
-        postcss
     },
     plugins:
     [
+        new webpack.LoaderOptionsPlugin
+        ({
+            options:
+            {
+                babel:
+                {
+                    babelrc: false,
+                    presets:
+                    [
+                        ['es2015', {modules: false}], 'stage-1'
+                    ]
+                },
+                postcss,
+                vue:
+                {
+                    postcss,
+                    loaders:
+                    {
+                        scss: "vue-style-loader!css-loader!sass-loader"
+                    }
+                }
+            }
+        }),
         new HtmlWebpackPlugin
         ({
             title   : 'Tocas UI',
