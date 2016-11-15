@@ -161,3 +161,7 @@ Commits written in English are welcomed.
 [Milligram](https://milligram.github.io/)
 
 [Element](http://element.eleme.io/)
+
+[Spectre](https://picturepan2.github.io/spectre/)
+
+[Elemental UI](http://elemental-ui.com/)
