@@ -1,65 +1,51 @@
-/* ----------------------------------------------------------------------------------------------------
- *Super Form Reset
- *A couple of things to watch out for:
- *- IE8: If a text input doesn't have padding on all sides or none the text won't be centered.
- *- The default border sizes on text inputs in all UAs seem to be slightly different. You're better off using custom borders.
- *- You NEED to set the font-size and family on all form elements
- *- Search inputs need to have their appearance reset and the box-sizing set to content-box to match other UAs
- *- You can style the upload button in webkit using ::-webkit-file-upload-button
- *- ::-webkit-file-upload-button selectors can't be used in the same selector as normal ones. FF and IE freak out.
- *- IE: You don't need to fake inline-block with labels and form controls in IE. They function as inline-block.
- *- By turning off ::-webkit-search-decoration, it removes the extra whitespace on the left on search inputs
- *----------------------------------------------------------------------------------------------------
+//-------------------//
+//   Focus Outline
+//-------------------//
 
-a:focus, a:active, 
+a:focus, a:active,
 button::-moz-focus-inner,
 input[type="reset"]::-moz-focus-inner,
 input[type="button"]::-moz-focus-inner,
 input[type="submit"]::-moz-focus-inner,
 select::-moz-focus-inner,
-input[type="file"] > input[type="button"]::-moz-focus-inner 
-  border: 0
-  outline: 0
+input[type="file"] > input[type="button"]::-moz-focus-inner
+    border : 0
+    outline: 0
 
+//-------------------//
+//       Inputs
+//-------------------//
 
 input,
 label,
 select,
 button,
 textarea
-  margin: 0
-  border: 0
-  padding: 0
-  display: inline-block
-  vertical-align: middle
-  //white-space: normal
-  background: none
-  line-height: 1
-  /* Browsers have different default form fonts
-  font-size: 13px
-  //font-family: Arial
+    margin        : 0
+    border        : 0
+    padding       : 0
+    display       : inline-block
+    vertical-align: middle
+    background    : none
+    line-height   : 1
+    font-size     : 13px
 
-
-/* Remove the stupid outer glow in Webkit
+//-------------------//
+//    Input Glows
+//-------------------//
 
 input:focus,
 button:focus,
 select:focus,
-textarea:focus,
-  outline: 0
+textarea:focus
+    outline: 0
 
-/* Box Sizing Reset
- *-----------------------------------------------
-
-/* All of our custom controls should be what we expect them to be
+//-------------------//
+//    Box Resizing
+//-------------------//
 
 input,
-textarea
-  box-sizing: border-box
-  resize: none
-
-/* These elements are usually rendered a certain way by the browser
-
+textarea,
 button,
 input[type=reset],
 input[type=button],
@@ -67,104 +53,76 @@ input[type=submit],
 input[type=checkbox],
 input[type=radio],
 select
-  -webkit-box-sizing: border-box
-  -moz-box-sizing: border-box
-  box-sizing: border-box
+    box-sizing: border-box
+    resize    : none
 
-/* Text Inputs
- *-----------------------------------------------
-
-input[type=date],
-input[type=datetime],
-input[type=datetime-local],
-input[type=email],
-input[type=month],
-input[type=number],
-input[type=password],
-input[type=range],
-input[type=search],
-input[type=tel],
-input[type=text],
-input[type=time],
-input[type=url],
-input[type=week]
-
-/* Button Controls
- *-----------------------------------------------
-
-input[type=checkbox],
-input[type=radio]
-  width: 13px
-  height: 13px
-
-/* File Uploads
- *-----------------------------------------------
-
-input[type=file]
-
-/* Search Input
- *-----------------------------------------------
-
-/* Make webkit render the search input like a normal text field
+//-------------------//
+//    Search Field
+//-------------------//
 
 input[type=search]
-  -webkit-appearance: textfield
-  -webkit-box-sizing: content-box
+    -webkit-appearance: textfield
+    -webkit-box-sizing: content-box
 
-/* Turn off the recent search for webkit. It adds about 15px padding on the left
+// Turn off the recent search for webkit. It adds about 15px padding on the left
 
-\::-webkit-search-decoration
-  display: none
+::-webkit-search-decoration
+    display: none
 
-/* Buttons
- *-----------------------------------------------
+//-------------------//
+//      Button
+//-------------------//
 
 button,
 input[type="reset"],
 input[type="button"],
 input[type="submit"]
-  /* Fix IE7 display bug
-  overflow: visible
-  width: auto
+    // Fix IE7 display bug
+    overflow: visible
+    width: auto
 
-/* IE8 and FF freak out if this rule is within another selector
+// IE8 and FF freak out if this rule is within another selector
+::-webkit-file-upload-button
+    padding: 0
+    border: 0
+    background: none
 
-\::-webkit-file-upload-button
-  padding: 0
-  border: 0
-  background: none
-
-/* Textarea
- *-----------------------------------------------
+//-------------------//
+//     Textarea
+//-------------------//
 
 textarea
-  /* Move the label to the top
-  vertical-align: top
-  /* Turn off scroll bars in IE unless needed
-  overflow: auto
+    // Move the label to the top
+    vertical-align: top
+    // Turn off scroll bars in IE unless needed
+    overflow: auto
 
-/* Selects
- *-----------------------------------------------
-
-select
+//-------------------//
+//      Select
+//-------------------//
 
 select[multiple]
-  /* Move the label to the top
-  vertical-align: top
+    // Move the label to the top
+    vertical-align: top
 
+//-------------------//
+//  Details, Summary
+//-------------------//
 
 details, summary
-  -webkit-appearance: none
-  appearance: none
-  outline: none
-  list-style-type: none
-  
-summary::-webkit-details-marker
-  display: none
+    -webkit-appearance: none
+    appearance        : none
+    outline           : none
+    list-style-type   : none
 
-  
-ul, ol
-  margin: 0
-  
-figure, menu
-  margin: 0
+summary::-webkit-details-marker
+    display: none
+
+//-------------------//
+// Reset Margin, Padding
+//-------------------//
+
+ul, ol, li, figure, figcaption
+    padding   : 0
+    margin    : 0
+    list-style: none
