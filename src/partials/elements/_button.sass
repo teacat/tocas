@@ -513,9 +513,33 @@
 .ts.buttons.basic .button:hover,
 .ts.buttons.basic .button:active,
     background-color: $button_basicBackgroundColor
-.ts.button.basic,
-.ts.buttons.basic .button
-    +button-basic-variant($button_basicTextColor, $button_basicTextColor, $button_basicBorderColor)
+
+/* Basic */
+.ts.button.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.secondary),
+.ts.buttons.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.secondary) .button
+    background-color: transparent
+    border-color    : $button_defaultTextColor
+    color           : $button_defaultTextColor
+    &:hover:hover:hover:hover
+        background-color: $button_defaultTextColor
+        color           : #FFF
+    &:active:active:active:active
+        background-color: darken($button_defaultTextColor, 5%)
+        color           : darken($button_defaultTextColor, 10%)
+
+/* secondary Basic */
+.ts.button.basic.secondary:not(.primary):not(.info):not(.warning):not(.positive):not(.negative),
+.ts.buttons.basic.secondary:not(.primary):not(.info):not(.warning):not(.positive):not(.negative) .button
+    background-color: transparent
+    border-color    : lighten($button_defaultTextColor, 20%)
+    color           : lighten($button_defaultTextColor, 20%)
+    &:hover:hover:hover:hover
+        background-color: lighten($button_defaultTextColor, 20%)
+        color           : #FFF
+    &:active:active:active:active
+        background-color: darken(lighten($button_defaultTextColor, 20%), 5%)
+        color           : darken(lighten($button_defaultTextColor, 20%), 10%)    
+        
 .ts.button.basic.inverted,
 .ts.buttons.basic.inverted .button,
 .ts.button.basic.secondary,
