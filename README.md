@@ -138,23 +138,23 @@ Commits written in English are welcomed.
 
 這裡是幾個可能會啟發你創意，或是更能讓你了解這類東西的連結。
 
-[Amaze UI | 中国首个开源 HTML5 跨屏前端框架](http://amazeui.org/)
+[Amaze UI](http://amazeui.org/)
 
 [Semantic UI](http://semantic-ui.com/)
 
-[Bulma: a modern CSS framework based on Flexbox](http://bulma.io/)
+[Bulma](http://bulma.io/)
 
-[Bootstrap·The world's most popular mobile-first and responsive front-end framework.](http://v4-alpha.getbootstrap.com/)
+[Bootstrap](http://v4-alpha.getbootstrap.com/)
 
 [Kule Lazy 3](http://www.kule.tw/)
 
-[Ant Design - 一个 UI 设计语言](http://ant.design/)
+[Ant Design](http://ant.design/)
 
 [Tapestry](http://tapestry.wisembly.com/)
 
 [Kube](https://imperavi.com/kube/)
 
-[BassCss](http://www.basscss.com/)
+[Bass CSS](http://www.basscss.com/)
 
 [Pure](http://purecss.io/)
 
@@ -167,3 +167,9 @@ Commits written in English are welcomed.
 [Elemental UI](http://elemental-ui.com/)
 
 [Muse UI](https://museui.github.io/#/index)
+
+[Primer](http://primercss.io/)
+
+[Dojo](http://dojo.kickserv.com/)
+
+[Vux](https://vux.li/#!/)
