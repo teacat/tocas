@@ -92,7 +92,7 @@ details, summary {
 summary::-webkit-details-marker {
   display: none; }
 
-ul, ol, li, figure, figcaption, h1, h2, h3, h4, h5, h6, fieldset {
+ul, ol, li, figure, figcaption, h1, h2, h3, h4, h5, h6, fieldset, menu {
   padding: 0;
   margin: 0;
   border: 0;
@@ -111,7 +111,7 @@ article, aside, footer, header, nav, section {
 
 h1 {
   font-size: 2em;
-  margin: 0.67em 0; }
+  margin: .67em 0; }
 
 figcaption, figure, main {
   display: block; }
@@ -205,11 +205,6 @@ button:-moz-focusring,
 [type="reset"]:-moz-focusring,
 [type="submit"]:-moz-focusring {
   outline: 1px dotted ButtonText; }
-
-fieldset {
-  border: 1px solid #c0c0c0;
-  margin: 0 2px;
-  padding: 0.35em 0.625em 0.75em; }
 
 legend {
   box-sizing: border-box;
@@ -538,11 +533,13 @@ html[data-ts-native] .ts.dropdown {
 
 .ts.button[class*="left floated"],
 .ts.buttons[class*="left floated"] {
-  float: left; }
+  float: left;
+  margin-right: auto; }
 
 .ts.button[class*="right floated"],
 .ts.buttons[class*="right floated"] {
-  float: right; }
+  float: right;
+  margin-left: auto; }
 
 .ts.button.fluid,
 .ts.buttons.fluid,
@@ -1075,10 +1072,12 @@ html[data-ts-native] .ts.dropdown {
   border-bottom: 2px solid #FFF; }
 
 .ts.header[class*="left floated"] {
-  float: left; }
+  float: left;
+  margin-right: auto; }
 
 .ts.header[class*="right floated"] {
-  float: right; }
+  float: right;
+  margin-left: auto; }
 
 h1.ts.header {
   font-size: 2.65rem; }
@@ -9214,10 +9213,12 @@ a.ts.basic.label:hover {
   margin: 0em 0em 0em -1.5em !important; }
 
 .ts.label[class*="right floated"] {
-  float: right; }
+  float: right;
+  margin-left: auto; }
 
 .ts.label[class*="left floated"] {
-  float: left; }
+  float: left;
+  margin-right: auto; }
 
 .ts.header > .ts.label {
   margin-top: calc(-0.5833em / 2); }
@@ -10675,6 +10676,7 @@ p:last-child:first-child {
   letter-spacing: -0.02em; }
 
 a {
+  position: relative;
   color: #4183C4;
   text-decoration: none; }
 
@@ -12825,6 +12827,7 @@ p:last-child:first-child {
   letter-spacing: -0.02em; }
 
 a {
+  position: relative;
   color: #4183C4;
   text-decoration: none; }
 
@@ -12895,5 +12898,240 @@ input[type=range]:active::-webkit-slider-thumb {
 .ts.slider input[disabled] {
   opacity: 0.45;
   pointer-events: none; }
+
+[data-tooltip]:before {
+  position: absolute;
+  right: auto;
+  top: calc(100% + 0.42857rem);
+  left: calc(50% + -0.42857em / 2);
+  z-index: 1;
+  content: "";
+  font-size: 1rem;
+  width: 0.42857em;
+  height: 0.42857em;
+  background-color: #000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: rotate(45deg) scale(1) !important; }
+
+[data-tooltip]:after {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 0.42857rem + 0.42857em / 2);
+  z-index: 2;
+  transform: translateX(-50%) scale(1) !important;
+  visibility: hidden;
+  pointer-events: none;
+  padding: 0.28571em 0.42857em;
+  text-transform: none;
+  text-align: left;
+  white-space: nowrap;
+  font-size: 0.85714rem;
+  font-weight: 400;
+  font-style: normal;
+  line-height: calc(0.85714rem * 1.5);
+  max-width: none;
+  content: attr(data-tooltip);
+  background-color: #000;
+  color: #EEE;
+  border-radius: 0.28571rem;
+  opacity: 0; }
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+  visibility: visible;
+  animation: tooltip-appear 0.1s ease-in 0.05s;
+  animation-fill-mode: forwards; }
+
+@-webkit-keyframes tooltip-appear {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+@keyframes tooltip-appear {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+[data-tooltip][data-tooltip-position="top left"]:before {
+  top: auto;
+  right: auto;
+  bottom: calc(100% + 0.42857rem);
+  left: 1em; }
+
+[data-tooltip][data-tooltip-position="top left"]:after {
+  transform: scale(1) !important;
+  top: auto;
+  right: auto;
+  bottom: calc(100% + 0.42857rem + 0.42857em / 2);
+  left: 0; }
+
+[data-tooltip][data-tooltip-position="top center"]:before {
+  top: auto;
+  right: auto;
+  bottom: calc(100% + 0.42857rem);
+  left: 50%; }
+
+[data-tooltip][data-tooltip-position="top center"]:after {
+  top: auto;
+  right: auto;
+  bottom: calc(100% + 0.42857rem + 0.42857em / 2);
+  left: 50%; }
+
+[data-tooltip][data-tooltip-position="top right"]:before {
+  top: auto;
+  left: auto;
+  bottom: calc(100% + 0.42857rem);
+  right: 1em; }
+
+[data-tooltip][data-tooltip-position="top right"]:after {
+  transform: scale(1) !important;
+  top: auto;
+  left: auto;
+  bottom: calc(100% + 0.42857rem + 0.42857em / 2);
+  right: 0; }
+
+/* Bottom */
+[data-tooltip][data-tooltip-position="bottom left"]:before {
+  bottom: auto;
+  right: auto;
+  top: calc(100% + 0.42857rem);
+  left: 1em; }
+
+[data-tooltip][data-tooltip-position="bottom left"]:after {
+  transform: scale(1) !important;
+  bottom: auto;
+  right: auto;
+  top: calc(100% + 0.42857rem + 0.42857em / 2);
+  left: 0; }
+
+[data-tooltip][data-tooltip-position="bottom center"]:before {
+  bottom: auto;
+  right: auto;
+  top: calc(100% + 0.42857rem);
+  left: calc(50% + -0.42857em / 2); }
+
+[data-tooltip][data-tooltip-position="bottom center"]:after {
+  bottom: auto;
+  right: auto;
+  top: calc(100% + 0.42857rem + 0.42857em / 2);
+  left: 50%; }
+
+[data-tooltip][data-tooltip-position="bottom right"]:before {
+  bottom: auto;
+  left: auto;
+  top: calc(100% + 0.42857rem);
+  right: 1em; }
+
+[data-tooltip][data-tooltip-position="bottom right"]:after {
+  transform: scale(1) !important;
+  bottom: auto;
+  left: auto;
+  top: calc(100% + 0.42857rem + 0.42857em / 2);
+  right: 0; }
+
+/* Side */
+[data-tooltip][data-tooltip-position="left"]:before {
+  bottom: auto;
+  right: calc(100% + 0.42857rem);
+  top: calc(50% + -0.42857em / 2);
+  left: auto; }
+
+[data-tooltip][data-tooltip-position="left"]:after {
+  transform: translateY(-50%) scale(1) !important;
+  bottom: auto;
+  right: calc(100% + 0.42857rem + 0.42857em / 2);
+  top: 50%;
+  left: auto; }
+
+[data-tooltip][data-tooltip-position="right"]:before {
+  bottom: auto;
+  left: calc(100% + 0.42857rem);
+  top: calc(50% + -0.42857em / 2);
+  right: auto; }
+
+[data-tooltip][data-tooltip-position="right"]:after {
+  transform: translateY(-50%) scale(1) !important;
+  bottom: auto;
+  left: calc(100% + 0.42857rem + 0.42857em / 2);
+  top: 50%;
+  right: auto; }
+
+[data-tooltip].untooltipped:hover:before,
+[data-tooltip].untooltipped:hover:after {
+  visibility: hidden !important; }
+
+[data-tooltip][data-tooltip-type="tag"]:before {
+  display: none; }
+
+[data-tooltip][data-tooltip-delay]:before,
+[data-tooltip][data-tooltip-delay]:after {
+  animation-delay: 0.2s; }
+
+[data-tooltip][data-tooltip-delay="0.1"]:before,
+[data-tooltip][data-tooltip-delay="0.1"]:after {
+  animation-delay: 0.1s; }
+
+[data-tooltip][data-tooltip-delay="0.2"]:before,
+[data-tooltip][data-tooltip-delay="0.2"]:after {
+  animation-delay: 0.2s; }
+
+[data-tooltip][data-tooltip-delay="0.3"]:before,
+[data-tooltip][data-tooltip-delay="0.3"]:after {
+  animation-delay: 0.3s; }
+
+[data-tooltip][data-tooltip-delay="0.4"]:before,
+[data-tooltip][data-tooltip-delay="0.4"]:after {
+  animation-delay: 0.3s; }
+
+[data-tooltip][data-tooltip-delay="0.5"]:before,
+[data-tooltip][data-tooltip-delay="0.5"]:after {
+  animation-delay: 0.5s; }
+
+[data-tooltip][data-tooltip-delay="1"]:before,
+[data-tooltip][data-tooltip-delay="1"]:after {
+  animation-delay: 1s; }
+
+[data-tooltip][data-tooltip-delay="2"]:before,
+[data-tooltip][data-tooltip-delay="2"]:after {
+  animation-delay: 2s; }
+
+[data-tooltip][data-tooltip-delay="3"]:before,
+[data-tooltip][data-tooltip-delay="3"]:after {
+  animation-delay: 3s; }
+
+[data-tooltip][data-tooltip-delay="4"]:before,
+[data-tooltip][data-tooltip-delay="4"]:after {
+  animation-delay: 4s; }
+
+[data-tooltip][data-tooltip-delay="5"]:before,
+[data-tooltip][data-tooltip-delay="5"]:after {
+  animation-delay: 5s; }
+
+/* Disabled */
+[data-tooltip][data-tooltip-delay="disabled"]:before,
+[data-tooltip][data-tooltip-delay="disabled"]:after {
+  animation: none; }
+
+[data-tooltip][data-tooltip-delay="disabled"]:hover:before,
+[data-tooltip][data-tooltip-delay="disabled"]:hover:after {
+  opacity: 1; }
+
+[data-tooltip][data-tooltip-width]:after {
+  white-space: initial !important;
+  text-align: center; }
+
+[data-tooltip][data-tooltip-width="very wide"]:after {
+  width: 20em; }
+
+[data-tooltip][data-tooltip-width="wide"]:after {
+  width: 15em; }
+
+[data-tooltip][data-tooltip-width="narrow"]:after {
+  width: 10em; }
+
+[data-tooltip][data-tooltip-width="very narrow"]:after {
+  width: 7.5em; }
 
 /*# sourceMappingURL=tocas.css.map */
