@@ -1,10 +1,10 @@
-var normal  = 'normal'
-var large   = 'large'
-var small   = 'small'
-var tiny    = 'tiny'
-var source  = 'source'
-var example = 'example'
-
+var normal             = 'normal'
+var large              = 'large'
+var small              = 'small'
+var tiny               = 'tiny'
+var source             = 'source'
+var example            = 'example'
+var imgPlaceholderUser = require('../../images/image_placeholder_user.png')
 
 export default
 {
@@ -115,6 +115,43 @@ export default
     <div class="sub header">然後我是子標題。</div>
 </h4>`,
             mark: 'sub header'
+        },
+        {
+            type       : small,
+            title      : '圖片',
+            description: `標題中可以帶有圖片。`,
+            link       : 'image'
+        },
+        {
+            type: 'example',
+            code: `<h3 class="ts header">
+    <img class="ts circular image" src="${imgPlaceholderUser}">
+    帳號設定
+</h3>`,
+            mark: 'image'
+        },
+        {
+            type       : small,
+            title      : '圖示',
+            description: `標題中也可以帶有圖示。`,
+            link       : 'icon'
+        },
+        {
+            type: 'example',
+            code: `<h3 class="ts header">
+    <i class="plug icon"></i>
+    <div class="content">
+        99.9% 上線時間保證
+    </div>
+</h3>
+<h2 class="ts header">
+    <i class="settings icon"></i>
+    <div class="content">
+        安全性設定
+        <div class="sub header">管理好您的洨洨安，確保不受任何人詐騙。</div>
+    </div>
+</h2>`,
+            mark: 'icon'
         },
         {
             type       : normal,
