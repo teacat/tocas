@@ -75,13 +75,13 @@ Tocas UI 的樣式命名方式來自於 Semantic UI 的精神，以意義為主�
 讓我們展示一些更進階的用法，讓你清楚了解 Tocas UI 和 Bootstrap 之間的差異。
 
 ```html
-<div class="ts menu">
+<nav class="ts menu">
     <a class="header item">商標</a>
     <a class="active item">首頁</a>
     <a class="item">特色</a>
     <a class="item">價格</a>
     <a class="item">關於</a>
-</div>
+</nav>
 ```
 
 而這是 Bootstrap。
