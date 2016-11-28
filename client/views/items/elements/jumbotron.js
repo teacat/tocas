@@ -10,7 +10,7 @@ export default
 {
     header:
     {
-        title   : '聚焦看板',
+        title   : '聚焦看板（已廢棄）',
         subTitle:
         `
             現在是時候閃耀了。
@@ -23,6 +23,7 @@ export default
             title      : '說明',
             description:
             `
+                <strong>注意！這個元素已經被<a href="/elements/slate">板岩</a>取代。</strong>
                 <p>聚焦看板不應該被拿來當作擺放很多元素的容器，</p>
                 <p>這應該只被拿來當作頁頭，用來當作擺放標題或少許元件的地方。</p>
             `
