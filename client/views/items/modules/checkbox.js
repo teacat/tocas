@@ -187,5 +187,37 @@ export default
             mark  : 'left aligned, right aligned, center aligned',
             remove: '<br><br>'
         },
+        {
+            type       : normal,
+            title      : '外觀',
+            description: '核取方塊有不同的外觀。',
+            link       : false
+        },
+        {
+            type       : small,
+            title      : '反色',
+            description: `核取方塊可以是反色的。`,
+            link       : 'inverted'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts inverted segment">
+    <div class="ts inverted checkboxes">
+        <div class="ts checkbox">
+            <input type="checkbox" id="xiaoan">
+            <label for="xiaoan">洨安</label>
+        </div>
+        <div class="ts checkbox">
+            <input type="checkbox" id="kataya">
+            <label for="kataya">卡特雅</label>
+        </div>
+        <div class="ts checkbox">
+            <input type="checkbox" id="pear">
+            <label for="pear">皮爾</label>
+        </div>
+    </div>
+</div>`,
+            mark: 'inverted'
+        },
     ]
 }
