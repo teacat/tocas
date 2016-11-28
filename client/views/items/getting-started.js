@@ -113,6 +113,22 @@ export default
             code: `<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">`
         },
         {
+            type       : small,
+            title      : '原生標籤',
+            description:
+            `
+                Tocas UI 能夠將瀏覽器多餘的樣式移除（如行動裝置按鈕按下時的藍色高光），這能夠讓使用上更像原生應用程式，其用法在 <span class="ts horizontal label">&lt;html&gt;</span> 標籤中宣告 <span class="ts horizontal label">data-ts-native</span> 即可。
+            `,
+            link             : 'ts-native',
+            expandableExample: false
+        },
+        {
+            type: source,
+            code: `<html data-ts-native>
+...
+</html>`
+        },
+        {
             type       : normal,
             anchor     : 'compare',
             title      : '與其他框架比較',
