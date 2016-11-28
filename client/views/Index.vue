@@ -82,13 +82,13 @@
                 <!-- 左側示範 -->
                 <div class="eight wide column">
                     <h3 class="ts header">Tocas UI</h3>
-                    <pre class="ts padded segment"><code class="hljs">&lt;div class=&quot;ts menu&quot;&gt;
+                    <pre class="ts padded segment"><code class="hljs">&lt;nav class=&quot;ts menu&quot;&gt;
     &lt;a class=&quot;header item&quot;&gt;商標&lt;/a&gt;
     &lt;a class=&quot;active item&quot;&gt;首頁&lt;/a&gt;
     &lt;a class=&quot;item&quot;&gt;特色&lt;/a&gt;
     &lt;a class=&quot;item&quot;&gt;價格&lt;/a&gt;
     &lt;a class=&quot;item&quot;&gt;關於&lt;/a&gt;
-&lt;/div&gt;</code></pre>
+&lt;/nav&gt;</code></pre>
                     <p>&nbsp;</p>
                 </div>
                 <!-- / 左側示範 -->
