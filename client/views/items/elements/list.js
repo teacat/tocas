@@ -418,6 +418,68 @@ export default
         },
         {
             type       : small,
+            title      : '項目語意',
+            description: `項目也可以具有語意渲染。`,
+            link       : 'item-emphasis'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts relaxed divided list">
+    <div class="positive item">
+        正面語意
+    </div>
+    <div class="negative item">
+        否定語意
+    </div>
+    <div class="primary item">
+        主要語意
+    </div>
+    <div class="info item">
+        資訊語意
+    </div>
+    <div class="warning item">
+        警告語意
+    </div>
+    <div class="inverted item">
+        反色語意
+    </div>
+</div>`,
+            mark: 'positive, negative, primary, info, warning, inverted'
+        },
+        {
+            type       : small,
+            title      : '反色項目語意',
+            description: `項目的語意渲染也可以是基於反色的。`,
+            link       : 'inverted-item-emphasis'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts inverted segment">
+    <div class="ts inverted relaxed divided list">
+        <div class="positive item">
+            正面語意
+        </div>
+        <div class="negative item">
+            否定語意
+        </div>
+        <div class="primary item">
+            主要語意
+        </div>
+        <div class="info item">
+            資訊語意
+        </div>
+        <div class="warning item">
+            警告語意
+        </div>
+        <div class="inverted item">
+            反色語意
+        </div>
+    </div>
+</div>`,
+            mark: 'positive, negative, primary, info, warning, inverted'
+        },
+        {
+            type       : small,
             title      : '可選擇的',
             description: `清單可以看起來像可供選擇的。`,
             link       : 'selection'
