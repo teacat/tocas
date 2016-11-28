@@ -692,6 +692,21 @@ export default
         },
         {
             type       : small,
+            title      : '輕巧版',
+            description: `使卡片依照內容作為寬度基準，而不是直接服貼父容器的寬度。`,
+            link       : 'compact'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts compact card">
+    <div class="content">
+        <a class="description">這張卡片會依照內容來進行寬度伸縮。</a>
+    </div>
+</div>`,
+            mark: 'compact'
+        },
+        {
+            type       : small,
             title      : '連結卡片',
             description: `整張卡片可以是一個連結。`,
             link       : 'link-card'

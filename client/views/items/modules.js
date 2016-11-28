@@ -52,5 +52,11 @@ export default
             link       : '/modules/slider/',
             description: '以滑桿來取代輸入欄位設定數值。'
         },
+        {
+            title      : '彈出式訊息',
+            class      : '.ts.popup',
+            link       : '/modules/popup/',
+            description: '滑鼠移過時會彈出一個訊息。'
+        },
     ]
 }
