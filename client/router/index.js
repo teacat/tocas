@@ -97,6 +97,10 @@ export default new Router
             component: require('../views/elements/Jumbotron')
         },
         {
+            path     : '/elements/slate',
+            component: require('../views/elements/Slate')
+        },
+        {
             path     : '/elements/label',
             component: require('../views/elements/Label')
         },
@@ -124,7 +128,7 @@ export default new Router
             path     : '/elements/typography',
             component: require('../views/elements/Typography')
         },
-        
+
         {
             path     : '/views/card',
             component: require('../views/views/Card')
@@ -149,7 +153,7 @@ export default new Router
             path     : '/views/statistic',
             component: require('../views/views/Statistic')
         },
-        
+
         {
             path     : '/collections/breadcrumb',
             component: require('../views/collections/Breadcrumb')
@@ -202,6 +206,10 @@ export default new Router
         {
             path     : '/modules/slider',
             component: require('../views/modules/Slider')
+        },
+        {
+            path     : '/modules/popup',
+            component: require('../views/modules/Popup')
         },
         {
             path     : '/animation/',
