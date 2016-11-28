@@ -53,10 +53,16 @@ export default
             description: '提供使用者輸入資料的欄位。'
         },
         {
-            title      : '聚焦看板',
+            title      : '聚焦看板（已廢棄）',
             class      : '.ts.jumbotron',
             link       : '/elements/jumbotron/',
             description: '一個巨大的文字容器，用於吸引使用者注意，或是擺放於首頁。'
+        },
+        {
+            title      : '板岩',
+            class      : '.ts.slate',
+            link       : '/elements/slate/',
+            description: '多功能的區塊，可作為標題容器、預置方塊、上傳區域等。'
         },
         {
             title      : '標籤',
