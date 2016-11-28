@@ -51,7 +51,7 @@ export default
         },
         {
             type       : small,
-            title      : '圖片連結',
+            title      : '連結',
             description: `圖片也可以是被連結包覆住的。`,
             link       : 'image-link'
         },
@@ -61,6 +61,20 @@ export default
     <img src="${imgPlaceholderLegacy}">
 </a>`,
             mark: 'image'
+        },
+        {
+            type       : small,
+            title      : '連結性圖片',
+            description: `圖片除了能夠被連結包覆住，亦能夠讓沒被連結包覆著的圖片看起來像連結一樣，這很適合用在非連結但可供點擊的圖片。`,
+            link       : 'link'
+        },
+        {
+            type: 'example',
+            code: `<a href="http://google.com" class="ts link small image">
+    <img src="${imgPlaceholderLegacy}">
+</a>
+<img class="ts link small image" src="${imgPlaceholderLegacy}">`,
+            mark: 'link'
         },
         {
             type       : normal,
