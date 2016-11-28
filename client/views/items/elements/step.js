@@ -362,6 +362,22 @@ export default
             <div class="description">認證訂單資訊</div>
         </div>
     </div>
+</div>
+<div class="ts fluid steps">
+    <div class="completed step">
+        <i class="payment icon"></i>
+        <div class="content">
+            <div class="title">結帳</div>
+            <div class="description">輸入結帳資訊</div>
+        </div>
+    </div>
+    <div class="active step">
+        <i class="notice icon"></i>
+        <div class="content">
+            <div class="title">確認訂單</div>
+            <div class="description">認證訂單資訊</div>
+        </div>
+    </div>
 </div>`,
             mark: 'fluid'
         },
