@@ -127,6 +127,32 @@ export default
         },
         {
             type       : small,
+            title      : '次要',
+            description: `訊息的重要程度可以是次要的。`,
+            link       : 'secondary'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts secondary message">
+    <div class="header">系統升級中</div>
+    <p>搭啦啦！系統正在升級！</p>
+</div>
+<div class="ts secondary primary message">
+    <div class="header">現已開始</div>
+    <p>目前「osu! World Cup 2015」已開始進行直播。</p>
+</div>
+<div class="ts secondary inverted positive message">
+    <div class="header">恭喜！</div>
+    <p>你已經註冊成功。</p>
+</div>
+<div class="ts secondary inverted negative message">
+    <div class="header">此文章已被刪除</div>
+    <p>你欲拜訪的文章因違反規定而遭到刪除。</p>
+</div>`,
+            mark: 'secondary'
+        },
+        {
+            type       : small,
             title      : '清單',
             description: `一個帶有清單的訊息。`,
             link       : 'list'
