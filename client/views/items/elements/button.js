@@ -117,7 +117,8 @@ export default
             type: 'example',
             code: `<button class="ts positive basic button">確定</button>
 <button class="ts negative basic button">拒絕</button>
-<button class="ts basic button">取消</button>`,
+<button class="ts basic button">知道</button>
+<button class="ts secondary basic button">取消</button>`,
             mark: 'basic'
         },
         {
