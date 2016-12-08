@@ -181,3 +181,5 @@ Commits written in English are welcomed.
 [Vue Material](https://vuematerial.github.io)
 
 [Markdown UI](https://jjuliano.github.io/markdown-ui/)
+
+[Office UI Fabric](http://dev.office.com/fabric#/components)
