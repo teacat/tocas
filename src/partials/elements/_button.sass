@@ -16,11 +16,12 @@
     color           : $color
     
     &:active:not(.opinion),
-    &.dropdown.visible
+    &.dropdown.visible,
+    &.active
         background-color: $activeBackgroundColor
         color           : $activeColor
         
-    &:not(.visible):not(.hidden):not(:active):not(.opinion):hover
+    &:not(.visible):not(.hidden):not(.active):not(:active):not(.opinion):hover
         background-color: $hoverBackgroundColor
         color           : $hoverColor
 
@@ -35,7 +36,8 @@
     color : $backgroundColor
         
     &:hover
-    &:active
+    &:active,
+    &.active
         color: $activeColor
 
 //-------------------//
@@ -52,7 +54,8 @@
         background-color: $backgroundColor
         color           : $color
     
-    &:active
+    &:active,
+    &.active
         border-color    : $activeBackgroundColor
         background-color: $activeBackgroundColor
         color           : $color
@@ -483,10 +486,11 @@
     background-color: rgba(0, 0, 0, 0.05)
     color           : #FFF
 
-    &:hover
+    &:hover:not(.active):not(:active)
         background-color: rgba(0, 0, 0, 0.1)
         color           : #FFF
-    &:active
+    &:active,
+    &.active
         background-color: rgba(0, 0, 0, 0.3)
         color           : #FFF
         
@@ -495,10 +499,11 @@
     background-color: rgba(0, 0, 0, 0.15)
     color           : #FFF
     
-    &:hover
+    &:hover:not(.active):not(:active)
         background-color: rgba(0, 0, 0, 0.2)
         color           : #FFF
-    &:active
+    &:active,
+    &.active
         background-color: rgba(0, 0, 0, 0.4)
         color           : #FFF
     
@@ -507,11 +512,9 @@
 //-------------------//
 
 .ts.button.basic,
-.ts.button.basic:hover,
-.ts.button.basic:active,
+.ts.button.basic:hover:not(.active):not(:active),
 .ts.buttons.basic .button,
-.ts.buttons.basic .button:hover,
-.ts.buttons.basic .button:active,
+.ts.buttons.basic .button:hover:not(.active):not(:active)
     background-color: $button_basicBackgroundColor
 
 /* Basic */
@@ -520,10 +523,11 @@
     background-color: transparent
     border-color    : $button_defaultTextColor
     color           : $button_defaultTextColor
-    &:hover:hover:hover:hover
+    &:hover:hover:hover:hover:not(.active):not(:active)
         background-color: $button_defaultTextColor
         color           : #FFF
-    &:active:active:active:active
+    &:active:active:active:active,
+    &.active.active.active.active
         background-color: darken($button_defaultTextColor, 10%)
         color           : darken($button_defaultTextColor, 20%)
 
@@ -533,10 +537,11 @@
     background-color: transparent
     border-color    : lighten($button_defaultTextColor, 20%)
     color           : lighten($button_defaultTextColor, 20%)
-    &:hover:hover:hover:hover
+    &:hover:hover:hover:hover:not(.active):not(:active)
         background-color: lighten($button_defaultTextColor, 20%)
         color           : #FFF
-    &:active:active:active:active
+    &:active:active:active:active,
+    &.active.active.active.active
         background-color: darken(lighten($button_defaultTextColor, 20%), 10%)
         color           : darken(lighten($button_defaultTextColor, 20%), 20%)    
         
@@ -568,12 +573,13 @@
 .ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative)
     +button-inverted-basic-variant($button_basicInvertedTextColor, $button_basicInvertedBorderColor, $button_basicInvertedBorderColor)
 
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):hover
+.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):hover:not(.active):not(:active)
     background-color: $button_invertedBasicHoverBackgroundColor
     border-color    : $button_invertedBasicHoverBackgroundColor
     color           : $button_invertedBasicHoverTextColor
     
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):active
+.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):active,
+.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative).active
     background-color: $button_invertedBasicActiveBackgroundColor
     border-color    : $button_invertedBasicActiveBackgroundColor
     color           : $button_invertedBasicActiveTextColor
