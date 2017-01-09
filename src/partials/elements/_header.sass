@@ -20,10 +20,10 @@
 
     &:first-child
         margin-top: $header_firstMargin
-    
+
     &:last-child
         margin-bottom: $header_lastMargin
-    
+
 .ts.header .sub.header
     display    : block
     font-weight: normal
@@ -357,15 +357,50 @@ h6.ts.smaller.sub.header
 .ts.header > .image:only-child,
 .ts.header > img:only-child 
     margin-right: $header_imageMargin
-    
+
 //-------------------//
-//   Loose Coupling       
+//      Attached
 //-------------------//
 
-.ts.header .ts.label 
+.ts.attached.header
+    padding         : $header_blockPadding
+    border          : $header_blockBorder
+    background-color: $header_attachedBackgroundColor
+    border-radius   : $header_blockBorderRadius
+
+.ts[class*="top attached"].header
+    margin-bottom: 0
+    border-bottom-left-radius: 0
+    border-bottom-right-radius: 0
+
+.ts.attached:not([class*="bottom attached"]):not([class*="top attached"]).header
+    margin-top: 0
+    margin-bottom: 0
+    border-radius: 0
+
+.ts[class*="bottom attached"].header
+    margin-top: 0
+    border-top-left-radius: 0
+    border-top-right-radius: 0
+
+//-------------------//
+//       Block
+//-------------------//
+
+.ts.block.header
+    padding         : $header_blockPadding
+    border          : $header_blockBorder
+    background-color: $header_blockBackgroundColor
+    border-radius   : $header_blockBorderRadius
+
+//-------------------//
+//   Loose Coupling
+//-------------------//
+
+.ts.header .ts.label
     font-size     : $header_labelSize
     margin-left   : $header_labelDistance
     vertical-align: middle
-    
+
 .ts.header .ts.horizontal.label
     margin-left: 0
