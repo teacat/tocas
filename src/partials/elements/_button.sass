@@ -612,46 +612,61 @@
 .ts.buttons
     display: inline-flex
 
-    &:not(.vertical) .ts.button
+.ts.buttons:not(.separated):not(.vertical)
+    .ts.button
         display: inline-block
-        
+
         &:not(:first-child)
             border-top-left-radius   : 0
             border-bottom-left-radius: 0
             border-left-width        : 0
-        
+
         &:not(:last-child)
             border-top-right-radius   : 0
             border-bottom-right-radius: 0
             border-right-width        : 1px
-        
+
         &:last-child
             border-left-width         : 0px
-    
-    &:not(.vertical).inverted.basic .ts.button
+
+    &.inverted.basic .ts.button
         &:not(:last-child)
             border-right-width        : 2px
-        
-                
-    &.vertical
+
+.ts.vertical.buttons:not(.separated)
+    display: block
+
+    .ts.button
         display: block
-        
-        .ts.button
-            display: block
-            
-            &:not(:first-child)
-                border-top-left-radius : 0
-                border-top-right-radius: 0
-                border-bottom-width    : 0
-            
-            &:not(:last-child)
-                border-bottom-left-radius : 0
-                border-bottom-right-radius: 0
-                border-bottom-width       : 0px
-            
-            &:last-child
-                border-bottom-width       : 1px
-    
-    &.vertical.inverted.basic .ts.button
+
+        &:not(:first-child)
+            border-top-left-radius : 0
+            border-top-right-radius: 0
+            border-bottom-width    : 0
+
+        &:not(:last-child)
+            border-bottom-left-radius : 0
+            border-bottom-right-radius: 0
+            border-bottom-width       : 0px
+
         &:last-child
-            border-bottom-width           : 2px
+            border-bottom-width       : 1px
+
+.ts.vertical.inverted.basic.buttons:not(.separated) .ts.button:last-child
+    border-bottom-width: 2px
+
+//-------------------//
+//     Separated
+//-------------------//
+
+.ts.separated.buttons .ts.button
+    margin: 0 $button_buttonsSeparatedHorizontalMargin 0 0
+
+.ts.vertical.separated.buttons .ts.button
+    margin: 0 0 $button_buttonsSeparatedVerticalMargin 0
+
+.ts.relaxed.separated.buttons .ts.button
+    margin: 0 $button_buttonsRelaxedSeparatedHorizontalMargin 0 0
+
+.ts.vertical.relaxed.separated.buttons .ts.button
+    margin: 0 0 $button_buttonsRelaxedSeparatedVerticalMargin 0
