@@ -97,7 +97,7 @@
     will-change: transform, opacity
 
 //-------------------//
-//       Basic       
+//       Basic
 //-------------------//
 
 .ts.basic.dropdown,
@@ -117,7 +117,7 @@
     //padding-right      : calc(#{$dropdown_horizontalPadding} + #{$dropdown_arrowSize} * 2 + #{$dropdown_horizontalPadding})
     //background-position: right #{$dropdown_horizontalPadding} top calc(#{$dropdown_verticalPadding} + #{$dropdown_arrowSize} - (1em / 2) + (#{$dropdown_lineHeight} - 1em ))
     background-position: right #{$dropdown_horizontalPadding} center
-    
+
     +basic-dropdown-variant($dropdown_textColor, $dropdown_backgroundColor, $dropdown_borderColor, $dropdown_arrowBackgroundURL)
 
 .ts.basic.dropdown:hover,
@@ -132,9 +132,9 @@
 //.ts.basic.dropdown:active
 //    background-color: rgb(210, 210, 210)
     //border-color    : $dropdown_activeBorderColor
-    
+
 //-------------------//
-//       Size       
+//       Size
 //-------------------//
 
 .ts.basic.mini.dropdown
@@ -172,15 +172,15 @@
     +basic-dropdown-variant($dropdown_invertedTextColor, $dropdown_invertedBackgroundColor, $dropdown_invertedBorderColor, $dropdown_invertedArrowBackgroundURL)
 
 //-------------------//
-//       Fluid       
+//       Fluid
 //-------------------//
 
 .ts.fluid.dropdown,
 .ts.fluid.dropdowns .ts.dropdown
     width: 100%
-    
+
 //-------------------//
-//     Borderless       
+//     Borderless
 //-------------------//
 
 .ts.borderless.dropdown,
@@ -188,12 +188,13 @@
     border: 0
 
 //-------------------//
-//     Dropdowns       
+//     Dropdowns
 //-------------------//
 
 .ts.dropdowns
-    position: relative
-    display : flex
+    position   : relative
+    display    : flex
+    align-items: center
 
 .ts.dropdowns.fluid
     width: 100%
@@ -209,6 +210,19 @@
 
 .ts.dropdowns .ts.dropdown:last-child,
 .ts.form .ts.dropdowns select:last-child
+    margin-right: 0
+
+//-------------------//
+//      Divider
+//-------------------//
+
+.ts.dropdowns .divider
+    margin-right: $columnPadding
+
+.ts.relaxed.dropdowns .divider
+    margin-right: $columnRelaxedPadding
+
+.ts.dropdowns .divider:last-child
     margin-right: 0
 
 //-------------------//
@@ -261,7 +275,7 @@
     border-bottom-left-radius: 0
     
 //*******************************//
-//          Multiple Select
+//        Multiple Select
 //*******************************//
 
 .ts.dropdown.basic[size]
@@ -274,15 +288,15 @@
 .ts.dropdown.basic[size] option
     border-radius: $dropdown_borderRadius
     padding      : $dropdown_basicMultipleOptionPadding
-    
+
 //*******************************//
 //           Dropdown
 //*******************************//
 
 .ts.dropdown:not(.basic)
     z-index: $dropdown_menuZIndex
-    
-.ts.dropdown .menu 
+
+.ts.dropdown .menu
     cursor    : auto
     position  : absolute
     display   : none
@@ -291,7 +305,7 @@
     //min-width : max-content
     min-width : $dropdown_menuMinWidth
     transform : translateZ(0px)
-    
+
     margin    : $dropdown_menuMargin
     padding   : $dropdown_menuPadding
     background: $dropdown_menuBackground
@@ -305,19 +319,19 @@
     z-index      : $dropdown_menuZIndex
     will-change  : transform, opacity
 
-.ts.dropdown .menu > * 
+.ts.dropdown .menu > *
     white-space: nowrap
 
 //-------------------//
-//        Text       
+//        Text
 //-------------------//
 
 .ts.dropdown > .text
     +extend(no-select)
     display: inline-block
-    
+
 //-------------------//
-//        Icon       
+//        Icon
 //-------------------//
 
 .ts.dropdown > .text + .icon
@@ -325,7 +339,7 @@
     margin-left: 0.25rem
 
 //-------------------//
-//        Item       
+//        Item
 //-------------------//
 
 .ts.dropdown .menu > .item.item.item.item.item.item
