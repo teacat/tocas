@@ -1,0 +1,256 @@
+@import ../../variables/modules/popup.variables
+
+//*******************************//
+//              Main
+//*******************************//
+
+[data-tooltip]:before
+    position : absolute
+    right    : auto
+    top      : $popup_arrowVerticalOffsetCalc
+    left     : $popup_arrowHorizontalOffsetCalc
+    z-index  : $popup_arrowZIndex
+    content  : ''
+    font-size: 1rem
+    
+    width : $popup_arrowSize
+    height: $popup_arrowSize
+    
+    background-color: $popup_backgroundColor
+    
+    opacity       : 0
+    visibility    : hidden
+    pointer-events: none
+    
+    transform : rotate(45deg) scale(1) !important
+    
+[data-tooltip]:after
+    position: absolute
+    left    : 50%
+    top     : $popup_messageVerticalOffset
+    z-index : $popup_zIndex
+
+    transform: translateX(-50%) scale(1) !important
+    
+    visibility    : hidden
+    pointer-events: none
+    
+    padding: $popup_padding
+    
+    text-transform: none
+    text-align    : left
+    white-space   : nowrap
+    font-size     : $popup_fontSize
+    font-weight   : 400
+    font-style    : normal
+    line-height   : $popup_lineHeight
+    max-width     : none
+    content       : attr(data-tooltip)
+    
+    background-color: $popup_backgroundColor
+    color           : $popup_textColor
+
+    border-radius: $popup_borderRadius
+    opacity      : 0
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after
+    visibility         : visible
+    animation          : tooltip-appear $popup_animationDuration $popup_timingFunction $popup_defaultDelay
+    animation-fill-mode: forwards
+    
+//-------------------//
+//     Animation       
+//-------------------//
+
+@-webkit-keyframes tooltip-appear
+    from
+        opacity: 0
+    to
+        opacity: 1
+
+@keyframes tooltip-appear
+    from
+        opacity: 0
+    to
+        opacity: 1
+
+//-------------------//
+//      Position       
+//-------------------//
+
+[data-tooltip][data-tooltip-position="top left"]:before
+    top   : auto
+    right : auto
+    bottom: $popup_arrowVerticalOffsetCalc
+    left  : 1em
+[data-tooltip][data-tooltip-position="top left"]:after
+    transform: scale(1) !important
+    top      : auto
+    right    : auto
+    bottom   : $popup_messageVerticalOffset
+    left     : 0
+    
+[data-tooltip][data-tooltip-position="top center"]:before
+    top   : auto
+    right : auto
+    bottom: $popup_arrowVerticalOffsetCalc
+    left  : 50%
+[data-tooltip][data-tooltip-position="top center"]:after
+    top   : auto
+    right : auto
+    bottom: $popup_messageVerticalOffset
+    left  : 50%
+    
+[data-tooltip][data-tooltip-position="top right"]:before
+    top   : auto
+    left  : auto
+    bottom: $popup_arrowVerticalOffsetCalc
+    right : 1em
+[data-tooltip][data-tooltip-position="top right"]:after
+    transform: scale(1) !important
+    top      : auto
+    left     : auto
+    bottom   : $popup_messageVerticalOffset
+    right    : 0
+    
+/* Bottom */
+[data-tooltip][data-tooltip-position="bottom left"]:before
+    bottom: auto
+    right : auto
+    top   : $popup_arrowVerticalOffsetCalc
+    left  : 1em
+[data-tooltip][data-tooltip-position="bottom left"]:after
+    transform: scale(1) !important
+    bottom   : auto
+    right    : auto
+    top      : $popup_messageVerticalOffset
+    left     : 0
+    
+[data-tooltip][data-tooltip-position="bottom center"]:before
+    bottom: auto
+    right : auto
+    top   : $popup_arrowVerticalOffsetCalc
+    left  : $popup_arrowHorizontalOffsetCalc
+[data-tooltip][data-tooltip-position="bottom center"]:after
+    bottom: auto
+    right : auto
+    top   : $popup_messageVerticalOffset
+    left  : 50%
+    
+[data-tooltip][data-tooltip-position="bottom right"]:before
+    bottom: auto
+    left  : auto
+    top   : $popup_arrowVerticalOffsetCalc
+    right : 1em
+[data-tooltip][data-tooltip-position="bottom right"]:after
+    transform: scale(1) !important
+    bottom   : auto
+    left     : auto
+    top      : $popup_messageVerticalOffset
+    right    : 0
+
+
+/* Side */
+[data-tooltip][data-tooltip-position="left"]:before
+    bottom: auto
+    right : $popup_arrowVerticalOffsetCalc
+    top   : $popup_arrowHorizontalOffsetCalc
+    left  : auto
+[data-tooltip][data-tooltip-position="left"]:after
+    transform: translateY(-50%) scale(1) !important
+    bottom   : auto
+    right    : $popup_messageVerticalOffset
+    top      : 50%
+    left     : auto
+ 
+[data-tooltip][data-tooltip-position="right"]:before
+    bottom: auto
+    left  : $popup_arrowVerticalOffsetCalc
+    top   : $popup_arrowHorizontalOffsetCalc
+    right : auto
+[data-tooltip][data-tooltip-position="right"]:after
+    transform: translateY(-50%) scale(1) !important
+    bottom   : auto
+    left     : $popup_messageVerticalOffset
+    top      : 50%
+    right    : auto
+
+//-------------------//
+//    Untooltipped       
+//-------------------//
+
+[data-tooltip].untooltipped:hover:before,
+[data-tooltip].untooltipped:hover:after
+    visibility: hidden !important
+
+//-------------------//
+//       Type       
+//-------------------//
+
+[data-tooltip][data-tooltip-type="label"]:before
+    display: none
+    
+//-------------------//
+//       Delay       
+//-------------------//
+
+[data-tooltip][data-tooltip-delay]:before,
+[data-tooltip][data-tooltip-delay]:after
+    animation-delay: .2s
+
+[data-tooltip][data-tooltip-delay="0.1"]:before,
+[data-tooltip][data-tooltip-delay="0.1"]:after
+    animation-delay: .1s
+[data-tooltip][data-tooltip-delay="0.2"]:before,
+[data-tooltip][data-tooltip-delay="0.2"]:after
+    animation-delay: .2s
+[data-tooltip][data-tooltip-delay="0.3"]:before,
+[data-tooltip][data-tooltip-delay="0.3"]:after
+    animation-delay: .3s
+[data-tooltip][data-tooltip-delay="0.4"]:before,
+[data-tooltip][data-tooltip-delay="0.4"]:after
+    animation-delay: .3s
+[data-tooltip][data-tooltip-delay="0.5"]:before,
+[data-tooltip][data-tooltip-delay="0.5"]:after
+    animation-delay: .5s
+[data-tooltip][data-tooltip-delay="1"]:before,
+[data-tooltip][data-tooltip-delay="1"]:after
+    animation-delay: 1s
+[data-tooltip][data-tooltip-delay="2"]:before,
+[data-tooltip][data-tooltip-delay="2"]:after
+    animation-delay: 2s
+[data-tooltip][data-tooltip-delay="3"]:before,
+[data-tooltip][data-tooltip-delay="3"]:after
+    animation-delay: 3s
+[data-tooltip][data-tooltip-delay="4"]:before,
+[data-tooltip][data-tooltip-delay="4"]:after
+    animation-delay: 4s
+[data-tooltip][data-tooltip-delay="5"]:before,
+[data-tooltip][data-tooltip-delay="5"]:after
+    animation-delay: 5s
+
+/* Disabled */
+[data-tooltip][data-tooltip-delay="disabled"]:before,
+[data-tooltip][data-tooltip-delay="disabled"]:after
+    animation: none
+[data-tooltip][data-tooltip-delay="disabled"]:hover:before,
+[data-tooltip][data-tooltip-delay="disabled"]:hover:after
+    opacity: 1
+    
+//-------------------//
+//       Width       
+//-------------------//
+
+[data-tooltip][data-tooltip-width]:after
+    white-space: initial !important
+    text-align : center
+    
+[data-tooltip][data-tooltip-width="very wide"]:after
+    width: 20em
+[data-tooltip][data-tooltip-width="wide"]:after
+    width: 15em
+[data-tooltip][data-tooltip-width="narrow"]:after
+    width: 10em
+[data-tooltip][data-tooltip-width="very narrow"]:after
+    width: 7.5em
