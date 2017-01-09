@@ -176,10 +176,29 @@
 .ts.action.input:not([class*="left action"]) > .buttons:not(:first-child) > .button 
     border-radius: 0px
 
+/* [Input][Button][>X<] */
 .ts.action.input:not([class*="left action"]) > .dropdown:last-child,
 .ts.action.input:not([class*="left action"]) > .button:last-child,
 .ts.action.input:not([class*="left action"]) > .buttons:last-child > .button 
     border-radius: 0px $input_borderRadius $input_borderRadius 0px
+
+/* [Input][Button][>Dropdown<] */
+.ts.action.input > .dropdown:last-child
+    border-top-right-radius: $input_borderRadius
+    border-bottom-right-radius: $input_borderRadius
+
+/* [>Dropdown<][Input][Button] */
+.ts.action.input > .dropdown:first-child
+    border-top-right-radius: 0
+    border-bottom-right-radius: 0
+
+/* [Dropdown][>Input<][Button] */
+.ts.action.input > .dropdown + input,
+.ts.action.input > .dropdown + textarea,
+.ts.action.input > .dropdown + *[contenteditable]
+    border-top-left-radius: 0
+    border-bottom-left-radius: 0
+    border-left-color: transparent
 
 /* Input Focus */
 .ts.action.input:not([class*="left action"]) 
@@ -554,30 +573,66 @@
     border-top-left-radius: 0px
     border-bottom-left-radius: 0px
 
-
 .ts[class*="right labeled"].input input:focus 
     border-right-color: $input_focusBorderColor !important
 
 //-------------------//
-//      Resizable       
-//-------------------//   
-    
-.ts.resizable input, 
-.ts.resizable textarea, 
+//   Labeled Action
+//-------------------//
+
+/* [Input][>Label<][Button] */
+.ts[class*="right labeled"].action.input:not([class*="left action"]) > input + .label,
+.ts[class*="right labeled"].action.input:not([class*="left action"]) > textarea + .label,
+.ts[class*="right labeled"].action.input:not([class*="left action"]) > *[contenteditable] + .label
+    border-right-color: transparent
+    border-radius: 0
+
+//.ts[class*="right labeled"][class*="left action"].input > button + .label
+//    border-left-color: transparent
+//    border-right-color: transparent
+//    border-radius: 0
+// This works the same as below
+
+/* [Button][>Label<][Input] */
+.ts.labeled[class*="left action"].input > button + .label
+    border-left-color: transparent
+    border-right-color: transparent
+    border-radius: 0
+
+/* [Button][Label][>Input<] */
+.ts.labeled[class*="left action"].input:not([class*="right labeled"]) > input,
+.ts.labeled[class*="left action"].input:not([class*="right labeled"]) > textarea,
+.ts.labeled[class*="left action"].input:not([class*="right labeled"]) > *[contenteditable]
+    border-radius: 0
+    border-top-right-radius: $input_borderRadius
+    border-bottom-right-radius: $input_borderRadius
+
+/* [Button][>Input<][Label] */
+.ts[class*="right labeled"][class*="left action"].input > input,
+.ts[class*="right labeled"][class*="left action"].input > textarea,
+.ts[class*="right labeled"][class*="left action"].input > *[contenteditable]
+    border-radius: 0
+
+//-------------------//
+//      Resizable
+//-------------------//
+
+.ts.resizable input,
+.ts.resizable textarea,
 .ts.resizable *[contenteditable]
     resize: both
 
 //-------------------//
-//      Circular       
+//      Circular
 //-------------------//
 
 .ts.input.circular
     &
         input, textarea, *[contenteditable]
             border-radius: 10em
-            
+
 //-------------------//
-//       Aligns       
+//       Aligns
 //-------------------//
 
 .ts.input.centered
