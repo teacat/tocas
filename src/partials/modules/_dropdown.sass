@@ -120,18 +120,11 @@
 
     +basic-dropdown-variant($dropdown_textColor, $dropdown_backgroundColor, $dropdown_borderColor, $dropdown_arrowBackgroundURL)
 
-.ts.basic.dropdown:hover,
+.ts.basic.dropdown:hover:hover:hover:hover:hover,
 .ts.form select:hover
     cursor          : pointer
     //background-color: rgb(250, 250, 250)
     border-color    : $dropdown_hoverBorderColor
-
-//.ts.basic.dropdown:focus
-    //border-color: $dropdown_focusBorderColor
-
-//.ts.basic.dropdown:active
-//    background-color: rgb(210, 210, 210)
-    //border-color    : $dropdown_activeBorderColor
 
 //-------------------//
 //       Size
@@ -201,15 +194,36 @@
 
 .ts.dropdowns .ts.dropdown,
 .ts.form .ts.dropdowns select
-    flex        : 1
+    flex: 1
+
+//
+.ts.dropdowns:not(.separated) .ts.dropdown:first-child
+    border-right-color: transparent
+    border-top-right-radius   : 0
+    border-bottom-right-radius: 0
+
+.ts.dropdowns:not(.separated) .ts.dropdown:not(:first-child):not(:last-child)
+    border-right-color: transparent
+    border-radius     : 0
+
+.ts.dropdowns:not(.separated) .ts.dropdown:last-child
+    border-top-left-radius   : 0
+    border-bottom-left-radius: 0
+
+//-------------------//
+//     Separated
+//-------------------//
+
+.ts.separated.dropdowns .ts.dropdown,
+.ts.form .ts.separated.dropdowns select
     margin-right: $columnPadding
 
-.ts.relaxed.dropdowns .ts.dropdown,
-.ts.form .ts.relaxed.dropdowns select
+.ts.relaxed.separated.dropdowns .ts.dropdown,
+.ts.form .ts.separated.relaxed.dropdowns select
     margin-right: $columnRelaxedPadding
 
-.ts.dropdowns .ts.dropdown:last-child,
-.ts.form .ts.dropdowns select:last-child
+.ts.separated.dropdowns .ts.dropdown:last-child,
+.ts.form .ts.separated.dropdowns select:last-child
     margin-right: 0
 
 //-------------------//
@@ -244,6 +258,13 @@
 .ts.stackable.relaxed.dropdowns .ts.dropdown
     +rwd-serious(mobile)
         margin-bottom: $columnRelaxedPadding
+
+.ts.dropdowns:not(.separated).stackable .ts.dropdown:first-child,
+.ts.dropdowns:not(.separated).stackable .ts.dropdown:not(:first-child):not(:last-child),
+.ts.dropdowns:not(.separated).stackable .ts.dropdown:last-child
+    +rwd-serious(mobile)
+        border: $dropdown_border
+        border-radius: $dropdown_borderRadius
 
 //-------------------//
 //      Action
@@ -464,7 +485,7 @@
     max-height    : $dropdown_menuImageMaxHeight
 
 //-------------------//
-//      Opened       
+//       Opened       
 //-------------------//
 
 .ts.dropdown.visible .menu,
