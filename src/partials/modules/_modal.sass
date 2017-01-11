@@ -5,10 +5,10 @@
 //*******************************//
 
 dialog.ts.modal
-    display: none
+    display   : none
     background: transparent
-    padding: 0
-    margin: 0
+    padding   : 0
+    margin    : 0
 
     border          : $modal_border
     border-radius   : $modal_borderRadius
@@ -19,23 +19,40 @@ dialog.ts.modal
 dialog.ts.modal[open]
     display: block
 
-dialog.ts.basic.modal
-    border    : 0
-    box-shadow: none
+//-------------------//
+//       Header
+//-------------------//
 
 .ts.modal > .header
     display: block
     border-bottom: $modal_border
     padding: 1.25rem 1.5rem
 
+    +rwd-serious(mobile)
+        padding: .8rem 1rem
+
+
 
 .ts.modal > .header:not(.ts)
-    font-size: 1.42857143rem
-    line-height: 1.2857em
+    font-size: $huge
     font-weight: 500
 
+    +rwd-serious(mobile)
+        font-size: $big
+
+//-------------------//
+//      Content
+//-------------------//
+
 .ts.modal > .content
-    padding: 1.25rem 1.5rem
+    padding: 1.5rem 1.5rem
+
+    +rwd-serious(mobile)
+        padding: 1rem 1rem
+
+//-------------------//
+//   Image Content
+//-------------------//
 
 .ts.modal > .image.content
     display: flex
@@ -56,16 +73,120 @@ dialog.ts.basic.modal
     +rwd-serious(mobile)
         padding-left: 0
 
+//-------------------//
+//      Actions
+//-------------------//
+
 .ts.modal > .actions
     border-top: $modal_border
     text-align: right
     padding: 1rem 1.5rem
 
+    +rwd-serious(mobile)
+        padding: .8rem 1rem
+
 .ts.modal > .actions .button
     margin-left: 1em
+
+//-------------------//
+//       Sizes
+//-------------------//
+
+.ts.modal
+    +rwd-serious(large)
+        width: 900px
+    +rwd-serious(computer)
+        width: 850px
+    +rwd-serious(tablet)
+        width: 88%
+    +rwd-serious(mobile)
+        width: 100%
+
+.ts.mini.modal
+    +rwd-serious(large)
+        width: 340px
+    +rwd-serious(computer)
+        width: 390px
+    +rwd-serious(tablet)
+        width: 60%
+    +rwd-serious(mobile)
+        width: 100%
+
+.ts.tiny.modal
+    +rwd-serious(large)
+        width: 520px
+    +rwd-serious(computer)
+        width: 440px
+    +rwd-serious(tablet)
+        width: 62.5%
+    +rwd-serious(mobile)
+        width: 100%
+
+.ts.small.modal
+    +rwd-serious(large)
+        width: 720px
+    +rwd-serious(computer)
+        width: 680px
+    +rwd-serious(tablet)
+        width: 70.4%
+    +rwd-serious(mobile)
+        width: 100%
+
+.ts.large.modal
+    +rwd-serious(large)
+        width: 1080px
+    +rwd-serious(computer)
+        width: 1020px
+    +rwd-serious(tablet)
+        width: 88%
+    +rwd-serious(mobile)
+        width: 100%
+
+//*******************************//
+//             Basic
+//*******************************//
+
+dialog.ts.basic.modal
+    border    : 0
+    box-shadow: none
+
+//-------------------//
+//       Header
+//-------------------//
+
+.ts.basic.modal > .header
+    padding: 1.88rem 1.5rem
+
+    +rwd-serious(mobile)
+        padding: 1.25rem 1rem
+
+//-------------------//
+//      Actions
+//-------------------//
+
+.ts.basic.modal > .actions
+    +rwd-serious(mobile)
+        padding: 1.25rem 1rem
+
+//*******************************//
+//         Modals Dimmer
+//*******************************//
 
 .ts.modals.dimmer
     position: fixed
     overflow: scroll
     padding: .88rem
-    display: block
+    display: none
+
+    +rwd-serious(large)
+        padding: calc(.88rem * 5)
+    +rwd-serious(computer)
+        padding: calc(.88rem * 4)
+    +rwd-serious(tablet)
+        padding: calc(.88rem * 2)
+
+.ts.modals.dimmer.active
+    display: flex
+
+.ts.modals.dimmer > .modal
+    margin: auto
