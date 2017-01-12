@@ -1,18 +1,70 @@
 @import ../../variables/modules/modal.variables
 
 //*******************************//
+//       Body Scroll Locker
+//*******************************//
+
+body[data-modal-lock]
+    overflow: hidden
+
+//*******************************//
+//            Animation
+//*******************************//
+
+@keyframes modalZoom
+    from
+        opacity  : 0
+        transform: scale3d(.5, .5, .5)
+    80%
+        opacity: 1
+
+.ts.modal.opening,
+.ts.modal.closing
+    animation-name  : modalZoom
+    transform-origin: $modal_transformOrigin
+
+.ts.modal.opening
+    animation-duration       : $modal_openingDuration
+    animation-timing-function: $modal_openingTimingFunction
+
+.ts.modal.closing
+    animation-duration       : $modal_closingDuration
+    animation-direction      : reverse
+    animation-timing-function: $modal_closingTimingFunction
+
+@keyframes modalsDimmer
+    from
+        opacity: 0
+    100%
+        opacity: 1
+
+.ts.modals.dimmer.opening,
+.ts.modals.dimmer.closing
+    animation-name  : modalsDimmer
+    transform-origin: $modal_transformOrigin
+
+.ts.modals.dimmer.opening
+    animation-duration       : $modal_dimmerOpeningDuration
+    animation-timing-function: $modal_dimmerOpeningTimingFunction
+
+.ts.modals.dimmer.closing
+    animation-duration       : $modal_dimmerClosingDuration
+    animation-timing-function: $modal_dimmerClosingTimingFunction
+    animation-direction      : reverse
+
+//*******************************//
 //              Main
 //*******************************//
 
 dialog.ts.modal
-    display   : none
-    background: transparent
-    padding   : 0
-    margin    : 0
+    display         : none
+    padding         : 0
+    margin          : 0
 
     border          : $modal_border
     border-radius   : $modal_borderRadius
     box-shadow      : $modal_boxShadow
+    //1px 3px 3px 0 rgba(0,0,0,.2), 1px 3px 15px 2px rgba(0,0,0,.2)
     color           : $textColor
     background-color: $modal_backgroundColor
 
@@ -24,31 +76,29 @@ dialog.ts.modal[open]
 //-------------------//
 
 .ts.modal > .header
-    display: block
+    display      : block
     border-bottom: $modal_border
-    padding: 1.25rem 1.5rem
+    padding      : $modal_headerPadding
 
     +rwd-serious(mobile)
-        padding: .8rem 1rem
-
-
+        padding: $modal_headerMobilePadding
 
 .ts.modal > .header:not(.ts)
-    font-size: $huge
+    font-size  : $modal_headerFontSize
     font-weight: 500
 
     +rwd-serious(mobile)
-        font-size: $big
+        font-size: $modal_headerMobileFontSize
 
 //-------------------//
 //      Content
 //-------------------//
 
 .ts.modal > .content
-    padding: 1.5rem 1.5rem
+    padding: $modal_contentPadding
 
     +rwd-serious(mobile)
-        padding: 1rem 1rem
+        padding: $modal_contentMobilePadding
 
 //-------------------//
 //   Image Content
@@ -62,13 +112,13 @@ dialog.ts.modal[open]
 
 .ts.modal > .image.content > .image
     +rwd-serious(mobile)
-        flex: 100%
-        text-align: center
-        padding-bottom: 1.25rem
+        flex          : 100%
+        text-align    : center
+        padding-bottom: $modal_imageMobilePaddingBottom
 
 .ts.modal > .image.content > .image + .description
-    flex: 1
-    padding-left: 2em
+    flex        : 1
+    padding-left: $modal_descriptionMarginLeft
 
     +rwd-serious(mobile)
         padding-left: 0
@@ -80,13 +130,65 @@ dialog.ts.modal[open]
 .ts.modal > .actions
     border-top: $modal_border
     text-align: right
-    padding: 1rem 1.5rem
+    padding   : $modal_actionsPadding
 
     +rwd-serious(mobile)
-        padding: .8rem 1rem
+        padding: $modal_actionsMobilePadding
 
 .ts.modal > .actions .button
-    margin-left: 1em
+    margin-left: $modal_actionsButtonLeftMargin
+
+//-------------------//
+//     Close Icon
+//-------------------//
+
+.ts.modal > i.close
+    z-index : 1
+    position: absolute
+    right   : $modal_closeIconRight
+    top     : $modal_closeIconTop
+
+    font-size: $modal_closeIconFontSize
+    color    : $modal_closeIconColor
+
+    opacity: $modal_closeIconOpacity
+
+    line-height: $modal_closeIconHeight
+    height     : $modal_closeIconHeight
+    width      : $modal_closeIconWidth
+
+    cursor       : pointer
+    padding-right: 1px
+    border-radius: 500em
+
+    +rwd-serious(mobile)
+        top   : $modal_closeIconMobileTop
+        right : $modal_closeIconMobileRight
+        margin: 0
+
+        color    : $modal_closeIconMobileColor
+        font-size: $modal_closeIconMobileFontSize
+
+.ts.modal > i.close:hover
+    background-color: $modal_closeIconHoverBackgroundColor
+    opacity         : $modal_closeIconHoverOpacity
+
+    +rwd-serious(mobile)
+        color: $modal_closeIconMobileHoverColor
+
+.ts.modal > i.close:active
+    background-color: $modal_closeIconActiveBackgroundColor
+    color           : $modal_closeIconActiveColor
+    opacity         : $modal_closeIconActiveOpacity
+
+    +rwd-serious(mobile)
+        background-color: $modal_closeIconMobileActiveBackgroundColor
+        color           : $modal_closeIconMobileActiveColor
+
+/** Header */
+.ts.modal > i.close + .header:not(.icon)
+    +rwd-serious(mobile)
+        padding-right: $modal_closeIconHeaderPaddingRight
 
 //-------------------//
 //       Sizes
@@ -94,53 +196,53 @@ dialog.ts.modal[open]
 
 .ts.modal
     +rwd-serious(large)
-        width: 900px
+        width: $modal_rwdLarge
     +rwd-serious(computer)
-        width: 850px
+        width: $modal_rwdComputer
     +rwd-serious(tablet)
-        width: 88%
+        width: $modal_rwdTablet
     +rwd-serious(mobile)
-        width: 100%
+        width: $modal_rwdMobile
 
 .ts.mini.modal
     +rwd-serious(large)
-        width: 340px
+        width: $modal_rwdMiniLarge
     +rwd-serious(computer)
-        width: 390px
+        width: $modal_rwdMiniComputer
     +rwd-serious(tablet)
-        width: 60%
+        width: $modal_rwdMiniTablet
     +rwd-serious(mobile)
-        width: 100%
+        width: $modal_rwdMiniMobile
 
 .ts.tiny.modal
     +rwd-serious(large)
-        width: 520px
+        width: $modal_rwdTinyLarge
     +rwd-serious(computer)
-        width: 440px
+        width: $modal_rwdTinyComputer
     +rwd-serious(tablet)
-        width: 62.5%
+        width: $modal_rwdTinyTablet
     +rwd-serious(mobile)
-        width: 100%
+        width: $modal_rwdTinyMobile
 
 .ts.small.modal
     +rwd-serious(large)
-        width: 720px
+        width: $modal_rwdSmallLarge
     +rwd-serious(computer)
-        width: 680px
+        width: $modal_rwdSmallComputer
     +rwd-serious(tablet)
-        width: 70.4%
+        width: $modal_rwdSmallTablet
     +rwd-serious(mobile)
-        width: 100%
+        width: $modal_rwdSmallMobile
 
 .ts.large.modal
     +rwd-serious(large)
-        width: 1080px
+        width: $modal_rwdLargeLarge
     +rwd-serious(computer)
-        width: 1020px
+        width: $modal_rwdLargeComputer
     +rwd-serious(tablet)
-        width: 88%
+        width: $modal_rwdLargeTablet
     +rwd-serious(mobile)
-        width: 100%
+        width: $modal_rwdLargeMobile
 
 //*******************************//
 //             Basic
@@ -150,15 +252,19 @@ dialog.ts.basic.modal
     border    : 0
     box-shadow: none
 
+    color           : $modal_basicColor
+    background-color: transparent
+
 //-------------------//
 //       Header
 //-------------------//
 
 .ts.basic.modal > .header
-    padding: 1.88rem 1.5rem
+    color  : $modal_basicHeaderColor
+    padding: $modal_basicHeaderPadding
 
     +rwd-serious(mobile)
-        padding: 1.25rem 1rem
+        padding: $modal_basicMobileHeaderPadding
 
 //-------------------//
 //      Actions
@@ -166,7 +272,20 @@ dialog.ts.basic.modal
 
 .ts.basic.modal > .actions
     +rwd-serious(mobile)
-        padding: 1.25rem 1rem
+        padding: $modal_basicMobileActionsPadding
+
+//-------------------//
+//     Close Icon
+//-------------------//
+
+.ts.basic.modal > i.close
+    top  : $modal_basicCloseIconTop
+    right: $modal_basicCloseIconRight
+
+    padding-left: 1px
+
+.ts.basic.modal > i.close:not(:active)
+    color: $modal_basicCloseIconColor
 
 //*******************************//
 //         Modals Dimmer
@@ -175,15 +294,15 @@ dialog.ts.basic.modal
 .ts.modals.dimmer
     position: fixed
     overflow: scroll
-    padding: .88rem
-    display: none
+    padding : $modal_dimmerPadding
+    display : none
 
     +rwd-serious(large)
-        padding: calc(.88rem * 5)
+        padding: $modal_dimmerLargePadding
     +rwd-serious(computer)
-        padding: calc(.88rem * 4)
+        padding: $modal_dimmerComputerPadding
     +rwd-serious(tablet)
-        padding: calc(.88rem * 2)
+        padding: $modal_dimmerTabletPadding
 
 .ts.modals.dimmer.active
     display: flex
