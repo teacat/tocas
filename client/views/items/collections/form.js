@@ -52,8 +52,8 @@ export default
     </div>
     <div class="field">
         <div class="ts checkbox">
-            <input type="checkbox" id="agree">
-            <label for="agree">我同意伊繁星最高協議。</label>
+            <input type="checkbox">
+            <label>我同意伊繁星最高協議。</label>
         </div>
     </div>
     <button class="ts button">送出</button>
@@ -233,14 +233,14 @@ export default
             code: `<div class="ts form">
     <div class="field">
         <div class="ts checkbox">
-            <input type="checkbox" id="adult">
-            <label for="adult">我已滿 18 歲。</label>
+            <input type="checkbox">
+            <label>我已滿 18 歲。</label>
         </div>
     </div>
     <div class="field">
         <div class="ts toggle checkbox">
-            <input type="checkbox" id="afk">
-            <label for="afk">開啟快速充電。</label>
+            <input type="checkbox">
+            <label>開啟快速充電。</label>
         </div>
     </div>
 </div>`,
@@ -259,16 +259,16 @@ export default
         <label>您最喜愛的食物？</label>
         <div class="ts compact horizontal checkboxes">
             <div class="ts radio checkbox">
-                <input type="radio" name="fruits" id="mango">
-                <label for="mango">芒果</label>
+                <input type="radio" name="fruits">
+                <label>芒果</label>
             </div>
             <div class="ts radio checkbox">
-                <input type="radio" name="fruits" id="apple">
-                <label for="apple">蘋果</label>
+                <input type="radio" name="fruits">
+                <label>蘋果</label>
             </div>
             <div class="ts radio checkbox">
-                <input type="radio" name="fruits" id="guava">
-                <label for="guava">芭樂</label>
+                <input type="radio" name="fruits">
+                <label>芭樂</label>
             </div>
         </div>
     </div>
@@ -276,16 +276,16 @@ export default
         <label>您最常搭乘的交通工具？</label>
         <div class="ts checkboxes">
             <div class="ts radio checkbox">
-                <input type="radio" name="traffic" id="bus">
-                <label for="bus">公車</label>
+                <input type="radio" name="traffic">
+                <label>公車</label>
             </div>
             <div class="ts radio checkbox">
-                <input type="radio" name="traffic" id="motorcycle">
-                <label for="motorcycle">機車</label>
+                <input type="radio" name="traffic">
+                <label>機車</label>
             </div>
             <div class="ts radio checkbox">
-                <input type="radio" name="traffic" id="walk">
-                <label for="walk">步行</label>
+                <input type="radio" name="traffic">
+                <label>步行</label>
             </div>
         </div>
     </div>
@@ -383,8 +383,8 @@ export default
     </div>
     <div class="inline field error">
         <div class="ts checkbox">
-            <input type="checkbox" id="agree2">
-            <label for="agree2">我同意伊繁星最高協議。</label>
+            <input type="checkbox">
+            <label>我同意伊繁星最高協議。</label>
         </div>
     </div>
 </div>`,
@@ -655,8 +655,8 @@ export default
     </div>
     <div class="required field">
         <div class="ts checkbox">
-            <input type="checkbox" id="agree3">
-            <label for="agree3">我同意伊繁星最高協議。</label>
+            <input type="checkbox">
+            <label>我同意伊繁星最高協議。</label>
         </div>
     </div>
 </div>`,

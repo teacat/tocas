@@ -621,21 +621,6 @@ export default
         },
         {
             type       : small,
-            title      : '寬鬆',
-            description: `選單可以套用更寬鬆的樣式。`,
-            link       : 'relaxed'
-        },
-        {
-            type: 'example',
-            code: `<div class="ts relaxed menu">
-    <a class="item">預設</a>
-    <a class="item">工作區域</a>
-    <a class="item">指令</a>
-</div>`,
-            mark: 'relaxed'
-        },
-        {
-            type       : small,
             title      : '抬舉',
             description: `選單可以看起來像被抬舉一般加重陰影。`,
             link       : 'raised'
