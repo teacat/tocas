@@ -974,6 +974,7 @@ export default
             type       : tiny,
             title      : 'JavaScript',
             description: '為此，你需要透過下列程式碼來驅動可排序表格。',
+            expandableExample: false
         },
         {
             type: source,
