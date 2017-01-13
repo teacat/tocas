@@ -166,6 +166,7 @@ function contractDropdown(target) {
 function detectDropdown(target, event) {
     var isDropdown = ts(target).hasClass('dropdown')
     var isDropdownText = ts(event.target).hasClass('text')
+    var isDropdownIcon = ts(event.target).hasClass('icon')
     var isDropdownImage = ts(event.target).hasClass('image')
     var hasDropdownParent = ts(event.target).parent().hasClass('dropdown')
     var parentIsItem = ts(event.target).parent().hasClass('item')
@@ -185,6 +186,9 @@ function detectDropdown(target, event) {
         expandDropdown(target)
 
     else if (isDropdown && targetIsDropdown)
+        expandDropdown(target)
+
+    else if (isDropdown && isDropdownIcon && hasDropdownParent)
         expandDropdown(target)
 
     else if (isDropdown && isDropdownImage && hasDropdownParent)
@@ -334,12 +338,56 @@ function closeModal(modal) {
         })
 }
 
+function bindModalButtons(modal, approve, deny, approveCallback, denyCalback, overwrite) {
+    tsApprove = ts(modal).find(approve),
+        tsDeny = ts(modal).find(deny),
+        isset = ts(modal).attr("data-modal-initialized") !== null
+
+    /** Approve callback */
+    if (tsApprove !== null) {
+        if (overwrite)
+            tsApprove.off("click")
+
+        if (overwrite || !isset && !overwrite)
+            tsApprove.on("click", function() {
+
+                if (approveCallback.call(modal) !== false) {
+                    closeModal(modal)
+                }
+            })
+    }
+
+    /** Deny callback */
+    if (tsDeny !== null) {
+        if (overwrite)
+            tsDeny.off("click")
+
+        if (overwrite || !isset && !overwrite)
+            tsDeny.on("click", function() {
+                if (denyCalback.call(modal) !== false) {
+                    closeModal(modal)
+                }
+            })
+    }
+
+    ts(modal).attr("data-modal-initialized", "true")
+}
+
 ts.fn.modal = function(option) {
-    return this.each(function() {
+
+    return this.each(function(i) {
+
+        /** Only set the first modal */
+        if (i > 0)
+            return
+
+        if (typeof this === "undefined")
+            return
 
         var modal = this,
             tsModal = ts(this),
-            tsDimmer = tsModal.closest(".ts.modals.dimmer")
+            tsDimmer = tsModal.closest(".ts.modals.dimmer"),
+            closeBtn = tsModal.find(".close.icon")
 
         if (tsDimmer == null)
             return
@@ -368,11 +416,19 @@ ts.fn.modal = function(option) {
                 })
 
             /** Bind the close icon event */
-            tsModal
-                .find(".close.icon")
-                .on("click", function() {
+            if (closeBtn !== null)
+                closeBtn.on("click", function() {
                     closeModal(modal)
                 })
+
+            /** Bind the events */
+            bindModalButtons(
+                modal,
+                '.positive, .approve, .ok', '.negative, .deny, .cancel',
+                function() { return true },
+                function() { return true },
+                false
+            )
 
             /** Open the specified modal */
             tsModal
@@ -397,19 +453,7 @@ ts.fn.modal = function(option) {
 
             var modal = this
 
-            /** Approve callback */
-            ts(this).find(approve).on("click", function() {
-                if (onApprove() !== false) {
-                    closeModal(modal)
-                }
-            })
-
-            /** Deny callback */
-            ts(this).find(deny).on("click", function() {
-                if (onDeny() !== false) {
-                    closeModal(modal)
-                }
-            })
+            bindModalButtons(modal, approve, deny, onApprove, onDeny, true)
         }
     })
 }
