@@ -256,26 +256,6 @@ export default
         },
         {
             type       : small,
-            title      : '圖片',
-            description: `一個用以放置圖片的區塊。`,
-            link       : 'image'
-        },
-        {
-            type: 'example',
-            code: `<div class="ts card">
-    <div class="image">
-        <img src="${imgPlaceholderLegacy}">
-    </div>
-    <div class="content">
-        你將會在這裡看見一個魔法師的日常生活，
-        沒錯，只要你能夠單身三十年，
-        你也可以跟我一樣成為魔法師。
-    </div>
-</div>`,
-            mark: 'image'
-        },
-        {
-            type       : small,
             title      : '標題',
             description: `用以放置人名、標題、名稱的區塊。`,
             link       : 'header'
@@ -284,10 +264,9 @@ export default
             type: 'example',
             code: `<div class="ts card">
     <div class="content">
-        <div class="header">The Place Where Only We Know</div>
+        <div class="header">嗶叭啦叭啦叭叭拉嗶嗶叭啦</div>
         <div class="description">
-            <p>I must going to find you out,</p>
-            <p>to the place where only we know.</p>
+            <p>這是來自地獄的智障骷髏智障骷髏小喇叭手。</p>
         </div>
     </div>
 </div>`,
@@ -314,6 +293,71 @@ export default
     </div>
 </div>`,
             mark: 'sub header'
+        },
+        {
+            type       : tiny,
+            title      : '較小的標題',
+            description: `標題與其子標題可以稍微小一點。`,
+            link       : 'smaller-header'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts card">
+    <div class="content">
+        <div class="smaller header">
+            電腦玩瞎咪
+            <div class="sub header">關於電腦、日常生活、休閒的去處。</div>
+        </div>
+        <div class="description">
+            <p>Event Store 是一個基於 CQRS 與 Event Sourcing 理念所衍生出來的新概念並由 C# 撰寫。這是一個微服務事件儲藏中心，這可能很難懂，但別緊張，這些都會在本文中得到答案。</p>
+        </div>
+    </div>
+</div>`,
+            mark: 'smaller header'
+        },
+        {
+            type       : small,
+            title      : '圖片',
+            description: `一個用以放置圖片的區塊。`,
+            link       : 'image'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts card">
+    <div class="image">
+        <img src="${imgPlaceholderLegacy}">
+    </div>
+    <div class="content">
+        你將會在這裡看見一個魔法師的日常生活，
+        沒錯，只要你能夠單身三十年，
+        你也可以跟我一樣成為魔法師。
+    </div>
+</div>`,
+            mark: 'image'
+        },
+        {
+            type       : small,
+            title      : '圖片標題',
+            description: `圖片區塊內可以有標題與子標題。`,
+            link       : 'image-header'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts card">
+    <div class="image">
+        <img src="${imgPlaceholderLegacy}">
+        <div class="header">
+            三十公分
+            <div class="sub header">人人都渴望的尺寸。</div>
+        </div>
+    </div>
+    <div class="content">
+        你將會在這裡看見一個魔法師的日常生活，
+        沒錯，只要你能夠單身三十年，
+        你也可以跟我一樣成為魔法師。
+    </div>
+</div>`,
+            mark: 'sub header, header'
         },
         {
             type       : small,
@@ -467,9 +511,9 @@ export default
         <p>任何已發布或是計畫中之產品及服務，</p>
         <p>皆不得用來刻意偏頗大眾想法、喜好、甚至混淆視聽，</p>
         <p>且該產品及服務不得擁有自我立場。</p>
-        <div class="symbol">
-            <i class="caution circle icon"></i>
-        </div>
+    </div>
+    <div class="symbol">
+        <i class="caution circle icon"></i>
     </div>
 </div>`,
             mark: 'symbol'
@@ -605,7 +649,7 @@ export default
         },
         {
             type: 'example',
-            code: `<div class="ts postive card">
+            code: `<div class="ts card">
     <div class="content">
         <div class="header">請問</div>
         <div class="description">
