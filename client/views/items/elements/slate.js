@@ -4,7 +4,7 @@ var small   = 'small'
 var tiny    = 'tiny'
 var source  = 'source'
 var example = 'example'
-
+var imgPlaceholderWide   = require('../../images/image_placeholder_16-9.png')
 
 export default
 {
@@ -23,9 +23,7 @@ export default
             title      : '說明',
             description:
             `
-                <p>板岩是<a href="/elements/jumbotron">聚焦看板</a>的後繼者，板岩除了擁有作為頁面標題區塊的功能外，</p>
-                <p>現在還可以當作一個預置區塊（Placeholder），例如一個空的購物車就可以用上板岩。</p>
-                <br><br>
+                <p>板岩是<a href="/elements/jumbotron">聚焦看板</a>的後繼者，板岩除了擁有作為頁面標題區塊的功能外，現在還可以當作一個預置區塊（Placeholder），例如一個空的購物車就可以用上板岩。</p>
                 <p>此外，板岩現在也支援標題、註釋、動作按鈕。</p>
             `
         },
@@ -126,6 +124,23 @@ export default
     <span class="description">模擬就學制度，協助在年者再次就職支援計劃。</span>
 </div>`,
             mark  : 'description'
+        },
+        {
+            type       : small,
+            title      : '背景圖片',
+            description: `板岩內能夠擺置圖片當作背景。`,
+            link       : 'image'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts slate">
+    <div class="image">
+        <img src="${imgPlaceholderWide}">
+    </div>
+    <span class="header">Tryment 計畫</span>
+    <span class="description">模擬就學制度，協助在年者再次就職支援計劃。</span>
+</div>`,
+            mark  : 'image'
         },
         {
             type       : small,
