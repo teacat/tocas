@@ -212,8 +212,8 @@ export default new Router
             component: require('../views/modules/Popup')
         },
         {
-            path     : '/animation/',
-            component: require('../views/Animation')
+            path     : '/modules/modal',
+            component: require('../views/modules/Modal')
         },
         {
             path     : '/rwd/',
