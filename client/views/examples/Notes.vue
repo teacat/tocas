@@ -69,7 +69,7 @@
                 <div class="sixteen wide column">
                 
                     <!-- 瀑布流卡片群組 -->
-                    <div class="ts stackable waterfall cards">
+                    <div class="ts stackable three waterfall cards">
                     
                         <!-- 單張卡片 -->
                         <div class="ts card">

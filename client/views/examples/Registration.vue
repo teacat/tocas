@@ -83,7 +83,7 @@
                         <label>生日</label>
                         
                         <!-- 下拉式選單群組 -->
-                        <div class="ts relaxed fluid dropdowns">
+                        <div class="ts relaxed fluid separated dropdowns">
                             <select>
                                 <option>1998</option>
                             </select>
