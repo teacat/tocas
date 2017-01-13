@@ -28,8 +28,7 @@ export default
             title      : '說明',
             description:
             `
-                <p>圖片在不指定大小的情況下，</p>
-                <p>預設最大至少可以填滿整個容器。</p>
+                <p>圖片在不指定大小的情況下，預設最大至少可以填滿整個容器。</p>
             `,
         },
         {
@@ -260,44 +259,22 @@ export default
         },
         {
             type       : small,
-            title      : '網格的',
-            description: `群組可以看起來是像是一個有網格結構。`,
-            link       : 'celled',
-            wip        : true
+            title      : '有關聯的',
+            description: `群組內的圖片可以看起來有關聯。`,
+            link       : 'group-related'
         },
         {
             type: 'example',
-            code: `<div class="ts one celled images">
-    <img src="${imgPlaceholderSquare}">
-</div>
-<br>
-<div class="ts two celled images">
+            code: `<div class="ts small related images">
     <img src="${imgPlaceholderSquare}">
     <img src="${imgPlaceholderSquare}">
 </div>
 <br>
-<div class="ts three celled images">
-    <img src="${imgPlaceholderSquare}">
-    <img src="${imgPlaceholderSquare}">
-    <img src="${imgPlaceholderSquare}">
-</div>
-<br>
-<div class="ts four celled images">
-    <img src="${imgPlaceholderSquare}">
-    <img src="${imgPlaceholderSquare}">
-    <img src="${imgPlaceholderSquare}">
-    <img src="${imgPlaceholderSquare}">
-</div>
-<br>
-<div class="ts five celled images">
-    <img src="${imgPlaceholderSquare}">
-    <img src="${imgPlaceholderSquare}">
-    <img src="${imgPlaceholderSquare}">
+<div class="ts tiny circular related images">
     <img src="${imgPlaceholderSquare}">
     <img src="${imgPlaceholderSquare}">
 </div>`,
-            mark  : 'celled, one, two, three, four, five',
-            remove: '<br>'
+            mark: 'related'
         },
     ]
 }
