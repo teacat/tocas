@@ -23,8 +23,7 @@ export default
             title      : '說明',
             description:
             `
-                <p>Tocas UI 的網格系統和 Bootstrap 的較為不同，</p>
-                <p>比起 Bootstrap來說，Tocas UI 且更具彈性與更強大的功能還更加地自動化。</p>
+                <p>Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說，Tocas UI 且更具彈性與更強大的功能還更加地自動化。</p>
                 <p>為了方便展示網格系統，我們將背景加上了灰色，在實際應用中將會是透明的。</p>
             `
         },
@@ -370,6 +369,31 @@ export default
     <div class="four wide column"></div>
 </div>`,
             mark: 'stackable'
+        },
+        {
+            type       : small,
+            title      : '排序反轉',
+            description: `你可以在指定裝置上反轉網格系統的排序。`,
+            link       : 'reversed'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts mobile reversed three column grid">
+    <div class="column">第一個，手機第三個</div>
+    <div class="column">第二個，手機第二個</div>
+    <div class="column">第三個，手機第一個</div>
+</div>
+<div class="ts tablet reversed three column grid">
+    <div class="column">第一個，平板第三個</div>
+    <div class="column">第二個，平板第二個</div>
+    <div class="column">第三個，平板第一個</div>
+</div>
+<div class="ts computer reversed three column grid">
+    <div class="column">第一個，電腦第三個</div>
+    <div class="column">第二個，電腦第二個</div>
+    <div class="column">第三個，電腦第一個</div>
+</div>`,
+            mark: 'mobile reversed, tablet reversed, computer reversed'
         },
         {
             type       : small,
