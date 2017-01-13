@@ -36,7 +36,7 @@ export default {
         },
         {
             type: 'example',
-            code: `<dialog class="ts modal" open>
+            code: `<dialog class="ts fullscreen modal" open>
     <div class="header">
         逼啪拉畢叭啦霹拉吧
     </div>
@@ -66,7 +66,7 @@ export default {
         {
             type: 'example',
             inverted: true,
-            code: `<dialog class="ts basic modal" open>
+            code: `<dialog class="ts basic fullscreen modal" open>
     <div class="ts icon header">
         <i class="smile icon"></i>
         您同意「合理使用條約」嗎
@@ -100,7 +100,7 @@ export default {
         },
         {
             type: 'example',
-            code: `<dialog class="ts modal" open>
+            code: `<dialog class="ts fullscreen modal" open>
     <div class="header">
         對話視窗標題
     </div>
@@ -115,7 +115,7 @@ export default {
         },
         {
             type: 'example',
-            code: `<dialog class="ts modal" open>
+            code: `<dialog class="ts fullscreen modal" open>
     <div class="header">
         吃過早餐了嗎？
     </div>
@@ -133,7 +133,7 @@ export default {
         },
         {
             type: 'example',
-            code: `<dialog class="ts modal" open>
+            code: `<dialog class="ts fullscreen modal" open>
     <div class="header">
         這是你嗎？
     </div>
@@ -158,7 +158,7 @@ export default {
         },
         {
             type: 'example',
-            code: `<dialog class="ts modal" open>
+            code: `<dialog class="ts fullscreen modal" open>
     <div class="header">
         確定檢舉嗎？
     </div>
@@ -187,7 +187,7 @@ export default {
         },
         {
             type: 'example',
-            code: `<dialog class="ts modal" open>
+            code: `<dialog class="ts fullscreen modal" open>
     <div class="header">
        我是對話視窗！
     </div>
@@ -214,16 +214,14 @@ export default {
             link: 'close'
         },
         {
-            style: "padding: 35px",
-            inverted: true,
             type: 'example',
-            code: `<dialog class="ts modal" open>
+            code: `<dialog class="ts fullscreen modal" open>
     <i class="close icon"></i>
     <div class="header">
-        確定檢舉嗎？
+        範例視窗
     </div>
     <div class="image content">
-        <p>你正打算要檢舉：「洨洨安萬萬歲⋯⋯」文章，如果你確定這篇文章違反伊繁星最高協議即可進行檢舉，倘若抱有任何遲疑的態度請在送出前再度確認是否有違反任何規範的嫌疑。</p>
+        <p>這個範例的關閉按鈕被遮住了，建議使用行動裝置觀看此範例。或者你也可以在下面的 JavaScript 範例中呼叫對話視窗來查看有關閉按鈕的範例。</p>
     </div>
     <div class="actions">
         <button class="ts deny button">
@@ -237,13 +235,31 @@ export default {
         </button>
     </div>
 </dialog>`,
-            mark: 'actions, positive, deny'
+            mark: 'close icon'
         },
         {
             type: normal,
             title: '外觀',
             description: '你可以更改對話視窗的外觀點綴。',
             link: false
+        },
+        {
+            type: small,
+            title: '全螢幕等寬',
+            description: `對話視窗的寬度可以直接符合螢幕最寬的寬度。`,
+            link: 'fullscreen'
+        },
+        {
+            type: 'example',
+            code: `<dialog class="ts fullscreen modal" open>
+    <div class="header">
+        全螢幕等寬
+    </div>
+    <div class="content">
+        這個對話視窗會是 100% 寬度喔。
+    </div>
+</dialog>`,
+            mark: 'fullscreen'
         },
         {
             type: small,
@@ -329,6 +345,7 @@ export default {
             type: 'example',
             code: `<div class="ts modals dimmer">
         <dialog id="basicModal" class="ts basic modal" open>
+        <i class="close icon"></i>
         <div class="ts icon header">
             <i class="smile icon"></i>
             您同意「合理使用條約」嗎
@@ -357,6 +374,7 @@ export default {
         },
         {
             type: source,
+            executable: true,
             code: `ts('#basicModal').modal("show")`
         },
         {
@@ -387,11 +405,12 @@ export default {
         {
             type: tiny,
             title: 'JavaScript',
-            description: '接著像這樣呼叫對話視窗。',
+            description: '用和剛才差不多的方式呼叫對話視窗。',
             expandableExample: false
         },
         {
             type: source,
+            executable: true,
             code: `ts('#testModal').modal("show")`
         },
         {
@@ -453,11 +472,12 @@ export default {
         {
             type: tiny,
             title: 'JavaScript',
-            description: '接著像這樣呼叫對話視窗。',
+            description: '接著呼叫對話視窗時，順帶把選項帶入呼叫函式中。',
             expandableExample: false
         },
         {
             type: source,
+            executable: true,
             code: `ts('#optionModal').modal({
     approve: '.positive, .approve, .ok',
     deny  : '.negative, .deny, .cancel',
