@@ -1,10 +1,14 @@
 <template>
-    <div class="example preview">
+    <div class="example preview" :class="{inverted: inverted}">
 
         <!-- 無框實際範例 -->
-        <div class="real example" v-html="code" v-if="hasExample"></div>
+        <div class="real example" v-html="code" v-if="hasExample" :style="style"></div>
         <!-- / 無框實際範例 -->
 
+        <button class="ts small secondary labeled icon button" v-if="!hasExample" v-on:click="ev(code)">
+            <i class="bug icon"></i>
+            執行程式碼
+        </button>
 
         <!-- 原始碼片段 -->
         <div class="ts padded secondary segment" v-if="!hasExample">
@@ -17,9 +21,8 @@
         <div class="ts example segments" v-if="hasExample">
 
             <!-- 實際範例 -->
-            <div class="ts clearing preview segment" v-html="code"></div>
+            <div class="ts clearing preview segment" v-html="code" :style="style"></div>
             <!-- / 實際範例 -->
-
 
             <!-- 原始碼 -->
             <div class="ts padded secondary segment">
@@ -111,6 +114,17 @@ pre
 }
 .example.preview
 {
+    &.inverted
+    {
+        border-radius: 4px;
+        background-color: #34495e;
+        .real.example,
+        .ts.example.segments .preview.segment
+        {
+            border-radius: 4px;
+            background-color: #34495e;
+        }
+    }
     .real.example
     {
         display: block;
@@ -140,11 +154,25 @@ pre
 export default
 {
     name : 'ExampleSegments',
+    methods:
+    {
+        ev(code)
+        {
+            var prev = jA(this.$el).prev().prev()
+
+            if(prev.hasClass("example"))
+                prev.removeClass("expanded")
+
+            eval(code)
+        }
+    },
     props:
     {
+        style      : { default: null  },
         code       : { default: ''    },
         mark       : { default: null  },
         tagMark    : { default: null  },
+        inverted   : { default: false },
         remove     : { default: null  },
         hasExample : { default: true  },
         showingCode: { default: false }
