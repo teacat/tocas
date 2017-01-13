@@ -7,8 +7,8 @@
                     <div v-text="card.class"></div>
                 </div>
                 <div class="description" v-text="card.description"></div>
-                <div class="symbol"><i class="icon" :class="card.symbol"></i>
             </div>
+            <div class="symbol"><i class="icon" :class="card.symbol"></i>
         </router-link>
     </article>
 </template>
