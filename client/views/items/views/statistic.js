@@ -202,6 +202,37 @@ export default
         },
         {
             type       : small,
+            title      : '異動',
+            description: `顯示與上次的差距、異動數值。`,
+            link       : 'fluctuation'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts statistic">
+    <div class="value">
+        892
+        <div class="increment">32</div>
+    </div>
+    <div class="label">觀看次數</div>
+</div>
+<div class="ts statistic">
+    <div class="value">
+        18
+        <div class="decrement">32</div>
+    </div>
+    <div class="label">收藏次數</div>
+</div>
+<div class="ts statistic">
+    <div class="value">
+        1,725
+        <div class="fluctuation">163+</div>
+    </div>
+    <div class="label">購買次數</div>
+</div>`,
+            mark: 'increment, decrement, fluctuation'
+        },
+        {
+            type       : small,
             title      : '標籤',
             description: `用來告訴使用者這個數據的含義。`,
             link       : 'label'
