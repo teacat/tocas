@@ -675,3 +675,38 @@
     margin: 0 $button_buttonsRelaxedSeparatedHorizontalMargin 0 0
 .ts.vertical.relaxed.separated.buttons .ts.button
     margin: 0 0 $button_buttonsRelaxedSeparatedVerticalMargin 0
+
+//-------------------//
+//      Stackable
+//-------------------//
+
+.ts.separated.stackable.buttons
+    +rwd-serious(mobile)
+        flex-direction: column
+.ts.separated.stackable.buttons .ts.button
+    +rwd-serious(mobile)
+        margin: 0 0 $button_buttonsSeparatedVerticalMargin 0
+.ts.separated.stackable.buttons .ts.button:last-child
+    +rwd-serious(mobile)
+        margin-bottom: 0
+
+.ts.stackable.buttons:not(.separated):not(.vertical)
+    +rwd-serious(mobile)
+        display: block
+
+        .ts.button
+            border-radius: $button_borderRadius
+            display      : block
+
+            &:not(:first-child)
+                border-top-left-radius : 0
+                border-top-right-radius: 0
+                border-bottom-width    : 0
+
+            &:not(:last-child)
+                border-bottom-left-radius : 0
+                border-bottom-right-radius: 0
+                border-bottom-width       : 0px
+
+            &:last-child
+                border-bottom-width       : 1px
