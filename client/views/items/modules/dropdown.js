@@ -119,7 +119,7 @@ export default
             type: 'example',
             code: `<div class="ts dropdown">
     <div class="text">檔案</div>
-    <i class="dropdown icon"></i>
+    <i class="caret down icon"></i>
     <div class="menu">
         <div class="item">
             新增
@@ -147,7 +147,8 @@ export default
         {
             type       : tiny,
             title      : 'JavaScript',
-            description: '透過下列方式來驅動你的下拉式功能選單。',
+            description: '欲要使用這種選單，你必須透過下列方式來驅動你的下拉式功能選單。',
+            expandableExample: false
         },
         {
             type: source,
@@ -182,13 +183,34 @@ export default
         },
         {
             type       : small,
+            title      : '分開的',
+            description: `下拉式選單群組裡的選單可以是分開的。`,
+            link       : 'separated'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts separated dropdowns">
+    <select class="ts basic dropdown">
+        <option>1998</option>
+    </select>
+    <select class="ts basic dropdown">
+        <option>07</option>
+    </select>
+    <select class="ts basic dropdown">
+        <option>13</option>
+    </select>
+</div>`,
+            mark: 'separated'
+        },
+        {
+            type       : small,
             title      : '較寬鬆',
-            description: `下拉式選單群組中間的間隙可以較為寬鬆。`,
+            description: `分開的下拉式選單群組間隙可以較為寬鬆。`,
             link       : 'relaxed'
         },
         {
             type: 'example',
-            code: `<div class="ts fluid relaxed dropdowns">
+            code: `<div class="ts fluid separated relaxed dropdowns">
     <select class="ts basic dropdown">
         <option>1998</option>
     </select>
@@ -215,7 +237,8 @@ export default
         },
         {
             type: 'example',
-            code: `<div class="ts floating dropdown button">
+            code: `<div class="ts floating dropdown labeled icon button">
+    <i class="caret down icon"></i>
     <span class="text">更多功能</span>
     <div class="menu">
         <div class="item">
@@ -239,7 +262,8 @@ export default
         },
         {
             type: 'example',
-            code: `<div class="ts floating dropdown button">
+            code: `<div class="ts floating dropdown labeled icon button">
+    <i class="filter icon"></i>
     <span class="text">篩選</span>
     <div class="menu">
         <div class="header">
@@ -264,7 +288,8 @@ export default
         },
         {
             type: 'example',
-            code: `<div class="ts floating dropdown button">
+            code: `<div class="ts floating dropdown labeled icon button">
+    <i class="users icon"></i>
     <span class="text">選擇人物</span>
     <div class="menu">
         <div class="item">
@@ -288,7 +313,8 @@ export default
         },
         {
             type: 'example',
-            code: `<div class="ts floating dropdown button">
+            code: `<div class="ts floating dropdown labeled icon button">
+    <i class="users icon"></i>
     <span class="text">選擇人物</span>
     <div class="menu">
         <div class="item">
@@ -304,6 +330,29 @@ export default
     </div>
 </div>`,
             mark: 'section divider'
+        },
+        {
+            type       : tiny,
+            title      : '群組分隔線',
+            description: `下拉式選單群組也能在中間插入自定義分隔線。`
+        },
+        {
+            type: 'example',
+            code: `<div class="ts separated dropdowns">
+    <select class="ts basic dropdown">
+        <option>1998</option>
+    </select>
+    <div class="divider">年</div>
+    <select class="ts basic dropdown">
+        <option>07</option>
+    </select>
+    <div class="divider">月</div>
+    <select class="ts basic dropdown">
+        <option>13</option>
+    </select>
+    <div class="divider">日</div>
+</div>`,
+            mark: 'divider'
         },
         {
             type       : small,
@@ -340,7 +389,8 @@ export default
         },
         {
             type: 'example',
-            code: `<div class="ts floating dropdown button">
+            code: `<div class="ts floating dropdown labeled icon button">
+    <i class="caret down icon"></i>
     <span class="text">移至資料夾</span>
     <div class="menu">
         <div class="item">
@@ -373,7 +423,8 @@ export default
         },
         {
             type: 'example',
-            code: `<div class="ts floating dropdown button">
+            code: `<div class="ts floating dropdown labeled icon button">
+    <i class="caret down icon"></i>
     <span class="text">更多功能</span>
     <div class="menu">
         <div class="item">
@@ -455,6 +506,27 @@ export default
     <option>Kake</option>
 </select>`,
             mark: 'fluid'
+        },
+        {
+            type       : small,
+            title      : '自動層疊',
+            description: `下拉式選單群組能夠在手機上自動層疊，而不是保持水平排列。欲看見效果，你可能需要透過手機來查看這個範例。`,
+            link       : 'stackable'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts stackable dropdowns">
+    <select class="ts basic dropdown">
+        <option>1998</option>
+    </select>
+    <select class="ts basic dropdown">
+        <option>07</option>
+    </select>
+    <select class="ts basic dropdown">
+        <option>13</option>
+    </select>
+</div>`,
+            mark: 'stackable'
         },
         {
             type       : small,
