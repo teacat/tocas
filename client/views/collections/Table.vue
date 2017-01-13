@@ -21,6 +21,10 @@ export default
     beforeCreate()
     {
         document.title = '表格 | Tocas UI'
+    },
+    mounted()
+    {
+        ts('.ts.sortable.table').tablesort()
     }
 }
 </script>
