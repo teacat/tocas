@@ -225,6 +225,21 @@ export default
             mark: 'relaxed'
         },
         {
+            type       : small,
+            title      : '自動層疊',
+            description: `按鈕群組可以在手機版上自動層疊，而不是保持水平排列。欲觀看此效果你需要使用手機來查看此範例。`,
+            link       : 'stackable-buttons'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts fluid stackable buttons">
+    <button class="ts info button">希豹</button>
+    <button class="ts negative button">祈浪</button>
+    <button class="ts secondary button">余望</button>
+</div>`,
+            mark: 'stackable'
+        },
+        {
             type       : normal,
             title      : '狀態',
             description: '你可以隨時透過樣式類別切換一個按鈕的狀態。',
