@@ -23,8 +23,7 @@ export default
             title      : '說明',
             description:
             `
-                <p>按鈕具有多種樣式和語意，請注意的是，語意和顏色不同，</p>
-                <p>請不要為了要新增紅色按鈕，就建立一個「負面」按鈕。</p>
+                <p>按鈕具有多種樣式和語意，請注意的是，語意和顏色不同，請不要為了要新增紅色按鈕，就建立一個「負面」按鈕。</p>
                 <p>請務必遵循 CSS 樣式中的含意。</p>
             `
         },
@@ -194,6 +193,36 @@ export default
     <button class="ts inverted button">卡莉絲</button>
 </div>`,
             mark: 'vertical, buttons'
+        },
+        {
+            type       : small,
+            title      : '分開的',
+            description: `按鈕群組也可以分開、有間距。`,
+            link       : 'separated'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts separated buttons">
+    <button class="ts warning button">橙希</button>
+    <button class="ts primary button">雨藍</button>
+    <button class="ts inverted button">卡莉絲</button>
+</div>`,
+            mark: 'separated, buttons'
+        },
+        {
+            type       : small,
+            title      : '較寬鬆的',
+            description: `按鈕群組之間的間距可以更大、看起來更寬鬆。`,
+            link       : 'relaxed'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts relaxed separated buttons">
+    <button class="ts warning button">橙希</button>
+    <button class="ts primary button">雨藍</button>
+    <button class="ts inverted button">卡莉絲</button>
+</div>`,
+            mark: 'relaxed'
         },
         {
             type       : normal,
