@@ -189,6 +189,27 @@ export default
         },
         {
             type       : small,
+            title      : '吸附',
+            description: `進度列可以吸附在某些元件內。`,
+            link       : 'attached'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts card">
+    <div class="ts positive top attached progress">
+        <div class="bar" style="width: 25%"></div>
+    </div>
+    <div class="content">
+        這個卡片的上下方都各有一個獨立的吸附式進度條。
+    </div>
+    <div class="ts bottom attached progress">
+        <div class="bar" style="width: 70%"></div>
+    </div>
+</div>`,
+            mark: 'top attached, bottom attached'
+        },
+        {
+            type       : small,
             title      : '尺寸',
             description: `進度列提供多種尺寸。`,
             link       : 'sizes'
