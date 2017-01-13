@@ -117,7 +117,7 @@ h5
 .button
 {
     position : absolute !important;
-    right    : 0;
+    right    : -6px;
     top      : 6.7em;
     transform: scale(0.9);
 }
