@@ -237,6 +237,37 @@ export default
         },
         {
             type       : small,
+            title      : '區塊',
+            description: `標題能夠看起來像自己一個區塊。`,
+            link       : 'block'
+        },
+        {
+            type: 'example',
+            code: `<h4 class="ts block header">我自己是一個區塊喔</h4>`,
+            mark: 'block'
+        },
+        {
+            type       : small,
+            title      : '吸附',
+            description: `標題能夠吸附在其他的元件上。`,
+            link       : 'attached'
+        },
+        {
+            type: 'example',
+            code: `<h5 class="ts top attached header">吸附在上部</h5>
+<div class="ts attached segment">
+    在這寂靜的夜晚，我又想起了你。
+</div>
+<h5 class="ts attached header">吸附於中間</h5>
+<div class="ts attached segment">
+    頓時；一陣涼風吹過，而我——又射了。
+</div>
+<h5 class="ts bottom attached header">吸附於底部</h5>
+`,
+            mark: 'top attached, bottom attached, attached'
+        },
+        {
+            type       : small,
             title      : '較細的',
             description: `標題可以略細一些。`,
             link       : 'thinner'
