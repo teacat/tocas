@@ -1051,14 +1051,52 @@ html[data-ts-native] .ts.dropdown {
 .ts.separated.buttons .ts.button {
   margin: 0 0.65em 0 0; }
 
+.ts.separated.buttons .ts.button:last-child {
+  margin-right: 0; }
+
+.ts.vertical.separated.buttons {
+  flex-direction: column; }
+
 .ts.vertical.separated.buttons .ts.button {
   margin: 0 0 0.65em 0; }
+
+.ts.vertical.separated.buttons .ts.button:last-child {
+  margin-bottom: 0; }
 
 .ts.relaxed.separated.buttons .ts.button {
   margin: 0 0.95em 0 0; }
 
 .ts.vertical.relaxed.separated.buttons .ts.button {
   margin: 0 0 0.95em 0; }
+
+@media (max-width: 767px) {
+  .ts.separated.stackable.buttons {
+    flex-direction: column; } }
+
+@media (max-width: 767px) {
+  .ts.separated.stackable.buttons .ts.button {
+    margin: 0 0 0.65em 0; } }
+
+@media (max-width: 767px) {
+  .ts.separated.stackable.buttons .ts.button:last-child {
+    margin-bottom: 0; } }
+
+@media (max-width: 767px) {
+  .ts.stackable.buttons:not(.separated):not(.vertical) {
+    display: block; }
+    .ts.stackable.buttons:not(.separated):not(.vertical) .ts.button {
+      border-radius: 0.28571rem;
+      display: block; }
+      .ts.stackable.buttons:not(.separated):not(.vertical) .ts.button:not(:first-child) {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-width: 0; }
+      .ts.stackable.buttons:not(.separated):not(.vertical) .ts.button:not(:last-child) {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-bottom-width: 0px; }
+      .ts.stackable.buttons:not(.separated):not(.vertical) .ts.button:last-child {
+        border-bottom-width: 1px; } }
 
 /* No Line Height Offset */
 .ts.header {
@@ -8607,11 +8645,6 @@ i.icon.fa:before {
   -moz-column-gap: calc(0.5em * 2);
   column-gap: calc(0.5em * 2); }
 
-.ts.card .symbol {
-  margin-right: -1rem;
-  margin-bottom: -1rem;
-  height: 1.8em; }
-
 .ts.card .symbol .icon {
   position: absolute;
   right: 0;
@@ -8895,6 +8928,7 @@ a.ts.flatted.card:hover,
 
 @media (max-width: 767px) {
   .ts.stackable.dropdowns .ts.dropdown {
+    display: block;
     margin-bottom: 0.4rem; } }
 
 @media (max-width: 767px) {
@@ -11077,15 +11111,15 @@ img.ts.bordered.image {
 .ts.segment > .ts.attached.progress,
 .ts.card > .ts.attached.progress {
   position: absolute;
-  top: auto;
+  top: 0.01rem;
   left: 0;
   bottom: 100%;
   width: 100%; }
 
 .ts.segment > .ts.bottom.attached.progress,
 .ts.card > .ts.bottom.attached.progress {
-  top: 100%;
-  bottom: auto; }
+  top: auto;
+  bottom: 0.01rem; }
 
 .ts.progress.fluid {
   border-radius: 0; }
@@ -11276,6 +11310,7 @@ a, span {
 .ts.statistics .statistic > .value,
 .ts.statistic > .value {
   display: flex;
+  justify-content: center;
   font-size: 4rem;
   font-weight: normal;
   line-height: 1em;
@@ -13877,7 +13912,7 @@ body[data-modal-lock] {
   animation-timing-function: cubic-bezier(0.06, 0.63, 0.36, 1); }
 
 .ts.modal.closing {
-  animation-duration: 0.25s;
+  animation-duration: 0.2s;
   animation-direction: reverse;
   animation-timing-function: cubic-bezier(0, 0, 0.08, 1.01); }
 
@@ -13896,7 +13931,7 @@ body[data-modal-lock] {
   animation-timing-function: cubic-bezier(0, 0.61, 0.36, 1); }
 
 .ts.modals.dimmer.closing {
-  animation-duration: 0.3s;
+  animation-duration: 0.25s;
   animation-timing-function: ease-out;
   animation-direction: reverse; }
 
@@ -14006,6 +14041,9 @@ dialog.ts.modal[open] {
 @media (max-width: 767px) {
   .ts.modal > i.close + .header:not(.icon) {
     padding-right: 2.6rem; } }
+
+.ts.fullscreen.modal {
+  width: 100%; }
 
 @media (min-width: 1200px) {
   .ts.modal {
