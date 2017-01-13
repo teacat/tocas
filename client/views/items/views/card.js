@@ -522,7 +522,7 @@ export default
             type       : small,
             title      : '額外內容',
             description: `一個與這個卡片有關連的額外內容。`,
-            link       : 'symbol'
+            link       : 'extra-content'
         },
         {
             type: 'example',
