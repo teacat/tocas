@@ -40,6 +40,30 @@ export default
         },
         {
             type       : small,
+            title      : '簡單',
+            description: `你可以使用 JavaScript 來省去撰寫 <span class="ts horizontal label">[id=""]</span> 和 <span class="ts horizontal label">[for=""]</span> 的困擾。`,
+            link       : 'simple'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts checkbox">
+    <input type="checkbox">
+    <label>第三性</label>
+</div>`,
+            mark: 'checkbox'
+        },
+        {
+            type       : tiny,
+            title      : 'JavaScript',
+            description: '如果要省去上述困擾，透過下列程式碼來實作。',
+            expandableExample: false
+        },
+        {
+            type: source,
+            code: `ts('.ts.checkbox').checkbox()`
+        },
+        {
+            type       : small,
             title      : '單選方塊',
             description: `一個僅能夠在多個選項中核取其中一項的單選方塊。`,
             link       : 'radio'
@@ -47,8 +71,8 @@ export default
         {
             type: 'example',
             code: `<div class="ts radio checkbox">
-    <input type="radio" id="male">
-    <label for="male">男性</label>
+    <input type="radio">
+    <label>男性</label>
 </div>`,
             mark: 'radio'
         },
@@ -61,8 +85,8 @@ export default
         {
             type: 'example',
             code: `<div class="ts toggle checkbox">
-    <input type="checkbox" id="afk">
-    <label for="afk">暫離</label>
+    <input type="checkbox">
+    <label>暫離</label>
 </div>`,
             mark: 'toggle'
         },
@@ -82,16 +106,16 @@ export default
             type: 'example',
             code: `<div class="ts checkboxes">
     <div class="ts radio checkbox">
-        <input type="radio" name="gender" id="genderMale">
-        <label for="genderMale">男性</label>
+        <input type="radio" name="gender">
+        <label>男性</label>
     </div>
     <div class="ts radio checkbox">
-        <input type="radio" name="gender" id="genderFemale">
-        <label for="genderFemale">女性</label>
+        <input type="radio" name="gender">
+        <label>女性</label>
     </div>
     <div class="ts radio checkbox">
-        <input type="radio" name="gender" id="genderThird">
-        <label for="genderThird">第三性</label>
+        <input type="radio" name="gender">
+        <label>第三性</label>
     </div>
 </div>`,
             mark: 'checkboxes'
@@ -106,16 +130,16 @@ export default
             type: 'example',
             code: `<div class="ts horizontal checkboxes">
     <div class="ts checkbox">
-        <input type="checkbox" id="aoi">
-        <label for="aoi">小藍</label>
+        <input type="checkbox">
+        <label>小藍</label>
     </div>
     <div class="ts checkbox">
-        <input type="checkbox" id="ava">
-        <label for="ava">小芽</label>
+        <input type="checkbox">
+        <label>小芽</label>
     </div>
     <div class="ts checkbox">
-        <input type="checkbox" id="orenji">
-        <label for="orenji">橙希</label>
+        <input type="checkbox">
+        <label>橙希</label>
     </div>
 </div>`,
             mark: 'horizontal'
@@ -130,16 +154,16 @@ export default
             type: 'example',
             code: `<div class="ts compact horizontal checkboxes">
     <div class="ts checkbox">
-        <input type="checkbox"id="apple">
-        <label for="apple">蘋果</label>
+        <input type="checkbox">
+        <label>蘋果</label>
     </div>
     <div class="ts checkbox">
-        <input type="checkbox" id="polo">
-        <label for="polo">菠蘿</label>
+        <input type="checkbox">
+        <label>菠蘿</label>
     </div>
     <div class="ts checkbox">
-        <input type="checkbox" id="pineapple">
-        <label for="pineapple">拔鳳梨</label>
+        <input type="checkbox">
+        <label>拔鳳梨</label>
     </div>
 </div>`,
             mark: 'compact'
@@ -154,34 +178,34 @@ export default
             type: 'example',
             code: `<div class="ts left aligned compact horizontal checkboxes">
     <div class="ts checkbox">
-        <input type="checkbox" id="lelia">
-        <label for="lelia">雷莉亞</label>
+        <input type="checkbox">
+        <label>雷莉亞</label>
     </div>
     <div class="ts checkbox">
-        <input type="checkbox" id="avane">
-        <label for="avane">亞凡芽</label>
+        <input type="checkbox">
+        <label>亞凡芽</label>
     </div>
 </div>
 <br><br>
 <div class="ts center aligned compact horizontal checkboxes">
     <div class="ts checkbox">
-        <input type="checkbox" id="wuAoi">
-        <label for="wuAoi">吳雨藍</label>
+        <input type="checkbox">
+        <label>吳雨藍</label>
     </div>
     <div class="ts checkbox">
-        <input type="checkbox" id="shirone">
-        <label for="shirone">羽田白音</label>
+        <input type="checkbox">
+        <label>羽田白音</label>
     </div>
 </div>
 <br><br>
 <div class="ts right aligned compact horizontal checkboxes">
     <div class="ts checkbox">
-        <input type="checkbox" id="caris">
-        <label for="caris">卡莉絲</label>
+        <input type="checkbox">
+        <label>卡莉絲</label>
     </div>
     <div class="ts checkbox">
-        <input type="checkbox" id="iknore">
-        <label for="iknore">依可諾爾</label>
+        <input type="checkbox">
+        <label>依可諾爾</label>
     </div>
 </div>`,
             mark  : 'left aligned, right aligned, center aligned',
@@ -189,9 +213,53 @@ export default
         },
         {
             type       : normal,
+            title      : '狀態',
+            description: '核取方塊有不同的狀態。',
+            link       : false
+        },
+        {
+            type       : small,
+            title      : '已停用',
+            description: `一個核取方塊可以顯示已經被停用、不可使用的樣子。`,
+            link       : 'disabled'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts disabled checkbox">
+    <input type="checkbox">
+    <label>你不能點擊我</label>
+</div>`,
+            mark: 'disabled'
+        },
+        {
+            type       : normal,
             title      : '外觀',
             description: '核取方塊有不同的外觀。',
             link       : false
+        },
+        {
+            type       : small,
+            title      : '自動層疊',
+            description: `核取方塊群組可以在行動裝置上自動層疊，而不是保持水平排列。欲要觀看效果，你可能需要使用手機裝置瀏覽此範例。`,
+            link       : 'stackable'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts horizontal stackable checkboxes">
+    <div class="ts radio checkbox">
+        <input type="radio" name="os">
+        <label>Windows</label>
+    </div>
+    <div class="ts radio checkbox">
+        <input type="radio" name="os">
+        <label>Linux</label>
+    </div>
+    <div class="ts radio checkbox">
+        <input type="radio" name="os">
+        <label>macOS</label>
+    </div>
+</div>`,
+            mark: 'stackable'
         },
         {
             type       : small,
@@ -204,16 +272,16 @@ export default
             code: `<div class="ts inverted segment">
     <div class="ts inverted checkboxes">
         <div class="ts checkbox">
-            <input type="checkbox" id="xiaoan">
-            <label for="xiaoan">洨安</label>
+            <input type="checkbox">
+            <label>洨安</label>
         </div>
         <div class="ts checkbox">
-            <input type="checkbox" id="kataya">
-            <label for="kataya">卡特雅</label>
+            <input type="checkbox">
+            <label>卡特雅</label>
         </div>
         <div class="ts checkbox">
-            <input type="checkbox" id="pear">
-            <label for="pear">皮爾</label>
+            <input type="checkbox">
+            <label>皮爾</label>
         </div>
     </div>
 </div>`,
