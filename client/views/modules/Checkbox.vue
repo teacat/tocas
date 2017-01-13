@@ -21,6 +21,10 @@ export default
     beforeCreate()
     {
         document.title = '核取方塊 | Tocas UI'
+    },
+    mounted()
+    {
+        ts('.ts.checkbox').checkbox()
     }
 }
 </script>
