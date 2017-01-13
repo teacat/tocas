@@ -86,13 +86,17 @@
 
 
                         <!-- 範例區塊 -->
-                        <doc-example :code   ="item.code"
-                                     :mark   ="item.mark"
-                                     :tagMark="item.tagMark"
-                                     :remove ="item.remove"
+                        <doc-example :style="item.style"
+                                     :inverted="item.inverted"
+                                     :code    ="item.code"
+                                     :mark    ="item.mark"
+                                     :tagMark ="item.tagMark"
+                                     :remove  ="item.remove"
                                      v-if="item.type == 'example'"></doc-example>
 
-                        <doc-example :code      ="item.code"
+                        <doc-example :style="item.style"
+                                     :inverted  ="item.inverted"
+                                     :code      ="item.code"
                                      :mark      ="item.mark"
                                      :tagMark   ="item.tagMark"
                                      :hasExample="false"
