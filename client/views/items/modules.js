@@ -71,7 +71,7 @@ export default
             class      : '.ts.modal',
             link       : '/modules/modal/',
             description: '跳出一個對話、表單視窗並阻擋背後的其他行為，令使用者專注在跳出的視窗。',
-            symbol     : 'window maximize'
+            symbol     : 'external'
         },
     ]
 }
