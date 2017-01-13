@@ -5,7 +5,7 @@
         <div class="real example" v-html="code" v-if="hasExample" :style="style"></div>
         <!-- / 無框實際範例 -->
 
-        <button class="ts small secondary labeled icon button" v-if="!hasExample" v-on:click="ev(code)">
+        <button class="ts small secondary labeled icon button" v-if="!hasExample && executable" v-on:click="ev(code)">
             <i class="bug icon"></i>
             執行程式碼
         </button>
@@ -175,7 +175,8 @@ export default
         inverted   : { default: false },
         remove     : { default: null  },
         hasExample : { default: true  },
-        showingCode: { default: false }
+        showingCode: { default: false },
+        executable : { default: false }
     }
 }
 </script>
