@@ -24,7 +24,7 @@ export default
     },
     mounted()
     {
-        ts(".ts.checkbox").checkbox()
+        //ts(".ts.checkbox").checkbox()
     }
 }
 </script>
