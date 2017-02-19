@@ -655,9 +655,9 @@ export default
         <div class="description">
             <p>比起小明，您是否更喜歡小安？</p>
         </div>
-        <div class="symbol">
-            <i class="question circle icon"></i>
-        </div>
+    </div>
+    <div class="symbol">
+        <i class="question circle icon"></i>
     </div>
     <div class="right aligned secondary extra content">
         <button class="ts primary button">是的</button>
