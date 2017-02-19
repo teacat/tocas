@@ -4,28 +4,24 @@
             <ul class="ts relaxed link list">
                 <li>
                     <a class="to top" href="#!" @click="toTop()">
-                        <i class="arrow up icon"></i> 回到頂部
+                        <i class="arrow up icon"></i> {{ $t('footer.to_top') }}
                     </a>
                 </li>
                 <li>
                     <a href="//github.com/TeaMeow/TocasUI/">Github</a>
                 </li>
                 <li>
-                    <router-link to="/examples/">實際範例</router-link>
+                    <router-link to="/examples/">{{ $t('footer.examples') }}</router-link>
                 </li>
                 <li>
-                    <router-link to="/about/">關於</router-link>
+                    <router-link to="/about/">{{ $t('footer.about') }}</router-link>
                 </li>
             </ul>
-            <p>
-                由 <a href="http://www.facebook.com/yamiodymel">Yami Odymel</a> 所設計，
-                還有<a href="https://github.com/TeaMeow/TocasUI/graphs/contributors">貢獻者們</a>的愛心 ❤️。
-                原始碼授權方式為 <a href="https://github.com/TeaMeow/TocasUI/blob/master/LICENSE">MIT</a>，
-                文件則為 <a href="https://creativecommons.org/licenses/by/4.0/deed.zh_TW">CC BY 4.0</a>，
-                還請盡情地使用和分享，或者是一同改進 :)
+            <p v-html="$t('footer.copyright')">
+                
             </p>
             <p class="render time">
-                本頁渲染速度：{{this.$store.state.renderTime}} ms
+                {{ $t('footer.render') }}{{this.$store.state.renderTime}} ms
             </p>
         </div>
     </footer>
