@@ -1,58 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-const Index = resolve => require(['../views/Index'], resolve)
-const GettingStarted = resolve => require(['../views/GettingStarted'], resolve)
-const Examples = resolve => require(['../views/Examples'], resolve)
-const ExampleBlog = resolve => require(['../views/examples/Blog'], resolve)
-const ExampleLogin = resolve => require(['../views/examples/Login'], resolve)
-const ExampleRegistration = resolve => require(['../views/examples/Registration'], resolve)
-const ExampleGallery = resolve => require(['../views/examples/Gallery'], resolve)
-const ExampleChatroom = resolve => require(['../views/examples/Chatroom'], resolve)
-const ExampleNotes = resolve => require(['../views/examples/Notes'], resolve)
-const About = resolve => require(['../views/About'], resolve)
-const Elements = resolve => require(['../views/Elements'], resolve)
-const Collections = resolve => require(['../views/Collections'], resolve)
-const Views = resolve => require(['../views/Views'], resolve)
-const Modules = resolve => require(['../views/Modules'], resolve)
-const Button = resolve => require(['../views/elements/Button'], resolve)
-const Container = resolve => require(['../views/elements/Container'], resolve)
-const Divider = resolve => require(['../views/elements/Divider'], resolve)
-const Header = resolve => require(['../views/elements/Header'], resolve)
-const Icon = resolve => require(['../views/elements/Icon'], resolve)
-const Image = resolve => require(['../views/elements/Image'], resolve)
-const Input = resolve => require(['../views/elements/Input'], resolve)
-const Jumbotron = resolve => require(['../views/elements/Jumbotron'], resolve)
-const Slate = resolve => require(['../views/elements/Slate'], resolve)
-const List = resolve => require(['../views/elements/List'], resolve)
-const Label = resolve => require(['../views/elements/Label'], resolve)
-const Loader = resolve => require(['../views/elements/Loader'], resolve)
-const Quote = resolve => require(['../views/elements/Quote'], resolve)
-const Segment = resolve => require(['../views/elements/Segment'], resolve)
-const Step = resolve => require(['../views/elements/Step'], resolve)
-const Typography = resolve => require(['../views/elements/Typography'], resolve)
-const Card = resolve => require(['../views/views/Card'], resolve)
-const Chatroom = resolve => require(['../views/views/Chatroom'], resolve)
-const Comment = resolve => require(['../views/views/Comment'], resolve)
-const Feed = resolve => require(['../views/views/Feed'], resolve)
-const Item = resolve => require(['../views/views/Item'], resolve)
-const Statistic = resolve => require(['../views/views/Statistic'], resolve)
-const Breadcrumb = resolve => require(['../views/collections/Breadcrumb'], resolve)
-const Form = resolve => require(['../views/collections/Form'], resolve)
-const Grid = resolve => require(['../views/collections/Grid'], resolve)
-const Menu = resolve => require(['../views/collections/Menu'], resolve)
-const Message = resolve => require(['../views/collections/Message'], resolve)
-const Table = resolve => require(['../views/collections/Table'], resolve)
-const Accordion = resolve => require(['../views/modules/Accordion'], resolve)
-const Calendar = resolve => require(['../views/modules/Calendar'], resolve)
-const Checkbox = resolve => require(['../views/modules/Checkbox'], resolve)
-const Dimmer = resolve => require(['../views/modules/Dimmer'], resolve)
-const Dropdown = resolve => require(['../views/modules/Dropdown'], resolve)
-const Progress = resolve => require(['../views/modules/Progress'], resolve)
-const Slider = resolve => require(['../views/modules/Slider'], resolve)
-const Popup = resolve => require(['../views/modules/Popup'], resolve)
-const Modal = resolve => require(['../views/modules/Modal'], resolve)
-const RWD = resolve => require(['../views/RWD'], resolve)
 Vue.use(Router)
 
 export default new Router
@@ -62,217 +10,217 @@ export default new Router
     [
         {
             path     : '/',
-            component: Index
+            component: require('../views/Index')
         },
         {
             path     : '/getting-started/',
-            component: GettingStarted
+            component: require('../views/GettingStarted')
         },
         {
             path     : '/examples/',
-            component: Examples
+            component: require('../views/Examples')
         },
         {
             path     : '/examples/blog',
-            component: ExampleBlog
+            component: require('../views/examples/Blog')
         },
         {
             path     : '/examples/login',
-            component: ExampleLogin
+            component: require('../views/examples/Login')
         },
         {
             path     : '/examples/registration',
-            component: ExampleRegistration
+            component: require('../views/examples/Registration')
         },
         {
             path     : '/examples/gallery',
-            component: ExampleGallery
+            component: require('../views/examples/Gallery')
         },
         {
             path     : '/examples/chatroom',
-            component: ExampleChatroom
+            component: require('../views/examples/Chatroom')
         },
         {
             path     : '/examples/notes',
-            component: ExampleNotes
+            component: require('../views/examples/Notes')
         },
         {
             path     : '/about/',
-            component: About
+            component: require('../views/About')
         },
         {
             path     : '/elements/',
-            component: Elements
+            component: require('../views/Elements')
         },
         {
             path     : '/collections/',
-            component: Collections
+            component: require('../views/Collections')
         },
         {
             path     : '/modules/',
-            component: Modules
+            component: require('../views/Modules')
         },
         {
             path     : '/views/',
-            component: Views
+            component: require('../views/Views')
         },
         {
             path     : '/elements/button',
-            component: Button
+            component: require('../views/elements/Button')
         },
         {
             path     : '/elements/container',
-            component: Container
+            component: require('../views/elements/Container')
         },
         {
             path     : '/elements/divider',
-            component: Divider
+            component: require('../views/elements/Divider')
         },
         {
             path     : '/elements/header',
-            component: Header
+            component: require('../views/elements/Header')
         },
         {
             path     : '/elements/icon',
-            component: Icon
+            component: require('../views/elements/Icon')
         },
         {
             path     : '/elements/image',
-            component: Image
+            component: require('../views/elements/Image')
         },
         {
             path     : '/elements/input',
-            component: Input
+            component: require('../views/elements/Input')
         },
         {
             path     : '/elements/jumbotron',
-            component: Jumbotron
+            component: require('../views/elements/Jumbotron')
         },
         {
             path     : '/elements/slate',
-            component: Slate
+            component: require('../views/elements/Slate')
         },
         {
             path     : '/elements/label',
-            component: Label
+            component: require('../views/elements/Label')
         },
         {
             path     : '/elements/list',
-            component: List
+            component: require('../views/elements/List')
         },
         {
             path     : '/elements/loader',
-            component: Loader
+            component: require('../views/elements/Loader')
         },
         {
             path     : '/elements/quote',
-            component: Quote
+            component: require('../views/elements/Quote')
         },
         {
             path     : '/elements/segment',
-            component: Segment
+            component: require('../views/elements/Segment')
         },
         {
             path     : '/elements/step',
-            component: Step
+            component: require('../views/elements/Step')
         },
         {
             path     : '/elements/typography',
-            component: Typography
+            component: require('../views/elements/Typography')
         },
 
         {
             path     : '/views/card',
-            component: Card
+            component: require('../views/views/Card')
         },
         {
             path     : '/views/chatroom',
-            component: Chatroom
+            component: require('../views/views/Chatroom')
         },
         {
             path     : '/views/comment',
-            component: Comment
+            component: require('../views/views/Comment')
         },
         {
             path     : '/views/feed',
-            component: Feed
+            component: require('../views/views/Feed')
         },
         {
             path     : '/views/item',
-            component: Item
+            component: require('../views/views/Item')
         },
         {
             path     : '/views/statistic',
-            component: Statistic
+            component: require('../views/views/Statistic')
         },
 
         {
             path     : '/collections/breadcrumb',
-            component: Breadcrumb
+            component: require('../views/collections/Breadcrumb')
         },
         {
             path     : '/collections/form',
-            component: Form
+            component: require('../views/collections/Form')
         },
         {
             path     : '/collections/grid',
-            component: Grid
+            component: require('../views/collections/Grid')
         },
         {
             path     : '/collections/menu',
-            component: Menu
+            component: require('../views/collections/Menu')
         },
         {
             path     : '/collections/message',
-            component: Message
+            component: require('../views/collections/Message')
         },
         {
             path     : '/collections/table',
-            component: Table
+            component: require('../views/collections/Table')
         },
         
         {
             path     : '/modules/accordion',
-            component: Accordion
+            component: require('../views/modules/Accordion')
         },
         {
             path     : '/modules/calendar',
-            component: Calendar
+            component: require('../views/modules/Calendar')
         },
         {
             path     : '/modules/checkbox',
-            component: Checkbox
+            component: require('../views/modules/Checkbox')
         },
         {
             path     : '/modules/dimmer',
-            component: Dimmer
+            component: require('../views/modules/Dimmer')
         },
         {
             path     : '/modules/dropdown',
-            component: Dropdown
+            component: require('../views/modules/Dropdown')
         },
         {
             path     : '/modules/progress',
-            component: Progress
+            component: require('../views/modules/Progress')
         },
         {
             path     : '/modules/slider',
-            component: Slider
+            component: require('../views/modules/Slider')
         },
         {
             path     : '/modules/popup',
-            component: Popup
+            component: require('../views/modules/Popup')
         },
         {
             path     : '/modules/modal',
-            component: Modal
+            component: require('../views/modules/Modal')
         },
         {
             path     : '/rwd/',
-            component: RWD
+            component: require('../views/RWD')
         },
-        {
-            path    : '*',
+        { 
+            path    : '*', 
             redirect: '/'
         }
     ]
