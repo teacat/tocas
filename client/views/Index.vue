@@ -664,6 +664,11 @@ section
             color: #848181;
         }
     }
+
+    .ts.label {
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
 }
 #quotes
 {
