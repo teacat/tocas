@@ -549,10 +549,21 @@ ol.ts.list ol li,
     margin-right: -#{$list_selectionListItemHorizontalPadding}
 
 //-------------------//
-//      Bulleted
+//    Custom Dot
 //-------------------//
 
+ul.ts.list:not(.horizontal) li[value]:before,
+ol.ts.list li[value]:before
+    content: attr(value)
 
+.ts.bulleted.list:not(.horizontal) .list > .item[data-value]:before,
+.ts.bulleted.list:not(.horizontal) > .item[data-value]:before,
+.ts.list .item[data-value]:before
+    content: attr(data-value)
+
+//-------------------//
+//      Bulleted
+//-------------------//
 
 /* Margin for dotted list */
 .ts.bulleted.list:not(.horizontal),
@@ -590,10 +601,10 @@ ul.ts.list:not(.horizontal) li:before,
     margin-right: calc(#{$list_horizontalBulletSpacing})
     content     : '•'
 
+/* Levels */
 ul.ts.list:not(.horizontal) ul li:before,
 .ts.bulleted.list:not(.horizontal) .list > .item:before
     content     : '○'
-
 ul.ts.list:not(.horizontal) ul ul li:before,
 .ts.bulleted.list:not(.horizontal) .list .list > .item:before
     content     : '▪'
@@ -688,12 +699,18 @@ ol.ts.list li[value]:before
 
 /* Child Lists */
 ol.ts.list ol,
-.ts.ordered.list .list 
-    margin-left: $list_orderedChildCountDistance
+.ts.ordered.list .list
+    //margin-left: $list_orderedChildCountDistance
 
 ol.ts.list ol li:before,
-.ts.ordered.list .list > .item:before 
+.ts.ordered.list .list > .item:before
     margin-left: $list_orderedChildCountOffset
+ol.ts.list ol ol li:before,
+.ts.ordered.list .list .list > .item:before
+    margin-left: $list_orderedcChildChildCountOffset
+ol.ts.list ol ol ol li:before,
+.ts.ordered.list .list .list .list > .item:before
+    margin-left: $list_orderedcChildChildChildCountOffset
 
 /* Horizontal Ordered */
 ol.ts.horizontal.list,
