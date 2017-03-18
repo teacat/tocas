@@ -212,7 +212,7 @@
                             <div class="header">
                                 Yami Odymel
                             </div>
-                            <div class="bulleted meta">
+                            <div class="middoted meta">
                                 <div>@yamiodymel</div>
                                 <div>2 mins     </div>
                             </div>
