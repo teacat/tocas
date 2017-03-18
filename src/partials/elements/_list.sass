@@ -33,7 +33,7 @@ ol.ts.list:last-child,
 ul.ts.list li,
 ol.ts.list li,
 .ts.list > .item,
-.ts.list .list > .item 
+.ts.list .list > .item
     display            : flex
     flex-wrap          : wrap
     table-layout       : fixed
@@ -218,7 +218,7 @@ ol.ts.list ol li,
     line-height        : $list_itemLineHeight
 
 .ts.menu .ts.list .list > .item:before,
-.ts.menu .ts.list > .item:before 
+.ts.menu .ts.list > .item:before
     border    : none
     background: none
 
@@ -406,7 +406,7 @@ ol.ts.list ol li,
 .ts.list[class*="top aligned"] .item,
 .ts.list[class*="top aligned"] .image,
 .ts.list[class*="top aligned"] .content,
-.ts.list [class*="top aligned"] 
+.ts.list [class*="top aligned"]
     vertical-align: top !important
     align-items   : flex-start
     margin-bottom : auto
@@ -414,14 +414,14 @@ ol.ts.list ol li,
 .ts.list[class*="middle aligned"] .item,
 .ts.list[class*="middle aligned"] .image,
 .ts.list[class*="middle aligned"] .content,
-.ts.list [class*="middle aligned"] 
+.ts.list [class*="middle aligned"]
     vertical-align: middle !important
     align-items   : center
 
 .ts.list[class*="bottom aligned"] .item,
 .ts.list[class*="bottom aligned"] .image,
 .ts.list[class*="bottom aligned"] .content,
-.ts.list [class*="bottom aligned"] 
+.ts.list [class*="bottom aligned"]
     vertical-align: bottom !important
     align-items   : flex-end
     margin-top    : auto
@@ -552,18 +552,36 @@ ol.ts.list ol li,
 //      Bulleted
 //-------------------//
 
+.ts.bulleted.list:not(.horizontal),
+ul.ts.list:not(.horizontal)
+    margin-left: $list_bulletDistance
+
+.ts.bulleted.list .list,
+ul.ts.list ul
+    padding-left: $list_bulletDistance
+
 .ts.bulleted.list .list > a.item:before,
-.ts.bulleted.list > a.item:before,  
+.ts.bulleted.list > a.item:before,
     color: $list_bulletColor
 
 .ts.bulleted.list.inverted .list > a.item:before,
-.ts.bulleted.list.inverted > a.item:before,  
+.ts.bulleted.list.inverted > a.item:before,
     color: $list_invertedBulletColor
     
 ul.ts.list:not(.horizontal) li:before,
 .ts.bulleted.list:not(.horizontal) .list > .item:before,
 .ts.bulleted.list:not(.horizontal) > .item:before
     +extend(is-dot)
+    +extend(no-select)
+
+    position: absolute
+    top     : auto
+    left    : auto
+
+    margin-left   : -#{$list_bulletDistance}
+    opacity       : 1
+    color         : inherit
+    vertical-align: top
 
     margin-right: calc(#{$list_horizontalBulletSpacing})
     content     : '•'
@@ -571,6 +589,16 @@ ul.ts.list:not(.horizontal) li:before,
 .ts.middoted.list:not(.horizontal) .list > .item:before,
 .ts.middoted.list:not(.horizontal) > .item:before
     +extend(is-dot)
+    +extend(no-select)
+
+    position: absolute
+    top     : auto
+    left    : auto
+
+    margin-left   : -#{$list_bulletDistance}
+    opacity       : 1
+    color         : inherit
+    vertical-align: top
 
     margin-right: calc(#{$list_horizontalBulletSpacing})
     content     : '·'
@@ -689,15 +717,15 @@ ol.ts.horizontal.list li:before,
 
 /* Divided bulleted */
 .ts.divided.bulleted.list:not(.horizontal),
-.ts.divided.bulleted.list .list 
+.ts.divided.bulleted.list .list
     margin-left : 0em
     padding-left: 0em
 
-.ts.divided.bulleted.list > .item:not(.horizontal) 
+.ts.divided.bulleted.list > .item:not(.horizontal)
     padding-left: $list_bulletDistance
 
 /* Divided Ordered */
-.ts.divided.ordered.list 
+.ts.divided.ordered.list
     margin-left: 0em
 
 .ts.divided.ordered.list .list > .item,
@@ -770,14 +798,14 @@ ol.ts.horizontal.list li:before,
     border-top-width: 0px
 
 /* Celled Bulleted */
-.ts.celled.bulleted.list 
+.ts.celled.bulleted.list
     margin-left: 0em
 
 .ts.celled.bulleted.list .list > .item,
-.ts.celled.bulleted.list > .item 
+.ts.celled.bulleted.list > .item
     padding-left: ($list_bulletDistance)
 
-.ts.celled.bulleted.list .item .list 
+.ts.celled.bulleted.list .item .list
     margin-left   : -#{$list_bulletDistance}
     margin-right  : -#{$list_bulletDistance}
     padding-bottom: $list_itemVerticalPadding
