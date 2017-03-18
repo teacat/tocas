@@ -585,14 +585,18 @@ ul.ts.horizontal.middoted.list li,
     
 ul.ts.horizontal.middoted.list li:not(:first-child):before,
 .ts.horizontal.middoted.list > .item:not(:first-child):before
-    margin-left : calc(#{$list_horizontalBulletSpacing} / 2)
-    margin-right: calc(#{$list_horizontalBulletSpacing} / 2)
+    +extend(is-dot)
+
+    margin-left : calc(#{$list_horizontalBulletSpacing} / 1.5)
+    margin-right: calc(#{$list_horizontalBulletSpacing} / 1.5)
     content     : '·'
     
 ul.ts.horizontal.bulleted.list li:not(:first-child):before,
 .ts.horizontal.bulleted.list > .item:not(:first-child):before,
-    margin-left : calc(#{$list_horizontalBulletSpacing} / 2)
-    margin-right: calc(#{$list_horizontalBulletSpacing} / 2)
+    +extend(is-dot)
+
+    margin-left : calc(#{$list_horizontalBulletSpacing} / 1.5)
+    margin-right: calc(#{$list_horizontalBulletSpacing} / 1.5)
     content     : '•'
 
 //-------------------//
@@ -602,7 +606,7 @@ ul.ts.horizontal.bulleted.list li:not(:first-child):before,
 ol.ts.list,
 .ts.ordered.list,
 .ts.ordered.list .list,
-ol.ts.list ol 
+ol.ts.list ol
     counter-reset  : ordered
     margin-left    : $list_orderedCountDistance
     list-style-type: none

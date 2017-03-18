@@ -166,7 +166,8 @@
 //        Meta
 //-------------------// 
 
-.ts.items > .item .meta 
+.ts.items > .item .meta
+    display    : flex
     margin     : $item_metaMargin
     font-size  : $item_metaFontSize
     line-height: $item_metaLineHeight
@@ -194,12 +195,16 @@
 .ts.items > .item .meta.bulleted > *
     margin-right: 0
 .ts.items > .item .meta.middoted > *:not(:first-child):before
-    margin-left : $item_metaSpacing / 2
-    margin-right: $item_metaSpacing / 2
+    +extend(is-dot)
+
+    margin-left : $item_metaSpacing / 1.5
+    margin-right: $item_metaSpacing / 1.5
     content     : '·'
 .ts.items > .item .meta.bulleted > *:not(:first-child):before
-    margin-left : $item_metaSpacing / 2
-    margin-right: $item_metaSpacing / 2
+    +extend(is-dot)
+
+    margin-left : $item_metaSpacing / 1.5
+    margin-right: $item_metaSpacing / 1.5
     content     : '•'
 
 //-------------------//
