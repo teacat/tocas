@@ -3,7 +3,7 @@
         <doc-nav class="homepage"></doc-nav>
 
         <!-- 聚焦看板 -->
-        <header class="ts fluid horizontally fitted extra padded jumbotron">
+        <header class="ts fluid horizontally fitted extra padded slate">
             <div class="ts center aligned narrow container">
                 <h1 class="ts center aligned header">
                     Tocas UI 2
@@ -573,6 +573,7 @@
 <style lang="scss" scoped>
 header
 {
+    display: block !important;
     padding-top   : 7em !important;
     padding-bottom: 7em !important;
     background    : linear-gradient(to bottom, #e7eae3 0%,#f9fcf7 100%) !important;

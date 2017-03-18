@@ -1,5 +1,5 @@
 <template>
-    <header class="ts fluid horizontally fitted extra padded jumbotron">
+    <header class="ts fluid horizontally fitted padded heading slate">
         <div class="ts narrow container">
             <h1 class="ts left aligned header">
                 {{ title }}
@@ -20,8 +20,9 @@ h1 .sub.header
     margin-top: .8em;
     font-size : 0.45em !important;
 }
-.jumbotron
+.slate
 {
+    display: block;
     margin-bottom: 2em !important;
 }
 </style>
