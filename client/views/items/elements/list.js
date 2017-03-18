@@ -65,7 +65,7 @@ export default
     <div class="item">橙希</div>
     <div class="item">卡莉絲</div>
     <div class="item">
-        <div>吳雨藍</div>
+        吳雨藍
         <div class="list">
             <a class="item" href="#">亞凡芽</a>
             <div class="item">羽田白音</div>
