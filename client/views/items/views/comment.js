@@ -337,7 +337,7 @@ export default
                 <div class="content">
                     <a class="author">橙希</a>
                     <div class="text">
-                        把 S 鍵拔掉，看是要向著 A 或 D 橫走，還是直接朝著 W 的方向前進？
+                        早安！我的朋友！
                     </div>
                 </div>
                 <div class="comment">
