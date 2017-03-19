@@ -173,6 +173,8 @@
 /** 左側選單 */
 .vertical.menu
 {
+    padding-left: 5px;
+
     /** 一般項目 */
     .item
     {
