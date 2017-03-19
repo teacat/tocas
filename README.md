@@ -46,8 +46,8 @@ $ git clone https://github.com/TeaMeow/TocasUI.git
 $ git clone https://github.com/TeaMeow/TocasUI.git
 $ git fetch --tags
 $ git tag -l
-> v2.0.2
-$ git checkout tags/v2.0.2
+> 2.2.2
+$ git checkout tags/2.2.2
 ```
 
 &nbsp;
