@@ -1,0 +1,321 @@
+@import ../master/src/tocas.sass
+
+//**************************************
+//************   M A I N   *************
+//**************************************
+
+.ts.button.sakura
+  +button-theme(#FFB7C5, #7F5961)
+
+#jungle
+  padding  : 110px 0px
+  background: linear-gradient(4deg, #00e6ff, #005778)
+  position  : relative
+  overflow  : hidden
+  text-align: center
+  
+  .ts.header
+    font-size  : 84px
+    line-height: 84px
+    margin-top : 0px
+
+
+#footer
+  background: #45484b
+  padding   : 20px 10px
+  
+  img
+    min-height: 86px
+    opacity   : 0.9
+
+
+$c: #D9D9D9
+$b: rgba(255,255,255,.2)
+$t: rgba(255,255,255,.1)
+$n: transparent
+
+.blueprint
+  background-color: #488BA4
+  
+  &.modules
+    background-color: #d9534f
+  
+  > div
+    padding: 60px 0px
+    height: 100%
+    background-image: linear-gradient(0deg, $n 0%, $n 9px, $b 9px, $b 10px, $n 10px, $n 19px, $t 19px, $t 20px, $n 20px, $n 29px, $t 29px, $t 30px, $n 30px, $n 39px, $t 39px, $t 40px, $n 40px, $n 49px, $t 49px, $t 50px), linear-gradient(-90deg, $n 0%, $n 9px, $b 9px, $b 10px, $n 10px, $n 19px, $t 19px, $t 20px, $n 20px, $n 29px, $t 29px, $t 30px, $n 30px, $n 39px, $t 39px, $t 40px, $n 40px, $n 49px, $t 49px, $t 50px)
+    background-size: 50px 50px
+
+
+
+
+
+//**************************************
+//*********   F A   I C O N   **********
+//**************************************
+
+.fa
+  margin-right: 6px
+  
+  .icon.menu &,
+  .button    &,
+  .header    &
+    margin-right: 0px
+    
+    
+
+
+//**************************************
+//*******   H I G H L I G H T   ********
+//**************************************
+
+.hljs
+  background : none    !important
+  color      : #005D56 !important
+  line-height: 19px    !important
+  padding    : 24px
+  font-size  : 14px
+  overflow-x : scroll
+  
+
+
+  .hljs-variable, 
+  .hljs-template-variable,
+  .hljs-tag,
+  .hljs-name, 
+  .hljs-selector-id,
+  .hljs-selector-class,
+  .hljs-regexp,
+  .hljs-deletion
+    color: #8E8E8E
+  
+  .hljs-string, 
+  .hljs-symbol, 
+  .hljs-bullet, 
+  .hljs-addition
+    color: #0683A3
+  
+  .hljs-important-class
+    background-color: #52C6CA
+    padding         : 1px 3px
+    border-radius   : 4px
+    color: #FFF !important
+    
+    *
+      color: #FFF !important
+
+  *
+    font-weight: normal
+    font-family: 'Ubuntu Mono'
+
+pre.ts.segment
+  margin-top   : 0px
+  margin-bottom: 70px
+  word-spacing: 4px
+  
+  & ~ .preview
+    margin-top: -62px
+
+
+
+
+//**************************************
+//********   D O C U M E N T   *********
+//**************************************
+
+.labelside ul
+  list-style  : none
+  padding-left: 0
+  padding-right: 1em
+
+.labelside::after
+  content: ''
+  position: absolute
+  top: 1em
+  right: 1em
+  bottom: 0
+  left: 0
+  border-right: 1px solid rgba(#000, 0.1)
+  pointer-events: none
+
+
+.left
+
+  &.ul
+    font-size    : 14px
+    margin-bottom: 30px
+  
+    a
+      display        : block
+      padding        : 15px
+      margin-left    : -15px
+      border-radius  : 4px
+      text-decoration: none
+      color          : #5B7691
+  
+      &:hover
+        background: #F8F8F8
+        color     : #7291B0
+
+@at-root
+  [class*="left label"]
+    display: block
+    margin: 15px 15px 15px 0px
+    font-size: 18px
+    font-weight: 500
+    color: #005F5F
+    border-bottom: 1px dashed #B3FFFF
+    padding-bottom: 7px
+
+
+
+
+//**************************************
+//*********   G E N E R A L   **********
+//**************************************
+
+.group >,
+.headerGroup >
+
+  h1
+    color: #005656 !important
+    
+  h2
+    color: #005F5F !important
+  
+  h3
+    color: #007878 !important
+  
+  h4
+    color: #019E9E !important
+  
+
+.preview
+  .ts.grid:not(.three)
+    
+    .grid:before
+      border-width: 2px
+  
+    &:before
+      +absolute
+      +position($columnPadding, $columnPadding, $columnPadding, $columnPadding)
+      +z(1)
+      
+      content: ''
+      border: 1px solid #929292
+    
+    &.relaxed:before
+      +position(x, $columnRelaxedPadding, x, $columnRelaxedPadding)
+    
+    
+    
+    .row
+      &:before
+        +absolute
+        +position($columnPadding, $columnPadding, $columnPadding, $columnPadding)
+        +z(1)
+        
+        content: ''
+        border: 2px solid #808080
+    
+    .column:not(.row):not(.grid)
+      +flex
+      +flex-content-center
+      +flex-column
+      
+      
+      height: 5em
+      
+      background: #E2E2E2
+      color: #909090
+      background-clip: content-box
+      
+    &.two
+      > .column:not(.row):not(.grid):first-child
+        height: 5em
+        background: transparent
+        background-clip: content-box
+
+  
+body >
+  
+  .ts.jumbotron
+    padding-left: 0
+    padding-right: 0
+  
+    nav.menu
+      //margin-left: -1.1em
+      margin: -1.5em -1.84rem 2em -1.84rem !important
+  
+  .ts.container
+    color: #007878
+    
+
+//*
+//  //color: #666
+//
+//.preview,
+//.jumbotron
+//  > h2,
+//  > h3,
+//  > h4,
+//  > .header,
+//  > .header *,
+//    color: initial !important
+
+
+
+//**************************************
+//***********   S T A R S   ************
+//**************************************
+
+#space, 
+.stars
+  overflow: hidden
+  position: absolute
+  top     : 0
+  bottom  : 0
+  left    : 0
+  right   : 0
+
+.stars
+  background-image : radial-gradient(2px 2px at 20px 30px, #eeeeee, rgba(0, 0, 0, 0)), radial-gradient(2px 2px at 40px 70px, white, rgba(0, 0, 0, 0)), radial-gradient(2px 2px at 50px 160px, #dddddd, rgba(0, 0, 0, 0)), radial-gradient(2px 2px at 90px 40px, white, rgba(0, 0, 0, 0)), radial-gradient(2px 2px at 130px 80px, white, rgba(0, 0, 0, 0)), radial-gradient(2px 2px at 160px 120px, #dddddd, rgba(0, 0, 0, 0))
+  background-repeat: repeat
+  background-size  : 200px 200px
+  animation        : zoom 5s infinite
+  opacity          : 0
+
+.stars:nth-child(1)
+  background-position: 50% 50%
+  animation-delay    : 0s
+
+.stars:nth-child(2)
+  background-position: 20% 60%
+  animation-delay    : 1s
+
+.stars:nth-child(3)
+  background-position: -20% -30%
+  animation-delay    : 2s
+
+.stars:nth-child(4)
+  background-position: 40% -80%
+  animation-delay    : 3s
+
+.stars:nth-child(5)
+  background-position: -20% 30%
+  animation-delay    : 4s
+
+@keyframes zoom
+  0%
+    opacity  : 0
+    transform: scale(0.5)
+    animation-timing-function: ease-in
+    
+  85%
+    opacity  : 1
+    transform: scale(2.8)
+    animation-timing-function: linear
+    
+  100%
+    opacity  : 0
+    transform: scale(3.5)
