@@ -930,8 +930,7 @@ ts.fn.modal = (option) ->
 
         # Set the configurations of the modal.
         else if typeof option is 'object'
-
-            # Options
+            # Options.
             approve   = option.approve   or '.positive, .approve, .ok'
             deny      = option.deny      or '.negative, .deny, .cancel'
             onDeny    = option.onDeny    or () -> true
@@ -961,3 +960,11 @@ ts.fn.sidebar = (option) ->
                 ts @
                     .addClass 'visible'
                     .removeClass 'animating'
+
+        #
+        else if typeof option is 'object'
+            # Options.
+            dimPage    = option.dimPage    or false
+            scrollLock = option.scrollLock or false
+            squeezable = option.squeezable or false
+            closable   = option.closable   or true
