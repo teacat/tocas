@@ -1,0 +1,105 @@
+@import ../../variables/modules/sidebar.variables
+
+//*******************************//
+//            Variations
+//*******************************//
+
+//*******************************//
+//             Main
+//*******************************//
+
+.ts.sidebar.menu
+    border-top: 0
+    border-bottom: 0
+    border-radius: 0
+    height: 100%
+
+.ts.sidebar
+    backface-visibility: hidden
+    transition: transform .45s cubic-bezier(.23,1,.32,1)
+    will-change: transform
+    visibility: hidden
+    -webkit-overflow-scrolling: touch
+
+//-------------------//
+//     Direction
+//-------------------//
+
+.ts.left.sidebar
+    left: 0
+    transform: translate3d(-100%, 0, 0)
+.ts.right.sidebar
+    right: 0
+    transform: translate3d(100%, 0%, 0)
+.ts.top.sidebar
+    top: 0
+    transform: translate3d(0, -100%, 0)
+.ts.bottom.sidebar
+    bottom: 0
+    transform: translate3d(0, 100%, 0)
+
+//-------------------//
+//     Overlapped
+//-------------------//
+
+.ts.overlapped.sidebar
+    z-index: 2
+
+//-------------------//
+//     Animating
+//-------------------//
+
+.ts.animating.sidebar
+    visibility: visible
+
+//-------------------//
+//     Visibility
+//-------------------//
+
+.ts.visible.sidebar
+    visibility: visible
+    transform: translate3d(0, 0, 0)
+
+//-------------------//
+//       Pusher
+//-------------------//
+
+.pusher
+    position: fixed
+    top: 0
+    right: 0
+    left: 0
+    width: 100vw
+    bottom: 0
+    background: #fff
+    transition: left .45s cubic-bezier(.23,1,.32,1)
+
+//-------------------//
+//   Pusher Offsets
+//-------------------//
+
+.ts.visible.very.thin.sidebar:not(.overlapped) ~ .pusher
+    left: $sidebar_veryThinWidth
+.ts.visible.thin.sidebar:not(.overlapped) ~ .pusher
+    left: $sidebar_thinWidth
+.ts.visible.sidebar:not(.overlapped) ~ .pusher
+    left: $sidebar_width
+.ts.visible.wide.sidebar:not(.overlapped) ~ .pusher
+    left: $sidebar_wideWidth
+.ts.visible.very.wide.sidebar:not(.overlapped) ~ .pusher
+    left: $sidebar_veryWideWidth
+
+//-------------------//
+//       Width
+//-------------------//
+
+.ts.very.thin.sidebar
+    width: $sidebar_veryThinWidth
+.ts.thin.sidebar
+    width: $sidebar_thinWidth
+.ts.sidebar
+    width: $sidebar_width
+.ts.wide.sidebar
+    width: $sidebar_wideWidth
+.ts.very.wide.sidebar
+    width: $sidebar_veryWideWidth
