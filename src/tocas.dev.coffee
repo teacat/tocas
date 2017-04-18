@@ -590,7 +590,7 @@ ts.fn.attr = (attr, value) ->
         @setAttribute i, attr[i]
       return
     )
-  else if attr != null and value != null
+  else if attr != null and typeof value != 'undefined'
     return @each(->
       @setAttribute attr, value
       return
@@ -968,3 +968,33 @@ ts.fn.sidebar = (option) ->
             scrollLock = option.scrollLock or false
             squeezable = option.squeezable or false
             closable   = option.closable   or true
+
+###
+The tab function.
+###
+
+ts.fn.tab = (option) ->
+    @each () ->
+        ts(@).on 'click', () ->
+            tabName = ts(@).attr 'data-tab'
+
+            if tabName is null
+                return
+
+            tabGroup   = ts(@).attr 'data-tab-group'
+            tabSection = ts(".tab[data-tab='#{tabName}'][data-tab-group='#{tabGroup}']")
+
+            # Deactive the other items.
+            ts("[data-tab-group='#{tabGroup}']:not(.tab)")
+                .removeClass 'active'
+            # Active the current item.
+            ts(@)
+                .addClass 'active'
+
+
+            # Hide all tabs first.
+            ts(".tab[data-tab-group='#{tabGroup}']")
+                .removeClass 'active'
+             # Active the current tab.
+            ts(".tab[data-tab='#{tabName}'][data-tab-group='#{tabGroup}']")
+                .addClass 'active'

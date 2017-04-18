@@ -673,7 +673,7 @@ ts.fn.attr = function(attr, value) {
         this.setAttribute(i, attr[i]);
       }
     });
-  } else if (attr !== null && value !== null) {
+  } else if (attr !== null && typeof value !== 'undefined') {
     return this.each(function() {
       this.setAttribute(attr, value);
     });
@@ -1018,6 +1018,7 @@ The sidebar function.
 
 ts.fn.sidebar = function(option) {
   return this.each(function() {
+    var closable, dimPage, scrollLock, squeezable;
     if (option === 'toggle') {
       ts(this).addClass('animating');
       if (ts(this).hasClass('visible')) {
@@ -1027,6 +1028,35 @@ ts.fn.sidebar = function(option) {
       } else {
         return ts(this).addClass('visible').removeClass('animating');
       }
+    } else if (typeof option === 'object') {
+      dimPage = option.dimPage || false;
+      scrollLock = option.scrollLock || false;
+      squeezable = option.squeezable || false;
+      return closable = option.closable || true;
     }
+  });
+};
+
+
+/*
+The tab function.
+ */
+
+ts.fn.tab = function(option) {
+  return this.each(function() {
+    return ts(this).on('click', function() {
+      var tabGroup, tabName, tabSection;
+      tabName = ts(this).attr('data-tab');
+      if (tabName === null) {
+        return;
+      }
+      console.log(tabName);
+      tabGroup = ts(this).attr('data-tab-group');
+      tabSection = ts(".tab[data-tab='" + tabName + "'][data-tab-group='" + tabGroup + "']");
+      ts("[data-tab-group='" + tabGroup + "']:not(.tab)").removeClass('active');
+      ts(this).addClass('active');
+      ts(".tab[data-tab-group='" + tabGroup + "']").removeClass('active');
+      return ts(".tab[data-tab='" + tabName + "'][data-tab-group='" + tabGroup + "']").addClass('active');
+    });
   });
 };
