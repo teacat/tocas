@@ -28,7 +28,7 @@
 //       Header
 //-------------------//
 
-.ts.slate .header:not(.ts):not(.sub)
+.ts.slate .header:not(.ts):not(.sub):not(.item)
     font-size  : $relativeHuge
     line-height: $relativeHuge
     font-weight: 500
@@ -120,12 +120,12 @@
 //      Relaxed
 //-------------------//
 
-.ts.relaxed.slate .icons:not(.symbol) + .header,
-.ts.relaxed.slate .icon:not(.symbol) + .header
+//.ts.relaxed.slate .icons:not(.symbol) + .header,
+//.ts.relaxed.slate .icon:not(.symbol) + .header
 
-.ts.relaxed.slate .description
+//.ts.relaxed.slate .description
 
-.ts.relaxed.slate .action
+//.ts.relaxed.slate .action
  
     
 //-------------------//
@@ -165,7 +165,7 @@
 .ts.heading.slate
     align-items: flex-start
 
-.ts.heading.slate .header:not(.ts):not(.sub)
+.ts.heading.slate .header:not(.ts):not(.sub):not(.item)
     font-size: $relativeMassive
 
 //-------------------//
@@ -182,7 +182,7 @@
 .ts.basic.slate
     background-color: transparent
     border          : $slate_basicBorder
-    
+
 //-------------------//
 //       Dashed
 //-------------------//
@@ -196,7 +196,7 @@
 
 .ts.borderless.slate
     border: 0
-    
+
 //-------------------//
 //      Centered
 //-------------------//
@@ -211,7 +211,7 @@
 .ts.fluid.slate
     width        : 100%
     border-radius: 0
-    
+
 //-------------------//
 //       Padded
 //-------------------//
@@ -222,21 +222,21 @@
     padding: $slate_veryPaddedPadding
 .ts.slate.extra.padded
     padding: $slate_extraPaddedPadding
-    
+
 .ts.slate.padded[class*="horizontally padded"]
     padding: $slate_verticalPadding $slate_paddedPadding
 .ts.slate.very.padded[class*="horizontally very padded"]
     padding: $slate_verticalPadding $slate_veryPaddedPadding
 .ts.slate.extra.padded[class*="horizontally extra padded"]
     padding: $slate_verticalPadding $slate_extraPaddedPadding
-    
+
 .ts.slate.padded[class*="vertically padded"]
     padding: $slate_paddedPadding $slate_horizontalPadding
 .ts.slate.very.padded[class*="vertically very padded"]
     padding: $slate_veryPaddedPadding $slate_horizontalPadding
 .ts.slate.extra.padded[class*="vertically extra padded"]
     padding: $slate_extraPaddedPadding $slate_horizontalPadding
-    
+
 //-------------------//
 //       Fitted
 //-------------------//
@@ -258,7 +258,7 @@
     pointer-events: none
     opacity       : $disabledOpacity
     color         : $disabledTextColor
-    
+
 //-------------------//
 //       Aligns
 //-------------------//
@@ -311,3 +311,50 @@
     font-size: $slate_hugeFontSize
 .ts.massive.slate
     font-size: $slate_massiveFontSize
+
+//-------------------//
+//     Slate Menu
+//-------------------//
+
+.ts.slate .ts.menu[class*="bottom attached"]
+    margin: $slate_verticalPadding -#{$slate_horizontalPadding} -#{$slate_verticalPadding} -#{$slate_horizontalPadding}
+    width: calc(100% + #{$slate_horizontalPadding} * 2)
+.ts.padded.padded.slate:not(.horizontally) .ts.menu[class*="bottom attached"]
+    margin: $slate_paddedPadding -#{$slate_paddedPadding} -#{$slate_paddedPadding} -#{$slate_paddedPadding}
+    width: calc(100% + #{$slate_paddedPadding} * 2)
+.ts.very.padded.slate:not(.horizontally) .ts.menu[class*="bottom attached"]
+    margin: $slate_veryPaddedPadding -#{$slate_veryPaddedPadding} -#{$slate_veryPaddedPadding} -#{$slate_veryPaddedPadding}
+    width: calc(100% + #{$slate_veryPaddedPadding} * 2)
+.ts.extra.padded.slate:not(.horizontally) .ts.menu[class*="bottom attached"]
+    margin: $slate_extraPaddedPadding -#{$slate_extraPaddedPadding} -#{$slate_extraPaddedPadding} -#{$slate_extraPaddedPadding}
+    width: calc(100% + #{$slate_extraPaddedPadding} * 2)
+
+.ts.horizontally.padded.padded.slate .ts.menu[class*="bottom attached"]
+    margin-left: -#{$slate_paddedPadding}
+    margin-right: -#{$slate_paddedPadding}
+    width: calc(100% + #{$slate_paddedPadding} * 2)
+.ts.horizontally.very.padded.slate .ts.menu[class*="bottom attached"]
+    margin-left: -#{$slate_veryPaddedPadding}
+    margin-right: -#{$slate_veryPaddedPadding}
+    width: calc(100% + #{$slate_veryPaddedPadding} * 2)
+.ts.horizontally.extra.padded.slate .ts.menu[class*="bottom attached"]
+    margin-left: -#{$slate_extraPaddedPadding}
+    margin-right: -#{$slate_extraPaddedPadding}
+    width: calc(100% + #{$slate_extraPaddedPadding} * 2)
+
+// TODO
+.ts.slate .ts.menu[class*="bottom attached"]:not(.secondary):not(.pointing)
+    margin-bottom: calc(-#{$slate_verticalPadding} + -1px)
+
+//-------------------//
+//     Coupling
+//-------------------//
+
+.ts.slate > .ts.container
+    display       : flex
+    flex-direction: column
+.ts.slate:not(.heading) > .ts.container
+    align-items: center
+
+.ts.slate + .ts.segment[class*="bottom attached"]
+    border-top: 0
