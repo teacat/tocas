@@ -43,7 +43,7 @@
 //-------------------//
 
 .ts.overlapped.sidebar
-    z-index: 2
+    z-index: $z_sidebar_overlapped
 
 //-------------------//
 //     Animating
@@ -60,22 +60,24 @@
     visibility: visible
     transform: translate3d(0, 0, 0)
 
-//-------------------//
-//       Pusher
-//-------------------//
+//*******************************//
+//            Pusher
+//*******************************//
 
 .pusher
     position: fixed
-    top: 0
-    right: 0
-    left: 0
-    width: 100vw
-    bottom: 0
+    top     : 0
+    right   : 0
+    left    : 0
+    bottom  : 0
+    width   : 100vw
+
+    overflow-y: scroll
     background: #fff
     transition: left .45s cubic-bezier(.23,1,.32,1)
 
 //-------------------//
-//   Pusher Offsets
+//      Offsets
 //-------------------//
 
 .ts.visible.very.thin.sidebar:not(.overlapped) ~ .pusher
@@ -88,6 +90,29 @@
     left: $sidebar_wideWidth
 .ts.visible.very.wide.sidebar:not(.overlapped) ~ .pusher
     left: $sidebar_veryWideWidth
+
+//-------------------//
+//      Dimmed
+//-------------------//
+
+.pusher:after
+    position: fixed
+    top     : 0
+    right   : 0
+    left    : 0
+    bottom  : 0
+    content : ''
+
+    background-color: rgba(0, 0, 0, .3)
+
+    overflow   : hidden
+    opacity    : 0
+    transition : opacity .45s
+    will-change: opacity
+    z-index    : $z_pusher
+
+.dimmed.pusher:after
+    opacity: 1
 
 //-------------------//
 //       Width
