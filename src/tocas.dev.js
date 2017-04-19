@@ -1046,6 +1046,9 @@ ts.fn.tab = function(option) {
   return this.each(function() {
     return ts(this).on('click', function() {
       var tabGroup, tabName;
+      if (ts(this).hasClass('active')) {
+        return;
+      }
       tabName = ts(this).attr('data-tab');
       if (tabName === null) {
         return;

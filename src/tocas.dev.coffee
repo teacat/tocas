@@ -976,6 +976,9 @@ The tab function.
 ts.fn.tab = (option) ->
     @each () ->
         ts(@).on 'click', () ->
+            # Ignore if user is clicking on the actived tab button.
+            return if ts(@).hasClass('active')
+            
             tabName = ts(@).attr 'data-tab'
             # Ignore the non-tab item buttons.
             return if tabName is null
