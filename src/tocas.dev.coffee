@@ -977,24 +977,28 @@ ts.fn.tab = (option) ->
     @each () ->
         ts(@).on 'click', () ->
             tabName = ts(@).attr 'data-tab'
-
-            if tabName is null
-                return
-
-            tabGroup   = ts(@).attr 'data-tab-group'
-            tabSection = ts(".tab[data-tab='#{tabName}'][data-tab-group='#{tabGroup}']")
-
-            # Deactive the other items.
-            ts("[data-tab-group='#{tabGroup}']:not(.tab)")
-                .removeClass 'active'
-            # Active the current item.
+            # Ignore the non-tab item buttons.
+            return if tabName is null
+            # Get the tag group name.
+            tabGroup = ts(@).attr 'data-tab-group'
+            # There's only one tab module if the `data-tab-group` is empty.
+            if tabGroup is null
+                # So we deactive all the tab buttons first.
+                ts('[data-tab]:not(.tab)')
+                    .removeClass 'active'
+                # And deactive all the tab pages.
+                ts('[data-tab]')
+                    .removeClass 'active'
+                # Now active the target tab page.
+                ts(".tab[data-tab='#{tabName}']")
+                    .addClass 'active'
+            else
+                ts("[data-tab-group='#{tabGroup}']:not(.tab)")
+                    .removeClass 'active'
+                ts(".tab[data-tab-group='#{tabGroup}']")
+                    .removeClass 'active'
+                ts(".tab[data-tab='#{tabName}'][data-tab-group='#{tabGroup}']")
+                    .addClass 'active'
+            # Active the target tab button.
             ts(@)
-                .addClass 'active'
-
-
-            # Hide all tabs first.
-            ts(".tab[data-tab-group='#{tabGroup}']")
-                .removeClass 'active'
-             # Active the current tab.
-            ts(".tab[data-tab='#{tabName}'][data-tab-group='#{tabGroup}']")
                 .addClass 'active'

@@ -1045,18 +1045,22 @@ The tab function.
 ts.fn.tab = function(option) {
   return this.each(function() {
     return ts(this).on('click', function() {
-      var tabGroup, tabName, tabSection;
+      var tabGroup, tabName;
       tabName = ts(this).attr('data-tab');
       if (tabName === null) {
         return;
       }
-      console.log(tabName);
       tabGroup = ts(this).attr('data-tab-group');
-      tabSection = ts(".tab[data-tab='" + tabName + "'][data-tab-group='" + tabGroup + "']");
-      ts("[data-tab-group='" + tabGroup + "']:not(.tab)").removeClass('active');
-      ts(this).addClass('active');
-      ts(".tab[data-tab-group='" + tabGroup + "']").removeClass('active');
-      return ts(".tab[data-tab='" + tabName + "'][data-tab-group='" + tabGroup + "']").addClass('active');
+      if (tabGroup === null) {
+        ts('[data-tab]:not(.tab)').removeClass('active');
+        ts('[data-tab]').removeClass('active');
+        ts(".tab[data-tab='" + tabName + "']").addClass('active');
+      } else {
+        ts("[data-tab-group='" + tabGroup + "']:not(.tab)").removeClass('active');
+        ts(".tab[data-tab-group='" + tabGroup + "']").removeClass('active');
+        ts(".tab[data-tab='" + tabName + "'][data-tab-group='" + tabGroup + "']").addClass('active');
+      }
+      return ts(this).addClass('active');
     });
   });
 };
