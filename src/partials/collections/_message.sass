@@ -9,20 +9,21 @@
     color           : $color
     background-color: $backgroundColor
     border-color    : $borderColor
-    
+
     a
         color: rgba($color, 0.9)
-        
+
         &:hover
             color: rgba($color, 1)
-    
+
 //*******************************//
 //              Main
 //*******************************//
 
 .ts.message
     position        : relative
-    display         : block
+    display         : flex
+    flex-direction  : column
     padding         : $message_padding
     margin          : $message_margin
     border          : $message_border
@@ -30,7 +31,7 @@
     border-radius   : $message_borderRadius
     color           : $message_textColor
 
-.ts.message:first-child 
+.ts.message:first-child
     margin-top: 0em
 .ts.message:last-child
     margin-bottom: 0em
@@ -43,18 +44,18 @@
     display    : block
     font-weight: $message_headerFontWeight
     margin     : $message_headerMargin
-    
+
 .ts.message .header:not(.ts)
-    font-size: $message_headerFontSize    
-    
+    font-size: $message_headerFontSize
+
 //-------------------//
 //       Icon
 //-------------------//
 
 .ts.message.icon
-    display    : flex
-    width      : 100%
-    align-items: center
+    width         : 100%
+    align-items   : center
+    flex-direction: row
 
 .ts.message.icon > .icon:not(.close)
     display       : block
@@ -78,14 +79,37 @@
 
 .ts.message > .icon
     margin-right: $message_iconDistance
-    
+
+//-------------------//
+//      Content
+//-------------------//
+
+.ts.message > .content
+    flex: 1
+    align-items: center
+    display: flex
+
+//-------------------//
+//      Action
+//-------------------//
+
+.ts.action.message
+    flex-direction: row
+
+//-------------------//
+//      Actions
+//-------------------//
+
+.ts.action.message > .actions
+    margin-left: $message_padding
+
 //-------------------//
 //      Floating
 //-------------------//
 
 .ts.message.floating
     box-shadow      : $message_boxShadow
-    
+
 //-------------------//
 //       Hidden
 //-------------------//
@@ -187,14 +211,14 @@
     font-size: $relativeHuge
 .ts.message.massive
     font-size: $relativeMassive
-    
+
 //-------------------//
 //        Faded
 //-------------------//
 
 .ts.message.faded
     opacity: $message_fadedOpacity
-    
+
 //-------------------//
 //       Basic
 //-------------------//
@@ -202,21 +226,21 @@
 .ts.message.basic
     background-color: transparent
     border          : none
-    
+
 //-------------------//
 //     Borderless
 //-------------------//
 
 .ts.message.borderless
     border: none
-    
+
 //-------------------//
 //       Compact
 //-------------------//
 
 .ts.message.compact
     display: inline-block
-    
+
 //-------------------//
 //       Fitted
 //-------------------//
@@ -245,26 +269,26 @@
 //        List
 //-------------------//
 
-.ts.message .list:not(.ts) 
+.ts.message .list:not(.ts)
     text-align         : left
     padding            : 0em
     opacity            : $message_listOpacity
     list-style-position: $message_listStylePosition
     margin             : $message_listMargin 0em 0em
 
-.ts.message .list:not(.ts):first-child 
+.ts.message .list:not(.ts):first-child
     margin-top: 0em
 
-.ts.message .list:not(.ts):last-child 
+.ts.message .list:not(.ts):last-child
     margin-bottom: 0em
 
-.ts.message .list:not(.ts) li 
+.ts.message .list:not(.ts) li
     position       : relative
     list-style-type: none
     margin         : 0em 0em $message_listItemMargin $message_listItemIndent
     padding        : 0em
 
-.ts.message .list:not(.ts) li:before 
+.ts.message .list:not(.ts) li:before
     position      : absolute
     content       : '•'
     font-weight   : bold
@@ -272,5 +296,16 @@
     height        : 100%
     vertical-align: baseline
 
-.ts.message .list:not(.ts) li:last-child 
+.ts.message .list:not(.ts) li:last-child
     margin-bottom: 0em
+
+//-------------------//
+//      Attached
+//-------------------//
+
+.ts.message[class*="top attached"]
+    border-bottom-left-radius : 0
+    border-bottom-right-radius: 0
+.ts.message[class*="bottom attached"]
+    border-top-left-radius : 0
+    border-top-right-radius: 0
