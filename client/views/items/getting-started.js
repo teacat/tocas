@@ -74,11 +74,18 @@ export default
             title      : '網頁字型',
             description:
             `
-                Tocas UI 為了統一所有裝置的字型所以使用了 Google 的 Web Font 網頁字型 <strong>Noto Sans CJK</strong>，
-                預設支援英文、日本語、韓文、簡體中文和正體中文共五種字型，
+                Tocas UI 2.2 之後的版本不再統一使用 Noto Sans CJK，因為其檔案量過大讀取費時。目前 Tocas UI 使用下列字型在各個系統（如：Ubuntu、macOS、Windows）上取得最相近且美觀的結果。
             `,
             link             : 'web-font',
             expandableExample: false
+        },
+        {
+            type: source,
+            code: `"SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue", "Helvetica", "Arial",
+"Microsoft JhengHei", wf_SegoeUI, "Segoe UI", Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu,
+"Bitstream Vera Sans", "DejaVu Sans", Tahoma, 微軟正黑體, "LiHei Pro", "WenQuanYi Micro Hei",
+"Droid Sans Fallback", "AR PL UMing TW", Roboto, "Helvetica Neue", "Hiragino Maru Gothic ProN",
+メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif`
         },
         {
             type       : small,
