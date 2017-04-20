@@ -820,16 +820,15 @@ ol.ts.horizontal.list li:before,
 
 .ts.celled.list > .item,
 .ts.celled.list > .list
-    border-top   : $list_celledBorder
+    border-bottom: $list_celledBorder
     padding-left : $list_celledHorizontalPadding
     padding-right: $list_celledHorizontalPadding
 
 .ts.celled.list > .item:last-child
-    border-bottom: $list_celledBorder
+    border-bottom: 0
 
 /* Padding on all elements */
-.ts.celled.list > .item:first-child,
-.ts.celled.list > .item:last-child
+.ts.celled.list > .item
     padding-top   : $list_itemVerticalPadding
     padding-bottom: $list_itemVerticalPadding
 
@@ -903,7 +902,8 @@ ol.ts.horizontal.list li:before,
 .ts.relaxed.list:not(.horizontal) > .item:not(:first-child)
     padding-top: $list_relaxedItemVerticalPadding
 
-.ts.relaxed.list:not(.horizontal) > .item:not(:last-child)
+.ts.relaxed.list:not(.horizontal) > .item:not(:last-child),
+.ts.relaxed.celled.list:not(.horizontal) > .item:last-child
     padding-bottom: $list_relaxedItemVerticalPadding
 
 .ts.horizontal.relaxed.list .list > .item:not(:first-child),
@@ -918,7 +918,8 @@ ol.ts.horizontal.list li:before,
 .ts[class*="very relaxed"].list:not(.horizontal) > .item:not(:first-child)
     padding-top: $list_veryRelaxedItemVerticalPadding
 
-.ts[class*="very relaxed"].list:not(.horizontal) > .item:not(:last-child)
+.ts[class*="very relaxed"].list:not(.horizontal) > .item:not(:last-child),
+.ts[class*="very relaxed"].celled.list:not(.horizontal) > .item:last-child
     padding-bottom: $list_veryRelaxedItemVerticalPadding
 
 .ts.horizontal[class*="very relaxed"].list .list > .item:not(:first-child),
@@ -928,6 +929,10 @@ ol.ts.horizontal.list li:before,
 .ts.horizontal[class*="very relaxed"].list .list > .item:not(:last-child),
 .ts.horizontal[class*="very relaxed"].list > .item:not(:last-child)
     padding-right: $list_veryRelaxedHorizontalPadding
+
+/* Celled */
+.ts.celled.list[class*="very relaxed"]:not(.horizontal) > .item
+    padding: $list_veryRelaxedCelledItemPadding
 
 //-------------------//
 //       Sizes
