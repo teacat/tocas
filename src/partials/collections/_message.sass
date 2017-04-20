@@ -306,6 +306,29 @@
 .ts.message[class*="top attached"]
     border-bottom-left-radius : 0
     border-bottom-right-radius: 0
+
+    border-bottom: 0
+    margin-bottom: 0
 .ts.message[class*="bottom attached"]
     border-top-left-radius : 0
     border-top-right-radius: 0
+
+    border-top: 0
+    margin-top: 0
+
+//-------------------//
+//      Coupling
+//-------------------//
+
+.ts.input.attached + .ts.message:not([class*="vertically fitted"]):not(.fitted),
+.ts.input.attached + .ts.message[class*="horizontally fitted"]
+    padding-top   : calc(#{$message_verticalPadding} / #{$message_attachedInputTimes})
+    padding-bottom: calc(#{$message_verticalPadding} / #{$message_attachedInputTimes})
+.ts.input.attached + .ts.message.padded:not([class*="vertically fitted"]):not(.fitted),
+.ts.input.attached + .ts.message.padded[class*="horizontally fitted"]
+    padding-top   : calc(#{$message_paddedPadding} / #{$message_attachedInputTimes})
+    padding-bottom: calc(#{$message_paddedPadding} / #{$message_attachedInputTimes})
+.ts.input.attached + .ts.message.very.padded:not([class*="vertically fitted"]):not(.fitted),
+.ts.input.attached + .ts.message.very.padded[class*="horizontally fitted"]
+    padding-top   : calc(#{$message_veryPaddedPadding} / #{$message_attachedInputTimes})
+    padding-bottom: calc(#{$message_veryPaddedPadding} / #{$message_attachedInputTimes})
