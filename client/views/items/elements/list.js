@@ -116,6 +116,26 @@ export default
             mark: 'link, active',
         },
         {
+            type       : small,
+            title      : '簡化',
+            description: `你可以直接透過 <span class="ts horizontal label">&lt;ol&gt;</span> 和 <span class="ts horizontal label">&lt;ul&gt;</span> 標籤來簡化清單的使用方式。`,
+            link       : 'ordered'
+        },
+        {
+            type: 'example',
+            code: `<ol class="ts list">
+    <li>伊莉雅</li>
+    <li>相羽六</li>
+    <li>西絲蒂娜</li>
+</ol>
+<ul class="ts list">
+    <li>七波白音</li>
+    <li>宮風夕梨</li>
+    <li>紬木沙羅</li>
+</ul>`,
+            tagMark: 'ol, ul'
+        },
+        {
             type       : normal,
             title      : '內容',
             description: '清單包含了各式各樣的內容。',
@@ -507,6 +527,27 @@ export default
     </div>
 </div>`,
             mark: 'selection'
+        },
+        {
+            type       : small,
+            title      : '自訂標點',
+            description: `你能夠透過 <span class="ts horizontal label">[value]</span> 來變更清單中的標記符號。`,
+            link       : 'custom-value'
+        },
+        {
+            type: 'example',
+            code: `<ol class="ts list">
+    <li value="+">橙希</li>
+    <li value="+">卡莉絲</li>
+    <li value="+">
+        吳雨藍
+        <ol>
+            <li value="-"><a class="item" href="#">亞凡芽</a></li>
+            <li value="-">橙希</li>
+            <li value="-">卡莉絲</li>
+        </ol>
+    </li>
+</ol>`,
         },
         {
             type       : small,
