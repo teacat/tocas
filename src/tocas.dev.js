@@ -653,12 +653,12 @@ ts.fn.contains = function(wants) {
 
 /**
  * Attr
- * 
+ *
  * Add a attribute to an element.
- * 
+ *
  * @param string attr    The name of the attribute.
  * @param mixed  value   The value of the attribute.
- * 
+ *
  * @return mixed
  */
 
@@ -1065,5 +1065,23 @@ ts.fn.tab = function(option) {
       }
       return ts(this).addClass('active');
     });
+  });
+};
+
+
+/*
+The tooltip function.
+ */
+
+ts.fn.popup = function() {
+  return this.each(function() {
+    var android, iOS, userAgent, winPhone;
+    userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    winPhone = new RegExp("windows phone", "i");
+    android = new RegExp("android", "i");
+    iOS = new RegExp("iPad|iPhone|iPod", "i");
+    if (winPhone.test(userAgent) || android.test(userAgent) || (iOS.test(userAgent) && !window.MSStream)) {
+      return ts(this).addClass('untooltipped');
+    }
   });
 };

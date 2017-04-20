@@ -570,12 +570,12 @@ ts.fn.contains = (wants) ->
 
 ###*
 # Attr
-# 
+#
 # Add a attribute to an element.
-# 
+#
 # @param string attr    The name of the attribute.
 # @param mixed  value   The value of the attribute.
-# 
+#
 # @return mixed
 ###
 
@@ -649,7 +649,7 @@ expandDropdown = (target) ->
         .removeClass 'hidden'
         .addClass 'visible'
         .addClass 'animating'
-        .one animationEnd, () ->
+        .one animationEnd, ->
             ts target
                 .removeClass 'animating'
 
@@ -663,7 +663,7 @@ contractDropdown = (target) ->
         .removeClass 'visible'
         .addClass 'hidden'
         .addClass 'animating'
-        .one animationEnd, () ->
+        .one animationEnd, ->
             ts target
                 .removeClass 'animating'
 
@@ -718,7 +718,7 @@ The dropdown function.
 ###
 
 ts.fn.dropdown = (command) ->
-    @each () ->
+    @each ->
         ts(@).on 'click', (e) ->
             pa = ts(@)[0]
 
@@ -740,8 +740,8 @@ ts.fn.dropdown = (command) ->
 The checkbox function.
 ###
 
-ts.fn.checkbox = () ->
-    @each () ->
+ts.fn.checkbox = ->
+    @each ->
         ts(@).on 'click', (e) ->
             isRadio = ts @
                 .hasClass 'radio'
@@ -771,15 +771,15 @@ ts.fn.checkbox = () ->
 The tablesort function.
 ###
 
-ts.fn.tablesort = () ->
-    @each () ->
+ts.fn.tablesort = ->
+    @each ->
         if !ts(@).hasClass("sortable")
             return
 
         table = @
 
         ts(@).find("thead th").each (i) ->
-            ts(@).on "click", () ->
+            ts(@).on "click", ->
                 isAsc = ts @
                     .hasClass 'ascending'
 
@@ -815,9 +815,9 @@ closeModal = (modal) ->
     ts modal
         .closest '.ts.modals.dimmer'
         .addClass 'closing'
-        .one animationEnd, () ->
+        .one animationEnd, ->
             dimmer = @
-            setTimeout(() ->
+            setTimeout(->
                 ts dimmer
                     .removeClass 'closing'
                     .removeClass 'active'
@@ -827,7 +827,7 @@ closeModal = (modal) ->
 
     ts modal
         .addClass 'closing'
-        .one animationEnd, () ->
+        .one animationEnd, ->
             ts @
                 .removeClass 'closing'
                 .removeAttr  'open'
@@ -847,7 +847,7 @@ bindModalButtons = (modal, approve, deny, approveCallback, denyCalback, overwrit
             tsApprove.off 'click'
 
         if overwrite or not isset and not overwrite
-            tsApprove.on 'click', () ->
+            tsApprove.on 'click', ->
                 if approveCallback.call(modal) isnt false
                     closeModal modal
 
@@ -857,7 +857,7 @@ bindModalButtons = (modal, approve, deny, approveCallback, denyCalback, overwrit
             tsDeny.off 'click'
 
         if overwrite or not isset and not overwrite
-            tsDeny.on 'click', () ->
+            tsDeny.on 'click', ->
                 if denyCalback.call modal isnt false
                     closeModal modal
 
@@ -894,7 +894,7 @@ ts.fn.modal = (option) ->
             tsDimmer
                 .addClass 'active'
                 .addClass 'opening'
-                .one animationEnd, () ->
+                .one animationEnd, ->
                     ts @
                         .removeClass 'opening'
                 # Close the modal if user clicked the dimmer.
@@ -905,15 +905,15 @@ ts.fn.modal = (option) ->
 
             # Bind the close icon event.
             if closeBtn isnt null
-                closeBtn.on 'click', () ->
+                closeBtn.on 'click', ->
                     closeModal modal
 
             # Bind the events.
             bindModalButtons(
                 modal,
                 '.positive, .approve, .ok', '.negative, .deny, .cancel',
-                () -> true,
-                () -> true,
+                -> true,
+                -> true,
                 false
             )
 
@@ -921,7 +921,7 @@ ts.fn.modal = (option) ->
             tsModal
                 .attr 'open', 'open'
                 .addClass 'opening'
-                .one animationEnd, () ->
+                .one animationEnd, ->
                     tsModal.removeClass 'opening'
 
         # Hide the modal.
@@ -944,7 +944,7 @@ The sidebar function.
 ###
 
 ts.fn.sidebar = (option) ->
-    @each () ->
+    @each ->
         #
         if option is 'toggle'
             ts @
@@ -953,7 +953,7 @@ ts.fn.sidebar = (option) ->
             if ts(@).hasClass('visible')
                 ts @
                     .removeClass 'visible'
-                    .one animationEnd, () ->
+                    .one animationEnd, ->
                         ts @
                             .removeClass 'animating'
             else
@@ -974,8 +974,8 @@ The tab function.
 ###
 
 ts.fn.tab = (option) ->
-    @each () ->
-        ts(@).on 'click', () ->
+    @each ->
+        ts(@).on 'click', ->
             # Ignore if user is clicking on the actived tab button.
             return if ts(@).hasClass('active')
 
@@ -1005,3 +1005,18 @@ ts.fn.tab = (option) ->
             # Active the target tab button.
             ts(@)
                 .addClass 'active'
+
+###
+The tooltip function.
+###
+
+ts.fn.popup = ->
+    @each ->
+        userAgent = navigator.userAgent or navigator.vendor or window.opera
+        winPhone  = new RegExp "windows phone"   , "i"
+        android   = new RegExp "android"         , "i"
+        iOS       = new RegExp "iPad|iPhone|iPod", "i"
+
+        if winPhone.test(userAgent) or android.test(userAgent) or (iOS.test(userAgent) and !window.MSStream)
+            ts(@)
+                .addClass 'untooltipped'
