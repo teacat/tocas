@@ -33,6 +33,10 @@
             color: #888888;
         }
     }
+    .symbol .icon:before
+    {
+        opacity: 0.4;
+    }
 }
 </style>
 
