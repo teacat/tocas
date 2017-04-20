@@ -197,38 +197,38 @@
     border-right: $table_basicTableHeaderDivider
 
 .ts.structured.celled.table tr th,
-.ts.structured.celled.table tr td 
+.ts.structured.celled.table tr td
     border-left : $table_cellBorder
     border-right: $table_cellBorder
 
 
 //-------------------//
 //     Definition
-//-------------------// 
+//-------------------//
 
-.ts.definition.table thead:not(.full-width) th:first-child 
+.ts.definition.table thead:not(.full-width) th:first-child
     pointer-events: none
     background : $table_definitionHeaderBackground
     font-weight: $table_definitionHeaderFontWeight
     color      : $table_definitionHeaderColor
 
 
-.ts.definition.table tfoot:not(.full-width) th:first-child 
+.ts.definition.table tfoot:not(.full-width) th:first-child
     pointer-events: none
     background    : $table_definitionFooterBackground
     font-weight   : $table_definitionFooterColor
     color         : $table_definitionFooterFontWeight
 
 /* Remove Border */
-.ts.celled.definition.table thead:not(.full-width) th:first-child 
+.ts.celled.definition.table thead:not(.full-width) th:first-child
     box-shadow: 0px -$table_borderWidth 0px $table_borderWidth $table_definitionPageBackground
 
-.ts.celled.definition.table tfoot:not(.full-width) th:first-child 
+.ts.celled.definition.table tfoot:not(.full-width) th:first-child
     box-shadow: 0px $table_borderWidth 0px $table_borderWidth $table_definitionPageBackground
 
 /* Highlight Defining Column */
 .ts.definition.table tr td:first-child:not(.ignored),
-.ts.definition.table tr td.definition 
+.ts.definition.table tr td.definition
     background : $table_definitionColumnBackground
     font-weight: $table_definitionColumnFontWeight
     color      : $table_definitionColumnColor
@@ -238,7 +238,7 @@
 .ts.definition.table thead:not(.full-width) th:nth-child(2) 
     border-left: $table_borderWidth solid $table_borderColor
 
-.ts.definition.table tfoot:not(.full-width) th:nth-child(2) 
+.ts.definition.table tfoot:not(.full-width) th:nth-child(2)
     border-left: $table_borderWidth solid $table_borderColor
 
 .ts.definition.table td:nth-child(2) 
@@ -252,41 +252,75 @@
 
 //-------------------//
 //      Emphasis
-//-------------------// 
+//-------------------//
 
-.ts.table tr.positive,
-.ts.table td.positive 
+.ts.table tr.positive:not(.marked),
+.ts.table td.positive:not(.marked)
     +column-variant($table_positiveColor, $table_positiveBackgroundColor)
-    
-.ts.table tr.negative,
-.ts.table td.negative,
-.ts.table tr.error,
-.ts.table td.error 
+
+.ts.table tr.negative:not(.marked),
+.ts.table td.negative:not(.marked),
+.ts.table tr.error:not(.marked),
+.ts.table td.error:not(.marked)
     +column-variant($table_negativeColor, $table_negativeBackgroundColor)
-    
-.ts.table tr.warning,
-.ts.table td.warning 
+
+.ts.table tr.warning:not(.marked),
+.ts.table td.warning:not(.marked)
     +column-variant($table_warningColor, $table_warningBackgroundColor)
-    
-.ts.table tr.info,
-.ts.table td.info 
+
+.ts.table tr.info:not(.marked),
+.ts.table td.info:not(.marked)
     +column-variant($table_infoColor, $table_infoBackgroundColor)
-    
-.ts.table tr.primary,
-.ts.table td.primary 
+
+.ts.table tr.primary:not(.marked),
+.ts.table td.primary:not(.marked)
     +column-variant($table_primaryColor, $table_primaryBackgroundColor)
-    
-.ts.table tr.inverted,
-.ts.table td.inverted 
+
+.ts.table tr.inverted:not(.marked),
+.ts.table td.inverted:not(.marked)
     +column-variant($table_invertedColor, $table_invertedBackgroundColor)
 
 //-------------------//
 //       Active
-//-------------------// 
+//-------------------//
 
-.ts.table tr.active,
-.ts.table td.active 
+.ts.table tr.active:not(.marked),
+.ts.table td.active:not(.marked)
     +column-variant($table_activeColor, $table_activeBackgroundColor)
+
+//-------------------//
+//       Marked
+//-------------------//
+
+.ts.table tr.positive.marked,
+.ts.table td.positive.marked
+    box-shadow: $table_markedShadow $table_positiveColor inset
+
+.ts.table tr.negative.marked,
+.ts.table td.negative.marked,
+.ts.table tr.error.marked,
+.ts.table td.error.marked
+    box-shadow: $table_markedShadow $table_negativeColor inset
+
+.ts.table tr.warning.marked,
+.ts.table td.warning.marked
+    box-shadow: $table_markedShadow $table_warningColor inset
+
+.ts.table tr.info.marked,
+.ts.table td.info.marked
+    box-shadow: $table_markedShadow $table_infoColor inset
+
+.ts.table tr.primary.marked,
+.ts.table td.primary.marked
+    box-shadow: $table_markedShadow $table_primaryColor inset
+
+.ts.table tr.inverted.marked,
+.ts.table td.inverted.marked
+    box-shadow: $table_markedShadow $table_invertedBackgroundColor inset
+
+.ts.table tr.active.marked,
+.ts.table td.active.marked
+    box-shadow: $table_markedShadow $table_activeBackgroundColor inset
 
 //-------------------//
 //      Disabled
@@ -305,7 +339,7 @@
 
 //-------------------//
 //     Stackable
-//-------------------// 
+//-------------------//
 
 +rwd-serious(tablet)
 
@@ -313,34 +347,34 @@
     .ts[class*="tablet stackable"].table tbody,
     .ts[class*="tablet stackable"].table tr,
     .ts[class*="tablet stackable"].table tr > th,
-    .ts[class*="tablet stackable"].table tr > td    
+    .ts[class*="tablet stackable"].table tr > td
         display: block !important
         width: 100% !important
         display: block !important
-    
 
-    .ts[class*="tablet stackable"].table 
+
+    .ts[class*="tablet stackable"].table
         padding: 0em
-    
-    .ts[class*="tablet stackable"].table thead 
+
+    .ts[class*="tablet stackable"].table thead
         display: $table_responsiveHeaderDisplay
     
-    .ts[class*="tablet stackable"].table tfoot 
+    .ts[class*="tablet stackable"].table tfoot
         display: $table_responsiveFooterDisplay
-    
-    .ts[class*="tablet stackable"].table tr 
+
+    .ts[class*="tablet stackable"].table tr
         padding-top: $table_responsiveRowVerticalPadding
         padding-bottom: $table_responsiveRowVerticalPadding
-    
+
     .ts[class*="tablet stackable"].table tr > th,
-    .ts[class*="tablet stackable"].table tr > td 
+    .ts[class*="tablet stackable"].table tr > td
         background: none
         border: none !important
         padding: $table_responsiveCellVerticalPadding $table_responsiveCellHorizontalPadding
     
 
     /* Definition Table */
-    .ts.definition[class*="tablet stackable"].table thead th:first-child 
+    .ts.definition[class*="tablet stackable"].table thead th:first-child
         box-shadow: none !important
 
 //-------------------//
@@ -348,15 +382,15 @@
 //-------------------// 
 
 .ts.table[class*="left aligned"],
-.ts.table [class*="left aligned"] 
+.ts.table [class*="left aligned"]
     text-align: left
 
 .ts.table[class*="center aligned"],
-.ts.table [class*="center aligned"] 
+.ts.table [class*="center aligned"]
     text-align: center
 
 .ts.table[class*="right aligned"],
-.ts.table [class*="right aligned"] 
+.ts.table [class*="right aligned"]
     text-align: right
 
 //-------------------//
@@ -364,7 +398,7 @@
 //-------------------// 
 
 .ts.table[class*="top aligned"],
-.ts.table [class*="top aligned"] 
+.ts.table [class*="top aligned"]
     vertical-align: top
 
 .ts.table[class*="middle aligned"],
