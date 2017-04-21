@@ -30,6 +30,7 @@
     background-color: $message_backgroundColor
     border-radius   : $message_borderRadius
     color           : $message_textColor
+    word-wrap       : break-word
 
 .ts.message:first-child
     margin-top: 0em
@@ -129,15 +130,29 @@
 //-------------------//
 
 .ts.message > .close.icon
+    display        : flex
+    align-items    : center
+    justify-content: center
+
+    height: $message_closeSize
+    width : $message_closeSize
+    color : $message_closeTextColor
+
+    background-color: $message_closeBackgroundColor
+    border-radius   : $circularRadius
+
     cursor    : pointer
     position  : absolute
-    margin    : 0em
+    margin    : 0
     top       : $message_closeTopDistance
     right     : $message_closeRightDistance
     opacity   : $message_closeOpacity
+    z-index   : $z_message_close
 
 .ts.message > .close.icon:hover
     opacity: 1
+.ts.message > .close.icon:active
+    opacity: 0.7
 
 //-------------------//
 //      Emphasis
@@ -155,7 +170,7 @@
     +message-variant($message_negativeTextColor, $message_negativeBackgroundColor, $message_negativeBorderColor)
 .ts.message.inverted
     +message-variant($message_invertedTextColor, $message_invertedBackgroundColor, $message_invertedBorderColor)
- 
+
 //-------------------//
 // Inverted Emphasis
 //-------------------//
@@ -170,7 +185,7 @@
     +message-variant($message_invertedPositiveTextColor, $message_invertedPositiveBackgroundColor, $message_invertedPositiveBorderColor)
 .ts.message.negative.inverted
     +message-variant($message_invertedNegativeTextColor, $message_invertedNegativeBackgroundColor, $message_invertedNegativeBorderColor)
-    
+
 //-------------------//
 //      Secondary
 //-------------------//
@@ -318,13 +333,31 @@
 
 .ts.attached.message:not([class*="vertically fitted"]):not(.fitted),
 .ts.attached.message[class*="horizontally fitted"]
-    padding-top   : calc(#{$message_verticalPadding} / #{$message_attachedInputTimes})
-    padding-bottom: calc(#{$message_verticalPadding} / #{$message_attachedInputTimes})
+    padding-top   : $message_attachedVerticalPadding
+    padding-bottom: $message_attachedVerticalPadding
+
+    > .close.icon
+        top: $message_attachedVerticalPadding
+
 .ts.attached.message.padded:not([class*="vertically fitted"]):not(.fitted),
 .ts.attached.message.padded[class*="horizontally fitted"]
-    padding-top   : calc(#{$message_paddedPadding} / #{$message_attachedInputTimes})
-    padding-bottom: calc(#{$message_paddedPadding} / #{$message_attachedInputTimes})
+    padding-top   : $message_attachedPaddedVerticalPadding
+    padding-bottom: $message_attachedPaddedVerticalPadding
+
+    > .close.icon
+        top: $message_attachedPaddedVerticalPadding
+
 .ts.attached.message.very.padded:not([class*="vertically fitted"]):not(.fitted),
 .ts.attached.message.very.padded[class*="horizontally fitted"]
-    padding-top   : calc(#{$message_veryPaddedPadding} / #{$message_attachedInputTimes})
-    padding-bottom: calc(#{$message_veryPaddedPadding} / #{$message_attachedInputTimes})
+    padding-top   : $message_attachedVeryPaddedVerticalPadding
+    padding-bottom: $message_attachedVeryPaddedVerticalPadding
+
+    > .close.icon
+        top: $message_attachedVeryPaddedVerticalPadding
+
+//-------------------//
+//      Closable
+//-------------------//
+
+.ts.message.closable
+    padding-right: calc(#{$message_horizontalPadding} + #{$message_closeSize} + #{$message_horizontalPadding} / 2)
