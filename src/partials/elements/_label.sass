@@ -9,23 +9,23 @@
 
     background-color: $backgroundColor
     border-color    : $borderColor
-    color           : $color      
-    
+    color           : $color
+
     &.image .detail
         background-color: $detailBackgroundColor !important
-        
+
     &.empty.triangle
         border-bottom-color: $backgroundColor !important
-    
-@mixin label-link-variant($color, $backgroundColor, $borderColor)    
+
+@mixin label-link-variant($color, $backgroundColor, $borderColor)
     $hoverBackgroundColor : lighten($backgroundColor, 3%)
     $activeBackgroundColor: darken($backgroundColor, 8%)
-    
+
     &:hover
         background-color: $hoverBackgroundColor !important
     &:active
         background-color: $activeBackgroundColor !important
-        
+
 //*******************************//
 //              Main
 //*******************************//
@@ -45,49 +45,49 @@
 .ts.label:first-child 
     margin-left: 0em
 
-.ts.label:last-child 
+.ts.label:last-child
     margin-right: 0em
 
 /* Link */
 a.ts.label
     +label-link-variant($label_defaultTextColor, $label_defaultBackgroundColor, $label_defaultBorderColor)
-    
+
     cursor: pointer
 
 /* Inside Link */
-.ts.label > a 
+.ts.label > a
     cursor    : pointer
     color     : inherit
     opacity   : $label_linkOpacity
 
-.ts.label > a:hover 
+.ts.label > a:hover
     opacity: 1
 
 /* Image */
-.ts.label > img 
+.ts.label > img
     width         : auto !important
     vertical-align: middle
     height        : $label_imageHeight !important
 
 /* Icon */
-.ts.label > .icon 
+.ts.label > .icon
     width: auto
     margin: 0em $label_iconDistance 0em 0em
 
 /* Detail */
-.ts.label > .detail 
+.ts.label > .detail
     display       : inline-block
     vertical-align: top
     font-weight   : $label_detailFontWeight
     margin-left   : $label_detailMargin
     opacity       : $label_detailOpacity
 
-.ts.label > .detail .icon 
+.ts.label > .detail .icon
     margin: 0em $label_detailIconDistance 0em 0em
 
 /* Removable label */
 .ts.label > .close.icon,
-.ts.label > .delete.icon 
+.ts.label > .delete.icon
     cursor      : pointer
     margin-right: 0em
     margin-left : $label_deleteMargin
@@ -95,14 +95,14 @@ a.ts.label
     opacity     : $label_deleteOpacity
     transition  : $label_deleteTransition
 
-.ts.label > .delete.icon:hover 
+.ts.label > .delete.icon:hover
     opacity: 1
 
 //-------------------//
-//       Image 
-//-------------------// 
+//       Image
+//-------------------//
 
-.ts.image.label 
+.ts.image.label
     width         : auto !important
     margin-top    : 0em
     margin-bottom : 0em
@@ -111,7 +111,7 @@ a.ts.label
     padding       : $label_imageLabelPadding
     border-radius : $label_imageLabelBorderRadius
 
-.ts.image.label img 
+.ts.image.label img
     display       : inline-block
     vertical-align: top
     height        : $label_imageLabelImageHeight
@@ -124,15 +124,15 @@ a.ts.label
     border-radius: 0em $label_imageLabelBorderRadius $label_imageLabelBorderRadius 0em
 
 //-------------------//
-//      Circular 
-//-------------------// 
+//      Circular
+//-------------------//
 
 .ts.label.circular
     border-radius: $circularRadius
 
 //-------------------//
-//       Empty 
-//-------------------// 
+//       Empty
+//-------------------//
 
 .ts.label.empty
     text-indent: -9999px
@@ -142,7 +142,7 @@ a.ts.label
     width        : 1em
     height       : 1em
     padding      : .5em
-    
+
 .ts.label.empty.triangle
     border-radius      : 0
     border-top         : none
@@ -164,63 +164,169 @@ a.ts.label
 //       Basic 
 //-------------------// 
 
-.ts.basic.label 
+.ts.basic.label
     background: $label_basicBackground
     border    : $label_basicBorder
     color     : $label_basicColor
 
 /* Link */
-a.ts.basic.label:hover 
+a.ts.basic.label:hover
     text-decoration: none
     background     : $label_basicHoverBackground
     color          : $label_basicHoverColor
 
 /* Pointing */
-.ts.basic.pointing.label:before 
+.ts.basic.pointing.label:before
     border-color: inherit
 
 //-------------------//
-//      Compact 
+//      Compact
 //-------------------//
 
 .ts.compact.label
     padding: $label_compactVerticalPadding $label_compactHorizontalPadding
 
 //-------------------//
-//       Sizes 
-//-------------------// 
+//     Pointing
+//-------------------//
+
+.ts.pointing.label
+    position: relative
+
+.ts.attached.pointing.label
+    position: absolute
+
+.ts.pointing.label:before
+    background-color: inherit
+    background-image: inherit
+    border-width    : none
+    border-style    : solid
+    border-color    : $label_pointingBorderColor
+
+/* Arrow */
+.ts.pointing.label:before
+    position        : absolute
+    content         : ''
+    transform       : rotate(45deg)
+    background-image: none
+
+    z-index   : $z_label_pointingTriangle
+    width     : $label_pointingTriangleSize
+    height    : $label_pointingTriangleSize
+    transition: $label_pointingTriangleTransition
+
+/*--- Above ---*/
+.ts.pointing.label,
+.ts[class*="pointing above"].label
+    margin-top: $label_pointingVerticalDistance
+
+.ts.pointing.label:before,
+.ts[class*="pointing above"].label:before
+    border-width: $label_borderWidth 0 0 $label_borderWidth
+    transform   : translateX(-50%) translateY(-50%) rotate(45deg)
+    top         : 0%
+    left        : 50%
+
+/*--- Below ---*/
+.ts[class*="bottom pointing"].label,
+.ts[class*="pointing below"].label
+    margin-top   : 0
+    margin-bottom: $label_pointingVerticalDistance
+
+.ts[class*="bottom pointing"].label:before,
+.ts[class*="pointing below"].label:before
+    border-width: 0 $label_borderWidth $label_borderWidth 0
+    top         : auto
+    right       : auto
+    transform   : translateX(-50%) translateY(-50%) rotate(45deg)
+    top         : 100%
+    left        : 50%
+
+/*--- Left ---*/
+.ts[class*="left pointing"].label
+    margin-top : 0
+    margin-left: $label_pointingHorizontalDistance
+
+.ts[class*="left pointing"].label:before
+    border-width: 0 0 $label_borderWidth $label_borderWidth
+    transform   : translateX(-50%) translateY(-50%) rotate(45deg)
+    bottom      : auto
+    right       : auto
+    top         : 50%
+    left        : 0
+
+/*--- Right ---*/
+.ts[class*="right pointing"].label
+    margin-top  : 0
+    margin-right: $label_pointingHorizontalDistance
+
+.ts[class*="right pointing"].label:before
+    border-width: $label_borderWidth $label_borderWidth 0 0
+    transform   : translateX(50%) translateY(-50%) rotate(45deg)
+    top         : 50%
+    right       : 0%
+    bottom      : auto
+    left        : auto
+
+/* Basic Pointing */
+
+/*--- Above ---*/
+.ts.basic.pointing.label:before,
+.ts.basic[class*="pointing above"].label:before
+    margin-top: $label_basicPointingTriangleOffset
+
+/*--- Below ---*/
+.ts.basic[class*="bottom pointing"].label:before,
+.ts.basic[class*="pointing below"].label:before
+    bottom    : auto
+    top       : 100%
+    margin-top: -$label_basicPointingTriangleOffset
+
+/*--- Left ---*/
+.ts.basic[class*="left pointing"].label:before
+    top : 50%
+    left: $label_basicPointingTriangleOffset
+
+/*--- Right ---*/
+.ts.basic[class*="right pointing"].label:before
+    top  : 50%
+    right: $label_basicPointingTriangleOffset
+
+//-------------------//
+//       Sizes
+//-------------------//
 
 .ts.mini.labels .label,
-.ts.mini.label 
+.ts.mini.label
     font-size: $label_mini
 .ts.tiny.labels .label,
-.ts.tiny.label 
+.ts.tiny.label
     font-size: $label_tiny
 .ts.small.labels .label,
-.ts.small.label 
+.ts.small.label
     font-size: $label_small
 .ts.labels .label,
-.ts.label 
+.ts.label
     font-size: $label_medium
 .ts.large.labels .label,
-.ts.large.label 
+.ts.large.label
     font-size: $label_large
 .ts.big.labels .label,
-.ts.big.label 
+.ts.big.label
     font-size: $label_big
 .ts.huge.labels .label,
-.ts.huge.label 
+.ts.huge.label
     font-size: $label_huge
 .ts.massive.labels .label,
-.ts.massive.label 
+.ts.massive.label
     font-size: $label_massive
 
 //-------------------//
-//      Attached 
-//-------------------// 
+//      Attached
+//-------------------//
 
 .ts.label[class*="top attached"],
-.ts.attached.label 
+.ts.attached.label
     width           : 100%
     position        : absolute
     margin          : 0em
@@ -272,10 +378,10 @@ a.ts.basic.label:hover
     border-right-width : 0
 
 //-------------------//
-//      Floating 
+//      Floating
 //-------------------//
 
-.ts.floating.label 
+.ts.floating.label
     position: absolute
     z-index : $z_label_floating
     top     : $label_floatingTopOffset
@@ -283,7 +389,7 @@ a.ts.basic.label:hover
     margin  : 0em 0em 0em $label_floatingLeftOffset !important
 
 //-------------------//
-//      Floated 
+//      Floated
 //-------------------//
 
 .ts.label[class*="right floated"]
@@ -304,30 +410,30 @@ a.ts.basic.label:hover
 //      Coupling
 //-------------------//
 
-.ts.header > .ts.label 
+.ts.header > .ts.label
     margin-top: $label_lineHeightOffset
 
 /* Remove border radius on attached segment */
 .ts.attached.segment > .ts.top.left.attached.label,
-.ts.bottom.attached.segment > .ts.top.left.attached.label    
+.ts.bottom.attached.segment > .ts.top.left.attached.label
     border-top-left-radius: 0
 
 .ts.attached.segment > .ts.top.right.attached.label,
-.ts.bottom.attached.segment > .ts.top.right.attached.label    
+.ts.bottom.attached.segment > .ts.top.right.attached.label
     border-top-right-radius: 0
 
-.ts.top.attached.segment > .ts.bottom.left.attached.label    
+.ts.top.attached.segment > .ts.bottom.left.attached.label
     border-bottom-left-radius: 0
 
-.ts.top.attached.segment > .ts.bottom.right.attached.label    
+.ts.top.attached.segment > .ts.bottom.right.attached.label
     border-bottom-right-radius: 0
 
 /* Padding on next content after a label */
 .ts.top.attached.label:first-child + :not(.attached),
-.ts.top.attached.label + [class*="right floated"] + * 
+.ts.top.attached.label + [class*="right floated"] + *
     margin-top: $label_attachedSegmentPadding !important
 
-.ts.bottom.attached.label:first-child ~ :last-child:not(.attached) 
+.ts.bottom.attached.label:first-child ~ :last-child:not(.attached)
     margin-top   : 0em
     margin-bottom: $label_attachedSegmentPadding !important
 
@@ -338,8 +444,8 @@ a.ts.basic.label:hover
     background-color: initial !important
 
 //-------------------//
-//      Emphasis 
-//-------------------// 
+//      Emphasis
+//-------------------//
 
 .ts.labels.primary .label,
 .ts.label.primary
@@ -359,10 +465,10 @@ a.ts.basic.label:hover
 .ts.labels.inverted .label,
 .ts.label.inverted
     +label-variant($label_invertedTextColor, $label_invertedBackgroundColor, $label_invertedBorderColor)
-    
+
 //-------------------//
-//    Link Emphasis 
-//-------------------// 
+//    Link Emphasis
+//-------------------//
 
 .ts.labels.primary a.label,
 a.ts.label.primary
