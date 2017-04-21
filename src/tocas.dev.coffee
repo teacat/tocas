@@ -975,6 +975,9 @@ The tab function.
 
 ts.fn.tab = (option) ->
     @each ->
+        # Options.
+        callback = option?.callback or ->
+
         ts(@).on 'click', ->
             # Ignore if user is clicking on the actived tab button.
             return if ts(@).hasClass('active')
@@ -984,6 +987,10 @@ ts.fn.tab = (option) ->
             return if tabName is null
             # Get the tag group name.
             tabGroup = ts(@).attr 'data-tab-group'
+
+            # Call the callback (ofcuz).
+            callback(tabName, tabGroup)
+
             # There's only one tab module if the `data-tab-group` is empty.
             if tabGroup is null
                 # So we deactive all the tab buttons first.

@@ -1044,6 +1044,8 @@ The tab function.
 
 ts.fn.tab = function(option) {
   return this.each(function() {
+    var callback;
+    callback = (option != null ? option.callback : void 0) || function() {};
     return ts(this).on('click', function() {
       var tabGroup, tabName;
       if (ts(this).hasClass('active')) {
@@ -1054,6 +1056,7 @@ ts.fn.tab = function(option) {
         return;
       }
       tabGroup = ts(this).attr('data-tab-group');
+      callback(tabName, tabGroup);
       if (tabGroup === null) {
         ts('[data-tab]:not(.tab)').removeClass('active');
         ts('[data-tab]').removeClass('active');
