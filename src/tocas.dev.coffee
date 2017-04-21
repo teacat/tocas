@@ -639,13 +639,21 @@ quadrant = (el) ->
     else if position.left > widthHalf && position.top < heightHalf
         return 1
 
+# Z indexes.
+z_dropdownMenu    = 9
+z_dropdownActive  = 10
+z_dropdownHovered = 11
+#
+slider_trackColor    = "#DDD"
+slider_progressColor = "rgb(150, 150, 150)"
+
 ###
 Expand the dropdown menu.
 ###
 
 expandDropdown = (target) ->
     ts target
-        .css 'z-index', '12'
+        .css 'z-index', z_dropdownActive
         .removeClass 'hidden'
         .addClass 'visible'
         .addClass 'animating'
@@ -659,7 +667,7 @@ Contract the dropdown menu.
 
 contractDropdown = (target) ->
     ts target
-        .css 'z-index', '11'
+        .css 'z-index', z_dropdownMenu
         .removeClass 'visible'
         .addClass 'hidden'
         .addClass 'animating'
@@ -1027,3 +1035,39 @@ ts.fn.popup = ->
         if winPhone.test(userAgent) or android.test(userAgent) or (iOS.test(userAgent) and !window.MSStream)
             ts(@)
                 .addClass 'untooltipped'
+
+###
+The slider function.
+###
+
+
+
+ts.fn.slider = (option) ->
+    outerCounter = option?.outerCounter
+    counter      = option?.counter
+
+    modify = (sliderEl, inputEl, counter, outerCounter) ->
+        # Get the 0.01(1) to 1(100) by calculating the steps.
+        value = (inputEl.value - inputEl.getAttribute 'min') / (inputEl.getAttribute 'max' - inputEl.getAttribute 'min')
+        # Or get the value from the range input directly if the range input has no steps.
+        value = inputEl.value / 100 if value is Number.POSITIVE_INFINITY
+
+        # Set the counter if any.
+        if counter?
+            counterEl = ts(sliderEl).find(counter)
+            counterEl[0].innerText = inputEl.value if counterEl?
+        if outerCounter?
+            ts(outerCounter).innerText = inputEl.value
+
+        # Update the progress.
+        ts(inputEl)
+            .css('background-image', "-webkit-gradient(linear, left top, right top, color-stop(#{value}, #{slider_progressColor}), color-stop(#{value}, #{slider_trackColor}))")
+
+    @each ->
+        sliderEl = @
+        inputEl  = ts(@).find('input[type="range"]')
+        # Modify the progress color when the initialize.
+        modify(@, inputEl[0], counter, outerCounter)
+
+        inputEl.on 'input', ->
+            modify(sliderEl, @, counter, outerCounter)
