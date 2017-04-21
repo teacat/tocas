@@ -1040,8 +1040,6 @@ ts.fn.popup = ->
 The slider function.
 ###
 
-
-
 ts.fn.slider = (option) ->
     outerCounter = option?.outerCounter
     counter      = option?.counter
@@ -1071,3 +1069,58 @@ ts.fn.slider = (option) ->
 
         inputEl.on 'input', ->
             modify(sliderEl, @, counter, outerCounter)
+
+###
+The editable function.
+###
+
+ts.fn.editable = (option) ->
+    autoReplace    = option?.autoReplace    || true
+    editCallback   = option?.editCallback   || ->
+    editedCallback = option?.editedCallback || ->
+    autoClose      = option?.autoClose      || true
+    inputWrapper   = @
+
+    # Auto save and end the editing when the input was unfocused.
+    if autoClose
+        ts(document).on 'click', (event) ->
+            # Wen the user clicked the element that is not in the `.ts.input`.
+            if ts(event.target).closest('.ts.input') is null
+                inputWrapper.each ->
+                    input           = ts(@).find('input')
+                    contenteditable = ts(@).find('[contenteditable]')
+                    text            = ts(@).find('.text')[0]
+
+                    # Auto replace the text by the value of the input if `autoReplace` is true.
+                    if autoReplace
+                        if input?
+                            text.innerText = input[0].value
+                        else if contenteditable?
+                            text.innerText = contenteditable[0].value
+
+                    # Call the edited callback.
+                    editedCallback(@)
+
+                    ts(@).removeClass 'editing'
+
+    # Enable the editing mode when the user
+    # clicked the input or the contenteditable element.
+    @each ->
+        input           = ts(@).find('input')
+        contenteditable = ts(@).find('[contenteditable]')
+
+        ts(@).on 'click', ->
+            ts(@).addClass 'editing'
+
+            editCallback(@)
+
+            if input?
+                input[0].focus()
+            else if contenteditable?
+                contenteditable[0].focus()
+
+###
+Te message function.
+###
+
+ts.fn.message = ->

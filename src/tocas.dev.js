@@ -1135,3 +1135,59 @@ ts.fn.slider = function(option) {
     });
   });
 };
+
+
+/*
+The editable function.
+ */
+
+ts.fn.editable = function(option) {
+  var autoClose, autoReplace, editCallback, editedCallback, inputWrapper;
+  autoReplace = (option != null ? option.autoReplace : void 0) || true;
+  editCallback = (option != null ? option.editCallback : void 0) || function() {};
+  editedCallback = (option != null ? option.editedCallback : void 0) || function() {};
+  autoClose = (option != null ? option.autoClose : void 0) || true;
+  inputWrapper = this;
+  if (autoClose) {
+    ts(document).on('click', function(event) {
+      if (ts(event.target).closest('.ts.input') === null) {
+        return inputWrapper.each(function() {
+          var contenteditable, input, text;
+          input = ts(this).find('input');
+          contenteditable = ts(this).find('[contenteditable]');
+          text = ts(this).find('.text')[0];
+          if (autoReplace) {
+            if (input != null) {
+              text.innerText = input[0].value;
+            } else if (contenteditable != null) {
+              text.innerText = contenteditable[0].value;
+            }
+          }
+          editedCallback(this);
+          return ts(this).removeClass('editing');
+        });
+      }
+    });
+  }
+  return this.each(function() {
+    var contenteditable, input;
+    input = ts(this).find('input');
+    contenteditable = ts(this).find('[contenteditable]');
+    return ts(this).on('click', function() {
+      ts(this).addClass('editing');
+      editCallback(this);
+      if (input != null) {
+        return input[0].focus();
+      } else if (contenteditable != null) {
+        return contenteditable[0].focus();
+      }
+    });
+  });
+};
+
+
+/*
+Te message function.
+ */
+
+ts.fn.message = function() {};
