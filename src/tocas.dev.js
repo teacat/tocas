@@ -1190,4 +1190,10 @@ ts.fn.editable = function(option) {
 Te message function.
  */
 
-ts.fn.message = function() {};
+ts.fn.message = function() {
+  return this.each(function() {
+    return ts(this).find('i.close').on('click', function() {
+      return ts(this).parent().addClass('hidden');
+    });
+  });
+};
