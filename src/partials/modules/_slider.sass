@@ -9,9 +9,14 @@
 //              Main
 //*******************************//
 
-.ts.slider:not(.vertical)
+//.ts.slider:not(.vertical)
+//    height: $slider_thumbSize
+.ts.slider
+    display: flex
+
+.ts.slider input[type="range"]:only-child
     height: $slider_thumbSize
-    
+
 .ts.slider input[type="range"]
     appearance        : none
     -webkit-appearance: none
@@ -31,8 +36,8 @@ input[type=range]::-moz-range-track
     background-color: $slider_trackColor
     border-radius   : $defaultBorderRadius
     border          : none
-    
-input[type=range]::-webkit-slider-thumb 
+
+input[type=range]::-webkit-slider-thumb
     -webkit-appearance: none
     border            : none
     box-shadow        : $checkbox_handleBoxShadow
@@ -42,7 +47,7 @@ input[type=range]::-webkit-slider-thumb
     background-color  : $slider_thumbColor
     cursor            : pointer
     margin-top        : $slider_thumbMarginTop
-    
+
 input[type=range]::-moz-range-thumb
     -webkit-appearance: none
     border            : none
@@ -54,11 +59,11 @@ input[type=range]::-moz-range-thumb
     cursor            : pointer
     margin-top        : $slider_thumbMarginTop
 
-input[type=range]:active::-webkit-slider-thumb 
+input[type=range]:active::-webkit-slider-thumb
     background-color: $slider_thumbActiveColor
 
 //-------------------//
-//      Vertical 
+//      Vertical
 //-------------------//
 
 .ts.vertical.slider
@@ -80,3 +85,10 @@ input[type=range]:active::-webkit-slider-thumb
 .ts.slider input[disabled]
     opacity       : $disabledOpacity
     pointer-events: none
+
+//-------------------//
+//       Label
+//-------------------//
+
+.ts.slider input[type="range"] + .ts.label
+    margin-left: $slider_labelDistance
