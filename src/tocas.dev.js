@@ -286,7 +286,8 @@ ts.fn.off = function(eventName, handler) {
     }
 
     /** If there's no handler name, we remove all handler */
-    if (handler === null) {
+    console.log(handler);
+    if (typeof handler === 'undefined') {
       this.ts_eventHandler[eventName].list = [];
       return;
     }
@@ -1187,7 +1188,7 @@ ts.fn.editable = function(option) {
 
 
 /*
-Te message function.
+The message function.
  */
 
 ts.fn.message = function() {
@@ -1195,5 +1196,63 @@ ts.fn.message = function() {
     return ts(this).find('i.close').on('click', function() {
       return ts(this).parent().addClass('hidden');
     });
+  });
+};
+
+
+/*
+The snackbar function
+ */
+
+ts.fn.snackbar = function(option) {
+  var action, actionEmphasis, content, interval, onAction, onClose;
+  content = (option != null ? option.content : void 0) || null;
+  action = (option != null ? option.action : void 0) || null;
+  actionEmphasis = (option != null ? option.actionEmphasis : void 0) || null;
+  onClose = (option != null ? option.onClose : void 0) || function() {};
+  onAction = (option != null ? option.onAction : void 0) || function() {};
+  interval = 3500;
+  if (content === null) {
+    return;
+  }
+  return this.each(function() {
+    var ActionEl, close, contentEl, snackbar;
+    snackbar = this;
+    contentEl = ts(snackbar).find('.content');
+    ActionEl = ts(snackbar).find('a');
+    ts(snackbar).removeClass('active').addClass('active').attr('data-mouseon', 'false');
+    contentEl[0].innerText = content;
+    if (ActionEl != null) {
+      ActionEl[0].innerText = action;
+    }
+    if ((actionEmphasis != null) && (ActionEl != null)) {
+      ActionEl.removeClass('primary info warning negative positive').addClass(actionEmphasis);
+    }
+    close = function() {
+      ts(snackbar).removeClass('active');
+      onClose(snackbar, content, action);
+      return clearTimeout(snackbar.snackbarTimer);
+    };
+    ActionEl.off('click');
+    ActionEl.on('click', function() {
+      onAction(snackbar, content, action);
+      return close();
+    });
+    ts(snackbar).on('mouseenter', function() {
+      return ts(this).attr('data-mouseon', 'true');
+    });
+    ts(snackbar).on('mouseleave', function() {
+      return ts(this).attr('data-mouseon', 'false');
+    });
+    clearTimeout(snackbar.snackbarTimer);
+    return snackbar.snackbarTimer = setTimeout(function() {
+      var hoverChecker;
+      return hoverChecker = setInterval(function() {
+        if (ts(snackbar).attr('data-mouseon') === 'false') {
+          close();
+          return clearInterval(hoverChecker);
+        }
+      }, 500);
+    }, interval);
   });
 };

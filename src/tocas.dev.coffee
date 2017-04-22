@@ -264,8 +264,8 @@ ts.fn.off = (eventName, handler) ->
       return
 
     ###* If there's no handler name, we remove all handler ###
-
-    if handler == null
+    console.log handler
+    if typeof handler is 'undefined'
       @ts_eventHandler[eventName].list = []
       return
 
@@ -1120,10 +1120,79 @@ ts.fn.editable = (option) ->
                 contenteditable[0].focus()
 
 ###
-Te message function.
+The message function.
 ###
 
 ts.fn.message = ->
     @each ->
         ts(@).find('i.close').on 'click', ->
             ts(@).parent().addClass 'hidden'
+
+###
+The snackbar function
+###
+
+ts.fn.snackbar = (option) ->
+    content        = option?.content  or null
+    action         = option?.action   or null
+    actionEmphasis = option?.actionEmphasis or null
+    onClose        = option?.onClose  or ->
+    onAction       = option?.onAction or ->
+    interval       = 3500
+
+    # Ignore the empty snackbar.
+    return if content is null
+
+    @each ->
+        snackbar  = @
+        contentEl = ts(snackbar).find('.content')
+        ActionEl  = ts(snackbar).find('a')
+
+        ts(snackbar)
+            .removeClass 'active'
+            .addClass 'active'
+            .attr 'data-mouseon', 'false'
+
+        # Replace the content and the action texts.
+        contentEl[0].innerText = content
+        ActionEl[0].innerText  = action if ActionEl?
+        # Set the emphasis of the action button.
+        if actionEmphasis? and ActionEl?
+            ActionEl
+                .removeClass 'primary info warning negative positive'
+                .addClass actionEmphasis
+
+        # close is the function that closes the snackbar (ofcuz).
+        close = ->
+            ts(snackbar).removeClass 'active'
+            # Call the close callback.
+            onClose snackbar, content, action
+            # Clear the unfinished timer.
+            clearTimeout snackbar.snackbarTimer
+
+        # Bind the action button event.
+        ActionEl.off 'click'
+        ActionEl.on 'click', ->
+            onAction snackbar, content, action
+            close()
+
+        # The mouse events to check if the cursor is stay on the snackbar or not.
+        ts(snackbar).on 'mouseenter', ->
+            ts(@).attr 'data-mouseon', 'true'
+        ts(snackbar).on 'mouseleave', ->
+            ts(@).attr 'data-mouseon', 'false'
+
+        # Clear the previous timer if does exist.
+        clearTimeout snackbar.snackbarTimer
+        # Set the timer in the element so we can reset it if we called the same snackbar later on.
+        snackbar.snackbarTimer = setTimeout(->
+            # When the time's up,
+            # call the checker to make sure the cursor is not stay on the snackbar.
+            hoverChecker = setInterval(->
+                if ts(snackbar).attr('data-mouseon') is 'false'
+                    close()
+                    clearInterval hoverChecker
+                # We check it again after 500ms,
+                # larger number to improve the performance.
+            , 500)
+        , interval)

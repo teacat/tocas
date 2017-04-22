@@ -5,12 +5,27 @@
 //*******************************//
 
 .ts.snackbar
-    background: rgba(0, 0, 0, 0.8)
-    padding: .5em 1em
-    display: flex
+    background: #323232
+    padding: .5em .5em .5em 1em
     align-items: center
     border-radius: 2px
     color: #FFF
+    word-break: break-word
+    display: none
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)
+
+    +rwd-serious(mobile)
+        padding-right: .5em
+
+.ts.snackbar.active
+    display: flex
+
+.ts.snackbar:not(.inline)
+    position: fixed
+    left: 20px
+    bottom: 20px
+    z-index: 99999
+    margin-right: 20px
 
     +rwd-serious(mobile)
         position: fixed
@@ -18,22 +33,57 @@
         left: 0
         right: 0
         border-radius: 0
+        margin-right: 0
 
-.ts.snackbar .actions
+//-------------------//
+//      Content
+//-------------------//
+
+.ts.snackbar .content
+    flex: 1
+    margin-right: 4em
+    padding: .5em 0
+
++rwd-serious(mobile)
+    .ts.snackbar:not(.inline) .content
+        margin-right: 0
+
+//-------------------//
+//       Action
+//-------------------//
+
+.ts.snackbar a
+    user-select: none
     align-self: flex-end
-    margin-left: auto
-
-.ts.snackbar .actions a
-    padding: .6em 1em
+    padding: .7em 1em
     font-weight: 500
     line-height: 1
+    white-space: nowrap
+    color: #FFF
+    border-radius: 2px
+    //margin-left: 4em
 
-.ts.snackbar .actions a:hover
+.ts.snackbar a:hover
     background-color: rgba(70, 70, 70, 0.8)
 
-.ts.snackbar.inline
+.ts.snackbar a:active
+    background-color: rgba(35, 35, 35, 0.8)
+
++rwd-serious(mobile)
+    .ts.snackbar:not(.inline) a
+        margin-left: .5em
 
 //-------------------//
-//  Square Checkbox
+//  Action Emphasis
 //-------------------//
 
+.ts.snackbar a.primary
+    color: $snackbar_actionPrimaryTextColor
+.ts.snackbar a.info
+    color: $snackbar_actionInfoTextColor
+.ts.snackbar a.warning
+    color: $snackbar_actionWarningTextColor
+.ts.snackbar a.negative
+    color: $snackbar_actionNegativeTextColor
+.ts.snackbar a.positive
+    color: $snackbar_actionPositiveTextColor
