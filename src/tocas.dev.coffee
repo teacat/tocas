@@ -984,7 +984,7 @@ The tab function.
 ts.fn.tab = (option) ->
     @each ->
         # Options.
-        callback = option?.callback or ->
+        onSwitch = option?.onSwitch or ->
 
         ts(@).on 'click', ->
             # Ignore if user is clicking on the actived tab button.
@@ -997,7 +997,7 @@ ts.fn.tab = (option) ->
             tabGroup = ts(@).attr 'data-tab-group'
 
             # Call the callback (ofcuz).
-            callback(tabName, tabGroup)
+            onSwitch(tabName, tabGroup)
 
             # There's only one tab module if the `data-tab-group` is empty.
             if tabGroup is null
@@ -1075,11 +1075,11 @@ The editable function.
 ###
 
 ts.fn.editable = (option) ->
-    autoReplace    = option?.autoReplace    || true
-    editCallback   = option?.editCallback   || ->
-    editedCallback = option?.editedCallback || ->
-    autoClose      = option?.autoClose      || true
-    inputWrapper   = @
+    autoReplace  = option?.autoReplace || true
+    onEdit       = option?.onEdit      || ->
+    onEdited     = option?.onEdited    || ->
+    autoClose    = option?.autoClose   || true
+    inputWrapper = @
 
     # Auto save and end the editing when the input was unfocused.
     if autoClose
@@ -1099,7 +1099,7 @@ ts.fn.editable = (option) ->
                             text.innerText = contenteditable[0].value
 
                     # Call the edited callback.
-                    editedCallback(@)
+                    onEdited(@)
 
                     ts(@).removeClass 'editing'
 
@@ -1112,7 +1112,7 @@ ts.fn.editable = (option) ->
         ts(@).on 'click', ->
             ts(@).addClass 'editing'
 
-            editCallback(@)
+            onEdit(@)
 
             if input?
                 input[0].focus()

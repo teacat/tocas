@@ -1054,8 +1054,8 @@ The tab function.
 
 ts.fn.tab = function(option) {
   return this.each(function() {
-    var callback;
-    callback = (option != null ? option.callback : void 0) || function() {};
+    var onSwitch;
+    onSwitch = (option != null ? option.onSwitch : void 0) || function() {};
     return ts(this).on('click', function() {
       var tabGroup, tabName;
       if (ts(this).hasClass('active')) {
@@ -1066,7 +1066,7 @@ ts.fn.tab = function(option) {
         return;
       }
       tabGroup = ts(this).attr('data-tab-group');
-      callback(tabName, tabGroup);
+      onSwitch(tabName, tabGroup);
       if (tabGroup === null) {
         ts('[data-tab]:not(.tab)').removeClass('active');
         ts('[data-tab]').removeClass('active');
@@ -1142,10 +1142,10 @@ The editable function.
  */
 
 ts.fn.editable = function(option) {
-  var autoClose, autoReplace, editCallback, editedCallback, inputWrapper;
+  var autoClose, autoReplace, inputWrapper, onEdit, onEdited;
   autoReplace = (option != null ? option.autoReplace : void 0) || true;
-  editCallback = (option != null ? option.editCallback : void 0) || function() {};
-  editedCallback = (option != null ? option.editedCallback : void 0) || function() {};
+  onEdit = (option != null ? option.onEdit : void 0) || function() {};
+  onEdited = (option != null ? option.onEdited : void 0) || function() {};
   autoClose = (option != null ? option.autoClose : void 0) || true;
   inputWrapper = this;
   if (autoClose) {
@@ -1163,7 +1163,7 @@ ts.fn.editable = function(option) {
               text.innerText = contenteditable[0].value;
             }
           }
-          editedCallback(this);
+          onEdited(this);
           return ts(this).removeClass('editing');
         });
       }
@@ -1175,7 +1175,7 @@ ts.fn.editable = function(option) {
     contenteditable = ts(this).find('[contenteditable]');
     return ts(this).on('click', function() {
       ts(this).addClass('editing');
-      editCallback(this);
+      onEdit(this);
       if (input != null) {
         return input[0].focus();
       } else if (contenteditable != null) {
