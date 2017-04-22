@@ -31,6 +31,7 @@
     border-radius   : $message_borderRadius
     color           : $message_textColor
     word-wrap       : break-word
+    overflow        : hidden
 
 .ts.message:first-child
     margin-top: 0em
@@ -94,20 +95,8 @@
         display: block
 
 //-------------------//
-//      Action
+//      Actions
 //-------------------//
-
-//.ts.action.message
-//    flex-direction: row
-//    align-items   : center
-//
-//    +rwd-serious(mobile)
-//        flex-direction: column
-//        align-items   : initial
-
-//.ts.action.message > .content
-//    +rwd-serious(mobile)
-//        display: block
 
 .ts.message > .content > .actions
     margin-left: auto
@@ -117,9 +106,6 @@
     +rwd-serious(mobile)
         margin-top : .8em
         margin-left: 0
-
-//.ts.action.message > .actions
-//    margin-left: $message_padding
 
 //-------------------//
 //      Floating
@@ -390,13 +376,12 @@
 //     Typography
 //-------------------//
 
-.ts.message > p
+.ts.message p
     margin-top   : $message_pVerticalMargin
     margin-bottom: $message_pVerticalMargin
 
-//-------------------//
-//     Structured
-//-------------------//
+.ts.message p:first-child
+    margin-top: 0
 
 //-------------------//
 //      Raised
@@ -404,3 +389,167 @@
 
 .ts.message.raised
     box-shadow: $message_raisedBoxShadow
+
+//*******************************//
+//          Structured
+//*******************************//
+
+.ts.structured.message
+    flex-direction: row
+
+//-------------------//
+//       Image
+//-------------------//
+
+.ts.structured.message > .image
+    display  : block
+    width    : $message_structuredImageWidth
+    min-width: $message_structuredImageWidth
+    height   : $message_structuredImageHeight
+    float    : left
+
+    margin-right: $message_horizontalPadding
+
+.ts.structured.message > .image > img
+    display      : block
+    margin       : 0 auto
+    width        : 100%
+    height       : auto
+    border-radius: $message_structuredImageBorderRadius
+
+//-------------------//
+//       Icon
+//-------------------//
+
+.ts.structured.message > .icon:not(i)
+    min-width: $message_structuredImageWidth
+    width    : $message_structuredImageWidth
+    height   : $message_structuredImageHeight
+
+
+.ts.structured.message > .icon > i.icon
+    display        : flex
+    align-items    : center
+    justify-content: center
+
+    width : 100%
+    height: 100%
+    margin: 0
+
+    font-size    : $message_structuredIconSize
+    border-radius: $message_structuredImageBorderRadius
+
+    background-color: $message_structuredIconBackgroundColor
+
+.ts.structured.message:not(.inverted) > .icon > i.icon
+    background-color: $message_structuredIconNotInvertedBackgroundColor
+
+.ts.structured.message:not(.inverted):not(.primary):not(.info):not(.warning):not(.positive):not(.negative) > .icon > i.icon
+    background-color: $message_structuredIconNoEmphasisBackgroundColor
+
+//-------------------//
+//      Content
+//-------------------//
+
+.ts.structured.message > .content
+    flex-direction: column
+    align-items   : initial
+
+//-------------------//
+//        Text
+//-------------------//
+
+.ts.structured.message > .content > .text
+    min-height: $message_structuredMinTextHeight
+
+//-------------------//
+//       Actions
+//-------------------//
+
+.ts.structured.message > .content > .actions
+    margin-left: 0
+    padding-top: $message_structuredActionPaddingTop
+    margin-top : $message_structuredActionDistanceToText
+    width      : 100%
+
+.ts.structured.message > .content > .actions:before
+    position: absolute
+    top     : 0
+    left    : 0
+    right   : -1000px
+    height  : $message_structuredActionBorderWidth
+    content : ''
+
+    background-color: $message_structuredDividerColor
+
+.ts.structured.message.primary > .content > .actions:before
+    background-color: $message_structuredPrimaryDividerColor
+.ts.structured.message.info > .content > .actions:before
+    background-color: $message_structuredInfoDividerColor
+.ts.structured.message.warning > .content > .actions:before
+    background-color: $message_structuredWarningDividerColor
+.ts.structured.message.positive > .content > .actions:before
+    background-color: $message_structuredPositiveDividerColor
+.ts.structured.message.negative > .content > .actions:before
+    background-color: $message_structuredNegativeDividerColor
+
+.ts.structured.message:not(.inverted).primary > .content > .actions:before,
+.ts.structured.message:not(.inverted).info > .content > .actions:before,
+.ts.structured.message:not(.inverted).warning > .content > .actions:before,
+.ts.structured.message:not(.inverted).positive > .content > .actions:before,
+.ts.structured.message:not(.inverted).negative > .content > .actions:before,
+    opacity: 0.15
+
+//-------------------//
+//    Actions Item
+//-------------------//
+
+.ts.structured.message > .content > .actions > a
+    user-select : none
+    margin-right: $message_structuredActionItemMargin
+    opacity     : .9
+
+.ts.structured.message > .content > .actions > a:hover
+    opacity: .6
+.ts.structured.message > .content > .actions > a:active
+    opacity: 1
+
+.ts.structured.message > .content > .actions > a:last-child
+    margin-right: 0
+
+.ts.structured.message > .content > .actions > a:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.inverted):not(.disabled):not(:hover)
+    opacity: .8
+
+.ts.structured.message:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.inverted) > .content > .actions > a:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.inverted):not(.disabled)
+    color: $message_textColor
+
+//-------------------//
+//   Actions Item
+//-------------------//
+
+//-------------------//
+// Action Item Emphasis
+//-------------------//
+
+.ts.structured.message > .content > .actions > a.primary
+    color: $message_structuredPrimaryActionTextColor
+.ts.structured.message > .content > .actions > a.info
+    color: $message_structuredInfoActionTextColor
+.ts.structured.message > .content > .actions > a.warning
+    color: $message_structuredWarningActionTextColor
+.ts.structured.message > .content > .actions > a.positive
+    color: $message_structuredPositiveActionTextColor
+.ts.structured.message > .content > .actions > a.negative
+    color: $message_structuredNegativeActionTextColor
+.ts.structured.message > .content > .actions > a.inverted
+    color: $message_structuredPrimaryActionTextColor
+
+//-------------------//
+// Disabled Action Item
+//-------------------//
+
+.ts.structured.message > .content > .actions > a.disabled
+    cursor: not-allowed
+    pointer-events: none
+    user-select   : none
+    opacity       : .45
