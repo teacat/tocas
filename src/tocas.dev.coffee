@@ -1147,7 +1147,7 @@ ts.fn.snackbar = (option) ->
     @each ->
         snackbar  = @
         contentEl = ts(snackbar).find('.content')
-        ActionEl  = ts(snackbar).find('a')
+        ActionEl  = ts(snackbar).find('.action')
 
         ts(snackbar)
             .removeClass 'active animating'

@@ -1220,7 +1220,7 @@ ts.fn.snackbar = function(option) {
     var ActionEl, close, contentEl, snackbar;
     snackbar = this;
     contentEl = ts(snackbar).find('.content');
-    ActionEl = ts(snackbar).find('a');
+    ActionEl = ts(snackbar).find('.action');
     ts(snackbar).removeClass('active animating').addClass('active animating').one(animationEnd, function() {
       return ts(this).removeClass('animating');
     }).attr('data-mouseon', 'false');
