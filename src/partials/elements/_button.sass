@@ -25,6 +25,22 @@
         background-color: $hoverBackgroundColor
         color           : $hoverColor
 
+//*******************************//
+//           Animation
+//*******************************//
+
+// https://github.com/Dogfalo/materialize/blob/0e5d98d5a1ddb93a5c80246d473f83484e9d1e6b/sass/components/_pulse.scss
+@keyframes pulse-animation
+    0%
+        opacity  : 1
+        transform: scale(1)
+    50%
+        opacity  : 0
+        transform: scale(1.5)
+    100%
+        opacity  : 0
+        transform: scale(1.5)
+
 //-------------------//
 //       Basic
 //-------------------//
@@ -95,6 +111,26 @@
 .ts.buttons[class*='bottom attached'] .button
     border-top-left-radius : 0
     border-top-right-radius: 0
+
+//-------------------//
+//      Pulsing
+//-------------------//
+
+.ts.pulsing.button::before
+    content : ''
+    display : block
+    position: absolute
+    width   : 100%
+    height  : 100%
+    top     : 0
+    left    : 0
+
+    background-color: inherit
+    border-radius   : inherit
+    transition      : opacity $button_pulsingTransitionDuration, transform $button_pulsingTransitionDuration
+    animation       : pulse-animation $button_pulsingDuration $button_pulsingTimingFunction infinite
+
+    z-index: $z_button_pulsing
 
 //-------------------//
 //      Circular
