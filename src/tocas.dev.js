@@ -1221,7 +1221,9 @@ ts.fn.snackbar = function(option) {
     snackbar = this;
     contentEl = ts(snackbar).find('.content');
     ActionEl = ts(snackbar).find('a');
-    ts(snackbar).removeClass('active').addClass('active').attr('data-mouseon', 'false');
+    ts(snackbar).removeClass('active animating').addClass('active animating').one(animationEnd, function() {
+      return ts(this).removeClass('animating');
+    }).attr('data-mouseon', 'false');
     contentEl[0].innerText = content;
     if (ActionEl != null) {
       ActionEl[0].innerText = action;
@@ -1230,15 +1232,19 @@ ts.fn.snackbar = function(option) {
       ActionEl.removeClass('primary info warning negative positive').addClass(actionEmphasis);
     }
     close = function() {
-      ts(snackbar).removeClass('active');
-      onClose(snackbar, content, action);
+      ts(snackbar).removeClass('active').addClass('animating').one(animationEnd, function() {
+        ts(this).removeClass('animating');
+        return onClose(snackbar, content, action);
+      });
       return clearTimeout(snackbar.snackbarTimer);
     };
-    ActionEl.off('click');
-    ActionEl.on('click', function() {
-      close();
-      return onAction(snackbar, content, action);
-    });
+    if (ActionEl != null) {
+      ActionEl.off('click');
+      ActionEl.on('click', function() {
+        close();
+        return onAction(snackbar, content, action);
+      });
+    }
     if (hoverStay) {
       ts(snackbar).on('mouseenter', function() {
         return ts(this).attr('data-mouseon', 'true');
@@ -1256,7 +1262,7 @@ ts.fn.snackbar = function(option) {
             close();
             return clearInterval(hoverChecker);
           }
-        }, 500);
+        }, 600);
       } else {
         return close();
       }

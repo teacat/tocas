@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body style="padding: 50px">
-<div class="ts test active snackbar">
+<div class="ts test snackbar">
     <div class="content">
 
     </div>
@@ -46,11 +46,30 @@ ts('.ts.test.snackbar').snackbar({
     content       : '檔案已經成功地送出了。',
     action        : '還原',
     actionEmphasis: 'warning',
+    hoverStay     : true,
     onClose: function(){
         console.log('Closed')
     },
+    //
+    //
+    //
+    ///   toooodoooooo
+    // FIIIIXX THIS ISISISISISI
+    ///
     onAction: function(){
         console.log('Actioned')
+        ts('.ts.test.snackbar').snackbar({
+            content       : '你已成功地還原檔案了。',
+            action        : '重新送出',
+            actionEmphasis: 'primary',
+            hoverStay     : true,
+            onClose: function(){
+                console.log('Closed')
+            },
+            onAction: function(){
+                console.log('Actioned')
+            }
+        })
     }
 })
 </script>

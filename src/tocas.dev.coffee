@@ -1150,8 +1150,10 @@ ts.fn.snackbar = (option) ->
         ActionEl  = ts(snackbar).find('a')
 
         ts(snackbar)
-            .removeClass 'active'
-            .addClass 'active'
+            .removeClass 'active animating'
+            .addClass 'active animating'
+            .one animationEnd, ->
+                ts(@).removeClass 'animating'
             .attr 'data-mouseon', 'false'
 
         # Replace the content and the action texts.
@@ -1165,17 +1167,23 @@ ts.fn.snackbar = (option) ->
 
         # close is the function that closes the snackbar (ofcuz).
         close = ->
-            ts(snackbar).removeClass 'active'
-            # Call the close callback.
-            onClose snackbar, content, action
+            # Animating.
+            ts(snackbar)
+                .removeClass 'active'
+                .addClass 'animating'
+                .one animationEnd, ->
+                    ts(@).removeClass 'animating'
+                    # Call the close callback.
+                    onClose snackbar, content, action
             # Clear the unfinished timer.
             clearTimeout snackbar.snackbarTimer
 
         # Bind the action button event.
-        ActionEl.off 'click'
-        ActionEl.on 'click', ->
-            close()
-            onAction snackbar, content, action
+        if ActionEl?
+            ActionEl.off 'click'
+            ActionEl.on 'click', ->
+                close()
+                onAction snackbar, content, action
 
         # The mouse events to check if the cursor is stay on the snackbar or not.
         if hoverStay
@@ -1197,7 +1205,7 @@ ts.fn.snackbar = (option) ->
                         clearInterval hoverChecker
                     # We check it again after 500ms,
                     # larger number to improve the performance.
-                , 500)
+                , 600)
             else
                 close()
         , interval)
