@@ -319,9 +319,11 @@
 //           Dropdown
 //*******************************//
 
+.ts.contextmenu,
 .ts.dropdown:not(.basic)
     z-index: $z_dropdown_menu
 
+.ts.contextmenu,
 .ts.dropdown .menu
     cursor    : auto
     position  : absolute
@@ -345,6 +347,7 @@
     z-index      : $z_dropdown_menu
     will-change  : transform, opacity
 
+.ts.contextmenu > *,
 .ts.dropdown .menu > *
     white-space: nowrap
 
@@ -368,6 +371,7 @@
 //        Item
 //-------------------//
 
+.ts.contextmenu > .item.item.item.item.item.item,
 .ts.dropdown .menu > .item.item.item.item.item.item
     +extend(no-select)
 
@@ -397,6 +401,7 @@
 
     -webkit-touch-callout: none
 
+.ts.contextmenu > .item:first-child,
 .ts.dropdown .menu > .item:first-child
     border-top-width: 0px
 
@@ -404,19 +409,24 @@
 //       Floated
 //-------------------//
 
+.ts.contextmenu .item > [class*="right floated"],
 .ts.dropdown > .text > [class*="right floated"],
 .ts.dropdown .menu .item > [class*="right floated"]
     float       : right !important
     margin-right: 0em !important
     margin-left : $dropdown_floatedDistance !important
 
+.ts.contextmenu .item > [class*="left floated"],
 .ts.dropdown > .text > [class*="left floated"],
 .ts.dropdown .menu .item > [class*="left floated"]
     float       : left !important
     margin-left : 0em !important
     margin-right: $dropdown_floatedDistance !important
 
-
+.ts.contextmenu .item > .icon.floated,
+.ts.contextmenu .item > .flag.floated,
+.ts.contextmenu .item > .image.floated,
+.ts.contextmenu .item > img.floated,
 .ts.dropdown .menu .item > .icon.floated,
 .ts.dropdown .menu .item > .flag.floated,
 .ts.dropdown .menu .item > .image.floated,
@@ -427,6 +437,7 @@
 //      Divider
 //-------------------//
 
+.ts.contextmenu > .header,
 .ts.dropdown .menu > .header
     margin        : $dropdown_menuHeaderMargin
     padding       : $dropdown_menuHeaderPadding
@@ -435,25 +446,33 @@
     font-weight   : $dropdown_menuHeaderFontWeight
     text-transform: $dropdown_menuHeaderTextTransform
 
+.ts.contextmenu > .divider,
 .ts.dropdown .menu > .divider
     border-top: $dropdown_menuDividerBorder
     height    : 0em
 
+.ts.contextmenu > .section.divider,
 .ts.dropdown .menu > .section.divider
     margin    : $dropdown_menuSectionDividerMargin
 
+.ts.contextmenu > .input,
 .ts.dropdown .menu > .input
     width    : auto
     display  : flex
     margin   : $dropdown_menuInputMargin
     min-width: $dropdown_menuInputMinWidth
 
+.ts.contextmenu > .header + .input,
 .ts.dropdown .menu > .header + .input
     margin-top: 0em
 
+.ts.contextmenu > .input:not(.transparent) input,
 .ts.dropdown .menu > .input:not(.transparent) input
     padding: $dropdown_menuInputPadding
 
+.ts.contextmenu > .input:not(.transparent) .button,
+.ts.contextmenu > .input:not(.transparent) .icon,
+.ts.contextmenu > .input:not(.transparent) .label,
 .ts.dropdown .menu > .input:not(.transparent) .button,
 .ts.dropdown .menu > .input:not(.transparent) .icon,
 .ts.dropdown .menu > .input:not(.transparent) .label
@@ -464,6 +483,7 @@
 //    Description
 //-------------------//
 
+.ts.contextmenu > .item > .description,
 .ts.dropdown > .text > .description,
 .ts.dropdown .menu > .item > .description
     //float : $dropdown_itemDescriptionFloat
@@ -478,6 +498,8 @@
 
 .ts.dropdown > .text > img,
 .ts.dropdown > .text > .image,
+.ts.contextmenu > .item > .image,
+.ts.contextmenu > .item > img,
 .ts.dropdown .menu > .item > .image,
 .ts.dropdown .menu > .item > img
     display       : inline-block
@@ -490,6 +512,7 @@
 //-------------------//
 
 .ts.contextmenu.visible,
+.ts.contextmenu.hidden.animating,
 .ts.dropdown.visible .menu,
 .ts.dropdown.hidden.animating .menu
     display: block
@@ -498,7 +521,7 @@
 //       Hover
 //-------------------//
 
-
+.ts.contextmenu.visible > .item.item:hover,
 .ts.dropdown .menu > .item.item:hover
     background-color: $dropdown_hoveredItemBackground !important
     color           : $dropdown_hoveredItemColor
@@ -508,12 +531,14 @@
 //       Active
 //-------------------//
 
+.ts.contextmenu.visible .active.item,
 .ts.dropdown .menu .active.item
     background-color: $dropdown_activeItemBackground !important
     font-weight     : $dropdown_activeItemFontWeight
     color           : $dropdown_activeItemColor
     z-index         : $z_dropdown_active
 
+.ts.contextmenu.visible > .item.item:active,
 .ts.dropdown .menu > .item.item:active
     background-color: $dropdown_activeItemBackground !important
 
@@ -521,22 +546,28 @@
 //     Animation
 //-------------------//
 
-.ts.dropdown.upward.hidden.animating   .menu,
+.ts.contextmenu.upward.hidden.animating,
+.ts.contextmenu.downward.hidden.animating,
+.ts.dropdown.upward.hidden.animating .menu,
 .ts.dropdown.downward.hidden.animating .menu
     animation: dropdown-contract 300ms cubic-bezier(0.22, 0.61, 0.36, 1) both
 
+.ts.contextmenu.downward.visible.animating,
+.ts.contextmenu.upward.visible.animating,
 .ts.dropdown.downward.visible.animating .menu,
-.ts.dropdown.upward.visible.animating   .menu
+.ts.dropdown.upward.visible.animating .menu
     animation: dropdown-expand 300ms cubic-bezier(0.22, 0.61, 0.36, 1) both
 
 //-------------------//
 //     Directions
 //-------------------//
 
+.ts.contextmenu.downward,
 .ts.dropdown.downward .menu
     transform-origin: center top 0px
     box-shadow      : $dropdown_downwardRaisedShadow
 
+.ts.contextmenu.upward,
 .ts.dropdown.upward .menu
     transform-origin: center bottom 0px
     box-shadow      : $dropdown_upwardRaisedShadow
@@ -555,12 +586,15 @@
 //      Floating
 //-------------------//
 
+.ts.contextmenu.floating,
 .ts.dropdown.floating .menu
     box-shadow: $dropdown_floatingMenuBoxShadow
 
+.ts.contextmenu.floating.upward,
 .ts.dropdown.floating.upward .menu
     margin-bottom: $dropdown_floatingMenuDistance
 
+.ts.contextmenu.floating.downward,
 .ts.dropdown.floating.downward .menu
     margin-top: $dropdown_floatingMenuDistance
 
@@ -575,3 +609,11 @@
 .ts.menu .ts.dropdown.downward .menu
     border-top-left-radius : 0
     border-top-right-radius: 0
+
+//*******************************//
+//           Contextmenu
+//*******************************//
+
+.ts.contextmenu
+    position: fixed
+    z-index: 1000

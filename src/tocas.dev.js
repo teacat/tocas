@@ -813,16 +813,15 @@ The dropdown function.
 ts.fn.dropdown = function(command) {
   return this.each(function() {
     return ts(this).on('click', function(e) {
-      var pa;
-      pa = ts(this)[0];
-      if (quadrant(pa === 2)) {
-        ts(this).removeClass('upward downward leftward rightward').addClass('downward rightward');
-      } else if (quadrant(pa === 3)) {
-        ts(this).removeClass('upward downward leftward rightward').addClass('upward rightward');
-      } else if (quadrant(pa === 1)) {
-        ts(this).removeClass('upward downward leftward rightward').addClass('downward leftward');
-      } else if (quadrant(pa === 4)) {
-        ts(this).removeClass('upward downward leftward rightward').addClass('upward leftward');
+      ts(this).removeClass('upward downward leftward rightward');
+      if (quadrant(this) === 2) {
+        ts(this).addClass('downward rightward');
+      } else if (quadrant(this) === 3) {
+        ts(this).addClass('upward rightward');
+      } else if (quadrant(this) === 1) {
+        ts(this).addClass('downward leftward');
+      } else if (quadrant(this) === 4) {
+        ts(this).addClass('upward leftward');
       }
       contractDropdown('.ts.dropdown.visible');
       return detectDropdown(this, e);
@@ -1267,5 +1266,44 @@ ts.fn.snackbar = function(option) {
         return close();
       }
     }, interval);
+  });
+};
+
+
+/*
+The contextmenu function.
+ */
+
+ts.fn.contextmenu = function(option) {
+  var menu;
+  menu = (option != null ? option.menu : void 0) || null;
+  ts(document).on('click', function(event) {
+    return ts('.ts.contextmenu.visible').removeClass('visible').addClass('hidden animating').one(animationEnd, function() {
+      return ts(this).removeClass('visible animating downward upward rightward leftward');
+    });
+  });
+  return this.each(function() {
+    return ts(this).on('contextmenu', function(e) {
+      var h, r, w;
+      event.preventDefault();
+      ts(menu).addClass('visible');
+      r = ts(menu)[0].getBoundingClientRect();
+      ts(menu).removeClass('visible');
+      w = window.innerWidth / 2;
+      h = window.innerHeight / 2;
+      ts(menu).removeClass('downward upward rightward leftward');
+      if (e.clientX < w && e.clientY < h) {
+        ts(menu).addClass('downward rightward').css('left', e.clientX).css('top', e.clientY);
+      } else if (e.clientX < w && e.clientY > h) {
+        ts(menu).addClass('upward rightward').css('left', e.clientX).css('top', e.clientY - r.height);
+      } else if (e.clientX > w && e.clientY > h) {
+        ts(menu).addClass('upward leftward').css('left', e.clientX - r.width).css('top', e.clientY - r.height);
+      } else if (e.clientX > w && e.clientY < h) {
+        ts(menu).addClass('downward leftward').css('left', e.clientX - r.width).css('top', e.clientY);
+      }
+      return ts(menu).removeClass('hidden').addClass('visible animating').one(animationEnd, function() {
+        return ts(this).removeClass('animating');
+      });
+    });
   });
 };

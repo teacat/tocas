@@ -631,13 +631,13 @@ quadrant = (el) ->
     heightHalf = height / 2
 
     if position.left < widthHalf and position.top < heightHalf
-        return 2
-    else if position.left < widthHalf && position.top > heightHalf
-        return 3
-    else if position.left > widthHalf && position.top > heightHalf
-        return 4
-    else if position.left > widthHalf && position.top < heightHalf
-        return 1
+        2
+    else if position.left < widthHalf and position.top > heightHalf
+        3
+    else if position.left > widthHalf and position.top > heightHalf
+        4
+    else if position.left > widthHalf and position.top < heightHalf
+        1
 
 # Z indexes.
 z_dropdownMenu    = 9
@@ -728,16 +728,16 @@ The dropdown function.
 ts.fn.dropdown = (command) ->
     @each ->
         ts(@).on 'click', (e) ->
-            pa = ts(@)[0]
+            ts(@).removeClass 'upward downward leftward rightward'
 
-            if quadrant pa is 2
-                ts(@).removeClass('upward downward leftward rightward').addClass('downward rightward')
-            else if quadrant pa is 3
-                ts(@).removeClass('upward downward leftward rightward').addClass('upward rightward')
-            else if quadrant pa is 1
-                ts(@).removeClass('upward downward leftward rightward').addClass('downward leftward')
-            else if quadrant pa is 4
-                ts(@).removeClass('upward downward leftward rightward').addClass('upward leftward')
+            if quadrant(@) is 2
+                ts(@).addClass 'downward rightward'
+            else if quadrant(@) is 3
+                ts(@).addClass 'upward rightward'
+            else if quadrant(@) is 1
+                ts(@).addClass 'downward leftward'
+            else if quadrant(@) is 4
+                ts(@).addClass 'upward leftward'
 
             # Close the visible dropdowns first.
             contractDropdown '.ts.dropdown.visible'
@@ -1209,3 +1209,71 @@ ts.fn.snackbar = (option) ->
             else
                 close()
         , interval)
+
+###
+The contextmenu function.
+###
+
+ts.fn.contextmenu = (option) ->
+    menu = option?.menu or null
+
+    # Bind the click outer event to close the contextmenus.
+    ts(document).on 'click', (event) ->
+        ts('.ts.contextmenu.visible')
+            .removeClass 'visible'
+            .addClass 'hidden animating'
+            .one animationEnd, ->
+                ts(@)
+                    .removeClass 'visible animating downward upward rightward leftward'
+
+    @each ->
+        ts(@).on 'contextmenu', (e) ->
+            # Disable the default system contextmenu.
+            event.preventDefault()
+
+            # Get the width and the height of the contextmenu first.
+            ts(menu).addClass 'visible'
+            r = ts(menu)[0].getBoundingClientRect()
+            ts(menu).removeClass 'visible'
+
+            # Divide the screen into two parts to get the quadrant of the mouse cursor.
+            w = window.innerWidth / 2
+            h = window.innerHeight / 2
+
+            # Remove the direction of the contextmenu.
+            ts(menu)
+                .removeClass 'downward upward rightward leftward'
+
+            # Set the position of the contextmenu based on the quadrant of the mouse cursor.
+            if e.clientX < w and e.clientY < h
+                # The mouse is at the top left.
+                ts(menu)
+                    .addClass 'downward rightward'
+                    .css 'left', e.clientX
+                    .css 'top', e.clientY
+            else if e.clientX < w && e.clientY > h
+                # The mouse is at the bottom left.
+                ts(menu)
+                    .addClass 'upward rightward'
+                    .css 'left', e.clientX
+                    .css 'top', e.clientY - r.height
+            else if e.clientX > w && e.clientY > h
+                # The mouse is at the bottom right.
+                ts(menu)
+                    .addClass 'upward leftward'
+                    .css 'left', e.clientX - r.width
+                    .css 'top', e.clientY - r.height
+            else if e.clientX > w && e.clientY < h
+                # The mouse is at the top right.
+                ts(menu)
+                    .addClass 'downward leftward'
+                    .css 'left', e.clientX - r.width
+                    .css 'top', e.clientY
+
+            # Show the contextmenu.
+            ts(menu)
+                .removeClass 'hidden'
+                .addClass 'visible animating'
+                .one animationEnd, ->
+                    ts(@)
+                        .removeClass 'animating'
