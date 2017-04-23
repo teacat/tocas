@@ -1205,12 +1205,13 @@ The snackbar function
  */
 
 ts.fn.snackbar = function(option) {
-  var action, actionEmphasis, content, interval, onAction, onClose;
+  var action, actionEmphasis, content, hoverStay, interval, onAction, onClose;
   content = (option != null ? option.content : void 0) || null;
   action = (option != null ? option.action : void 0) || null;
   actionEmphasis = (option != null ? option.actionEmphasis : void 0) || null;
   onClose = (option != null ? option.onClose : void 0) || function() {};
   onAction = (option != null ? option.onAction : void 0) || function() {};
+  hoverStay = (option != null ? option.hoverStay : void 0) || false;
   interval = 3500;
   if (content === null) {
     return;
@@ -1235,24 +1236,30 @@ ts.fn.snackbar = function(option) {
     };
     ActionEl.off('click');
     ActionEl.on('click', function() {
-      onAction(snackbar, content, action);
-      return close();
+      close();
+      return onAction(snackbar, content, action);
     });
-    ts(snackbar).on('mouseenter', function() {
-      return ts(this).attr('data-mouseon', 'true');
-    });
-    ts(snackbar).on('mouseleave', function() {
-      return ts(this).attr('data-mouseon', 'false');
-    });
+    if (hoverStay) {
+      ts(snackbar).on('mouseenter', function() {
+        return ts(this).attr('data-mouseon', 'true');
+      });
+      ts(snackbar).on('mouseleave', function() {
+        return ts(this).attr('data-mouseon', 'false');
+      });
+    }
     clearTimeout(snackbar.snackbarTimer);
     return snackbar.snackbarTimer = setTimeout(function() {
       var hoverChecker;
-      return hoverChecker = setInterval(function() {
-        if (ts(snackbar).attr('data-mouseon') === 'false') {
-          close();
-          return clearInterval(hoverChecker);
-        }
-      }, 500);
+      if (hoverStay) {
+        return hoverChecker = setInterval(function() {
+          if (ts(snackbar).attr('data-mouseon') === 'false') {
+            close();
+            return clearInterval(hoverChecker);
+          }
+        }, 500);
+      } else {
+        return close();
+      }
     }, interval);
   });
 };

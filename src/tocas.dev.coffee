@@ -1133,11 +1133,12 @@ The snackbar function
 ###
 
 ts.fn.snackbar = (option) ->
-    content        = option?.content  or null
-    action         = option?.action   or null
+    content        = option?.content        or null
+    action         = option?.action         or null
     actionEmphasis = option?.actionEmphasis or null
-    onClose        = option?.onClose  or ->
-    onAction       = option?.onAction or ->
+    onClose        = option?.onClose        or ->
+    onAction       = option?.onAction       or ->
+    hoverStay      = option?.hoverStay      or false
     interval       = 3500
 
     # Ignore the empty snackbar.
@@ -1173,14 +1174,15 @@ ts.fn.snackbar = (option) ->
         # Bind the action button event.
         ActionEl.off 'click'
         ActionEl.on 'click', ->
-            onAction snackbar, content, action
             close()
+            onAction snackbar, content, action
 
         # The mouse events to check if the cursor is stay on the snackbar or not.
-        ts(snackbar).on 'mouseenter', ->
-            ts(@).attr 'data-mouseon', 'true'
-        ts(snackbar).on 'mouseleave', ->
-            ts(@).attr 'data-mouseon', 'false'
+        if hoverStay
+            ts(snackbar).on 'mouseenter', ->
+                ts(@).attr 'data-mouseon', 'true'
+            ts(snackbar).on 'mouseleave', ->
+                ts(@).attr 'data-mouseon', 'false'
 
         # Clear the previous timer if does exist.
         clearTimeout snackbar.snackbarTimer
@@ -1188,11 +1190,14 @@ ts.fn.snackbar = (option) ->
         snackbar.snackbarTimer = setTimeout(->
             # When the time's up,
             # call the checker to make sure the cursor is not stay on the snackbar.
-            hoverChecker = setInterval(->
-                if ts(snackbar).attr('data-mouseon') is 'false'
-                    close()
-                    clearInterval hoverChecker
-                # We check it again after 500ms,
-                # larger number to improve the performance.
-            , 500)
+            if hoverStay
+                hoverChecker = setInterval(->
+                    if ts(snackbar).attr('data-mouseon') is 'false'
+                        close()
+                        clearInterval hoverChecker
+                    # We check it again after 500ms,
+                    # larger number to improve the performance.
+                , 500)
+            else
+                close()
         , interval)
