@@ -74,6 +74,40 @@ export default
         },
         {
             type       : small,
+            title      : '指向',
+            description: `標籤可以有看起來像是指向某個元素。`,
+            link       : 'pointing'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts left pointing label">
+    左邊
+</div>
+<div class="ts right pointing label">
+    右邊
+</div>
+<div class="ts pointing top label">
+    上面
+</div>
+<div class="ts pointing bottom label">
+    下面
+</div>
+<div class="ts basic left pointing label">
+    左邊
+</div>
+<div class="ts basic right pointing label">
+    右邊
+</div>
+<div class="ts basic pointing top label">
+    上面
+</div>
+<div class="ts basic pointing bottom label">
+    下面
+</div>`,
+            mark  : 'pointing'
+        },
+        {
+            type       : small,
             title      : '語氣',
             description: `標籤也可以擁有不同的語氣。`,
             link       : 'emphasis'
@@ -190,7 +224,12 @@ export default
         },
         {
             type: 'example',
-            code: `<div class="ts basic label">Yami Odymel</div>`,
+            code: `<div class="ts basic label">預設</div>
+<div class="ts basic positive label">正面</div>
+<div class="ts basic negative label">負面</div>
+<div class="ts basic info label">資訊</div>
+<div class="ts basic primary label">主要</div>
+<div class="ts basic warning label">警告</div>`,
             mark: 'basic'
         },
         {
