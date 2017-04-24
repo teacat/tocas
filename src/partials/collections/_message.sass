@@ -10,11 +10,8 @@
     background-color: $backgroundColor
     border-color    : $borderColor
 
-    .header:not(.ts)
+    &:not(.inverted) .header:not(.ts)
         color: darken($color, 10%)
-    // Prevent inverted header become darken than the content.
-    &.inverted:not(.warning):not(.info):not(.positive):not(.negative):not(.primary) .header:not(.ts)
-        color: $color
 
     a
         color: rgba($color, 0.9)
@@ -53,8 +50,10 @@
     font-weight: $message_headerFontWeight
     margin     : $message_headerMargin
 
+.ts.message:not(.inverted):not(.positive):not(.info):not(.negative):not(.warning):not(.primary) .header:not(.ts)
+    color: $message_headerTextColor
+
 .ts.message .header:not(.ts)
-    color      : $message_headerTextColor
     line-height: $message_headerLineHeight
     font-size  : $message_headerFontSize
 
