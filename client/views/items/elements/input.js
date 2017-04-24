@@ -94,6 +94,19 @@ export default
             mark: 'basic'
         },
         {
+            type       : small,
+            title      : '底線的',
+            description: `輸入欄位能夠僅有底線。`,
+            link       : 'underlined'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts underlined input">
+    <input type="text" placeholder="僅有底線的輸入欄位">
+</div>`,
+            mark: 'underlined'
+        },
+        {
             type       : normal,
             title      : '群組',
             description: '輸入欄位也具有群組。',
