@@ -329,19 +329,26 @@
 //      Attached
 //-------------------//
 
-.ts.message.attached:not([class*="bottom attached"]),
+.ts.message.attached:not([class*="bottom attached"]):not([class*="top attached"])
+    margin-top         : 0
+    margin-bottom      : 0
+    border-radius      : 0
+    border-bottom-width: 0
+
 .ts.message[class*="top attached"]
     border-bottom-left-radius : 0
     border-bottom-right-radius: 0
+    border-bottom-width       : 0
+    margin-bottom             : 0
 
-    border-bottom: 0
-    margin-bottom: 0
 .ts.message[class*="bottom attached"]
     border-top-left-radius : 0
     border-top-right-radius: 0
+    border-top-width       : $message_borderWidth
+    margin-top             : 0
 
-    border-top: 0
-    margin-top: 0
+.ts.attached.input + .ts.message[class*="bottom attached"]
+    border-top-width: 0
 
 .ts.attached.message:not([class*="vertically fitted"]):not(.fitted),
 .ts.attached.message[class*="horizontally fitted"]

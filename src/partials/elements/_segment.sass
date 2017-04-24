@@ -6,7 +6,7 @@
 
 @mixin segment-variant($borderColor)
     border-top-color: $borderColor
-    
+
 @mixin segment-inverted-variant($color, $backgroundColor, $borderColor)
     color           : $color
     background-color: $backgroundColor
@@ -74,7 +74,7 @@
 .ts.segment.flatted,
 .ts.segments.flatted > .segment
     box-shadow: none
-    
+
 //-------------------//
 //     Borderless
 //-------------------//
@@ -82,7 +82,7 @@
 .ts.segment.borderless,
 .ts.segments.borderless > .segment
     border: 0
-    
+
 //-------------------//
 //      Floated
 //-------------------//
@@ -100,7 +100,7 @@
 //      Loading
 //-------------------//
 
-.ts.loading.segment 
+.ts.loading.segment
     position      : relative
     cursor        : default
     pointer-events: none
@@ -128,7 +128,7 @@
     top   : -#{$segment_borderWidth}
     height: calc(100% + #{$segment_borderWidth * 2})
 
-.ts.loading.segment:after 
+.ts.loading.segment:after
     position: absolute
     content : ''
     top     : 50%
@@ -149,10 +149,10 @@
     visibility   : visible
     z-index      : $z_segment_loaderLine
 
-@keyframes segment-spin 
-    from 
-        transform: rotate(0deg)  
-    to 
+@keyframes segment-spin
+    from
+        transform: rotate(0deg)
+    to
         transform: rotate(360deg)
 
 //-------------------//
@@ -202,7 +202,7 @@
 .ts.segment.inverted,
 .ts.segments.inverted .segment
     +segment-inverted-variant($segment_invertedTextColor, $segment_invertedBackgroundColor, $segment_invertedBorderColor)
-    
+
 //-------------------//
 //       Padded
 //-------------------//
@@ -238,7 +238,7 @@
 .ts.segment.fitted.vertically
     padding-top   : 0
     padding-bottom: 0
-    
+
 //-------------------//
 //       Basic
 //-------------------//
@@ -248,7 +248,7 @@
     box-shadow   : none
     background   : none
     border-radius: none
-    
+
 //-------------------//
 //      Disabled
 //-------------------//
@@ -259,8 +259,8 @@
 
 //-------------------//
 //       Aligns
-//-------------------//  
-    
+//-------------------//
+
 .ts.segment[class*='center aligned'],
 .ts.segments[class*='center aligned'] .segment
     text-align: center
@@ -270,21 +270,21 @@
 .ts.segment[class*='right aligned'],
 .ts.segments[class*='right aligned'] .segment
     text-align: right
-    
+
 .ts.segment.centered
     margin: 0 auto
 
 //-------------------//
 //       Fluid
-//-------------------//  
+//-------------------//
 
 .ts.segment.fluid
     border-radius: 0
     border       : none
-    
+
 //-------------------//
 //      Compact
-//-------------------//  
+//-------------------//
 
 .ts.segments.compact .segment,
 .ts.segment.compact
@@ -292,26 +292,26 @@
 
 //-------------------//
 //      Attached
-//-------------------//  
+//-------------------//
 
 .ts.segment[class*="bottom attached"]
     margin-top: 0
- 
+
     border-top-left-radius : 0
     border-top-right-radius: 0
     border-top-width       : $segment_borderWidth
 
 .ts.segment[class*="top attached"]
     margin-bottom: 0
-    
+
     border-bottom-left-radius : 0
     border-bottom-right-radius: 0
     border-bottom-width       : $segment_borderWidth
-    
+
 .ts.segment.attached:not(.top):not(.bottom)
     margin-top   : 0
     margin-bottom: 0
- 
+
     border-top-left-radius    : 0
     border-top-right-radius   : 0
     border-top-width          : 0
@@ -326,10 +326,10 @@
 .ts.segments
     border-radius: $segment_borderRadius
     font-size    : 0
-    
+
     > .segment
         font-size: $fontSize
-  
+
     &:not(.horizontal)
         > .segment
             &:first-child:not(:last-child)
@@ -346,7 +346,7 @@
                 border-top-left-radius    : 0
                 border-bottom-right-radius: 0
                 border-bottom-left-radius : 0
-    
+
             &:last-child
                 margin-top: 0
                 border-top-right-radius: 0
@@ -357,24 +357,31 @@
         display: flex
         margin-top   : $segment_verticalMargin
         margin-bottom: $segment_verticalMargin
-  
+
         > .segment
             display: inline-block
             flex   : 1
             margin : 0
-  
+
             &:first-child:not(:last-child)
                 border-right               : none
                 border-top-right-radius    : 0
                 border-bottom-right-radius : 0
-      
+
             &:not(:last-child):not(:first-child)
                 border-right              : none
                 border-top-right-radius   : 0
                 border-top-left-radius    : 0
                 border-bottom-right-radius: 0
                 border-bottom-left-radius : 0
-      
+
             &:last-child
                 border-top-left-radius    : 0
                 border-bottom-left-radius : 0
+
+//-------------------//
+//     Coupling
+//-------------------//
+
+.ts.attached.message + .ts.attached.segment
+    border-top-width: $segment_borderWidth
