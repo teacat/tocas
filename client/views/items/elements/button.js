@@ -274,6 +274,43 @@ export default
         },
         {
             type       : normal,
+            title      : '內容',
+            description: '按鈕內部可以有不同的內容。',
+            link       : false
+        },
+        {
+            type       : small,
+            title      : '條件',
+            description: `你能夠在按鈕群組的間隙中間安插像是條件式的文字讓使用者擇其一。`,
+            link       : 'conditional'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts buttons">
+  <button class="ts button">取消</button>
+  <div class="or"></div>
+  <button class="ts positive button">儲存</button>
+  <div class="or"></div>
+  <button class="ts primary button">送出</button>
+</div>`,
+            mark: 'or'
+        },
+        {
+            type       : tiny,
+            title      : '自訂條件文字',
+            description: `你也能夠透過 <span class="ts horizontal label">[data-text]</span> 來變動條件文字，但注意文字字數不可超過圓圈大小。`
+        },
+        {
+            type: 'example',
+            code: `<div class="ts buttons">
+  <button class="ts button">Cancel</button>
+  <div class="or" data-text="Or"></div>
+  <button class="ts positive button">Save</button>
+</div>`,
+            mark: 'horizontal, bulleted'
+        },
+        {
+            type       : normal,
             title      : '狀態',
             description: '你可以隨時透過樣式類別切換一個按鈕的狀態。',
             link       : false
@@ -310,6 +347,17 @@ export default
             type: 'example',
             code: `<button class="ts loading button">按鈕</button>`,
             mark: 'loading'
+        },
+        {
+            type       : small,
+            title      : '脈動中',
+            description: `按鈕能夠看起來正在脈動，令人注意。`,
+            link       : 'pulsing'
+        },
+        {
+            type: 'example',
+            code: `<button class="ts pulsing button">按鈕</button>`,
+            mark: 'pulsing'
         },
         {
             type       : normal,
