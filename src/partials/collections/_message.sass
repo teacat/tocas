@@ -10,6 +10,12 @@
     background-color: $backgroundColor
     border-color    : $borderColor
 
+    .header:not(.ts)
+        color: darken($color, 10%)
+    // Prevent inverted header become darken than the content.
+    &.inverted:not(.warning):not(.info):not(.positive):not(.negative):not(.primary) .header:not(.ts)
+        color: $color
+
     a
         color: rgba($color, 0.9)
 
@@ -48,7 +54,9 @@
     margin     : $message_headerMargin
 
 .ts.message .header:not(.ts)
-    font-size: $message_headerFontSize
+    color      : $message_headerTextColor
+    line-height: $message_headerLineHeight
+    font-size  : $message_headerFontSize
 
 //-------------------//
 //       Icon
@@ -321,6 +329,7 @@
 //      Attached
 //-------------------//
 
+.ts.message.attached:not([class*="bottom attached"]),
 .ts.message[class*="top attached"]
     border-bottom-left-radius : 0
     border-bottom-right-radius: 0
@@ -398,33 +407,33 @@
     flex-direction: row
 
 //-------------------//
-//       Image
+//       Avatar
 //-------------------//
 
-.ts.structured.message > .image
+.ts.structured.message > .avatar
     display  : block
-    width    : $message_structuredImageWidth
-    min-width: $message_structuredImageWidth
-    height   : $message_structuredImageHeight
+    width    : $message_structuredAvatarWidth
+    min-width: $message_structuredAvatarWidth
+    height   : $message_structuredAvatarHeight
     float    : left
 
     margin-right: $message_horizontalPadding
 
-.ts.structured.message > .image > img
+.ts.structured.message > .avatar > img
     display      : block
     margin       : 0 auto
     width        : 100%
     height       : auto
-    border-radius: $message_structuredImageBorderRadius
+    border-radius: $message_structuredAvatarBorderRadius
 
 //-------------------//
 //       Icon
 //-------------------//
 
 .ts.structured.message > .icon:not(i)
-    min-width: $message_structuredImageWidth
-    width    : $message_structuredImageWidth
-    height   : $message_structuredImageHeight
+    min-width: $message_structuredAvatarWidth
+    width    : $message_structuredAvatarWidth
+    height   : $message_structuredAvatarHeight
 
 
 .ts.structured.message > .icon > i.icon
@@ -437,7 +446,7 @@
     margin: 0
 
     font-size    : $message_structuredIconSize
-    border-radius: $message_structuredImageBorderRadius
+    border-radius: $message_structuredAvatarBorderRadius
 
     background-color: $message_structuredIconBackgroundColor
 
