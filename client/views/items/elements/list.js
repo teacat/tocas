@@ -119,7 +119,7 @@ export default
             type       : small,
             title      : '簡化',
             description: `你可以直接透過 <span class="ts horizontal label">&lt;ol&gt;</span> 和 <span class="ts horizontal label">&lt;ul&gt;</span> 標籤來簡化清單的使用方式。`,
-            link       : 'ordered'
+            link       : 'simplify'
         },
         {
             type: 'example',
@@ -561,8 +561,31 @@ export default
     <div class="item">天野望</div>
     <div class="item">火井向百合</div>
     <div class="item">成海遙香</div>
+</div>
+<br>
+<div class="ts very relaxed divided list">
+    <div class="item">Yami Odymel</div>
+    <div class="item">Karisu</div>
+    <div class="item">Iknore</div>
 </div>`,
-            mark: 'relaxed'
+            mark: 'very relaxed, relaxed',
+            remove: '<br>'
+        },
+        {
+            type       : small,
+            title      : '自動層疊',
+            description: `水平清單可以在行動裝置上自動將項目以垂直方式進行層疊。`,
+            link       : 'stackable'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts stackable horizontal list">
+    <div class="item">始春</div>
+    <div class="item">絢夏</div>
+    <div class="item">起秋</div>
+    <div class="item">末冬</div>
+</div>`,
+            mark: 'stackable'
         },
         {
             type       : small,
@@ -576,33 +599,29 @@ export default
     <div class="item">千導院楓</div>
     <div class="item">粒櫻杏子</div>
     <div class="item">若葉昴</div>
-</div>
-<br>
-<div class="ts relaxed divided list">
-    <div class="item">英梨梨</div>
-    <div class="item">詩羽</div>
-    <div class="item">加藤惠</div>
 </div>`,
             mark: 'divided, relaxed divided'
         },
         {
             type       : small,
             title      : '網格的',
-            description: `像網格一樣清單。`,
+            description: `像網格一樣清單，這很適合放置在像片段、卡片內部。`,
             link       : 'celled'
         },
         {
             type: 'example',
             code: `<div class="ts celled list">
-    <div class="item">千導院楓</div>
-    <div class="item">粒櫻杏子</div>
-    <div class="item">若葉昴</div>
+    <div class="item">くろさき めあ</div>
+    <div class="item">ネメシス</div>
+    <div class="item">こんじきのやみ</div>
 </div>
-<br>
-<div class="ts relaxed celled list">
-    <div class="item">英梨梨</div>
-    <div class="item">詩羽</div>
-    <div class="item">加藤惠</div>
+
+<div class="ts fitted segment">
+    <div class="ts very relaxed celled list">
+        <div class="item">英梨梨</div>
+        <div class="item">詩羽</div>
+        <div class="item">加藤惠</div>
+    </div>
 </div>`,
             mark: 'celled, relaxed celled'
         },
