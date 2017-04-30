@@ -58,6 +58,15 @@
     font-size  : $message_headerFontSize
 
 //-------------------//
+//       Fluid
+//-------------------//
+
+.ts.message.fluid
+    border-radius: 0
+    border-left  : 0
+    border-right : 0
+
+//-------------------//
 //       Icon
 //-------------------//
 
@@ -66,7 +75,8 @@
     align-items   : center
     flex-direction: row
 
-.ts.message.icon > .icon:not(.close)
+.ts.message.icon > .icon:not(.close),
+.ts.message.icon > .ts.container > .icon:not(.close)
     display       : block
     flex          : 0 0 auto
     width         : auto
@@ -86,7 +96,8 @@
 .ts.icon.message .circular.icon
     width: 1em
 
-.ts.message > .icon
+.ts.message > .icon,
+.ts.message > .ts.container > .icon
     margin-right: $message_iconDistance
 
 //-------------------//
@@ -139,7 +150,8 @@
 //     Close Icon
 //-------------------//
 
-.ts.message > .close.icon
+.ts.message > .close.icon,
+.ts.message > .ts.container > .close.icon
     display        : flex
     align-items    : center
     justify-content: center
@@ -568,3 +580,15 @@
     pointer-events: none
     user-select   : none
     opacity       : .45
+
+//-------------------//
+//     Coupling
+//-------------------//
+
+.ts.message > .ts.container
+    width  : 100%
+    display: flex
+
+.ts.message > .ts.container > .close.icon
+    top  : 0
+    right: 0
