@@ -1,12 +1,50 @@
 @import ../../variables/modules/progress.variables
 
 //*******************************//
+//           Animation
+//*******************************//
+
+@keyframes indeterminate-bar-animation
+    /* one open*/
+    0%
+        transform: translateX(-100%) scaleX(0.2)
+    20%
+        transform: translateX(-40%) scaleX(0.2)
+    30%
+        transform: translateX(0%) scaleX(0.5)
+    55%
+        transform: translateX(100%) scaleX(0.7)
+    55.99%
+        transform: scaleX(0)
+    /* two close*/
+    56%
+        transform: translateX(-100%) scaleX(0)
+    56.99%
+        transform: translateX(-100%) scaleX(0.6)
+    75%
+        transform: translateX(-5%) scaleX(0.6)
+    85%
+        transform: translateX(30%) scaleX(0.3)
+    98%
+        transform: translateX(100%) scaleX(0.2)
+    99.99%
+        transform: scaleX(0)
+    100%
+        transform: translateX(-100%)
+
+@keyframes process-bar-animation
+    from
+        background-position: 0px
+    to
+        background-position: 40px
+
+//*******************************//
 //            Variations
 //*******************************//
 
 @mixin progress-bar-variant($color, $barColor, $activeBarColor)
     background-color: $barColor
-    
+
     > .progress
         color: $color
     &:after
@@ -36,7 +74,7 @@
 //*******************************//
 
 /* Activity Bar */
-.ts.progress .bar 
+.ts.progress .bar
     display         : inline-block
     line-height     : 1
     position        : $progress_barPosition
@@ -50,12 +88,12 @@
     border-bottom-right-radius: 0
 .ts.progress .bar:last-child:not(:only-child)
     border-top-left-radius   : 0
-    border-bottom-left-radius: 0    
+    border-bottom-left-radius: 0
 .ts.progress .bar:not(:last-child):not(:first-child)
     border-radius: 0
 
 /* Percent Complete */
-.ts.progress .bar > .text 
+.ts.progress .bar > .text
     white-space: nowrap
     position   : $progress_progressPosition
     width      : $progress_progressWidth
@@ -74,41 +112,55 @@
 //*******************************//
 
 //-------------------//
-//   Indeterminate       
-//-------------------//   
+//   Indeterminate
+//-------------------//
 
-.ts.progress.indeterminate
-    background-size : $progress_indeterminateBackgroundSize $progress_indeterminateBackgroundSize
-    background-image: $progress_defaultIndeterminateBackground
-    
-    animation: process-bar-animation 2s linear 0s infinite
-    @keyframes process-bar-animation
-        from
-            background-position: 0px
-        to
-            background-position: 40px
-    
 .ts.progress.indeterminate .bar
-    visibility: hidden
-        
+    animation: indeterminate-bar-animation 2.8s linear 0s infinite
+    width    : 100%
+
+    // https://github.com/lightningtgc/MProgress.js/blob/master/src/css/mprogress.styl
+
+
 //-------------------//
-//       Active       
+// Query Indeterminate
 //-------------------//
 
-.ts.active.progress .bar 
+.ts.progress.query.indeterminate .bar
+    animation          : indeterminate-bar-animation 2.8s linear 0s infinite
+    animation-direction: reverse
+    width              : 100%
+
+//-------------------//
+//     Preparing
+//-------------------//
+
+.ts.progress.preparing
+    background-size : $progress_preparingBackgroundSize $progress_preparingBackgroundSize
+    background-image: $progress_defaultPreparingBackground
+    animation       : process-bar-animation 2s linear 0s infinite
+
+.ts.progress.preparing .bar
+    visibility: hidden
+
+//-------------------//
+//       Active
+//-------------------//
+
+.ts.active.progress .bar
     position : relative
     min-width: $progress_activeMinWidth
 
 .ts.progress.active .bar:after
     position        : absolute
     top             : 0
-    bottom          : 0 
+    bottom          : 0
     left            : 0
     content         : ''
     background-color: $progress_defaultActiveBarColor
     border-radius   : $progress_barBorderRadius
     animation       : process-active 2s cubic-bezier(0.4, 0, 0.2, 1) infinite
-    
+
 @keyframes process-active
     from
         opacity: .8
@@ -118,14 +170,14 @@
         width: 100%
 
 //-------------------//
-//      Disabled       
+//      Disabled
 //-------------------//
 
-.ts.disabled.progress 
+.ts.disabled.progress
     opacity: 0.35
 
 .ts.disabled.progress .bar,
-.ts.disabled.progress .bar::after 
+.ts.disabled.progress .bar::after
     animation: none !important
 
 //*******************************//
@@ -135,81 +187,81 @@
 .ts.progress.primary .bar,
 .ts.progress .primary.bar
     +progress-bar-variant($progress_primaryTextColor, $progress_primaryBarColor, $progress_primaryActiveBarColor)
-        
+
 .ts.progress.indeterminate.primary
-    background-image: $progress_primaryIndeterminateBackground
-    
+    background-image: $progress_primaryPreparingBackground
+
 .ts.progress.info .bar,
 .ts.progress .info.bar
     +progress-bar-variant($progress_infoTextColor, $progress_infoBarColor, $progress_infoActiveBarColor)
-    
+
 .ts.progress.indeterminate.info
-    background-image: $progress_infoIndeterminateBackground
-    
+    background-image: $progress_infoPreparingBackground
+
 .ts.progress.warning .bar,
 .ts.progress .warning
     +progress-bar-variant($progress_warningTextColor, $progress_warningBarColor, $progress_warningActiveBarColor)
-    
+
 .ts.progress.indeterminate.warning
-    background-image: $progress_warningIndeterminateBackground
-    
+    background-image: $progress_warningPreparingBackground
+
 .ts.progress.positive .bar,
 .ts.progress.success .bar,
 .ts.progress .success.bar,
 .ts.progress .positive.bar
     +progress-bar-variant($progress_positiveTextColor, $progress_positiveBarColor, $progress_positiveActiveBarColor)
-    
+
 .ts.progress.indeterminate.success,
 .ts.progress.indeterminate.positive
-    background-image: $progress_positiveIndeterminateBackground
-    
+    background-image: $progress_positivePreparingBackground
+
 .ts.progress.negative .bar,
 .ts.progress.error .bar,
 .ts.progress .error.bar,
 .ts.progress .negative.bar
     +progress-bar-variant($progress_negativeTextColor, $progress_negativeBarColor, $progress_negativeActiveBarColor)
-    
+
 .ts.progress.indeterminate.negative,
 .ts.progress.indeterminate.error
-    background-image: $progress_negativeIndeterminateBackground
+    background-image: $progress_negativePreparingBackground
 
 //-------------------//
-//     Attached       
+//     Attached
 //-------------------//
 
 /* bottom attached */
-.ts.progress.attached 
+.ts.progress.attached
     background: $progress_attachedBackground
     position  : relative
     border    : none
     margin    : 0em
 
 .ts.progress.attached,
-.ts.progress.attached .bar 
+.ts.progress.attached .bar
     display      : block
     height       : $progress_attachedHeight
     padding      : 0px
     overflow     : hidden
     border-radius: 0em 0em $progress_attachedBorderRadius $progress_attachedBorderRadius
 
-.ts.progress.attached .bar 
+.ts.progress.attached .bar
     border-radius: 0em
 
 /* top attached */
 .ts.progress.top.attached,
-.ts.progress.top.attached .bar 
+.ts.progress.top.attached .bar
     top          : 0px
     border-radius: $progress_attachedBorderRadius $progress_attachedBorderRadius 0em 0em
 
-.ts.progress.top.attached .bar 
+.ts.progress.top.attached .bar
     border-radius: 0em
 
 //-------------------//
-//      Coupling       
+//      Coupling
 //-------------------//
 
 .ts.segment > .ts.attached.progress,
-.ts.card > .ts.attached.progress 
+.ts.card > .ts.attached.progress
     position: absolute
     top     : .01rem
     left    : 0
@@ -217,42 +269,42 @@
     width   : 100%
 
 .ts.segment > .ts.bottom.attached.progress,
-.ts.card > .ts.bottom.attached.progress 
+.ts.card > .ts.bottom.attached.progress
     top   : auto
     bottom: .01rem
 
 //-------------------//
-//       Fluid       
+//       Fluid
 //-------------------//
 
 .ts.progress.fluid
     border-radius: 0
 
 //-------------------//
-//       Sizes       
+//       Sizes
 //-------------------//
 
-.ts.tiny.progress 
+.ts.tiny.progress
     font-size: $tiny
-.ts.tiny.progress .bar 
+.ts.tiny.progress .bar
     height: $progress_tinyBarHeight
 
-.ts.small.progress 
+.ts.small.progress
     font-size: $small
-.ts.small.progress .bar 
+.ts.small.progress .bar
     height: $progress_smallBarHeight
 
-.ts.progress 
+.ts.progress
     font-size: $medium
-.ts.progress .bar 
+.ts.progress .bar
     height: $progress_barHeight
 
-.ts.large.progress 
+.ts.large.progress
     font-size: $large
-.ts.large.progress .bar 
+.ts.large.progress .bar
     height: $progress_largeBarHeight
 
-.ts.big.progress 
+.ts.big.progress
     font-size: $big
-.ts.big.progress .bar 
+.ts.big.progress .bar
     height: $progress_bigBarHeight
