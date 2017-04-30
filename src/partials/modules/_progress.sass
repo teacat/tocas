@@ -4,6 +4,7 @@
 //           Animation
 //*******************************//
 
+// https://github.com/lightningtgc/MProgress.js/blob/master/src/css/mprogress.styl
 @keyframes indeterminate-bar-animation
     /* one open*/
     0%
@@ -32,6 +33,16 @@
     100%
         transform: translateX(-100%)
 
+@keyframes buffer-bar-animation
+    0%
+        opacity            : 1
+        background-position: 0px -23px
+    50%
+        opacity: 0
+    100%
+        opacity            : 1
+        background-position: -200px -23px
+
 @keyframes process-bar-animation
     from
         background-position: 0px
@@ -49,12 +60,12 @@
         color: $color
     &:after
         background-color: $activeBarColor
-    
+
 //*******************************//
 //            Main
 //*******************************//
 
-.ts.progress 
+.ts.progress
     position        : relative
     display         : flex
     max-width       : 100%
@@ -64,9 +75,9 @@
     padding         : $progress_padding
     border-radius   : $progress_borderRadius
 
-.ts.progress:first-child 
+.ts.progress:first-child
     margin: $progress_firstMargin
-.ts.progress:last-child 
+.ts.progress:last-child
     margin: $progress_lastMargin
 
 //*******************************//
@@ -83,7 +94,7 @@
     background-color: $progress_defaultBarColor
     border-radius   : $progress_barBorderRadius
 
-.ts.progress .bar:not(:last-child)
+.ts.progress:not(.buffering) .bar:not(:last-child)
     border-top-right-radius   : 0
     border-bottom-right-radius: 0
 .ts.progress .bar:last-child:not(:only-child)
@@ -119,9 +130,6 @@
     animation: indeterminate-bar-animation 2.8s linear 0s infinite
     width    : 100%
 
-    // https://github.com/lightningtgc/MProgress.js/blob/master/src/css/mprogress.styl
-
-
 //-------------------//
 // Query Indeterminate
 //-------------------//
@@ -130,6 +138,15 @@
     animation          : indeterminate-bar-animation 2.8s linear 0s infinite
     animation-direction: reverse
     width              : 100%
+
+//-------------------//
+//     Buffer Bar
+//-------------------//
+
+.ts.progress.buffering .buffer.bar
+    position: absolute
+    left    : 0
+    opacity : .3
 
 //-------------------//
 //     Preparing
