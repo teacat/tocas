@@ -5,42 +5,43 @@ $table_margin          : $table_verticalMargin $table_horizontalMargin
 $table_borderCollapse: separate
 $table_borderSpacing : 0px
 $table_borderRadius  : $defaultBorderRadius
-$table_borderColor   : $borderColor
+$table_borderColor   : $color_table_border
 $table_transition    : background $defaultDuration $defaultEasing, color $defaultDuration $defaultEasing
 
 $table_background : #FFF
-$table_color      : $textColor
+$table_color      : $color_table
 $table_borderWidth: 1px
-$table_border     : $table_borderWidth solid $borderColor
+$table_border     : $table_borderWidth solid $table_borderColor
 $table_boxShadow  : none
 $table_textAlign  : left
 
-$table_sectionColor: #FBFBFB
+$table_disabledInvertedColor: $color_table_disabledInverted
+$table_disabledColor        : $color_table_disabled
 
 //-------------------//
 //       Parts
 //-------------------// 
 
 /* Table Row */
-$table_rowBorder: 1px solid $internalBorderColor
+$table_rowBorder: $table_border
 
 /* Table Cell */
 $table_cellVerticalPadding  : $relativeMini
 $table_cellHorizontalPadding: $relativeMini
 $table_cellVerticalAlign    : inherit
 $table_cellTextAlign        : inherit
-$table_cellBorder           : 1px solid $internalBorderColor
+$table_cellBorder           : 1px solid $table_borderColor
 
 //-------------------//
 //       Header
 //-------------------//
 
-$table_headerBorder           : 1px solid $internalBorderColor
+$table_headerBorder           : 1px solid $table_borderColor
 $table_headerDivider          : none
-$table_headerBackground       : $table_sectionColor
+$table_headerBackground       : $color_table_headerBackground
 $table_headerAlign            : inherit
 $table_headerVerticalAlign    : inherit
-$table_headerColor            : $textColor
+$table_headerColor            : $color_table_header
 $table_headerVerticalPadding  : $relativeSmall
 $table_headerHorizontalPadding: $table_cellHorizontalPadding
 $table_headerFontStyle        : none
@@ -53,12 +54,12 @@ $table_headerBoxShadow        : none
 //-------------------//
 
 $table_footerBoxShadow        : none
-$table_footerBorder           : 1px solid $borderColor
+$table_footerBorder           : 1px solid $table_borderColor
 $table_footerDivider          : none
-$table_footerBackground       : $table_sectionColor
+$table_footerBackground       : $color_table_footerBackground
 $table_footerAlign            : inherit
 $table_footerVerticalAlign    : middle
-$table_footerColor            : $textColor
+$table_footerColor            : $color_table_footer
 $table_footerVerticalPadding  : $table_cellVerticalPadding
 $table_footerHorizontalPadding: $table_cellHorizontalPadding
 $table_footerFontStyle        : normal
@@ -75,25 +76,25 @@ $table_responsiveRowVerticalPadding   : 1em
 $table_responsiveRowBoxShadow         : 0px -1px 0px 0px rgba(0, 0, 0, 0.1) inset
 $table_responsiveCellVerticalPadding  : 0.25em
 $table_responsiveCellHorizontalPadding: 0.75em
-$table_responsiveCellBoxShadow        : none 
+$table_responsiveCellBoxShadow        : none
 
 //-------------------//
 //     Definition
-//-------------------// 
+//-------------------//
 
 $table_definitionPageBackground: #FFF
 
-$table_definitionHeaderBackground: transparent
-$table_definitionHeaderColor     : $textColor
+$table_definitionHeaderBackground: $color_table_definitionHeaderBackground
+$table_definitionHeaderColor     : $color_table_definitionHeader
 $table_definitionHeaderFontWeight: normal
 
-$table_definitionFooterBackground: $table_definitionHeaderBackground
-$table_definitionFooterColor     : $table_definitionHeaderColor
+$table_definitionFooterBackground: $color_table_definitionFooterBackground
+$table_definitionFooterColor     : $color_table_definitionFooter
 $table_definitionFooterFontWeight: $table_definitionHeaderFontWeight
 
-$table_definitionColumnBackground       : $subtleTransparentBlack
+$table_definitionColumnBackground       : $color_table_definitionColumnBackground
 $table_definitionColumnFontWeight       : 500
-$table_definitionColumnColor            : $textColor
+$table_definitionColumnColor            : $color_table_definitionColumnText
 $table_definitionColumnFontSize         : $relativeMedium
 $table_definitionColumnTextTransform    : ''
 $table_definitionColumnBoxShadow        : ''
@@ -102,162 +103,171 @@ $table_definitionColumnHorizontalPadding: ''
 
 //-------------------//
 //     Couplings
-//-------------------// 
+//-------------------//
 
 $table_iconVerticalAlign: baseline
 
 //-------------------//
 //       States
-//-------------------// 
+//-------------------//
 
 $table_stateMarkerWidth: 0px
 
 /* Positive */
-$table_positiveColor          : $positiveColor
-$table_positiveBorderColor    : $globalPositiveBorderColor
-$table_positiveBackgroundColor: lighten($positiveColor, 35%)
-$table_positiveBackgroundHover: darken($table_positiveBackgroundColor, 3%)
-$table_positiveColorHover     : darken($table_positiveColor, 3)
+$table_positiveColor          : $color_positive
+$table_positiveBorderColor    : $color_positive
+$table_positiveBackgroundColor: $color_positive_lightenBackground
+$table_positiveBackgroundHover: $color_positive_lightenBackgroundHover
+$table_positiveColorHover     : $color_positive
 
 /* Negative */
-$table_negativeColor          : $negativeColor
-$table_negativeBorderColor    : $globalNegativeBorderColor
-$table_negativeBackgroundColor: lighten($negativeColor, 35%)
-$table_negativeBackgroundHover: darken($table_negativeBackgroundColor, 3%)
-$table_negativeColorHover     : darken($table_negativeColor, 3)
+$table_negativeColor          : $color_negative
+$table_negativeBorderColor    : $color_negative
+$table_negativeBackgroundColor: $color_negative_lightenBackground
+$table_negativeBackgroundHover: $color_negative_lightenBackgroundHover
+$table_negativeColorHover     : $color_negative
 
 /* Warning */
-$table_warningColor          : $globalWarningTextColor
-$table_warningBorderColor    : $globalWarningBorderColor
-$table_warningBackgroundColor: lighten($warningColor, 25%)
-$table_warningBackgroundHover: darken($table_warningBackgroundColor, 3%)
-$table_warningColorHover     : darken($table_warningColor, 3)
+$table_warningColor          : $color_warning
+$table_warningBorderColor    : $color_warning
+$table_warningBackgroundColor: $color_warning_lightenBackground
+$table_warningBackgroundHover: $color_warning_lightenBackgroundHover
+$table_warningColorHover     : $color_warning
 
 /* Primary */
-$table_primaryColor          : $primaryColor
-$table_primaryBorderColor    : $globalPrimaryBorderColor
-$table_primaryBackgroundColor: lighten($primaryColor, 35%)
-$table_primaryBackgroundHover: darken($table_primaryBackgroundColor, 3%)
-$table_primaryColorHover     : darken($table_primaryColor, 3)
+$table_primaryColor          : $color_primary
+$table_primaryBorderColor    : $color_primary
+$table_primaryBackgroundColor: $color_primary_lightenBackground
+$table_primaryBackgroundHover: $color_primary_lightenBackgroundHover
+$table_primaryColorHover     : $color_primary
 
 /* Info */
-$table_infoColor          : $infoColor
-$table_infoBorderColor    : $globalInfoBorderColor
-$table_infoBackgroundColor: lighten($infoColor, 35%)
-$table_infoBackgroundHover: darken($table_infoBackgroundColor, 3%)
-$table_infoColorHover     : darken($table_infoColor, 3)
+$table_infoColor          : $color_info
+$table_infoBorderColor    : $color_info
+$table_infoBackgroundColor: $color_info_lightenBackground
+$table_infoBackgroundHover: $color_info_lightenBackgroundHover
+$table_infoColorHover     : $color_info
 
 /* Invert */
-$table_invertedColor          : $globalInvertedTextColor
-$table_invertedBorderColor    : $globalInvertedBorderColor
-$table_invertedBackgroundColor: #34495E
-$table_invertedBackgroundHover: darken($table_invertedBackgroundColor, 3%)
-$table_invertedColorHover     : darken($table_invertedColor, 3)
+$table_invertedColor          : $color_inverted
+$table_invertedBorderColor    : $color_inverted
+$table_invertedBackgroundColor: $color_inverted_lightenBackground
+$table_invertedBackgroundHover: $color_inverted_lightenBackgroundHover
+$table_invertedColorHover     : $color_inverted
 
 /* Active */
-$table_activeColor          : $darkTextColor
-$table_activeBackgroundColor: #E0E0E0
+$table_activeColor          : $color_table_active
+$table_activeBackgroundColor: $color_table_activeBackground
 
-$table_activeBackgroundHover: #EFEFEF
-$table_activeColorHover     : $selectedTextColor
+$table_activeBackgroundHover: $color_table_activeHoverBackground
+$table_activeColorHover     : $color_table_activeHover
+
+/* Inverted Active */
+$table_activeInvertedColor          : $color_table_activeInverted
+$table_activeInvertedBackgroundColor: $color_table_activeInvertedBackground
+
+$table_activeInvertedHoverBackgroundColor: $color_table_activeInvertedHoverBackground
+$table_activeInvertedHoverColor          : $color_table_activeInvertedHover
 
 //-------------------//
 //      Attached
-//-------------------// 
+//-------------------//
 
 $table_attachedTopOffset       : 0px
 $table_attachedBottomOffset    : 0px
 $table_attachedHorizontalOffset: -#{$table_borderWidth}
 $table_attachedWidth           : calc(100% + -#{$table_attachedHorizontalOffset} * 2)
 $table_attachedBoxShadow       : none
-$table_attachedBorder          : $table_borderWidth solid $solidBorderColor
+$table_attachedBorder          : $table_borderWidth solid $table_borderColor
 $table_attachedBottomBoxShadow : $table_boxShadow, $table_attachedBoxShadow
 
 //-------------------//
 //      Striped
-//-------------------// 
+//-------------------//
 
-$table_stripedBackground        : rgba(0, 0, 50, 0.02)
-$table_invertedStripedBackground: rgba(255, 255, 255, 0.05)
+$table_stripedBackground        : $color_table_stripedBackground
+$table_invertedStripedBackground: $color_table_invertedStripedBackground
 
 //-------------------//
 //     Selectable
-//-------------------// 
+//-------------------//
 
-$table_selectableBackground        : $transparentBlack
-$table_selectableTextColor         : $selectedTextColor
-$table_selectableInvertedBackground: $transparentWhite
-$table_selectableInvertedTextColor : $invertedSelectedTextColor
+$table_selectableBackground        : $color_table_selectableBackground
+$table_selectableTextColor         : $color_table_selectable
+$table_selectableInvertedBackground: $color_table_selectableInvertedBackground
+$table_selectableInvertedTextColor : $color_table_selectableInverted
 
 //-------------------//
 //      Sortable
-//-------------------// 
+//-------------------//
 
 $table_sortableBackground: ''
-$table_sortableColor     : $textColor
+$table_sortableColor     : $table_color
 
-$table_sortableBorder        : 1px solid $borderColor
+$table_sortableBorder        : 1px solid $table_borderColor
 $table_sortableIconWidth     : auto
 $table_sortableIconDistance  : 0.5em
 $table_sortableIconOpacity   : 0.8
 $table_sortableIconFont      : 'Icons'
 $table_sortableIconAscending : '\f0d8'
 $table_sortableIconDescending: '\f0d7'
-$table_sortableDisabledColor : $disabledTextColor
+$table_sortableDisabledColor : $table_disabledColor
 
-$table_sortableHoverBackground: $transparentBlack
-$table_sortableHoverColor     : $hoveredTextColor
+$table_sortableHoverBackground: $color_table_sortableHoverBackground
+$table_sortableHoverColor     : $color_table_sortableHover
 
-$table_sortablePressedBackground: $strongTransparentBlack
-$table_sortablePressedColor     : $hoveredTextColor
+$table_sortablePressedBackground: $color_table_sortablePressedBackground
+$table_sortablePressedColor     : $color_table_sortablePressed
 
-$table_sortableActiveBackground: $transparentBlack
-$table_sortableActiveColor     : $selectedTextColor
+$table_sortableActiveBackground: $color_table_sortableActiveBackground
+$table_sortableActiveColor     : $color_table_sortableActive
 
-$table_sortableActiveHoverBackground: $transparentBlack
-$table_sortableActiveHoverColor     : $selectedTextColor
+$table_sortableActiveHoverBackground: $color_table_sortableActiveHoverBackground
+$table_sortableActiveHoverColor     : $color_table_sortableActiveHover
 
-$table_sortableActivePressedBackground: $strongTransparentBlack
-$table_sortableActivePressedColor     : $hoveredTextColor
+$table_sortableActivePressedBackground: $color_table_sortableActivePressedBackground
+$table_sortableActivePressedColor     : $color_table_sortableActivePressed
 
-$table_sortableInvertedBorderColor     : transparent
-$table_sortableInvertedHoverBackground : $transparentWhite $subtleGradient
-$table_sortableInvertedHoverColor      : $invertedHoveredTextColor
-$table_sortableInvertedActiveBackground: $strongTransparentWhite $subtleGradient
-$table_sortableInvertedActiveColor     : $invertedSelectedTextColor
+// Inverted
+$table_sortableInvertedBorderColor      : $color_table_sortableInvertedBorder
+$table_sortableInvertedHoverBackground  : $color_table_sortableInvertedHoverBackground
+$table_sortableInvertedHoverColor       : $color_table_sortableInvertedHover
+$table_sortableInvertedPressedBackground: $color_table_sortableInvertedPressedBackground
+$table_sortableInvertedPressedColor     : $color_table_sortableInvertedPressed
+$table_sortableInvertedActiveBackground : $color_table_sortableInvertedActiveBackground
+$table_sortableInvertedActiveColor      : $color_table_sortableInvertedActive
 
 //-------------------//
 //       Colors
-//-------------------// 
+//-------------------//
 
 $table_coloredBorderSize  : 0.2em
 $table_coloredBorderRadius: 0em 0em $table_borderRadius $table_borderRadius
 
 /* Inverted */
-$table_invertedBackground     : #333333
+$table_invertedBackground     : $color_table_invertedBackground
 $table_invertedBorder         : none
-$table_invertedCellBorderColor: $whiteBorderColor
-$table_invertedCellColor      : $invertedTextColor
+$table_invertedCellBorderColor: $color_table_invertedCellBorder
+$table_invertedCellColor      : $color_table_invertedCell
 
-$table_invertedHeaderBackground : $veryStrongTransparentBlack
-$table_invertedHeaderColor      : $invertedTextColor
-$table_invertedHeaderBorderColor: $table_invertedCellBorderColor
+$table_invertedHeaderBackground : $color_table_invertedHeaderBackground
+$table_invertedHeaderColor      : $color_table_invertedHeader
+$table_invertedHeaderBorderColor: $color_table_invertedHeaderBorder
 
-$table_invertedDefinitionColumnBackground: $subtleTransparentWhite
-$table_invertedDefinitionColumnColor     : $invertedSelectedTextColor
+$table_invertedDefinitionColumnBackground: $color_table_invertedDefinitionColumnBackground
+$table_invertedDefinitionColumnColor     : $color_table_invertedDefinitionColumn
 $table_invertedDefinitionColumnFontWeight: 500
 
 /* Basic */
 $table_basicTableBackground: transparent
-$table_basicTableBorder    : $table_borderWidth solid $borderColor
+$table_basicTableBorder    : $table_borderWidth solid $table_borderColor
 $table_basicBoxShadow      : none
 
 $table_basicTableHeaderBackground : transparent
 $table_basicTableCellBackground   : transparent
 $table_basicTableHeaderDivider    : none
-$table_basicTableCellBorder       : 1px solid rgba(0, 0, 0, 0.1)
+$table_basicTableCellBorder       : 1px solid table_borderColor
 $table_basicTableCellPadding      : ''
-$table_basicTableStripedBackground: $transparentBlack
 
 /* Padded */
 $table_paddedVerticalPadding      : 1em
