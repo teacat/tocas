@@ -13,6 +13,9 @@
 //*******************************//
 
 .ts.header
+    display    : flex
+    flex-wrap  : wrap
+    align-items: center
     margin     : $header_margin
     line-height: $header_lineHeight
     color      : $textColor
@@ -26,21 +29,27 @@
         margin-bottom: $header_lastMargin
 
 .ts.header .sub.header
-    display    : block
+    width      : 100%
     font-weight: normal
     line-height: $header_subHeaderLineHeight
     color      : $header_subHeaderColor
+
+//-------------------//
+//  Inline Sub Header
+//-------------------//
+
+.ts.header .inline.sub.header
+    width      : auto
+    flex       : 1
+    margin-left: 1em
 
 //-------------------//
 //       Icon
 //-------------------//
 
 .ts.header > .icon
-    display       : table-cell
     opacity       : $header_iconOpacity
     font-size     : $header_iconSize
-    padding-top   : $header_iconOffset
-    vertical-align: middle
 
 /* With Text Node */
 .ts.header > .icon:only-child
@@ -335,10 +344,9 @@ h6.ts.smaller.sub.header
 .ts.header > .image,
 .ts.header > img
     display       : inline-block
-    margin-top    : $header_imageOffset
     width         : $header_imageWidth
     height        : $header_imageHeight
-    vertical-align: middle
+    max-height    : $header_imageWidth
 
 .ts.header > .image:only-child,
 .ts.header > img:only-child
