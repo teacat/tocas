@@ -4,12 +4,14 @@
 //            Variations
 //*******************************//
 
-@mixin button-variant($color, $backgroundColor, $borderColor)
-    $hoverBackgroundColor: darken($backgroundColor, 5%)
-    $hoverColor          : lighten($color, 5%)
-
-    $activeBackgroundColor: darken($backgroundColor, 20%)
-    $activeColor          : darken($color, 10%)
+@mixin button-variant($colors)
+    $color                : nth($colors, 1)
+    $backgroundColor      : nth($colors, 2)
+    $hoverColor           : nth($colors, 3)
+    $hoverBackgroundColor : nth($colors, 4)
+    $activeColor          : nth($colors, 5)
+    $activeBackgroundColor: nth($colors, 6)
+    $borderColor          : nth($colors, 7)
 
     border-color    : $borderColor
     background-color: $backgroundColor
@@ -96,7 +98,7 @@
     text-align    : center
     position      : relative
 
-    +button-variant($button_defaultTextColor, $button_defaultBackgroundColor, $button_defaultBorderColor)
+    +button-variant($button_defaultColors)
 
 //-------------------//
 //      Attached
@@ -540,22 +542,22 @@
 .ts.buttons.inverted .button,
 .ts.button.secondary:not(.opinion),
 .ts.buttons.secondary:not(.opinion) .button
-    +button-variant($button_invertedTextColor, $button_invertedBackgroundColor, $button_invertedBorderColor)
+    +button-variant($button_invertedColors)
 .ts.button.primary,
 .ts.buttons.primary .button
-    +button-variant($button_primaryTextColor, $button_primaryBackgroundColor, $button_primaryBorderColor)
+    +button-variant($button_primaryColors)
 .ts.button.info,
 .ts.buttons.info .button
-    +button-variant($button_infoTextColor, $button_infoBackgroundColor, $button_infoBorderColor)
+    +button-variant($button_infoColors)
 .ts.button.warning,
 .ts.buttons.warning .button
-    +button-variant($button_warningTextColor, $button_warningBackgroundColor, $button_warningBorderColor)
+    +button-variant($button_warningColors)
 .ts.button.negative,
 .ts.buttons.negative .button
-    +button-variant($button_negativeTextColor, $button_negativeBackgroundColor, $button_negativeBorderColor)
+    +button-variant($button_negativeColors)
 .ts.button.positive,
 .ts.buttons.positive .button
-    +button-variant($button_positiveTextColor, $button_positiveBackgroundColor, $button_positiveBorderColor)
+    +button-variant($button_positiveColors)
 
 //-------------------//
 //      Opinion
