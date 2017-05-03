@@ -6,23 +6,22 @@
 
 .ts.divider
     +extend(no-select)
-    
+
     margin        : $divider_margin
     line-height   : 1
     height        : 0em
     font-weight   : $divider_fontWeight
     letter-spacing: $divider_letterSpacing
     color         : $divider_color
-    
+
 .ts.divider:not(.vertical):not(.horizontal)
-    border-top   : $divider_shadowWidth    solid $divider_shadowColor
-    border-bottom: $divider_highlightWidth solid $divider_highlightColor
+    border-bottom: $divider_width solid $divider_borderColor
 
 //-------------------//
-//     Horizontal 
-//-------------------//  
+//     Horizontal
+//-------------------//
 
-.ts.horizontal.divider 
+.ts.horizontal.divider
     display    : table
     white-space: nowrap
     height     : auto
@@ -31,26 +30,27 @@
     text-align : center
 
 .ts.horizontal.divider:before,
-.ts.horizontal.divider:after 
+.ts.horizontal.divider:after
     content          : ''
     display          : table-cell
     position         : relative
     top              : 50%
     width            : 50%
     background-repeat: no-repeat
+    opacity          : $divider_horizontalDividerOpacity
 
-.ts.horizontal.divider:before 
+.ts.horizontal.divider:before
     background-position: right $divider_horizontalDividerMargin top 50%
     background-image   : $divider_horizontalDividerBackgroundImage
 
-.ts.horizontal.divider:after 
+.ts.horizontal.divider:after
     background-position: left $divider_horizontalDividerMargin top 50%
     background-image   : $divider_horizontalDividerBackgroundImage
 
 //-------------------//
-//       Hidden 
-//-------------------//  
-    
+//       Hidden
+//-------------------//
+
 .ts.hidden.divider
     visibility  : hidden
     border-color: transparent !important
@@ -60,47 +60,44 @@
     display: none
 
 //-------------------//
-//       Fitted 
-//-------------------// 
+//       Fitted
+//-------------------//
 
 .ts.divider.fitted
     margin: 0em
-    
+
 //-------------------//
-//      Clearing 
-//-------------------// 
+//      Clearing
+//-------------------//
 
 .ts.divider.clearing
     clear: both
-    
+
 //-------------------//
-//      Section 
-//-------------------// 
+//      Section
+//-------------------//
 
 .ts.divider.section
     margin-top   : $divider_sectionMargin
     margin-bottom: $divider_sectionMargin
 
 //-------------------//
-//       Sizes 
-//-------------------// 
+//       Sizes
+//-------------------//
 
 .ts.divider
     font-size: $divider_medium
 
 //-------------------//
-//      Inverted 
-//-------------------// 
+//      Inverted
+//-------------------//
 
 .ts.divider.inverted,
 .ts.vertical.inverted.divider,
-.ts.horizontal.inverted.divider 
-    color: $invertedTextColor
- 
+.ts.horizontal.inverted.divider
+    color: $divider_invertedTextColor
+
 .ts.divider.inverted,
 .ts.divider.inverted:after,
 .ts.divider.inverted:before
-    border-top-color   : $divider_invertedShadowColor    !important
-    border-left-color  : $divider_invertedShadowColor    !important
-    border-bottom-color: $divider_invertedHighlightColor !important
-    border-right-color : $divider_invertedHighlightColor !important
+    border-bottom-color: $divider_invertedColor !important
