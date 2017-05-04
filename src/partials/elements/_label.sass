@@ -4,14 +4,19 @@
 //            Variations
 //*******************************//
 
-@mixin label-variant($color, $backgroundColor, $borderColor)
-    $detailBackgroundColor: darken($backgroundColor, 8%)
+@mixin label-variant($colors)
+    $color                : nth($colors, 1)
+    $backgroundColor      : nth($colors, 2)
+    $borderColor          : nth($colors, 3)
+    $detailTextColor      : nth($colors, 4)
+    $detailBackgroundColor: nth($colors, 5)
 
     background-color: $backgroundColor
     border-color    : $borderColor
     color           : $color
 
     &.image .detail
+        color           : $detailTextColor
         background-color: $detailBackgroundColor !important
 
     &.empty.triangle
@@ -30,8 +35,8 @@
 //              Main
 //*******************************//
 
-.ts.label 
-    +label-variant($label_defaultTextColor, $label_defaultBackgroundColor, $label_defaultBorderColor)
+.ts.label
+    +label-variant($label_defaultColors)
 
     display       : inline-block
     line-height   : 1
@@ -174,6 +179,7 @@ a.ts.basic.label:hover
     text-decoration: none
     background     : $label_basicHoverBackground
     color          : $label_basicHoverColor
+    border-color   : $label_basicHoverBorder
 
 /* Pointing */
 .ts.basic.pointing.label:before
@@ -444,9 +450,6 @@ a.ts.basic.label:hover
 //      Coupling
 //-------------------//
 
-.ts.header > .ts.label
-    margin-top: $label_lineHeightOffset
-
 /* Remove border radius on attached segment */
 .ts.attached.segment > .ts.top.left.attached.label,
 .ts.bottom.attached.segment > .ts.top.left.attached.label
@@ -483,22 +486,22 @@ a.ts.basic.label:hover
 
 .ts.labels.primary .label,
 .ts.label.primary
-    +label-variant($label_primaryTextColor, $label_primaryBackgroundColor, $label_primaryBorderColor)
+    +label-variant($label_primaryColors)
 .ts.labels.info .label,
 .ts.label.info
-    +label-variant($label_infoTextColor, $label_infoBackgroundColor, $label_infoBorderColor)
+    +label-variant($label_infoColors)
 .ts.labels.warning .label,
 .ts.label.warning
-    +label-variant($label_warningTextColor, $label_warningBackgroundColor, $label_warningBorderColor)
+    +label-variant($label_warningColors)
 .ts.labels.positive .label,
 .ts.label.positive
-    +label-variant($label_positiveTextColor, $label_positiveBackgroundColor, $label_positiveBorderColor)
+    +label-variant($label_positiveColors)
 .ts.labels.negative .label,
 .ts.label.negative
-    +label-variant($label_negativeTextColor, $label_negativeBackgroundColor, $label_negativeBorderColor)
+    +label-variant($label_negativeColors)
 .ts.labels.inverted .label,
 .ts.label.inverted
-    +label-variant($label_invertedTextColor, $label_invertedBackgroundColor, $label_invertedBorderColor)
+    +label-variant($label_invertedColors)
 
 //-------------------//
 //    Link Emphasis
