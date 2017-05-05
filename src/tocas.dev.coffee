@@ -644,7 +644,7 @@ z_dropdownMenu    = 9
 z_dropdownActive  = 10
 z_dropdownHovered = 11
 #
-slider_trackColor    = "#DDD"
+slider_trackColor    = "#e9e9e9"
 slider_progressColor = "rgb(150, 150, 150)"
 
 ###

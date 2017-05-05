@@ -4,47 +4,81 @@
 //            Variations
 //*******************************//
 
-@mixin menu-inverted-variant($color, $backgroundColor, $borderColor)
+@mixin menu-inverted-variant($colors)
+    $backgroundColor      : nth($colors, 5)
+    $backgroundHoverColor : nth($colors, 6)
+    $backgroundActiveColor: nth($colors, 7)
+    $color                : nth($colors, 1)
+    $borderColor          : nth($colors, 4)
+    $activeColor          : nth($colors, 3)
+    $hoverColor           : nth($colors, 2)
+    $disabledColor        : nth($colors, 8)
+
     background-color: $backgroundColor
     border-color    : $borderColor
-    
+
     .item.item,
     .item .menu .item
-        color       : $color
         border-color: $borderColor
-    
-    .item.unread:after
-        background-color: $color
-        
-    .item.item:active,
-    .item:hover,
-    .item .menu .item:hover
         color: $color
 
-@mixin menu-pure-variant($color, $backgroundColor, $borderColor)
+    a.item.item:active:not(.disabled),
+    .item .menu a.item:active:not(.disabled),
+    .item.item.active:not(.disabled),
+    .item .menu .item.active:not(.disabled)
+        color: $activeColor
+
+    a.item.item:active:not(.disabled),
+    .item.item.active:not(.disabled),
+        background-color: $backgroundActiveColor
+
+    .item.unread:after
+        background-color: $color
+
+    a.item.item:hover:not(.active):not(:active):not(.disabled),
+    .item .menu a.item:hover:not(.active):not(:active):not(.disabled)
+        background-color: $backgroundHoverColor
+        color           : $hoverColor
+
+    .item.disabled,
+    .item.disabled *:not(.label),
+    .item.disabled .list .item,
+    .item > .menu .item.disabled
+        color: $disabledColor
+
+@mixin menu-pure-variant($colors)
+    $backgroundColor      : nth($colors, 5)
+    $backgroundHoverColor : nth($colors, 6)
+    $backgroundActiveColor: nth($colors, 7)
+    $color                : nth($colors, 1)
+    $borderColor          : nth($colors, 4)
+    $activeColor          : nth($colors, 3)
+    $hoverColor           : nth($colors, 2)
+    $disabledColor        : nth($colors, 8)
+
     background-color: $backgroundColor
     border-color    : $borderColor
-    
+
     .item,
     .item .menu .item,
         color       : $color
         border-color: $borderColor
-    
+
     .item.unread:after
         background-color: $color
-    
+
     a.item:hover:not(.active),
     a.item .menu .item:hover:not(.active),
     .item.dropdown.dropdown.dropdown:hover
-        color: lighten($color, 14%)
-    
+        color: $hoverColor
+
     a.item.item:active,
     a.item.active,
     a.item .menu .item:active,
     a.item .menu .item.active,
     .item.active,
     .item.dropdown.visible.visible.visible
-        color: darken($color, 10%)
+        color: $activeColor
 
 //*******************************//
 //              Main
@@ -58,26 +92,26 @@
     border-radius   : $menu_borderRadius
     border          : $menu_border
     box-shadow      : $menu_boxShadow
-    
+
     &:first-child
         margin-top: 0
-    
+
     &:last-child
         margin-bottom: 0
 
 .ts.menu[class*="horizontally scrollable"]:not(.secondary):not(.pointing):not(.tabbed)
     overflow-x: auto
-    
+
 //-------------------//
 //       Raised
-//-------------------// 
+//-------------------//
 
 .ts.menu.raised
     box-shadow: $menu_raisedBoxShadow
 
 //-------------------//
 //       Pagination
-//-------------------// 
+//-------------------//
 
 .ts.menu.pagination
     margin: 0
@@ -108,7 +142,7 @@
 .ts.menu:not(.vertical):not(.tabbed) .menu .item
     border-top     : none
     border-bottom  : none
-    
+
 .ts.menu .item:first-child,
 .ts.menu .item:not(:first-child)
     border-left: none
@@ -124,8 +158,8 @@
     color           : $menu_itemHoverTextColor
 
 //-------------------//
-//       Active       
-//-------------------// 
+//       Active
+//-------------------//
 
 .ts.menu:not(.pure) a.item:active,
 .ts.menu:not(.pure) .item.active,
@@ -138,33 +172,34 @@
     color           : $menu_itemActiveTextColor
 
 //-------------------//
-//      Disabled       
-//-------------------// 
+//      Disabled
+//-------------------//
 
 .ts.menu .item.disabled,
-.ts.menu .item.disabled *,
-.ts.menu .item.disabled .list .item
+.ts.menu .item.disabled *:not(.label),
+.ts.menu .item.disabled .list .item,
+.ts.menu .item.disabled .list .item.disabled
     pointer-events: none
-    color         : $disabledTextColor
+    color         : $menu_disabledTextColor
 
 //-------------------//
-//       Header       
-//-------------------// 
+//       Header
+//-------------------//
 
-.ts.menu .item.header
+.ts.menu .item.header.header
     opacity    : 1
     font-weight: $menu_itemHeaderFontWeight
     color      : $menu_itemHeaderTextColor
     font-size  : $menu_itemHeaderFontSize
-    
+
 .ts.vertical.menu .item > .header:not(.ts)
     margin     : $menu_verticalHeaderMargin
     font-size  : $menu_verticalHeaderFontSize
     font-weight: $menu_verticalHeaderFontWeight
 
 //-------------------//
-//       Sizes       
-//-------------------// 
+//       Sizes
+//-------------------//
 
 .ts.menu.mini
     font-size: $mini
@@ -188,50 +223,50 @@
 //-------------------//
 
 .ts.menu.basic
-    +menu-inverted-variant($menu_defaultTextColor, $menu_defaultBackgroundColor, $menu_defaultBorderColor)
+    +menu-inverted-variant($menu_defaultColors)
     border: 0
 .ts.menu.inverted
-    +menu-inverted-variant($menu_invertedTextColor, $menu_invertedBackgroundColor, $menu_invertedBorderColor)
+    +menu-inverted-variant($menu_invertedColors)
     border: 0
 .ts.menu.inverted.primary
-    +menu-inverted-variant($menu_primaryTextColor, $menu_primaryBackgroundColor, $menu_primaryBorderColor)
+    +menu-inverted-variant($menu_primaryColors)
 .ts.menu.inverted.info
-    +menu-inverted-variant($menu_infoTextColor, $menu_infoBackgroundColor, $menu_infoBorderColor)
+    +menu-inverted-variant($menu_infoColors)
 .ts.menu.inverted.warning
-    +menu-inverted-variant($menu_warningTextColor, $menu_warningBackgroundColor, $menu_warningBorderColor)
+    +menu-inverted-variant($menu_warningColors)
 .ts.menu.inverted.positive
-    +menu-inverted-variant($menu_positiveTextColor, $menu_positiveBackgroundColor, $menu_positiveBorderColor)
+    +menu-inverted-variant($menu_positiveColors)
 .ts.menu.inverted.negative
-    +menu-inverted-variant($menu_negativeTextColor, $menu_negativeBackgroundColor, $menu_negativeBorderColor)
+    +menu-inverted-variant($menu_negativeColors)
 .ts.menu.inverted .item.disabled
-    color: $invertedDisabledTextColor
-    
+    color: $menu_invertedDisabledTextColor
+
 .ts.menu.basic
-    +menu-pure-variant($menu_defaultTextColor, $menu_defaultBackgroundColor, $menu_defaultBorderColor)
+    +menu-pure-variant($menu_defaultColors)
 .ts.menu.inverted.pure
-    +menu-pure-variant($menu_invertedTextColor, $menu_invertedBackgroundColor, $menu_invertedBorderColor)
+    +menu-pure-variant($menu_invertedColors)
 .ts.menu.inverted.primary.pure
-    +menu-pure-variant($menu_primaryTextColor, $menu_primaryBackgroundColor, $menu_primaryBorderColor)
+    +menu-pure-variant($menu_primaryColors)
 .ts.menu.inverted.info.pure
-    +menu-pure-variant($menu_infoTextColor, $menu_infoBackgroundColor, $menu_infoBorderColor)
+    +menu-pure-variant($menu_infoColors)
 .ts.menu.inverted.warning.pure
-    +menu-pure-variant($menu_warningTextColor, $menu_warningBackgroundColor, $menu_warningBorderColor)
+    +menu-pure-variant($menu_warningColors)
 .ts.menu.inverted.positive.pure
-    +menu-pure-variant($menu_positiveTextColor, $menu_positiveBackgroundColor, $menu_positiveBorderColor)
+    +menu-pure-variant($menu_positiveColors)
 .ts.menu.inverted.negative.pure
-    +menu-pure-variant($menu_negativeTextColor, $menu_negativeBackgroundColor, $menu_negativeBorderColor)
+    +menu-pure-variant($menu_negativeColors)
 .ts.menu.inverted.pure .item.disabled
-    color: $invertedDisabledTextColor
+    color: $menu_invertedDisabledTextColor
 
 //-------------------//
-//     Borderless       
+//     Borderless
 //-------------------//
 
 .ts.menu.borderless .item
     border: none
 
 //-------------------//
-//       Aligns       
+//       Aligns
 //-------------------//
 
 .ts.menu .item[class*="center aligned"]
@@ -240,20 +275,20 @@
     text-align: left
 .ts.menu .item[class*="right aligned"]
     text-align: right
-    
+
 //-------------------//
-//     Stackable       
+//     Stackable
 //-------------------//
 
 .ts.menu.stackable
     +rwd-serious(mobile)
         overflow-x    : hidden
         flex-direction: column
-        
+
         .item
             margin-left : 0 !important
             margin-right: 0 !important
-            
+
         .item:before
             position: absolute
             content : ''
@@ -262,26 +297,26 @@
             left    : 0
             height  : $menu_dividerSize
             width   : 100%
-        
+
         .right.menu
             flex-direction: column
             float         : left
             margin-left   : initial !important
-        
+
         // Tabbed Menu
         &.tabbed
             .item
                 border-left : $menu_border
                 border-right: $menu_border
                 border-top  : $menu_border
-                
+
             .item:not(:first-child)
                 border-top   : 0
                 border-radius: 0
-            
+
 
 //-------------------//
-//      Vertical       
+//      Vertical
 //-------------------//
 
 .ts.menu.vertical
@@ -290,7 +325,7 @@
 .ts.menu.vertical > .item
     border-left : none
     border-right: none
-    
+
 .ts.menu.vertical > .item:first-child,
 .ts.menu.vertical > .item:not(:first-child)
     border-top: none
@@ -304,7 +339,7 @@
     border-radius          : $menu_borderRadius
     border-top-left-radius : 0
     border-top-right-radius: 0
-    
+
 //-------------------//
 //       Fluid
 //-------------------//
@@ -317,7 +352,7 @@
     border-radius: 0
 
 //-------------------//
-//       Fitted       
+//       Fitted
 //-------------------//
 
 .ts.menu .item[class*="horizontally fitted"]
@@ -330,7 +365,7 @@
     padding: 0
 
 //-------------------//
-//      Compact       
+//      Compact
 //-------------------//
 
 .ts.menu.compact
@@ -342,7 +377,7 @@
     border-bottom-right-radius: $menu_borderRadius
 
 //-------------------//
-//     Secondary       
+//     Secondary
 //-------------------//
 
 .ts.menu.secondary
@@ -364,9 +399,9 @@
 
 .ts.menu.vertical.secondary .item
     margin: $menu_secondaryVerticalItemMargin
-    
+
 //-------------------//
-// Secondary Pointing 
+// Secondary Pointing
 //-------------------//
 
 .ts.menu.pointing.secondary
@@ -391,7 +426,7 @@
 
 //-------------------//
 //       Tabbed
-//-------------------//  
+//-------------------//
 
 .ts.menu.tabbed
     box-shadow      : none
@@ -409,7 +444,7 @@
 
 .ts.menu.tabbed .item:before
     display: none
- 
+
 .ts.menu.tabbed .item.active.active
     background-color: $menu_tabbedMenuActiveBackgroundColor
     border-color    : $menu_tabbedMenuActiveBorderColor
@@ -425,10 +460,6 @@
 .ts.menu.tabbed a.item:not(.active):active
     background-color: $menu_tabbedItemActiveBackgroundColor
     color           : $menu_tabbedItemActiveTextColor
-
-.ts.menu .item.disabled
-    pointer-events: none
-    color         : $disabledTextColor
 
 //-------------------//
 //      Flatted
@@ -505,10 +536,10 @@
 
 .ts.menu.pure .item:not(.header):hover,
 .ts.menu.pure a.item.header:hover,
-    background-color: initial !important
-
 .ts.menu.pure .item:not(.header):active,
-.ts.menu.pure a.item.header:active
+.ts.menu.pure a.item.header:active,
+.ts.menu.pure .item:not(.header).active,
+.ts.menu.pure a.item.header.active
     background-color: initial !important
 
 .ts.menu.pure .item.active,
@@ -617,24 +648,24 @@
     padding      : $menu_subMenuVerticalPadding $menu_subMenuHorizontalPadding
     font-size    : $menu_subMenuFontSize
 
-.ts.vertical.menu:not(.inverted) .item > .menu .item
+.ts.vertical.menu:not(.inverted) .item > .menu .item:not(.disabled)
     color: $menu_subMenuTextColor
 
 .ts.vertical.menu.inverted .item > .menu .item
     opacity: $menu_invertedSubMenuItemOpacity
 
-.ts.vertical.menu .item > .menu .item:hover
+.ts.vertical.menu .item > .menu .item:hover:hover:hover:hover:hover:hover
     background-color: transparent
     opacity         : 1
 
 .ts.vertical.menu:not(.inverted) .item > .menu .item:hover
     color: $darkTextColor
 
-.ts.vertical.menu .item > .menu .item:active
+.ts.vertical.menu .item > .menu .item:active:active,
+.ts.vertical.menu .item > .menu .item.active.active
     background-color: transparent
 
-.ts.vertical.menu .item > .menu .item.active
-    background-color: transparent
+.ts.vertical.menu .item > .menu .item.active.active
     font-weight     : $menu_subMenuActiveFontWeight
     opacity         : 1
 
@@ -723,10 +754,11 @@
     background-color: $menu_unreadBackgroundColor
     border-radius   : 50%
     font-size       : 0
-    height          : $absolute6px
+    height          : $menu_unreadIconSize
     position        : absolute
+    margin-left     : $menu_unreadIconDistance
     top             : $menu_unreadTop
-    width           : $absolute6px
+    width           : $menu_unreadIconSize
     z-index         : $z_menu_readDot
 
 .ts.menu.icon .item.unread .icon:after
