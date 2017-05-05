@@ -15,18 +15,18 @@
     border        : $step_stepsBorder
 
 /* First Steps */
-.ts.steps:not(.simple):first-child 
+.ts.steps:not(.simple):first-child
     margin-top: 0em
 
 /* Last Steps */
-.ts.steps:not(.simple):last-child 
+.ts.steps:not(.simple):last-child
     margin-bottom: 0em
 
 //*******************************//
 //           Singular
 //*******************************//
 
-.ts.steps:not(.simple) .step 
+.ts.steps:not(.simple) .step
     position       : relative
     display        : flex
     flex           : 1 0 auto
@@ -37,7 +37,7 @@
     justify-content: $step_justifyContent
     margin         : $step_verticalMargin $step_horizontalMargin
     padding        : $step_verticalPadding $step_horizontalPadding
-    background     : $step_background
+    background     : $step_backgroundColor
     color          : $textColor
     box-shadow     : $step_boxShadow
     border-radius  : $step_borderRadius
@@ -45,7 +45,7 @@
     border-right   : $step_divider
 
 /* Arrow */
-.ts.steps:not(.simple) .step:after 
+.ts.steps:not(.simple) .step:after
     display         : none
     position        : absolute
     z-index         : $z_step
@@ -62,12 +62,12 @@
     transform        : translateY(-50%) translateX(50%) rotate(-45deg)
 
 /* First Step */
-.ts.steps:not(.simple) .step:first-child 
+.ts.steps:not(.simple) .step:first-child
     padding-left : $step_horizontalPadding
     border-radius: $step_stepsBorderRadius 0em 0em $step_stepsBorderRadius
 
 /* Last Step */
-.ts.steps:not(.simple) .step:last-child 
+.ts.steps:not(.simple) .step:last-child
     border-radius: 0em $step_stepsBorderRadius $step_stepsBorderRadius 0em
 
 .ts.steps:not(.simple) .step:last-child 
@@ -75,7 +75,7 @@
     margin-right: 0em
 
 /* Only Step */
-.ts.steps:not(.simple) .step:only-child 
+.ts.steps:not(.simple) .step:only-child
     border-radius: $step_stepsBorderRadius
 
 //*******************************//
@@ -83,47 +83,49 @@
 //*******************************//
 
 /* Title */
-.ts.steps:not(.simple) .step .title 
+.ts.steps:not(.simple) .step .title
+    color      : $step_titleColor
     font-size  : $step_titleFontSize
     font-weight: $step_titleFontWeight
 
-.ts.steps:not(.simple) .step > .title 
+.ts.steps:not(.simple) .step > .title
     width: 100%
 
 /* Description */
-.ts.steps:not(.simple) .step .description 
+.ts.steps:not(.simple) .step .description
     font-weight: $step_descriptionFontWeight
     font-size  : $step_descriptionFontSize
     color      : $step_descriptionColor
 
-.ts.steps:not(.simple) .step > .description 
+.ts.steps:not(.simple) .step > .description
     width: 100%
 
-.ts.steps:not(.simple) .step .title ~ .description 
+.ts.steps:not(.simple) .step .title ~ .description
     margin-top: $step_descriptionDistance
 
 /* Icon */
-.ts.steps:not(.simple) .step > .icon 
+.ts.steps:not(.simple) .step > .icon
     line-height: 1
     font-size  : $step_iconSize
     margin     : 0em $step_iconDistance 0em 0em
+    color      : $step_iconColor
 
 .ts.steps:not(.simple) .step > .icon,
-.ts.steps:not(.simple) .step > .icon ~ .content 
+.ts.steps:not(.simple) .step > .icon ~ .content
     display   : block
     flex      : 0 1 auto
     align-self: $step_iconAlign
 
-.ts.steps:not(.simple) .step > .icon ~ .content 
+.ts.steps:not(.simple) .step > .icon ~ .content
     flex-grow: 1 0 auto
 
 /* Horizontal Icon */
-.ts.steps:not(.simple):not(.vertical) .step > .icon 
+.ts.steps:not(.simple):not(.vertical) .step > .icon
     width: auto
 
 /* Link */
 .ts.steps:not(.simple) .link.step,
-.ts.steps:not(.simple) a.step 
+.ts.steps:not(.simple) a.step
     cursor: pointer
 
 //*******************************//
@@ -134,10 +136,10 @@
 //       Ordered
 //-------------------//
 
-.ts.ordered.steps 
+.ts.ordered.steps
     counter-reset: ordered
 
-.ts.ordered.steps .step:before 
+.ts.ordered.steps .step:before
     display          : block
     position         : static
     text-align       : center
@@ -146,9 +148,10 @@
     margin-right     : $step_iconDistance
     font-size        : $step_iconSize
     counter-increment: ordered
+    color            : $step_counterColor
     font-weight      : $step_orderedFontWeight
 
-.ts.ordered.steps .step > * 
+.ts.ordered.steps .step > *
     display: block
     align-self: $step_iconAlign
 
@@ -156,48 +159,48 @@
 //      Vertical
 //-------------------//
 
-.ts.vertical.steps 
+.ts.vertical.steps
     display       : inline-flex
     flex-direction: column
     overflow      : visible
 
-.ts.vertical.steps .step 
+.ts.vertical.steps .step
     justify-content: flex-start
     border-radius  : $step_borderRadius
     padding        : $step_verticalPadding $step_horizontalPadding
     border-right   : none
     border-bottom  : $step_verticalDivider
 
-.ts.vertical.steps .step:first-child 
+.ts.vertical.steps .step:first-child
     padding      : $step_verticalPadding $step_horizontalPadding
     border-radius: $step_stepsBorderRadius $step_stepsBorderRadius 0em 0em
 
-.ts.vertical.steps .step:last-child 
+.ts.vertical.steps .step:last-child
     border-bottom: none
     border-radius: 0em 0em $step_stepsBorderRadius $step_stepsBorderRadius
 
-.ts.vertical.steps .step:only-child 
+.ts.vertical.steps .step:only-child
     border-radius: $step_stepsBorderRadius
 
 /* Arrow */
-.ts.vertical.steps .step:after 
+.ts.vertical.steps .step:after
     display: none !important
 
-.ts.vertical.steps .step:after 
+.ts.vertical.steps .step:after
     top         : $step_verticalArrowTopOffset
     right       : $step_verticalArrowRightOffset
     border-width: $step_verticalArrowBorderWidth
 
-.ts.vertical.steps .step:after 
+.ts.vertical.steps .step:after
     display: $step_verticalArrowDisplay
 
-.ts.vertical.steps .active.step:after 
+.ts.vertical.steps .active.step:after
     display: $step_verticalActiveArrowDisplay !important
 
-.ts.vertical.steps .step:last-child:after 
+.ts.vertical.steps .step:last-child:after
     display: $step_verticalLastArrowDisplay !important
 
-.ts.vertical.steps .active.step:last-child:after 
+.ts.vertical.steps .active.step:last-child:after
     display: $step_verticalActiveLastArrowDisplay !important
 
 //-------------------//
@@ -206,33 +209,33 @@
 
 /* Mobile (Default) */
 +rwd-serious(mobile)
-    
+
     .ts.steps:not(.simple).stackable:not(.tablet)
         display       : inline-flex
         overflow      : visible
         flex-direction: column
-    
-    .ts.steps:not(.simple).stackable:not(.tablet) .step 
+
+    .ts.steps:not(.simple).stackable:not(.tablet) .step
         width         : 100% !important
         flex-direction: column
         border-radius : $step_borderRadius
         padding       : $step_verticalPadding $step_horizontalPadding
-    
-    .ts.steps:not(.simple).stackable:not(.tablet) .step:first-child 
+
+    .ts.steps:not(.simple).stackable:not(.tablet) .step:first-child
         padding      : $step_verticalPadding $step_horizontalPadding
         border-radius: $step_stepsBorderRadius $step_stepsBorderRadius 0em 0em
-    
-    .ts.steps:not(.simple).stackable:not(.tablet) .step:last-child 
+
+    .ts.steps:not(.simple).stackable:not(.tablet) .step:last-child
         border-radius: 0em 0em $step_stepsBorderRadius $step_stepsBorderRadius
-    
+
     /* Arrow */
-    .ts.steps:not(.simple).stackable:not(.tablet) .step:after 
+    .ts.steps:not(.simple).stackable:not(.tablet) .step:after
         display: none !important
-    
+
     /* Content */
-    .ts.steps:not(.simple).stackable:not(.tablet) .step .content 
+    .ts.steps:not(.simple).stackable:not(.tablet) .step .content
         text-align: center
-    
+
     /* Icon */
     .ts.steps:not(.simple).stackable:not(.tablet) .step > .icon,
     .ts.ordered.steps.stackable:not(.tablet) .step:before 
@@ -246,7 +249,7 @@
 .ts.steps:not(.simple) .link.step:hover::after,
 .ts.steps:not(.simple) .link.step:hover,
 .ts.steps:not(.simple) a.step:hover::after,
-.ts.steps:not(.simple) a.step:hover 
+.ts.steps:not(.simple) a.step:hover
     background: $step_hoverBackground
     color     : $step_hoverColor
 
@@ -254,64 +257,67 @@
 .ts.steps:not(.simple) .link.step:active::after,
 .ts.steps:not(.simple) .link.step:active,
 .ts.steps:not(.simple) a.step:active::after,
-.ts.steps:not(.simple) a.step:active 
+.ts.steps:not(.simple) a.step:active
     background: $step_downBackground
     color     : $step_downColor
 
 /* Active */
-.ts.steps:not(.simple) .step.active 
+.ts.steps:not(.simple) .step.active
     cursor    : auto
     background: $step_activeBackground
 
-.ts.steps:not(.simple) .step.active:after 
+.ts.steps:not(.simple) .step.active:after
     background: $step_activeBackground
 
-.ts.steps:not(.simple) .step.active .title 
+.ts.steps:not(.simple) .step.active .title
     color: $step_activeColor
 
 .ts.ordered.steps .step.active:before,
-.ts.steps:not(.simple) .active.step .icon 
+.ts.steps:not(.simple) .active.step .icon
     color: $step_activeIconColor
 
 /* Active Arrow */
-.ts.steps:not(.simple) .step:after 
+.ts.steps:not(.simple) .step:after
     display: $step_arrowDisplay
 
-.ts.steps:not(.simple) .active.step:after 
+.ts.steps:not(.simple) .active.step:after
     display: $step_activeArrowDisplay
 
-.ts.steps:not(.simple) .step:last-child:after 
+.ts.steps:not(.simple) .step:last-child:after
     display: $step_lastArrowDisplay
 
-.ts.steps:not(.simple) .active.step:last-child:after 
+.ts.steps:not(.simple) .active.step:last-child:after
     display: $step_activeLastArrowDisplay
 
 /* Active Hover */
 .ts.steps:not(.simple) .link.active.step:hover::after,
 .ts.steps:not(.simple) .link.active.step:hover,
 .ts.steps:not(.simple) a.active.step:hover::after,
-.ts.steps:not(.simple) a.active.step:hover 
+.ts.steps:not(.simple) a.active.step:hover
     cursor    : pointer
     background: $step_activeHoverBackground
     color     : $step_activeHoverColor
 
 /* Completed */
 .ts.steps:not(.simple) .step.completed > .icon:before,
-.ts.ordered.steps .step.completed:before 
+.ts.ordered.steps .step.completed:before
     color: $step_completedColor
 
 /* Disabled */
-.ts.steps:not(.simple) .disabled.step 
+.ts.steps:not(.simple) .disabled.step
     cursor        : auto
     background    : $step_disabledBackground
     pointer-events: none
 
+.ts.steps:not(.simple) .disabled.step > .icon
+    color: $step_disabledIconColor
+
 .ts.steps:not(.simple) .disabled.step,
 .ts.steps:not(.simple) .disabled.step .title,
-.ts.steps:not(.simple) .disabled.step .description 
+.ts.steps:not(.simple) .disabled.step .description
     color: $step_disabledColor
 
-.ts.steps:not(.simple) .disabled.step:after 
+.ts.steps:not(.simple) .disabled.step:after
     background: $step_disabledBackground
 
 
@@ -326,35 +332,35 @@
 /* Tablet Or Below */
 +rwd-serious(tablet)
 
-    .ts[class*="tablet stackable"].steps 
+    .ts[class*="tablet stackable"].steps
         display       : inline-flex
         overflow      : visible
         flex-direction: column
-    
+
     /* Steps */
-    .ts[class*="tablet stackable"].steps .step 
+    .ts[class*="tablet stackable"].steps .step
         flex-direction: column
         border-radius : $step_borderRadius
         padding       : $step_verticalPadding $step_horizontalPadding
-    
-    .ts[class*="tablet stackable"].steps .step:first-child 
+
+    .ts[class*="tablet stackable"].steps .step:first-child
         padding      : $step_verticalPadding $step_horizontalPadding
         border-radius: $step_stepsBorderRadius $step_stepsBorderRadius 0em 0em
-    
-    .ts[class*="tablet stackable"].steps .step:last-child 
+
+    .ts[class*="tablet stackable"].steps .step:last-child
         border-radius: 0em 0em $step_stepsBorderRadius $step_stepsBorderRadius
-    
+
     /* Arrow */
-    .ts[class*="tablet stackable"].steps .step:after 
+    .ts[class*="tablet stackable"].steps .step:after
         display: none !important
-    
+
     /* Content */
-    .ts[class*="tablet stackable"].steps .step .content 
+    .ts[class*="tablet stackable"].steps .step .content
         text-align: center
-    
+
     /* Icon */
     .ts[class*="tablet stackable"].steps .step > .icon,
-    .ts[class*="tablet stackable"].ordered.steps .step:before 
+    .ts[class*="tablet stackable"].ordered.steps .step:before
         margin: 0em 0em $step_mobileIconDistance 0em
 
 //-------------------//
@@ -362,7 +368,7 @@
 //-------------------//
 
 /* Fluid */
-.ts.fluid.steps 
+.ts.fluid.steps
     display: flex
     width  : 100%
 
@@ -371,27 +377,27 @@
 //-------------------//
 
 /* Top */
-.ts.attached.steps 
+.ts.attached.steps
     width        : $step_attachedWidth !important
     margin       : 0em $step_attachedHorizontalOffset $step_attachedVerticalOffset
     max-width    : $step_attachedWidth
     border-radius: $step_stepsBorderRadius $step_stepsBorderRadius 0em 0em
 
-.ts.attached.steps .step:first-child 
+.ts.attached.steps .step:first-child
     border-radius: $step_stepsBorderRadius 0em 0em 0em
 
-.ts.attached.steps .step:last-child 
+.ts.attached.steps .step:last-child
     border-radius: 0em $step_stepsBorderRadius 0em 0em
 
 /* Bottom */
-.ts.bottom.attached.steps 
+.ts.bottom.attached.steps
     margin       : $step_attachedVerticalOffset $step_attachedHorizontalOffset 0em
     border-radius: 0em 0em $step_stepsBorderRadius $step_stepsBorderRadius
 
-.ts.bottom.attached.steps .step:first-child 
+.ts.bottom.attached.steps .step:first-child
     border-radius: 0em 0em 0em $step_stepsBorderRadius
 
-.ts.bottom.attached.steps .step:last-child 
+.ts.bottom.attached.steps .step:last-child
     border-radius: 0em 0em $step_stepsBorderRadius 0em
 
 //-------------------//
@@ -405,7 +411,7 @@
 .ts.five.steps,
 .ts.six.steps,
 .ts.seven.steps,
-.ts.eight.steps 
+.ts.eight.steps
     width: 100%
 
 .ts.one.steps > .step,
@@ -415,31 +421,31 @@
 .ts.five.steps > .step,
 .ts.six.steps > .step,
 .ts.seven.steps > .step,
-.ts.eight.steps > .step 
+.ts.eight.steps > .step
     flex-wrap: nowrap
 
-.ts.one.steps > .step 
+.ts.one.steps > .step
     width: 100%
 
-.ts.two.steps > .step 
+.ts.two.steps > .step
     width: 50%
 
-.ts.three.steps > .step 
+.ts.three.steps > .step
     width: 33.333%
 
-.ts.four.steps > .step 
+.ts.four.steps > .step
     width: 25%
 
-.ts.five.steps > .step 
+.ts.five.steps > .step
     width: 20%
 
-.ts.six.steps > .step 
+.ts.six.steps > .step
     width: 16.666%
 
-.ts.seven.steps > .step 
+.ts.seven.steps > .step
     width: 14.285%
 
-.ts.eight.steps > .step 
+.ts.eight.steps > .step
     width: 12.500%
 
 
@@ -449,35 +455,35 @@
 
 
 .ts.mini.steps .step,
-.ts.mini.step 
+.ts.mini.step
     font-size: $mini
 
 .ts.tiny.steps .step,
-.ts.tiny.step 
+.ts.tiny.step
     font-size: $tiny
 
 .ts.small.steps .step,
-.ts.small.step 
+.ts.small.step
     font-size: $small
 
 .ts.steps:not(.simple) .step,
-.ts.step 
+.ts.step
     font-size: $medium
 
 .ts.large.steps .step,
-.ts.large.step 
+.ts.large.step
     font-size: $large
 
 .ts.big.steps .step,
-.ts.big.step 
+.ts.big.step
     font-size: $big
 
 .ts.huge.steps .step,
-.ts.huge.step 
+.ts.huge.step
     font-size: $huge
 
 .ts.massive.steps .step,
-.ts.massive.step 
+.ts.massive.step
     font-size: $massive
 
 @font-face
@@ -538,24 +544,23 @@
     border-style: solid
     background  : none !important
     transform   : rotate(45deg)
-    
+
 .ts.simple.steps .step ~ .step:after
     border-color: $step_simpleArrowColor
-    
+
 .ts.simple.steps .step:first-child:after
     display: none
-    
+
 .ts.simple.steps .step.disabled
     opacity: $disabledOpacity
-    
+
 .ts.simple.steps .step.active:before
     background-color: $step_simpleActiveBackground
     color           : $step_simpleActiveTextColor
 
-.ts.steps.simple .step.completed:before, 
+.ts.steps.simple .step.completed:before,
 .ts.ordered.steps.simple .step.completed:before
     font-family     : 'Step'
     content         : '\e800'
     background-color: $step_simpleCompletedBackgroundColor
     color           : $step_simpleCompletedTextColor
-    
