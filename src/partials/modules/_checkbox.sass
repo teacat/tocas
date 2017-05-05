@@ -146,11 +146,11 @@
 //     Variations
 //-------------------//
 
-.ts.toggle.checkbox 
+.ts.toggle.checkbox
     min-height: $checkbox_toggleHeight
-    
+
 /* Input */
-.ts.toggle.checkbox input 
+.ts.toggle.checkbox input
     width : $checkbox_toggleWidth
     height: $checkbox_toggleHeight
 
@@ -160,6 +160,9 @@
     min-height  : $checkbox_toggleHandleSize
     padding-left: $checkbox_toggleLabelDistance
     color       : $checkbox_toggleOffLabelColor
+
+.ts.toggle.checkbox input:checked + label
+    color       : $checkbox_toggleOnLabelColor
 
 .ts.toggle.checkbox label
     padding-top: $checkbox_toggleLabelOffset
@@ -201,50 +204,54 @@
     transition   : $checkbox_toggleHandleTransition
 
 .ts.toggle.checkbox input ~ .box:after,
-.ts.toggle.checkbox input ~ label:after 
+.ts.toggle.checkbox input ~ label:after
     left: $checkbox_toggleOffOffset
 
 /* Focus */
 .ts.toggle.checkbox input:focus ~ .box:before,
-.ts.toggle.checkbox input:focus ~ label:before 
+.ts.toggle.checkbox input:focus ~ label:before
     background-color: $checkbox_toggleFocusColor
     border          : none
 
 /* Hover */
 .ts.toggle.checkbox .box:hover:before,
-.ts.toggle.checkbox label:hover:before 
+.ts.toggle.checkbox label:hover:before
     background-color: $checkbox_toggleHoverColor
     border          : none
 
 /* Active */
-.ts.toggle.checkbox input:checked ~ .box,
-.ts.toggle.checkbox input:checked ~ label 
-    //color: $checkbox_toggleOnLabelColor !important
+.ts.toggle.checkbox .box:active:before,
+.ts.toggle.checkbox label:active:before
+    background-color: $checkbox_toggleActiveColor
 
 .ts.toggle.checkbox input:checked ~ .box:before,
-.ts.toggle.checkbox input:checked ~ label:before 
+.ts.toggle.checkbox input:checked ~ label:before
     background-color: $checkbox_toggleOnLaneColor !important
 
 .ts.toggle.checkbox input:checked ~ .box:hover:before,
-.ts.toggle.checkbox input:checked ~ label:hover:before 
-    background-color: $checkbox_toggleOnHoverLaneColor !important  
-    
+.ts.toggle.checkbox input:checked ~ label:hover:before
+    background-color: $checkbox_toggleOnHoverLaneColor !important
+
+.ts.toggle.checkbox input:checked ~ .box:active:before,
+.ts.toggle.checkbox input:checked ~ label:active:before
+    background-color: $checkbox_toggleOnActiveLaneColor !important
+
 .ts.toggle.checkbox input:checked ~ .box:after,
-.ts.toggle.checkbox input:checked ~ label:after 
+.ts.toggle.checkbox input:checked ~ label:after
     left: $checkbox_toggleOnOffset
 
 /* Active Focus */
 .ts.toggle.checkbox input:focus:checked ~ .box,
-.ts.toggle.checkbox input:focus:checked ~ label 
+.ts.toggle.checkbox input:focus:checked ~ label
     //color: $checkbox_toggleOnFocusLabelColor !important
 
 .ts.toggle.checkbox input:focus:checked ~ .box:before,
-.ts.toggle.checkbox input:focus:checked ~ label:before 
+.ts.toggle.checkbox input:focus:checked ~ label:before
     background-color: $checkbox_toggleOnFocusLaneColor !important
 
 //*******************************//
 //           Checkboxes
-//*******************************// 
+//*******************************//
 
 .ts.checkboxes .ts.checkbox
     display: flex
@@ -252,7 +259,7 @@
 
 .ts.checkboxes:not(.horizontal) .ts.checkbox
     margin-bottom: $checkbox_groupCheckboxSpacing
-    
+
 .ts.checkboxes:not(.horizontal) .ts.checkbox:last-child
     margin-bottom: 0
 
@@ -262,10 +269,10 @@
 
 .ts.checkboxes.horizontal
     display: flex
-    
+
 .ts.checkboxes.horizontal .ts.checkbox
     margin-right: $checkbox_labelDistance
-    
+
 .ts.checkboxes.horizontal .ts.checkbox:last-child
     margin-right: 0
 
@@ -292,7 +299,7 @@
 .ts.checkbox.inverted label,
 .ts.checkboxes.inverted label
     color: $invertedTextColor
-    
+
 //-------------------//
 //      Compact
 //-------------------//
@@ -302,7 +309,7 @@
 
 .ts.checkboxes.compact .ts.checkbox
     flex: initial
-    
+
 //-------------------//
 //       Aligns
 //-------------------//
@@ -316,7 +323,7 @@
 .ts.checkboxes[class*="right aligned"]
     width          : 100%
     justify-content: flex-end
-    
+
 //-------------------//
 //      Coupling
 //-------------------//
