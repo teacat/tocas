@@ -52,6 +52,7 @@
 //-------------------//
 
 .ts.chatroom > .content .message .avatar
+    border-radius: $chatroom_messageAvatarBorderRadius
     box-shadow   : $chatroom_avatarBoxShadow
     height       : 0
 
@@ -157,6 +158,17 @@
 
 .ts.chatroom > .content .message .meta > *
     margin-right: $chatroom_messageMetaSpacing
+
+// Inline Meta
+.ts.chatroom > .content .message .text .meta
+    display    : inline-flex
+    margin-left: $chatroom_messageInlineMetaDistanceToText
+    bottom     : $chatroom_messageInlineMetaBottomOffset
+    line-height: 0
+    float      : right
+
+.ts.chatroom > .content .message .text .meta .item:before
+    line-height: 0
 
 //-------------------//
 //    Dotted Meta
@@ -300,7 +312,7 @@
 .ts.chatroom > .content .group .message:not(:last-child) .text:before,
     display: none
 
-.ts.chatroom > .content .group .message:not(:last-child) .content .meta
+.ts.chatroom > .content .group .message:not(:last-child) .content > .meta
     display: none
 
 .ts.chatroom > .content .group .message:not(:first-child) .author
@@ -323,7 +335,10 @@
 .ts.chatroom > .content .group .right.message.circular:last-child:not(:first-child) .text
     border-top-right-radius: $chatroom_messageBorderRadius
 
-
+// Avatar aligned to the bottom
+.ts.chatroom > .content .group .message:last-child .avatar
+    align-self: flex-end
+    height    : auto
 //-------------------//
 //      Coupling
 //-------------------//
