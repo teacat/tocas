@@ -106,7 +106,7 @@
     box-shadow   : $chatroom_messageBoxShadow
 
 //-------------------//
-//   Message Arrow
+//      Pointing
 //-------------------//
 
 .ts.chatroom > .content .message.pointing .text:first-child:after
@@ -132,6 +132,15 @@
     border-width: $chatroom_messageArrowBorderSize $chatroom_messageArrowBorderSize $chatroom_messageArrowBorderSize 0
     border-color: transparent lighten(#808080, 40%)
     border-style: solid
+
+//-------------------//
+//      Circular
+//-------------------//
+
+.ts.chatroom > .content .message.circular .text
+    border-radius: $chatroom_messageCircularBorderRadius
+    padding-left : $chatroom_messageCircularVerticalPadding
+    padding-right: $chatroom_messageCircularVerticalPadding
 
 //-------------------//
 //        Meta
@@ -239,12 +248,12 @@
     background-position: right $chatroom_dividerDistance top 50%
     background-repeat  : no-repeat
     background-image   : $chatroom_dividerBackgroundURL
-      
-.ts.chatroom > .content > .divider:after      
+
+.ts.chatroom > .content > .divider:after
     background-position: left $chatroom_dividerDistance top 50%
 
 //-------------------//
-//       Author    
+//       Author
 //-------------------//
 
 .ts.chatroom > .content .message .content .text .author,
@@ -270,19 +279,50 @@
 
 .ts.chatroom.tiny
     font-size: $tiny
-
 .ts.chatroom.small
     font-size: $small
-
 .ts.chatroom.medium,
 .ts.chatroom
     font-size: $medium
-
 .ts.chatroom.large
     font-size: $large
-
 .ts.chatroom.big
     font-size: $big
+
+//-------------------//
+//       Group
+//-------------------//
+
+.ts.chatroom > .content .group .message:not(:last-child) .avatar
+    visibility: hidden
+
+.ts.chatroom > .content .group .message:not(:last-child) .text:after,
+.ts.chatroom > .content .group .message:not(:last-child) .text:before,
+    display: none
+
+.ts.chatroom > .content .group .message:not(:last-child) .content .meta
+    display: none
+
+.ts.chatroom > .content .group .message:not(:first-child) .author
+    display: none
+
+// Circular Group
+.ts.chatroom > .content .group .message.circular:first-child:not(:last-child):not(.right) .text
+    border-bottom-left-radius: $chatroom_messageBorderRadius
+.ts.chatroom > .content .group .message.circular:not(:last-child):not(:first-child):not(.right) .text
+    border-top-left-radius   : $chatroom_messageBorderRadius
+    border-bottom-left-radius: $chatroom_messageBorderRadius
+.ts.chatroom > .content .group .message.circular:last-child:not(:first-child):not(.right) .text
+    border-top-left-radius: $chatroom_messageBorderRadius
+
+.ts.chatroom > .content .group .right.message.circular:first-child:not(:last-child) .text
+    border-bottom-right-radius: $chatroom_messageBorderRadius
+.ts.chatroom > .content .group .right.message.circular:not(:last-child):not(:first-child) .text
+    border-top-right-radius   : $chatroom_messageBorderRadius
+    border-bottom-right-radius: $chatroom_messageBorderRadius
+.ts.chatroom > .content .group .right.message.circular:last-child:not(:first-child) .text
+    border-top-right-radius: $chatroom_messageBorderRadius
+
 
 //-------------------//
 //      Coupling
