@@ -5,29 +5,46 @@
 //            Variations
 //*******************************//
 
-@mixin card-inverted-variant($color, $backgroundColor, $borderColor)
+@mixin card-inverted-variant($colors)
+    $color                  : nth($colors, 1)
+    $headerColor            : nth($colors, 2)
+    $subHeaderColor         : nth($colors, 3)
+    $extraColor             : nth($colors, 4)
+    $secondaryColor         : nth($colors, 5)
+    $tertiaryColor          : nth($colors, 6)
+    $metaColor              : nth($colors, 7)
+    $metaLinkColor          : nth($colors, 8)
+    $borderColor            : nth($colors, 9)
+    $backgroundColor        : nth($colors, 10)
+    $extraBackgroundColor   : nth($colors, 11)
+    $secondayBackgroundColor: nth($colors, 12)
+    $tertiaryBackgroundColor: nth($colors, 13)
+
     background-color: $backgroundColor
     border-color    : $borderColor
 
     > .content
-        .header
-            color: rgba($color, $card_headerTextOpacity)
+        color: $color
 
+        .header
+            color: $headerColor
             .sub.header
-                color: rgba($color, $card_subHeaderTextOpacity)
+                color: $subHeaderColor
         .meta
-            color: rgba($color, $card_metaTextColorOpacity)
+            color: $metaColor
+            a
+                color: $metaLinkColor
         .description
-            color: rgba($color, $card_descriptionTextOpacity)
+            color: $color
 
     > .extra.content
-        color: rgba($color, $card_extraTextOpacity)
+        color: $extraColor
     > .secondary.extra.content
-        background-color: darken($backgroundColor, 5%)
-        color: rgba($color, $card_secondaryExtraTextOpacity)
+        background-color: $secondayBackgroundColor
+        color: $secondaryColor
     > .tertiary.extra.content
-        background-color: darken($backgroundColor, 10%)
-        color: rgba($color, $card_tertiaryExtraTextOpacity)
+        background-color: $tertiaryBackgroundColor
+        color: $tertiaryColor
 
 //*******************************//
 //              Main
@@ -42,9 +59,9 @@
     border-radius   : $card_borderRadius
     box-shadow      : $card_boxShadow
     transition      : $card_transition
-    color           : $textColor
+    color           : $card_textColor
 
-    +card-inverted-variant($card_textColor, $card_backgroundColor, $card_borderColor)
+    +card-inverted-variant($card_defaultColors)
 
 .ts.card [class*="right floated"]
     float: right
@@ -177,7 +194,7 @@
     content     : '•'
 
 //-------------------//
-//       Aligns    
+//       Aligns
 //-------------------//
 
 .ts.card *[class*="center aligned"]
@@ -188,8 +205,8 @@
     text-align: right
 
 //-------------------//
-//      Overlay 
-//-------------------// 
+//      Overlay
+//-------------------//
 
 .ts.card .overlapped.content
     position: absolute
@@ -198,7 +215,7 @@
     width   : 100%
     height  : 100%
     z-index :  $z_card_overlappedContent
-    
+
 .ts.card .overlapped.content > .header,
 .ts.card .overlapped.content > .header .sub.header,
 .ts.card .overlapped.content,
@@ -244,24 +261,26 @@
     clear: both
 
 //-------------------//
-//       Extra    
-//-------------------// 
+//       Extra
+//-------------------//
 
 .ts.card > .extra.content
     border-top: $card_extraBorder
     flex-grow : 0
     min-height: 0 !important
 
-.ts.card > .extra.content:first-child:not(:last-child)
-    border-top-width: 0
-    border-bottom   : $card_extraBorder
+.ts.card > .extra.content:first-child
+    border-top: 0
 
-.ts.card > .extra.content:not(:first-child):not(:last-child)
-    border-top-width: $card_extraBorder
-    border-bottom   : $card_extraBorder
-    
+.ts.card > .extra.content + .content
+    border-top: $card_extraBorder
+
+.ts.card > .extra.content:last-child
+    border-bottom-left-radius : $card_borderRadius
+    border-bottom-right-radius: $card_borderRadius
+
 //-------------------//
-//      Emphasis  
+//      Emphasis
 //-------------------//
 
 .ts.card.primary
@@ -279,26 +298,26 @@
 .ts.card.negative
     border-bottom-width: $card_coloredBorderWidth
     border-bottom-color: $card_negativeBorderColor
-    
+
 //-------------------//
 //  Inverted Colors
-//-------------------// 
-    
+//-------------------//
+
 .ts.card.basic
-    +card-inverted-variant($card_defaultTextColor, $card_defaultBackgroundColor, $card_defaultBorderColor)
+    +card-inverted-variant($card_defaultColors)
 .ts.card.inverted
     border-bottom-width: $card_borderWidth
-    +card-inverted-variant($card_invertedTextColor, $card_invertedBackgroundColor, $card_invertedBorderColor)
+    +card-inverted-variant($card_invertedColors)
 .ts.card.inverted.primary
-    +card-inverted-variant($card_primaryTextColor, $card_primaryBackgroundColor, $card_primaryBorderColor)
+    +card-inverted-variant($card_primaryColors)
 .ts.card.inverted.info
-    +card-inverted-variant($card_infoTextColor, $card_infoBackgroundColor, $card_infoBorderColor)
+    +card-inverted-variant($card_infoColors)
 .ts.card.inverted.warning
-    +card-inverted-variant($card_warningTextColor, $card_warningBackgroundColor, $card_warningBorderColor)
+    +card-inverted-variant($card_warningColors)
 .ts.card.inverted.positive
-    +card-inverted-variant($card_positiveTextColor, $card_positiveBackgroundColor, $card_positiveBorderColor)
+    +card-inverted-variant($card_positiveColors)
 .ts.card.inverted.negative
-    +card-inverted-variant($card_negativeTextColor, $card_negativeBackgroundColor, $card_negativeBorderColor)
+    +card-inverted-variant($card_negativeColors)
 
 //-------------------//
 //      Disabled
@@ -409,7 +428,7 @@
 
 //-------------------//
 //     Stackable
-//-------------------// 
+//-------------------//
 
 +rwd-serious(mobile)
     .ts.stackable.cards:not(.waterfall)
@@ -428,7 +447,7 @@
 
 //-------------------//
 //     Doubling
-//-------------------// 
+//-------------------//
 
 .ts.cards.doubling.two:not(.waterfall)
     +rwd-serious(mobile)
