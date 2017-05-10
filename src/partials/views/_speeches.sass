@@ -1,12 +1,12 @@
 @charset "UTF-8"
-@import ../../variables/views/chatroom.variables
+@import ../../variables/views/speeches.variables
 
 //*******************************//
 //            Variations
 //*******************************//
 
 @mixin chatroom-message-variant($color, $backgroundColor, $borderColor)
-    .text
+    .bubble
         background-color: $backgroundColor
         color           : $color
         border-color    : $borderColor
@@ -21,7 +21,7 @@
 //              Main
 //*******************************//
 
-.ts.chatroom
+.ts.speeches
     position: relative
     width   : 100%
 
@@ -29,19 +29,19 @@
 //             Header
 //*******************************//
 
-.ts.chatroom > .header
+.ts.speeches > .header
 
 //*******************************//
 //            Content
 //*******************************//
 
-.ts.chatroom > .content
+.ts.speeches .speech
 
 //*******************************//
 //            Message
 //*******************************//
 
-.ts.chatroom > .content .message
+.ts.speeches .speech
     display       : flex
     flex-direction: row
     margin-bottom : $chatroom_messageMarginBottom
@@ -51,12 +51,12 @@
 //       Avatar
 //-------------------//
 
-.ts.chatroom > .content .message .avatar
+.ts.speeches .speech .avatar
     border-radius: $chatroom_messageAvatarBorderRadius
     box-shadow   : $chatroom_avatarBoxShadow
     height       : 0
 
-.ts.chatroom > .content .message .avatar img
+.ts.speeches .speech .avatar img
     border-radius: $chatroom_messageAvatarBorderRadius
     width        : $chatroom_avatarWidth
     height       : $chatroom_avatarHeight
@@ -65,7 +65,7 @@
 //       Content
 //-------------------//
 
-.ts.chatroom > .content .message .content
+.ts.speeches .speech .content
     margin-left   : $chatroom_messageNoAvatarDistance
     margin-right  : 0
     display       : flex
@@ -76,7 +76,8 @@
 //    Outer Author
 //-------------------//
 
-.ts.chatroom > .content .message > .author
+.ts.speeches .speech > .author,
+.ts.speeches .speech > .meta,
     padding-left: calc((#{$chatroom_avatarSizeCalc}) + #{$chatroom_messageArrowDistance} + #{$chatroom_messageArrowSize})
     width       : 100%
 
@@ -84,17 +85,17 @@
 // Content With Avatar
 //-------------------//
 
-.ts.chatroom > .content .message .avatar + .content
+.ts.speeches .speech .avatar + .content
     margin-left: $chatroom_messageDistance
 
 //-------------------//
 //        Text
 //-------------------//
 
-.ts.chatroom > .content .message .content
+.ts.speeches .speech .content
     +chatroom-message-variant($chatroom_messageTextColor, $chatroom_messageBackgroundColor, $chatroom_messageBorderColor)
 
-.ts.chatroom > .content .message .content .text
+.ts.speeches .speech .content .bubble
     position     : relative
     display      : table
     padding      : $chatroom_messagePadding
@@ -110,7 +111,7 @@
 //      Pointing
 //-------------------//
 
-.ts.chatroom > .content .message.pointing .text:first-child:after
+.ts.speeches .speech .pointing.bubble:first-child:after
     display     : block
     position    : absolute
     top         : $chatroom_messageArrowTop
@@ -122,7 +123,7 @@
     border-color: transparent #fff
     border-style: solid
 
-.ts.chatroom > .content .message.pointing .text:first-child:before
+.ts.speeches .speech .pointing.bubble:first-child:before
     display     : block
     position    : absolute
     top         : $chatroom_messageArrowFillTop
@@ -135,10 +136,28 @@
     border-style: solid
 
 //-------------------//
+//       Image
+//-------------------//
+
+.ts.speeches .speech .bubble .image
+    overflow: hidden
+    margin  : #{$chatroom_messageVerticalPadding} -#{$chatroom_messageHorizontalPadding}
+
+.ts.speeches .speech .bubble .author + .image
+    //margin-top: -#{$chatroom_authorDistanceToText}
+
+.ts.speeches .speech .bubble .image:only-child
+    margin       : -#{$chatroom_messageVerticalPadding} -#{$chatroom_messageHorizontalPadding}
+    border-radius: $chatroom_messageBorderRadius
+
+.ts.speeches .speech .bubble.circular .image:only-child
+    border-radius: $chatroom_messageCircularBorderRadius
+
+//-------------------//
 //      Circular
 //-------------------//
 
-.ts.chatroom > .content .message.circular .text
+.ts.speeches .speech .bubble.circular
     border-radius: $chatroom_messageCircularBorderRadius
     padding-left : $chatroom_messageCircularVerticalPadding
     padding-right: $chatroom_messageCircularVerticalPadding
@@ -147,7 +166,7 @@
 //        Meta
 //-------------------//
 
-.ts.chatroom > .content .message .meta
+.ts.speeches .speech .meta
     margin-left: $chatroom_messageHorizontalPadding
     margin-top : $chatroom_messageMetaMarginTop
     font-size  : $relativeTiny
@@ -156,34 +175,38 @@
     clear      : both
     display    : flex
 
-.ts.chatroom > .content .message .meta > *
+.ts.speeches .speech .meta > *
     margin-right: $chatroom_messageMetaSpacing
 
 // Inline Meta
-.ts.chatroom > .content .message .text .meta
+.ts.speeches .speech .bubble .meta
     display    : inline-flex
     margin-left: $chatroom_messageInlineMetaDistanceToText
     bottom     : $chatroom_messageInlineMetaBottomOffset
     line-height: 0
     float      : right
 
-.ts.chatroom > .content .message .text .meta .item:before
+.ts.speeches .speech .bubble > .meta
+    bottom     : $chatroom_messageInBubbleMetaBottomOffset
+    line-height: $chatroom_messageInBubbleMetaLineHeight
+
+.ts.speeches .speech .bubble .meta .item:before
     line-height: 0
 
 //-------------------//
 //    Dotted Meta
 //-------------------//
 
-.ts.chatroom > .content .message .meta.middoted > *,
-.ts.chatroom > .content .message .meta.bulleted > *
+.ts.speeches .speech .meta.middoted > *,
+.ts.speeches .speech .meta.bulleted > *
     margin-right: 0
-.ts.chatroom > .content .message .meta.middoted > *:not(:first-child):before
+.ts.speeches .speech .meta.middoted > *:not(:first-child):before
     +extend(is-dot)
 
     margin-left : $chatroom_messageMetaSpacing / 1.5
     margin-right: $chatroom_messageMetaSpacing / 1.5
     content     : '·'
-.ts.chatroom > .content .message .meta.bulleted > *:not(:first-child):before
+.ts.speeches .speech .meta.bulleted > *:not(:first-child):before
     +extend(is-dot)
 
     margin-left : $chatroom_messageMetaSpacing / 1.5
@@ -194,50 +217,50 @@
 //    Right Message
 //-------------------//
 
-.ts.chatroom > .content .right.message
+.ts.speeches .speech.right
     flex-direction: row-reverse
 
 /** Content */
-.ts.chatroom > .content .right.message .content
+.ts.speeches .speech.right .content
     margin-right: $chatroom_messageNoAvatarDistance
     margin-left : 0
     align-items : flex-end
 
 /** Author */
-.ts.chatroom > .content .right.message > .author
+.ts.speeches .speech.right > .author
     padding-right: calc((#{$chatroom_avatarSizeCalc}) + #{$chatroom_messageArrowDistance} + #{$chatroom_messageArrowSize})
     text-align   : right
 
 /** Content with avatar */
-.ts.chatroom > .content .right.message .avatar + .content
+.ts.speeches .speech.right .avatar + .content
     margin-right: $chatroom_messageDistance
 
 /** Arrow border */
-.ts.chatroom > .content .right.message .text:first-child:after
+.ts.speeches .speech.right .bubble.pointing:first-child:after
     right       : -#{$chatroom_messageArrowDistance}
     bottom      : auto
     left        : auto
     border-width: $chatroom_messageArrowSize 0 $chatroom_messageArrowSize $chatroom_messageArrowSize
 
 /** Fill arrow */
-.ts.chatroom > .content .right.message .text:first-child:before
+.ts.speeches .speech.right .bubble.pointing:first-child:before
     right       : -#{$chatroom_messageArrowFillDistance}
     bottom      : auto
     left        : auto
     border-width: $chatroom_messageArrowBorderSize 0 $chatroom_messageArrowBorderSize $chatroom_messageArrowBorderSize
 
 /** Meta */
-.ts.chatroom > .content .right.message .meta
+.ts.speeches .speech.right .meta
     margin-left    : 0
     margin-right   : $chatroom_messageHorizontalPadding
     text-align     : right
     justify-content: flex-end
 
 //-------------------//
-//      Divider    
+//      Divider
 //-------------------//
 
-.ts.chatroom > .content > .divider
+.ts.speeches .speech > .divider
     display      : table
     margin-bottom: $chatroom_dividerMarginBottom
     white-space  : nowrap
@@ -250,8 +273,8 @@
     opacity      : $chatroom_dividerOpacity
 
 /** Divider line */
-.ts.chatroom > .content > .divider:before,
-.ts.chatroom > .content > .divider:after
+.ts.speeches .speech > .divider:before,
+.ts.speeches .speech > .divider:after
     position           : relative
     display            : table-cell
     top                : 50%
@@ -261,21 +284,21 @@
     background-repeat  : no-repeat
     background-image   : $chatroom_dividerBackgroundURL
 
-.ts.chatroom > .content > .divider:after
+.ts.speeches .speech > .divider:after
     background-position: left $chatroom_dividerDistance top 50%
 
 //-------------------//
 //       Author
 //-------------------//
 
-.ts.chatroom > .content .message .content .text .author,
-.ts.chatroom > .content .message > .author
+.ts.speeches .speech .content .bubble .author,
+.ts.speeches .speech > .author
     color        : $chatroom_authorTextColor
-    margin-bottom: .3em
+    margin-bottom: $chatroom_authorDistanceToText
     font-weight  : bold
 
 /** Inline author */
-.ts.chatroom > .content .message .content .text .author.inline
+.ts.speeches .speech .content .bubble .author.inline
     margin-bottom: 0
     display      : inline
 
@@ -283,67 +306,78 @@
 //       Footer
 //-------------------//
 
-.ts.chatroom > .footer
+.ts.speeches > .footer
 
 //-------------------//
 //       Sizes
 //-------------------//
 
-.ts.chatroom.tiny
+.ts.speeches.tiny
     font-size: $tiny
-.ts.chatroom.small
+.ts.speeches.small
     font-size: $small
-.ts.chatroom.medium,
-.ts.chatroom
+.ts.speeches.medium,
+.ts.speeches
     font-size: $medium
-.ts.chatroom.large
+.ts.speeches.large
     font-size: $large
-.ts.chatroom.big
+.ts.speeches.big
     font-size: $big
 
 //-------------------//
 //       Group
 //-------------------//
 
-.ts.chatroom > .content .group .message:not(:last-child) .avatar
+.ts.speeches > .group .speech:not(:last-child) .avatar
     visibility: hidden
 
-.ts.chatroom > .content .group .message:not(:last-child) .text:after,
-.ts.chatroom > .content .group .message:not(:last-child) .text:before,
+.ts.speeches > .group .speech:not(:last-child) .bubble:after,
+.ts.speeches > .group .speech:not(:last-child) .bubble:before,
     display: none
 
-.ts.chatroom > .content .group .message:not(:last-child) .content > .meta
+//.ts.speeches > .group .speech:not(:last-child) .content > .meta,
+.ts.speeches > .group .speech:not(:last-child) > .meta
     display: none
 
-.ts.chatroom > .content .group .message:not(:first-child) .author
+.ts.speeches > .group .speech:not(:first-child) .author
     display: none
 
 // Circular Group
-.ts.chatroom > .content .group .message.circular:first-child:not(:last-child):not(.right) .text
+.ts.speeches > .group .speech:first-child:not(:last-child):not(.right) .bubble.circular
     border-bottom-left-radius: $chatroom_messageBorderRadius
-.ts.chatroom > .content .group .message.circular:not(:last-child):not(:first-child):not(.right) .text
+.ts.speeches > .group .speech:not(:last-child):not(:first-child):not(.right) .bubble.circular
     border-top-left-radius   : $chatroom_messageBorderRadius
     border-bottom-left-radius: $chatroom_messageBorderRadius
-.ts.chatroom > .content .group .message.circular:last-child:not(:first-child):not(.right) .text
+.ts.speeches > .group .speech:last-child:not(:first-child):not(.right) .bubble.circular
     border-top-left-radius: $chatroom_messageBorderRadius
 
-.ts.chatroom > .content .group .right.message.circular:first-child:not(:last-child) .text
+.ts.speeches > .group .speech.right:first-child:not(:last-child) .bubble.circular
     border-bottom-right-radius: $chatroom_messageBorderRadius
-.ts.chatroom > .content .group .right.message.circular:not(:last-child):not(:first-child) .text
+.ts.speeches > .group .speech.right:not(:last-child):not(:first-child) .bubble.circular
     border-top-right-radius   : $chatroom_messageBorderRadius
     border-bottom-right-radius: $chatroom_messageBorderRadius
-.ts.chatroom > .content .group .right.message.circular:last-child:not(:first-child) .text
+.ts.speeches > .group .speech.right:last-child:not(:first-child) .bubble.circular
     border-top-right-radius: $chatroom_messageBorderRadius
 
 // Avatar aligned to the bottom
-.ts.chatroom > .content .group .message:last-child .avatar
+.ts.speeches > .group .speech:last-child .avatar
     align-self: flex-end
     height    : auto
+
+// Pointing aligned to the bottom
+.ts.speeches > .group .speech .pointing.bubble:first-child:after
+    top   : auto
+    bottom: $chatroom_messageArrowTop
+
+.ts.speeches > .group .speech .pointing.bubble:first-child:before
+    top   : auto
+    bottom: $chatroom_messageArrowFillTop
+
 //-------------------//
 //      Coupling
 //-------------------//
 
-.ts.chatroom > .content .message .content .text .ts.quote
+.ts.speeches .speech .bubble .ts.quote
     margin-bottom: $chatroom_quoteMarginBottom
     padding-left : $chatroom_quotePaddingLeft
 
@@ -351,19 +385,19 @@
 //      Emphasis
 //-------------------//
 
-.ts.chatroom > .content .primary.message .content
+.ts.speeches .speech.primary .bubble
     +chatroom-message-variant($chatroom_primaryTextColor, $chatroom_primaryBackgroundColor, $chatroom_primaryBorderColor)
-.ts.chatroom > .content .info.message .content
+.ts.speeches .speech.info .bubble
     +chatroom-message-variant($chatroom_infoTextColor, $chatroom_infoBackgroundColor, $chatroom_infoBorderColor)
-.ts.chatroom > .content .warning.message .content
+.ts.speeches .speech.warning .bubble
     +chatroom-message-variant($chatroom_warningTextColor, $chatroom_warningBackgroundColor, $chatroom_warningBorderColor)
-.ts.chatroom > .content .positive.message .content
+.ts.speeches .speech.positive .bubble
     +chatroom-message-variant($chatroom_positiveTextColor, $chatroom_positiveBackgroundColor, $chatroom_positiveBorderColor)
-.ts.chatroom > .content .negative.message .content
+.ts.speeches .speech.negative .bubble
     +chatroom-message-variant($chatroom_negativeTextColor, $chatroom_negativeBackgroundColor, $chatroom_negativeBorderColor)
-.ts.chatroom > .content .inverted.message .content
+.ts.speeches .speech.inverted .bubble
     +chatroom-message-variant($chatroom_invertedTextColor, $chatroom_invertedBackgroundColor, $chatroom_invertedBorderColor)
-.ts.chatroom > .content .secondary.message .content
+.ts.speeches .speech.secondary .bubble
     +chatroom-message-variant($chatroom_secondaryColor, $chatroom_secondaryBackgroundColor, $chatroom_messageBorderColor)
-.ts.chatroom > .content .tertiary.message .content
+.ts.speeches .speech.tertiary .bubble
     +chatroom-message-variant($chatroom_tertiaryColor, $chatroom_tertiaryBackgroundColor, $chatroom_messageBorderColor)
