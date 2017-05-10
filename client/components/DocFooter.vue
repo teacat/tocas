@@ -8,7 +8,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="//github.com/TeaMeow/TocasUI/">Github</a>
+                    <a href="//github.com/TeaMeow/TocasUI/">GitHub</a>
                 </li>
                 <li>
                     <router-link to="/examples/">{{ $t('footer.examples') }}</router-link>
