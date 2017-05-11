@@ -1277,3 +1277,86 @@ ts.fn.contextmenu = (option) ->
                 .one animationEnd, ->
                     ts(@)
                         .removeClass 'animating'
+
+###
+The embed function.
+###
+
+ts.fn.embed = (option) ->
+    @each ->
+        source      = @.getAttribute 'data-source'
+        url         = @.getAttribute 'data-url'
+        id          = @.getAttribute 'data-id'
+        placeholder = @.getAttribute 'data-placeholder'
+        options     = @.getAttribute('data-options') or ''
+        query       = @.getAttribute('data-query')   or ''
+        icon        = @.getAttribute('data-icon')    or 'video play'
+        embedEl     = @
+
+        # Add the question mark after the query string.
+        if query isnt ''
+            query = '?' + query
+
+        # Load the placeholder image from the attribute and
+        # create the image then append it to the embed element.
+        if placeholder
+            placeholderEl           = document.createElement 'img'
+            placeholderEl.src       = placeholder
+            placeholderEl.className = 'placeholder'
+
+            this.appendChild placeholderEl
+
+        # Prepare the icon.
+        if icon and (source or url or id)
+            iconEl           = document.createElement 'i'
+            iconEl.className = icon + ' icon'
+
+            # The icon click event.
+            ts(iconEl).on 'click', ->
+                urlExtension = if url then url.split('.').pop() else ''
+
+                # Create the <video> element if the end of the url is a file extension.
+                if urlExtension.toUpperCase().indexOf('MOV')  isnt -1 or urlExtension.toUpperCase().indexOf('MP4')  isnt -1 or
+                   urlExtension.toUpperCase().indexOf('WEBM') isnt -1 or urlExtension.toUpperCase().indexOf('OGG')  isnt -1
+                    videoEl     = document.createElement 'video'
+                    videoEl.src = url
+
+                    # Extract the options string, and apply it to the <video> tag.
+                    if options isnt ''
+                        options.split(',').forEach (pair) ->
+                            p     = pair.split('=')
+                            key   = p[0]
+                            value = p[1] or ''
+                            videoEl.setAttribute key.trim(), value.trim()
+
+                    # Then append the new video element to the embed element.
+                    ts(embedEl).addClass 'active'
+                    embedEl.appendChild videoEl
+
+                # Otherwise we create an iframe element to open the target url.
+                else
+                    iframeEl             = document.createElement 'iframe'
+                    iframeEl.width       = '100%'
+                    iframeEl.height      = '100%'
+                    iframeEl.frameborder = '0'
+                    iframeEl.scrolling   = 'no'
+                    iframeEl.setAttribute 'webkitAllowFullScreen', ''
+                    iframeEl.setAttribute 'mozallowfullscreen'   , ''
+                    iframeEl.setAttribute 'allowFullScreen'      , ''
+
+                    # Create the iframe url based on the source.
+                    if source
+                        switch source
+                            when 'youtube'
+                                iframeEl.src = 'https://www.youtube.com/embed/'  + id + query
+                            when 'viemo'
+                                iframeEl.src = 'https://player.vimeo.com/video/' + id + query
+                    # Otherwise based on the url.
+                    else if url
+                        iframeEl.src = url + query
+
+                    ts(embedEl).addClass 'active'
+                    embedEl.appendChild iframeEl
+
+            # Append the icon element to the embed element.
+            this.appendChild iconEl

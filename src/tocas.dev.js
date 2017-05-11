@@ -735,7 +735,7 @@ z_dropdownActive = 10;
 
 z_dropdownHovered = 11;
 
-slider_trackColor = "#DDD";
+slider_trackColor = "#e9e9e9";
 
 slider_progressColor = "rgb(150, 150, 150)";
 
@@ -1305,5 +1305,79 @@ ts.fn.contextmenu = function(option) {
         return ts(this).removeClass('animating');
       });
     });
+  });
+};
+
+
+/*
+The contextmenu function.
+ */
+
+ts.fn.embed = function(option) {
+  return this.each(function() {
+    var embedEl, icon, iconEl, id, options, placeholder, placeholderEl, query, source, url;
+    source = this.getAttribute('data-source');
+    url = this.getAttribute('data-url');
+    id = this.getAttribute('data-id');
+    placeholder = this.getAttribute('data-placeholder');
+    options = this.getAttribute('data-options') || '';
+    query = this.getAttribute('data-query') || '';
+    icon = this.getAttribute('data-icon') || 'video play';
+    embedEl = this;
+    if (query !== '') {
+      query = '?' + query;
+    }
+    if (placeholder) {
+      placeholderEl = document.createElement('img');
+      placeholderEl.src = placeholder;
+      placeholderEl.className = 'placeholder';
+      this.appendChild(placeholderEl);
+    }
+    if (icon && (source || url || id)) {
+      iconEl = document.createElement('i');
+      iconEl.className = icon + ' icon';
+      ts(iconEl).on('click', function() {
+        var iframeEl, urlExtension, videoEl;
+        urlExtension = url ? url.split('.').pop() : '';
+        if (urlExtension.toUpperCase().indexOf('MOV') !== -1 || urlExtension.toUpperCase().indexOf('MP4') !== -1 || urlExtension.toUpperCase().indexOf('WEBM') !== -1 || urlExtension.toUpperCase().indexOf('OGG') !== -1) {
+          videoEl = document.createElement('video');
+          videoEl.src = url;
+          if (options !== '') {
+            options.split(',').forEach(function(pair) {
+              var key, p, value;
+              p = pair.split('=');
+              key = p[0];
+              value = p[1] || '';
+              return videoEl.setAttribute(key.trim(), value.trim());
+            });
+          }
+          ts(embedEl).addClass('active');
+          return embedEl.appendChild(videoEl);
+        } else {
+          iframeEl = document.createElement('iframe');
+          iframeEl.width = '100%';
+          iframeEl.height = '100%';
+          iframeEl.frameborder = '0';
+          iframeEl.scrolling = 'no';
+          iframeEl.setAttribute('webkitAllowFullScreen', '');
+          iframeEl.setAttribute('mozallowfullscreen', '');
+          iframeEl.setAttribute('allowFullScreen', '');
+          if (source) {
+            switch (source) {
+              case 'youtube':
+                iframeEl.src = 'https://www.youtube.com/embed/' + id + query;
+                break;
+              case 'viemo':
+                iframeEl.src = 'https://player.vimeo.com/video/' + id + query;
+            }
+          } else if (url) {
+            iframeEl.src = url + query;
+          }
+          ts(embedEl).addClass('active');
+          return embedEl.appendChild(iframeEl);
+        }
+      });
+      return this.appendChild(iconEl);
+    }
   });
 };
