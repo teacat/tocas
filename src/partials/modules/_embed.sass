@@ -15,7 +15,7 @@
     justify-content : center
 
 //-------------------//
-//
+//   Embed Elements
 //-------------------//
 
 .ts.embed .embed iframe
@@ -29,7 +29,7 @@
     display: none
 
 //-------------------//
-//
+//       Video
 //-------------------//
 
 .ts.embed video
@@ -43,7 +43,7 @@
     object-fit: cover
 
 //-------------------//
-//
+//       iFrame
 //-------------------//
 
 .ts.embed iframe
@@ -57,7 +57,7 @@
     padding : 0
 
 //-------------------//
-//
+//    Placeholder
 //-------------------//
 
 .ts.embed .placeholder
@@ -71,7 +71,7 @@
     object-fit: cover
 
 //-------------------//
-//
+//       Icon
 //-------------------//
 
 .ts.embed > .icon
@@ -88,18 +88,18 @@
     top      : 50%
     left     : 50%
     transform: translateX(-50%) translateY(-50%)
-    color    : nth($grey, 6)
-    font-size: 6rem
+    color    : $embed_iconColor
+    font-size: $embed_iconFontSize
     z-index  : 10
 
 .ts.embed > .icon:hover:before
-    color    : darken(nth($grey, 6), 3%)
+    color    : $embed_iconHoverColor
 .ts.embed > .icon:active:before
-    color    : darken(nth($grey, 6), 12%)
+    color    : $embed_iconActiveColor
 
 .ts.embed > .placeholder + .icon:before
-    color      : #fff
-    text-shadow: 0 0 10px rgba(35, 35, 35, .2)
+    color      : $embed_iconOnPlaceholderColor
+    text-shadow: $embed_iconOnPlaceholderTextShadow
 
 .ts.embed > .icon:after
     position  : absolute
@@ -112,28 +112,53 @@
     opacity   : .5
 
 .ts.embed > .placeholder + .icon:after
-    background: radial-gradient(transparent 45%, rgba(0, 0, 0, .1))
+    background: $embed_iconOnPlaceholderBackground
 
 //-------------------//
-//
+//     Disabled
 //-------------------//
 
 .ts.disabled.embed
+    user-select   : none
+    pointer-events: none
+    opacity       : $embed_disabledOpacity
 
 //-------------------//
-//
+//    Unreactive
 //-------------------//
 
 .ts.unreactive.embed
+    user-select   : none
+    pointer-events: none
 
 //-------------------//
-//
+//       Mask
 //-------------------//
 
 .ts.embed .mask
+    bottom: 0
+    left: 0
+    right: 0
+    position: absolute
+    background-color: rgba(0,0,0,0.5)
+    color: #fff
+    padding: calc(1rem / 1.5) 1rem
+    text-rendering: optimizelegibility
+    text-shadow: 0 0 3px rgba(0,0,0,0.8)
+    z-index: 3
+    font-size: 1.28571em
+    margin-top: -.21425em
+    line-height: 1.2857em
+    font-weight: 500
+
+.ts.embed .mask .sub.header
+    font-size: .78571em
+    margin-top: .25em
+    line-height: 1.2857em
+    font-weight: 500
 
 //-------------------//
-//
+//   Aspect Ration
 //-------------------//
 
 .ts.embed[class*="21:9"]
@@ -161,32 +186,8 @@
     padding-bottom: $embed_ratio2by3
 
 //-------------------//
-//
+//         Img
 //-------------------//
-
-//.ts.embed[class*="21:9"] img
-//    transform: translateY(#{$embed_ratio21by9 / 3})
-//.ts.embed[class*="18:9"] img
-//    transform: translateY(#{$embed_ratio18by9 / 3})
-//.ts.embed[class*="16:9"] img
-//    transform: translateY(#{$embed_ratio16by9 / 3})
-//.ts.embed[class*="1:1"] img
-//    transform: translateY(#{$embed_ratio1by1 / 3})
-//.ts.embed[class*="4:3"] img
-//    transform: translateY(#{$embed_ratio4by3 / 3})
-//.ts.embed[class*="5:2"] img
-//    transform: translateY(#{$embed_ratio5by2 / 3})
-//.ts.embed[class*="3:2"] img
-//    transform: translateY(#{$embed_ratio3by2 / 3})
-////
-//.ts.embed[class*="9:18"] img
-//    transform: translateY(#{$embed_ratio9by18 / 3})
-//.ts.embed[class*="9:16"] img
-//    transform: translateY(#{$embed_ratio9by16 / 3})
-//.ts.embed[class*="3:4"] img
-//    transform: translateY(#{$embed_ratio3by4 / 3})
-//.ts.embed[class*="2:3"] img
-//    transform: translateY(#{$embed_ratio2by3 / 3})
 
 .ts.embed img
     position  : absolute
