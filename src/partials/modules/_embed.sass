@@ -1,0 +1,198 @@
+@import ../../variables/modules/embed.variables
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.embed
+    max-width       : 100%
+    height          : 0
+    overflow        : hidden
+    background-color: $embed_backgroundColor
+    padding-bottom  : $embed_ratio16by9
+    display         : flex
+    align-items     : center
+    justify-content : center
+
+//-------------------//
+//
+//-------------------//
+
+.ts.embed .embed iframe
+    display: none
+
+.ts.embed.active .embed iframe
+    display: block
+
+.ts.embed.active .placeholder,
+.ts.embed.active .icon
+    display: none
+
+//-------------------//
+//
+//-------------------//
+
+.ts.embed video
+    position  : absolute
+    top       : 0
+    left      : 0
+    right     : 0
+    bottom    : 0
+    width     : 100%
+    height    : 100%
+    object-fit: cover
+
+//-------------------//
+//
+//-------------------//
+
+.ts.embed iframe
+    position: absolute
+    border  : none
+    width   : 100%
+    height  : 100%
+    top     : 0
+    left    : 0
+    margin  : 0
+    padding : 0
+
+//-------------------//
+//
+//-------------------//
+
+.ts.embed .placeholder
+    position  : absolute
+    cursor    : pointer
+    top       : 0
+    left      : 0
+    display   : block
+    width     : 100%
+    height    : 100%
+    object-fit: cover
+
+//-------------------//
+//
+//-------------------//
+
+.ts.embed > .icon
+    cursor: pointer
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 100%
+    z-index: 2
+
+.ts.embed > .icon:before
+    position : absolute
+    top      : 50%
+    left     : 50%
+    transform: translateX(-50%) translateY(-50%)
+    color    : nth($grey, 6)
+    font-size: 6rem
+    z-index  : 10
+
+.ts.embed > .icon:hover:before
+    color    : darken(nth($grey, 6), 3%)
+.ts.embed > .icon:active:before
+    color    : darken(nth($grey, 6), 12%)
+
+.ts.embed > .placeholder + .icon:before
+    color      : #fff
+    text-shadow: 0 0 10px rgba(35, 35, 35, .2)
+
+.ts.embed > .icon:after
+    position  : absolute
+    top       : 0
+    left      : 0
+    width     : 100%
+    height    : 100%
+    z-index   : 3
+    content   : ''
+    opacity   : .5
+
+.ts.embed > .placeholder + .icon:after
+    background: radial-gradient(transparent 45%, rgba(0, 0, 0, .1))
+
+//-------------------//
+//
+//-------------------//
+
+.ts.disabled.embed
+
+//-------------------//
+//
+//-------------------//
+
+.ts.unreactive.embed
+
+//-------------------//
+//
+//-------------------//
+
+.ts.embed .mask
+
+//-------------------//
+//
+//-------------------//
+
+.ts.embed[class*="21:9"]
+    padding-bottom: $embed_ratio21by9
+.ts.embed[class*="18:9"]
+    padding-bottom: $embed_ratio18by9
+.ts.embed[class*="16:9"]
+    padding-bottom: $embed_ratio16by9
+.ts.embed[class*="1:1"]
+    padding-bottom: $embed_ratio1by1
+.ts.embed[class*="4:3"]
+    padding-bottom: $embed_ratio4by3
+.ts.embed[class*="5:2"]
+    padding-bottom: $embed_ratio5by2
+.ts.embed[class*="3:2"]
+    padding-bottom: $embed_ratio3by2
+//
+.ts.embed[class*="9:18"]
+    padding-bottom: $embed_ratio9by18
+.ts.embed[class*="9:16"]
+    padding-bottom: $embed_ratio9by16
+.ts.embed[class*="3:4"]
+    padding-bottom: $embed_ratio3by4
+.ts.embed[class*="2:3"]
+    padding-bottom: $embed_ratio2by3
+
+//-------------------//
+//
+//-------------------//
+
+//.ts.embed[class*="21:9"] img
+//    transform: translateY(#{$embed_ratio21by9 / 3})
+//.ts.embed[class*="18:9"] img
+//    transform: translateY(#{$embed_ratio18by9 / 3})
+//.ts.embed[class*="16:9"] img
+//    transform: translateY(#{$embed_ratio16by9 / 3})
+//.ts.embed[class*="1:1"] img
+//    transform: translateY(#{$embed_ratio1by1 / 3})
+//.ts.embed[class*="4:3"] img
+//    transform: translateY(#{$embed_ratio4by3 / 3})
+//.ts.embed[class*="5:2"] img
+//    transform: translateY(#{$embed_ratio5by2 / 3})
+//.ts.embed[class*="3:2"] img
+//    transform: translateY(#{$embed_ratio3by2 / 3})
+////
+//.ts.embed[class*="9:18"] img
+//    transform: translateY(#{$embed_ratio9by18 / 3})
+//.ts.embed[class*="9:16"] img
+//    transform: translateY(#{$embed_ratio9by16 / 3})
+//.ts.embed[class*="3:4"] img
+//    transform: translateY(#{$embed_ratio3by4 / 3})
+//.ts.embed[class*="2:3"] img
+//    transform: translateY(#{$embed_ratio2by3 / 3})
+
+.ts.embed img
+    position  : absolute
+    top       : 0
+    left      : 0
+    z-index   : 1
+    width     : 100%
+    height    : 100%
+    object-fit: cover
