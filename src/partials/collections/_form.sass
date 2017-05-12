@@ -59,10 +59,16 @@
 //     Horizontal
 //-------------------//
 
-.ts.horizontal.form .field.field.field.field
-    flex-wrap: wrap
+.ts.horizontal.form .field
+    flex-wrap   : wrap
+    padding-left: $form_horizontalFieldLeftOffset
 
-.ts.horizontal.form .field.field.field > label
+    +rwd-serious(mobile)
+        padding-left  : 0
+        flex-direction: column
+        align-items   : initial
+
+.ts.horizontal.form .field.field > label
     position: absolute
     left    : 0
     top     : $form_horizontalLabelTopOffest
@@ -73,11 +79,27 @@
     word-wrap  : break-word
     white-space: normal
 
-.ts.horizontal.form .field.field
-    padding-left: $form_horizontalFieldLeftOffset
+    +rwd-serious(mobile)
+        position  : relative
+        top       : 0
+        left      : 0
+        flex      : 1
+        width     : 100%
+        margin    : $form_labelMargin
+        max-width : none
+        min-width : initial
+        text-align: left
 
-.ts.horizontal.form .field.field > label + *
-    padding-top: $form_horizontalFieldTopOffset
+.ts.horizontal.form .field > .ts.message
+    width: 100%
+
+.ts.horizontal.form .field > label + *:not(.input):not(input):not(select):not(textarea)
+    margin-top: $form_horizontalFieldTopOffset
+
+    +rwd-serious(mobile)
+        margin-top: 0
+
+
 
 //-------------------//
 //        Text
