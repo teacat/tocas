@@ -8,7 +8,7 @@
 //              Main
 //*******************************//
 
-.ts.calendar
+.ts.calendar:not(.full)
     position        : relative
     display         : inline-flex
     flex-direction  : column
@@ -19,17 +19,17 @@
     background-color: $calendar_backgroundColor
 
 //-------------------//
-//      Rounded       
+//      Rounded
 //-------------------//
 
-.ts.calendar.rounded
+.ts.calendar.rounded:not(.full)
     border-radius: $calendar_borderRadius
 
 //-------------------//
-//      Content       
+//      Content
 //-------------------//
 
-.ts.calendar .content
+.ts.calendar:not(.full) .content
     position       : relative
     display        : flex
     justify-content: center
@@ -40,10 +40,10 @@
     margin-top     : $calendar_elementMargin
 
 //-------------------//
-//       Header       
+//       Header
 //-------------------//
 
-.ts.calendar .header
+.ts.calendar:not(.full) .header
     display         : block
     background-color: #CCC
     text-align      : center
@@ -52,46 +52,46 @@
     color           : #FFF
 
 //-------------------//
-//   Prefix Suffix       
+//   Prefix Suffix
 //-------------------//
 
-.ts.calendar .date .prefix,
-.ts.calendar .date .suffix
+.ts.calendar:not(.full) .date .prefix,
+.ts.calendar:not(.full) .date .suffix
     font-size: .7em
     opacity  : 0.5
 
-.ts.calendar .date .prefix
+.ts.calendar:not(.full) .date .prefix
     margin-right: -.2em
-    
-.ts.calendar .date .suffix
+
+.ts.calendar:not(.full) .date .suffix
     margin-left: -.2em
 
 //-------------------//
-//       Date       
+//       Date
 //-------------------//
 
-.ts.calendar .date
+.ts.calendar:not(.full) .date
     display    : block
     text-align : center
     font-size  : 1.5em
     line-height: 1
     font-weight: bold
 
-.ts.calendar .date:only-child
+.ts.calendar:not(.full) .date:only-child
     margin-top: -#{$calendar_elementMargin}
 
 //-------------------//
-//       Range       
+//       Range
 //-------------------//
 
-.ts.calendar .date.range
+.ts.calendar:not(.full) .date.range
     font-size: 1.2em
 
 //-------------------//
-//       Extra       
+//       Extra
 //-------------------//
 
-.ts.calendar .extra
+.ts.calendar:not(.full) .extra
     display      : block
     text-align   : center
     font-size    : .8em
@@ -100,7 +100,7 @@
     opacity      : 0.5
 
 //-------------------//
-//       Sizes       
+//       Sizes
 //-------------------//
 
 .ts.calendar.mini
@@ -119,3 +119,288 @@
     font-size: $relativeHuge
 .ts.calendar.massive
     font-size: $relativeMassive
+
+//*******************************//
+//            Full
+//*******************************//
+
+.ts.full.calendar > .days,
+.ts.full.calendar > .headers
+    display: grid
+
+    grid-template-columns: repeat(7, 1fr)
+    grid-gap             : $calendar_gaps
+
+.ts.full.calendar > .days
+    grid-template-rows: repeat(5, 1fr)
+
+//-------------------//
+//      Doubling
+//-------------------//
+
+.ts.full.calendar.doubling > .days
+    +rwd-serious(mobile)
+        grid-template-columns: repeat(2, 1fr)
+        grid-gap             : $calendar_mobileGaps
+    +rwd-serious(tablet)
+        grid-template-columns: repeat(3, 1fr)
+        grid-gap             : $calendar_mobileGaps
+
+//-------------------//
+//     Stackable
+//-------------------//
+
+.ts.full.calendar.stackable > .days
+    +rwd-serious(mobile)
+        grid-template-columns: repeat(1, 1fr)
+
+.ts.full.calendar.stackable > .days > .day > .header.header
+    +rwd-serious(mobile)
+        text-align : left
+        margin-left: 0
+
+.ts.full.calendar.stackable > .headers,
+.ts.full.calendar.doubling > .headers
+    +rwd-serious(mobile)
+        display: none
+
+//-------------------//
+//      Headers
+//-------------------//
+
+.ts.full.calendar > .headers > .item
+    text-align: right
+    padding   : $calendar_fullItemPadding
+    color     : $calendar_fullHeaderTextColor
+
+//-------------------//
+//        Day
+//-------------------//
+
+.ts.full.calendar > .days > .day
+    display       : flex
+    flex-direction: column
+    padding       : $calendar_fullItemPadding
+    border        : $calendar_fullItemBorder
+    border-radius : $calendar_fullItemBorderRadius
+
+    text-overflow: ellipsis
+    overflow     : hidden
+    white-space  : nowrap
+
+//-------------------//
+//        Basic
+//-------------------//
+
+.ts.full.basic.calendar > .days > .day
+    border       : 0
+    border-radius: 0
+    border-top   : $calendar_basicBorderTop
+
+//-------------------//
+//     Day Header
+//-------------------//
+
+.ts.full.calendar > .days > .day > .header
+    text-align   : right
+    font-size    : $calendar_fullHeaderFontSize
+    margin-bottom: $calendar_fullHeaderMarginBottom
+    min-height   : $calendar_fullHeaderCurrentSize
+    color        : $calendar_fullHeaderTextColor
+
+//-------------------//
+//       Event
+//-------------------//
+
+.ts.full.calendar > .days > .day  > .event
+    margin-bottom: $calendar_fullEventMarginBottom
+    z-index      : 1
+
+//-------------------//
+//    Single Event
+//-------------------//
+
+.ts.full.calendar > .days > .day  > .event
+    display: flex
+
+    text-overflow: ellipsis
+    overflow     : hidden
+    white-space  : nowrap
+
+//-------------------//
+// AllDay Event Header
+//-------------------//
+
+.ts.full.calendar > .days > .day  > .event.all.day
+    padding: $calendar_fullAllDayEventPadding
+    margin : $calendar_fullAllDayEventMargin
+
+    background-color: $calendar_fullAllDayBackgroundColor
+    color           : $calendar_fullAllDayTextColor
+
+//-------------------//
+//     Event Time
+//-------------------//
+
+.ts.full.calendar > .days > .day  > .event > .time
+    margin-left : auto
+    font-size   : $calendar_fullTimeFontSize
+    opacity     : $calendar_fullTimeOpacity
+    white-space : nowrap
+    padding-left: $calendar_fullTimeDistanceToHeader
+
+//-------------------//
+//
+//-------------------//
+
+.ts.full.calendar > .days > .day > .symbol
+    position: absolute
+    bottom  : 0
+    right   : 0
+
+.ts.full.calendar > .days > .day > .symbol .icon
+    position: absolute
+    right   : 0
+    bottom  : 0
+    overflow: hidden
+    width   : $calendar_fullSymbolSize
+    height  : $calendar_fullSymbolSize
+
+    margin-left : 0
+    margin-right: 0
+
+    pointer-events: none
+
+    font-size  : $calendar_fullSymbolFontSize
+    line-height: $calendar_fullSymbolLineHeight
+    opacity    : $calendar_fullSymbolOpacity
+
+//-------------------//
+//      Striped
+//-------------------//
+
+.ts.full.calendar.striped > .days > .day:nth-child(2n)
+    background-color: $calendar_fullStripedBackgroundColor
+
+//-------------------//
+//       Celled
+//-------------------//
+
+.ts.full.calendar.celled > .days,
+.ts.full.calendar.celled > .headers
+    grid-gap: $calendar_fullCelledBorderWidth
+
+.ts.full.calendar.celled > .days > .day,
+.ts.full.calendar.celled > .headers > .item
+    box-shadow: 0 0 0 $calendar_fullCelledBorderWidth $calendar_fullCelledBorderColor
+
+.ts.full.calendar.celled > .days > .day
+    border       : 0
+    border-radius: 0
+
+//-------------------//
+//    Disabled Day
+//-------------------//
+
+.ts.full.calendar > .days > .disabled.day
+    opacity       : $calendar_fullDisabledOpacity
+    pointer-events: none
+    user-select   : none
+
+//-------------------//
+//    Weekend Day
+//-------------------//
+
+.ts.full.calendar > .days > .weekend.day.secondary > .header,
+.ts.full.calendar > .days > .special.day.secondary > .header
+    color: $calendar_weekendDaySecondaryColor
+
+.ts.full.calendar > .days > .weekend.day > .header,
+.ts.full.calendar > .days > .special.day > .header
+    color: $calendar_weekendDayColor
+
+//-------------------//
+//    Current Day
+//-------------------//
+
+.ts.full.calendar > .days > .current.day > .header
+    display: inline-block
+    width  : $calendar_fullHeaderCurrentSize
+    height : $calendar_fullHeaderCurrentSize
+    padding: 1px 3px 0px 1px
+
+    margin-left  : auto
+    border-radius: $circularRadius
+
+    background-color: $calendar_currentDayBackgroundColor
+    color           : $calendar_currentDayTextColor
+
+//-------------------//
+//     Active Day
+//-------------------//
+
+.ts.full.calendar > .days > .active.day
+    border-top-color: $calendar_activeColor
+
+//-------------------//
+//    Link Event
+//-------------------//
+
+.ts.full.calendar > .days > .day > a.event:hover
+    opacity: 0.8
+.ts.full.calendar > .days > .day > a.event:active
+    opacity: 1
+
+//-------------------//
+//    Emphasis Day
+//-------------------//
+
+.ts.full.calendar:not(.basic) > .days > .active.day,
+.ts.full.calendar:not(.basic) > .days > .warning.day,
+.ts.full.calendar:not(.basic) > .days > .info.day,
+.ts.full.calendar:not(.basic) > .days > .primary.day,
+.ts.full.calendar:not(.basic) > .days > .negative.day,
+.ts.full.calendar:not(.basic) > .days > .positive.day
+    border-top-width: 2px
+
+.ts.full.calendar > .days > .warning.day
+    border-top-color: $calendar_warningColor
+.ts.full.calendar > .days > .info.day
+    border-top-color: $calendar_infoColor
+.ts.full.calendar > .days > .primary.day
+    border-top-color: $calendar_primaryColor
+.ts.full.calendar > .days > .negative.day
+    border-top-color: $calendar_negativeColor
+.ts.full.calendar > .days > .positive.day
+    border-top-color: $calendar_positiveColor
+
+//-------------------//
+//   Emphasis Event
+//-------------------//
+
+.ts.full.calendar > .days > .day > .warning.event[class*="all day"]
+    background-color: $calendar_warningColor
+    color           : $calendar_warningTextColor
+.ts.full.calendar > .days > .day > .info.event[class*="all day"]
+    background-color: $calendar_infoColor
+    color           : $calendar_infoTextColor
+.ts.full.calendar > .days > .day > .primary.event[class*="all day"]
+    background-color: $calendar_primaryColor
+    color           : $calendar_primaryTextColor
+.ts.full.calendar > .days > .day > .negative.event[class*="all day"]
+    background-color: $calendar_negativeColor
+    color           : $calendar_negativeTextColor
+.ts.full.calendar > .days > .day > .positive.event[class*="all day"]
+    background-color: $calendar_positiveColor
+    color           : $calendar_positiveTextColor
+
+.ts.full.calendar > .days > .day > .warning.event:not([class*="all day"])
+    color: $calendar_warningColor
+.ts.full.calendar > .days > .day > .info.event:not([class*="all day"])
+    color: $calendar_infoColor
+.ts.full.calendar > .days > .day > .primary.event:not([class*="all day"])
+    color: $calendar_primaryColor
+.ts.full.calendar > .days > .day > .negative.event:not([class*="all day"])
+    color: $calendar_negativeColor
+.ts.full.calendar > .days > .day > .positive.event:not([class*="all day"])
+    color: $calendar_positiveColor
