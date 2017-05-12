@@ -251,30 +251,36 @@
 
 /* bottom attached */
 .ts.progress.attached
-    background: $progress_attachedBackground
     position  : relative
     border    : none
     margin    : 0em
+    display   : block
+    overflow  : hidden
 
 .ts.progress.attached,
 .ts.progress.attached .bar
-    display      : block
-    height       : $progress_attachedHeight
-    padding      : 0px
-    overflow     : hidden
-    border-radius: 0em 0em $progress_attachedBorderRadius $progress_attachedBorderRadius
-
-.ts.progress.attached .bar
     border-radius: 0em
+
+.ts.progress[class*="top attached"],
+.ts.progress[class*="bottom attached"]
+    background: $progress_attachedBackground
+    height    : $progress_attachedHeight
+    padding   : 0px
+
+.ts.progress[class*="bottom attached"],
+.ts.progress[class*="bottom attached"] .bar
+    border-bottom-left-radius: $progress_attachedBorderRadius
+    border-top-left-radius   : 0
+    border-top-right-radius  : 0
 
 /* top attached */
-.ts.progress.top.attached,
-.ts.progress.top.attached .bar
-    top          : 0px
-    border-radius: $progress_attachedBorderRadius $progress_attachedBorderRadius 0em 0em
+.ts.progress[class*="top attached"],
+.ts.progress[class*="top attached"] .bar
+    top: 0px
 
-.ts.progress.top.attached .bar
-    border-radius: 0em
+    border-top-left-radius    : $progress_attachedBorderRadius
+    border-bottom-left-radius : 0
+    border-bottom-right-radius: 0
 
 //-------------------//
 //      Coupling
