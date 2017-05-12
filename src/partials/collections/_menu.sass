@@ -346,7 +346,7 @@
     border-radius             : $menu_borderRadius
     border-bottom-left-radius : 0
     border-bottom-right-radius: 0
-.ts.menu.vertical > .item.item:last-child
+.ts.menu.vertical:not(.secondary) > .item.item:last-child
     border-radius          : $menu_borderRadius
     border-top-left-radius : 0
     border-top-right-radius: 0
@@ -691,14 +691,55 @@
     color: $menu_subMenuActiveTextColor
 
 //-------------------//
+//       Text
+//-------------------//
+
+.ts.menu.text
+    border-radius: 0
+    box-shadow   : none
+    border       : 0
+
+.ts.menu.text .item
+    padding      : 0
+    border       : 0
+
+.ts.menu.text a.item:not(.active)
+    opacity: $menu_textItemOpacity
+
+.ts.menu.text .item:hover:not(.active)
+    background: transparent
+    opacity   : 1
+
+.ts.menu.text .item:active,
+.ts.menu.text .item.active,
+.ts.menu.text .item.active:active
+    background: transparent
+
+.ts.menu.text .header.item
+
+// Vertical
+.ts.vertical.menu.text .item
+    margin-bottom: $menu_textItemVerticalMargin
+.ts.vertical.menu.text .item:last-child
+    margin-bottom: 0
+
+// Horizontal
+.ts.menu.text:not(.vertical) .item
+    margin-right: $menu_textItemHorizontalMargin
+.ts.menu.text:not(.vertical) .item:last-child
+    margin-right: 0
+
+//-------------------//
 //      Attached
 //-------------------//
 
 .ts.menu[class*="top attached"]
     margin-bottom             : 0
-    border-bottom             : 0
     border-bottom-left-radius : 0
     border-bottom-right-radius: 0
+
+.ts.menu[class*="top attached"]:not(.tabbed)
+    border-bottom: 0
 
 .ts.menu[class*="top attached"] .item:first-child
     border-bottom-left-radius : 0
