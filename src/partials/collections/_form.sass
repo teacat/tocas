@@ -14,10 +14,12 @@
 //       Inline
 //-------------------//
 
-.ts.form .inline.fields
+.ts.form .inline.fields,
+.ts.horizontal.form .fields
     align-items: center
 
-.ts.form .inline.field label
+.ts.form .inline.field label,
+.ts.horizontal.form .field label,
     display       : inline-block
     width         : auto
     margin-top    : 0
@@ -28,22 +30,54 @@
     color         : $form_inlineLabelColor
 
 .ts.form .inline.field > :first-child,
-.ts.form .inline.fields .field > :first-child
+.ts.form .inline.fields .field > :first-child,
+.ts.horizontal.form .field > :first-child,
+.ts.horizontal.form .fields .field > :first-child
     margin: 0 $form_inlineLabelDistance 0 0
 
 .ts.form .inline.field > :only-child,
-.ts.form .inline.fields .field > :only-child
+.ts.form .inline.fields .field > :only-child,
+.ts.horizontal.form .field > :only-child,
+.ts.horizontal.form .fields .field > :only-child
     margin: 0
 
 .ts.form .inline.fields .wide.field,
-.ts.form .inline.field
+.ts.form .inline.field,
+.ts.horizontal.form .fields .wide.field,
+.ts.horizontal.form .field
     display    : flex
     align-items: center
     flex-wrap  : nowrap
 
 .ts.form .inline.fields .wide.field input,
-.ts.form .inline.field input
+.ts.form .inline.field input,
+.ts.horizontal.form .fields .wide.field input,
+.ts.horizontal.form .field input
     flex: 1
+
+//-------------------//
+//     Horizontal
+//-------------------//
+
+.ts.horizontal.form .field.field.field.field
+    flex-wrap: wrap
+
+.ts.horizontal.form .field.field.field > label
+    position: absolute
+    left    : 0
+    top     : $form_horizontalLabelTopOffest
+
+    min-width  : $form_horizontalLabelWidth
+    max-width  : $form_horizontalLabelWidth
+    text-align : right
+    word-wrap  : break-word
+    white-space: normal
+
+.ts.horizontal.form .field.field
+    padding-left: $form_horizontalFieldLeftOffset
+
+.ts.horizontal.form .field.field > label + *
+    padding-top: $form_horizontalFieldTopOffset
 
 //-------------------//
 //        Text
@@ -57,7 +91,8 @@
 //    Helper Text
 //-------------------//
 
-.ts.form .field > small
+.ts.form .field > small,
+.ts.form .field > .inputs > small,
     display  : block
     margin   : $form_fieldHelperTextMargin
     opacity  : $form_fieldHelperOpacity
