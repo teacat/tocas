@@ -1360,3 +1360,9 @@ ts.fn.embed = (option) ->
 
             # Append the icon element to the embed element.
             this.appendChild iconEl
+
+###
+The accordion function.
+###
+
+ts.fn.accordion = () ->
