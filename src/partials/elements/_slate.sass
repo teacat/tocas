@@ -1,19 +1,19 @@
 @import ../../variables/elements/slate.variables
-    
+
 //*******************************//
 //              Main
 //*******************************//
 
 .ts.slate
     position: relative
-    
+
     display       : flex
     flex-direction: column
     align-items   : center
-    
+
     padding      : $slate_padding
     border-radius: $slate_borderRadius
-    
+
     background-color: $slate_backgroundColor
     color           : $slate_textColor
 
@@ -67,24 +67,45 @@
     margin-top: $slate_actionMargin
 
 //-------------------//
-//       Image
+//   Image & Embed
 //-------------------//
 
-.ts.slate .image
-    left: 0
-    top: 0
-    right: 0
-    bottom: 0
+.ts.slate .image,
+.ts.slate .video
+    left    : 0
+    top     : 0
+    right   : 0
+    bottom  : 0
     overflow: hidden
     position: absolute
+    
+    pointer-events: none
+    user-select   : none
 
-.ts.slate .image img
-    width: 100%
-    height: 100%
+.ts.slate .image img,
+.ts.slate .video video,
+.ts.slate .video iframe
+    width     : 100%
+    height    : 100%
     object-fit: cover
 
+.ts.slate .video > video,
+.ts.slate .video > iframe,
+.ts.slate .embed,
+    top      : 50%
+    left     : 50%
+    transform: translateX(-50%) translateY(-50%)
+
 .ts.slate .image ~ .header,
-.ts.slate .image ~ .description
+.ts.slate .image ~ .description,
+.ts.slate .video ~ .header,
+.ts.slate .video ~ .description,
+.ts.slate .embed ~ .header,
+.ts.slate .embed ~ .description,
+.ts.slate .image ~ .ts.container .header,
+.ts.slate .image ~ .ts.container .description,
+.ts.slate .video ~ .ts.container .header,
+.ts.slate .video ~ .ts.container .description
     color         : $slate_imageTextColor
     text-rendering: optimizelegibility
     text-shadow   : $slate_imageTextShadow
@@ -112,7 +133,9 @@
 
 /* Single Icon */
 .ts.slate > .icon:not(.button),
-.ts.slate > .icons > .icon
+.ts.slate > .icons > .icon,
+.ts.slate > .ts.container > .icon:not(.button),
+.ts.slate > .ts.container > .icons > .icon
     font-size: $slate_iconSize
     margin   : 0
 
@@ -123,7 +146,7 @@
 .ts.slate .icons:not(.symbol) + .header,
 .ts.slate .icon:not(.symbol) + .header
     margin-top: $slate_headerMargin
-    
+
 //-------------------//
 //      Relaxed
 //-------------------//
@@ -134,8 +157,8 @@
 //.ts.relaxed.slate .description
 
 //.ts.relaxed.slate .action
- 
-    
+
+
 //-------------------//
 //    Faded Icons
 //-------------------//
@@ -143,7 +166,7 @@
 .ts.slate .faded.icons,
 .ts.slate .faded.icon
     opacity: $slate_fadedIconOpacity
-    
+
 //-------------------//
 //     Symbol Icon
 //-------------------//
