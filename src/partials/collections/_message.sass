@@ -295,11 +295,14 @@
 //       Aligns
 //-------------------//
 
-.ts.message[class*="center aligned"]
+.ts.message[class*="center aligned"],
+.ts.message .content .description[class*="center aligned"]
     text-align: center
-.ts.message[class*="left aligned"]
+.ts.message[class*="left aligned"],
+.ts.message .content .description[class*="left aligned"]
     text-align: left
-.ts.message[class*="right aligned"]
+.ts.message[class*="right aligned"],
+.ts.message .content .description[class*="right aligned"]
     text-align: right
 
 //-------------------//
@@ -476,11 +479,31 @@
     align-items   : initial
 
 //-------------------//
-//    Description
+//     Description
 //-------------------//
 
 .ts.structured.message > .content > .description
     min-height: $message_structuredMinDescriptionHeight
+
+//-------------------//
+//  Extra Description
+//-------------------//
+
+.ts.structured.message > .content > .description + .extra.description,
+.ts.structured.message > .content > .actions + .extra.description
+    padding-top: $message_structuredActionPaddingTop
+    margin-top : $message_structuredActionDistanceToText
+
+.ts.structured.message > .content > .description + .extra.description:before,
+.ts.structured.message > .content > .actions + .extra.description:before
+    position: absolute
+    top     : 0
+    left    : 0
+    right   : -1000px
+    height  : $message_structuredActionBorderWidth
+    content : ''
+
+    background-color: $message_structuredDividerColor
 
 //-------------------//
 //       Actions
