@@ -4,9 +4,11 @@ $container_maxWidth: 100%
 //        Grid
 //-------------------//
 
-$container_gridGutterWidth           : 2rem
-$container_relaxedGridGutterWidth    : 3rem
-$container_veryRelaxedGridGutterWidth: 5rem
+$container_gridColumnsPadding       : $columnPadding * 2
+$container_gridRelaxedColumnsPadding: $columnRelaxedPadding * 2
+
+$container_gridMaxWidth       : calc(#{$container_maxWidth} + #{$container_gridColumnsPadding})
+$container_relaxedGridMaxWidth: calc(#{$container_maxWidth} + #{$container_gridRelaxedColumnsPadding})
 
 //-------------------//
 //       Mobile
@@ -15,9 +17,9 @@ $container_veryRelaxedGridGutterWidth: 5rem
 $container_mobileMinimumGutter       : 0em
 $container_mobileGutter              : $columnRelaxedPadding * 1.1
 $container_mobileWidth               : auto
-$container_mobileGridWidth           : $container_mobileWidth
-$container_mobileRelaxedGridWidth    : $container_mobileWidth
-$container_mobileVeryRelaxedGridWidth: $container_mobileWidth
+
+$container_mobileGridHorizontalPadding       : -$columnPadding - -$container_mobileGutter
+$container_mobileRelaxedGridHorizontalPadding: 1px
 
 //-------------------//
 //       Tablet
@@ -25,10 +27,10 @@ $container_mobileVeryRelaxedGridWidth: $container_mobileWidth
 
 $container_tabletMinimumGutter       : $emSize * 1
 $container_tabletGutter              : auto
-$container_tabletWidth               : calc(#{$rwdTabletMin} - (#{$container_tabletMinimumGutter} * 2) - #{$scrollbarWidth})
-$container_tabletGridWidth           : calc(#{$container_tabletWidth} + #{$container_gridGutterWidth})
-$container_tabletRelaxedGridWidth    : calc(#{$container_tabletWidth} + #{$container_relaxedGridGutterWidth})
-$container_tabletVeryRelaxedGridWidth: calc(#{$container_tabletWidth} + #{$container_veryRelaxedGridGutterWidth})
+$container_tabletWidth               : $rwdTabletMin - $container_tabletMinimumGutter * 2 - $scrollbarWidth
+
+$container_tabletGridWidth       : calc(#{$container_tabletWidth} + #{$container_gridColumnsPadding})
+$container_tabletRelaxedGridWidth: calc(#{$container_tabletWidth} + #{$container_gridRelaxedColumnsPadding})
 
 //-------------------//
 //      Computer
@@ -36,10 +38,10 @@ $container_tabletVeryRelaxedGridWidth: calc(#{$container_tabletWidth} + #{$conta
 
 $container_computerMinimumGutter       : $emSize * 1.5
 $container_computerGutter              : auto
-$container_computerWidth               : calc(#{$rwdComputerMin} - (#{$container_computerMinimumGutter} * 2) - #{$scrollbarWidth})
-$container_computerGridWidth           : calc(#{$container_computerWidth} + #{$container_gridGutterWidth})
-$container_computerRelaxedGridWidth    : calc(#{$container_computerWidth} + #{$container_relaxedGridGutterWidth})
-$container_computerVeryRelaxedGridWidth: calc(#{$container_computerWidth} + #{$container_veryRelaxedGridGutterWidth})
+$container_computerWidth               : $rwdComputerMin - $container_computerMinimumGutter * 2 - $scrollbarWidth
+
+$container_computerGridWidth       : calc(#{$container_computerWidth} + #{$container_gridColumnsPadding})
+$container_computerRelaxedGridWidth: calc(#{$container_computerWidth} + #{$container_gridRelaxedColumnsPadding})
 
 //-------------------//
 //   Large Monitor
@@ -47,21 +49,52 @@ $container_computerVeryRelaxedGridWidth: calc(#{$container_computerWidth} + #{$c
 
 $container_largeMonitorMinimumGutter       : $emSize * 2
 $container_largeMonitorGutter              : auto
-$container_largeMonitorWidth               : calc(#{$rwdLargeMin} - (#{$container_largeMonitorMinimumGutter} * 2) - #{$scrollbarWidth})
-$container_largeMonitorGridWidth           : calc(#{$container_largeMonitorWidth} + #{$container_gridGutterWidth})
-$container_largeMonitorRelaxedGridWidth    : calc(#{$container_largeMonitorWidth} + #{$container_relaxedGridGutterWidth})
-$container_largeMonitorVeryRelaxedGridWidth: calc(#{$container_largeMonitorWidth} + #{$container_veryRelaxedGridGutterWidth})
+$container_largeMonitorWidth               : $rwdLargeMin - $container_largeMonitorMinimumGutter * 2 - $scrollbarWidth
+
+$container_largeMonitorGridWidth       : calc(#{$container_largeMonitorWidth} + #{$container_gridColumnsPadding})
+$container_largeMonitorRelaxedGridWidth: calc(#{$container_largeMonitorWidth} + #{$container_gridRelaxedColumnsPadding})
 
 //-------------------//
-//   Narrow & Text
+//       Narrow
 //-------------------//
 
 $container_narrowGutter        : $columnRelaxedPadding * 1.1
 $container_narrowWidth         : $rwdComputerMin
 $container_narrowBreakPoint    : 1015px
+
+$container_narrowGridMaxWidth       : calc(#{$container_narrowWidth} + #{$container_gridColumnsPadding})
+$container_narrowRelaxedGridMaxWidth: calc(#{$container_narrowWidth} + #{$container_gridRelaxedColumnsPadding})
+
+$container_narrowGridHorizontalPadding       : -$columnPadding - -$container_narrowGutter
+$container_narrowRelaxedGridHorizontalPadding: 1px
+
+//-------------------//
+//    Very Narrow
+//-------------------//
+
 $container_veryNarrowWidth     : 700px
 $container_veryNarrowBreakPoint: 724px
+
+$container_veryNarrowGridMaxWidth       : calc(#{$container_veryNarrowWidth} + #{$container_gridColumnsPadding})
+$container_veryNarrowRelaxedGridMaxWidth: calc(#{$container_veryNarrowWidth} + #{$container_gridRelaxedColumnsPadding})
+
+$container_veryNarrowGridHorizontalPadding       : -$columnPadding - -$container_narrowGutter
+$container_veryNarrowRelaxedGridHorizontalPadding: 1px
+
+//-------------------//
+//        Text
+//-------------------//
 
 $container_textWidth       : 860px
 $container_textLineHeight  : 1.5
 $container_textFontSize    : $large
+
+$container_textGridMaxWidth       : calc(#{$container_textWidth} + #{$container_gridColumnsPadding})
+$container_textRelaxedGridMaxWidth: calc(#{$container_textWidth} + #{$container_gridRelaxedColumnsPadding})
+
+//-------------------//
+//       Fluid
+//-------------------//
+
+$container_fluidGridMaxWidth       : calc(100% + #{$container_gridColumnsPadding})
+$container_fluidRelaxedGridMaxWidth: calc(100% + #{$container_gridRelaxedColumnsPadding})
