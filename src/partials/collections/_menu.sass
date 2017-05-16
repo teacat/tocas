@@ -466,7 +466,6 @@
 
 .ts.menu.pointing.secondary .item
     margin       : 0
-    margin-bottom: -$menu_secondaryPointingBorderWidth
     border-radius: 0
 
 .ts.menu.pointing.secondary a.item:hover
@@ -475,15 +474,35 @@
 .ts.menu.pointing.secondary a.item:active
     opacity: 1
 
+// Bottom Border
+.ts.menu.pointing.secondary a.item:hover:after,
+.ts.menu.pointing.secondary a.item:active:after,
+.ts.menu.pointing.secondary .item.active:after
+    position: absolute
+    content : ''
+    bottom  : -$menu_secondaryPointingBorderWidth
+    right   : 0
+    left    : 0
+    height  : $menu_secondaryPointingBorderWidth
+    z-index: 1
+
+.ts.menu.pointing.secondary a.item:hover:after
+    background-color: $menu_secondaryPointingHoverBorderColor
+
+.ts.menu.pointing.secondary a.item:active:after
+    background-color: $menu_secondaryPointingPressedBorderColor
+
+.ts.menu.pointing.secondary .item.active,
 .ts.menu.pointing.secondary a.item:hover,
 .ts.menu.pointing.secondary a.item:active
     background-color: transparent
 
 .ts.menu.pointing.secondary .item.active
-    background-color: $menu_secondaryPoingintActiveBackgroundColor
-    border-bottom   : $menu_secondaryPointingActiveBorder
-    color           : $menu_secondaryPointingActiveTextColor
-    font-weight     : $menu_secondaryPointingActiveFontWeight
+    color      : $menu_secondaryPointingActiveTextColor
+    font-weight: $menu_secondaryPointingActiveFontWeight
+
+.ts.menu.pointing.secondary .item.active:after
+    background-color: $menu_secondaryPointingActiveBorderColor
 
 //-------------------//
 // Vertical Secondary Pointing
@@ -495,10 +514,17 @@
 
 .ts.menu.vertical.pointing.secondary .item
     border-bottom: 0
-    margin-right: -$menu_secondaryPointingBorderWidth
 
-.ts.menu.pointing.secondary .item.active
-    border-right: $menu_secondaryPointingActiveBorder
+.ts.menu.pointing.vertical.secondary a.item:hover:after,
+.ts.menu.pointing.vertical.secondary a.item:active:after,
+.ts.menu.pointing.vertical.secondary .item.active:after
+    bottom: 0
+    right : -$menu_secondaryPointingBorderWidth
+    left  : auto
+    top   : 0
+    width : $menu_secondaryPointingBorderWidth
+    height: auto
+
 
 //-------------------//
 //       Tabbed
