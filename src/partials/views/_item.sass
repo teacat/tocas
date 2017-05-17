@@ -111,6 +111,7 @@
     display    : inline-block
     margin     : $item_headerMargin
     font-weight: $item_headerFontWeight
+    line-height: $item_headerLineHeight
     color      : $item_headerColor
 
 /* Default Header Size */
@@ -179,8 +180,9 @@
 .ts.items > .item .meta *
     margin-right: $item_metaSpacing
 
-.ts.items > .item .meta :last-child
-    margin-right: 0em
+.ts.items > .item .meta:last-child
+    margin-right : 0em
+    margin-bottom: 0
 
 .ts.items > .item .meta [class*="right floated"]
     margin-right: 0em
@@ -188,7 +190,6 @@
 
 .ts.items > .item .meta.inline
     margin-top : 0
-    //margin-left: $item_metaSpacing
     display    : inline-block
 
 //-------------------//
@@ -322,6 +323,58 @@
     border-bottom: $item_segmentedBorder
 
 //-------------------//
+//      Attached
+//-------------------//
+
+.ts.segmented.items[class*="top attached"]
+    margin-bottom             : 0
+    border-bottom-left-radius : 0
+    border-bottom-right-radius: 0
+    border-bottom             : 0
+
+.ts.segmented.items.attached:not([class*="top attached"]):not([class*="bottom attached"])
+    margin-bottom: 0
+    margin-top   : 0
+    border-radius: 0
+    border-top   : 0
+    border-bottom: 0
+    box-shadow   : $item_segmentedTopAttachedBoxShadow
+
+.ts.segmented.items[class*="bottom attached"]
+    margin-top             : 0
+    border-top-left-radius : 0
+    border-top-right-radius: 0
+    border-top             : 0
+
+.ts.segmented.items.attached:not([class*="top attached"]):not([class*="bottom attached"]) + .ts.segmented.items.attached:not([class*="top attached"]):not([class*="bottom attached"]),
+.ts.attached.message + .ts.segmented.items.attached,
+.ts.attached.menu + .ts.segmented.items.attached
+    border-top: $item_segmentedBorder
+
+//-------------------//
+//      Selection
+//-------------------//
+
+.ts.selection.items > .item
+    user-select: none
+    cursor     : pointer
+
+.ts.selection.items > .item:last-child
+    margin-bottom: 0em
+
+.ts.selection.items > .item:hover:not(.active):not(:active)
+    background: $item_selectionListHoverBackground
+    color     : $item_selectionListHoverColor
+
+.ts.selection.items > .item:active
+    background: $item_selectionListDownBackground
+    color     : $item_selectionListDownColor
+
+.ts.selection.items > .item.active
+    background: $item_selectionListActiveBackground
+    color     : $item_selectionListActiveColor
+
+//-------------------//
 //    Single Line
 //-------------------//
 
@@ -338,11 +391,11 @@
 .ts.items[class*="single line"] .content .header
     vertical-align: text-top
 
-.ts.items[class*="single line"] .content .meta
+.ts.items[class*="single line"] .content .meta.inline
     display: inline
     vertical-align: top
 
-.ts.items[class*="single line"] .content .meta > *
+.ts.items[class*="single line"] .content .meta.inline > *
     display: inline
 
 //-------------------//
@@ -404,6 +457,17 @@
         > .item > .image + .content
             display: block
             padding: $item_mobileContentImageDistance 0em 0em
+
+
+.ts.items.stackable.segmented
+    +rwd-serious(mobile)
+        > .item
+            margin-top   : 0
+            margin-bottom: 0
+    +rwd-serious(tablet)
+        > .item
+            margin-top   : 0
+            margin-bottom: 0
 
 //*******************************//
 //           Variations
@@ -467,7 +531,7 @@
 .ts.link.items > .item:hover
     cursor: pointer
 
-.ts.items a.item:hover .content .header,
+.ts.items:not(.selection) a.item:hover .content .header,
 .ts.link.items > .item:hover .content .header
     color: $item_headerLinkHoverColor
 
