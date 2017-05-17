@@ -152,6 +152,9 @@
     line-height: $item_descriptionLineHeight
     color      : $item_descriptionColor
 
+.ts.items > .item > .content > .inline.meta + .description
+    margin-top: $item_descriptionDistanceToMeta
+
 //-------------------//
 //     Paragraph
 //-------------------//
@@ -303,12 +306,45 @@
     visibility: hidden
 
 //-------------------//
+//    Single Line
+//-------------------//
+
+.ts.items[class*="single line"],
+.ts.items[class*="single line"] .content,
+.ts.items[class*="single line"] .content .header,
+.ts.items[class*="single line"] .content .meta,
+.ts.items[class*="single line"] .content .meta > *,
+.ts.items[class*="single line"] .content .description
+    white-space  : nowrap
+    text-overflow: ellipsis
+    overflow     : hidden
+
+.ts.items[class*="single line"] .content .header
+    vertical-align: text-top
+
+.ts.items[class*="single line"] .content .meta
+    display: inline
+    vertical-align: top
+
+.ts.items[class*="single line"] .content .meta > *
+    display: inline
+
+//-------------------//
 //      Actions
 //-------------------//
 
 .ts.items .item .actions
+    display    : flex
+    align-items: flex-start
     white-space: nowrap
     margin-left: $item_actionDistance
+
+.ts.items .item .actions[class*="top aligned"]
+    align-items: flex-start
+.ts.items .item .actions[class*="middle aligned"]
+    align-items: center
+.ts.items .item .actions[class*="bottom aligned"]
+    align-items: flex-end
 
 //*******************************//
 //          Responsive
