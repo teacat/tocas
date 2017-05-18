@@ -125,7 +125,11 @@
 //-------------------//
 
 .ts.card > .content > .header
-    display: block
+    display  : block
+    word-wrap: break-word
+
+.ts.card > .content > .actions ~ .header:not(:last-child)
+    margin-bottom: $card_descriptionDistance
 
 .ts.card > .content > .header:not(.ts),
 .ts.card > .image > .header:not(.ts),
@@ -188,6 +192,12 @@
     flex-wrap : wrap
     margin-top: $card_metaDistance
     font-size : $card_metaFontSize
+
+.ts.card > .content > .actions ~ .meta:not(:last-child)
+    margin-bottom: $card_descriptionDistance
+
+.ts.card > .content > .actions ~ .header + .meta
+    margin-top: calc(-#{$card_descriptionDistance} + -#{$card_metaDistance} - #{$card_headerLineHeightMetaOffset})
 
 .ts.card > .content > .meta > *
     display     : inline-block
@@ -294,7 +304,10 @@
     margin-top: $card_descriptionDistance
 
 .ts.card > .content > .description
-    clear: both
+    clear  : both
+
+.ts.card > .content > .actions ~ .description
+    display: inline
 
 //-------------------//
 //       Extra
@@ -361,6 +374,15 @@
 
 .ts.card.disabled
     opacity: $disabledOpacity
+
+//-------------------//
+//      Actions
+//-------------------//
+
+.ts.card > .content > .actions
+    float      : right
+    margin-left: .5em
+    z-index    : 1
 
 //-------------------//
 //      Compact
