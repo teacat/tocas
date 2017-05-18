@@ -15,7 +15,6 @@
     border       : $item_border
     border-radius: $item_borderRadius
     box-shadow   : $item_boxShadow
-    transition   : $item_transition
     z-index      : $z_item
 
 .ts.items > .item a
@@ -108,10 +107,10 @@
     padding-left: $item_contentImageDistance
 
 .ts.items > .item > .content > .header
-    display    : inline-block
+    display    : inline
     margin     : $item_headerMargin
     font-weight: $item_headerFontWeight
-    line-height: $item_headerLineHeight
+    //line-height: $item_headerLineHeight
     color      : $item_headerColor
 
 /* Default Header Size */
@@ -150,11 +149,11 @@
     margin-top : $item_descriptionDistance
     max-width  : $item_descriptionMaxWidth
     font-size  : $item_descriptionFontSize
-    line-height: $item_descriptionLineHeight
+    //line-height: $item_descriptionLineHeight
     color      : $item_descriptionColor
 
-.ts.items > .item > .content > .inline.meta + .description
-    margin-top: $item_descriptionDistanceToMeta
+//.ts.items > .item > .content > .inline.meta + .description
+//    margin-top: $item_descriptionDistanceToMeta
 
 //-------------------//
 //     Paragraph
@@ -174,7 +173,7 @@
     display    : flex
     margin     : $item_metaMargin
     font-size  : $item_metaFontSize
-    line-height: $item_metaLineHeight
+    //line-height: $item_metaLineHeight
     color      : $item_metaColor
 
 .ts.items > .item .meta *
@@ -241,38 +240,18 @@
     color: $item_metaLinkActiveColor
 
 //-------------------//
-//       Labels
+//     Tiled Icon
 //-------------------//
 
-/*-----Star----- */
+.ts.items > .item > .icon
+    margin-right: 0
+    color       : $item_iconTextColor
 
-/* Icon */
-.ts.items > .item > .content .favorite.icon
-    cursor    : pointer
-    opacity   : $item_actionOpacity
-    transition: $item_actionTransition
+.ts.items > .item > .icon:not(.inverted)
+    background-color: $item_iconBackgroundColor
 
-.ts.items > .item > .content .favorite.icon:hover
-    opacity: $item_actionHoverOpacity
-    color  : $item_favoriteColor
-
-.ts.items > .item > .content .active.favorite.icon
-    color: $item_favoriteActiveColor
-
-/*-----Like----- */
-
-/* Icon */
-.ts.items > .item > .content .like.icon
-    cursor    : pointer
-    opacity   : $item_actionOpacity
-    transition: $item_actionTransition
-
-.ts.items > .item > .content .like.icon:hover
-    opacity: $item_actionHoverOpacity
-    color  : $item_likeColor
-
-.ts.items > .item > .content .active.like.icon
-    color: $item_likeActiveColor
+.ts.items > .item > .icon + .content
+    padding-left: $item_contentImageDistance
 
 //-------------------//
 //   Extra Content
@@ -388,15 +367,13 @@
     text-overflow: ellipsis
     overflow     : hidden
 
-.ts.items[class*="single line"] .content .header
-    vertical-align: text-top
-
-.ts.items[class*="single line"] .content .meta.inline
-    display: inline
-    vertical-align: top
-
+.ts.items[class*="single line"] .content .header,
+.ts.items[class*="single line"] .content .meta.inline,
 .ts.items[class*="single line"] .content .meta.inline > *
     display: inline
+
+.ts.items[class*="single line"] .content .meta
+    margin-top: 0
 
 //-------------------//
 //      Actions
@@ -534,6 +511,10 @@
 .ts.items:not(.selection) a.item:hover .content .header,
 .ts.link.items > .item:hover .content .header
     color: $item_headerLinkHoverColor
+
+.ts.items:not(.selection) a.item:active .content .header,
+.ts.link.items > .item:active .content .header
+    color: $item_headerLinkActiveColor
 
 //-------------------//
 //       Size
