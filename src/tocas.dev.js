@@ -1310,7 +1310,7 @@ ts.fn.contextmenu = function(option) {
 
 
 /*
-The contextmenu function.
+The embed function.
  */
 
 ts.fn.embed = function(option) {
@@ -1379,5 +1379,56 @@ ts.fn.embed = function(option) {
       });
       return this.appendChild(iconEl);
     }
+  });
+};
+
+
+/*
+The accordion function.
+ */
+
+ts.fn.accordion = function() {};
+
+
+/*
+The scrollspy function.
+ */
+
+ts.fn.scrollspy = function(options) {
+  var anchors, container, target, tsTarget;
+  target = document.querySelector(options.target);
+  tsTarget = ts(target);
+  container = this[0];
+  anchors = document.querySelectorAll('[data-scrollspy="#' + target.id + '"]');
+  if (this[0] === document.body) {
+    container = document;
+  }
+  return Array.from(anchors).forEach(function(element) {
+    var anchor, event, link;
+    anchor = element;
+    link = '[href="#' + anchor.id + '"]';
+    event = function() {
+      var containerRect, containerTop, length, rect;
+      rect = anchor.getBoundingClientRect();
+      if (container === document) {
+        containerRect = document.documentElement.getBoundingClientRect();
+      } else {
+        containerRect = container.getBoundingClientRect();
+      }
+      containerTop = containerRect.top < 0 ? 0 : containerRect.top;
+      console.log(rect, containerRect, containerTop, rect.top - containerTop);
+      if (rect.top - containerTop < 0) {
+        tsTarget.find(link).addClass('active');
+        length = tsTarget.find('.active').length;
+        return tsTarget.find('.active').each(function(index) {
+          if (index !== length - 1) {
+            return ts(this).removeClass('active');
+          }
+        });
+      } else {
+        return tsTarget.find(link).removeClass('active');
+      }
+    };
+    return container.addEventListener('scroll', event);
   });
 };

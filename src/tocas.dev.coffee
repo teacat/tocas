@@ -1366,3 +1366,45 @@ The accordion function.
 ###
 
 ts.fn.accordion = () ->
+
+###
+The scrollspy function.
+###
+
+ts.fn.scrollspy = (options) ->
+
+    target    = document.querySelector(options.target)
+    tsTarget  = ts(target)
+    container = @[0]
+    anchors   = document.querySelectorAll('[data-scrollspy="#' + target.id + '"]')
+
+    if @[0] is document.body
+        container = document
+
+    # Each of the anchors.
+    Array.from(anchors).forEach (element) ->
+        anchor = element
+        link   = '[href="#' + anchor.id + '"]'
+
+        event = ->
+            rect = anchor.getBoundingClientRect()
+            if container is document
+                containerRect = document.documentElement.getBoundingClientRect()
+            else
+                containerRect = container.getBoundingClientRect()
+            containerTop = if containerRect.top < 0 then 0 else containerRect.top
+
+            console.log(rect, containerRect, containerTop, rect.top - containerTop)
+
+            if rect.top - containerTop < 0
+                tsTarget.find(link).addClass 'active'
+
+                length = tsTarget.find('.active').length
+                tsTarget.find('.active').each (index) ->
+                    if index isnt length - 1
+                        ts(@).removeClass 'active'
+            else
+                tsTarget.find(link).removeClass 'active'
+
+
+        container.addEventListener 'scroll', event
