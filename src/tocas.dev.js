@@ -1399,25 +1399,26 @@ ts.fn.scrollspy = function(options) {
   target = document.querySelector(options.target);
   tsTarget = ts(target);
   container = this[0];
-  anchors = document.querySelectorAll('[data-scrollspy="#' + target.id + '"]');
+  anchors = document.querySelectorAll("[data-scrollspy='" + target.id + "']");
   if (this[0] === document.body) {
     container = document;
   }
-  return Array.from(anchors).forEach(function(element) {
+  return Array.from(anchors).forEach(function(element, index, array) {
     var anchor, event, link;
     anchor = element;
-    link = '[href="#' + anchor.id + '"]';
+    link = "[href='#" + anchor.id + "']";
     event = function() {
-      var containerRect, containerTop, length, rect;
+      var containerRect, containerTop, continerIsBottom, length, rect;
       rect = anchor.getBoundingClientRect();
       if (container === document) {
         containerRect = document.documentElement.getBoundingClientRect();
+        continerIsBottom = document.body.scrollHeight - (document.body.scrollTop + window.innerHeight) === 0;
       } else {
         containerRect = container.getBoundingClientRect();
+        continerIsBottom = container.scrollHeight - (container.scrollTop + container.clientHeight) === 0;
       }
       containerTop = containerRect.top < 0 ? 0 : containerRect.top;
-      console.log(rect, containerRect, containerTop, rect.top - containerTop);
-      if (rect.top - containerTop < 0) {
+      if (rect.top - containerTop < 10 || (continerIsBottom && (index === array.length - 1))) {
         tsTarget.find(link).addClass('active');
         length = tsTarget.find('.active').length;
         return tsTarget.find('.active').each(function(index) {
@@ -1429,6 +1430,8 @@ ts.fn.scrollspy = function(options) {
         return tsTarget.find(link).removeClass('active');
       }
     };
-    return container.addEventListener('scroll', event);
+    event.call(this);
+    container.addEventListener('scroll', event);
+    return window.addEventListener('hashchange', event);
   });
 };

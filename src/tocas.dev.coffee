@@ -1372,39 +1372,53 @@ The scrollspy function.
 ###
 
 ts.fn.scrollspy = (options) ->
-
     target    = document.querySelector(options.target)
     tsTarget  = ts(target)
     container = @[0]
-    anchors   = document.querySelectorAll('[data-scrollspy="#' + target.id + '"]')
+    anchors   = document.querySelectorAll("[data-scrollspy='#{target.id}']")
 
+    # If the container is body, we replace it as document, it would be easier to process.
     if @[0] is document.body
         container = document
 
     # Each of the anchors.
-    Array.from(anchors).forEach (element) ->
+    Array.from(anchors).forEach (element, index, array) ->
         anchor = element
-        link   = '[href="#' + anchor.id + '"]'
+        link   = "[href='##{anchor.id}']"
 
+        # The scroll event.
         event = ->
+            # Get the computed position of the anchor.
             rect = anchor.getBoundingClientRect()
+
+            # Get the information of the position based on the different element.
             if container is document
-                containerRect = document.documentElement.getBoundingClientRect()
+                containerRect    = document.documentElement.getBoundingClientRect()
+                continerIsBottom = document.body.scrollHeight - (document.body.scrollTop + window.innerHeight) is 0
             else
-                containerRect = container.getBoundingClientRect()
+                containerRect    = container.getBoundingClientRect()
+                continerIsBottom = container.scrollHeight - (container.scrollTop + container.clientHeight) is 0
+
             containerTop = if containerRect.top < 0 then 0 else containerRect.top
 
-            console.log(rect, containerRect, containerTop, rect.top - containerTop)
-
-            if rect.top - containerTop < 0
+            # If the anchor is near the container top,
+            # or the anchor is the last one, and the user scrolled to the bottom of the container.
+            if rect.top - containerTop < 10 or (continerIsBottom and (index is array.length - 1))
+                # Mark the self anchor as active.
                 tsTarget.find(link).addClass 'active'
-
+                # Get all the active anchors in the target menu,
+                # because the previous anchors were been actived too.
                 length = tsTarget.find('.active').length
+                # Looping the each of the actived anchors in the target menu.
                 tsTarget.find('.active').each (index) ->
-                    if index isnt length - 1
-                        ts(@).removeClass 'active'
+                    # Remove the `active` class if the anchor is not the last one of the target menu.
+                    ts(@).removeClass ('active') if index isnt length - 1
             else
                 tsTarget.find(link).removeClass 'active'
 
+        # Call the event when initialized.
+        event.call(@)
 
+        # Execute the event while scrolling or URL hash chaged.
         container.addEventListener 'scroll', event
+        window.addEventListener 'hashchange', event
