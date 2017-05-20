@@ -156,7 +156,7 @@ ts.fn.on = (eventName, selector, handler, once) ->
   #      /
   # Click      func :func
   #      \   /
-  #       [0] 
+  #       [0]
   #          \
   #            once :bool         
   ###
@@ -667,11 +667,11 @@ Contract the dropdown menu.
 
 contractDropdown = (target) ->
     ts target
-        .css 'z-index', z_dropdownMenu
+        .css         'z-index', z_dropdownMenu
         .removeClass 'visible'
-        .addClass 'hidden'
-        .addClass 'animating'
-        .one animationEnd, ->
+        .addClass    'hidden'
+        .addClass    'animating'
+        .one         animationEnd, ->
             ts target
                 .removeClass 'animating'
 
@@ -821,9 +821,9 @@ closeModal = (modal) ->
         return
 
     ts modal
-        .closest '.ts.modals.dimmer'
+        .closest  '.ts.modals.dimmer'
         .addClass 'closing'
-        .one animationEnd, ->
+        .one      animationEnd, ->
             dimmer = @
             setTimeout(->
                 ts dimmer
@@ -835,7 +835,7 @@ closeModal = (modal) ->
 
     ts modal
         .addClass 'closing'
-        .one animationEnd, ->
+        .one      animationEnd, ->
             ts @
                 .removeClass 'closing'
                 .removeAttr  'open'
@@ -951,31 +951,84 @@ ts.fn.modal = (option) ->
 The sidebar function.
 ###
 
-ts.fn.sidebar = (option) ->
+ts.fn.sidebar = (options) ->
+    dimPage    = options?.dimPage    or false
+    exclusive  = options?.exclusive  or false
+    scrollLock = options?.scrollLock or false
+    closable   = options?.closable   or true
+    pusher     = document.querySelector '.pusher'
+
+    closeVisibleSidebars = ->
+        ts '.ts.sidebar.visible'
+            .addClass    'animating'
+            .removeClass 'visible'
+            .one         'animationEnd', ->
+                ts @
+                    .removeClass 'animating'
+        ts '.pusher'
+            .removeClass 'dimmed'
+            .removeAttr  'data-pusher-lock'
+
+    # When user clicked the pusher, all the sidebars will be closed.
+    if pusher.getAttribute('data-closable-bind') isnt 'true'
+        pusher.addEventListener 'click', ->
+            closeVisibleSidebars()
+    #
+    pusher.setAttribute 'data-closable-bind', true
+
     @each ->
-        #
-        if option is 'toggle'
+        # Toggle the sidebar.
+        if options is 'toggle'
+            # Add the `animating` class to the sidebar
+            # so we can animating the slide out/in animation
             ts @
                 .addClass 'animating'
 
+            # Add the `data-dim-page` attribute to the sidebar if it's not setted.
+            if @getAttribute('data-dim-page') is null
+                @setAttribute 'data-dim-page', dimPage
+
+            #
+            if @getAttribute('data-scroll-lock') is null
+                @setAttribute 'data-scroll-lock', scrollLock
+
+            # If the sidebar is visiable.
             if ts(@).hasClass('visible')
+                # Reset the pusher.
+                ts '.pusher'
+                    .removeClass 'dimmed'
+                    .removeAttr  'data-pusher-lock'
+
+                # Hide the sidebar.
                 ts @
                     .removeClass 'visible'
-                    .one animationEnd, ->
+                    .one         animationEnd, ->
                         ts @
                             .removeClass 'animating'
             else
+                # Close all the sidebars if the `data-exclusive` is true.
+                if @getAttribute('data-exclusive') is 'true'
+                    closeVisibleSidebars()
+
+                # Dim the pusher if the `data-dim-page` is true.
+                if @getAttribute('data-dim-page') is 'true'
+                    ts '.pusher'
+                        .addClass 'dimmed'
+
+                ts '.pusher'
+                    .attr 'data-pusher-lock', 'true'
+
+                # Show the sidebar.
                 ts @
-                    .addClass 'visible'
+                    .addClass    'visible'
                     .removeClass 'animating'
 
-        #
-        else if typeof option is 'object'
-            # Options.
-            dimPage    = option.dimPage    or false
-            scrollLock = option.scrollLock or false
-            squeezable = option.squeezable or false
-            closable   = option.closable   or true
+        # Set the settings if the options is an object.
+        else if typeof options is 'object'
+            @setAttribute 'data-closable'   , closable
+            @setAttribute 'data-scroll-lock', scrollLock
+            @setAttribute 'data-exclusive'  , exclusive
+            @setAttribute 'data-dim-page'   , dimPage
 
 ###
 The tab function.

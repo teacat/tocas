@@ -174,7 +174,7 @@ ts.fn.on = function(eventName, selector, handler, once) {
    *      /
    * Click      func :func
    *      \   /
-   *       [0] 
+   *       [0]
    *          \
    *            once :bool
    */
@@ -1026,23 +1026,54 @@ ts.fn.modal = function(option) {
 The sidebar function.
  */
 
-ts.fn.sidebar = function(option) {
+ts.fn.sidebar = function(options) {
+  var closable, closeVisibleSidebars, dimPage, exclusive, pusher, scrollLock;
+  dimPage = (options != null ? options.dimPage : void 0) || false;
+  exclusive = (options != null ? options.exclusive : void 0) || false;
+  scrollLock = (options != null ? options.scrollLock : void 0) || false;
+  closable = (options != null ? options.closable : void 0) || true;
+  pusher = document.querySelector('.pusher');
+  closeVisibleSidebars = function() {
+    ts('.ts.sidebar.visible').addClass('animating').removeClass('visible').one('animationEnd', function() {
+      return ts(this).removeClass('animating');
+    });
+    return ts('.pusher').removeClass('dimmed').removeAttr('data-pusher-lock');
+  };
+  if (pusher.getAttribute('data-closable-bind') !== 'true') {
+    pusher.addEventListener('click', function() {
+      return closeVisibleSidebars();
+    });
+  }
+  pusher.setAttribute('data-closable-bind', true);
   return this.each(function() {
-    var closable, dimPage, scrollLock, squeezable;
-    if (option === 'toggle') {
+    if (options === 'toggle') {
       ts(this).addClass('animating');
+      if (this.getAttribute('data-dim-page') === null) {
+        this.setAttribute('data-dim-page', dimPage);
+      }
+      if (this.getAttribute('data-scroll-lock') === null) {
+        this.setAttribute('data-scroll-lock', scrollLock);
+      }
       if (ts(this).hasClass('visible')) {
+        ts('.pusher').removeClass('dimmed').removeAttr('data-pusher-lock');
         return ts(this).removeClass('visible').one(animationEnd, function() {
           return ts(this).removeClass('animating');
         });
       } else {
+        if (this.getAttribute('data-exclusive') === 'true') {
+          closeVisibleSidebars();
+        }
+        if (this.getAttribute('data-dim-page') === 'true') {
+          ts('.pusher').addClass('dimmed');
+        }
+        ts('.pusher').attr('data-pusher-lock', 'true');
         return ts(this).addClass('visible').removeClass('animating');
       }
-    } else if (typeof option === 'object') {
-      dimPage = option.dimPage || false;
-      scrollLock = option.scrollLock || false;
-      squeezable = option.squeezable || false;
-      return closable = option.closable || true;
+    } else if (typeof options === 'object') {
+      this.setAttribute('data-closable', closable);
+      this.setAttribute('data-scroll-lock', scrollLock);
+      this.setAttribute('data-exclusive', exclusive);
+      return this.setAttribute('data-dim-page', dimPage);
     }
   });
 };

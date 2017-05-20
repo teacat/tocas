@@ -12,10 +12,13 @@
     border-top: 0
     border-bottom: 0
     border-radius: 0
-    height: 100%
+    box-shadow: none
+    margin: 0
 
 
 .ts.sidebar
+    height: 100vh
+    position: absolute
     backface-visibility: hidden
     transition: transform .45s cubic-bezier(.23,1,.32,1)
     will-change: transform
@@ -23,6 +26,12 @@
     -webkit-overflow-scrolling: touch
     overflow: scroll
     z-index: $z_sidebar
+
+.ts.sidebar:not(.menu)
+    background-color: $white
+    padding: $sidebar_padding
+    border: $sidebar_border
+
 
 //-------------------//
 //     Direction
@@ -42,11 +51,21 @@
     transform: translate3d(0, 100%, 0)
 
 //-------------------//
+//       Padded
+//-------------------//
+
+.ts.padded.sidebar
+    padding: $sidebar_paddedPadding
+.ts.sidebar[class*="very padded"]
+    padding: $sidebar_veryPaddedPadding
+
+//-------------------//
 //     Overlapped
 //-------------------//
 
 .ts.overlapped.sidebar
     z-index: $z_sidebar_overlapped
+    box-shadow: $sidebar_raisedBoxShadow
 
 //-------------------//
 //     Animating
@@ -77,29 +96,58 @@
 
     overflow-y: scroll
     background: #fff
-    transition: left .45s cubic-bezier(.23,1,.32,1)
+    transition: left .45s cubic-bezier(.23,1,.32,1), right .45s cubic-bezier(.23,1,.32,1), width .45s cubic-bezier(.23,1,.32,1)
+
+.pusher[data-pusher-lock]
+    overflow: hidden
 
 //-------------------//
 //     Squeezable
 //-------------------//
 
-.pusher.squeezable
+//.ts.right.sidebar.visible ~ .pusher.squeezable
+//    left : 0
+//    right: auto
+//.ts.left.sidebar.visible ~ .pusher.squeezable
+//    left : auto
+//    right: 0
+
+.ts.visible.sidebar:not(.overlapped)[class*="very thin"] ~ .pusher.squeezable
+    width: calc(100vw - #{$sidebar_veryThinWidth})
+.ts.visible.thin.sidebar:not(.overlapped):not([class*="very thin"]) ~ .pusher.squeezable
+    width: calc(100vw - #{$sidebar_thinWidth})
+.ts.visible.sidebar:not(.overlapped) ~ .pusher.squeezable
     width: calc(100vw - #{$sidebar_width})
+.ts.visible.wide.sidebar:not(.overlapped):not([class*="very wide"]) ~ .pusher.squeezable
+    width: calc(100vw - #{$sidebar_wideWidth})
+.ts.visible.sidebar:not(.overlapped)[class*="very wide"] ~ .pusher.squeezable
+    width: calc(100vw - #{$sidebar_veryWideWidth})
 
 //-------------------//
 //      Offsets
 //-------------------//
 
-.ts.visible.very.thin.sidebar:not(.overlapped) ~ .pusher
+.ts.left.visible.sidebar:not(.overlapped)[class*="very thin"] ~ .pusher
     left: $sidebar_veryThinWidth
-.ts.visible.thin.sidebar:not(.overlapped) ~ .pusher
+.ts.left.visible.thin.sidebar:not(.overlapped):not([class*="very thin"]) ~ .pusher
     left: $sidebar_thinWidth
-.ts.visible.sidebar:not(.overlapped) ~ .pusher
+.ts.left.visible.sidebar:not(.overlapped) ~ .pusher
     left: $sidebar_width
-.ts.visible.wide.sidebar:not(.overlapped) ~ .pusher
+.ts.left.visible.wide.sidebar:not(.overlapped):not([class*="very wide"]) ~ .pusher
     left: $sidebar_wideWidth
-.ts.visible.very.wide.sidebar:not(.overlapped) ~ .pusher
+.ts.left.visible.sidebar:not(.overlapped)[class*="very wide"] ~ .pusher
     left: $sidebar_veryWideWidth
+
+.ts.right.visible.sidebar:not(.overlapped)[class*="very thin"] ~ .pusher:not(.squeezable)
+    left: -$sidebar_veryThinWidth
+.ts.right.visible.thin.sidebar:not(.overlapped):not([class*="very thin"]) ~ .pusher:not(.squeezable)
+    left: -$sidebar_thinWidth
+.ts.right.visible.sidebar:not(.overlapped) ~ .pusher:not(.squeezable)
+    left: -$sidebar_width
+.ts.right.visible.wide.sidebar:not(.overlapped):not([class*="very wide"]) ~ .pusher:not(.squeezable)
+    left: -$sidebar_wideWidth
+.ts.right.visible.sidebar:not(.overlapped)[class*="very wide"] ~ .pusher:not(.squeezable)
+    left: -$sidebar_veryWideWidth
 
 //-------------------//
 // Secondary & Tertiary
@@ -126,24 +174,30 @@
 
     overflow   : hidden
     opacity    : 0
-    transition : opacity .45s
+    transition : all .35s
     will-change: opacity
-    z-index    : $z_pusher
+    z-index    : 3
+    visibility: hidden
+
+.dimmed.pusher
+    user-select: none
 
 .dimmed.pusher:after
     opacity: 1
+    visibility: visible
+
 
 //-------------------//
 //       Width
 //-------------------//
 
-.ts.very.thin.sidebar
+.ts.sidebar[class*="very thin"]
     width: $sidebar_veryThinWidth
-.ts.thin.sidebar
+.ts.thin.sidebar:not([class*="very thin"])
     width: $sidebar_thinWidth
 .ts.sidebar
     width: $sidebar_width
-.ts.wide.sidebar
+.ts.wide.sidebar:not([class*="very wide"])
     width: $sidebar_wideWidth
-.ts.very.wide.sidebar
+.ts.sidebar[class*="very wide"]
     width: $sidebar_veryWideWidth
