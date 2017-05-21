@@ -17,7 +17,7 @@ Here're the unacceptable feature requests (and it would be closed immediately):
    Global classes (the class that can be applied to all the components, ex: `right margin 4px`)
 3. 以顏色為主（如：藍色、灰色、紫色按鈕）
    Colors (ex: The blue, grey, purple buttons)
-   
+
 --
 
 # Issue Report
@@ -26,7 +26,7 @@ Here're the unacceptable feature requests (and it would be closed immediately):
 Remember to post the HTML structure and the reproducing steps:
 
 1. 我做了什麼⋯⋯
-   What I did... 
+   What I did...
 2. 我期望什麼⋯⋯
    What I expected...
 3. 最終結果是⋯⋯
