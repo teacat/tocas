@@ -6,10 +6,10 @@ The issue can be written in English or Chinese.
 # Feature Request
 
 功能追加請求是可以被接受的，但請記得敘述功能，還有用途為何。
-Feature request is acceptable, just remember to describe why, and how to use it.
+Feature requests are acceptable, just remember to describe why, and how to use it.
 
 以下是不被接受的請求（會馬上被關閉）：
-Here're the unacceptable feature requests (will be closed immediately):
+Here're the unacceptable feature requests (and it would be closed immediately):
 
 1. 漢堡選單（類似 Bootstrap 的層疊選單）
    Hamburger menu (like the Bootstrap one)
