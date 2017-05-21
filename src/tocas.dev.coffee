@@ -951,18 +951,19 @@ ts.fn.modal = (option) ->
 The sidebar function.
 ###
 
-ts.fn.sidebar = (options) ->
+ts.fn.sidebar = (options, selector, eventName) ->
     dimPage    = options?.dimPage    or false
     exclusive  = options?.exclusive  or false
     scrollLock = options?.scrollLock or false
     closable   = options?.closable   or true
     pusher     = document.querySelector '.pusher'
 
+    # The function which closes all the sidebars.
     closeVisibleSidebars = ->
         ts '.ts.sidebar.visible'
             .addClass    'animating'
             .removeClass 'visible'
-            .one         'animationEnd', ->
+            .one         animationEnd, ->
                 ts @
                     .removeClass 'animating'
         ts '.pusher'
@@ -971,14 +972,18 @@ ts.fn.sidebar = (options) ->
 
     # When user clicked the pusher, all the sidebars will be closed.
     if pusher.getAttribute('data-closable-bind') isnt 'true'
-        pusher.addEventListener 'click', ->
-            closeVisibleSidebars()
-    #
+        pusher.addEventListener 'click', (e) ->
+            if not e.target.getAttribute('data-sidebar-trigger')
+                closeVisibleSidebars()
+
+    # Set the pusher as binded so we won't bind it again.
     pusher.setAttribute 'data-closable-bind', true
 
     @each ->
         # Toggle the sidebar.
-        if options is 'toggle'
+        if options is 'toggle' or
+           options is 'hide'   or
+           options is 'show'
             # Add the `animating` class to the sidebar
             # so we can animating the slide out/in animation
             ts @
@@ -988,12 +993,16 @@ ts.fn.sidebar = (options) ->
             if @getAttribute('data-dim-page') is null
                 @setAttribute 'data-dim-page', dimPage
 
-            #
+            # Initialize the `data-scroll-lock` attribute of the sidebar.
             if @getAttribute('data-scroll-lock') is null
                 @setAttribute 'data-scroll-lock', scrollLock
 
+            # Remove the animating if the sidebar which we are going to hide is hidden already.
+            if not ts(@).hasClass('visible') and options is 'hide'
+                ts(@).removeClass 'animating'
+
             # If the sidebar is visiable.
-            if ts(@).hasClass('visible')
+            if (ts(@).hasClass('visible') and options is 'toggle') or options is 'hide'
                 # Reset the pusher.
                 ts '.pusher'
                     .removeClass 'dimmed'
@@ -1015,13 +1024,36 @@ ts.fn.sidebar = (options) ->
                     ts '.pusher'
                         .addClass 'dimmed'
 
-                ts '.pusher'
-                    .attr 'data-pusher-lock', 'true'
+                # Lock the scroll of the pusher if needed.
+                if @getAttribute('data-scroll-lock') is 'true'
+                    ts '.pusher'
+                        .attr 'data-pusher-lock', 'true'
 
                 # Show the sidebar.
                 ts @
                     .addClass    'visible'
                     .removeClass 'animating'
+
+        # Attach the click event.
+        else if options is 'attach events'
+            that = @
+
+            switch eventName
+                when 'show'
+                    ts selector
+                        .attr 'data-sidebar-trigger', 'true'
+                        .on   'click', ->
+                            ts(that).sidebar('show')
+                when 'hide'
+                    ts selector
+                        .attr 'data-sidebar-trigger', 'true'
+                        .on   'click', ->
+                            ts(that).sidebar('hide')
+                when 'toggle'
+                    ts selector
+                        .attr 'data-sidebar-trigger', 'true'
+                        .on   'click', ->
+                            ts(that).sidebar('toggle')
 
         # Set the settings if the options is an object.
         else if typeof options is 'object'

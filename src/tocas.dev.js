@@ -1026,7 +1026,7 @@ ts.fn.modal = function(option) {
 The sidebar function.
  */
 
-ts.fn.sidebar = function(options) {
+ts.fn.sidebar = function(options, selector, eventName) {
   var closable, closeVisibleSidebars, dimPage, exclusive, pusher, scrollLock;
   dimPage = (options != null ? options.dimPage : void 0) || false;
   exclusive = (options != null ? options.exclusive : void 0) || false;
@@ -1034,19 +1034,22 @@ ts.fn.sidebar = function(options) {
   closable = (options != null ? options.closable : void 0) || true;
   pusher = document.querySelector('.pusher');
   closeVisibleSidebars = function() {
-    ts('.ts.sidebar.visible').addClass('animating').removeClass('visible').one('animationEnd', function() {
+    ts('.ts.sidebar.visible').addClass('animating').removeClass('visible').one(animationEnd, function() {
       return ts(this).removeClass('animating');
     });
     return ts('.pusher').removeClass('dimmed').removeAttr('data-pusher-lock');
   };
   if (pusher.getAttribute('data-closable-bind') !== 'true') {
-    pusher.addEventListener('click', function() {
-      return closeVisibleSidebars();
+    pusher.addEventListener('click', function(e) {
+      if (!e.target.getAttribute('data-sidebar-trigger')) {
+        return closeVisibleSidebars();
+      }
     });
   }
   pusher.setAttribute('data-closable-bind', true);
   return this.each(function() {
-    if (options === 'toggle') {
+    var that;
+    if (options === 'toggle' || options === 'hide' || options === 'show') {
       ts(this).addClass('animating');
       if (this.getAttribute('data-dim-page') === null) {
         this.setAttribute('data-dim-page', dimPage);
@@ -1054,7 +1057,10 @@ ts.fn.sidebar = function(options) {
       if (this.getAttribute('data-scroll-lock') === null) {
         this.setAttribute('data-scroll-lock', scrollLock);
       }
-      if (ts(this).hasClass('visible')) {
+      if (!ts(this).hasClass('visible') && options === 'hide') {
+        ts(this).removeClass('animating');
+      }
+      if ((ts(this).hasClass('visible') && options === 'toggle') || options === 'hide') {
         ts('.pusher').removeClass('dimmed').removeAttr('data-pusher-lock');
         return ts(this).removeClass('visible').one(animationEnd, function() {
           return ts(this).removeClass('animating');
@@ -1066,8 +1072,26 @@ ts.fn.sidebar = function(options) {
         if (this.getAttribute('data-dim-page') === 'true') {
           ts('.pusher').addClass('dimmed');
         }
-        ts('.pusher').attr('data-pusher-lock', 'true');
+        if (this.getAttribute('data-scroll-lock') === 'true') {
+          ts('.pusher').attr('data-pusher-lock', 'true');
+        }
         return ts(this).addClass('visible').removeClass('animating');
+      }
+    } else if (options === 'attach events') {
+      that = this;
+      switch (eventName) {
+        case 'show':
+          return ts(selector).attr('data-sidebar-trigger', 'true').on('click', function() {
+            return ts(that).sidebar('show');
+          });
+        case 'hide':
+          return ts(selector).attr('data-sidebar-trigger', 'true').on('click', function() {
+            return ts(that).sidebar('hide');
+          });
+        case 'toggle':
+          return ts(selector).attr('data-sidebar-trigger', 'true').on('click', function() {
+            return ts(that).sidebar('toggle');
+          });
       }
     } else if (typeof options === 'object') {
       this.setAttribute('data-closable', closable);
