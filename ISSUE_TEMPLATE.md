@@ -5,8 +5,8 @@ The issue can be written in English or Chinese.
 
 # Feature Request
 
-功能追加請求是可以被接受的，但請記得敘述功能，還有用途為何。
-Feature requests are acceptable, just remember to describe why, and how to use it.
+功能追加請求是可以被接受的（仍要考慮），但請記得敘述功能，還有用途為何。
+Feature requests are acceptable (but not all of them), just remember to describe why, and how to use it.
 
 以下是不被接受的請求（會馬上被關閉）：
 Here're the unacceptable feature requests (and it would be closed immediately):
@@ -28,6 +28,6 @@ Remember to post the HTML structure and the reproducing steps:
 1. 我做了什麼⋯⋯
    What I did... 
 2. 我期望什麼⋯⋯
-   What I excepted...
+   What I expected...
 3. 最終結果是⋯⋯
    What I get...
