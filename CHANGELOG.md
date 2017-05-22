@@ -4,6 +4,137 @@
 
 格式基於[如何維護更新日誌](http://keepachangelog.com/)，而專案採用[語意化版本號碼](http://semver.org/)（注意的是 2.2.2 之前都沒有按照這個版本）。
 
+## [2.3] - 23 May 2017
+### 極重大更新，多個樣式被修改！破壞兼容性！
+
+#### 兼容性破壞
+1. Pure Menu 現在叫做 Link Menu。
+2. Chatroom 改名為 Speeches，結構大有不同。
+3. Celled List 被廢除。
+
+#### 焦點矚目
+1. 新的 Font Awesome 4.7.0 圖示系統！（#186）
+2. 顏色系統重寫，現在顏色對比較明顯與清晰但不會過於黑白。（#108）
+3. Chatroom 的結構簡化了，並重新命名成 Speeches，支援更多內容。（#142）
+4. 新的 Structured Message 能夠呈現更多樣、帶豐富內容的訊息，類似 Android 的通知卡片。（#265）
+5. Progress 新增多個讀取樣式，像 Material Design 的 Indeterminate 的樣式。（#282）
+6. Speeches 的對話氣泡現在可以連成一串，就像 Facebook Messenger 那樣。（#328）
+7. Menu 裡面現在可以有 Right Item 將單個項目置右，適合排版用。（#315）
+8. Menu 可以 Attached 在任何元件上了！（#294）
+9. Menu 有了 Stretched Item 可以將特定項目拉最寬，適合排版用。（#321）
+10. 新增了類似網格佈局的左右欄 Form 排版，類似 Bootstrap Horizontal Form。（#273）
+11. Calendar 日曆元件有了全尺寸的樣式！（#264）
+12. 廢除 Celled List，取而代之的是新的 Segmented List。（#335）
+13. Form 有了 Fieldset 的標籤支援，可劃分欄位區塊！（#347）
+14. Link Button 能讓一個 Button 看起來像連結。（#344）
+15. Items 現在可以看起來像 Bootstrap Media Object 那樣排版使用者頭像和輕量資訊了。（#272）
+16. Pure Menu 改名叫做 Link Menu 了，且不需額外加上 Borderless 樣式了。（#287）
+17. Card 裡面可以擺放 Actions 動作按鈕了！（@2a92767c695a9169ae950561446659936e7a7a90）
+
+#### 新元件
+1. 新的 Tab 分頁籤模塊！（#237）
+2. 新的 Snackbar 通知元件！（#129）
+3. 嵌套影片、設定長寬比的 Embed 元件！（#314）
+4. 新的側邊欄 Sidebar 模塊！（#203）
+5. 新的 Scrollspy 模塊可以讓選單隨著捲軸自動變動 Active 啟用項目！（#292）
+6. 右鍵選單 Contextmenu 模塊！（#062ea027cd3f3cdd8f12b238a6b70f6c49a573b7）
+
+#### 新功能
+1. Spaceless Container 能在行動裝置上移除左右空白。（#233）
+2. Menu 有 Fixed 樣式可以固定在 Top, Left, Right, Bottom。（#231）
+3. Message 現在可以右側邊 Actions 按鈕了。（#244）
+4. Input 有了僅有底線的 Underlined 樣式。（#249）
+5. Table 有了新的 Indicated 功能，可將左側邊框變得醒目。（#248）
+6. List 支援了 Stackable 可在行動裝置上層疊。（#228）
+7. Button 有了 Or 的條件樣式，可將按鈕切分成兩部分，中間安插文字。（#251）
+8. Label 有了 Pointing 樣式，可以有個三角形指標。（#254）
+9. Message 有了僅有框線的 Outlined 樣式。（#258）
+10. Message 有關閉的 JavaScript 模塊了。（#259）
+11. Button 有了新的 Pulsing 脈動樣式，會有水波紋的脈動吸引使用者注意。（#263）
+12. Progress 支援了新的 Buffer 的緩衝條。（#281）
+13. Speeches 的對話氣泡可以自訂是否要有 Pointing 樣式。（#324）
+14. Speeches 支援 Image 能夠擺放圖片的訊息。（#329）
+15. Card 的 Content 有了 Padded 功能。（#283）
+16. Table 裡面可以有 Caption 標籤用來敘述表格。（#286）
+17. Table 可以 Attached 附著在其他元件上了。（#295）
+18. 純文字的 Text Menu。（#316）
+19. Card 裡面可以擺放影片了。（#311）
+20. Menu 有 Image Item 可以擺放單純的圖片。（#311）
+21. Input 有了 Secondary、Tertiary 的樣式能讓預設背景色是灰色。（#341）
+22. Form 有了 Message 輔助訊息樣式，可隨著狀態變更顏色，類似 `<small>`。（#340）
+23. Top Aligned Icon 在 Header 裡能讓圖示對齊上部，而非中間。（#346）
+24. Button 支援浮動在角落了。（#350）
+25. Close Button 能看起來像一個關閉按鈕。（#353）
+26. Items 有了 Segmented 樣式，能看起來像層疊的 Segments。（#349）
+27. Label 可以是 Fluid 變成全寬。（#358）
+28. Item 可以擺放圖示當成圖示清單了。（#351）
+29. Sidebar 支援 Secondary、Tertiary 語調。（#343）
+30. 新的 Fitted Menu。（#338）
+31. Image 裡面可以有角落 Icon。（#360）
+32. Squared Image 會確保圖片一定是正方形的。（#360）
+33. Statistic 支援分隔線樣式 Divided 功能。（#365）
+34. Pointing Tabbed Menu 會在啟用的頁籤上有個粗體框線，就像 GitHub 頁籤。（#356）
+35. Statistic 支援 Aligns 對齊了。（#364）
+36. Statistic 可以透過 Fluid 自我均分了。（#368）
+37. Menu 支援 One、Two、Three⋯⋯Items 來固定均分項目寬度。（#367）
+38. Item 裡面可以有 Actions 動作按鈕。（@7f793045c948d35ef32027b020c72d29f42fb246）
+
+#### Bug 修正
+1. Tabbed Menu 的 Active 卻是一般 Menu 的樣式。（#241）
+2. #229 的問題，Horizontal List 的 Margin 從左邊換到右邊。（#230）
+3. Item 非全寬的問題。（#195）
+4. Cards 瀑布流和 Stackable、Doubling 使用上出問題。（#223）
+5. Hovering Card 的 Z Index。（#235）
+6. Modal Dimmer 的 Overflow。（#246）
+7. Dropdown 和 Modal Dimmer 的 Z Index 穿透問題。（#227）
+8. Icon Buttons 不對齊。（#250）
+9. Message 內的 `<p>` 和 `.header` 間距問題。（#260）
+10. Error Action Input 的聚焦右邊框顏色。（#266）
+11. Floating Dropdown Menu 上半部的不是圓角。（#268）
+12. Card 的 Meta 不會換行。（#269）
+13. 滑鼠移過標籤會透明。（#226）
+14. Focus Input 不起作用。（#270）
+15. Dimmer 在 Body 時沒辦法覆蓋全螢幕。（#278）
+16. Quote 的對齊。（#290、#291）
+17. Header 裡的 Floating Label 失效。（#299）
+18. Warning Input 卻還有背景顏色。（#303）
+19. Modal 裡的 Link Image 會全高。（#313）
+20. Card 的 Meta 在特定顏色下不明顯。（#276）
+21. Attached Header 和 Segment 的框線重複。（#284）
+22. Separated Button 的最後一個按鈕還是有右外距。（#285）
+23. Disabled Item 在 List 裡面不會套用到 Content、Header⋯⋯等。（#306）
+24. Slate 加上背景和 Container 後文字不會有陰影。（#275）
+25. Menu Dropdown Active 時背景顏色是 Basic。（#337）
+26. 長期以來 Container Grid 和 Container > Grid 不對齊。（#147）
+27. Attached Buttons 不能自我上下堆疊。（#348）
+28. 許多地方的 Line Height 重疊。（#309）
+29. Separated Buttons 會拆開 Labeled Button 的標籤。（#359）
+30. Feed 頭像和文字不對齊。（#336）
+31. Horizontal List 的 Center Aligned 無作用。（#363）
+
+#### 調整和新增
+1. Slate 裡面現在可以擺置 Tab 了。（#236）
+2. Message 支援 Attached 在 Input 底部了。（#243）
+3. Card 的 Image Header 背景顏色加深了。（#232）
+4. Horizontal List 現在會換行了。（#229）
+5. 透過 JavaScript 可以在行動裝置上隱藏 Tooltip 了。（#234）
+6. 新增 Bottom Menu 用於 Sidebar Menu 中將項目至底。（#238）
+7. 替 Comment 的 Meta 顏色加深。（#206）
+8. Slider 左右現在可以擺放 Label 了。（#255）
+9. Slider 的左半邊透過 JavaScript 可以有顏色了。（#256）
+10. Message 的 Close 圖示現在更美觀了。（#257）
+11. Toggle 的陰影移除了。（#298）
+12. List 的 Link Header 點擊範圍不會寬到整個容器去了。（#305）
+13. Right Aligned List 能讓清單置右。（#317）
+14. Sub Header 現在也有語意顏色了。（#300）
+15. Progress 可以夾在 Segments 中間了。（#301）
+16. Slate 裡面可以透過 Embed 元件擺放背景影片了。（#323）
+17. Basic 的按鈕顏色現在文字深色、框線淺色。（#297）
+18. Secondary Pointing Menu 支援 Vertical 模式了。（#345）
+
+#### 尚未完成、測試中
+1. Input 有了原地編輯的功能（點擊文字編輯）。（#252）
+
 ## [2.2.2] - 21 Mar 2017
 ### 極重大更新，多個樣式被修改！
 
