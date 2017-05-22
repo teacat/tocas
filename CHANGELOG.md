@@ -11,6 +11,7 @@
 1. Pure Menu 現在叫做 Link Menu。
 2. Chatroom 改名為 Speeches，結構大有不同。
 3. Celled List 被廢除。
+4. [data-ts-native] 被廢除，現在是預設套用了。
 
 #### 焦點矚目
 1. 新的 Font Awesome 4.7.0 圖示系統！（#186）
@@ -37,7 +38,7 @@
 3. 嵌套影片、設定長寬比的 Embed 元件！（#314）
 4. 新的側邊欄 Sidebar 模塊！（#203）
 5. 新的 Scrollspy 模塊可以讓選單隨著捲軸自動變動 Active 啟用項目！（#292）
-6. 右鍵選單 Contextmenu 模塊！（#062ea027cd3f3cdd8f12b238a6b70f6c49a573b7）
+6. 右鍵選單 Contextmenu 模塊！（@062ea027cd3f3cdd8f12b238a6b70f6c49a573b7）
 
 #### 新功能
 1. Spaceless Container 能在行動裝置上移除左右空白。（#233）
@@ -78,6 +79,7 @@
 36. Statistic 可以透過 Fluid 自我均分了。（#368）
 37. Menu 支援 One、Two、Three⋯⋯Items 來固定均分項目寬度。（#367）
 38. Item 裡面可以有 Actions 動作按鈕。（@7f793045c948d35ef32027b020c72d29f42fb246）
+39. Label 現在支援 Basic 基本樣式，讓標籤看起來更簡潔了。（#）
 
 #### Bug 修正
 1. Tabbed Menu 的 Active 卻是一般 Menu 的樣式。（#241）
