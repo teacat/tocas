@@ -80,6 +80,7 @@
 37. Menu 支援 One、Two、Three⋯⋯Items 來固定均分項目寬度。（#367）
 38. Item 裡面可以有 Actions 動作按鈕。（@7f793045c948d35ef32027b020c72d29f42fb246）
 39. Label 現在支援 Basic 基本樣式，讓標籤看起來更簡潔了。（#）
+40. Header 的 Sub Header 子標題可以是 Inline 同行模式。（@780f79bd7db1d21080e1e97e1b0106f1ef11568e）
 
 #### Bug 修正
 1. Tabbed Menu 的 Active 卻是一般 Menu 的樣式。（#241）
