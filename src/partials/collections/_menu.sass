@@ -153,9 +153,11 @@
     border-bottom-right-radius: 0
 
 .ts.menu a.item:hover
-    cursor          : pointer
+    cursor: pointer
+    color : $menu_itemHoverTextColor
+
+.ts.menu:not(.fitted) a.item:hover
     background-color: $menu_itemHoverBackgroundColor
-    color           : $menu_itemHoverTextColor
 
 //-------------------//
 //      Relaxed
@@ -195,15 +197,14 @@
 //       Active
 //-------------------//
 
-.ts.menu:not(.link) a.item:active,
-.ts.menu:not(.link) .item.active,
-.ts.menu:not(.link) .item.dropdown.visible
+.ts.menu:not(.link):not(.fitted) a.item:active,
+.ts.menu:not(.link):not(.fitted) .item.active,
+.ts.menu:not(.link):not(.fitted) .item.dropdown.visible
     background-color: $menu_itemActiveBackgroundColor
 
 .ts.menu:not(.link) a.item:active,
 .ts.menu:not(.link) .item.active,
-    background-color: $menu_itemActiveBackgroundColor
-    color           : $menu_itemActiveTextColor
+    color: $menu_itemActiveTextColor
 
 //-------------------//
 //      Disabled
@@ -389,7 +390,8 @@
 .ts.menu .image.item
     padding: 0
 
-.ts.menu .image.item img
+.ts.menu .image.item > img:not(.ts)
+    display   : block
     width     : 100%
     object-fit: cover
 
@@ -851,7 +853,7 @@
     border-bottom-right-radius: 0
 
 .ts.menu[class*="top attached"]:not(.tabbed)
-    border-bottom: 0
+    //border-bottom: 0
 
 .ts.menu[class*="top attached"] .item:first-child
     border-bottom-left-radius : 0
