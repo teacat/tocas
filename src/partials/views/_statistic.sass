@@ -40,6 +40,9 @@
     display: flex
     margin : $statistic_groupMargin
 
+.ts.statistics > .statistic:last-child
+    margin-right: 0
+
 /* Clearing */
 .ts.statistics:after
     display   : block
@@ -53,19 +56,28 @@
     margin-top: 0em
 
 .ts.statistics:last-child
-    //margin-bottom: 0em
+    margin-bottom: 0em
 
 //-------------------//
 //      Divided
 //-------------------//
 
-.ts.statistics.divided .statistic:not(:last-child):after
+.ts.statistics.divided:not(.horizontal) .statistic:not(:last-child):after
     content         : ''
     position        : absolute
-    right           : -#{$statistic_horizontalSpacing}
+    right           : -#{$statistic_horizontalSpacing / 2}
     top             : 0
     bottom          : 0
     width           : $statistic_dividedBorderWidth
+    background-color: $statistic_dividedBorderColor
+
+.ts.statistics.divided.horizontal .statistic:not(:last-child):after
+    content         : ''
+    position        : absolute
+    right           : 0
+    left            : 0
+    bottom          : -#{$statistic_horizontalGroupElementMargin / 2}
+    height          : $statistic_dividedBorderWidth
     background-color: $statistic_dividedBorderColor
 
 //*******************************//
@@ -266,7 +278,10 @@
     flex-direction: row
     align-items   : center
     max-width     : none
-    margin        : $statistic_horizontalGroupElementMargin
+    margin-bottom : $statistic_horizontalGroupElementMargin
+
+.ts.horizontal.statistics .statistic:last-child
+    margin-bottom: 0
 
 .ts.horizontal.statistic > .text.value,
 .ts.horizontal.statistics > .statistic > .text.value
@@ -278,8 +293,7 @@
 
 .ts.horizontal.statistics .statistic > .value,
 .ts.horizontal.statistic > .value
-    display       : inline-block
-    vertical-align: middle
+    display       : inline-flex
 
 .ts.horizontal.statistics .statistic > .label,
 .ts.horizontal.statistic > .label
