@@ -1211,7 +1211,7 @@ The message function.
 ts.fn.message = ->
     @each ->
         ts(@).find('i.close').on 'click', ->
-            ts(@).parent().addClass 'hidden'
+            ts(@).closest('.ts.message').addClass 'hidden'
 
 ###
 The snackbar function
