@@ -42,6 +42,7 @@
     align-items    : center
     justify-content: center
     line-height    : 1
+    height         : $label_height
     vertical-align : $label_verticalAlign
     margin         : $label_verticalMargin $label_horizontalMargin
     padding        : $label_verticalPadding $label_horizontalPadding
@@ -83,8 +84,9 @@ a.ts.label
 
 /* Detail */
 .ts.label > .detail
-    display       : inline-block
-    vertical-align: top
+    display       : inline-flex
+    align-items   : center
+    height        : $label_height
     font-weight   : $label_detailFontWeight
     margin-left   : $label_detailMargin
     opacity       : $label_detailOpacity
@@ -93,8 +95,10 @@ a.ts.label
     margin: 0em $label_detailIconDistance 0em 0em
 
 /* Removable label */
-.ts.label > .ts.close.button
-    margin-left: $label_deleteMargin
+.ts.label > .ts.close.button,
+.ts.label > .detail > .ts.close.button
+    margin-left : $label_deleteMargin
+    margin-right: $label_deleteRightMargin
 
 //-------------------//
 //       Image
@@ -105,14 +109,14 @@ a.ts.label
     margin-top    : 0em
     margin-bottom : 0em
     max-width     : 9999px
-    vertical-align: baseline
+    vertical-align: middle
     padding       : $label_imageLabelPadding
     border-radius : $label_imageLabelBorderRadius
 
 .ts.image.label img
     display       : inline-block
     vertical-align: top
-    height        : $label_imageLabelImageHeight
+    height        : $label_height
     margin        : $label_imageLabelImageMargin
     border-radius : $label_imageLabelImageBorderRadius
 
@@ -446,8 +450,13 @@ a.ts.basic.label:active
 //       Icon
 //-------------------//
 
-.ts.icon.label:not([class*="left icon"]):not([class*="right icon"]) > .icon
-    margin: 0
+.ts.icon.label[class*="left icon"] > .icon
+    margin-left : 0
+    margin-right: $label_iconDistance
+
+.ts.icon.label[class*="right icon"] > .icon
+    margin-left : $label_iconDistance
+    margin-right: 0
 
 //-------------------//
 //     Borderless
