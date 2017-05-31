@@ -489,39 +489,14 @@
     border-radius: 0
 
 /* Middle */
-.ts.attached.table
-    top          : 0
-    bottom       : 0
-    border-radius: 0
-    margin       : 0 0
-    width        : $table_attachedWidth
-    max-width    : $table_attachedWidth
-    border       : $table_attachedBorder
+.ts.attached.table:not([class*="top attached"]):not([class*="bottom attached"])
+    +extend(attached)
 
-.ts.attached:not(.menu) + .ts.attached.table:not(.top)
-    border-top: none
-
-/* Top */
 .ts.table[class*="top attached"]
-    bottom       : 0px
-    margin-bottom: 0em
-    top          : $table_attachedTopOffset
-    margin-top   : $table_verticalMargin
-    border-radius: $table_borderRadius $table_borderRadius 0em 0em
+    +extend(top-attached)
 
-.ts.table[class*="top attached"]:first-child
-    margin-top: 0em
-
-/* Bottom */
 .ts.table[class*="bottom attached"]
-    bottom       : 0px
-    margin-top   : 0em
-    top          : $table_attachedBottomOffset
-    margin-bottom: $table_verticalMargin
-    border-radius: 0em 0em $table_borderRadius $table_borderRadius
-
-.ts.table[class*="bottom attached"]:last-child
-    margin-bottom: 0em
+    +extend(bottom-attached)
 
 //-------------------//
 //      Striped

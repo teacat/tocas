@@ -376,28 +376,32 @@
 //       Attached
 //-------------------//
 
-/* Top */
 .ts.attached.steps
     width        : $step_attachedWidth !important
-    margin       : 0em $step_attachedHorizontalOffset $step_attachedVerticalOffset
     max-width    : $step_attachedWidth
-    border-radius: $step_stepsBorderRadius $step_stepsBorderRadius 0em 0em
 
-.ts.attached.steps .step:first-child
+// Top Attached
+.ts.steps[class*="top attached"].top.attached
+    +extend(top-attached)
+
+.ts.steps[class*="top attached"] .step:first-child
     border-radius: $step_stepsBorderRadius 0em 0em 0em
-
-.ts.attached.steps .step:last-child
+.ts.steps[class*="top attached"] .step:last-child
     border-radius: 0em $step_stepsBorderRadius 0em 0em
 
-/* Bottom */
-.ts.bottom.attached.steps
-    margin       : $step_attachedVerticalOffset $step_attachedHorizontalOffset 0em
-    border-radius: 0em 0em $step_stepsBorderRadius $step_stepsBorderRadius
+// Attached
+.ts.steps.attached:not([class*="top attached"]):not([class*="bottom attached"])
+    +extend(attached)
+.ts.steps.attached:not([class*="top attached"]):not([class*="bottom attached"]) .step
+    border-radius: 0
 
-.ts.bottom.attached.steps .step:first-child
+// Bottom Attached
+.ts.steps[class*="bottom attached"].bottom.attached
+    +extend(bottom-attached)
+
+.ts.steps[class*="bottom attached"] .step:first-child
     border-radius: 0em 0em 0em $step_stepsBorderRadius
-
-.ts.bottom.attached.steps .step:last-child
+.ts.steps[class*="bottom attached"] .step:last-child
     border-radius: 0em 0em $step_stepsBorderRadius 0em
 
 //-------------------//

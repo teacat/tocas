@@ -309,29 +309,15 @@
 //-------------------//
 
 .ts.segmented.items[class*="top attached"]
-    margin-bottom             : 0
-    border-bottom-left-radius : 0
-    border-bottom-right-radius: 0
-    border-bottom             : 0
+    +extend(top-attached)
+
+    box-shadow: $item_segmentedTopAttachedBoxShadow
 
 .ts.segmented.items.attached:not([class*="top attached"]):not([class*="bottom attached"])
-    margin-bottom: 0
-    margin-top   : 0
-    border-radius: 0
-    border-top   : 0
-    border-bottom: 0
-    box-shadow   : $item_segmentedTopAttachedBoxShadow
+    +extend(attached)
 
 .ts.segmented.items[class*="bottom attached"]
-    margin-top             : 0
-    border-top-left-radius : 0
-    border-top-right-radius: 0
-    border-top             : 0
-
-.ts.segmented.items.attached:not([class*="top attached"]):not([class*="bottom attached"]) + .ts.segmented.items.attached:not([class*="top attached"]):not([class*="bottom attached"]),
-.ts.attached.message + .ts.segmented.items.attached,
-.ts.attached.menu + .ts.segmented.items.attached
-    border-top: $item_segmentedBorder
+    +extend(bottom-attached)
 
 //-------------------//
 //      Selection
@@ -339,7 +325,7 @@
 
 .ts.selection.items > .item
     +extend(no-select)
-    
+
     cursor     : pointer
 
 .ts.selection.items > .item:last-child

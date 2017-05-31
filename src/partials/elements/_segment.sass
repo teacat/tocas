@@ -292,32 +292,17 @@
 //      Attached
 //-------------------//
 
-.ts.segment[class*="bottom attached"]
-    margin-top: 0
-
-    border-top-left-radius : 0
-    border-top-right-radius: 0
-    border-top-width       : $segment_borderWidth
-
-.ts.segment[class*="top attached"]
-    margin-bottom: 0
-
+.ts.attached.segment
     box-shadow: $segment_topAttachedBoxShadow
 
-    border-bottom-left-radius : 0
-    border-bottom-right-radius: 0
-    border-bottom-width       : $segment_borderWidth
+.ts.segment[class*="top attached"]
+    +extend(top-attached)
 
-.ts.segment.attached:not(.top):not(.bottom)
-    margin-top   : 0
-    margin-bottom: 0
+.ts.segment.attached:not([class*="top attached"]):not([class*="bottom attached"])
+    +extend(attached)
 
-    border-top-left-radius    : 0
-    border-top-right-radius   : 0
-    border-top-width          : 0
-    border-bottom-left-radius : 0
-    border-bottom-right-radius: 0
-    border-bottom-width       : 0
+.ts.segment[class*="bottom attached"]
+    +extend(bottom-attached)
 
 //*******************************//
 //            Segments
