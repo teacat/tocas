@@ -960,7 +960,7 @@ ts.fn.sidebar = (options, selector, eventName) ->
 
     # The function which closes all the sidebars.
     closeVisibleSidebars = ->
-        ts '.ts.sidebar.visible'
+        ts '.ts.sidebar.visible:not(.static)'
             .addClass    'animating'
             .removeClass 'visible'
             .one         animationEnd, ->
@@ -973,7 +973,7 @@ ts.fn.sidebar = (options, selector, eventName) ->
     # When user clicked the pusher, all the sidebars will be closed.
     if pusher.getAttribute('data-closable-bind') isnt 'true'
         pusher.addEventListener 'click', (e) ->
-            if not e.target.getAttribute('data-sidebar-trigger')
+            if pusher.getAttribute('data-sidebar-closing') isnt 'true'
                 closeVisibleSidebars()
 
     # Set the pusher as binded so we won't bind it again.
@@ -988,6 +988,12 @@ ts.fn.sidebar = (options, selector, eventName) ->
             # so we can animating the slide out/in animation
             ts @
                 .addClass 'animating'
+
+            #
+            pusher.setAttribute('data-sidebar-closing', 'true')
+            setTimeout ->
+                pusher.removeAttribute('data-sidebar-closing')
+            , 300
 
             # Add the `data-dim-page` attribute to the sidebar if it's not setted.
             if @getAttribute('data-dim-page') is null

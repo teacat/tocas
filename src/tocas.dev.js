@@ -1031,14 +1031,14 @@ ts.fn.sidebar = function(options, selector, eventName) {
   closable = (options != null ? options.closable : void 0) || true;
   pusher = document.querySelector('.pusher');
   closeVisibleSidebars = function() {
-    ts('.ts.sidebar.visible').addClass('animating').removeClass('visible').one(animationEnd, function() {
+    ts('.ts.sidebar.visible:not(.static)').addClass('animating').removeClass('visible').one(animationEnd, function() {
       return ts(this).removeClass('animating');
     });
     return ts('.pusher').removeClass('dimmed').removeAttr('data-pusher-lock');
   };
   if (pusher.getAttribute('data-closable-bind') !== 'true') {
     pusher.addEventListener('click', function(e) {
-      if (!e.target.getAttribute('data-sidebar-trigger')) {
+      if (pusher.getAttribute('data-sidebar-closing') !== 'true') {
         return closeVisibleSidebars();
       }
     });
@@ -1048,6 +1048,10 @@ ts.fn.sidebar = function(options, selector, eventName) {
     var that;
     if (options === 'toggle' || options === 'hide' || options === 'show') {
       ts(this).addClass('animating');
+      pusher.setAttribute('data-sidebar-closing', 'true');
+      setTimeout(function() {
+        return pusher.removeAttribute('data-sidebar-closing');
+      }, 300);
       if (this.getAttribute('data-dim-page') === null) {
         this.setAttribute('data-dim-page', dimPage);
       }
@@ -1245,7 +1249,7 @@ The message function.
 ts.fn.message = function() {
   return this.each(function() {
     return ts(this).find('i.close').on('click', function() {
-      return ts(this).parent().addClass('hidden');
+      return ts(this).closest('.ts.message').addClass('hidden');
     });
   });
 };
