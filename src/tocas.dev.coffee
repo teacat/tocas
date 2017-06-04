@@ -1093,13 +1093,13 @@ ts.fn.tab = (option) ->
             # There's only one tab module if the `data-tab-group` is empty.
             if tabGroup is null
                 # So we deactive all the tab buttons first.
-                ts('[data-tab]:not(.tab)')
+                ts('[data-tab]:not(.tab):not([data-tab-group]')
                     .removeClass 'active'
                 # And deactive all the tab pages.
-                ts('[data-tab]')
+                ts('[data-tab]:not([data-tab-group]')
                     .removeClass 'active'
                 # Now active the target tab page.
-                ts(".tab[data-tab='#{tabName}']")
+                ts(".tab[data-tab='#{tabName}']:not([data-tab-group]")
                     .addClass 'active'
             else
                 ts("[data-tab-group='#{tabGroup}']:not(.tab)")
@@ -1338,28 +1338,27 @@ ts.fn.contextmenu = (option) ->
             # Set the position of the contextmenu based on the quadrant of the mouse cursor.
             if e.clientX < w and e.clientY < h
                 # The mouse is at the top left.
-                ts(menu)
-                    .addClass 'downward rightward'
-                    .css 'left', e.clientX
-                    .css 'top', e.clientY
+                ts(menu).addClass 'downward rightward'
+                    .css 'left', e.clientX + 'px'
+                    .css 'top', e.clientY + 'px'
             else if e.clientX < w && e.clientY > h
                 # The mouse is at the bottom left.
                 ts(menu)
                     .addClass 'upward rightward'
-                    .css 'left', e.clientX
-                    .css 'top', e.clientY - r.height
+                    .css 'left', e.clientX + 'px'
+                    .css 'top', e.clientY - r.height + 'px'
             else if e.clientX > w && e.clientY > h
                 # The mouse is at the bottom right.
                 ts(menu)
                     .addClass 'upward leftward'
-                    .css 'left', e.clientX - r.width
-                    .css 'top', e.clientY - r.height
+                    .css 'left', e.clientX - r.width + 'px'
+                    .css 'top', e.clientY - r.height + 'px'
             else if e.clientX > w && e.clientY < h
                 # The mouse is at the top right.
                 ts(menu)
                     .addClass 'downward leftward'
-                    .css 'left', e.clientX - r.width
-                    .css 'top', e.clientY
+                    .css 'left', e.clientX - r.width + 'px'
+                    .css 'top', e.clientY + 'px'
 
             # Show the contextmenu.
             ts(menu)

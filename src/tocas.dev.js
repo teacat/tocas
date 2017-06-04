@@ -1124,9 +1124,9 @@ ts.fn.tab = function(option) {
       tabGroup = ts(this).attr('data-tab-group');
       onSwitch(tabName, tabGroup);
       if (tabGroup === null) {
-        ts('[data-tab]:not(.tab)').removeClass('active');
-        ts('[data-tab]').removeClass('active');
-        ts(`.tab[data-tab='${tabName}']`).addClass('active');
+        ts('[data-tab]:not(.tab):not([data-tab-group]').removeClass('active');
+        ts('[data-tab]:not([data-tab-group]').removeClass('active');
+        ts(`.tab[data-tab='${tabName}']:not([data-tab-group]`).addClass('active');
       } else {
         ts(`[data-tab-group='${tabGroup}']:not(.tab)`).removeClass('active');
         ts(`.tab[data-tab-group='${tabGroup}']`).removeClass('active');
@@ -1349,13 +1349,13 @@ ts.fn.contextmenu = function(option) {
       h = window.innerHeight / 2;
       ts(menu).removeClass('downward upward rightward leftward');
       if (e.clientX < w && e.clientY < h) {
-        ts(menu).addClass('downward rightward').css('left', e.clientX).css('top', e.clientY);
+        ts(menu).addClass('downward rightward').css('left', e.clientX + 'px').css('top', e.clientY + 'px');
       } else if (e.clientX < w && e.clientY > h) {
-        ts(menu).addClass('upward rightward').css('left', e.clientX).css('top', e.clientY - r.height);
+        ts(menu).addClass('upward rightward').css('left', e.clientX + 'px').css('top', e.clientY - r.height + 'px');
       } else if (e.clientX > w && e.clientY > h) {
-        ts(menu).addClass('upward leftward').css('left', e.clientX - r.width).css('top', e.clientY - r.height);
+        ts(menu).addClass('upward leftward').css('left', e.clientX - r.width + 'px').css('top', e.clientY - r.height + 'px');
       } else if (e.clientX > w && e.clientY < h) {
-        ts(menu).addClass('downward leftward').css('left', e.clientX - r.width).css('top', e.clientY);
+        ts(menu).addClass('downward leftward').css('left', e.clientX - r.width + 'px').css('top', e.clientY + 'px');
       }
       return ts(menu).removeClass('hidden').addClass('visible animating').one(animationEnd, function() {
         return ts(this).removeClass('animating');
