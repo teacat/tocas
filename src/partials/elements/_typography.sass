@@ -1,12 +1,143 @@
 @import ../../variables/elements/typography.variables
 
+//-------------------//
+//        Page
+//-------------------//
 
 html
     font-size: $fontSize
 body
     line-height: $lineHeight
     overflow-x : hidden
-    color      : nth($grey, 8)
+    color      : $typography_textColor
+
+//-------------------//
+//        All
+//-------------------//
+
+*
+    position      : relative
+    font-family   : $typography_fontFamily
+    box-sizing    : $typography_boxSizing
+    letter-spacing: $typography_letterSpacing
+
+//-------------------//
+//        kbd
+//-------------------//
+
+kbd:not(.unstyled)
+    padding         : $typography_kbdPadding
+    font-size       : 90%
+    color           : $typography_kbdTextColor
+    background-color: $typography_kbdBackgroundColor
+    border-radius   : $typography_kbdBorderRadius
+
+    kbd
+        padding    : 0
+        font-size  : 100%
+        font-weight: 500
+
+//-------------------//
+//       mark
+//-------------------//
+
+mark:not(.unstyled)
+    padding         : $typography_markPadding
+    color           : $typography_markTextColor
+    background-color: $typography_markBackgroundColor
+    border-radius   : $typography_markBorderRadius
+
+//-------------------//
+//        del
+//-------------------//
+
+del:not(.unstyled)
+    opacity: $typography_delOpacity
+
+//-------------------//
+//    dl & dd & dt
+//-------------------//
+
+dl:not(.unstyled)
+    margin: $typography_dlMargin
+
+dl:first-child
+    margin-top: 0
+dl:last-child
+    margin-bottom: 0
+
+dd:not(.unstyled)
+    margin-left: $typography_ddDistance
+
+dd:not(.unstyled) + dt:not(.unstyled)
+    margin-top: $typography_dtDistance
+
+//-------------------//
+//        ins
+//-------------------//
+
+ins:not(.unstyled)
+    text-decoration: none
+    border-bottom  : $typography_insBorder
+
+//-------------------//
+//     sup & sub
+//-------------------//
+
+sup:not(.unstyled), sub:not(.unstyled)
+    opacity: $typography_subOpacity
+
+//-------------------//
+//        abbr
+//-------------------//
+
+abbr[data-original-title],
+abbr[title]
+    cursor: help
+
+//-------------------//
+//      address
+//-------------------//
+
+address:not(.unstyled)
+    font-style : normal
+    line-height: inherit
+    margin     : $typography_addressMargin
+
+address:not(.unstyled):first-child
+    margin-top: 0
+
+address:not(.unstyled):last-child
+    margin-bottom: 0
+
+address:not(.unstyled) strong
+    display      : block
+    margin-bottom: $typography_addressStrongDistance
+
+//-------------------//
+//        code
+//-------------------//
+
+code:not(.unstyled)
+    padding         : $typography_codePadding
+    font-size       : 90%
+    color           : $typography_codeTextColor
+    background-color: $typography_codeBackgroundColor
+    border-radius   : $typography_codeBorderRadius
+
+pre code:not(.unstyled)
+    padding         : 0
+    font-size       : inherit
+    color           : inherit
+    background-color: transparent
+    border-radius   : 0
+
+code, kbd, samp
+    font-family: $typography_codeFamily
+
+//-------------------//
+//         p
+//-------------------//
 
 p:not(:first-child)
     margin-top   : $typography_pVerticalMargin
@@ -15,14 +146,6 @@ p:not(:first-child)
 p:last-child:not(:first-child)
     margin-bottom: 0
 
-a,
-.ts.button,
-.ts.dropdown
-    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0)
-
-strong
-    color: nth($grey, 9)
-
 p:first-child
     margin-top: 0
 
@@ -30,11 +153,25 @@ p:last-child:first-child
     margin-top   : 0
     margin-bottom: 0
 
-*
-    position: relative
-    font-family   : $typography_fontFamily
-    box-sizing    : $typography_boxSizing
-    letter-spacing: $typography_letterSpacing
+//-------------------//
+//   Tap Highlight
+//-------------------//
+
+a,
+.ts.button,
+.ts.dropdown
+    -webkit-tap-highlight-color:  rgba(255, 255, 255, 0)
+
+//-------------------//
+//      strong
+//-------------------//
+
+strong
+    color: nth($grey, 9)
+
+//-------------------//
+//       link
+//-------------------//
 
 a
     position       : relative
@@ -52,12 +189,16 @@ a
 a, span
     display: inline-block
 
-::-webkit-selection
+//-------------------//
+//     Selection
+//-------------------//
+
+*::-webkit-selection
     background-color: $typography_hightlightBackground
     color           : $typography_hightlightColor
-::-moz-selection
+*::-moz-selection
     background-color: $typography_hightlightBackground
     color           : $typography_hightlightColor
-::selection
+*::selection
     background-color: $typography_hightlightBackground
     color           : $typography_hightlightColor

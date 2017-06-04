@@ -7,7 +7,8 @@
 
 ul.ts.list,
 ol.ts.list,
-.ts.list
+.ts.list,
+ol:not(.ts):not(.unstyled), ul:not(.ts):not(.unstyled)
     list-style-type: $list_listStyleType
     margin         : $list_margin
     padding        : $list_verticalPadding $list_horizontalPadding
@@ -15,13 +16,15 @@ ol.ts.list,
 
 ul.ts.list:first-child,
 ol.ts.list:first-child,
-.ts.list:first-child
+.ts.list:first-child,
+ol:not(.ts):not(.unstyled):first-child, ul:not(.ts):not(.unstyled):first-child
     margin-top : 0em
     padding-top: 0em
 
 ul.ts.list:last-child,
 ol.ts.list:last-child,
-.ts.list:last-child
+.ts.list:last-child,
+ol:not(.ts):not(.unstyled):last-child, ul:not(.ts):not(.unstyled):last-child
     margin-bottom : 0em
     padding-bottom: 0em
 
@@ -32,6 +35,8 @@ ol.ts.list:last-child,
 /* List Item */
 ul.ts.list li,
 ol.ts.list li,
+ul:not(.ts):not(.unstyled) li,
+ol:not(.ts):not(.unstyled) li,
 .ts.list > .item,
 .ts.list .list > .item
     display            : flex
@@ -44,6 +49,8 @@ ol.ts.list li,
 
 ul.ts.list > li:first-child:after,
 ol.ts.list > li:first-child:after,
+ul:not(.ts):not(.unstyled) > li:first-child:after,
+ol:not(.ts):not(.unstyled) > li:first-child:after,
 .ts.list > .list > .item,
 .ts.list > .item:after
     content   : ''
@@ -54,12 +61,16 @@ ol.ts.list > li:first-child:after,
 
 ul.ts.list li:first-child,
 ol.ts.list li:first-child,
+ul:not(.ts):not(.unstyled) li:first-child,
+ol:not(.ts):not(.unstyled) li:first-child,
 .ts.list .list > .item:first-child,
 .ts.list > .item:first-child
     padding-top: 0em
 
 ul.ts.list li:last-child,
 ol.ts.list li:last-child,
+ul:not(.ts) li:last-child,
+ol:not(.ts) li:last-child,
 .ts.list .list > .item:last-child,
 .ts.list > .item:last-child
     padding-bottom: 0em
@@ -67,6 +78,8 @@ ol.ts.list li:last-child,
 /* Child List */
 ul.ts.list ul,
 ol.ts.list ol,
+ul:not(.ts):not(.unstyled) ul:not(.ts),
+ol:not(.ts):not(.unstyled) ol:not(.ts),
 .ts.list .list
     clear     : both
     margin    : 0em
@@ -76,6 +89,8 @@ ol.ts.list ol,
 /* Child Item */
 ul.ts.list ul li,
 ol.ts.list ol li,
+ul:not(.ts):not(.unstyled) ul:not(.ts) li,
+ol:not(.ts):not(.unstyled) ol:not(.ts) li,
 .ts.list .list > .item
     padding    : $list_childItemPadding
     line-height: $list_childItemLineHeight
@@ -146,7 +161,7 @@ ol.ts.list ol li,
 /* Header */
 .ts.list .list > .item .header,
 .ts.list > .item .header
-    display    : inline-block
+    display    : block
     flex-basis : 100%
     margin     : 0em
     font-weight: $list_itemHeaderFontWeight
@@ -667,7 +682,9 @@ ol.ts.list ol li,
 //-------------------//
 
 ul.ts.list:not(.horizontal) li[value]:before,
-ol.ts.list li[value]:before
+ol.ts.list li[value]:before,
+ul:not(.ts):not(.unstyled) li[value]:before,
+ol:not(.ts):not(.unstyled) li[value]:before
     content: attr(value)
 
 .ts.bulleted.list:not(.horizontal) .list > .item[data-value]:before,
@@ -682,22 +699,26 @@ ol.ts.list li[value]:before
 /* Margin for dotted list */
 .ts.bulleted.list:not(.horizontal),
 .ts.middoted.list:not(.horizontal),
-ul.ts.list:not(.horizontal)
+ul.ts.list:not(.horizontal),
+ul:not(.ts):not(.unstyled)
     margin-left: $list_bulletDistance
 .ts.bulleted.list .list,
 .ts.middoted.list .list,
-ul.ts.list ul
+ul.ts.list ul,
+ul:not(.ts):not(.unstyled) ul:not(.ts)
     padding-left: $list_bulletDistance
 
 .ts.bulleted.list .list > a.item:before,
 .ts.bulleted.list > a.item:before,
+ul:not(.ts):not(.unstyled) > a.item:before,
     color: $list_bulletColor
 
 .ts.bulleted.list.inverted .list > a.item:before,
-.ts.bulleted.list.inverted > a.item:before,
+.ts.bulleted.list.inverted > a.item:before
     color: $list_invertedBulletColor
 
 ul.ts.list:not(.horizontal) li:before,
+ul:not(.ts):not(.unstyled) li:before,
 .ts.bulleted.list:not(.horizontal) .list > .item:before,
 .ts.bulleted.list:not(.horizontal) > .item:before
     +extend(is-dot)
@@ -717,9 +738,11 @@ ul.ts.list:not(.horizontal) li:before,
 
 /* Levels */
 ul.ts.list:not(.horizontal) ul li:before,
+ul:not(.ts):not(.unstyled) ul:not(.ts) li:before,
 .ts.bulleted.list:not(.horizontal) .list > .item:before
     content     : '○'
 ul.ts.list:not(.horizontal) ul ul li:before,
+ul:not(.ts):not(.unstyled) ul:not(.ts) ul:not(.ts) li:before,
 .ts.bulleted.list:not(.horizontal) .list .list > .item:before
     content     : '▪'
 
@@ -769,20 +792,24 @@ ul.ts.horizontal.bulleted.list li:not(:first-child):before,
 //-------------------//
 
 ol.ts.list,
+ol:not(.ts):not(.unstyled),
 .ts.ordered.list,
 .ts.ordered.list .list,
-ol.ts.list ol
+ol.ts.list ol,
+ol:not(.ts):not(.unstyled) ol:not(.ts)
     counter-reset  : ordered
     margin-left    : $list_orderedCountDistance
     list-style-type: none
 
 ol.ts.list li,
+ol:not(.ts):not(.unstyled) li,
 .ts.ordered.list .list > .item,
 .ts.ordered.list > .item
     list-style-type: none
     position       : relative
 
 ol.ts.list li:before,
+ol:not(.ts):not(.unstyled) li:before,
 .ts.ordered.list .list > .item:before,
 .ts.ordered.list > .item:before
     +extend(no-select)
@@ -808,21 +835,26 @@ ol.ts.inverted.list li:before,
 .ts.ordered.list > .item[data-value]
     content: attr(data-value)
 
-ol.ts.list li[value]:before
+ol.ts.list li[value]:before,
+ol:not(.ts):not(.unstyled) li[value]:before
     content: attr(value)
 
 /* Child Lists */
 ol.ts.list ol,
+ol:not(.ts):not(.unstyled) ol:not(.ts),
 .ts.ordered.list .list
     //margin-left: $list_orderedChildCountDistance
 
 ol.ts.list ol li:before,
+ol:not(.ts):not(.unstyled) ol:not(.ts) li:before,
 .ts.ordered.list .list > .item:before
     margin-left: $list_orderedChildCountOffset
 ol.ts.list ol ol li:before,
+ol:not(.ts):not(.unstyled) ol:not(.ts) ol:not(.ts) li:before,
 .ts.ordered.list .list .list > .item:before
     margin-left: $list_orderedcChildChildCountOffset
 ol.ts.list ol ol ol li:before,
+ol:not(.ts):not(.unstyled) ol:not(.ts) ol:not(.ts) ol:not(.ts) li:before,
 .ts.ordered.list .list .list .list > .item:before
     margin-left: $list_orderedcChildChildChildCountOffset
 
