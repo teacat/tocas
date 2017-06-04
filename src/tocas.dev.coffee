@@ -1216,7 +1216,7 @@ The message function.
 
 ts.fn.message = ->
     @each ->
-        ts(@).find('i.close').on 'click', ->
+        ts(@).find('.close.button').on 'click', ->
             ts(@).closest('.ts.message').addClass 'hidden'
 
 ###

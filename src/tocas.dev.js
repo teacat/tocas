@@ -1248,7 +1248,7 @@ The message function.
 
 ts.fn.message = function() {
   return this.each(function() {
-    return ts(this).find('i.close').on('click', function() {
+    return ts(this).find('.close.button').on('click', function() {
       return ts(this).closest('.ts.message').addClass('hidden');
     });
   });
