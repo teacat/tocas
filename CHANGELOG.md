@@ -4,6 +4,14 @@
 
 格式基於[如何維護更新日誌](http://keepachangelog.com/)，而專案採用[語意化版本號碼](http://semver.org/)。
 
+## [2.3.1] - 6 Jun 2017
+
+#### Bug 修正
+
+1. Firefox 上 Inderterminate 進度列會閃爍的問題。（#383）
+2. Fieldset 在 Stackable 上沒有外間距。（#385）
+3. Dropdown 的箭頭背景變成重複的了。（#384）
+
 ## [2.3] - 6 Jun 2017
 ### 極重大更新，多個樣式被修改！破壞兼容性！
 
