@@ -4,7 +4,7 @@
 
 格式基於[如何維護更新日誌](http://keepachangelog.com/)，而專案採用[語意化版本號碼](http://semver.org/)。
 
-## [2.3] - 23 May 2017
+## [2.3] - 6 Jun 2017
 ### 極重大更新，多個樣式被修改！破壞兼容性！
 
 #### 兼容性破壞
@@ -31,6 +31,7 @@
 15. Items 現在可以看起來像 Bootstrap Media Object 那樣排版使用者頭像和輕量資訊了。（#272）
 16. Pure Menu 改名叫做 Link Menu 了，且不需額外加上 Borderless 樣式了。（#287）
 17. Card 裡面可以擺放 Actions 動作按鈕了！（@2a92767c695a9169ae950561446659936e7a7a90）
+18. 原生標籤現在有了 Tocas UI 的樣式。（#379）
 
 #### 新元件
 1. 新的 Tab 分頁籤模塊！（#237）
@@ -81,6 +82,9 @@
 38. Item 裡面可以有 Actions 動作按鈕。（@7f793045c948d35ef32027b020c72d29f42fb246）
 39. Label 現在支援 Basic 基本樣式，讓標籤看起來更簡潔了。（#）
 40. Header 的 Sub Header 子標題可以是 Inline 同行模式。（@780f79bd7db1d21080e1e97e1b0106f1ef11568e）
+41. Label 裡面可以擺置關閉按鈕。（#371）
+42. Grid 現在支援 Stretched Column，可將欄位拉伸到最寬，並縮短其他欄位。（#321）
+43. Items 和 List 的項目現在有了已選擇 Selected 的樣式。（#382）
 
 #### Bug 修正
 1. Tabbed Menu 的 Active 卻是一般 Menu 的樣式。（#241）
@@ -114,6 +118,9 @@
 29. Separated Buttons 會拆開 Labeled Button 的標籤。（#359）
 30. Feed 頭像和文字不對齊。（#336）
 31. Horizontal List 的 Center Aligned 無作用。（#363）
+32. Attached 在不同元件總是用奇異方式修正。（#372）
+33. 移除 Secondary Menu 的負外距。（#377）
+34. 讓寬 Sidebar 在行動裝置上填滿整個螢幕。（#376）
 
 #### 調整和新增
 1. Slate 裡面現在可以擺置 Tab 了。（#236）
@@ -134,6 +141,8 @@
 16. Slate 裡面可以透過 Embed 元件擺放背景影片了。（#323）
 17. Basic 的按鈕顏色現在文字深色、框線淺色。（#297）
 18. Secondary Pointing Menu 支援 Vertical 模式了。（#345）
+19. 重寫 Statistic 的所有外距。（#373）
+20. Message 現在不用 Close Icon 而是用 Close Button。（#381）
 
 #### 尚未完成、測試中
 1. Input 有了原地編輯的功能（點擊文字編輯）。（#252）
