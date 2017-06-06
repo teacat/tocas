@@ -45,22 +45,15 @@ Tocas UI 是基於 SASS 和 CSS3 的元件框架，可快速建立大型或小�
 
 &nbsp;
 
-# 安裝
+# 使用
 
-透過 `git` 安裝最新（測試版）。
+將下列標籤放入網頁的 `<head>...</head>` 標籤之中。
 
-```
-$ git clone https://github.com/TeaMeow/TocasUI.git
-```
-
-透過 `git` 安裝正式版。
-
-```
-$ git clone https://github.com/TeaMeow/TocasUI.git
-$ git fetch --tags
-$ git tag -l
-> 2.2.2
-$ git checkout tags/2.2.2
+```html
+<!-- Tocas UI：CSS 與元件 -->
+<link rel="stylesheet" href="//cdn.rawgit.com/TeaMeow/TocasUI/2.3/dist/tocas.css">
+<!-- Tocas JS：模塊與 JavaScript 函式 -->
+<script src="//cdn.rawgit.com/TeaMeow/TocasUI/2.3/dist/tocas.js"></script>
 ```
 
 &nbsp;
