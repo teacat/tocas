@@ -14,6 +14,19 @@ Tocas UI 是基於 SASS 和 CSS3 的元件框架，可快速建立大型或小�
 
 &nbsp;
 
+# 瀏覽器支援
+
+除了 Microsoft 所提供的瀏覽器（如：Edge、Internet Explorer）外，都獲得後續的支援與開發。
+
+|         | ![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_64x64.png)<br>Chrome | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_64x64.png)<br>Firefox | ![Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_64x64.png)<br>Edge | ![WebView](https://raw.githubusercontent.com/alrra/browser-logos/master/src/android-webview-beta/android-webview-beta_64x64.png)<br>Android Browser & WebView | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_64x64.png)<br>Opera | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_64x64.png)<br>Safari |
+|---------|--------|---------|------|-------------------|-------|--------|
+| Android | 29+    | 28+     | N/A  | Android 5.0+      | 17+   | N/A    |
+| iOS     | 29+    | 28+     | N/A  | N/A               | 17+   | 9.2+   |
+| macOS   | 29+    | 28+     | N/A  | N/A               | 17+   | 9+     |
+| Windows | 29+    | 28+     | ✖    | N/A               | 17+   | 9+     |
+
+&nbsp;
+
 # 特色
 
 1. 更簡潔，沒有像 Bootstrap 那樣**雜亂**的樣式名稱。（如：`.m-l-1`, `.p-x-2`, `.p-a-3`）
