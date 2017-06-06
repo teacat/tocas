@@ -11,8 +11,7 @@
             <router-link class="item" to="/rwd/">{{ $t('nav.rwd') }}</router-link>
             <div class="right menu">
                 <!--<a class="item" href="#!" @click="changeLang">{{ language }}</a>-->
-                <a class="item" href="//patreon.com/yamiodymel">{{ $t('nav.donate') }}</a>
-                <a class="item" href="//github.com/TeaMeow/TocasUI/">Github</a>
+                <a class="item" href="//github.com/TeaMeow/TocasUI/">GitHub</a>
             </div>
         </div>
     </nav>

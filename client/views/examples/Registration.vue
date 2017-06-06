@@ -11,7 +11,7 @@
         
         
         <!-- 聚焦看板 -->
-        <div class="ts very padded horizontally fitted fluid jumbotron">
+        <div class="ts padded horizontally fitted fluid slate">
             <div class="ts very narrow container">
                 
                 <!-- 標題 -->

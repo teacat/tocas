@@ -35,11 +35,11 @@ module.exports =
         [
             {
                 test: /\.vue$/,
-                loader: 'vue-loader'
+                use : 'vue-loader'
             },
             {
                 test: /\.js$/,
-                loader: 'babel-loader',
+                use : 'babel-loader',
                 exclude: [/node_modules/]
             },
             {
@@ -53,11 +53,11 @@ module.exports =
             },
             {
                 test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-                loader: 'url-loader'
+                use : 'url-loader'
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: 'css-loader' })
+                use : ExtractTextPlugin.extract({ fallback: 'style-loader', loader: 'css-loader' })
             },
         ]
     },

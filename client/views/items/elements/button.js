@@ -176,8 +176,16 @@ export default
     <button class="ts warning button">橙希</button>
     <button class="ts primary button">雨藍</button>
     <button class="ts inverted button">卡莉絲</button>
+</div>
+<br><br>
+<div class="ts icon buttons">
+  <button class="ts button"><i class="align left icon"></i></button>
+  <button class="ts button"><i class="align center icon"></i></button>
+  <button class="ts button active"><i class="align right icon"></i></button>
+  <button class="ts button"><i class="align justify icon"></i></button>
 </div>`,
-            mark: 'buttons'
+            mark: 'buttons',
+            remove: '<br><br>'
         },
         {
             type       : small,
@@ -240,6 +248,68 @@ export default
             mark: 'stackable'
         },
         {
+            type       : small,
+            title      : '垂直附著',
+            description: `按鈕群組可以垂直附著在某個元素的上下端。`,
+            link       : 'attached-buttons'
+        },
+        {
+            type: 'example',
+            code: `
+<div class="ts fluid top attached buttons">
+    <div class="ts primary button">按鈕一</div>
+    <div class="ts positive button">按鈕二</div>
+</div>
+<div class="ts attached segment">
+    <p>貓耳就是量子力學</p>
+    <p>△×￥○＠％＆＄＃☆□！</p>
+    <p>「冷靜一點、把咖啡歐蕾喝下去」</p>
+</div>
+<div class="ts fluid bottom attached buttons">
+    <div class="ts inverted button">按鈕三</div>
+    <div class="ts negative button">按鈕四</div>
+</div>`,
+            mark: 'top attached, bottom attached',
+            remove: '<br><br>'
+        },
+        {
+            type       : normal,
+            title      : '內容',
+            description: '按鈕內部可以有不同的內容。',
+            link       : false
+        },
+        {
+            type       : small,
+            title      : '條件',
+            description: `你能夠在按鈕群組的間隙中間安插像是條件式的文字讓使用者擇其一。`,
+            link       : 'conditional'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts buttons">
+  <button class="ts button">取消</button>
+  <div class="or"></div>
+  <button class="ts positive button">儲存</button>
+  <div class="or"></div>
+  <button class="ts primary button">送出</button>
+</div>`,
+            mark: 'or'
+        },
+        {
+            type       : tiny,
+            title      : '自訂條件文字',
+            description: `你也能夠透過 <span class="ts horizontal label">[data-text]</span> 來變動條件文字，但注意文字字數不可超過圓圈大小。`
+        },
+        {
+            type: 'example',
+            code: `<div class="ts buttons">
+  <button class="ts button">Cancel</button>
+  <div class="or" data-text="Or"></div>
+  <button class="ts positive button">Save</button>
+</div>`,
+            mark: 'horizontal, bulleted'
+        },
+        {
             type       : normal,
             title      : '狀態',
             description: '你可以隨時透過樣式類別切換一個按鈕的狀態。',
@@ -277,6 +347,17 @@ export default
             type: 'example',
             code: `<button class="ts loading button">按鈕</button>`,
             mark: 'loading'
+        },
+        {
+            type       : small,
+            title      : '脈動中',
+            description: `按鈕能夠看起來正在脈動，令人注意。`,
+            link       : 'pulsing'
+        },
+        {
+            type: 'example',
+            code: `<button class="ts pulsing button">按鈕</button>`,
+            mark: 'pulsing'
         },
         {
             type       : normal,
@@ -318,7 +399,7 @@ export default
         {
             type       : small,
             title      : '垂直附著',
-            description: `按鈕可以垂直附著在某個元素的上下端。`,
+            description: `按鈕可以單獨垂直附著在某個元素的上下端。`,
             link       : 'attached'
         },
         {

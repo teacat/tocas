@@ -84,7 +84,7 @@ export default {
         </button>
     </div>
 </dialog>`,
-            mark: 'basic modal'
+            mark: 'basic'
         },
         {
             type: normal,
@@ -344,7 +344,7 @@ export default {
         {
             type: 'example',
             code: `<div class="ts modals dimmer">
-        <dialog id="basicModal" class="ts basic modal" open>
+    <dialog id="basicModal" class="ts basic modal" open>
         <i class="close icon"></i>
         <div class="ts icon header">
             <i class="smile icon"></i>

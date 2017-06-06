@@ -35,7 +35,7 @@
             </div>
         </div>
         <!-- / 部落格 -->
-        
+
         <br>
         
         <!-- 主要區塊 -->
@@ -186,7 +186,6 @@
                         <a href="#" class="item">1</a>
                         <a href="#" class="item">2</a>
                         <a href="#" class="item">3</a>
-                        <a href="#" class="item">4</a>
                         <a href="#" class="item">下一頁</a>
                     </div>
                     <br>

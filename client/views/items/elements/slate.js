@@ -224,6 +224,26 @@ export default
             mark  : 'action'
         },
         {
+            type       : small,
+            title      : '底部附著選單',
+            description: `板岩內的底部可以附著一個選單。`,
+            link       : 'bottom-attached-menu'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts fluid slate">
+    <span class="header">已收藏項目</span>
+    <span class="description">這裡存放著你已經收藏的項目。</span>
+    <div class="ts bottom attached tabbed menu">
+        <a class="item" href="#!">圖片</a>
+        <a class="active item" href="#!">文章</a>
+        <a class="item" href="#!">音樂</a>
+        <a class="item" href="#!">影片</a>
+    </div>
+</div>`,
+            mark  : 'bottom attached, menu'
+        },
+        {
             type       : normal,
             title      : '外觀',
             description: '你可以更改板岩的位置、大小、或者形狀。',

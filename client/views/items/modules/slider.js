@@ -60,11 +60,25 @@ export default
             link       : 'disabled'
         },
         {
+            type       : normal,
+            title      : '內容',
+            description: '滑桿裡可以擺放不同的內容',
+            link       : false
+        },
+        {
+            type       : small,
+            title      : '標籤',
+            description: `滑桿的側邊可以擺放標籤用以標示與滑桿有關的數值。`,
+            link       : 'label'
+        },
+        {
             type: 'example',
-            code: `<div class="ts disabled slider">
+            code: `<div class="ts slider">
+    <div class="ts basic right pointing label">32</div>
     <input type="range">
+    <div class="ts basic left pointing label">96</div>
 </div>`,
-            mark: 'disabled'
+            mark: 'label'
         },
         {
             type       : normal,

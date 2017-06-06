@@ -3,7 +3,7 @@
         <doc-nav class="homepage"></doc-nav>
 
         <!-- 聚焦看板 -->
-        <header class="ts fluid horizontally fitted extra padded jumbotron">
+        <header class="ts fluid horizontally fitted extra padded slate">
             <div class="ts center aligned narrow container">
                 <h1 class="ts center aligned header">
                     Tocas UI 2
@@ -26,6 +26,63 @@
             </div>
         </header>
         <!-- / 聚焦看板 -->
+
+
+        <!-- 贊助者 -->
+        <aside id="donators" class="tablet or large device only">
+            <div class="ts narrow container">
+                <strong>本網站由以下贊助者提供</strong>
+                <div class="ts three column stackable grid">
+                    <div class="column">
+                        <div class="user">
+                            <img src="./images/donators/10524324_1719516811627772_3208381219312350014_n.jpg">
+                            Sciuridae Li
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="user">
+                            <img src="./images/donators/13439103_294002067611387_7097529764601871832_n.jpg">
+                            Mac Taylor
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="user">
+                            <img src="./images/donators/13179078_1056932151068232_6308606966882718486_n.jpg">
+                            李政皇
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="ts four column stackable grid">
+                    <div class="column">
+                        <div class="small user">
+                            <img src="./images/donators/11202584_1080523821966181_8611149687343390555_n.jpg">
+                            Yan-K
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="small user">
+                            <img src="./images/image_placeholder_user.png">
+                            Fan Kangtai
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="small user">
+                            <img src="./images/donators/15135924_1128641133917952_9018342414149777037_n.jpg">
+                            SpaceTimeHalf
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="small user">
+                            <img src="./images/donators/15284922_1833601036911747_5479027173828893071_n.jpg">
+                            Sean Wei
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="https://patreon.com/yamiodymel" target="_blank">成為贊助者</a>
+        </aside>
+        <!-- / 贊助者 -->
 
 
         <!-- 開場白 -->
@@ -212,7 +269,7 @@
                             <div class="header">
                                 Yami Odymel
                             </div>
-                            <div class="bulleted meta">
+                            <div class="middoted meta">
                                 <div>@yamiodymel</div>
                                 <div>2 mins     </div>
                             </div>
@@ -349,6 +406,7 @@
 
         </section>
         <!-- / 展示元件 -->
+
 
 
         <!-- 客戶引言 -->
@@ -566,6 +624,62 @@
         </section>
         <!-- / 客戶引言 -->
 
+        <!-- 贊助者 -->
+        <aside id="donators" class="mobile only">
+            <div class="ts narrow container">
+                <strong>本網站由以下贊助者提供</strong>
+                <div class="ts one column grid">
+                    <div class="column">
+                        <div class="user">
+                            <img src="./images/donators/10524324_1719516811627772_3208381219312350014_n.jpg">
+                            Sciuridae Li
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="user">
+                            <img src="./images/donators/13439103_294002067611387_7097529764601871832_n.jpg">
+                            Mac Taylor
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="user">
+                            <img src="./images/donators/13179078_1056932151068232_6308606966882718486_n.jpg">
+                            李政皇
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="ts two column grid">
+                    <div class="column">
+                        <div class="small user">
+                            <img src="./images/donators/11202584_1080523821966181_8611149687343390555_n.jpg">
+                            Yan-K
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="small user">
+                            <img src="./images/image_placeholder_user.png">
+                            Fan Kangtai
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="small user">
+                            <img src="./images/donators/15135924_1128641133917952_9018342414149777037_n.jpg">
+                            SpaceTimeHalf
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="small user">
+                            <img src="./images/donators/15284922_1833601036911747_5479027173828893071_n.jpg">
+                            Sean Wei
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="https://patreon.com/yamiodymel" target="_blank">成為贊助者</a>
+        </aside>
+        <!-- / 贊助者 -->
+
         <doc-footer></doc-footer>
     </main>
 </template>
@@ -573,10 +687,11 @@
 <style lang="scss" scoped>
 header
 {
+    display: block !important;
     padding-top   : 7em !important;
     padding-bottom: 7em !important;
     background    : linear-gradient(to bottom, #e7eae3 0%,#f9fcf7 100%) !important;
-    margin-bottom : 3.5em !important;
+    //margin-bottom : 3.5em !important;
 
     p
     {
@@ -633,8 +748,88 @@ section
         }
     }
 }
+#donators
+{
+    opacity: 0.9;
+    text-align: center;
+    color: #777676;
+    padding: 2.5em 0 3em;
+    border-bottom: 1px solid #f5f5f5;
+
+    &:nth-of-type(2)
+    {
+        border: 0;
+        margin: 3em 0 0em;
+        padding-bottom: 0;
+
+        .small.user {
+            min-width: 0px;
+            display: inline-block;
+            img {
+                margin: .3em auto;
+                display: block;
+            }
+        }
+
+    }
+    strong
+    {
+        color: #646464;
+        text-align: center;
+        margin-bottom: 2.5em;
+        display: block;
+        font-weight: 500;
+    }
+    .column
+    {
+        text-align: center;
+    }
+    .user
+    {
+        color: #848484;
+        min-width: 170px;
+        display: inline-flex;
+        align-items: center;
+        font-size: 1.2em;
+
+        img
+        {
+            max-width: 50px;
+            max-height: 50px;
+            border-radius: 4px;
+            margin-right: 1.5em;
+        }
+    }
+    .small.user
+    {
+        font-size: 1em;
+        img
+        {
+            margin-right: 1.2em;
+            max-width: 40px;
+            max-height: 40px;
+        }
+    }
+    a
+    {
+        display: inline-block;
+        text-align: center;
+        padding: .7em 1.2em;
+        border-radius: 500em;
+        color: #777;
+        margin-top: 3em;
+        border: 1px solid #e6e6e6;
+
+        &:hover
+        {
+            background: #e2e2e2;
+            color: #6f6f6f;
+        }
+    }
+}
 #openWhiteDesu
 {
+    margin-top : 0em !important;
     background-color: #fff;
 
     .ts.header

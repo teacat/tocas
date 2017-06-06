@@ -41,7 +41,7 @@
             <div class="ts narrow container">
                 
                 <!-- 卡片群組 -->
-                <div class="ts three cards">
+                <div class="ts stackable three cards">
                     
                     <!-- 單個卡片 -->
                     <div class="ts flatted card">

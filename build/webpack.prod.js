@@ -61,8 +61,8 @@ module.exports = merge(config,
                 {
                     css: ExtractTextPlugin.extract
                     ({
-                        loader        : 'css-loader',
-                        fallbackLoader: 'vue-style-loader'
+                        use     : 'css-loader',
+                        fallback: 'vue-style-loader'
                     }),
                     scss: "vue-style-loader!css-loader!sass-loader"
                 }

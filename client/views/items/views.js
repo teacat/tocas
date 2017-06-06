@@ -15,7 +15,7 @@ export default
             class      : '.ts.card',
             link       : '/views/card',
             description: '用來彙整短篇文字、或是以區塊顯示碎片式內容的元素。',
-            symbol     : 'browser'
+            symbol     : 'id card'
         },
         {
             title      : '聊天室',

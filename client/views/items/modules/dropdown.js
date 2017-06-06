@@ -126,7 +126,7 @@ export default
         </div>
         <div class="item">
             重新命名
-            <span class="description">ctrl + r</span>
+            <span class="description">Ctrl + R</span>
         </div>
         <div class="item">
             <i class="folder icon"></i>

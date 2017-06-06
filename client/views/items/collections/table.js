@@ -548,10 +548,93 @@ export default
             mark: 'disabled'
         },
         {
+            type       : small,
+            title      : '指示的',
+            description: `你可以用特殊方式凸顯表格中的其中一行、欄。`,
+            link       : 'indicated'
+        },
+        {
+            type: 'example',
+            code: `<table class="ts celled table">
+    <thead>
+        <tr>
+            <th>動畫名稱</th>
+            <th>放映起始日期</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>WorldEnd: What do you do at the end of the world? Are you busy? Will you save us?</td>
+            <td>Apr 11, 2017</td>
+        </tr>
+        <tr class="indicated">
+            <td>Eromanga Sensei</td>
+            <td>Apr 09, 2017</td>
+        </tr>
+        <tr class="negative indicated">
+            <td>Armed Girl's Machiavellism</td>
+            <td>Apr 05, 2017</td>
+        </tr>
+        <tr class="info indicated">
+            <td>Grimoire of Zero</td>
+            <td class="positive indicated">Apr 10, 2017</td>
+        </tr>
+        <tr>
+            <td class="primary indicated">Attack on Titan Season 2</td>
+            <td>Apr 01, 2017</td>
+        </tr>
+        <tr class="warning indicated">
+            <td>Akashic Records of Bastard Magic Instructor;</td>
+            <td>Apr 04, 2017</td>
+        </tr>
+    </tbody>
+    <tbody></tbody>
+</table>`,
+            mark: 'indicated'
+        },
+        {
             type       : normal,
             title      : '外觀',
             description: '表格可以透過額外的樣式來強化外觀。',
             link       : false
+        },
+        {
+            type       : small,
+            title      : '語意',
+            description: `欄位或行都能有語意。`,
+            link       : 'emphasis'
+        },
+        {
+            type: 'example',
+            code: `<table class="ts table">
+    <thead>
+        <tr>
+            <th>工作區域</th>
+            <th>目前狀態</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Avane</td>
+            <td class="primary">
+                <i class="icon unhide"></i> 主要目的
+            </td>
+        </tr>
+        <tr class="info">
+            <td>Iknore</td>
+            <td>
+                <i class="icon caution"></i> 尚未確認
+            </td>
+        </tr>
+        <tr>
+            <td>Sana</td>
+            <td class="inverted">
+                <i class="icon question"></i> 反色
+            </td>
+        </tr>
+    </tbody>
+</table>`,
+            mark: 'info, primary, inverted'
         },
         {
             type       : small,

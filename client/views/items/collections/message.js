@@ -4,7 +4,7 @@ var small   = 'small'
 var tiny    = 'tiny'
 var source  = 'source'
 var example = 'example'
-
+var imgPlaceholderUser   = require('../../images/image_placeholder_user.png')
 
 export default
 {
@@ -50,6 +50,44 @@ export default
     直到你成功之前，人們都是瞎子。
 </div>`,
             mark: 'basic'
+        },
+        {
+            type       : small,
+            title      : '外框線',
+            description: `訊息可以只有外框線。`,
+            link       : 'outlined'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts outlined message">
+    直到你成功之前，人們都是瞎子。
+</div>`,
+            mark: 'outlined'
+        },
+        {
+            type       : small,
+            title      : '結構化',
+            description: `訊息能夠看起來更具有結構，並帶有更多附加動作。`,
+            link       : 'structured'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts structured message">
+    <div class="avatar">
+        <img src="${imgPlaceholderUser}">
+    </div>
+    <div class="content">
+        <div class="text">
+            <p>有位使用者跑到了你的小屋並向你道聲早安，</p>
+            <p>但就在你卸下心防的同時，你意識到有什麼東西從身邊消失了。</p>
+        </div>
+        <div class="actions">
+            <a class="primary" href="#!">檢查道具欄</a>
+            <a href="#!">叫住對方</a>
+        </div>
+    </div>
+</div>`,
+            mark: 'structured'
         },
         {
             type       : small,
@@ -193,14 +231,14 @@ export default
         },
         {
             type: 'example',
-            code: `<div class="ts message">
+            code: `<div class="ts dismissable message">
     <i class="close icon"></i>
     <div class="header">
         不喜歡我？
     </div>
     <p>那就關閉我吧。</p>
 </div>`,
-            mark: 'close'
+            mark: 'dismissable, close'
         },
         {
             type       : normal,
@@ -220,6 +258,93 @@ export default
     你看不見我。
 </div>`,
             mark: 'hidden'
+        },
+        {
+            type       : normal,
+            title      : '內容',
+            description: '訊息裡面可以帶有不同的內容。',
+            link       : false
+        },
+        {
+            type       : small,
+            title      : '文字',
+            description: `訊息裡可以擺放基本的文字，這只用於結構較複雜的訊息，通常你不需要這麼做。`,
+            link       : 'text'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts message">
+    <div class="content">
+        <div class="text">
+            雖然開始是一樣的，但經歷令我們成為了不同人。
+        </div>
+    </div>
+</div>`,
+            mark: 'content, text'
+        },
+        {
+            type       : small,
+            title      : '動作',
+            description: `你能夠在訊息的右側安插一些動作按鈕。`,
+            link       : 'actions'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts message">
+    <div class="content">
+        <div class="text">
+            我們已接獲版權警告並將此影片進行消音處理，這可能導致你的影片觀看次數下降。
+        </div>
+        <div class="actions">
+            <button class="ts small inverted basic negative button">重新上訴</button>
+        </div>
+    </div>
+</div>`,
+            mark: 'actions'
+        },
+        {
+            type       : small,
+            title      : '圖示',
+            description: `結構化的訊息內可以擺放圖示。`,
+            link       : 'structured-icon'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts structured message">
+    <div class="icon">
+        <i class="trash icon"></i>
+    </div>
+    <div class="content">
+        <div class="text">
+            你已成功地將文章移動至垃圾桶了。
+        </div>
+    </div>
+</div>`,
+            mark: 'icon'
+        },
+        {
+            type       : small,
+            title      : '頭像',
+            description: `訊息裡也能夠擺置一個使用者頭像。`,
+            link       : 'structured-avatar'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts structured message">
+    <div class="avatar">
+        <img src="${imgPlaceholderUser}">
+    </div>
+    <div class="content">
+        <div class="text">
+            你的朋友剛才在你的文章中留言。
+        </div>
+        <div class="actions">
+            <a class="primary" href="#!">查看</a>
+            <a href="#!">下次別提醒我</a>
+        </div>
+    </div>
+</div>`,
+            mark: 'avatar'
         },
         {
             type       : normal,
@@ -284,6 +409,58 @@ export default
     這個訊息沒有邊框。
 </div>`,
             mark: 'borderless'
+        },
+        {
+            type       : small,
+            title      : '附著',
+            description: `訊息可以附著在其他元素上下。`,
+            link       : 'attached'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts padded top attached message">
+    <div class="header">
+        正在編輯：關於我
+    </div>
+    <p>請檢查以下「關於我」是否正確。</p>
+</div>
+<div class="ts bottom attached segment">
+    始春到底是什麼？始春，絕不向日曆妥協始春，絕不向預告低頭只要 CM3D2 在手，就能夠永遠地始春始春是一種精神，一種態度一種革命，一種叛逆。於是我了解「跳票、延期、三螢幕，這就是始春。」
+</div>
+<br><br>
+<div class="ts fluid top attached input">
+    <input type="text" placeholder="監護人姓名">
+</div>
+<div class="ts warning bottom attached message">
+    當有監護人時請填寫此欄位。
+</div>`,
+            mark: 'top attached message, bottom attached message',
+            remove: '<br><br>'
+        },
+        {
+            type       : small,
+            title      : '附著增加內距',
+            description: `訊息在附著的情況下會縮減內距以避免過大，這個時候你能夠增加內距來令訊息大於他們所附著的元素。`,
+            link       : 'attached-padded'
+        },
+        {
+            type: 'example',
+            code: `<div class="ts top attached message">
+    基本內距
+</div>
+<div class="ts attached segment">
+    文字。
+</div>
+<div class="ts padded attached message">
+    增加內距
+</div>
+<div class="ts attached segment">
+    文字。
+</div>
+<div class="ts very padded bottom attached message">
+    超級內距
+</div>`,
+            mark: 'attached message, very padded, padded'
         },
         {
             type       : small,
