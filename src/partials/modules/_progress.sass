@@ -6,32 +6,15 @@
 
 // https://github.com/lightningtgc/MProgress.js/blob/master/src/css/mprogress.styl
 @keyframes indeterminate-bar-animation
-    /* one open*/
     0%
-        transform: translateX(-100%) scaleX(0.2)
-    20%
-        transform: translateX(-40%) scaleX(0.2)
-    30%
-        transform: translateX(0%) scaleX(0.5)
-    55%
-        transform: translateX(100%) scaleX(0.7)
-    55.99%
-        transform: scaleX(0)
-    /* two close*/
-    56%
-        transform: translateX(-100%) scaleX(0)
-    56.99%
-        transform: translateX(-100%) scaleX(0.6)
-    75%
-        transform: translateX(-5%) scaleX(0.6)
-    85%
-        transform: translateX(30%) scaleX(0.3)
-    98%
-        transform: translateX(100%) scaleX(0.2)
-    99.99%
-        transform: scaleX(0)
+        margin-left: 0px
+        margin-right: 100%
+    40%
+        margin-left: 25%
+        margin-right: 0%
     100%
-        transform: translateX(-100%)
+        margin-left: 100%
+        margin-right: 0
 
 @keyframes buffer-bar-animation
     0%
@@ -130,17 +113,19 @@
 //-------------------//
 
 .ts.progress.indeterminate .bar
-    animation: indeterminate-bar-animation 2.8s linear 0s infinite
+    animation: indeterminate-bar-animation 2s cubic-bezier(0.4, 0, 0.2, 1) 0s infinite
     width    : 100% !important
+    min-width: 0
 
 //-------------------//
 // Queried Indeterminate
 //-------------------//
 
 .ts.progress.queried.indeterminate .bar
-    animation          : indeterminate-bar-animation 2.8s linear 0s infinite
+    animation          : indeterminate-bar-animation 2s cubic-bezier(0.4, 0, 0.2, 1) 0s infinite
     animation-direction: reverse
     width              : 100% !important
+    min-width: 0
 
 //-------------------//
 //     Buffer Bar
