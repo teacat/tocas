@@ -21,6 +21,8 @@
 * .appendTo(*selector*)
 * .prepend(*element*)
 * .prependTo(*selector*)
+* .remove()
+* .is()
 
 ### 標籤和樣式
 
@@ -43,6 +45,7 @@
 * .text(*value*)
 * .val(*value*)
 * .html(*value*)
+* .empty()
 
 ### 資料
 

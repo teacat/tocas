@@ -1,0 +1,1 @@
+coffee -b -o ./dist/ -c ./src/selector.coffee
