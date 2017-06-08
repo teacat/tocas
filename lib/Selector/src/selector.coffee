@@ -142,7 +142,7 @@ $selector.fn.prependTo = (selector) ->
 # 將選擇器元素從頁面上中移除。
 $selector.fn.remove = ->
     @each ->
-        @parentNode?.removeChild(element)
+        @parentNode?.removeChild(@)
 
 # Is
 #
