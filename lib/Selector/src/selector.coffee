@@ -1,8 +1,13 @@
 # 主要的選擇器函式。
 $_ = (selector, context) ->
     nodes = []
+
+    # 如果選擇器是文字，但是是標籤（如：`<div>`）就建立新的元素
+    if typeof selector is 'string' and selector[0] is '<'
+        tag   = selector.match(/<(.*)\/>|<(.*)>/)
+        nodes = [document.createElement(tag[1] ? tag[2])]
     # 如果選擇器是一般的文字，就選取元素。
-    if typeof selector is 'string' and context is undefined
+    else if typeof selector is 'string' and context is undefined
         nodes = document.querySelectorAll(selector)
     # 如果選擇器是文字，還有上下文選擇器，就透過選擇器找出上下文元素。
     else if typeof selector is 'string' and typeof context is 'string'
@@ -47,25 +52,42 @@ $_.fn =
             callback.call(element, element, index)
         @
 
+    # CollectSwap 會將收集到的元素替換掉目前選擇器內的所有元素。
+    collectSwap: (callback) ->
+        collection = []
+
+        @each (element, index) ->
+            result = callback.call(element, element, index)
+            if result is undefined or result is null
+                return
+
+            if result instanceof NodeList
+                result.forEach (el) -> collection.push(el)
+            else if Array.isArray result
+                collection = collection.concat(result)
+            else
+                collection.push(result) if collection.indexOf(result) is -1
+
+        return $_(collection)
+
     # Eq 會取得選擇器的指定元素，然後繼續回傳僅帶有該元素的選擇器。
     eq: (index) ->
         $_(@get(index))
 
     # Parent 會回傳元素的父元素選擇器。
-    parent: (selector) ->
-        $_(@get()?.parentNode)
+    parent: () ->
+        @collectSwap ->
+            @parentNode
 
     # Closest 會回傳最接近指定的父元素選擇器。
     closest: (selector) ->
-        $_(@get()?.closest(selector))
+        @collectSwap ->
+            @closest(selector)
 
     # Find 會在目前元素中搜尋指定元素並回傳其選擇器。
     find: (selector) ->
-        elements = []
-        @each ->
-            @querySelectorAll(selector).forEach (element) ->
-                elements.push(element)
-        return $_(elements)
+        @collectSwap ->
+            @querySelectorAll(selector)
 
     # Append 會將元素插入在目前選擇器元素的內部最後面。
     append: (element) ->
@@ -90,7 +112,7 @@ $_.fn =
     # Remove 會將選擇器元素從頁面上中移除。
     remove: ->
         @each ->
-            @parentNode.removeChild(element) if @parentNode isnt null
+            @parentNode?.removeChild(element)
 
     # Is 會選擇一些元素，然後用來比對目前的選擇器元素是否在這群當中。
     is: (selector) ->
@@ -167,6 +189,20 @@ $_.fn =
             @value     = null if @value     isnt undefined
             @innerHTML = null if @innerHTML isnt undefined
             @innerText = null if @innerText isnt undefined
+
+    # Prop 會變更或取得選擇器元素的屬性，例如 `.src`、`.width`。
+    prop: (name, value) ->
+        # 有 name 也有 value 就設置屬性。
+        if typeof name is 'string' and value isnt undefined
+            @each -> @[name] = value
+        # 有 name 但沒有 value 就取得屬性。
+        else if typeof name is 'string' and value is undefined
+            @get()?[name]
+        # 有 name 但他是 object，就設置多重屬性。
+        else if typeof name is 'object'
+            for key of name
+                @each -> @[key] = name[key]
+            @
 
     # Data 會在選擇器元素中存放資料，類似 Attr 但頁面不可見。
     data: (name, value) ->

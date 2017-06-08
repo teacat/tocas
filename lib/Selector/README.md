@@ -50,4 +50,5 @@
 
 ### 資料
 
+* .prop(*name*, *value*)
 * .data(*name*, *value*)
