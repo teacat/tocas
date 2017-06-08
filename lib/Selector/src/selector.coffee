@@ -119,9 +119,10 @@ $_.fn =
         compareElements = document.querySelectorAll(selector)
         isInElements    = false
 
-        @each (element) ->
+        @each ->
             compareElements.forEach (compareElement) ->
-                isInElements = true if element is compareElement
+                isInElements = true if @ is compareElement
+            , @
 
         return isInElements
 
@@ -135,14 +136,21 @@ $_.fn =
             @removeAttribute name
 
     # AddClass 會在目前選擇器元素插入新的樣式類別名稱。
-    addClass: (name) ->
+    addClass: (names) ->
         @each ->
-            DOMTokenList.prototype.add.apply(@classList, name.split(' '))
+            DOMTokenList.prototype.add.apply(@classList, names.split(' '))
 
     # RemoveClass 會移除目前選擇器元素的指定樣式類別。
-    removeClass: (name) ->
+    removeClass: (names) ->
         @each ->
-            DOMTokenList.prototype.remove.apply(@classList, name.split(' '))
+            DOMTokenList.prototype.remove.apply(@classList, names.split(' '))
+
+    # ToggleClass 會切換目前選擇器元素的樣式。
+    toggleClass: (names) ->
+        @each ->
+            names.split(' ').forEach (name) ->
+                @classList.toggle(name)
+            , @
 
     # HasClass 會回傳選擇器元素是否帶有指定樣式類別，是布林值。
     hasClass: (name) ->
@@ -164,6 +172,7 @@ $_.fn =
 
     # On 會綁定並註冊一個事件監聽器。
     on: (event, handler, options) ->
+        #animationEnd: webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend
 
     # One 會綁定一次性的事件監聽器，當被觸發之後就會被移除。
     one: (event, handler) ->
