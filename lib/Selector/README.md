@@ -18,6 +18,7 @@
 * .parent()
 * .closest(*selector*)
 * .find(*selector*)
+* .wrap(*element*)
 * .append(*element*)
 * .appendTo(*selector*)
 * .prepend(*element*)

@@ -109,6 +109,17 @@ $selector.fn.find = (selector) ->
     @collectSwap ->
         @querySelectorAll(selector)
 
+# Wrap
+#
+# 將元素用指定元素包覆起來。
+$selector.fn.wrap = (element) ->
+    @each ->
+        if @nextSibling
+            @parentNode.insertBefore(element, @nextSibling)
+        else
+            @parentNode.appendChild(element)
+        element.appendChild(@)
+
 # Append
 #
 # 將元素插入在目前選擇器元素的內部最後面。
