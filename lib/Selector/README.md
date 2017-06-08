@@ -11,6 +11,7 @@
 * .get(*index*)
 * .each(*function(index, value)*)
 * .eq(*index*)
+* .toArray()
 
 ### 元素
 
@@ -49,5 +50,4 @@
 
 ### 資料
 
-* .prop(*name*, *value*)
 * .data(*name*, *value*)
