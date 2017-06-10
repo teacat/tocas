@@ -178,7 +178,7 @@ Commits written in English are welcomed.
 
 [Dojo](http://dojo.kickserv.com/)
 
-[Vux](https://vux.li/#!/)
+[Vux](https://vux.li/)
 
 [SUI](http://sui.taobao.org/sui/docs/)
 
