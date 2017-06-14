@@ -51,9 +51,9 @@ Tocas UI 是基於 SASS 和 CSS3 的元件框架，可快速建立大型或小�
 
 ```html
 <!-- Tocas UI：CSS 與元件 -->
-<link rel="stylesheet" href="//cdn.rawgit.com/TeaMeow/TocasUI/2.3.0/dist/tocas.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/2.3.2/tocas.css">
 <!-- Tocas JS：模塊與 JavaScript 函式 -->
-<script src="//cdn.rawgit.com/TeaMeow/TocasUI/2.3.0/dist/tocas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/2.3.2/tocas.js"></script>
 ```
 
 &nbsp;
