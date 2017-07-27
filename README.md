@@ -193,3 +193,7 @@ Commits written in English are welcomed.
 [Bttn CSS](https://bttn.surge.sh/)
 
 [MDUI](http://www.mdui.org/)
+
+[WeUI](https://weui.io/)
+
+[Vital UI Kit](https://gss-fed.github.io/vital-ui-kit/index.html)
