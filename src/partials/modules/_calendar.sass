@@ -9,6 +9,8 @@
 //*******************************//
 
 .ts.calendar:not(.full)
+    border-radius   : $calendar_borderRadius
+    overflow        : hidden
     position        : relative
     display         : inline-flex
     flex-direction  : column
@@ -19,13 +21,6 @@
     background: $calendar_backgroundColor
 
 //-------------------//
-//      Rounded
-//-------------------//
-
-.ts.calendar.rounded:not(.full)
-    border-radius: $calendar_borderRadius
-
-//-------------------//
 //      Content
 //-------------------//
 
@@ -34,10 +29,8 @@
     display        : flex
     justify-content: center
     flex-direction : column
-    flex           : 1
     padding        : $calendar_elementPadding
-    min-height     : 3.2em
-    margin-top     : $calendar_elementMargin
+    min-height     : 3.9em
 
 //-------------------//
 //       Header
@@ -77,9 +70,6 @@
     line-height: 1
     font-weight: bold
 
-.ts.calendar:not(.full) .date:only-child
-    margin-top: -#{$calendar_elementMargin}
-
 //-------------------//
 //       Range
 //-------------------//
@@ -95,8 +85,6 @@
     display      : block
     text-align   : center
     font-size    : .8em
-    margin-top   : $calendar_elementMargin
-    margin-bottom: $calendar_elementMargin
     opacity      : 0.5
 
 //-------------------//
@@ -304,7 +292,7 @@
 
 .ts.full.calendar > .days > .disabled.day
     +extend(no-select)
-    
+
     opacity       : $calendar_fullDisabledOpacity
     pointer-events: none
 
