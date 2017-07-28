@@ -7,10 +7,6 @@
 .ts.slate
     position: relative
 
-    display       : flex
-    flex-direction: column
-    align-items   : center
-
     padding      : $slate_padding
     border-radius: $slate_borderRadius
 
@@ -22,7 +18,7 @@
 //-------------------//
 
 .ts.compact.slate
-    display: inline-flex
+    display: inline-block
 
 //-------------------//
 //       Header
@@ -64,7 +60,11 @@
 //-------------------//
 
 .ts.slate .action
+    text-align: center
     margin-top: $slate_actionMargin
+
+.ts.slate.heading .action
+    text-align: left
 
 //-------------------//
 //   Image & Embed
@@ -124,6 +124,7 @@
 //-------------------//
 
 .ts.slate .icons
+    text-align: center
 
 /* Single Icon */
 .ts.slate > .icon:not(.button):not(.menu):not(.symbol),
@@ -131,7 +132,12 @@
 .ts.slate > .ts.container > .icon:not(.button):not(.menu):not(.symbol),
 .ts.slate > .ts.container > .icons > .icon
     font-size: $slate_iconSize
-    margin   : 0
+    display  : block
+    margin   : 0 auto
+
+.ts.slate > .icons > .icon,
+.ts.slate > .ts.container > .icons > .icon
+    display: inline-block
 
 .ts.slate .icons:not(.symbol) + .description,
 .ts.slate .icon:not(.symbol) + .description
@@ -289,12 +295,24 @@
 //       Aligns
 //-------------------//
 
-.ts.slate[class*="left aligned"]
-    align-items: flex-start
-.ts.slate[class*="right aligned"]
-    align-items: flex-end
-.ts.slate[class*="center aligned"]
-    align-items: center
+.ts.slate[class*="left aligned"],
+.ts.slate[class*="left aligned"] .header,
+.ts.slate[class*="left aligned"] .description,
+.ts.slate[class*="left aligned"] .action
+    justify-content: flex-start
+    text-align     : left
+.ts.slate[class*="right aligned"],
+.ts.slate[class*="right aligned"] .header,
+.ts.slate[class*="right aligned"] .description,
+.ts.slate[class*="right aligned"] .action
+    justify-content: flex-end
+    text-align     : right
+.ts.slate[class*="center aligned"],
+.ts.slate[class*="center aligned"] .header,
+.ts.slate[class*="center aligned"] .description,
+.ts.slate[class*="center aligned"] .action
+    justify-content: center
+    text-align     : center
 
 //-------------------//
 //     Clickable
@@ -376,14 +394,8 @@
 //     Coupling
 //-------------------//
 
-//.ts.slate > .ts.menu > .ts.container
-//    display       : flex
-//    flex-direction: column
 .ts.slate:not(.heading) > .ts.container
     align-items: center
 
 .ts.slate ~ .ts.segment[class*="bottom attached"]
     border-top: 0
-
-.ts.slate .ts.container
-    width: 100% !important
