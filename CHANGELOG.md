@@ -4,6 +4,36 @@
 
 格式基於[如何維護更新日誌](http://keepachangelog.com/)，而專案採用[語意化版本號碼](http://semver.org/)。
 
+## [2.3.3] - 30 Jul 2017
+
+#### Bug 修正
+
+1. Message 裡的 Container 在某個寬度下會往內縮。（#431）
+2. 將 Sidebar 的 Position 從 Absolute 改為 Fixed 避免在 Chrome 上有多餘水平空白。（#448）
+3. Pusher 裏的 Icon Labeled Button 中的 Icon 比 Dimmer 還要高層。（#461）
+4. 連結圖片會因為浮動而頂部被裁切。（#406）
+5. Checkbox 在 Form 裡面不對齊標籤。（#407）
+6. Basic Modal 周邊有陰影。（#404）
+7. Slate 裡面的 Icon 會被誤以為是 Symbol Icon 而夭壽大。（#426）
+
+#### 新功能
+
+1. 圖片支援 Selected 有藍色邊框看起來能夠是被選擇的。（#458）
+2. 新增無邊框 Card。（#459）
+3. 下拉式選單的內部選單可以是流動寬度的，和下拉式選單的主按鈕一樣寬度。（#405）
+
+#### 調整
+
+1. Slate 現在不再是 Flexbox 了，讓排版和 Container 使用上更方便。（#442）
+2. Calendar 是正方形的了。（#422）
+3. 統計數據異動可以被用在群組內簡化單個統計了。（#439）
+4. Message 現在不再是 Flexbox 了，讓排版和 Container 使用上更方便。（#445）
+
+#### 文件頁面
+
+1. Message 的 List 改為原生 `ul` 標籤。（#446）
+2. Grid 教學中的多重網格視圖不正確。（#447）
+
 ## [2.3.2] - 8 Jun 2017
 
 #### Bug 修正
