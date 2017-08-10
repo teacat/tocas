@@ -2050,6 +2050,7 @@ h6.ts.smaller.sub.header {
 /* Inverted Segmented Link Item */
 /* Header */
 /* Content */
+/* Actions */
 /* Metadata */
 /* Description */
 /* Category */
@@ -2359,7 +2360,8 @@ ol.ts.horizontal.list li:before,
   display: table-cell;
   vertical-align: top;
   white-space: nowrap;
-  width: 1px; }
+  width: 1px;
+  padding-left: 0.5rem; }
 
 .ts.list > .category {
   background: #f7f7f7;
@@ -2540,12 +2542,14 @@ ol.ts.horizontal.list li:before,
   color: #EFEFEF; }
 
 .ts.list.horizontal {
-  display: inline-block; }
+  display: inline-block;
+  margin: 0; }
 
 .ts.list.horizontal .item {
   display: inline-block;
   width: auto;
-  margin-right: 0.65em; }
+  margin-right: 0.65em;
+  padding: 0; }
 
 .ts.list.horizontal .item .ts.avatar.image,
 .ts.list.horizontal .item .image,
@@ -2750,8 +2754,7 @@ ol.ts.horizontal.list li:before,
 .ts.relaxed.list:not(.horizontal) > .item:not(:first-child) {
   padding-top: 0.42857em; }
 
-.ts.relaxed.list:not(.horizontal) > .item:not(:last-child),
-.ts.relaxed.list:not(.horizontal) > .item:last-child {
+.ts.relaxed.list:not(.horizontal) > .item:not(:last-child) {
   padding-bottom: 0.42857em; }
 
 .ts.horizontal.relaxed.list .list > .item:not(:first-child),
@@ -2789,6 +2792,10 @@ ol.ts.horizontal.list li:before,
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden; }
+
+.ts.list.centered {
+  width: 100%;
+  text-align: center; }
 
 .ts.list[class*="middle aligned"] .item,
 .ts.list[class*="middle aligned"] .image,
@@ -2881,17 +2888,17 @@ ol.ts.horizontal.list li:before,
 .ts.inverted.list .item a:not(.ts):hover {
   color: #D8D8D8 !important; }
 
-.ts.link.list .item,
-.ts.link.list a.item,
-.ts.link.list .item a:not(.ts) {
+.ts.link.list.list .item,
+.ts.link.list.list a.item,
+.ts.link.list.list .item a:not(.ts) {
   color: #5a5a5a; }
 
-.ts.link.list a.item:not(.active):hover,
-.ts.link.list .item:not(.active) a:not(.ts):hover {
+.ts.link.list.list a.item:not(.active):hover,
+.ts.link.list.list .item:not(.active) a:not(.ts):hover {
   color: #919191; }
 
-.ts.link.list a.item:active:active,
-.ts.link.list .item a:not(.ts):active:active {
+.ts.link.list.list a.item:active:active,
+.ts.link.list.list .item a:not(.ts):active:active {
   color: #404040; }
 
 .ts.link.list .active.item,
@@ -2899,21 +2906,21 @@ ol.ts.horizontal.list li:before,
   color: #5a5a5a; }
 
 /* Inverted */
-.ts.inverted.link.list .item,
-.ts.inverted.link.list a.item,
-.ts.inverted.link.list .item a:not(.ts) {
+.ts.inverted.link.list.list .item,
+.ts.inverted.link.list.list a.item,
+.ts.inverted.link.list.list .item a:not(.ts) {
   color: #EFEFEF; }
 
-.ts.inverted.link.list a.item:not(.active):hover,
-.ts.inverted.link.list .item:not(.active) a:not(.ts):hover {
+.ts.inverted.link.list.list a.item:not(.active):hover,
+.ts.inverted.link.list.list .item:not(.active) a:not(.ts):hover {
   color: #D8D8D8; }
 
-.ts.inverted.link.list a.item:active:active,
-.ts.inverted.link.list .item a:not(.ts):active:active {
+.ts.inverted.link.list.list a.item:active:active,
+.ts.inverted.link.list.list .item a:not(.ts):active:active {
   color: #B9B9B9; }
 
-.ts.inverted.link.list a.active.item,
-.ts.inverted.link.list .active.item a:not(.ts) {
+.ts.inverted.link.list.list a.active.item,
+.ts.inverted.link.list.list .active.item a:not(.ts) {
   color: #B9B9B9; }
 
 .ts.list > .item a,
@@ -3038,9 +3045,6 @@ ol.ts.horizontal.list li:before,
 .ts.menu .ts.list .list > .item:last-child,
 .ts.menu .ts.list > .item:last-child {
   padding-bottom: 0em; }
-
-.ts.card + .ts.list {
-  display: flex; }
 
 .ts.card + .ts.list.floated {
   margin-top: 0; }
@@ -4357,6 +4361,9 @@ ol.ts.horizontal.list li:before,
   border-top-left-radius: 0;
   border-top-right-radius: 0; }
 
+.ts.menu.vertical.secondary > .item {
+  border: none; }
+
 .ts.menu .image.item {
   padding: 0; }
 
@@ -4759,7 +4766,9 @@ ol.ts.horizontal.list li:before,
 .ts.menu .list .item {
   border: none; }
 
-.ts.menu .list a.item:active {
+.ts.menu .list.list a.item:active,
+.ts.menu .list.list a.item.active,
+.ts.menu .list.list a.item:hover {
   background: transparent; }
 
 .ts.menu:not(.tabbed) > .ts.container > .item:first-child {
@@ -5444,6 +5453,13 @@ ol.ts.horizontal.list li:before,
 .ts.message > .ts.container > .ts.close.button {
   top: 0;
   right: 0; }
+
+.ts.message .ts.list,
+.ts.message ul,
+.ts.message ol {
+  color: inherit;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em; }
 
 .ts.loader {
   display: none;
@@ -6758,6 +6774,18 @@ ol.ts.horizontal.list li:before,
 .ts.input.editable.editing > .text {
   display: none; }
 
+.ts.input > .ts.progress[class*="bottom attached"] {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+
+.ts.input > .ts.progress[class*="top attached"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0; }
+
 .ts.form {
   position: relative; }
 
@@ -6842,10 +6870,10 @@ ol.ts.horizontal.list li:before,
 .ts.horizontal.form .field > .ts.message {
   width: 100%; }
 
-.ts.horizontal.form .field > label + *:not(.input):not(input):not(select):not(textarea) {
+.ts.horizontal.form .field > label + *:not(.input):not(input):not(select):not(textarea):not(.dropdowns) {
   margin-top: 0.85em; }
   @media (max-width: 767px) {
-    .ts.horizontal.form .field > label + *:not(.input):not(input):not(select):not(textarea) {
+    .ts.horizontal.form .field > label + *:not(.input):not(input):not(select):not(textarea):not(.dropdowns) {
       margin-top: 0; } }
 
 .ts.form .field > small,
@@ -6860,6 +6888,10 @@ ol.ts.horizontal.list li:before,
 .ts.form .field > .message:not(.ts) + small,
 .ts.form .field > .inputs > .message:not(.ts) + small {
   margin: 0.2em 0 0 0; }
+
+.ts.form.horizontal .field > .message,
+.ts.form.horizontal .field > small {
+  width: 100%; }
 
 .ts.form .field[class*="one wide"] {
   width: calc(100% / 16 * 1); }
@@ -13530,6 +13562,9 @@ a.link.image > img {
   display: flex;
   font-size: 0.875em; }
 
+.ts.comments .comment .actions[class*="right floated"] {
+  float: right; }
+
 .ts.comments .comment .actions a {
   cursor: pointer;
   display: inline-block;
@@ -16399,6 +16434,23 @@ blockquote:not(.unstyled) cite:after {
 .ts.big.feed {
   font-size: 1.28571rem; }
 
+.ts.timelined.feed > .event > .label {
+  margin-left: 1.2em; }
+
+.ts.timelined.feed > .event .label {
+  border-left: 3px solid #e9e9e9; }
+
+.ts.timelined.feed > .event > .label > img,
+.ts.timelined.feed > .event > .label > .icon {
+  left: -1.4rem; }
+
+.ts.timelined.feed > .event > .label > .icon {
+  background-color: #e9e9e9;
+  color: #5a5a5a;
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 1.25; }
+
 html {
   font-size: 14px; }
 
@@ -17894,3 +17946,7 @@ dialog.ts.basic.modal {
   width: 100%;
   height: 100%;
   object-fit: cover; }
+
+.ts.search > .ts.list {
+  position: absolute;
+  margin-top: .5em; }
