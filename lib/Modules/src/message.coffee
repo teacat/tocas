@@ -1,10 +1,10 @@
 class TocasMessage
     $name:
         'message'
-    $data:
-        {}
-    $options:
-        {}
     $init: ->
     $methods:
+        # 顯示訊息。
+        show: ({$elements}) ->
 
+        # 隱藏訊息。
+        hide: ({$elements}) ->

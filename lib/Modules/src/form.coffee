@@ -1,6 +1,6 @@
-class TocasDropdown
+class TocasForm
     $name:
-        'dropdown'
+        'form'
     $data:
         {}
     $options:

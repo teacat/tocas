@@ -1,10 +1,6 @@
 class TocasScrollspy
     $name:
         'scrollspy'
-    $data:
-        {}
     $options:
-        {}
+        target: '' # 捲動監聽的目標對象選擇器。
     $init: ->
-    $methods:
-

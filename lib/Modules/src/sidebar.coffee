@@ -1,8 +1,6 @@
 class TocasSidebar
     $name:
         'sidebar'
-    $data:
-        {}
     $options:
         dimPage   : false # 是否要在側邊欄出現時將主畫面淡化。
         exclusive : false # 是否僅允許頁面上同時只會出現一個側邊欄，若為是，則會在開啟該側邊欄的同時關閉其他側邊欄。

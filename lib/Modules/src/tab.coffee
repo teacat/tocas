@@ -1,10 +1,6 @@
 class TocasTab
     $name:
         'tab'
-    $data:
-        {}
     $options:
-
-
+        onSwitch: -> # 當分頁籤切換時所會呼叫的函式。
     $init: ->
-    $methods:

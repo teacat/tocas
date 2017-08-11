@@ -1,17 +1,22 @@
 class TocasCheckbox
     $name:
         'checkbox'
-    $data:
-        {}
-    $options:
-        {}
     $init: ->
     $methods:
-        # 開啟指定索引的手風琴內容。
-        open: ({$elements}, index) ->
+        # 勾選指定核取方塊。
+        check: ({$elements}) ->
 
-        # 關閉指定索引的手風琴內容。
-        close: ({$elements}, index) ->
+        # 取消勾選指定核取方塊。
+        uncheck: ({$elements}) ->
 
-        # 切換指定索引的手風琴內容，如果是開啟的則關閉，相反之。
-        toggle: ({$elements}, index) ->
+        # 停用指定核取方塊，使用者將無法手動勾選或取消勾選該方塊。
+        disable: ({$elements}) ->
+
+        # 啟用指定核取方塊，使用者可以對其進行勾選或取消勾選。
+        enable: ({$elements}) ->
+
+        # 取得一個表示核取方塊是否被勾選的布林值。
+        'is checked': ({$elements}) ->
+
+        # 取得一個表示核取方塊是否沒有被勾選的布林值。
+        'is unchecked': ({$elements}) ->

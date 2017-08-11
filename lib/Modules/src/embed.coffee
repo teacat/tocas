@@ -6,5 +6,4 @@ class TocasEmbed
     $options:
         {}
     $init: ->
-    $methods:
-
+    $opts: ->

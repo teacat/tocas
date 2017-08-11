@@ -1,7 +1,6 @@
 class TocasDimmer
     $name:
         'dimmer'
-
     $methods:
         # 顯示淡化幕。
         show: ({$elements}) ->
