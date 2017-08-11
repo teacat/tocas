@@ -1,6 +1,7 @@
 ts = (selector, context=null) ->
     # 如果傳入的選擇器不是物件，那麼就只是普通的選擇器。
     if typeof selector isnt 'object'
+        ts.fn
 
     # 如果傳入的是物件，那麼就是欲註冊的 Tocas 模組。
     # 改名為 module 比較符合接下來的使用方式。
@@ -9,7 +10,7 @@ ts = (selector, context=null) ->
     # 在 Tocas 函式鏈中新增一個相對應的模組函式。
     ts.fn[module.$name] = ($arg=null, $arg2=null, $arg3=null) ->
         # 先用 Tocas Core 核心來選取指定元素，然後放到上下文物件之後傳遞到模組內使用。
-        $elements = context isnt null then $selector(selector, context) else $selector(selector)
+        $elements = if context isnt null then $selector(selector, context) else $selector(selector)
         # 上下文物件讓我們可以在模組中展開，使用相關的內容。
         $context = {$elements}
 

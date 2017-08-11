@@ -11,5 +11,5 @@ class TocasSnackbar
         onAction      : ->    # 當點心條上的動作按鈕被按下時所會呼叫的函式。
     $init: ->
     $methods:
-
+        {}
 
