@@ -24,6 +24,7 @@ class TocasSidebar
 
     # 模組選項。
     $options:
+        {}
 
     # 模組無選項回呼函式。
     $init: ->
@@ -34,7 +35,7 @@ class TocasSidebar
     # 模組可供使用方式。
     $methods:
         # show 會顯示側邊欄。
-        show: ->
+        show: ({$elements}) ->
             # ...
 
 # 註冊側邊欄模組到 Tocas JS 核心中，並將其命名為 `sidebar()`。

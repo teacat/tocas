@@ -11,12 +11,14 @@ class TocasSidebar
 
     $init: ->
 
+    $opts: ({$elements}, options) ->
+
     $methods:
         # 顯示指定側邊欄。
-        show: ->
-        
+        show: ({$elements}) ->
+
         # 隱藏指定側邊欄。
-        hide: ->
+        hide: ({$elements}) ->
 
         # 切換側邊欄。當側邊欄是隱藏時會顯示、顯示時則隱藏。
-        toggle: ->
+        toggle: ({$elements}) ->
