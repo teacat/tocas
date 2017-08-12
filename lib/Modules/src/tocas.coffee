@@ -13,7 +13,7 @@ ts = (selector, context=null) ->
         # 先用 Tocas Core 核心來選取指定元素，然後放到上下文物件之後傳遞到模組內使用。
         $elements = ts.selector
         # 上下文物件讓我們可以在模組中展開，使用相關的內容。
-        $context = {$elements}
+        $context = {$elements, $selector}
         # 初始化一些模組該有的函式。
         methods = module::$methods or { }
         init    = module::$init    or ->
