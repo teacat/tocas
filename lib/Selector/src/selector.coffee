@@ -169,6 +169,29 @@ $selector.fn.is = (selector) ->
 
     return isInElements
 
+# Next
+#
+# 下一個元素。
+$selector.fn.next = ->
+    if @get(0)? then $selector(@get(0).nextElementSibling) else $selector()
+
+# Prev
+#
+# 上一個元素。
+$selector.fn.prev = ->
+    if @get(0)? then $selector(@get(0).previousElementSibling) else $selector()
+
+# Index
+#
+# 該元素在容器內的索引。
+$selector.fn.index = ->
+    node  = @get(0)
+    index = 0
+
+    return -1 if not node?
+    index++ while (node = node.previousElementSibling)
+    return index
+
 # Attr
 #
 # 取得或是建立新的標籤到目前的選擇器元素。
@@ -270,7 +293,7 @@ $selector.fn.on = (events, handler, options) ->
 # 綁定一次性的事件監聽器，當被觸發之後就會被移除。
 $selector.fn.one = (events, handler) ->
     @each ->
-        $selector(@).one(events, handler, {once: true})
+        $selector(@).on(events, handler, {once: true})
 
 # Off
 #

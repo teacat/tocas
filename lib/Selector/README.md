@@ -9,7 +9,7 @@
 ### 核心
 
 * .get(*index*)
-* .each(*function(index, value)*)
+* .each(*function(element, index)*)
 * .eq(*index*)
 * .toArray()
 
@@ -25,6 +25,9 @@
 * .prependTo(*selector*)
 * .remove()
 * .is()
+* .next()
+* .prev()
+* .index()
 
 ### 標籤和樣式
 
