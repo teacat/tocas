@@ -42,7 +42,8 @@ ol:not(.ts):not(.unstyled) li:before,
 .ts.list > .disabled.item .description,
 .ts.list .list > .disabled.item .meta,
 .ts.list > .disabled.item .meta, .ts.menu a.item, .ts.structured.message > .content > .actions > a, .ts.structured.message > .content > .actions > a.disabled, .ts.form fieldset legend, .ts.dropdown > .text, .ts.contextmenu > .item,
-.ts.dropdown .menu > .item, .ts.checkbox:not(.radio) label, .ts.radio.checkbox label, .ts.button .ts.label, .ts.divider, .ts.accordion summary, .ts.sortable.table thead th.sorted,
+.ts.dropdown .menu > .item, .ts.checkbox:not(.radio) label, .ts.radio.checkbox label, .ts.button .ts.label, .ts.divider, .ts.accordion .title,
+details summary, .ts.sortable.table thead th.sorted,
 .ts.sortable.table thead th.sorted:hover, .ts.slate .image:not(i),
 .ts.slate .video:not(i), .ts.clickable.slate, .dimmed.pusher, .ts.snackbar .action, .ts.disabled.embed, .ts.embed[class*="read only"] {
   -webkit-touch-callout: none;
@@ -14169,20 +14170,31 @@ blockquote:not(.unstyled) cite:after {
 .ts.accordion.inverted {
   color: #EFEFEF; }
 
-.ts.accordion summary {
+.ts.accordion .title,
+details summary {
   cursor: pointer;
   padding: 0.5em 0em; }
 
-.ts.accordion summary:hover {
+.ts.accordion .title:hover,
+details summary:hover {
   opacity: 0.9; }
 
-.ts.accordion summary:active {
+.ts.accordion .title:active,
+details summary:active {
   opacity: 1; }
 
 .ts.accordion .content {
-  padding: 0.5em 0em 1em; }
+  overflow: hidden;
+  transition: height 0.3s cubic-bezier(0.65, 0.05, 0.36, 1); }
 
-.ts.accordion:not([open]) summary .dropdown.icon {
+.ts.accordion .content:not(.active) {
+  display: none; }
+
+.ts.accordion .title .dropdown.icon {
+  transition: transform 0.25s ease; }
+
+.ts.accordion .title:not(.active) .dropdown.icon,
+details:not([open]) summary .dropdown.icon {
   transform: rotate(-90deg); }
 
 .ts.statistic {

@@ -18,16 +18,19 @@
 //      Summary
 //-------------------//
 
-.ts.accordion summary
+.ts.accordion .title,
+details summary
     +extend(no-select)
-    
-    cursor     : pointer
-    padding    : $accordion_summaryPadding
 
-.ts.accordion summary:hover
+    cursor : pointer
+    padding: $accordion_summaryPadding
+
+.ts.accordion .title:hover,
+details summary:hover
     opacity: $accordion_summaryHoverOpacity
 
-.ts.accordion summary:active
+.ts.accordion .title:active,
+details summary:active
     opacity: $accordion_summaryActiveOpacity
 
 //-------------------//
@@ -35,11 +38,19 @@
 //-------------------//
 
 .ts.accordion .content
-    padding: $accordion_contentPadding
+    overflow  : hidden
+    transition: $accordion_contentTransition
+
+.ts.accordion .content:not(.active)
+    display: none
 
 //-------------------//
 //        Icon
 //-------------------//
 
-.ts.accordion:not([open]) summary .dropdown.icon
+.ts.accordion .title .dropdown.icon
+    transition: $accordion_iconTransition
+
+.ts.accordion .title:not(.active) .dropdown.icon,
+details:not([open]) summary .dropdown.icon
     transform: rotate(-90deg)
