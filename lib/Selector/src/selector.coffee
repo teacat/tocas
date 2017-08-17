@@ -9,8 +9,8 @@ $selector = (selector, context) ->
     # 如果選擇器是一般的文字，就選取元素。
     else if typeof selector is 'string' and context is undefined
         nodes = document.querySelectorAll(selector)
-    # 如果選擇器是文字，還有上下文選擇器，就透過選擇器找出上下文元素。
-    else if typeof selector is 'string' and typeof context is 'string'
+    # 如果選擇器有上下文選擇器，就透過選擇器找出上下文元素。
+    else if typeof context is 'string'
         nodes = $selector(selector).find(context).toArray()
     # 如果選擇器是 NodeList 就轉換成元素陣列然後取出來接著繼續。
     else if selector instanceof NodeList
