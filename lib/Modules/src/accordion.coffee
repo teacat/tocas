@@ -12,40 +12,40 @@ class TocasAccordion
         onClose  : ->   # 當分頁被關閉時所呼叫的函式。
         onChange : ->   # 當分頁被打開或者關閉時所呼叫的函式。
 
-    $init: ({$elements, $selector, $module, $data, $options}) ->
+    $init: ({$this, $module, $data, $options}) ->
         # 尋找手風琴容器裡的每個標題，當標題被按下時。
-        $elements.find($data.title).on 'click', ->
+        $this.find($data.title).on 'click', ->
             # 因為是標題被按下，所以我們呼叫切換手風琴分頁的函式，
             # 當手風琴是開的，則關，反之亦然。
-            $module::_toggle $elements, $selector(@)
+            $module::_toggle $this, $selector(@)
         ts.fn
 
     # 呼叫指定事件函式。
-    _event: ($elements, event, title) ->
-        $elements.data(event).call $elements.get(0), Math.floor(title.index() / 2)
+    _event: ($this, event, title) ->
+        $this.data(event).call $this.get(), Math.floor(title.index() / 2)
 
     # 開啟手風琴分頁。
-    _open: ($elements, title) ->
+    _open: ($this, title) ->
         # 呼叫指定事件函式。
-        @_event $elements, 'onOpen'  , title
-        @_event $elements, 'onChange', title
+        @_event $this, 'onOpen'  , title
+        @_event $this, 'onChange', title
 
         # 取得內容元素。
         content = title.next()
 
         # 如果要開啟的分頁，正是已經被開啟的那個，
         # 那麼就忽略這次的請求。
-        if content.get(0) is $elements.find(@$data.activeContent).get(0)
+        if content.get() is $this.find(@$data.activeContent).get()
             return
 
         # 如果手風琴只允許同ㄧ時間展開一個分頁。
         if title.closest(@$data.accordion).data('exclusive')
             # 那麼就上拉並關閉其他的分頁內容。
-            activeContent = $elements.find(@$data.activeContent)
+            activeContent = $this.find(@$data.activeContent)
             if activeContent.length isnt 0
                 # 呼叫事件函式。
-                @_event $elements, 'onClose' , activeContent.prev()
-                @_event $elements, 'onChange', activeContent.prev()
+                @_event $this, 'onClose' , activeContent.prev()
+                @_event $this, 'onChange', activeContent.prev()
                 # 呼叫上拉動畫
                 activeContent.css 'height', '0px'
                 activeContent.one 'transitionend', ->
@@ -71,10 +71,10 @@ class TocasAccordion
         , 0
 
     # 關閉手風琴分頁。
-    _close: ($elements, title) ->
+    _close: ($this, title) ->
         # 呼叫事件函式。
-        @_event $elements, 'onClose' , title
-        @_event $elements, 'onChange', title
+        @_event $this, 'onClose' , title
+        @_event $this, 'onChange', title
 
         # 取得內容元素。
         content = title.next()
@@ -91,26 +91,26 @@ class TocasAccordion
             content.removeClass 'active'
 
     # 切換手風琴分頁。
-    _toggle: ($elements, title) ->
+    _toggle: ($this, title) ->
         if title.hasClass 'active'
-            @_close $elements, title
+            @_close $this, title
         else
-            @_open $elements, title
+            @_open $this, title
 
     $methods:
         # 開啟指定索引的手風琴內容。
-        open: ({$elements, $module, $data}, index) ->
-            $module::_open $elements, $elements.find($data.title).eq(index)
+        open: ({$this, $module, $data}, index) ->
+            $module::_open $this, $this.find($data.title).eq(index)
             ts.fn
 
         # 關閉指定索引的手風琴內容。
-        close: ({$elements, $module, $data}, index) ->
-            $module::_close $elements, $elements.find($data.title).eq(index)
+        close: ({$this, $module, $data}, index) ->
+            $module::_close $this, $this.find($data.title).eq(index)
             ts.fn
 
         # 切換指定索引的手風琴內容，如果是開啟的則關閉，相反之。
-        toggle: ({$elements, $module, $data}, index) ->
-            $module::_toggle $elements, $elements.find($data.title).eq(index)
+        toggle: ({$this, $module, $data}, index) ->
+            $module::_toggle $this, $this.find($data.title).eq(index)
             ts.fn
 
 new ts TocasAccordion

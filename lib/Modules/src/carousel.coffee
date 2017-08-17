@@ -2,7 +2,8 @@ class TocasCarousel
     $name:
         'carousel'
     $data:
-        {} 
+        left : '.controls .left'
+        right: '.controls .right'
     $options:
         interval: 2000 # 幻燈片換到下一張的毫秒相隔時間。
         onChange: ->   # 當幻燈片變更時所呼叫的函式。
@@ -10,8 +11,14 @@ class TocasCarousel
 
     $init: ->
 
-    $opts: ->
 
+    _next: ->
+
+    _pause: ->
+
+    _previous: ->
+
+    _jump: ->
 
     $methods:
         # 開始播放幻燈片。

@@ -26,43 +26,39 @@ ts = (selector, context=null) ->
         # 最終的回傳值。
         value   = ts.fn
 
-        # 如果第一個參數是空的，那麼使用者想直接呼叫這個模組的初始化函式。
-        if $arg is null
-            $elements.each ->
-                self = $selector @
+        # 每個節點。
+        $elements.each ->
+            $context.$this = $selector @
+
+            # 如果第一個參數是空的，那麼使用者想直接呼叫這個模組的初始化函式。
+            if $arg is null
                 # 如果這個模組已經被初始化了，元素已有模組的選項，就離開。
                 # 因為我們不需要重複初始化模組。
-                return if self.data('tocas')?
+                return if $context.$this.data('tocas')?
                 # 用模組的預設選項，初始化選取的模組。
-                self.data($options)
-                # 取代上下文內的選擇器，改為單個元素。因為我們現在在 Each 裡面。
-                $context.$elements = self
+                $context.$this.data $options
                 # 然後呼叫自定義的初始化模組函式。
                 value = init.call module, $context
 
-        # 如果第一個參數是物件，就表示使用者想要傳入一個選項物件。
-        else if typeof $arg is 'object'
-            $elements.each ->
-                self = $selector @
-                # 取代上下文內的選擇器，改為單個元素。因為我們現在在 Each 裡面。
-                $context.$elements = self
+            # 如果第一個參數是物件，就表示使用者想要傳入一個選項物件。
+            else if typeof $arg is 'object'
                 # 如果該元素還沒被初始化，我們就要先呼叫初始化函式初始化這個元素。
                 # 不然變成只有套用設定到該元素，該元素會沒有功能。
-                if not self.data('tocas')?
+                if not $context.$this.data('tocas')?
                     # 用模組的預設選項，初始化選取的模組。
-                    self.data($options)
+                    $context.$this.data $options
                     # 呼叫初始化函式
-                    init.call(module, $context)
+                    init.call module, $context
                 # 套用新的選項到指定元素。
-                self.data $arg
+                $context.$this.data $arg
                 # 然後呼叫自定義的選項模組函式。
                 value = opts.call module, $context, $arg, $arg2, $arg3
 
-        # 如果第一個是字串，就表示使用者想要呼叫模組的自訂方法。
-        else if typeof $arg is 'string'
-            # 呼叫指定的自訂方法，並傳入上下文物件好讓我們在模組中使用這些東西，
-            # 順便綁定 this 為模組本身，這樣才能呼叫模組自己的其他輔助函式。
-            value = methods[$arg]?.call module, $context, $arg2, $arg3
+            # 如果第一個是字串，就表示使用者想要呼叫模組的自訂方法。
+            else if typeof $arg is 'string'
+                # 呼叫指定的自訂方法，並傳入上下文物件好讓我們在模組中使用這些東西，
+                # 順便綁定 this 為模組本身，這樣才能呼叫模組自己的其他輔助函式。
+                value = methods[$arg]?.call module, $context, $arg2, $arg3
 
         return value
 
