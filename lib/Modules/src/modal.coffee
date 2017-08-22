@@ -10,7 +10,7 @@ class TocasModal
         onDismiss        : ->                          # 當因為點擊視窗以外區域而關閉所呼叫的函式。
         keyboardShortcuts: true                        # 是否綁定鍵盤快捷鍵，如 Esc 鍵以關閉視窗。
     $init: ->
-    
+
 
     $methods:
         # 顯示對話視窗。

@@ -4,3 +4,13 @@ class TocasContextMenu
     $options:
         menu: ''
     $init: ->
+
+    $methods:
+        show: () ->
+        hide: () ->
+        disable: () ->
+        enable: () ->
+        'is disable': () ->
+        'is enable': () ->
+        'is visible': () ->
+        'is hidden': () ->

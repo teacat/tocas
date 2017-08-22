@@ -1,11 +1,15 @@
 class TocasSidebar
     $name:
         'sidebar'
+
     $options:
         dimPage   : false # 是否要在側邊欄出現時將主畫面淡化。
         exclusive : false # 是否僅允許頁面上同時只會出現一個側邊欄，若為是，則會在開啟該側邊欄的同時關閉其他側邊欄。
         scrollLock: false # 是否要在側邊欄出現時鎖定螢幕捲軸的滾動。
         closable  : false # 是否允許使用者點擊主畫面將側邊欄關閉。
+        offset    :
+            top   : 0
+            bottom: 0
 
     $init: ->
 
@@ -20,3 +24,9 @@ class TocasSidebar
 
         # 切換側邊欄。當側邊欄是隱藏時會顯示、顯示時則隱藏。
         toggle: ({$elements}) ->
+
+        'is visible': () ->
+
+        'is hidden': () ->
+
+        'attach events': () ->
