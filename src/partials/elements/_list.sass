@@ -386,6 +386,7 @@ ol.ts.horizontal.list li:before,
     vertical-align: top
     white-space   : nowrap
     width         : 1px
+    padding-left  : $list_itemActionsDistance
 
 //-------------------//
 //      Category
@@ -604,11 +605,14 @@ ol.ts.horizontal.list li:before,
 
 .ts.list.horizontal
     display: inline-block
+    margin : 0
 
 .ts.list.horizontal .item
     display: inline-block
     width  : auto
+
     margin-right: 0.65em
+    padding     : 0
 
 .ts.list.horizontal .item .ts.avatar.image,
 .ts.list.horizontal .item .image,
@@ -855,8 +859,7 @@ ol.ts.horizontal.list li:before,
 .ts.relaxed.list:not(.horizontal) > .item:not(:first-child)
     padding-top: $list_relaxedItemVerticalPadding
 
-.ts.relaxed.list:not(.horizontal) > .item:not(:last-child),
-.ts.relaxed.list:not(.horizontal) > .item:last-child
+.ts.relaxed.list:not(.horizontal) > .item:not(:last-child)
     padding-bottom: $list_relaxedItemVerticalPadding
 
 .ts.horizontal.relaxed.list .list > .item:not(:first-child),
@@ -898,6 +901,14 @@ ol.ts.horizontal.list li:before,
     white-space  : nowrap
     text-overflow: ellipsis
     overflow     : hidden
+
+//-------------------//
+//      Centered
+//-------------------//
+
+.ts.list.centered
+    width     : 100%
+    text-align: center
 
 //-------------------//
 //      Aligns
@@ -1014,17 +1025,17 @@ ol.ts.horizontal.list li:before,
 //       Link
 //-------------------//
 
-.ts.link.list .item,
-.ts.link.list a.item,
-.ts.link.list .item a:not(.ts)
-    color     : $list_linkListItemColor
+.ts.link.list.list .item,
+.ts.link.list.list a.item,
+.ts.link.list.list .item a:not(.ts)
+    color: $list_linkListItemColor
 
-.ts.link.list a.item:not(.active):hover,
-.ts.link.list .item:not(.active) a:not(.ts):hover
+.ts.link.list.list a.item:not(.active):hover,
+.ts.link.list.list .item:not(.active) a:not(.ts):hover
     color: $list_linkListItemHoverColor
 
-.ts.link.list a.item:active:active,
-.ts.link.list .item a:not(.ts):active:active
+.ts.link.list.list a.item:active:active,
+.ts.link.list.list .item a:not(.ts):active:active
     color: $list_linkListItemDownColor
 
 .ts.link.list .active.item,
@@ -1032,21 +1043,21 @@ ol.ts.horizontal.list li:before,
     color: $list_linkListItemActiveColor
 
 /* Inverted */
-.ts.inverted.link.list .item,
-.ts.inverted.link.list a.item,
-.ts.inverted.link.list .item a:not(.ts)
+.ts.inverted.link.list.list .item,
+.ts.inverted.link.list.list a.item,
+.ts.inverted.link.list.list .item a:not(.ts)
     color: $list_invertedLinkListItemColor
 
-.ts.inverted.link.list a.item:not(.active):hover,
-.ts.inverted.link.list .item:not(.active) a:not(.ts):hover
+.ts.inverted.link.list.list a.item:not(.active):hover,
+.ts.inverted.link.list.list .item:not(.active) a:not(.ts):hover
     color: $list_invertedLinkListItemHoverColor
 
-.ts.inverted.link.list a.item:active:active,
-.ts.inverted.link.list .item a:not(.ts):active:active,
+.ts.inverted.link.list.list a.item:active:active,
+.ts.inverted.link.list.list .item a:not(.ts):active:active,
     color: $list_invertedLinkListItemDownColor
 
-.ts.inverted.link.list a.active.item,
-.ts.inverted.link.list .active.item a:not(.ts)
+.ts.inverted.link.list.list a.active.item,
+.ts.inverted.link.list.list .active.item a:not(.ts)
     color: $list_invertedLinkListItemActiveColor
 
 //-------------------//
@@ -1173,9 +1184,6 @@ ol.ts.horizontal.list li:before,
 .ts.menu .ts.list .list > .item:last-child,
 .ts.menu .ts.list > .item:last-child
     padding-bottom: 0em
-
-.ts.card + .ts.list
-    display: flex
 
 .ts.card + .ts.list.floated
     margin-top: 0
