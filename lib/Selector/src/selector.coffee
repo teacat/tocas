@@ -196,7 +196,17 @@ $selector.fn.index = ->
 #
 # 取得或是建立新的標籤到目前的選擇器元素。
 $selector.fn.attr = (name, value) ->
-    if value isnt undefined then @each -> @setAttribute(name, value) else @get()?.getAttribute(name)
+    # 如果有 value 就設置簡單鍵值資料。
+    if value isnt undefined
+        @each -> @setAttribute name, value
+    # 如果傳入的是物件就設置多重資料。
+    else if typeof name is 'object'
+        @each ->
+            for key of name
+                @setAttribute key, name[key]
+    # 不然就取得資料。
+    else
+        @get()?.getAttribute name
 
 # RemoveAttr
 #
