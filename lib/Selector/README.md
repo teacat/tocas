@@ -25,8 +25,13 @@
 * .prependTo(*selector*)
 * .remove()
 * .is()
+* .slice()
+* .children()
 * .next()
 * .prev()
+* .prevAll(*selector*)
+* .nextAll(*selector*)
+* .addBack()
 * .index()
 
 ### 標籤和樣式
