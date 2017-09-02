@@ -396,14 +396,14 @@ $selector.fn.one =
 $selector.fn.off =
     value: (events, handler) ->
         @each ->
-            events.split(' ').forEach (eventName) ->
-                return if @$events        is undefined
+            events.split(' ').forEach (eventName) =>
+                return if @$events            is undefined
                 return if @$events[eventName] is undefined
 
                 if handler is undefined
                     @$events[eventName].list = []
 
-                @$events[eventName].list.forEach (item, index) ->
+                @$events[eventName].list.forEach (item, index) =>
                     if handler is item.func
                         @$events[eventName].list.splice(index, 1)
             , @
