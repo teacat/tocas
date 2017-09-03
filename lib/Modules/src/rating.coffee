@@ -10,46 +10,53 @@ class TocasRating
         onRate      : (value) -> # 當評分數值更改時所呼叫的函式。
 
     # 初始化事件。
-    _init: ({$this, $options, $module}, {rating, maxRating}) ->
+    _init: ({$this, $options, $module}, {rating, maxRating, interactive}) ->
         # 如果已經有星星的話則移除所有星星。
         $this.find('i').remove()
+        # 如果這個評分是不可操作的，則加上停用類別。
+        if interactive
+            $this.addClass 'disabled'
         # 初始化評分元件的時候，依照設置來決定要在元件內產生幾顆星星元素。
         for _ in [1..maxRating]
-            $selector('<i>').addClass('icon').appendTo($this)
+            $selector('<i>').addClass('icon').appendTo $this
 
         # 當使用者在圖示上觸控按著移動的時候。
         $this.on 'touchmove', (e) ->
+            # 取得目前觸控點位置的元素。
             $icon = $selector document.elementFromPoint e.touches[0].clientX, e.touches[0].clientY
+            # 如果觸控位置的元素跟當初開始觸控的元素不是同個評分元件則離開，
+            # 這表示使用者已經滑到另一個評分元件了。
             if $selector(e.target).parent().get() isnt $icon.parent().get()
                 return
+            # 圖示自己跟之前的所有圖示都加上「已選擇」樣式。
             $icon.prevAll().addBack().addClass 'selected'
+            # 移除圖示之後的所有「已選擇」樣式。
             $icon.nextAll().removeClass 'selected'
+            # 保存最後一個觸控的圖示，這樣才能在觸控結束時取得是在哪個圖示結束觸控的。
             $this.data '$lastIcon', $icon
 
         # 當使用者在圖示上放開觸控的時候。
         $this.find('.icon').on 'touchend', (e) ->
+            # 取得是在哪個圖示放開觸控的。
             $lastIcon = $this.data '$lastIcon'
-
             # 如果沒有 touchmove 時所記錄的最後一個圖示元素則離開。
             if $lastIcon is undefined
                 $lastIcon = $selector(e.target)
-
             # 取得目前的評分數值還有點擊的評分數值。
             rating        = $lastIcon.index() + 1
             currentRating = $this.data 'rating'
-
             # 如果目前的評分數值和點下去的ㄧ樣。
             if rating is currentRating
+                clearable = $this.data('clearable')
                 # 如果這個評分元件允許重設評分，就來重設吧。
-                if $this.data('clearable') is true
+                # 又或者重設是自動模式，而這個元件內只有一個評分，那麼就允許重設。
+                if clearable is true or (clearable is 'auto' and $this.children().length is 1)
                     # 重設評分為零。
                     $module::_set {$this}, 0
             # 不然如果點的是其他的評分。
             else
                 # 設置評分的分數。
                 $module::_set {$this}, rating
-
-
 
         # 當滑鼠在圖示上移動的時候。
         $this.find('.icon').on 'mousemove', ->
@@ -65,20 +72,23 @@ class TocasRating
             # 因為移出了圖示，所以沒有被點擊，把被點擊設置為 `false`。
             $this.data 'isLast', false
 
+        # 設置評分的函式。
         set = (e) ->
+            # 防止兩個事件同時發生，所以先取消監聽。
             $selector(@).off 'mouseup click', set
-
+            # 如果是觸控事件，又剛好在現在點擊的這個圖示上觸控，
+            # 我們就不要觸發點擊事件，只觸發觸控事件，所以這個事件就離開。
             if $this.data('$lastIcon') isnt undefined and $this.data('$lastIcon').get() is e.target
                 return
-
             # 取得目前的評分數值還有點擊的評分數值。
             rating        = $selector(@).index() + 1
             currentRating = $this.data 'rating'
-
             # 如果目前的評分數值和點下去的ㄧ樣。
             if rating is currentRating
+                clearable = $this.data('clearable')
                 # 如果這個評分元件允許重設評分，就來重設吧。
-                if $this.data('clearable') is true
+                # 又或者重設是自動模式，而這個元件內只有一個評分，那麼就允許重設。
+                if clearable is true or (clearable is 'auto' and $this.children().length is 1)
                     # 重設評分為零。
                     $module::_set {$this}, 0
             # 不然如果點的是其他的評分。
@@ -87,7 +97,6 @@ class TocasRating
                 $module::_set {$this}, rating
             # 因為被按下了，所以將被點擊設置為 `true`。
             $this.data 'isLast', true
-
 
         # 當滑鼠放開或是按下時。
         $this.find '.icon'
@@ -101,15 +110,17 @@ class TocasRating
 
     $init: ({$this, $options, $module}) ->
         config =
-            rating   : $this.attr('data-rating')     or $options.rating
-            maxRating: $this.attr('data-max-rating') or $options.maxRating
+            rating     : $this.attr('data-rating')     or $options.rating
+            maxRating  : $this.attr('data-max-rating') or $options.maxRating
+            interactive: $this.attr('data-interactive') or $options.interactive
 
         $module::_init {$this, $module}, config
 
     $opts: ({$this, $options, $module}, options) ->
         config = {
-            rating   : $this.data 'rating'
-            maxRating: $this.data 'maxRating'
+            rating     : $this.data 'rating'
+            maxRating  : $this.data 'maxRating'
+            interactive: $this.data 'interactive'
             ...options
         }
 
