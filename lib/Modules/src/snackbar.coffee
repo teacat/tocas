@@ -10,6 +10,9 @@ class TocasSnackbar
         onClose       :	->    # 當點心條關閉時所呼叫的函式。
         onAction      : ->    # 當點心條上的動作按鈕被按下時所會呼叫的函式。
     $init: ->
+    $opts: ->
+
     $methods:
-        {}
+        show: ->
+        hide: ->
 

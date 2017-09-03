@@ -30,15 +30,15 @@ class TocasEmbed
         onDisplay           : ->
         onCreate            : ->
 
-    $init: ({$this, $data, $module}) ->
+    $init: ({$this, $data, $module, $options}) ->
         config =
             source      : $this.attr 'data-source'
             url         : $this.attr 'data-url'
             id          : $this.attr 'data-id'
             placeholder : $this.attr 'data-placeholder'
-            options     : $this.attr('data-options')    or $data.options
-            parameters  : $this.attr('data-parameters') or $data.parameters
-            icon        : $this.attr('data-icon')       or $data.icon
+            options     : $this.attr('data-options')    or $options.options
+            parameters  : $this.attr('data-parameters') or $options.parameters
+            icon        : $this.attr('data-icon')       or $options.icon
         $module::_init {$this, $data, $module}, config
 
     $opts: ({$this, $data, $module}, options) ->

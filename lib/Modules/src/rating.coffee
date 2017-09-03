@@ -110,8 +110,8 @@ class TocasRating
 
     $init: ({$this, $options, $module}) ->
         config =
-            rating     : $this.attr('data-rating')     or $options.rating
-            maxRating  : $this.attr('data-max-rating') or $options.maxRating
+            rating     : $this.attr('data-rating')      or $options.rating
+            maxRating  : $this.attr('data-max-rating')  or $options.maxRating
             interactive: $this.attr('data-interactive') or $options.interactive
 
         $module::_init {$this, $module}, config
