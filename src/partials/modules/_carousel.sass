@@ -5,6 +5,7 @@
 //*******************************//
 
 .ts.carousel
+    overflow: hidden
 
 //-------------------//
 //      Controls
@@ -32,6 +33,8 @@
 .ts.carousel > .controls > .left .icon,
 .ts.carousel > .controls > .right .icon
     margin: 0
+    -webkit-text-stroke: 1px nth($grey, 6)
+    text-stroke: 1px nth($grey, 6)
 
 .ts.carousel > .controls > .right
     margin-left: auto
@@ -56,6 +59,8 @@
     width: 1.5em
     border-radius: .4rem
     background: #7b7b7b
+    transition: background 200ms linear
+    border: 1px solid nth($grey, 6)
     margin: 0 .25em
 
 .ts.carousel > .indicators > .item.active
@@ -72,32 +77,41 @@
 
 .ts.carousel > .items
     overflow: hidden
+    white-space: nowrap
+
     display: flex
+
+.ts.carousel > .items:not(.resetting)
+    transition: margin-left .4s ease-in-out
 
 //-------------------//
 //       Item
 //-------------------//
 
 .ts.carousel > .items > .item
-    transition: transform .6s ease-in-out
+    //display: inline-flex
+    width: 100%
+    height: 100%
+    flex-shrink: 0;
 
-.ts.carousel > .items > .item[class*="moving left"]
-    transform: translate3d(-100%,0,0)
-
-.ts.carousel > .items > .item[class*="moving right"]
-    transform: translate3d(100%,0,0)
-
-.ts.carousel > .items > .item.next
-    transform: translate3d(100%,0,0);
 
 //-------------------//
 //       Image
 //-------------------//
 
 .ts.carousel > .items > .item > .image
-
-.ts.carousel > .items > .item > .image img
     width: 100%
+.ts.carousel > .items > .item > .image img
+    //width: 100%
+
+//-------------------//
+//      Covered
+//-------------------//
+
+.ts.carousel > .items > .item > .image.covered img
+    width: 100%
+    height: 100%
+    object-fit: cover
 
 //-------------------//
 //      Content
@@ -126,7 +140,7 @@
 .ts.carousel > .items > .item > .content .header
     font-size: 1.8em
     line-height: 1.5
-    //text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.43)
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.65);
 
 //-------------------//
 //    Description
@@ -135,4 +149,4 @@
 .ts.carousel > .items > .item > .content .description
     font-size: 1.15em
     line-height: 1.5
-    //text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.43)
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.65);
