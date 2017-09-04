@@ -15,10 +15,11 @@ ts = (selector, context=null) ->
         $module   = module
         $data     = module::$data    or {}
         $options  = module::$options or {}
+        $delay    = (time=0) -> new Promise (resolve) -> setTimeout(resolve, time)
         # 在選項中插入 Tocas 初始化開關，用以檢測模組是否被初始化過。
         $options.tocas = module::$name
         # 上下文物件讓我們可以在模組中展開，使用相關的內容。
-        $context = {$elements, $selector, $module, $data, $options}
+        $context = {$elements, $selector, $module, $data, $options, $delay}
         # 初始化一些模組該有的函式。
         methods = module::$methods or { }
         init    = module::$init    or -> ts.fn
