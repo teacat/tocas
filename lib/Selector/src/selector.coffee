@@ -135,13 +135,25 @@ $selector.fn.wrap =
                 @parentNode.appendChild(element)
             element.appendChild(@)
 
+# Clone
+#
+# 複製元素。
+$selector.fn.clone =
+    value: ->
+        @collectSwap ->
+            @cloneNode(true)
+
 # Append
 #
 # 將元素插入在目前選擇器元素的內部最後面。
 $selector.fn.append =
     value: (element) ->
-        @each ->
-            @appendChild(element)
+        if element.isSelector isnt undefined
+            @each ->
+                element.each (e) => @appendChild(e)
+        else
+            @each ->
+                @appendChild(element)
 
 # AppendTo
 #
@@ -156,8 +168,12 @@ $selector.fn.appendTo =
 # 將元素插入在目前選擇器元素的內部最前面。
 $selector.fn.prepend =
     value: (element) ->
-        @each ->
-            @parentNode.insertBefore(element, @parentNode.firstChild) if @parentNode isnt null
+        if element.isSelector isnt undefined
+            @each ->
+                element.each (e) => @prened(e)
+        else
+            @each ->
+                @prepend(element)
 
 # PrependTo
 #
@@ -348,7 +364,8 @@ $selector.fn.css =
 # 綁定並註冊一個事件監聽器。
 $selector.fn.on =
     value: (events, handler, options) ->
-        events = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend' if events is 'animationend'
+        events = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'    if events is 'animationend'
+        events = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend' if events is 'transitionend'
 
         @each ->
             return        if @addEventListener is undefined
