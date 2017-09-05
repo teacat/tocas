@@ -150,14 +150,17 @@ class TocasRating
         # 停用指定評分，令使用者不得變更其數值。
         disable: ({$this}) ->
             $this.addClass 'disabled'
+            ts.fn
 
         # 啟用指定評分，讓使用者可以更改其數值。
         enable: ({$this}) ->
             $this.removeClass 'disabled'
+            ts.fn
 
         # 清除、歸零指定評分。
         'clear rating': ({$this, $module}) ->
             $module::_set {$this}, 0
+            ts.fn
 
         # 取得指定評分數值。
         'get rating': ({$this}) ->
@@ -166,5 +169,6 @@ class TocasRating
         # 設置指定評分數值。
         'set rating': ({$this, $module}, rating) ->
             $module::_set {$this}, rating
+            ts.fn
 
 new ts TocasRating
