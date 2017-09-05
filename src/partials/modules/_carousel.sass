@@ -18,7 +18,7 @@
     right: 0
     bottom: 0
     display: flex
-    z-index: 2
+    z-index: 1
 
 .ts.carousel > .controls > .left,
 .ts.carousel > .controls > .right
@@ -54,23 +54,51 @@
 
 .ts.carousel > .indicators
     position: absolute
-    bottom: 0
-    left: 0
+    bottom: 20px
+    left: 50%
     right: 0
-    height: 50px
+    transform: translate(-50%, -50%)
     display: flex
-    z-index: 1
+    z-index: 2
     align-items: center
     justify-content: center
 
+.ts.carousel > .outer.indicators
+    positive: relative
+    bottom: initial
+    left: initial
+    transform: none
+    width: 100%
+
+.ts.carousel > .navigable.indicators > .item
+    cursor: pointer
+
 .ts.carousel > .indicators > .item
     height: .45em
-    width: 1.6em
+    width: 1.8em
     border-radius: .4rem
     background: #7b7b7b
     transition: background 200ms linear
     border: 1px solid nth($grey, 7)
     margin: 0 .25em
+
+.ts.carousel > .indicators > .item:before
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    height: 10px;
+    content: "";
+
+.ts.carousel > .indicators > .item:after
+    position: absolute;
+    top: -10px;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    height: 10px;
+    content: "";
 
 .ts.carousel > .indicators > .item.active
     background: #fff
