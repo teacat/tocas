@@ -61,3 +61,4 @@
 
 * .prop(*name*, *value*)
 * .data(*name*, *value*)
+* .removeData(*name*)

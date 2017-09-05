@@ -493,3 +493,11 @@ $selector.fn.data =
                     @$data      = {} if @$data is undefined
                     @$data[key] = name[key]
             @
+
+# Remove Data
+#
+# 移除指定的資料。
+$selector.fn.removeData =
+    value: (name) ->
+        @each ->
+            delete @$data[name] if @$data[name]?
