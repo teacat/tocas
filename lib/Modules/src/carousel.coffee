@@ -46,10 +46,10 @@ class TocasCarousel
         $last  = $items.find '.item:last-child'
 
         #
-        $firstDuplicated = $first.clone().addClass 'duplicated'
-        $lastDuplicated  = $last.clone().addClass  'duplicated'
-        $firstDuplicated.appendTo $items
-        $lastDuplicated.prependTo $items
+        #$firstDuplicated = $first.clone().addClass 'duplicated'
+        #$lastDuplicated  = $last.clone().addClass  'duplicated'
+        #$firstDuplicated.appendTo $items
+        #$lastDuplicated.prependTo $items
 
         $first.addClass 'active'
 
@@ -67,72 +67,43 @@ class TocasCarousel
         $this.find('.controls > .right').on 'click', ->
             $module::_next {$this, $delay, $module}
 
-        $items
-            .addClass 'resetting'
-            .css      'margin-left', -Math.abs parseInt $items.find('.item:first-child').css('width')
-        await $delay()
-        $items.removeClass 'resetting'
-        $items.find('.item').css('width', $items.parent().css('width'))
+
         $this.data 'index', 0
 
 
     _slide: ({$this, $delay}, direction) ->
-        toNext = direction is 'next'
 
-        # 取得目前的幻燈片索引。
-        index = $this.data 'index'
-        # 取得幻燈片的指示器。
-        $indicators = $this.find '.indicators'
-        # 取得目前的幻燈片元素。
-        $current = $this.find '.items > .item.active'
-        # 取得幻燈片的下一個元素。
-        $next = if toNext then $current.next() else $current.prev()
-        # 取得幻燈片項目容器。
-        $items = $this.find '.items'
-        # 如果下一個元素是重複的，那麼就表示這個幻燈片已經到底了。
-        isLast = $next.hasClass 'duplicated'
+        if $this.data('sliding') is true
+            return
 
-        # 移除這個幻燈片的啟用樣式。
-        $current.removeClass 'active'
+        $this.data 'sliding', true
 
-        # 取得下個幻燈片的寬度。
-        nextWidth = parseInt $next.css 'width'
-        # 取得目前的偏移。
-        currentMargin = parseInt $items.css 'margin-left'
-        # 移動到下一個幻燈片。
-        $items.css 'margin-left', if toNext then currentMargin - nextWidth else currentMargin + nextWidth
+        movingDirection = if direction is 'next' then 'left' else 'right'
 
-        # 如果這個幻燈片是最後一個。
-        if isLast
-            # 移動完之後。
-            $items.one 'transitionend', ->
-                # 加上重設樣式避免觸動動畫效果，然後重設偏移，
-                # 這樣能在使用者沒發現的情況下重新回到第一個元素。
-                $items.addClass 'resetting'
-                if toNext
-                    $items.css 'margin-left', -Math.abs nextWidth
-                else
-                    width = 0
-                    # 取得所有幻燈片的寬度並進行加總。
-                    $items.find('.item:not(.duplicated)').each -> width += parseInt $selector(@).css 'width'
-                    # 轉跳到最後一個換燈片的位置。
-                    $items.css 'margin-left', -Math.abs width
-                await $delay()
-                # 移除重設樣式，這樣才能重新啟用動畫效果。
-                $items.removeClass 'resetting'
+        $current = $this.find('.items > .item.active')
 
-        # 設置新的索引。
-        if toNext
-            index = if isLast then 0 else index + 1
+        if direction is 'next'
+            $next = $current.next()
+            $next = if $next.length is 0 then $this.find('.items > .item:first-child') else $next
         else
-            index = if isLast then $items.find('.item').length - 3 else index - 1
+            $next = $current.prev()
+            $next = if $next.length is 0 then $this.find('.items > .item:last-child') else $next
 
-        # 更新幻燈片內的索引值。
-        $this.data 'index', index
-        # 移除所有指示器的啟用樣式，基於新的幻燈片的索引加上啟用樣式。
-        $indicators.children().removeClass('active').eq(index).addClass('active')
-        # 啟用指定的新幻燈片。
-        $items.find('.items > .item:not(.duplicated)').eq(index).addClass 'active'
+
+        $next.addClass(direction)
+        await $delay(30)
+        $current.addClass("moving #{movingDirection}")
+        $next.addClass("moving #{movingDirection}")
+
+        $current.one 'transitionend', ->
+
+            $next.removeClass("moving #{movingDirection} #{direction}")
+            $next.addClass('active')
+
+            $current.removeClass("active moving #{movingDirection} #{direction}")
+            $this.data 'sliding', false
+
+
 
 
     _next: ({$this, $delay, $module}) ->
