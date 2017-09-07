@@ -315,7 +315,7 @@ $selector.fn.removeAttr =
 $selector.fn.addClass =
     value: (names) ->
         @each ->
-            DOMTokenList.prototype.add.apply(@classList, names.split(' '))
+            DOMTokenList.prototype.add.apply(@classList, names.split(' ').filter(Boolean))
 
 # RemoveClass
 #
@@ -323,7 +323,7 @@ $selector.fn.addClass =
 $selector.fn.removeClass =
     value: (names) ->
         @each ->
-            DOMTokenList.prototype.remove.apply(@classList, names.split(' '))
+            DOMTokenList.prototype.remove.apply(@classList, names.split(' ').filter(Boolean))
 
 # ToggleClass
 #
