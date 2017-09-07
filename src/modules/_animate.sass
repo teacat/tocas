@@ -4,67 +4,60 @@
 // Licensed under the MIT license - http://opensource.org/licenses/MIT//
 // Copyright (c) 2016 Daniel Eden
 
-.animated
+[data-animating]
   animation-duration: 1s
   animation-fill-mode: both
 
   &.infinite
     animation-iteration-count: infinite
 
-  &.hinge
+  &[data-animation="hinge"]
     animation-duration: 2s
 
-  &[class*="flip out x"],
-  &[class*="flip out y"],
-  &[class*="bounce in"],
-  &[class*="bounce out"]
+  &[data-animation="flip out x"],
+  &[data-animation="flip out y"],
+  &[data-animation="bounce in"],
+  &[data-animation="bounce out"]
     animation-duration: .75s
 
-  @for $i from 2 through 9
-    &.animated#{$i}s
-      animation-duration: $i + s
-
-    &.animated0#{$i}s
-      animation-duration: $i / 10 + s
-
-[class*="fast out and slow in"]
+[data-animation-timing="fast out and slow in"]
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
 
-[class*="ease"]
+[data-animation-timing="ease"]
   animation-timing-function: ease
 
-[class*="ease in"]
+[data-animation-timing="ease in"]
   animation-timing-function: ease-in
 
-[class*="ease out"]
+[data-animation-timing="ease out"]
   animation-timing-function: ease-out
 
-[class*="ease in and out"]
+[data-animation-timing="ease in and out"]
   animation-timing-function: ease-in-out
-//cubic-bezier(0.34, 0.35, 0.15, 1)
-[class*="linear"]
+
+[data-animation-timing="linear"]
   animation-timing-function: linear
 
-[class*="fast out and linear in"]
+[data-animation-timing="fast out and linear in"]
   animation-timing-function: cubic-bezier(0.4, 0, 1, 1)
 
-[class*="out back"]
+[data-animation-timing="out back"]
   animation-timing-function: cubic-bezier(0.18, 0.89, 0.32, 1.28)
 
-[class*="linear out and slow in"]
+[data-animation-timing="linear out and slow in"]
   animation-timing-function: cubic-bezier(0, 0, 0.2, 1)
 
-[class*="out and cubic"]
+[data-animation-timing="out and cubic"]
   animation-timing-function: cubic-bezier(0.28, 0.77, 0.57, 0.98)
 
-[class*="out and quadratic"]
+[data-animation-timing="out and quadratic"]
   animation-timing-function: cubic-bezier(0.18, 0.76, 0.45, 0.94)
 
-[class*="out and sine"]
+[data-animation-timing="out and sine"]
   animation-timing-function: cubic-bezier(0.39, 0.58, 0.57, 1)
 
-
-
+[data-animating-hidden]
+  visibility: hidden
 
 @keyframes bounce
   from, 20%, 53%, 80%, to
@@ -78,9 +71,7 @@
     transform: translate3d(0, -15px, 0)
   90%
     transform: translate3d(0, -4px, 0)
-
-
-.bounce
+[data-animation="bounce"]
   animation-name: bounce
   transform-origin: center bottom
 
@@ -89,22 +80,32 @@
     opacity: 1
   25%, 75%
     opacity: 0
-
-
-.flash
+[data-animation="flash"]
   animation-name: flash
 
 /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
 
+//@keyframes pulse
+//  from
+//    transform: scale3d(1, 1, 1)
+//  50%
+//    transform: scale3d(1.05, 1.05, 1.05)
+//  to
+//    transform: scale3d(1, 1, 1)
+
 @keyframes pulse
-  from
-    transform: scale3d(1, 1, 1)
+  0%
+    transform: scale(1)
+    opacity: 1
   50%
-    transform: scale3d(1.05, 1.05, 1.05)
-  to
-    transform: scale3d(1, 1, 1)
-.pulse
+    transform: scale(0.9)
+    opacity: 0.7
+  100%
+    transform: scale(1)
+    opacity: 1
+[data-animation="pulse"]
   animation-name: pulse
+
 @keyframes rubberBand
   from
     transform: scale3d(1, 1, 1)
@@ -120,8 +121,9 @@
     transform: scale3d(1.05, 0.95, 1)
   to
     transform: scale3d(1, 1, 1)
-[class*="rubber band"]
+[data-animation="rubber band"]
   animation-name: rubberBand
+
 @keyframes shake
   from, to
     transform: translate3d(0, 0, 0)
@@ -129,8 +131,9 @@
     transform: translate3d(-10px, 0, 0)
   20%, 40%, 60%, 80%
     transform: translate3d(10px, 0, 0)
-.shake
+[data-animation="shake"]
   animation-name: shake
+
 @keyframes headShake
   0%
     transform: translateX(0)
@@ -144,9 +147,10 @@
     transform: translateX(2px) rotateY(3deg)
   50%
     transform: translateX(0)
-[class*="head shake"]
+[data-animation="head shake"]
   animation-timing-function: ease-in-out
   animation-name: headShake
+
 @keyframes swing
   20%
     transform: rotate3d(0, 0, 1, 15deg)
@@ -158,9 +162,10 @@
     transform: rotate3d(0, 0, 1, -5deg)
   to
     transform: rotate3d(0, 0, 1, 0deg)
-.swing
+[data-animation="swing"]
   transform-origin: top center
   animation-name: swing
+
 @keyframes tada
   from
     transform: scale3d(1, 1, 1)
@@ -172,8 +177,9 @@
     transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg)
   to
     transform: scale3d(1, 1, 1)
-.tada
+[data-animation="tada"]
   animation-name: tada
+
 /* originally authored by Nick Pettit - https://github.com/nickpettit/glide
 @keyframes wobble
   from
@@ -190,8 +196,9 @@
     transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg)
   to
     transform: none
-.wobble
+[data-animation="wobble"]
   animation-name: wobble
+
 @keyframes jello
   from, 11.1%, to
     transform: none
@@ -209,9 +216,10 @@
     transform: skewX(0.39063deg) skewY(0.39063deg)
   88.8%
     transform: skewX(-0.19531deg) skewY(-0.19531deg)
-.jello
+[data-animation="jello"]
   animation-name: jello
   transform-origin: center
+
 @keyframes bounceIn
   from, 20%, 40%, 60%, 80%, to
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1)
@@ -230,8 +238,9 @@
   to
     opacity: 1
     transform: scale3d(1, 1, 1)
-[class*="bounce in"]
+[data-animation="bounce in"]
   animation-name: bounceIn
+
 @keyframes bounceInDown
   from, 60%, 75%, 90%, to
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1)
@@ -247,8 +256,9 @@
     transform: translate3d(0, 5px, 0)
   to
     transform: none
-[class*="bounce in down"]
+[data-animation="bounce in down"]
   animation-name: bounceInDown
+
 @keyframes bounceInLeft
   from, 60%, 75%, 90%, to
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1)
@@ -264,8 +274,9 @@
     transform: translate3d(5px, 0, 0)
   to
     transform: none
-[class*="bounce in left"]
+[data-animation="bounce in left"]
   animation-name: bounceInLeft
+
 @keyframes bounceInRight
   from, 60%, 75%, 90%, to
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1)
@@ -281,8 +292,9 @@
     transform: translate3d(-5px, 0, 0)
   to
     transform: none
-[class*="bounce in right"]
+[data-animation="bounce in right"]
   animation-name: bounceInRight
+
 @keyframes bounceInUp
   from, 60%, 75%, 90%, to
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1)
@@ -298,8 +310,9 @@
     transform: translate3d(0, -5px, 0)
   to
     transform: translate3d(0, 0, 0)
-[class*="bounce in up"]
+[data-animation="bounce in up"]
   animation-name: bounceInUp
+
 @keyframes bounceOut
   20%
     transform: scale3d(0.9, 0.9, 0.9)
@@ -309,8 +322,9 @@
   to
     opacity: 0
     transform: scale3d(0.3, 0.3, 0.3)
-[class*="bounce out"]
+[data-animation="bounce out"]
   animation-name: bounceOut
+
 @keyframes bounceOutDown
   20%
     transform: translate3d(0, 10px, 0)
@@ -320,8 +334,9 @@
   to
     opacity: 0
     transform: translate3d(0, 2000px, 0)
-[class*="bounce out down"]
+[data-animation="bounce out down"]
   animation-name: bounceOutDown
+
 @keyframes bounceOutLeft
   20%
     opacity: 1
@@ -329,8 +344,9 @@
   to
     opacity: 0
     transform: translate3d(-2000px, 0, 0)
-[class*="bounce out left"]
+[data-animation="bounce out left"]
   animation-name: bounceOutLeft
+
 @keyframes bounceOutRight
   20%
     opacity: 1
@@ -338,8 +354,9 @@
   to
     opacity: 0
     transform: translate3d(2000px, 0, 0)
-[class*="bounce out right"]
+[data-animation="bounce out right"]
   animation-name: bounceOutRight
+
 @keyframes bounceOutUp
   20%
     transform: translate3d(0, -10px, 0)
@@ -349,15 +366,17 @@
   to
     opacity: 0
     transform: translate3d(0, -2000px, 0)
-[class*="bounce out up"]
+[data-animation="bounce out up"]
   animation-name: bounceOutUp
+
 @keyframes fadeIn
   from
     opacity: 0
   to
     opacity: 1
-[class*="fade in"]
+[data-animation="fade in"]
   animation-name: fadeIn
+
 @keyframes fadeInDown
   from
     opacity: 0
@@ -365,8 +384,9 @@
   to
     opacity: 1
     transform: none
-[class*="fade in down"]
+[data-animation="fade in down"]
   animation-name: fadeInDown
+
 @keyframes fadeInDownBig
   from
     opacity: 0
@@ -383,8 +403,9 @@
   to
     opacity: 1
     transform: none
-[class*="fade in left"]
+[data-animation="fade in left"]
   animation-name: fadeInLeft
+
 @keyframes fadeInLeftBig
   from
     opacity: 0
@@ -392,8 +413,9 @@
   to
     opacity: 1
     transform: none
-[class*="fade in left heavily"]
+[data-animation="fade in left heavily"]
   animation-name: fadeInLeftBig
+
 @keyframes fadeInRight
   from
     opacity: 0
@@ -401,8 +423,9 @@
   to
     opacity: 1
     transform: none
-[class*="fade in right"]
+[data-animation="fade in right"]
   animation-name: fadeInRight
+
 @keyframes fadeInRightBig
   from
     opacity: 0
@@ -410,8 +433,9 @@
   to
     opacity: 1
     transform: none
-[class*="fade in right heavily"]
+[data-animation="fade in right heavily"]
   animation-name: fadeInRightBig
+
 @keyframes fadeInUp
   from
     opacity: 0
@@ -419,8 +443,9 @@
   to
     opacity: 1
     transform: none
-[class*="fade in up"]
+[data-animation="fade in up"]
   animation-name: fadeInUp
+
 @keyframes fadeInUpBig
   from
     opacity: 0
@@ -428,79 +453,89 @@
   to
     opacity: 1
     transform: none
-[class*="fade in up heavily"]
+[data-animation="fade in up heavily"]
   animation-name: fadeInUpBig
+
 @keyframes fadeOut
   from
     opacity: 1
   to
     opacity: 0
-.fadeOut
+[data-animation="fade out"]
   animation-name: fadeOut
+
 @keyframes fadeOutDown
   from
     opacity: 1
   to
     opacity: 0
     transform: translate3d(0, 50%, 0)
-[class*="fade out down"]
+[data-animation="fade out down"]
   animation-name: fadeOutDown
+
 @keyframes fadeOutDownBig
   from
     opacity: 1
   to
     opacity: 0
     transform: translate3d(0, 2000px, 0)
-[class*="fade out down heavily"]
+[data-animation="fade out down heavily"]
   animation-name: fadeOutDownBig
+
 @keyframes fadeOutLeft
   from
     opacity: 1
   to
     opacity: 0
     transform: translate3d(-50%, 0, 0)
-[class*="fade out left"]
+[data-animation="fade out left"]
   animation-name: fadeOutLeft
+
 @keyframes fadeOutLeftBig
   from
     opacity: 1
   to
     opacity: 0
     transform: translate3d(-2000px, 0, 0)
-[class*="fade out left heavily"]
+[data-animation="fade out left heavily"]
   animation-name: fadeOutLeftBig
+
 @keyframes fadeOutRight
   from
     opacity: 1
   to
     opacity: 0
     transform: translate3d(50%, 0, 0)
-[class*="fade out right"]
+[data-animation="fade out right"]
   animation-name: fadeOutRight
+
 @keyframes fadeOutRightBig
   from
     opacity: 1
   to
     opacity: 0
     transform: translate3d(2000px, 0, 0)
-[class*="fade out right heavily"]
+[data-animation="fade out right heavily"]
   animation-name: fadeOutRightBig
+
 @keyframes fadeOutUp
   from
     opacity: 1
   to
     opacity: 0
     transform: translate3d(0, -50%, 0)
-[class*="fade out up"]
+[data-animation="fade out up"]
   animation-name: fadeOutUp
+
 @keyframes fadeOutUpBig
   from
     opacity: 1
   to
     opacity: 0
     transform: translate3d(0, -2000px, 0)
-[class*="fade out up heavily"]
+[data-animation="fade out up heavily"]
   animation-name: fadeOutUpBig
+
 @keyframes flip
   from
     transform: perspective(400px) rotate3d(0, 1, 0, -360deg)
@@ -517,9 +552,10 @@
   to
     transform: perspective(400px)
     animation-timing-function: ease-in
-.animated.flip
+[data-animation="flip"]
   backface-visibility: visible
   animation-name: flip
+
 @keyframes flipInX
   from
     transform: perspective(400px) rotate3d(1, 0, 0, 90deg)
@@ -535,9 +571,10 @@
     transform: perspective(400px) rotate3d(1, 0, 0, -5deg)
   to
     transform: perspective(400px)
-[class*="flip in x"]
+[data-animation="flip in x"]
   backface-visibility: visible !important
   animation-name: flipInX
+
 @keyframes flipInY
   from
     transform: perspective(400px) rotate3d(0, 1, 0, 90deg)
@@ -553,9 +590,10 @@
     transform: perspective(400px) rotate3d(0, 1, 0, -5deg)
   to
     transform: perspective(400px)
-[class*="flip in y"]
+[data-animation="flip in y"]
   backface-visibility: visible !important
   animation-name: flipInY
+
 @keyframes flipOutX
   from
     transform: perspective(400px)
@@ -565,9 +603,10 @@
   to
     transform: perspective(400px) rotate3d(1, 0, 0, 90deg)
     opacity: 0
-[class*="flip out x"]
+[data-animation="flip out x"]
   animation-name: flipOutX
   backface-visibility: visible !important
+
 @keyframes flipOutY
   from
     transform: perspective(400px)
@@ -577,9 +616,10 @@
   to
     transform: perspective(400px) rotate3d(0, 1, 0, 90deg)
     opacity: 0
-[class*="flip out y"]
+[data-animation="flip out y"]
   backface-visibility: visible !important
   animation-name: flipOutY
+
 @keyframes lightSpeedIn
   from
     transform: translate3d(100%, 0, 0) skewX(-30deg)
@@ -593,9 +633,10 @@
   to
     transform: none
     opacity: 1
-[class*="light speed in"]
+[data-animation="light speed in"]
   animation-name: lightSpeedIn
   animation-timing-function: ease-out
+
 @keyframes lightSpeedOut
   from
     opacity: 1
@@ -614,8 +655,9 @@
     transform-origin: center
     transform: none
     opacity: 1
-[class*="rotate in"]
+[data-animation="rotate in"]
   animation-name: rotateIn
+
 @keyframes rotateInDownLeft
   from
     transform-origin: left bottom
@@ -625,8 +667,9 @@
     transform-origin: left bottom
     transform: none
     opacity: 1
-[class*="rotate in down left"]
+[data-animation="rotate in down left"]
   animation-name: rotateInDownLeft
+
 @keyframes rotateInDownRight
   from
     transform-origin: right bottom
@@ -636,8 +679,9 @@
     transform-origin: right bottom
     transform: none
     opacity: 1
-[class*="rotate in down right"]
+[data-animation="rotate in down right"]
   animation-name: rotateInDownRight
+
 @keyframes rotateInUpLeft
   from
     transform-origin: left bottom
@@ -647,8 +691,9 @@
     transform-origin: left bottom
     transform: none
     opacity: 1
-[class*="rotate in up left"]
+[data-animation="rotate in up left"]
   animation-name: rotateInUpLeft
+
 @keyframes rotateInUpRight
   from
     transform-origin: right bottom
@@ -658,8 +703,9 @@
     transform-origin: right bottom
     transform: none
     opacity: 1
-[class*="rotate in up right"]
+[data-animation="rotate in up right"]
   animation-name: rotateInUpRight
+
 @keyframes rotateOut
   from
     transform-origin: center
@@ -668,8 +714,9 @@
     transform-origin: center
     transform: rotate3d(0, 0, 1, 200deg)
     opacity: 0
-[class*="rotate out"]
+[data-animation="rotate out"]
   animation-name: rotateOut
+
 @keyframes rotateOutDownLeft
   from
     transform-origin: left bottom
@@ -678,8 +725,9 @@
     transform-origin: left bottom
     transform: rotate3d(0, 0, 1, 45deg)
     opacity: 0
-[class*="rotate out down left"]
+[data-animation="rotate out down left"]
   animation-name: rotateOutDownLeft
+
 @keyframes rotateOutDownRight
   from
     transform-origin: right bottom
@@ -688,8 +736,9 @@
     transform-origin: right bottom
     transform: rotate3d(0, 0, 1, -45deg)
     opacity: 0
-[class*="rotate out down right"]
+[data-animation="rotate out down right"]
   animation-name: rotateOutDownRight
+
 @keyframes rotateOutUpLeft
   from
     transform-origin: left bottom
@@ -698,8 +747,9 @@
     transform-origin: left bottom
     transform: rotate3d(0, 0, 1, -45deg)
     opacity: 0
-[class*="rotate out up left"]
+[data-animation="rotate out up left"]
   animation-name: rotateOutUpLeft
+
 @keyframes rotateOutUpRight
   from
     transform-origin: right bottom
@@ -708,8 +758,9 @@
     transform-origin: right bottom
     transform: rotate3d(0, 0, 1, 90deg)
     opacity: 0
-[class*="rotate out up right"]
+[data-animation="rotate out up right"]
   animation-name: rotateOutUpRight
+
 @keyframes hinge
   0%
     transform-origin: top left
@@ -726,8 +777,9 @@
   to
     transform: translate3d(0, 700px, 0)
     opacity: 0
-.hinge
+[data-animation="hinge"]
   animation-name: hinge
+
 /* originally authored by Nick Pettit - https://github.com/nickpettit/glide
 @keyframes rollIn
   from
@@ -736,8 +788,9 @@
   to
     opacity: 1
     transform: none
-[class*="roll in"]
+[data-animation="roll in"]
   animation-name: rollIn
+
 /* originally authored by Nick Pettit - https://github.com/nickpettit/glide
 @keyframes rollOut
   from
@@ -745,16 +798,18 @@
   to
     opacity: 0
     transform: translate3d(100%, 0, 0) rotate3d(0, 0, 1, 120deg)
-[class*="roll out"]
+[data-animation="roll out"]
   animation-name: rollOut
+
 @keyframes zoomIn
   from
     opacity: 0
     transform: scale3d(0.3, 0.3, 0.3)
   50%
     opacity: 1
-[class*="zoom in"]
+[data-animation="zoom in"]
   animation-name: zoomIn
+
 @keyframes zoomInDown
   from
     opacity: 0
@@ -764,8 +819,9 @@
     opacity: 1
     transform: scale3d(0.475, 0.475, 0.475) translate3d(0, 60px, 0)
     animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1)
-[class*="zoom in down"]
+[data-animation="zoom in down"]
   animation-name: zoomInDown
+
 @keyframes zoomInLeft
   from
     opacity: 0
@@ -775,8 +831,9 @@
     opacity: 1
     transform: scale3d(0.475, 0.475, 0.475) translate3d(10px, 0, 0)
     animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1)
-[class*="zoom in left"]
+[data-animation="zoom in left"]
   animation-name: zoomInLeft
+
 @keyframes zoomInRight
   from
     opacity: 0
@@ -786,8 +843,9 @@
     opacity: 1
     transform: scale3d(0.475, 0.475, 0.475) translate3d(-10px, 0, 0)
     animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1)
-[class*="zoom in right"]
+[data-animation="zoom in right"]
   animation-name: zoomInRight
+
 @keyframes zoomInUp
   from
     opacity: 0
@@ -797,8 +855,9 @@
     opacity: 1
     transform: scale3d(0.475, 0.475, 0.475) translate3d(0, -60px, 0)
     animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1)
-[class*="zoom in up"]
+[data-animation="zoom in up"]
   animation-name: zoomInUp
+
 @keyframes zoomOut
   from
     opacity: 1
@@ -807,8 +866,9 @@
     transform: scale3d(0.3, 0.3, 0.3)
   to
     opacity: 0
-[class*="zoom out"]
+[data-animation="zoom out"]
   animation-name: zoomOut
+
 @keyframes zoomOutDown
   40%
     opacity: 1
@@ -819,8 +879,9 @@
     transform: scale3d(0.1, 0.1, 0.1) translate3d(0, 2000px, 0)
     transform-origin: center bottom
     animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1)
-[class*="zoom out down"]
+[data-animation="zoom out down"]
   animation-name: zoomOutDown
+
 @keyframes zoomOutLeft
   40%
     opacity: 1
@@ -829,8 +890,9 @@
     opacity: 0
     transform: scale(0.1) translate3d(-2000px, 0, 0)
     transform-origin: left center
-[class*="zoom out left"]
+[data-animation="zoom out left"]
   animation-name: zoomOutLeft
+
 @keyframes zoomOutRight
   40%
     opacity: 1
@@ -839,8 +901,9 @@
     opacity: 0
     transform: scale(0.1) translate3d(2000px, 0, 0)
     transform-origin: right center
-[class*="zoom out right"]
+[data-animation="zoom out right"]
   animation-name: zoomOutRight
+
 @keyframes zoomOutUp
   40%
     opacity: 1
@@ -851,69 +914,77 @@
     transform: scale3d(0.1, 0.1, 0.1) translate3d(0, -2000px, 0)
     transform-origin: center bottom
     animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1)
-[class*="zoom out up"]
+[data-animation="zoom out up"]
   animation-name: zoomOutUp
+
 @keyframes slideInDown
   from
     transform: translate3d(0, -100%, 0)
     visibility: visible
   to
     transform: translate3d(0, 0, 0)
-[class*="slide in down"]
+[data-animation="slide in down"]
   animation-name: slideInDown
+
 @keyframes slideInLeft
   from
     transform: translate3d(-100%, 0, 0)
     visibility: visible
   to
     transform: translate3d(0, 0, 0)
-[class*="slide in left"]
+[data-animation="slide in left"]
   animation-name: slideInLeft
+
 @keyframes slideInRight
   from
     transform: translate3d(100%, 0, 0)
     visibility: visible
   to
     transform: translate3d(0, 0, 0)
-[class*="slide in right"]
+[data-animation="slide in right"]
   animation-name: slideInRight
+
 @keyframes slideInUp
   from
     transform: translate3d(0, 100%, 0)
     visibility: visible
   to
     transform: translate3d(0, 0, 0)
-[class*="slide in up"]
+[data-animation="slide in up"]
   animation-name: slideInUp
+
 @keyframes slideOutDown
   from
     transform: translate3d(0, 0, 0)
   to
     visibility: hidden
     transform: translate3d(0, 100%, 0)
-[class*="slide out down"]
+[data-animation="slide out down"]
   animation-name: slideOutDown
+
 @keyframes slideOutLeft
   from
     transform: translate3d(0, 0, 0)
   to
     visibility: hidden
     transform: translate3d(-100%, 0, 0)
-[class*="slide out left"]
+[data-animation="slide out left"]
   animation-name: slideOutLeft
+
 @keyframes slideOutRight
   from
     transform: translate3d(0, 0, 0)
   to
     visibility: hidden
     transform: translate3d(100%, 0, 0)
-[class*="slide out right"]
+[data-animation="slide out right"]
   animation-name: slideOutRight
+
 @keyframes slideOutUp
   from
     transform: translate3d(0, 0, 0)
   to
     visibility: hidden
     transform: translate3d(0, -100%, 0)
-[class*="slide out up"]
+[data-animation="slide out up"]
   animation-name: slideOutUp
