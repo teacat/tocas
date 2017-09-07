@@ -404,6 +404,9 @@ $selector.fn.on =
 # 綁定一次性的事件監聽器，當被觸發之後就會被移除。
 $selector.fn.one =
     value: (events, handler) ->
+        events = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'    if events is 'animationend'
+        events = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend' if events is 'transitionend'
+
         @each ->
             $selector(@).on(events, handler, {once: true})
 
@@ -412,6 +415,9 @@ $selector.fn.one =
 # 註銷事件監聽器。
 $selector.fn.off =
     value: (events, handler) ->
+        events = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'    if events is 'animationend'
+        events = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend' if events is 'transitionend'
+
         @each ->
             events.split(' ').forEach (eventName) =>
                 return if @$events            is undefined
@@ -424,6 +430,19 @@ $selector.fn.off =
                     if handler is item.func
                         @$events[eventName].list.splice(index, 1)
             , @
+
+# Trigger
+#
+# 觸發指定事件。
+$selector.fn.trigger =
+    value: (events) ->
+        events = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'    if events is 'animationend'
+        events = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend' if events is 'transitionend'
+
+        @each ->
+            events.split(' ').forEach (eventName) =>
+                event = new Event eventName
+                @dispatchEvent event
 
 # Text
 #
