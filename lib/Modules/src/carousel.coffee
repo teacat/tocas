@@ -1,67 +1,119 @@
 class TocasCarousel
     $name:
         'carousel'
-
-    $data:
-        left : '.controls .left'
-        right: '.controls .right'
-
+        
     $options:
-        interval   : 3500               # 幻燈片換到下一張的毫秒相隔時間。
+        interval   : 4000               # 幻燈片換到下一張的毫秒相隔時間。
         autoplay   : true               # 是否要自動播放。
         indicator  :                    # 指示器選項。
-            style     : 'round'         # 指示器的外觀，`round` 為圓角矩形，`circular` 為圓形。
+            style     : 'rounded'       # 指示器的外觀，`round` 為圓角矩形，`circular` 為圓形。
             navigable : true            # 是否可供轉跳。
             overlapped: true            # 是否疊加在幻燈片上。
         control:                        # 控制器選項。
+            edged     : false
+            overlapped: true            # 是否疊加在幻燈片上。
             icon:                       # 圖示選項。
                 left : 'chevron left'   # 左圖示的圖示名稱。
                 right: 'chevron right'  # 右圖示的圖示名稱
         onChange: ->                    # 當幻燈片變更時所呼叫的函式。
-        #onCycle : ->                   # 當幻燈片完成一個循環時所呼叫的函式。
-        #onLast  : ->                   # 當幻燈片切換到最後一個時所呼叫的函式。
 
-    _init: () ->
+    $opts: ({$this, $delay, $module}, options) ->
+        config = {
+            interval : $this.data 'interval'
+            autoplay : $this.data 'autoplay'
+            indicator: $this.data 'indicator'
+            control  : $this.data 'control'
+            onChange : $this.data 'onChange'
+            ...options
+        }
 
-    $init: ({$this, $delay, $module}) ->
-        # 初始化幻燈片所需的內部元件。
-        $control    = $selector('<div>').addClass 'controls'
-        $indicators = $selector('<div>').addClass 'navigable indicators'
-        $items      = $selector('<div>').addClass 'items'
+        $module::_init {$this, $delay, $module}, config
 
-        # 配置控制元素的內部 HTML。
-        $control.html """
-            <a href="#!" class="left"><i class="chevron left icon"></i></a>
-            <a href="#!" class="right"><i class="chevron right icon"></i></a>
-        """
+    $init: ({$this, $delay, $module, $options}) ->
+        config = {
+            interval: parseInt $this.attr('data-interval')
+            autoplay: $this.attr('data-autoplay') is 'true'
+            ...$options
+        }
 
-        # 取得使用者已經擺置的項目。
+        if $this.attr('data-indicator')
+            config.indicator = false
+        if $this.attr('data-indicator-style')
+            config.indicator.style = $this.attr('data-indicator-style')
+        if $this.attr('data-indicator-navigable')
+            config.indicator.navigable = $this.attr('data-indicator-navigable') is 'true'
+        if $this.attr('data-indicator-overlapped')
+            config.indicator.overlapped = $this.attr('data-indicator-overlapped') is 'true'
+
+        if $this.attr('data-control')
+            config.control = false
+        if $this.attr('data-control-overlapped')
+            config.control.overlapped = $this.attr('data-control-overlapped') is 'true'
+        if $this.attr('data-control-icon-left')
+            config.control.icon.left = $this.attr('data-control-icon-left')
+        if $this.attr('data-control-icon-right')
+            config.control.icon.left = $this.attr('data-control-icon-right')
+
+        $module::_init {$this, $delay, $module}, config
+
+    # 初始化幻燈片。
+    _init: ({$this, $delay, $module}, {interval, autoplay, indicator, control, onChange}) ->
+        # 建立項目容器，用來包裹所有的幻燈片。
+        $items = $selector('<div>').addClass 'items'
+        # 取得使用者已經擺置的幻燈片。
         $item = $this.find(':scope > .item')
-        # 替這些項目產生指示器的元素。
-        for index in [1..$item.length]
-            $indicators.append $selector('<div>').addClass 'item' + if index is 1 then ' active' else ''
-        $indicators.find('.item').each ->
-            $self = $selector @
-            $self.on 'click', -> $module::_jump({$this, $delay, $module}, $self.index())
-        # 將這些項目移動到項目容器中。
-        $items.append($item)
         # 給第一個幻燈片啟用樣式。
-        $items.find('.item:first-child').addClass 'active'
-        # 清除幻燈片的所有內容，將項目容器、控制元素、指示器都移動進來。
-        $this
-            .html ''
-            .append $items
-            .append $control
-            .append $indicators
+        $item.eq(0).addClass 'active'
+        # 將這些幻燈片移動到項目容器中。
+        $items.append($item)
+        # 清除原先幻燈片的所有內容。
+        $this.html ''
 
-        # 給控制按鈕加上控制事件。
-        $this.find('.controls > .left').on 'click', ->
-            $module::_previous {$this, $delay, $module}
-        $this.find('.controls > .right').on 'click', ->
-            $module::_next {$this, $delay, $module}
+        # 如果有控制元素設置。
+        if control isnt false
+            overlapped = if control.overlapped then 'overlapped ' else ''
+            # 建立控制元素，並且加上指定的圖示。
+            $control = $selector('<div>').addClass(overlapped + 'controls').html """
+                <a href="#!" class="left"><i class="#{control.icon.left} icon"></i></a>
+                <a href="#!" class="right"><i class="#{control.icon.right} icon"></i></a>
+            """
+            # 移動到幻燈片容器中。
+            $this.append $control
+            # 給控制按鈕加上控制事件。
+            $this.find('.controls > .left').on 'click', ->
+                $module::_previous {$this, $delay, $module}
+            $this.find('.controls > .right').on 'click', ->
+                $module::_next {$this, $delay, $module}
+
+        # 將幻燈片容器在控制元素之後插入，
+        # 這樣才能透過控制元素的樣式來取決幻燈片容器的樣式。
+        # CSS Selector 的 `x + x`。
+        $this.append $items
+
+        # 如果有指示器設置。
+        if indicator isnt false
+            overlapped = if indicator.overlapped         then 'overlapped' else ''
+            navigable  = if indicator.navigable          then 'navigable'  else ''
+            style      = if indicator.style is 'rounded' then ''           else 'circular'
+            # 建立指示器元素，並且決定是否可供導覽點按。
+            $indicators = $selector('<div>').addClass "#{navigable} #{overlapped} #{style} indicators"
+
+            # 替幻燈片產生指示器的元素。
+            for index in [1..$item.length]
+                active = if index is 1 then ' active' else ''
+                $indicators.append $selector('<div>').addClass "#{active} item"
+            # 如果可供導覽點按，則綁定點擊事件。
+            if indicator.navigable
+                $indicators.find('.item').each (_, index) ->
+                    $selector(@).on 'click', -> $module::_jump({$this, $delay, $module}, index)
+            # 移動到幻燈片容器中。
+            $this.append $indicators
 
         # 初始化索引為零。
         $this.data 'index', 0
+        # 如果要自動播放的話則建立計時器。
+        if autoplay
+            $module::_play {$this, $delay, $module}
 
     # 向特定方向移動幻燈片。
     _slide: ({$this, $delay}, direction, $nextElement) ->
@@ -107,9 +159,9 @@ class TocasCarousel
         # 當目前舊的幻燈片移動完畢時。
         $current.one 'transitionend', ->
             # 順便移除下個幻燈片的移動效果，並且加上已啟用樣式。
-            $next.removeClass("moving #{movingDirection} #{direction}").addClass('active')
+            $next.removeClass("moving #{movingDirection} #{direction}").addClass 'active'
             # 同時移除這個舊的幻燈片樣式。
-            $current.removeClass("active moving #{movingDirection} #{direction}")
+            $current.removeClass "active moving #{movingDirection} #{direction}"
             # 滑動已結束。
             $this.data 'sliding', false
 
@@ -133,7 +185,7 @@ class TocasCarousel
         if $this.data('autoplayTimer') isnt undefined
             return
         # 先換下一張。
-        $module::_next {$this, $delay, $module}
+        # $module::_next {$this, $delay, $module}
         # 建立並保存這個計時器，之後才能清除。
         $this.data 'autoplayTimer', setInterval(->
             # 時間到了就呼叫切換下一張的函式。

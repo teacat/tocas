@@ -22,6 +22,9 @@
 
 .ts.carousel > .controls > .left,
 .ts.carousel > .controls > .right
+    opacity: 0.7
+    user-select: none
+    user-drag: none
     height: 100%
     color: #FFF
     font-size: 2em
@@ -29,21 +32,53 @@
     align-items: center
     justify-content: center
     width: 11%
+    min-width: 60px
 
 .ts.carousel > .sided.controls > .left,
 .ts.carousel > .sided.controls > .right
-    width: 60px
+    width: 50px
     background: rgba(0, 0, 0, 0.2);
-    height: 100px;
-    top: calc(50% + -50px);
+    height: 80px;
+    top: calc(50% + -40px);
+
+.ts.carousel > .sided.controls > .left
     border-top-right-radius: .4rem;
     border-bottom-right-radius: .4rem;
+
+.ts.carousel > .sided.controls > .right
+    border-top-left-radius: .4rem;
+    border-bottom-left-radius: .4rem;
+
+.ts.carousel > .controls:not(.overlapped) + .items
+    width: calc(100% - (50px * 2) - 2rem)
+    margin: 0 auto
+
+.ts.carousel > .controls:not(.overlapped):not(.sided) > .left,
+.ts.carousel > .controls:not(.overlapped):not(.sided) > .right,
+    width: 60px
 
 .ts.carousel > .controls > .left .icon,
 .ts.carousel > .controls > .right .icon
     margin: 0
     -webkit-text-stroke: 1px nth($grey, 7)
     text-stroke: 1px nth($grey, 7)
+
+.ts.carousel > .controls > .left:hover,
+.ts.carousel > .controls > .right:hover
+    //color: #eee
+    opacity: 1
+
+.ts.carousel > .controls.overlapped > .left:hover,
+.ts.carousel > .controls.overlapped > .right:hover
+    //background: rgba(0, 0, 0, 0.07)
+
+.ts.carousel > .controls > .left:active,
+.ts.carousel > .controls > .right:active
+    color: #CCC
+
+.ts.carousel > .controls.overlapped > .left:active,
+.ts.carousel > .controls.overlapped > .right:active
+    //background: rgba(0, 0, 0, 0.2)
 
 .ts.carousel > .controls > .right
     margin-left: auto
@@ -63,12 +98,16 @@
     align-items: center
     justify-content: center
 
-.ts.carousel > .outer.indicators
-    positive: relative
+.ts.carousel > .indicators:not(.overlapped)
+    position: relative
     bottom: initial
     left: initial
+    height: 35px
     transform: none
     width: 100%
+
+.ts.carousel > .indicators:not(.overlapped) + .controls:not(.overlapped)
+    bottom: 35px
 
 .ts.carousel > .navigable.indicators > .item
     cursor: pointer
@@ -156,8 +195,11 @@
 //-------------------//
 
 .ts.carousel > .items > .item > .image
+    user-select: none
+    user-drag: none
     width: 100%
 .ts.carousel > .items > .item > .image img
+
     //width: 100%
 
 //-------------------//
