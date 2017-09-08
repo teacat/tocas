@@ -28,8 +28,9 @@ ts = (selector, context=null) ->
         value   = ts.fn
 
         # 每個節點。
-        $elements.each ->
-            $context.$this = $selector @
+        $elements.each (_, index) ->
+            $context.$this  = $selector @
+            $context.$index = index
 
             # 如果第一個參數是空的，那麼使用者想直接呼叫這個模組的初始化函式。
             if $arg is null

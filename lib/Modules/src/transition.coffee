@@ -2,140 +2,146 @@ class TocasTransition
     $name:
         'transition'
 
-    _init: ({$this, $delay, $module}) ->
+    _init: ({$this}) ->
         # 初始化動畫佇列。
         $this.data 'animationQueue', []
         # 初始化動畫索引。
         $this.data 'animationIndex', 0
-        # 建立消費者事件，會在每次動畫結束後，從動畫佇列中找出下一個該執行的動畫，執行後將其從佇列中移除。
-        customer = ->
-            # 如果沒有 `animated` 則不是 Tocas 動畫，略過本次動畫監聽事件。
-            if $this.attr('data-animating') isnt 'true'
-                return
-
-            # 移除上個動畫的樣式。
-            $this.removeAttr 'data-animating'
-            # 移除上個動畫名稱。
-            $this.removeAttr 'data-animation'
-
-            # 取得現有動畫佇列。
-            queue = $this.data 'animationQueue'
-            # 取得上個動畫的資料。
-            previousData = queue[0]
-            # 呼叫上個動畫的完成回呼函式。
-            previousData.onComplete.call $this.get()
-
-            looping = $this.data('animationLooping') is true
-            # 將這個動畫從佇列中移除。
-            if not looping
-                queue.shift()
-                # 更新動畫佇列。
-                $this.data 'animationQueue', queue
-
-            # 如果佇列是空的則離開。
-            if queue.length is 0
-                return
-            await $delay()
-
-            if not looping
-                next = queue[0]
-            else
-                index = $this.data 'animationIndex'
-                index = if queue[index + 1] isnt undefined then index + 1 else 0
-                next  = queue[index]
-                $this.data 'animationIndex', index
-
-            # 執行佇列中的下一個動畫。
-            $module::_animate {$this, $delay, $module}, next
-
-        # 設置動畫消費者事件。
-        $this.on 'animationend', customer
-        # 表示初始化終了。
-        $this.data 'animationInitialized', true
-
+        # 初始化群組。
+        if $this.data('animationGrouped') is undefined
+            $this.data 'animationGrouped', false
 
     # 播放動畫。
-    _animate: ({$this, $delay, $module}, data) ->
-        if data.animation is 'hide'
-            $this.attr 'data-animating-hidden', 'true'
-            $this.attr 'data-animating', 'true'
-            await $delay(data.duration)
-            $this.trigger 'animationend'
+    _animate: ({$this, $delay, $module}, {animation, duration, onComplete}) ->
+        # 是否為群組項目。
+        grouped = $this.data('animationGrouped')
+        # 如果是群組項目，但不是輪到自己，則先離開。
+        if grouped isnt false and $this.attr('data-animation-current') isnt 'true'
             return
-        else if data.animation is 'show'
-            $this.removeAttr 'data-animating-hidden'
-            $this.attr 'data-animating', 'true'
-            await $delay(data.duration)
-            $this.trigger 'animationend'
-            return
-        # 設置本次動畫的速度。
-        $this.css 'animation-duration', "#{data.duration}ms"
-        # 決定本次動畫名稱。
-        $this.attr 'data-animation', data.animation
-        # 然後等一下，播放動畫。
+
+        # 設置動畫時間。
+        $this.css 'animation-duration', "#{duration}ms"
+        # 設置動畫名稱。
+        $this.attr 'data-animation', animation
         await $delay()
-        $this.attr 'data-animating', 'true'
+        # 執行動畫。
+        $this.attr 'data-animating', true
+
+        # 如果這是群組元素，我們先不要急著執行自己的下一個動畫，
+        # 我們執行下一個元素的動畫。
+        if grouped isnt false
+            await $delay(duration / 3)
+            # 呼叫下一個元素。
+            $groupElements = grouped.$elements
+            groupIndex     = grouped.index
+            groupIndex++
+
+            # 如果群組裡沒有下一個元素了，就回到起頭，播放另一輪動畫。
+            if $groupElements[groupIndex] is undefined
+                groupIndex = 0
+
+            # 更新大家的索引。
+            $groupElements.each ->
+                data = $selector(@).data('animationGrouped')
+                data.index = groupIndex
+                console.log $selector(@).data('animationGrouped')
+
+            # 取得下一個元素。
+            $groupNext = $selector $groupElements[groupIndex]
+
+            # 取得下個元素要播放的動畫。
+            nextQueue = $groupNext.data 'animationQueue'
+            nextIndex = $groupNext.data 'animationIndex'
+
+            # 自己的群組動畫已經播放了，輪到下一個了。
+            $this.removeAttr 'data-animation-current'
+
+            # 如果下一個元素還有動畫的話。
+            if nextQueue[nextIndex] isnt undefined
+                # 就輪到他執行群組動畫。
+                $groupNext.attr 'data-animation-current', 'true'
+                # 呼叫下一個元素的下一個動畫。
+                $module::_animate {$this: $groupNext, $delay, $module}, nextQueue[nextIndex]
+
+        # 過了動畫的執行時間（相當於動畫執行完畢），我們才繼續。
+        await $delay(duration)
+        # 移除動畫效果樣式。
+        $this.removeAttr 'data-animating'
+        # 呼叫完成函式。
+        onComplete.call $this.get()
+        # 取得動畫佇列。
+        queue = $this.data 'animationQueue'
+        # 取得目前播放的索引。
+        index = $this.data 'animationIndex'
+        # 確認是否為無限重複的動畫。
+        looping = $this.data 'animationLooping'
+        index++
+
+        # 如果沒有下一個動畫了，就表示這是最後一個。
+        # 我們就把動畫佇列清空。
+        if queue[index] is undefined
+            index = 0
+            $this
+                .removeAttr 'data-animation'
+                .removeAttr 'data-animating'
+                .css        'animation-duration', ''
+                .data       'animationIndex', index
+            # 如果不需要重複的話，就將佇列清空。
+            if not looping
+                queue = []
+                $this.data 'animationQueue', queue
+                return
+
+        # 設置新的索引。
+        $this.data 'animationIndex', index
+
+        # 執行下一個動畫。
+        $module::_animate {$this, $delay, $module}, queue[index]
 
     # 將新的動畫推入佇列中，如果佇列裡只有這個動畫就立即執行。
     _push: ({$this, $delay, $module}, animation, duration, onComplete) ->
-        # 如果元素還沒初始化動畫設置，則先初始化。
-        if $this.data('animationInitialized') is undefined
-            $module::_init {$this, $delay, $module}
-
-        # 如果動畫時間是函式，就表示使用者設置的是回呼函式而不是時間。
+        # 如果元素還沒初始化的話，就先初始化。
+        if $this.data('animationQueue') is undefined
+            $module::_init {$this}
+        # 準備好本次的動畫資料。
         if typeof duration is 'function'
             onComplete = duration
-            duration = 1000
-
+            duration   = 800
         if duration is null
-            duration = 1000
-
-        # 初始化一個空的完成函式，如果沒有的話。
-        if onComplete is null or onComplete is undefined
+            duration = 800
+        if onComplete is null
             onComplete = ->
-
-        # 準備好這個動畫的資料。
-        data =
-            animation : animation
-            duration  : duration
-            onComplete: onComplete
-
-        # 取得現有動畫佇列，並且將這個新的動畫推入佇列中。
+        data = {
+            animation
+            duration
+            onComplete
+        }
+        # 將本次動畫資料擺入至佇列中。
         queue = $this.data 'animationQueue'
         queue.push data
-        $this.data 'animationQueue', queue
 
-        # 如果動畫佇列裡只有這個動畫，那麼就立即執行。
+        # 如果佇列裡只有一個動畫，那麼就是剛才所新增的，直接開始執行。
         if queue.length is 1
             $module::_animate {$this, $delay, $module}, data
 
+
+
+
+
+
+
     $opts: ({$this, $delay, $module}, options) ->
-        options = {
-            duration  : 1000
-            interval  : 200
-            reverse   : false
+        options: {
+            duration  : 800
+            interval  : 250
             onComplete: ->
             ...options
         }
 
-        if options.group is undefined
-            $module::_push {$this, $delay, $module}, options.animation, options.duration, options.onComplete
-            return ts.fn
-
-        if options.reverse is true
-            $this.find(options.group).toArray().reverse().forEach (element, index) ->
-                $self = $selector(element)
-                do ($self) ->
-                    await $delay(options.interval * index)
-                    $module::_push {$this: $self, $delay, $module}, options.animation, options.duration, options.onComplete
-        else
-            $this.find(options.group).toArray().forEach (element, index) ->
-                $self = $selector(element)
-                do ($self) ->
-                    await $delay(options.interval * index)
-                    $module::_push {$this: $self, $delay, $module}, options.animation, options.duration, options.onComplete
+        $module::_push {$this, $delay, $module}, options.animation, duration, onComplete, interval
 
         ts.fn
+
     $methods:
         'bounce': ({$this, $delay, $module}, duration, onComplete) ->
             $module::_push {$this, $delay, $module}, 'bounce', duration, onComplete
@@ -376,18 +382,27 @@ class TocasTransition
 
         'delay': ->
 
+
+        'set group': ({$this, $index, $elements, $module}) ->
+            $this.data 'animationGrouped',
+                index    : 0
+                $elements: $elements
+            if $index is 0
+                $this.attr 'data-animation-current', 'true'
+            ts.fn
+
+        'remove group': ({$this, $delay, $module}) ->
+            $this.data 'animationGrouped', false
+            ts.fn
+
         'set looping': ({$this, $delay, $module}, options) ->
-            if options.group?
-                $this.find(options.group).data 'animationLooping', true
-            else
-                $this.data 'animationLooping', true
+            $this.data 'animationLooping', true
             ts.fn
 
         'remove looping': ({$this, $delay, $module}, options) ->
-            if options.group?
-                $this.find(options.group).data('animationLooping', false).removeData 'animationIndex'
-            else
-                $this.data('animationLooping', false).removeData 'animationIndex'
+            $this.data
+                'animationLooping': false
+                'animationIndex'  : 0
             ts.fn
 
         'stop': ->
