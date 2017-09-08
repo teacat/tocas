@@ -7,18 +7,9 @@ class TocasTransition
         $this.data 'animationQueue', []
         # 初始化動畫索引。
         $this.data 'animationIndex', 0
-        # 初始化群組。
-        if $this.data('animationGrouped') is undefined
-            $this.data 'animationGrouped', false
 
     # 播放動畫。
-    _animate: ({$this, $delay, $module}, {animation, duration, onComplete}) ->
-        # 是否為群組項目。
-        grouped = $this.data('animationGrouped')
-        # 如果是群組項目，但不是輪到自己，則先離開。
-        if grouped isnt false and $this.attr('data-animation-current') isnt 'true'
-            return
-
+    _animate: ({$this, $delay, $module}, {animation, duration, onComplete, group, interval}) ->
         # 設置動畫時間。
         $this.css 'animation-duration', "#{duration}ms"
         # 設置動畫名稱。
@@ -27,41 +18,7 @@ class TocasTransition
         # 執行動畫。
         $this.attr 'data-animating', true
 
-        # 如果這是群組元素，我們先不要急著執行自己的下一個動畫，
-        # 我們執行下一個元素的動畫。
-        if grouped isnt false
-            await $delay(duration / 3)
-            # 呼叫下一個元素。
-            $groupElements = grouped.$elements
-            groupIndex     = grouped.index
-            groupIndex++
 
-            # 如果群組裡沒有下一個元素了，就回到起頭，播放另一輪動畫。
-            if $groupElements[groupIndex] is undefined
-                groupIndex = 0
-
-            # 更新大家的索引。
-            $groupElements.each ->
-                data = $selector(@).data('animationGrouped')
-                data.index = groupIndex
-                console.log $selector(@).data('animationGrouped')
-
-            # 取得下一個元素。
-            $groupNext = $selector $groupElements[groupIndex]
-
-            # 取得下個元素要播放的動畫。
-            nextQueue = $groupNext.data 'animationQueue'
-            nextIndex = $groupNext.data 'animationIndex'
-
-            # 自己的群組動畫已經播放了，輪到下一個了。
-            $this.removeAttr 'data-animation-current'
-
-            # 如果下一個元素還有動畫的話。
-            if nextQueue[nextIndex] isnt undefined
-                # 就輪到他執行群組動畫。
-                $groupNext.attr 'data-animation-current', 'true'
-                # 呼叫下一個元素的下一個動畫。
-                $module::_animate {$this: $groupNext, $delay, $module}, nextQueue[nextIndex]
 
         # 過了動畫的執行時間（相當於動畫執行完畢），我們才繼續。
         await $delay(duration)
@@ -69,6 +26,11 @@ class TocasTransition
         $this.removeAttr 'data-animating'
         # 呼叫完成函式。
         onComplete.call $this.get()
+
+
+        #if group isnt undefined
+        #    return
+
         # 取得動畫佇列。
         queue = $this.data 'animationQueue'
         # 取得目前播放的索引。
@@ -98,6 +60,12 @@ class TocasTransition
         # 執行下一個動畫。
         $module::_animate {$this, $delay, $module}, queue[index]
 
+
+
+
+
+
+
     # 將新的動畫推入佇列中，如果佇列裡只有這個動畫就立即執行。
     _push: ({$this, $delay, $module}, animation, duration, onComplete) ->
         # 如果元素還沒初始化的話，就先初始化。
@@ -109,7 +77,7 @@ class TocasTransition
             duration   = 800
         if duration is null
             duration = 800
-        if onComplete is null
+        if onComplete is null or onComplete is undefined
             onComplete = ->
         data = {
             animation
@@ -126,21 +94,39 @@ class TocasTransition
 
 
 
+    $opts: ({$index, $this, $delay, $module}, options) ->
+        if $index isnt 0
+            return ts.fn
 
-
-
-
-    $opts: ({$this, $delay, $module}, options) ->
-        options: {
-            duration  : 800
-            interval  : 250
-            onComplete: ->
+        options = {
+            animation    : ''
+            duration     : null
+            interval     : 100
+            reverse      : false
+            group        : false
+            onComplete   : ->
+            onAllComplete: ->
             ...options
         }
 
-        $module::_push {$this, $delay, $module}, options.animation, duration, onComplete, interval
+        if options.group isnt false
+            if options.reverse is true
+                group = $this.find(options.group).toArray().reverse()
+            else
+                group = $this.find(options.group).toArray()
 
+            group.forEach (element, index) ->
+                await $delay(options.interval * index)
+                $module::_push {$this: $selector(element), $delay, $module}, options.animation, options.duration, options.onComplete
+                
+                if index is group.length - 1
+                    setTimeout (-> options.onAllComplete.call($this.get())), options.duration
+        else
+            $module::_push {$this, $delay, $module}, options.animation, options.duration, options.onComplete
         ts.fn
+
+
+
 
     $methods:
         'bounce': ({$this, $delay, $module}, duration, onComplete) ->
@@ -381,19 +367,6 @@ class TocasTransition
             ts.fn
 
         'delay': ->
-
-
-        'set group': ({$this, $index, $elements, $module}) ->
-            $this.data 'animationGrouped',
-                index    : 0
-                $elements: $elements
-            if $index is 0
-                $this.attr 'data-animation-current', 'true'
-            ts.fn
-
-        'remove group': ({$this, $delay, $module}) ->
-            $this.data 'animationGrouped', false
-            ts.fn
 
         'set looping': ({$this, $delay, $module}, options) ->
             $this.data 'animationLooping', true
