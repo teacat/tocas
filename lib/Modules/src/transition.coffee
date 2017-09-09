@@ -94,8 +94,8 @@ class TocasTransition
 
 
 
-    $opts: ({$index, $this, $delay, $module}, options) ->
-        if $index isnt 0
+    $opts: ({$elements, $index, $this, $delay, $module}, options) ->
+        if $index isnt 0 and options.reverse? and options.reverse is true
             return ts.fn
 
         options = {
@@ -109,24 +109,20 @@ class TocasTransition
             ...options
         }
 
-        if options.group isnt false
-            if options.reverse is true
-                group = $this.find(options.group).toArray().reverse()
-            else
-                group = $this.find(options.group).toArray()
 
-            group.forEach (element, index) ->
-                await $delay(options.interval * index)
-                $module::_push {$this: $selector(element), $delay, $module}, options.animation, options.duration, options.onComplete
-                
-                if index is group.length - 1
-                    setTimeout (-> options.onAllComplete.call($this.get())), options.duration
+        if options.reverse is true
+            elements = $elements.toArray().reverse()
+            for element, index in elements
+                $self = $selector element
+                do ($self) ->
+                    await $delay(options.interval * index)
+                    $module::_push {$this: $self, $delay, $module}, options.animation, options.duration, options.onComplete
         else
-            $module::_push {$this, $delay, $module}, options.animation, options.duration, options.onComplete
+            do ->
+                await $delay(options.interval * $index)
+                $module::_push {$this, $delay, $module}, options.animation, options.duration, options.onComplete
+
         ts.fn
-
-
-
 
     $methods:
         'bounce': ({$this, $delay, $module}, duration, onComplete) ->
