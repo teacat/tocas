@@ -6,6 +6,8 @@
 
 # Tocas UI 2
 
+[![](lib/forthebadge/built-with-love.png)](https://forthebadge.com/) [![](lib/forthebadge/contains-xiaoxiaoan.png)](https://forthebadge.com/) [![](lib/forthebadge/powered-by-water.png)](https://forthebadge.com/) [![](lib/forthebadge/wtf-is-this.png)](https://forthebadge.com/)
+
 Tocas UI 是基於 SASS 和 CSS3 的元件框架，可快速建立大型或小型網站的介面，
 
 其用法與 Bootstrap 差異甚多，Tocas UI 以不雜亂，有意義為主。
