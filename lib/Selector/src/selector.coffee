@@ -148,12 +148,13 @@ $selector.fn.clone =
 # 將元素插入在目前選擇器元素的內部最後面。
 $selector.fn.append =
     value: (element) ->
+        shouldClone = @.length isnt 0
         if element.isSelector isnt undefined
             @each ->
-                element.each (e) => @appendChild(e)
+                element.each (e) => @appendChild(if shouldClone then e.cloneNode(true) else e)
         else
             @each ->
-                @appendChild(element)
+                @appendChild(if shouldClone then element.cloneNode(true) else element)
 
 # AppendTo
 #
@@ -168,12 +169,13 @@ $selector.fn.appendTo =
 # 將元素插入在目前選擇器元素的內部最前面。
 $selector.fn.prepend =
     value: (element) ->
+        shouldClone = @.length isnt 0
         if element.isSelector isnt undefined
             @each ->
-                element.each (e) => @prened(e)
+                element.each (e) => @prepend(if shouldClone then e.cloneNode(true) else e)
         else
             @each ->
-                @prepend(element)
+                @prepend(if shouldClone then element.cloneNode(true) else element)
 
 # PrependTo
 #
