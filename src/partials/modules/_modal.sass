@@ -20,8 +20,9 @@ body[data-modal-lock]
 
 .ts.modal.opening,
 .ts.modal.closing
-    animation-name  : modalZoom
-    transform-origin: $modal_transformOrigin
+    animation-name     : modalZoom
+    transform-origin   : $modal_transformOrigin
+    animation-fill-mode: forwards
 
 .ts.modal.opening
     animation-duration       : $modal_openingDuration
@@ -40,8 +41,9 @@ body[data-modal-lock]
 
 .ts.modals.dimmer.opening,
 .ts.modals.dimmer.closing
-    animation-name  : modalsDimmer
-    transform-origin: $modal_transformOrigin
+    animation-name     : modalsDimmer
+    transform-origin   : $modal_transformOrigin
+    animation-fill-mode: forwards
 
 .ts.modals.dimmer.opening
     animation-duration       : $modal_dimmerOpeningDuration
@@ -56,7 +58,7 @@ body[data-modal-lock]
 //              Main
 //*******************************//
 
-dialog.ts.modal
+.ts.modal
     display         : none
     padding         : 0
     margin          : 0
@@ -67,13 +69,13 @@ dialog.ts.modal
     color           : $modal_textColor
     background: $modal_backgroundColor
 
-dialog.ts.modal[open]
+.ts.modal.active
     display: block
 
-.ts.modals.dimmer dialog.ts.modal:not(.basic)
+.ts.modals.dimmer .ts.modal:not(.basic)
     box-shadow: $modal_inDimmerBoxShadow
 
-.ts.modals.dimmer.inverted dialog.ts.modal:not(.basic)
+.ts.modals.dimmer.inverted .ts.modal:not(.basic)
     box-shadow: $modal_inDimmerInvertedBoxShadow
 
 //-------------------//
@@ -150,6 +152,23 @@ dialog.ts.modal[open]
 //     Close Icon
 //-------------------//
 
+.ts.modal > .ts.close.button
+    z-index : $z_modal_close
+    position: absolute
+    right   : $modal_closeIconRight
+    top     : $modal_closeIconTop
+    font-size: $modal_closeIconFontSize
+
+    height     : $modal_closeIconHeight
+    width      : $modal_closeIconWidth
+
+    +rwd-serious(mobile)
+        top   : $modal_closeIconMobileTop
+        right : $modal_closeIconMobileRight
+        margin: 0
+        font-size: $modal_closeIconMobileFontSize
+
+
 .ts.modal > i.close
     z-index : $z_modal_close
     position: absolute
@@ -179,19 +198,19 @@ dialog.ts.modal[open]
 
 .ts.modal > i.close:hover
     background: $modal_closeIconHoverBackgroundColor
-    opacity         : $modal_closeIconHoverOpacity
+    opacity   : $modal_closeIconHoverOpacity
 
     +rwd-serious(mobile)
         color: $modal_closeIconMobileHoverColor
 
 .ts.modal > i.close:active
     background: $modal_closeIconActiveBackgroundColor
-    color           : $modal_closeIconActiveColor
-    opacity         : $modal_closeIconActiveOpacity
+    color     : $modal_closeIconActiveColor
+    opacity   : $modal_closeIconActiveOpacity
 
     +rwd-serious(mobile)
         background: $modal_closeIconMobileActiveBackgroundColor
-        color           : $modal_closeIconMobileActiveColor
+        color     : $modal_closeIconMobileActiveColor
 
 /** Header */
 .ts.modal > i.close + .header:not(.icon)
@@ -263,11 +282,11 @@ dialog.ts.modal[open]
 //             Basic
 //*******************************//
 
-dialog.ts.basic.modal
+.ts.basic.modal
     border    : 0
     box-shadow: none
 
-    color           : $modal_basicColor
+    color     : $modal_basicColor
     background: transparent
 
 //-------------------//
