@@ -20,7 +20,9 @@ $selector = (selector, context) ->
     else if Array.isArray(selector) or selector?.isSelector is true
         nodes = nodes.concat(selector)
     # 如果是單個 DOM 元素，就放入選擇器然後繼續。
-    else if selector instanceof HTMLElement
+    else if selector instanceof HTMLElement  or
+            selector instanceof HTMLDocument or
+            selector instanceof HTMLBodyElement
         nodes = [selector]
 
     # 保存目前的選擇器文字與上下文選擇器文字。
@@ -36,6 +38,20 @@ $selector = (selector, context) ->
 
 # 函式鏈。
 $selector.fn = {}
+
+# 輔助函式。
+$selector.helper = {}
+#
+$selector.helper.eventAlias = (event) ->
+    event = event.split('.')
+    alias = if event[1] isnt undefined then ".#{event[1]}" else ''
+
+    if event.indexOf('animationend') isnt -1
+        return "webkitAnimationEnd#{alias} mozAnimationEnd#{alias} MSAnimationEnd#{alias} oanimationend#{alias} animationend#{alias}"
+    else if event.indexOf('transitionend') isnt -1
+        return "webkitTransitionEnd#{alias} mozTransitionEnd#{alias} oTransitionEnd#{alias} msTransitionEnd#{alias} transitionend#{alias}"
+    else
+        return event[0]
 
 # Get
 #
@@ -148,7 +164,7 @@ $selector.fn.clone =
 # 將元素插入在目前選擇器元素的內部最後面。
 $selector.fn.append =
     value: (element) ->
-        shouldClone = @.length isnt 0
+        shouldClone = @length isnt 1
         if element.isSelector isnt undefined
             @each ->
                 element.each (e) => @appendChild(if shouldClone then e.cloneNode(true) else e)
@@ -169,7 +185,7 @@ $selector.fn.appendTo =
 # 將元素插入在目前選擇器元素的內部最前面。
 $selector.fn.prepend =
     value: (element) ->
-        shouldClone = @.length isnt 0
+        shouldClone = @length isnt 1
         if element.isSelector isnt undefined
             @each ->
                 element.each (e) => @prepend(if shouldClone then e.cloneNode(true) else e)
@@ -366,39 +382,74 @@ $selector.fn.css =
 # 綁定並註冊一個事件監聽器。
 $selector.fn.on =
     value: (events, handler, options) ->
-        events = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'    if events is 'animationend'
-        events = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend' if events is 'transitionend'
+        events = $selector.helper.eventAlias(events)
+
+        # $events.click =
+        # {
+        #     anonymous: [
+        #         {
+        #             once: true,
+        #             func: func()
+        #         }
+        #     ]
+        #     alias1:
+        #     {
+        #         once: true,
+        #         func: func()
+        #     }
+        # }
 
         @each ->
             return        if @addEventListener is undefined
             @$events = {} if @$events          is undefined
 
             events.split(' ').forEach (eventName) ->
+                event      = eventName.split('.')
+                # 透過事件的「event.alias」取得「點」後面的別名。
+                hasAlias   = event.length > 1
+                eventName  = event[0]
+                eventAlias = if hasAlias then event[1] else null
+
                 # 如果事件還沒在這個物件內產生過，就初始化一個事件結構。
                 if @$events[eventName] is undefined
-                    @$events[eventName] = {binded: false, list: []}
+                    @$events[eventName] =
+                        anonymous: []
 
-                # 如果這個事件還沒被註冊過。
-                if @$events[eventName].binded is false
-                    # 建立一個管理多個事件的事件管理處理程式。
+                    # 然後建立一個管理多個事件的事件管理處理程式。
                     @addEventListener eventName, (event) ->
                         # 如果該事件已經被移除則停止後續的反應。
                         if @$events[eventName] is undefined
                             return
+
                         # 將被觸發的事件裡面的所有處理程式全部呼叫一次。
-                        @$events[eventName].list.forEach (item, index) ->
-                            item.func.call(@, event)
-                            # 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
-                            if item.once is true
-                                @$events[eventName].list.splice(index, 1)
-                        , @
-                    # 將對應的事件監聽器設置為已綁定。
-                    @$events[eventName].binded = true
+                        for alias of @$events[eventName]
+                            # 如果這是匿名函式陣列的話。
+                            if alias is 'anonymous'
+                                # 將所有匿名函式呼叫一次。
+                                @$events[eventName][alias].forEach (item, index) ->
+                                    item.func.call(@, event)
+                                    # 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
+                                    if item.once is true
+                                        @$events[eventName][alias].splice(index, 1)
+                                , @
+                            # 不然如果是別名函式的話。
+                            else
+                                @$events[eventName][alias].func.call(@, event)
+                                # 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
+                                if @$events[eventName][alias].once is true
+                                   delete @$events[eventName][alias]
 
                 # 將新的事件處理程式註冊到事件清單中。
-                @$events[eventName].list.push
-                    func: handler
-                    once: options?.once
+                # 如果有別名，就不要推送到匿名陣列中，我們替這個別名另開物件。
+                if hasAlias
+                    @$events[eventName][eventAlias] =
+                        func: handler
+                        once: options?.once
+                # 如果沒有，就照常推進匿名陣列中。
+                else
+                    @$events[eventName].anonymous.push
+                        func: handler
+                        once: options?.once
             , @
 
 # One
@@ -406,8 +457,7 @@ $selector.fn.on =
 # 綁定一次性的事件監聽器，當被觸發之後就會被移除。
 $selector.fn.one =
     value: (events, handler) ->
-        events = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'    if events is 'animationend'
-        events = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend' if events is 'transitionend'
+        events = $selector.helper.eventAlias(events)
 
         @each ->
             $selector(@).on(events, handler, {once: true})
@@ -417,20 +467,30 @@ $selector.fn.one =
 # 註銷事件監聽器。
 $selector.fn.off =
     value: (events, handler) ->
-        events = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'    if events is 'animationend'
-        events = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend' if events is 'transitionend'
+        events = $selector.helper.eventAlias(events)
 
         @each ->
             events.split(' ').forEach (eventName) =>
                 return if @$events            is undefined
                 return if @$events[eventName] is undefined
 
-                if handler is undefined
-                    @$events[eventName].list = []
+                event      = eventName.split('.')
+                # 透過事件的「event.alias」取得「點」後面的別名。
+                hasAlias   = event.length > 1
+                eventName  = event[0]
+                eventAlias = if hasAlias then event[1] else null
 
-                @$events[eventName].list.forEach (item, index) =>
+                if hasAlias
+                    delete @$events[eventName][eventAlias]
+                    return
+
+                if handler is undefined
+                    @$events[eventName].anonymous = []
+                    return
+
+                @$events[eventName].anonymous.forEach (item, index) =>
                     if handler is item.func
-                        @$events[eventName].list.splice(index, 1)
+                        @$events[eventName].anonymous.splice(index, 1)
             , @
 
 # Trigger
