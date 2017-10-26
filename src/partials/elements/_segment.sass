@@ -324,7 +324,6 @@
 
 .ts.segments
     border-radius: $segment_borderRadius
-    font-size    : 0
 
     > .segment
         font-size: $fontSize
@@ -396,22 +395,23 @@
 
     &::before,
     &::after
-        content : ''
-        position: absolute
-        display : block
-        border  : $segment_border
-        height  : 100%
-        width   : 100%
-        left    : 0
-        top     : 0
+        content      : ''
+        position     : absolute
+        display      : block
+        border       : $segment_border
+        border-radius: $segment_borderRadius
+        height       : 100%
+        width        : 100%
+        left         : 0
+        top          : 0
 
     &::before
-        transform: rotate(-1.2deg)
-        z-index  : -2
+        transform: rotate(-#{$segment_piledRotate})
+        z-index  : $z_segment_piledBefore
 
     &::after
-        transform: rotate(1.2deg)
-        z-index  : -1
+        transform: rotate(#{$segment_piledRotate})
+        z-index  : $z_segment_piledAfter
 
 //-------------------//
 //      Stacked
@@ -423,13 +423,14 @@
 
     &::before,
     &::after
-        content   : ''
-        position  : absolute
-        bottom    : -3px
-        left      : 0
-        width     : 100%
-        height    : 6px
-        border-top: $segment_border
+        content      : ''
+        position     : absolute
+        bottom       : $segment_stackedBottom
+        left         : 0
+        width        : 100%
+        height       : $segment_stackedHeight
+        border-radius: $segment_borderRadius
+        border-top   : $segment_border
 
     &::before
         display: none
@@ -438,4 +439,4 @@
 .ts.tall.stacked.segments
     &::before
         display: block
-        bottom: 0
+        bottom : 0
