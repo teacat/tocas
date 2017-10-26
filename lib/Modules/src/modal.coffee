@@ -1,7 +1,7 @@
 class TocasModal
     $name:
         'modal'
-        
+
     $options:
         approve          : '.approve, .positive, .ok'  # 會呼叫同意回呼函式的元素選擇器。
         deny             : '.deny, .negative, .cancel' # 會呼叫拒絕回呼函式的元素選擇器。
