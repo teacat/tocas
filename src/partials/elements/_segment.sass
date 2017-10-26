@@ -384,3 +384,58 @@
 
 .ts.attached.message + .ts.attached.segment
     border-top-width: $segment_borderWidth
+
+//-------------------//
+//       Piled
+//-------------------//
+
+.ts.piled.segment,
+.ts.piled.segments
+    margin : $segment_piledMargin 0
+    z-index: auto
+
+    &::before,
+    &::after
+        content : ''
+        position: absolute
+        display : block
+        border  : $segment_border
+        height  : 100%
+        width   : 100%
+        left    : 0
+        top     : 0
+
+    &::before
+        transform: rotate(-1.2deg)
+        z-index  : -2
+
+    &::after
+        transform: rotate(1.2deg)
+        z-index  : -1
+
+//-------------------//
+//      Stacked
+//-------------------//
+
+.ts.stacked.segment,
+.ts.stacked.segments
+    padding-bottom: $segment_stackedPaddingBottom
+
+    &::before,
+    &::after
+        content   : ''
+        position  : absolute
+        bottom    : -3px
+        left      : 0
+        width     : 100%
+        height    : 6px
+        border-top: $segment_border
+
+    &::before
+        display: none
+
+.ts.tall.stacked.segment,
+.ts.tall.stacked.segments
+    &::before
+        display: block
+        bottom: 0
