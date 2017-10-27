@@ -75,13 +75,16 @@ h1:not(.unstyled):not(.ts), h2:not(.unstyled):not(.ts), h3:not(.unstyled):not(.t
 //       Aligns
 //-------------------//
 
-.ts.header[class*="center aligned"]
+.ts.header[class*="center aligned"][class*="center aligned"],
+.ts.header[class*="center aligned"][class*="center aligned"] .content
     justify-content: center
     text-align     : center
-.ts.header[class*="left aligned"]
+.ts.header[class*="left aligned"][class*="left aligned"],
+.ts.header[class*="left aligned"][class*="left aligned"] .content
     justify-content: flex-start
     text-align     : left
-.ts.header[class*="right aligned"]
+.ts.header[class*="right aligned"][class*="right aligned"],
+.ts.header[class*="right aligned"][class*="right aligned"] .content
     justify-content: flex-end
     text-align     : right
 
@@ -123,7 +126,6 @@ h1:not(.unstyled):not(.ts), h2:not(.unstyled):not(.ts), h3:not(.unstyled):not(.t
 .ts.header .icon[class*="top aligned"]
     align-self: flex-start
     margin-top: $header_topAlignedIconOffset
-
 
 //-------------------//
 //        Page
@@ -279,6 +281,26 @@ h6.ts.smaller.sub.header
     +header-variant($header_invertedTextColor, $header_invertedBorderColor, $header_invertedSubTextColor)
 
 //-------------------//
+//       Content
+//-------------------//
+
+.ts.header .content
+    display       : inline-block
+    vertical-align: middle
+
+/* After Image */
+.ts.header > img + .content,
+.ts.header > .image + .content
+    padding-left  : $header_imageMargin
+    vertical-align: middle
+
+/* After Icon */
+.ts.header > .icon + .content
+    padding-left  : $header_iconMargin
+    display       : table-cell
+    vertical-align: middle
+
+//-------------------//
 //        Icon
 //-------------------//
 
@@ -346,26 +368,6 @@ h6.ts.smaller.sub.header
     font-size: $header_hugeIconHeaderSize
 .ts.icon.header .massive.icon
     font-size: $header_massiveIconHeaderSize
-
-//-------------------//
-//       Content
-//-------------------//
-
-.ts.header .content
-    display       : inline-block
-    vertical-align: middle
-
-/* After Image */
-.ts.header > img + .content,
-.ts.header > .image + .content
-    padding-left  : $header_imageMargin
-    vertical-align: middle
-
-/* After Icon */
-.ts.header > .icon + .content
-    padding-left  : $header_iconMargin
-    display       : table-cell
-    vertical-align: middle
 
 //-------------------//
 //       Image
