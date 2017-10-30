@@ -4,6 +4,83 @@
 
 格式基於[如何維護更新日誌](http://keepachangelog.com/)，而專案採用[語意化版本號碼](http://semver.org/)。
 
+## [2.4.0-alpha2] - 30 Oct 2017
+
+#### 破壞性問題
+
+1. 這個版本的所有 JavaScript 模塊正在開發，因此所有模塊皆不可用。
+
+#### 新功能
+
+1. Feed 新增了 Timelined 樣式，類似 Twitter 的時間串連軸。（#451）
+2. Input 裡可以擺放 Attached Progress。（#417）
+3. Comment 新增 Right Floated Actions 可在留言右上擺放功能按鈕。（#449）
+4. Embed 嵌入物件可以透過 ID 自動搜尋 YouTube 和 Vimeo 的縮圖。（#415）
+5. Horizontal List 支援 Centered 置中了。（@b1a3a279b3c173c2d1ebbf53b2fd97be6ef88065）
+6. Table 裡的欄位能是 Empty 的，看起來是空的僅有淺色的「－」符號。（#501）
+7. Segmented List 可以使用像 Table 那樣的 Indicated 標記語意。（#507）（感謝 @coin3x ）
+8. Segment 可以使用 Piled 或 Stacked 看起來就像被堆疊。（#510）（感謝 @coin3x ）
+9. Padded Container 可以讓容器有上下外距，就不會和其他元素相黏在一起。（#519）
+10. Image 現在有 Overlay 可以在圖片上層擺放文字或圖示了。（#457, #483）
+
+#### Bug 修正
+
+1. Text Menu 的項目在 Active 時有背景顏色。（#477）
+2. Secondary Vertical Menu 的項目有分隔線。（#480）
+3. Menu 裡的 Link List 在 Active 時有背景顏色。（#479）
+4. UL 在 Message 裡的顏色過深。（#463）
+5. Horizontal Form 跟 Dropdown 不對齊。（#476）
+6. Horizontal Form 的 Message 跟 Small 不會對齊。（#484）
+7. Slate 裡的 Image 會奇異地放大。（@9c23938c7332582c719cebbf3de1a1e2ccd7e1a0）
+8. Relaxed Items 第一個項目有上外間距。（#492）
+9. 讓 Link List 的文字顏色優先度更高避免被覆蓋。（@b1a3a279b3c173c2d1ebbf53b2fd97be6ef88065）
+10. List 的 Item Actions 現在有了左邊距，避免離文字太近。（@b1a3a279b3c173c2d1ebbf53b2fd97be6ef88065）
+11. 滑鼠移動到語意 Link Card 時，底線會消失。（#494）
+12. Modal 中 `.content` 裡的按鈕被按下，Modal 就會消失。（#444）
+13. Slate 的左右對齊沒有影響到標題。（#469）
+14. Compact Message 不會跟文字縮減。（#503）
+15. Text Menu 有白色背景。（#517）
+16. 元素的背景陰影現在改為半透明，解決了 Inverted 時陰影卻是白色的問題。（#474）
+17. List 的語意沒有套用到 `.meta` 上。（#508）
+18. 跟 Sweet Alert 使用時出現標題走位。（#499）
+19. Squared Icon 跟 Icon 大小不一。（#511）
+20. Icon Header 無法使用對齊功能。（#520）
+21. Error Input 沒有下框線。（#130）
+
+#### 調整和新增
+
+1. Accordion 現在是基於 HTML5 跟 JavaScript。（#288）
+2. 移除 Comment 的 `max-width` 設定。（@6dcea5fb8e5130d78bd295a342fbed5897e17d44）
+3. Modal 有了 `onClose` 的監聽函式可在 Modal 關閉時被呼叫。（#429）
+4. Slate 的標題顏色，現在跟 Header 相同。（@d62148a68a02e34c971e53ae7915dd04e94d45b4）
+5. Icon Input 的 Icon 現在有了 Hover 跟 Active 的狀態樣式，看起來更不死板了。（#506）
+
+#### 尚未完成、測試中
+
+1. 新增 Carousel，與 Bootstrap 的幻燈片相當但多了些功能。（@df20da38d499d782f33314ac886d969f54ff0130）
+2. 星星與愛心評分 Rating 系統。（#487）
+3. 新的動畫 Transition 系統，可以指定元素展現過場動畫，或者輪巡元件。（#485）
+4. Table 支援 Expand 展開功能，可以展開欄位顯示更詳細的資料。（#490）
+5. 新的 Modal 系統，簡化了結構與使用方法。（#489）
+
+#### 文件頁面
+
+1. README 粗體擺錯地方。（@cb064eefb9204b8aff4e8e6bd2c61798c6d93c64）（感謝 @BirkhoffLee ）
+
+## [2.4.0-alpha1] - 07 Aug 2017
+
+#### 新功能
+
+1. List 有文字與一般的分隔線了。（#460）
+2. List 現在有了 Thumbnail 的縮圖清單，很適合陳列圖片。
+3. List 現在有了 Icon 的圖示清單，很適合用來陳列文字與圖示的項目。
+
+#### 調整
+
+1. List 全部重寫，更整齊而且不壅擠了。
+2. 移除 Segmented Items，現在全部統合在 List 中。（#443）
+3. Vertical Secondary Menu 不再有分隔線了。
+
 ## [2.3.3] - 30 Jul 2017
 
 #### Bug 修正
@@ -475,7 +552,7 @@ Tocas 2 拋棄了 SASS 方面的函式支援，現在幾乎都用原生寫法，
 #### 新功能列表
 1. 所有樣式現在都保存在變數中。
 
-   _意思是你可以簡單地改變變數中的顏色數值或其他樣式，然後重新編譯，個人化你的 Tocas。_  
+   _意思是你可以簡單地改變變數中的顏色數值或其他樣式，然後重新編譯，個人化你的 Tocas。_
 2. 更少使用 `&` 作為 Selector。
 
    _現在 Selectors 更簡潔了，不需要死腦筋的去思考這個樣式的 Selector 是哪個。_
