@@ -1,5 +1,3 @@
-DELAY = (time=0) -> new Promise (resolve) -> setTimeout(resolve, time)
-
 # Accordion
 #
 # 手風琴。
@@ -22,9 +20,15 @@ class Accordion
 
     # 模組自己選擇器。
     $this: null
+
     # 模組自己群組選擇器。
     $elements: null
+
+    # 所選的手風琴標題元素。
     $title: null
+
+    # 延遲函式。
+    delay: (time=0) -> new Promise (resolve) -> setTimeout(resolve, time)
 
     # 模組內部資料。
     className:
