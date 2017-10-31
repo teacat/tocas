@@ -421,13 +421,20 @@ $selector.fn.on =
                         if @$events[eventName] is undefined
                             return
 
+                        arr = []
                         # 將被觸發的事件裡面的所有處理程式全部呼叫一次。
                         for alias of @$events[eventName]
+                            arr.push alias
+
+                        n = arr.length
+                        while n--
+                            alias = @$events[eventName][arr[n]]
                             # 如果這是匿名函式陣列的話。
                             if alias is 'anonymous'
                                 # 將所有匿名函式呼叫一次。
                                 @$events[eventName][alias].forEach (item, index) ->
                                     item.func.call(@, event)
+                                    console.log index
                                     # 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
                                     if item.once is true
                                         @$events[eventName][alias].splice(index, 1)
