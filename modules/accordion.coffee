@@ -4,11 +4,11 @@
 
 class Accordion
     # 模組名稱。
-    name:
+    @name:
         'accordion'
 
     # 模組屬性。
-    props:
+    @props:
         # 是否僅允許單個手風琴只有一個分頁能被打開，設為 false 則無限制。
         exclusive: true
         # 當分頁被打開時所呼叫的函式。
@@ -19,19 +19,16 @@ class Accordion
         onChange : ->
 
     # 模組自己選擇器。
-    $this: null
-
-    # 模組自己群組選擇器。
-    $elements: null
+    @$this: null
 
     # 所選的手風琴標題元素。
-    $title: null
+    @$title: null
 
     # 延遲函式。
-    delay: (time=0) -> new Promise (resolve) -> setTimeout(resolve, time)
+    @delay: ->
 
     # 模組內部資料。
-    className:
+    @className:
         # 標題的類別名稱。
         title        : '.title'
         # 分頁內容的類別名稱。
@@ -40,6 +37,13 @@ class Accordion
         accordion    : '.ts.accordion'
         # 已啟用的分頁內容類別名稱。
         activeContent: '.content.active'
+
+    # 元素初始化函式。
+    @init: (props, arg, arg2, arg3) ->
+        ts.fn
+
+    # 元素摧毀函式。
+    @destroy: () ->
 
     # Open
     #
@@ -58,13 +62,13 @@ class Accordion
 
         # 如果要開啟的分頁，正是已經被開啟的那個，
         # 那麼就忽略這次的請求。
-        if $content.get() is $this.find(@className.activeContent).get()
+        if $content.get() is @$this.find(@className.activeContent).get()
             return
 
         # 如果手風琴只允許同ㄧ時間展開一個分頁。
         if @$title.closest(@className.accordion).data 'exclusive'
             # 那麼就上拉並關閉其他的分頁內容。
-            $activeContent = $this.find @className.activeContent
+            $activeContent = @$this.find @className.activeContent
 
             # 如果沒有其他分頁內容則返回。
             if $activeContent.length is 0
@@ -114,12 +118,12 @@ class Accordion
         $content.css 'height', height
 
         # 表明這個手風琴正在執行動畫。
-        $this.addClass 'animating'
+        @$this.addClass 'animating'
 
         # 下拉完畢之後移除固定高度，這樣才能有彈性高度。
-        $content.one 'transitionend', ->
+        $content.one 'transitionend', =>
             $content.css      'height', ''
-            $this.removeClass 'animating'
+            @$this.removeClass 'animating'
 
     # Close
     #
@@ -160,11 +164,11 @@ class Accordion
 
         # 當上拉動畫結束的時候，才移除內容的啟用樣式，
         # 直接移除的話會沒辦法觸發動畫效果。
-        $content.one 'transitionend', ->
+        $content.one 'transitionend', =>
             $content
                 .css         'height', ''
                 .removeClass 'active'
-            $this
+            @$this
                 .removeClass 'animating'
 
     # Toggle
