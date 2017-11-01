@@ -9,7 +9,7 @@ ts = (selector, context=null) ->
     module = selector
 
     # 在 Tocas 函式鏈中新增一個相對應的模組函式。
-    ts.fn[module.name] = (arg=null, arg2=null, arg3=null) ->
+    ts.fn[module.module] = (arg=null, arg2=null, arg3=null) ->
         # 先用 Tocas Core 核心來選取指定元素，然後放到上下文物件之後傳遞到模組內使用。
         $elements = ts.selector
         # 最終的回傳值。
@@ -18,20 +18,22 @@ ts = (selector, context=null) ->
         # 每個節點。
         $elements.each (_, index) ->
             # 初始化這個模組。
-            module       = new module()
-            module.delay = (time=0) -> new Promise (resolve) -> setTimeout(resolve, time)
+            #console.log module
+            #localModule = Object.assign( Object.create( Object.getPrototypeOf(module)), module)
+            localModule = new module()
+            localModule.delay = (time=0) -> new Promise (resolve) -> setTimeout(resolve, time)
             # 準備一些此元素的資料。
             $this = $selector @
             # 將此元素的資料放置這個模組中。
-            module.$this = $this
-            module.index = index
+            localModule.$this = $this
+            localModule.index = index
 
             # init 會初始化一個元素，並讓他執行模組中的初始化函式。
             init = ->
                 # 初始化一個屬性物件，用以保存此元素的自訂屬性。
                 props = {}
                 # 遞迴模組的屬性設置，並且找尋元素是否有相對應的屬性。
-                for name of module.props
+                for name of localModule.props
                     # 將設定的 camelCase 轉換成 hyphen-case。
                     name = name.replace /([A-Z])/g, (g) => "-#{g[0].toLowerCase()}"
                     # 建立相對應的元素屬性名稱。
@@ -47,9 +49,9 @@ ts = (selector, context=null) ->
                         else
                             props[name] = attr
                 # 用模組的預設選項加上元素標籤所設置的選項來初始化選取的模組。
-                $this.data {module.props..., props...}
+                $this.data {localModule.props..., props...}
                 # 然後呼叫自定義的初始化模組函式。
-                value = module.init {module.props..., props...}
+                value = localModule.init {localModule.props..., props...}
                 # 將這個元素的 `tocas` 設置為 `true`，表示被初始化過了。
                 $this.data 'tocas', true
 
@@ -62,11 +64,16 @@ ts = (selector, context=null) ->
             # 如果第一個參數是物件，就表示使用者想要傳入一個選項物件。
             else if typeof arg is 'object'
                 # 如果該元素已經被初始化了，我們就呼叫摧毀函式。
-                module.destroy() if $this.data('tocas')?
+                localModule.destroy() if $this.data('tocas')?
                 # 套用新的選項到指定元素。
-                $this.data arg
+                # if $this.data('tocas')?
+                    # 如果先前初始化過了，就覆蓋先前的部分選項。
+                #    $this.data arg
+                # else
+                # 套用覆蓋 + 預設的選項。
+                $this.data {localModule.props..., arg...}
                 # 以新的選項執行初始化函式並傳入部分參數。
-                value = module.init {module.props..., arg...}, arg2, arg3
+                value = localModule.init {localModule.props..., arg...}, arg2, arg3
                 # 將這個元素的 `tocas` 設置為 `true`，表示被初始化過了。
                 $this.data 'tocas', true
 
@@ -75,7 +82,7 @@ ts = (selector, context=null) ->
                 # 如果該元素還沒被初始化，我們就要先呼叫初始化函式初始化這個元素。
                 init() if not $this.data('tocas')?
                 # 呼叫指定的自訂方法並取得回傳值。
-                value = module.methods()[arg]?(arg2, arg3)
+                value = localModule.methods()[arg]?(arg2, arg3)
 
         return value
 

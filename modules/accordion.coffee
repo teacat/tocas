@@ -4,11 +4,11 @@
 
 class Accordion
     # 模組名稱。
-    @name:
+    @module:
         'accordion'
 
     # 模組屬性。
-    @props:
+    props:
         # 是否僅允許單個手風琴只有一個分頁能被打開，設為 false 則無限制。
         exclusive: true
         # 當分頁被打開時所呼叫的函式。
@@ -19,16 +19,19 @@ class Accordion
         onChange : ->
 
     # 模組自己選擇器。
-    @$this: null
+    $this: null
 
     # 所選的手風琴標題元素。
-    @$title: null
+    $title: null
 
     # 延遲函式。
-    @delay: ->
+    delay: ->
+
+    # 開展閉合動畫效果毫秒。
+    duration: 400
 
     # 模組內部資料。
-    @className:
+    className:
         # 標題的類別名稱。
         title        : '.title'
         # 分頁內容的類別名稱。
@@ -37,13 +40,26 @@ class Accordion
         accordion    : '.ts.accordion'
         # 已啟用的分頁內容類別名稱。
         activeContent: '.content.active'
+        # 已啟用的類別名稱。
+        active       : '.active'
 
     # 元素初始化函式。
-    @init: (props, arg, arg2, arg3) ->
+    init: =>
+        module = @
+        # 尋找手風琴容器裡的每個標題，當標題被按下時。
+        @$this.find(@className.title).on 'click.accordion', ->
+            # 因為是標題被按下，所以我們呼叫切換手風琴分頁的函式，
+            # 當手風琴是開的，則關，反之亦然。
+            module.$title = $selector @
+            module.toggle()
         ts.fn
 
     # 元素摧毀函式。
-    @destroy: () ->
+    destroy: () =>
+        # 移除 `click` 的綁定事件。
+        @$this.find(@className.title).off 'click.accordion'
+        # 關閉所有手風琴。
+        @$this.find(@className.active).removeClass 'active'
 
     # Open
     #
@@ -70,32 +86,32 @@ class Accordion
             # 那麼就上拉並關閉其他的分頁內容。
             $activeContent = @$this.find @className.activeContent
 
-            # 如果沒有其他分頁內容則返回。
-            if $activeContent.length is 0
-                return
+            # 如果有其他分頁內容則對這些分頁內容進行處理。
+            if $activeContent.length isnt 0
+                # 呼叫事件函式。
+                @event 'onClose' , $activeContent.prev()
+                @event 'onChange', $activeContent.prev()
 
-            # 呼叫事件函式。
-            @event 'onClose' , $activeContent.prev()
-            @event 'onChange', $activeContent.prev()
+                # 重新計算內容目前的高度。
+                height = $activeContent.css 'height'
 
-            # 重新計算內容目前的高度。
-            height = $activeContent.css 'height'
+                # 替內容設置固定高度。
+                $activeContent.css 'height', height
 
-            # 替內容設置固定高度。
-            $activeContent.css 'height', height
+                # 稍微延遲一下，避免太快執行會沒有效果。
+                await @delay()
 
-            # 稍微延遲一下，避免太快執行會沒有效果。
-            await @delay()
+                # 呼叫上拉動畫
+                $activeContent
+                    .css 'height', '0px'
+                    .one 'transitionend', ->
+                        $activeContent
+                            .css         'height', ''
+                            .removeClass 'active'
+                            .prev()
+                            .removeClass 'active'
+                    .emulate 'transitionend', @duration
 
-            # 呼叫上拉動畫
-            $activeContent
-                .css 'height', '0px'
-                .one 'transitionend', ->
-                    $activeContent
-                        .css         'height', ''
-                        .removeClass 'active'
-                        .prev()
-                        .removeClass 'active'
 
         # 啟用指定分頁的標題。
         @$title.addClass 'active'
@@ -121,9 +137,11 @@ class Accordion
         @$this.addClass 'animating'
 
         # 下拉完畢之後移除固定高度，這樣才能有彈性高度。
-        $content.one 'transitionend', =>
-            $content.css      'height', ''
-            @$this.removeClass 'animating'
+        $content
+            .one 'transitionend', =>
+                $content.css      'height', ''
+                @$this.removeClass 'animating'
+            .emulate 'transitionend', @duration
 
     # Close
     #
@@ -148,7 +166,7 @@ class Accordion
         @$title.removeClass 'active'
 
         # 重新計算內容目前的高度。
-        height = content.css 'height'
+        height = $content.css 'height'
 
         # 替內容設置固定高度。
         $content.css 'height', height
@@ -164,12 +182,14 @@ class Accordion
 
         # 當上拉動畫結束的時候，才移除內容的啟用樣式，
         # 直接移除的話會沒辦法觸發動畫效果。
-        $content.one 'transitionend', =>
-            $content
-                .css         'height', ''
-                .removeClass 'active'
-            @$this
-                .removeClass 'animating'
+        $content
+            .one 'transitionend', =>
+                $content
+                    .css         'height', ''
+                    .removeClass 'active'
+                @$this
+                    .removeClass 'animating'
+            .emulate 'transitionend', @duration
 
     # Toggle
     #
@@ -193,7 +213,7 @@ class Accordion
         # Open
         #
         # 開啟指定索引的手風琴內容。
-        open: (_, index) =>
+        open: (index) =>
             @$title = @$this.find(@className.title).eq(index)
             @open()
             ts.fn
@@ -201,7 +221,7 @@ class Accordion
         # Close
         #
         # 關閉指定索引的手風琴內容。
-        close: (_, index) =>
+        close: (index) =>
             @$title = @$this.find(@className.title).eq(index)
             @close()
             ts.fn
@@ -209,7 +229,9 @@ class Accordion
         # Toggle
         #
         # 切換指定索引的手風琴內容，如果是開啟的則關閉，相反之。
-        toggle: (_, index) =>
+        toggle: (index) =>
             @$title = @$this.find(@className.title).eq(index)
             @toggle()
             ts.fn
+
+ts Accordion

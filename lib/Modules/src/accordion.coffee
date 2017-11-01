@@ -1,11 +1,13 @@
 class TocasAccordion
     $name:
         'accordion'
+
     $data:
         title        : '.title'          # 標題的類別名稱。
         content      : '.content'        # 分頁內容的類別名稱。
         accordion    : '.ts.accordion'   # 手風琴容器的類別名稱。
         activeContent: '.content.active' # 已啟用的分頁內容類別名稱。
+
     $options:
         exclusive: true # 是否僅允許單個手風琴只有一個分頁能被打開，設為 false 則無限制。
         onOpen   : ->   # 當分頁被打開時所呼叫的函式。
