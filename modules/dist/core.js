@@ -2,7 +2,7 @@
 var ts;
 
 ts = function(selector, context = null) {
-  var module;
+  var extend, module;
   // 如果傳入的選擇器不是物件，那麼就只是普通的選擇器。
   if (typeof selector !== 'function') {
     ts.selector = context !== null ? $selector(selector, context) : $selector(selector);
@@ -11,6 +11,37 @@ ts = function(selector, context = null) {
   // 如果傳入的是物件，那麼就是欲註冊的 Tocas 模組。
   // 改名為 module 比較符合接下來的使用方式。
   module = selector;
+  // 延展物件的函式，與 ES 的 `...` 不同之處在於 extend 並不會替換掉整個子物件，而會以補插的方式執行。
+  // https://gomakethings.com/vanilla-javascript-version-of-jquery-extend/
+  extend = function() {
+    var deep, extended, i, length, merge, obj;
+    extended = {};
+    deep = true;
+    i = 0;
+    length = arguments.length;
+    if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
+      deep = arguments[0];
+      i++;
+    }
+    merge = function(obj) {
+      var prop;
+      for (prop in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+          if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+            extended[prop] = extend(true, extended[prop], obj[prop]);
+          } else {
+            extended[prop] = obj[prop];
+          }
+        }
+      }
+    };
+    while (i < length) {
+      obj = arguments[i];
+      merge(obj);
+      i++;
+    }
+    return extended;
+  };
   // 在 Tocas 函式鏈中新增一個相對應的模組函式。
   return ts.fn[module.module] = function(arg = null, arg2 = null, arg3 = null) {
     var $elements, value;
@@ -22,8 +53,6 @@ ts = function(selector, context = null) {
     $elements.each(function(_, index) {
       var $this, base, init, localModule;
       // 初始化這個模組。
-      //console.log module
-      //localModule = Object.assign( Object.create( Object.getPrototypeOf(module)), module)
       localModule = new module();
       localModule.delay = function(time = 0) {
         return new Promise(function(resolve) {
@@ -37,38 +66,54 @@ ts = function(selector, context = null) {
       localModule.index = index;
       // init 會初始化一個元素，並讓他執行模組中的初始化函式。
       init = function() {
-        var attr, name, props;
+        var iterate, props;
         // 初始化一個屬性物件，用以保存此元素的自訂屬性。
         props = {};
         // 遞迴模組的屬性設置，並且找尋元素是否有相對應的屬性。
-        for (name in localModule.props) {
-          // 將設定的 camelCase 轉換成 hyphen-case。
-          name = name.replace(/([A-Z])/g, (g) => {
-            return `-${g[0].toLowerCase()}`;
-          });
-          // 建立相對應的元素屬性名稱。
-          attr = $this.attr(`data-${name}`);
-          if (attr == null) {
-            // 如果元素沒有相對應的標籤，就略過這個設置。
-            continue;
+        // 建立一個遞迴函式讓我們能夠解決錯綜復雜的物件。
+        iterate = function(object, prefix) {
+          var attr, hyphenName, name, results;
+          results = [];
+          for (name in object) {
+            // 將設定的 camelCase 屬性名稱轉換成 hyphen-case。
+            hyphenName = name.replace(/([A-Z])/g, (g) => {
+              return `-${g[0].toLowerCase()}`;
+            });
+            // 如果有前輟，就將轉換後的名稱加上前輟。
+            if (prefix !== void 0) {
+              hyphenName = `${prefix}-${hyphenName}`;
+            }
+            // 如果這個設定是物件，就帶入此屬性名稱並繼續遞回這個物件。
+            if (object[name].constructor === Object) {
+              iterate(object[name], hyphenName);
+            }
+            // 建立相對應的元素屬性名稱。
+            attr = $this.attr(`data-${hyphenName}`);
+            if (attr == null) {
+              // 如果元素沒有相對應的標籤，就略過這個設置。
+              continue;
+            }
+            // 轉換標籤的字串型態到相對應的真正型態，例如：數字字串 -> 數值、布林字串 -> 布林值。
+            switch (attr) {
+              case attr === 'true':
+              case attr === 'false':
+                results.push(props[name] = attr === 'true');
+                break;
+              case !isNaN(attr):
+                results.push(props[name] = parseInt(attr));
+                break;
+              default:
+                results.push(props[name] = attr);
+            }
           }
-          // 轉換標籤的字串型態到相對應的真正型態，例如：數字字串 -> 數值、布林字串 -> 布林值。
-          switch (attr) {
-            case attr === 'true':
-            case attr === 'false':
-              props[name] = attr === 'true';
-              break;
-            case !isNaN(attr):
-              props[name] = parseInt(attr);
-              break;
-            default:
-              props[name] = attr;
-          }
-        }
+          return results;
+        };
+        // 開始遞迴設置。
+        iterate(localModule.props);
         // 用模組的預設選項加上元素標籤所設置的選項來初始化選取的模組。
-        $this.data(Object.assign({}, localModule.props, props));
+        $this.data(extend({}, localModule.props, props));
         // 然後呼叫自定義的初始化模組函式。
-        value = localModule.init(Object.assign({}, localModule.props, props));
+        value = localModule.init(extend({}, localModule.props, props));
         // 將這個元素的 `tocas` 設置為 `true`，表示被初始化過了。
         return $this.data('tocas', true);
       };
@@ -85,15 +130,10 @@ ts = function(selector, context = null) {
           // 如果該元素已經被初始化了，我們就呼叫摧毀函式。
           localModule.destroy();
         }
-        // 套用新的選項到指定元素。
-        // if $this.data('tocas')?
-        // 如果先前初始化過了，就覆蓋先前的部分選項。
-        //    $this.data arg
-        // else
         // 套用覆蓋 + 預設的選項。
-        $this.data(Object.assign({}, localModule.props, arg));
+        $this.data(extend({}, localModule.props, arg));
         // 以新的選項執行初始化函式並傳入部分參數。
-        value = localModule.init(Object.assign({}, localModule.props, arg), arg2, arg3);
+        value = localModule.init(extend({}, localModule.props, arg), arg2, arg3);
         // 將這個元素的 `tocas` 設置為 `true`，表示被初始化過了。
         return $this.data('tocas', true);
       // 如果第一個是字串，就表示使用者想要呼叫模組的自訂方法。

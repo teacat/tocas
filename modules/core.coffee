@@ -8,6 +8,30 @@ ts = (selector, context=null) ->
     # 改名為 module 比較符合接下來的使用方式。
     module = selector
 
+    # 延展物件的函式，與 ES 的 `...` 不同之處在於 extend 並不會替換掉整個子物件，而會以補插的方式執行。
+    # https://gomakethings.com/vanilla-javascript-version-of-jquery-extend/
+    extend = ->
+        extended = {}
+        deep     = true
+        i        = 0
+        length   = arguments.length
+        if Object::toString.call(arguments[0]) == '[object Boolean]'
+            deep = arguments[0]
+            i++
+        merge = (obj) ->
+            for prop of obj
+                if Object::hasOwnProperty.call(obj, prop)
+                    if deep and Object::toString.call(obj[prop]) == '[object Object]'
+                        extended[prop] = extend(true, extended[prop], obj[prop])
+                    else
+                        extended[prop] = obj[prop]
+            return
+        while i < length
+            obj = arguments[i]
+            merge obj
+            i++
+        extended
+
     # 在 Tocas 函式鏈中新增一個相對應的模組函式。
     ts.fn[module.module] = (arg=null, arg2=null, arg3=null) ->
         # 先用 Tocas Core 核心來選取指定元素，然後放到上下文物件之後傳遞到模組內使用。
@@ -18,9 +42,7 @@ ts = (selector, context=null) ->
         # 每個節點。
         $elements.each (_, index) ->
             # 初始化這個模組。
-            #console.log module
-            #localModule = Object.assign( Object.create( Object.getPrototypeOf(module)), module)
-            localModule = new module()
+            localModule       = new module()
             localModule.delay = (time=0) -> new Promise (resolve) -> setTimeout(resolve, time)
             # 準備一些此元素的資料。
             $this = $selector @
@@ -32,26 +54,38 @@ ts = (selector, context=null) ->
             init = ->
                 # 初始化一個屬性物件，用以保存此元素的自訂屬性。
                 props = {}
+
                 # 遞迴模組的屬性設置，並且找尋元素是否有相對應的屬性。
-                for name of localModule.props
-                    # 將設定的 camelCase 轉換成 hyphen-case。
-                    name = name.replace /([A-Z])/g, (g) => "-#{g[0].toLowerCase()}"
-                    # 建立相對應的元素屬性名稱。
-                    attr = $this.attr("data-#{name}")
-                    # 如果元素沒有相對應的標籤，就略過這個設置。
-                    continue if !attr?
-                    # 轉換標籤的字串型態到相對應的真正型態，例如：數字字串 -> 數值、布林字串 -> 布林值。
-                    switch attr
-                        when attr is 'true', attr is 'false'
-                            props[name] = attr is 'true'
-                        when !isNaN attr
-                            props[name] = parseInt attr
-                        else
-                            props[name] = attr
+                # 建立一個遞迴函式讓我們能夠解決錯綜復雜的物件。
+                iterate = (object, prefix) ->
+                    for name of object
+                        # 將設定的 camelCase 屬性名稱轉換成 hyphen-case。
+                        hyphenName = name.replace /([A-Z])/g, (g) => "-#{g[0].toLowerCase()}"
+                        # 如果有前輟，就將轉換後的名稱加上前輟。
+                        if prefix isnt undefined
+                            hyphenName = "#{prefix}-#{hyphenName}"
+                        # 如果這個設定是物件，就帶入此屬性名稱並繼續遞回這個物件。
+                        if object[name].constructor is Object
+                            iterate object[name], hyphenName
+                        # 建立相對應的元素屬性名稱。
+                        attr = $this.attr("data-#{hyphenName}")
+                        # 如果元素沒有相對應的標籤，就略過這個設置。
+                        continue if !attr?
+                        # 轉換標籤的字串型態到相對應的真正型態，例如：數字字串 -> 數值、布林字串 -> 布林值。
+                        switch attr
+                            when attr is 'true', attr is 'false'
+                                props[name] = attr is 'true'
+                            when !isNaN attr
+                                props[name] = parseInt attr
+                            else
+                                props[name] = attr
+                # 開始遞迴設置。
+                iterate localModule.props
+
                 # 用模組的預設選項加上元素標籤所設置的選項來初始化選取的模組。
-                $this.data {localModule.props..., props...}
+                $this.data extend {}, localModule.props, props
                 # 然後呼叫自定義的初始化模組函式。
-                value = localModule.init {localModule.props..., props...}
+                value = localModule.init extend {}, localModule.props, props
                 # 將這個元素的 `tocas` 設置為 `true`，表示被初始化過了。
                 $this.data 'tocas', true
 
@@ -65,15 +99,10 @@ ts = (selector, context=null) ->
             else if typeof arg is 'object'
                 # 如果該元素已經被初始化了，我們就呼叫摧毀函式。
                 localModule.destroy() if $this.data('tocas')?
-                # 套用新的選項到指定元素。
-                # if $this.data('tocas')?
-                    # 如果先前初始化過了，就覆蓋先前的部分選項。
-                #    $this.data arg
-                # else
                 # 套用覆蓋 + 預設的選項。
-                $this.data {localModule.props..., arg...}
+                $this.data extend {}, localModule.props, arg
                 # 以新的選項執行初始化函式並傳入部分參數。
-                value = localModule.init {localModule.props..., arg...}, arg2, arg3
+                value = localModule.init extend({}, localModule.props, arg), arg2, arg3
                 # 將這個元素的 `tocas` 設置為 `true`，表示被初始化過了。
                 $this.data 'tocas', true
 
