@@ -38,7 +38,7 @@ Accordion = (function() {
       var module;
       module = this;
       // 尋找手風琴容器裡的每個標題，當標題被按下時。
-      this.$this.find(this.className.title).on('click.accordion', function() {
+      this.$this.find(this.selector.TITLE).on('click.accordion', function() {
         // 因為是標題被按下，所以我們呼叫切換手風琴分頁的函式，
         // 當手風琴是開的，則關，反之亦然。
         module.$title = $selector(this);
@@ -49,15 +49,15 @@ Accordion = (function() {
 
     destroy() {
       // 移除 `click` 的綁定事件。
-      this.$this.find(this.className.title).off('click.accordion');
+      this.$this.find(this.selector.TITLE).off('click.accordion');
       // 關閉所有手風琴。
-      return this.$this.find(this.className.active).removeClass('active');
+      return this.$this.find(this.selector.ACTIVE).removeClass(this.className.ACTIVE);
     }
 
     async open() {
       var $activeContent, $content, height;
       // 如果這個手風琴正在執行動畫效果則離開。
-      if (this.$this.hasClass('animating')) {
+      if (this.$this.hasClass(this.className.ANIMATING)) {
         return;
       }
       // 呼叫指定事件函式。
@@ -67,13 +67,13 @@ Accordion = (function() {
       $content = this.$title.next();
       // 如果要開啟的分頁，正是已經被開啟的那個，
       // 那麼就忽略這次的請求。
-      if ($content.get() === this.$this.find(this.className.activeContent).get()) {
+      if ($content.get() === this.$this.find(this.selector.ACTIVE_CONTENT).get()) {
         return;
       }
       // 如果手風琴只允許同ㄧ時間展開一個分頁。
-      if (this.$title.closest(this.className.accordion).data('exclusive')) {
+      if (this.$title.closest(this.selector.ACCORDION).data('exclusive')) {
         // 那麼就上拉並關閉其他的分頁內容。
-        $activeContent = this.$this.find(this.className.activeContent);
+        $activeContent = this.$this.find(this.selector.ACTIVE_CONTENT);
         // 如果有其他分頁內容則對這些分頁內容進行處理。
         if ($activeContent.length !== 0) {
           // 呼叫事件函式。
@@ -86,15 +86,15 @@ Accordion = (function() {
           // 稍微延遲一下，避免太快執行會沒有效果。
           await this.delay();
           // 呼叫上拉動畫
-          $activeContent.css('height', '0px').one('transitionend', function() {
-            return $activeContent.css('height', '').removeClass('active').prev().removeClass('active');
+          $activeContent.css('height', '0px').one('transitionend', () => {
+            return $activeContent.css('height', '').removeClass(this.className.ACTIVE).prev().removeClass(this.className.ACTIVE);
           }).emulate('transitionend', this.duration);
         }
       }
       // 啟用指定分頁的標題。
-      this.$title.addClass('active');
+      this.$title.addClass(this.className.ACTIVE);
       // 啟用指定分頁的內容，並馬上顯示內容。
-      $content.addClass('active').css('height', 'auto');
+      $content.addClass(this.className.ACTIVE).css('height', 'auto');
       // 取得該內容展開時的高度。
       height = $content.css('height');
       // 現在趕快把內容趁使用者沒看見之前藏起來。
@@ -104,18 +104,18 @@ Accordion = (function() {
       // 現在展開，讓使用者看到下拉的動畫。
       $content.css('height', height);
       // 表明這個手風琴正在執行動畫。
-      this.$this.addClass('animating');
+      this.$this.addClass(this.className.ANIMATING);
       // 下拉完畢之後移除固定高度，這樣才能有彈性高度。
       return $content.one('transitionend', () => {
         $content.css('height', '');
-        return this.$this.removeClass('animating');
+        return this.$this.removeClass(this.className.ANIMATING);
       }).emulate('transitionend', this.duration);
     }
 
     async close() {
       var $content, height;
       // 如果這個手風琴正在執行動畫效果則離開。
-      if (this.$this.hasClass('animating')) {
+      if (this.$this.hasClass(this.className.ANIMATING)) {
         return;
       }
       // 呼叫事件函式。
@@ -123,17 +123,17 @@ Accordion = (function() {
       this.event('onChange');
       // 取得內容元素。
       $content = this.$title.next();
-      if (!this.$title.hasClass('active')) {
+      if (!this.$title.hasClass(this.className.ACTIVE)) {
         return;
       }
       // 移除標題的啟用樣式。
-      this.$title.removeClass('active');
+      this.$title.removeClass(this.className.ACTIVE);
       // 重新計算內容目前的高度。
       height = $content.css('height');
       // 替內容設置固定高度。
       $content.css('height', height);
       // 表明這個手風琴正在執行動畫。
-      this.$this.addClass('animating');
+      this.$this.addClass(this.className.ANIMATING);
       // 稍微延遲一下，避免太快執行會沒有效果。
       await this.delay();
       // 將內容高度設為 0px ，這樣才能觸發上拉動畫。
@@ -141,13 +141,13 @@ Accordion = (function() {
       // 當上拉動畫結束的時候，才移除內容的啟用樣式，
       // 直接移除的話會沒辦法觸發動畫效果。
       return $content.one('transitionend', () => {
-        $content.css('height', '').removeClass('active');
+        $content.css('height', '').removeClass(this.className.ACTIVE);
         return this.$this.removeClass('animating');
       }).emulate('transitionend', this.duration);
     }
 
     toggle() {
-      if (this.$title.hasClass('active')) {
+      if (this.$title.hasClass(this.className.ACTIVE)) {
         return this.close();
       } else {
         return this.open();
@@ -164,7 +164,7 @@ Accordion = (function() {
 
         // 開啟指定索引的手風琴內容。
         open: (index) => {
-          this.$title = this.$this.find(this.className.title).eq(index);
+          this.$title = this.$this.find(this.selector.TITLE).eq(index);
           this.open();
           return ts.fn;
         },
@@ -172,7 +172,7 @@ Accordion = (function() {
 
         // 關閉指定索引的手風琴內容。
         close: (index) => {
-          this.$title = this.$this.find(this.className.title).eq(index);
+          this.$title = this.$this.find(this.selector.TITLE).eq(index);
           this.close();
           return ts.fn;
         },
@@ -180,7 +180,7 @@ Accordion = (function() {
 
         // 切換指定索引的手風琴內容，如果是開啟的則關閉，相反之。
         toggle: (index) => {
-          this.$title = this.$this.find(this.className.title).eq(index);
+          this.$title = this.$this.find(this.selector.TITLE).eq(index);
           this.toggle();
           return ts.fn;
         }
@@ -213,18 +213,19 @@ Accordion = (function() {
   // 開展閉合動畫效果毫秒。
   Accordion.prototype.duration = 400;
 
-  // 模組內部資料。
+  // 類別樣式名稱。
   Accordion.prototype.className = {
-    // 標題的類別名稱。
-    title: '.title',
-    // 分頁內容的類別名稱。
-    content: '.content',
-    // 手風琴容器的類別名稱。
-    accordion: '.ts.accordion',
-    // 已啟用的分頁內容類別名稱。
-    activeContent: '.content.active',
-    // 已啟用的類別名稱。
-    active: '.active'
+    ACTIVE: 'active',
+    ANIMATING: 'animating'
+  };
+
+  // 選擇器名稱。
+  Accordion.prototype.selector = {
+    TITLE: '.title',
+    CONTENT: '.content',
+    ACCORDION: '.ts.accordion',
+    ACTIVE_CONTENT: '.content.active',
+    ACTIVE: '.active'
   };
 
   return Accordion;
