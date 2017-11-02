@@ -607,3 +607,310 @@ $selector.fn.removeData =
     value: (name) ->
         @each ->
             delete @$data[name] if @$data[name]?
+
+#
+#
+#
+$selector.fn.hasTimer =
+    value: (name) ->
+        @get(0)?.$timers?[name]?
+
+#
+#
+#
+$selector.fn.getTimer =
+    value: (name) ->
+        @get(0)?.$timers?[name]
+
+$selector.fn.setTimer =
+    value: (options) ->
+        options = {
+            {
+                name    : ''
+                callback: ->
+                interval: 0
+                looping: false
+                visible: false
+            }...
+            options...
+        }
+
+        @each ->
+            if @$timers is undefined
+                @$timers = []
+            if @$timers[options.name] isnt undefined
+                clearInterval @$timers[options.name].timer
+
+            timer = =>
+                # 當設置有說明，頁面不可見的時候就不要繼續計時。
+                if options.visible and document.hidden
+                    return
+                # 替計時器加上 10 毫秒。
+                @$timers[options.name].passed += 10
+                # 如果計時器的經過時間還不到使用者設定的時間
+                # 就返回而不要繼續執行。
+                if @$timers[options.name].passed < interval
+                    return
+                # 呼叫回呼函式。
+                callback()
+                # 清除計數計時器。
+                clearInterval @$timers[options.name].timer
+                # 移除在 DOM 元素內的這個計時器物件。
+                delete @$timers[options.name]
+            # 在此元素內初始化計時器物件。
+            @$timers[options.name] =
+                timer      : setInterval timer, 10
+                passed     : 0
+                callback   : options.callback
+                interval   : options.interval
+                initializer: timer
+                paused     : false
+
+
+$selector.fn.pauseTimer =
+    value: (name) ->
+        @each ->
+            if not @$timers?[name]?
+                return
+            # 清除計數計時器達到暫停效果。
+            clearInterval @$timers[name].timer
+            # 表示暫停。
+            @$timers[name].paused = true
+
+$selector.fn.playTimer =
+    value: (name) ->
+        @each ->
+            if not @$timers?[name]?
+                return
+            if not @$timers[name].paused
+                return
+            # 重新初始化計數計時器來達到繼續的效果。
+            @$timers[name].timer = setInterval @$timers[name].initializer, 10
+            # 表示重新啟動。
+            @$timers[name].paused = false
+
+$selector.fn.removeTimer =
+    value: (name) ->
+        @each ->
+            if not @$timers?[name]?
+                return
+            # 清除計數計時器。
+            clearInterval @$timers[name].timer
+            # 移除在 DOM 元素內的計時器物件。
+            delete @$timers[name]
+
+#
+#
+#
+$selector.fn.setTimeout =
+    value: (name, callback, interval) ->
+        @each ->
+            if @$timers is undefined
+                @$timers = []
+            if @$timers[name] isnt undefined
+                clearInterval @$timers[name].timer
+
+            timer = =>
+                # 替計時器加上 10 毫秒。
+                @$timers[name].passed += 10
+                # 如果計時器的經過時間還不到使用者設定的時間
+                # 就返回而不要繼續執行。
+                if @$timers[name].passed < interval
+                    return
+                # 呼叫回呼函式。
+                callback()
+                # 清除計數計時器。
+                clearInterval @$timers[name].timer
+                # 移除在 DOM 元素內的這個計時器物件。
+                delete @$timers[name]
+            # 在此元素內初始化計時器物件。
+            @$timers[name] =
+                timer      : setInterval timer, 10
+                passed     : 0
+                callback   : callback
+                interval   : interval
+                initializer: timer
+                paused     : false
+
+#
+#
+#
+$selector.fn.setFocusTimeout =
+    value: (name, callback, interval) ->
+        @each ->
+            if @$timers is undefined
+                @$timers = []
+            if @$timers[name] isnt undefined
+                clearInterval @$timers[name].timer
+
+            timer = =>
+                # 當頁面不可見的時候就不要繼續計時。
+                if document.hidden
+                    return
+                # 替計時器加上 10 毫秒。
+                @$timers[name].passed += 10
+                # 如果計時器的經過時間還不到使用者設定的時間
+                # 就返回而不要繼續執行。
+                if @$timers[name].passed < interval
+                    return
+                # 呼叫回呼函式。
+                callback()
+                # 清除計數計時器。
+                clearInterval @$timers[name].timer
+                # 移除在 DOM 元素內的這個計時器物件。
+                delete @$timers[name]
+            # 在此元素內初始化計時器物件。
+            @$timers[name] =
+                timer      : setInterval timer, 10
+                passed     : 0
+                callback   : callback
+                interval   : interval
+                initializer: timer
+                paused     : false
+
+#
+#
+#
+$selector.fn.clearTimeout =
+    value: (name) ->
+        @each ->
+            if not @$timers?[name]?
+                return
+            # 清除計數計時器。
+            clearInterval @$timers[name].timer
+            # 移除在 DOM 元素內的計時器物件。
+            delete @$timers[name]
+
+#
+#
+#
+$selector.fn.pauseTimeout =
+    value: (name) ->
+        @each ->
+            if not @$timers?[name]?
+                return
+            # 清除計數計時器達到暫停效果。
+            clearInterval @$timers[name].timer
+            # 表示暫停。
+            @$timers[name].paused = true
+
+#
+#
+#
+$selector.fn.playTimeout =
+    value: (name) ->
+        @each ->
+            if not @$timers?[name]?
+                return
+            if not @$timers[name].paused
+                return
+            # 重新初始化計數計時器來達到繼續的效果。
+            @$timers[name].timer = setInterval @$timers[name].initializer, 10
+            # 表示重新啟動。
+            @$timers[name].paused = false
+
+#
+#
+#
+$selector.fn.setInterval =
+    value: (name, callback, interval) ->
+        @each ->
+            if @$timers is undefined
+                @$timers = []
+            if @$timers[name] isnt undefined
+                clearInterval @$timers[name].timer
+
+            timer = =>
+                # 替計時器加上 10 毫秒。
+                @$timers[name].passed += 10
+                # 如果計時器的經過時間還不到使用者設定的時間
+                # 就返回而不要繼續執行。
+                if @$timers[name].passed < interval
+                    return
+                # 呼叫回呼函式。
+                callback()
+                # 重設計數計時器。
+                @$timers[name].passed = 0
+            # 在此元素內初始化計時器物件。
+            @$timers[name] =
+                timer      : setInterval timer, 10
+                passed     : 0
+                callback   : callback
+                interval   : interval
+                initializer: timer
+                paused     : false
+
+#
+#
+#
+$selector.fn.setFocusInterval =
+    value: (name, callback, interval) ->
+        @each ->
+            if @$timers is undefined
+                @$timers = []
+            if @$timers[name] isnt undefined
+                clearInterval @$timers[name].timer
+
+            timer = =>
+                # 當頁面不可見的時候就不要繼續計時。
+                if document.hidden
+                    return
+                # 替計時器加上 10 毫秒。
+                @$timers[name].passed += 10
+                # 如果計時器的經過時間還不到使用者設定的時間
+                # 就返回而不要繼續執行。
+                if @$timers[name].passed < interval
+                    return
+                # 呼叫回呼函式。
+                callback()
+                # 重設計數計時器。
+                @$timers[name].passed = 0
+            # 在此元素內初始化計時器物件。
+            @$timers[name] =
+                timer      : setInterval timer, 10
+                passed     : 0
+                callback   : callback
+                interval   : interval
+                initializer: timer
+                paused     : false
+
+#
+#
+#
+$selector.fn.clearInterval =
+    value: (name) ->
+        @each ->
+            if not @$timers?[name]?
+                return
+            # 清除計數計時器。
+            clearInterval @$timers[name].timer
+            # 移除在 DOM 元素內的計時器物件。
+            delete @$timers[name]
+
+#
+#
+#
+$selector.fn.pauseInterval =
+    value: (name) ->
+        @each ->
+            if not @$timers?[name]?
+                return
+            # 清除計數計時器達到暫停效果。
+            clearInterval @$timers[name].timer
+            # 表示暫停。
+            @$timers[name].paused = true
+
+#
+#
+#
+$selector.fn.playInterval =
+    value: (name) ->
+        @each ->
+            if not @$timers?[name]?
+                return
+            if not @$timers[name].paused
+                return
+            # 重新初始化計數計時器來達到繼續的效果。
+            @$timers[name].timer = setInterval @$timers[name].initializer, 10
+            # 表示重新啟動。
+            @$timers[name].paused = false
