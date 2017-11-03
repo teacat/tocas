@@ -201,7 +201,6 @@ Accordion = (function() {
     onChange: function() {}
   };
 
-  
   // 所選的手風琴標題元素。
   Accordion.prototype.$title = null;
 
