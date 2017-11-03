@@ -48,7 +48,7 @@
     content       : attr(data-tooltip)
 
     background: $popup_backgroundColor
-    color           : $popup_textColor
+    color     : $popup_textColor
 
     border-radius: $popup_borderRadius
     opacity      : 0
@@ -254,3 +254,119 @@
     width: 10em
 [data-tooltip][data-tooltip-width="very narrow"]:after
     width: 7.5em
+
+//*******************************//
+//         Element Main
+//*******************************//
+
+.ts.popup
+    display: inline-block
+    border: $popup_elementBorder
+    border-radius: $popup_elementBorderRadius
+
+.ts.popup > .header
+    overflow: hidden
+    color: $popup_elementHeaderColor
+    border-bottom: $popup_elementHeaderBorder
+    padding: $popup_elementPadding
+    background: $popup_elementHeaderBackgroundColor
+
+.ts.popup > .content
+    padding: $popup_elementPadding
+
+.ts.popup:before,
+.ts.popup:after
+    bottom: 100%
+    border: solid transparent
+    content: ""
+    height: 0
+    width: 0
+    position: absolute
+    pointer-events: none
+
+.ts.popup:before
+    border-color: transparent
+    border-width: 14px
+    z-index: 100
+
+.ts.popup:after
+    border-color: transparent
+    border-width: 12px
+    z-index: 200
+.ts.popup[class*="top left"]:before
+    border-bottom-color: $popup_elementBorderColor
+    left               : $popup_elementHorizontalPadding
+.ts.popup[class*="top left"]:after
+    border-bottom-color: #FFF
+    left               : calc(#{$popup_elementHorizontalPadding} - -2px)
+
+.ts.popup[class*="top center"]:before
+    border-bottom-color: $popup_elementBorderColor
+    left               : 50%
+    transform          : translateX(-50%)
+.ts.popup[class*="top center"]:after
+    border-bottom-color: #FFF
+    left               : 50%
+    transform          : translateX(-50%)
+
+.ts.popup[class*="top right"]:before
+    border-bottom-color: $popup_elementBorderColor
+    right              : $popup_elementHorizontalPadding
+.ts.popup[class*="top right"]:after
+    border-bottom-color: #FFF
+    right              : calc(#{$popup_elementHorizontalPadding} - -2px)
+
+.ts.popup[class*="bottom left"]:before
+    border-bottom-color: $popup_elementBorderColor
+    bottom             : -28px
+    left               : $popup_elementHorizontalPadding
+    transform          : rotate(180deg)
+.ts.popup[class*="bottom left"]:after
+    border-bottom-color: #FFF
+    bottom             : -24px
+    left               : calc(#{$popup_elementHorizontalPadding} - -2px)
+    transform          : rotate(180deg)
+
+.ts.popup[class*="bottom center"]:before
+    border-bottom-color: $popup_elementBorderColor
+    bottom             : -28px
+    left               : 50%
+    transform          : translateX(-50%) rotate(180deg)
+.ts.popup[class*="bottom center"]:after
+    border-bottom-color: #FFF
+    bottom             : -24px
+    left               : 50%
+    transform          : translateX(-50%) rotate(180deg)
+
+.ts.popup[class*="bottom right"]:before
+    border-bottom-color: $popup_elementBorderColor
+    bottom             : -28px
+    right              : $popup_elementHorizontalPadding
+    transform          : rotate(180deg)
+.ts.popup[class*="bottom right"]:after
+    border-bottom-color: #FFF
+    bottom             : -24px
+    right              : calc(#{$popup_elementHorizontalPadding} - -2px)
+    transform          : rotate(180deg)
+
+.ts.popup.right:not(.bottom):not(.top):before
+    border-bottom-color: $popup_elementBorderColor
+    top                : 50%
+    right              : -28px
+    transform          : translateY(-50%) rotate(90deg)
+.ts.popup.right:not(.bottom):not(.top):after
+    border-bottom-color: #FFF
+    top                : 50%
+    right              : -24px
+    transform          : translateY(-50%) rotate(90deg)
+
+.ts.popup.left:not(.bottom):not(.top):before
+    border-bottom-color: $popup_elementBorderColor
+    top                : 50%
+    left               : -28px
+    transform          : translateY(-50%) rotate(270deg)
+.ts.popup.left:not(.bottom):not(.top):after
+    border-bottom-color: #FFF
+    top                : 50%
+    left               : -24px
+    transform          : translateY(-50%) rotate(270deg)
