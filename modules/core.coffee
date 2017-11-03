@@ -1,4 +1,4 @@
-ts = (selector, context=null) ->
+ts = (selector, context=null) =>
     # 如果傳入的選擇器不是物件，那麼就只是普通的選擇器。
     if typeof selector isnt 'function'
         ts.selector = if context isnt null then $selector(selector, context) else $selector(selector)
@@ -33,31 +33,31 @@ ts = (selector, context=null) ->
         extended
 
     # 在 Tocas 函式鏈中新增一個相對應的模組函式。
-    ts.fn[module.module] = (arg=null, arg2=null, arg3=null) ->
+    ts.fn[module.module] = (arg=null, arg2=null, arg3=null) =>
         # 先用 Tocas Core 核心來選取指定元素，然後放到上下文物件之後傳遞到模組內使用。
         $elements = ts.selector
         # 最終的回傳值。
         value = ts.fn
-
         # 每個節點。
-        $elements.each (_, index) ->
+        $elements.each (element, index) =>
             # 初始化這個模組。
             localModule       = new module()
             localModule.delay = (time=0) -> new Promise (resolve) -> setTimeout(resolve, time)
             # 準備一些此元素的資料。
-            $this = $selector @
+            $this = $selector element
             # 將此元素的資料放置這個模組中。
-            localModule.$this = $this
-            localModule.index = index
+            localModule.$origin = $this
+            localModule.$this   = $this
+            localModule.index   = index
 
             # init 會初始化一個元素，並讓他執行模組中的初始化函式。
-            init = ->
+            init = =>
                 # 初始化一個屬性物件，用以保存此元素的自訂屬性。
                 props = {}
 
                 # 遞迴模組的屬性設置，並且找尋元素是否有相對應的屬性。
                 # 建立一個遞迴函式讓我們能夠解決錯綜復雜的物件。
-                iterate = (object, prefix) ->
+                iterate = (object, prefix) =>
                     for name of object
                         # 將設定的 camelCase 屬性名稱轉換成 hyphen-case。
                         hyphenName = name.replace /([A-Z])/g, (g) => "-#{g[0].toLowerCase()}"
