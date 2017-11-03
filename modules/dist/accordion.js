@@ -31,9 +31,6 @@ Accordion = (function() {
       this.methods = this.methods.bind(this);
     }
 
-    // 延遲函式。
-    delay() {}
-
     init() {
       var module;
       module = this;
@@ -204,9 +201,7 @@ Accordion = (function() {
     onChange: function() {}
   };
 
-  // 模組自己選擇器。
-  Accordion.prototype.$this = null;
-
+  
   // 所選的手風琴標題元素。
   Accordion.prototype.$title = null;
 

@@ -39,9 +39,6 @@ Carousel = (function() {
       this.methods = this.methods.bind(this);
     }
 
-    // 延遲函式。
-    delay() {}
-
     // 控制元素的 HTML 原始碼。
     controlHTML(left, right) {
       return `<a href=\"#!\" class=\"left\"><i class=\"${left} icon\"></i></a>\n<a href=\"#!\" class=\"right\"><i class=\"${right} icon\"></i></a>`;
@@ -302,9 +299,6 @@ Carousel = (function() {
     // 當幻燈片變更時所呼叫的函式。
     onChange: function() {}
   };
-
-  // 模組自己選擇器。
-  Carousel.prototype.$this = null;
 
   // 幻燈片切換動畫效果毫秒。
   Carousel.prototype.duration = 700;
