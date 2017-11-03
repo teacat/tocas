@@ -18,14 +18,8 @@ class Accordion
         # 當分頁被打開或者關閉時所呼叫的函式。
         onChange : ->
 
-    # 模組自己選擇器。
-    $this: null
-
     # 所選的手風琴標題元素。
     $title: null
-
-    # 延遲函式。
-    delay: ->
 
     # 開展閉合動畫效果毫秒。
     duration: 400

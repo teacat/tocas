@@ -36,12 +36,6 @@ class Carousel
         # 當幻燈片變更時所呼叫的函式。
         onChange: ->
 
-    # 模組自己選擇器。
-    $this: null
-
-    # 延遲函式。
-    delay: ->
-
     # 幻燈片切換動畫效果毫秒。
     duration: 700
 
