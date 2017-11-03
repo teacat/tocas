@@ -1,0 +1,67 @@
+<body style="padding: 50px">
+    <link rel="stylesheet" type="text/css" href="../../dist/tocas.css">
+    <script src="../dist/core.js"></script>
+    <script src="../../lib/Selector/dist/selector.js"></script>
+    <script src="../dist/dimmer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- -->
+    <div class="ts form">
+        <fieldset>
+            <legend>測試按鈕控制台</legend>
+            <button class="ts button" id="a">segment.dimmer('show')</button>
+            <button class="ts button" id="b">segment.dimmer('hide')</button>
+            <button class="ts button" id="c">segment.dimmer('toggle')</button>
+            <button class="ts button" id="d">segment.dimmer('is active')</button>
+            <button class="ts button" id="e">.dimmer('show')</button>
+            <button class="ts button" id="f">.dimmer('hide')</button>
+            <button class="ts button" id="g">.dimmer('toggle')</button>
+            <button class="ts button" id="h">.dimmer('is active')</button>
+        </fieldset>
+    </div>
+    <!-- -->
+
+    <!-- -->
+    <div class="ts section divider"></div>
+    <!-- -->
+
+    <div class="ts segment" id="segment1">
+        這是一段會被等等 Dimmer 所隱藏的文字。
+    </div>
+
+    <div class="ts segment" id="segment2">
+        這是有 Dimmer 的 Segment。
+        <div class="ts dimmer">
+            <div class="ts segment">我在 Dimmer 裡</div>
+        </div>
+    </div>
+
+    <!-- -->
+    <script>
+        $('#a').on('click', () => {
+            ts('#segment1').dimmer('show')
+        })
+        $('#b').on('click', () => {
+            ts('#segment1').dimmer('hide')
+        })
+        $('#c').on('click', () => {
+            ts('#segment1').dimmer('toggle')
+        })
+        $('#d').on('click', () => {
+            alert(ts('#segment1').dimmer('is active'))
+        })
+        $('#e').on('click', () => {
+            ts('#segment2 .dimmer').dimmer('show')
+        })
+        $('#f').on('click', () => {
+            ts('#segment2 .dimmer').dimmer('hide')
+        })
+        $('#g').on('click', () => {
+            ts('#segment2 .dimmer').dimmer('toggle')
+        })
+        $('#h').on('click', () => {
+            alert(ts('#segment2 .dimmer').dimmer('is active'))
+        })
+    </script>
+    <!-- -->
+</body>
