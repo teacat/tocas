@@ -43,7 +43,7 @@ ts = (selector, context = null) => {
     return extended;
   };
   // 在 Tocas 函式鏈中新增一個相對應的模組函式。
-  return ts.fn[module.module] = (arg = null, arg2 = null, arg3 = null) => {
+  return ts.fn[module.module] = (arg = null, arg2 = null, arg3 = null, arg4 = null, arg5 = null) => {
     var $elements, value;
     // 先用 Tocas Core 核心來選取指定元素，然後放到上下文物件之後傳遞到模組內使用。
     $elements = ts.selector;
@@ -51,7 +51,7 @@ ts = (selector, context = null) => {
     value = ts.fn;
     // 每個節點。
     $elements.each((element, index) => {
-      var $this, base, init, localModule;
+      var $this, base, getAttributeOptions, init, localModule, props;
       // 初始化這個模組。
       localModule = new module();
       localModule.delay = function(time = 0) {
@@ -65,15 +65,15 @@ ts = (selector, context = null) => {
       localModule.$origin = $this;
       localModule.$this = $this;
       localModule.index = index;
-      // init 會初始化一個元素，並讓他執行模組中的初始化函式。
-      init = () => {
+      // 取得元素的標籤，並當作設置選項回傳一個物件。
+      getAttributeOptions = (object) => {
         var iterate, props;
         // 初始化一個屬性物件，用以保存此元素的自訂屬性。
         props = {};
         // 遞迴模組的屬性設置，並且找尋元素是否有相對應的屬性。
         // 建立一個遞迴函式讓我們能夠解決錯綜復雜的物件。
         iterate = (object, prefix) => {
-          var attr, hyphenName, name, results;
+          var attr, hyphenName, name, ref, results;
           results = [];
           for (name in object) {
             // 將設定的 camelCase 屬性名稱轉換成 hyphen-case。
@@ -84,8 +84,7 @@ ts = (selector, context = null) => {
             if (prefix !== void 0) {
               hyphenName = `${prefix}-${hyphenName}`;
             }
-            // 如果這個設定是物件，就帶入此屬性名稱並繼續遞回這個物件。
-            if (object[name].constructor === Object) {
+            if (((ref = object[name]) != null ? ref.constructor : void 0) === Object) {
               iterate(object[name], hyphenName);
             }
             // 建立相對應的元素屬性名稱。
@@ -110,7 +109,14 @@ ts = (selector, context = null) => {
           return results;
         };
         // 開始遞迴設置。
-        iterate(localModule.props);
+        iterate(object);
+        return props;
+      };
+      // init 會初始化一個元素，並讓他執行模組中的初始化函式。
+      init = () => {
+        var props;
+        // 初始化一個屬性物件，用以保存此元素的自訂屬性。
+        props = getAttributeOptions(localModule.props);
         // 用模組的預設選項加上元素標籤所設置的選項來初始化選取的模組。
         $this.data(extend({}, localModule.props, props));
         // 然後呼叫自定義的初始化模組函式。
@@ -131,10 +137,12 @@ ts = (selector, context = null) => {
           // 如果該元素已經被初始化了，我們就呼叫摧毀函式。
           localModule.destroy();
         }
-        // 套用覆蓋 + 預設的選項。
-        $this.data(extend({}, localModule.props, arg));
+        // 初始化一個屬性物件，用以保存此元素的自訂屬性。
+        props = getAttributeOptions(localModule.props);
+        // 套用預設 + 元素設置 + 覆蓋的選項。
+        $this.data(extend({}, localModule.props, props, arg));
         // 以新的選項執行初始化函式並傳入部分參數。
-        value = localModule.init(extend({}, localModule.props, arg), arg2, arg3);
+        value = localModule.init(extend({}, localModule.props, arg), arg2, arg3, arg4, arg5);
         // 將這個元素的 `tocas` 設置為 `true`，表示被初始化過了。
         return $this.data('tocas', true);
       // 如果第一個是字串，就表示使用者想要呼叫模組的自訂方法。
@@ -144,7 +152,7 @@ ts = (selector, context = null) => {
           init();
         }
         // 呼叫指定的自訂方法並取得回傳值。
-        return value = typeof (base = localModule.methods())[arg] === "function" ? base[arg](arg2, arg3) : void 0;
+        return value = typeof (base = localModule.methods())[arg] === "function" ? base[arg](arg2, arg3, arg4, arg5) : void 0;
       }
     });
     return value;
