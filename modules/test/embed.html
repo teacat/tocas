@@ -1,0 +1,116 @@
+<body style="padding: 50px">
+    <link rel="stylesheet" type="text/css" href="../../dist/tocas.css">
+    <script src="../dist/core.js"></script>
+    <script src="../../lib/Selector/dist/selector.js"></script>
+    <script src="../dist/embed.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- -->
+    <div class="ts form">
+        <fieldset>
+            <legend>測試按鈕控制台</legend>
+            <button class="ts button" id="a">.embed({id})</button>
+            <button class="ts button" id="b">.embed({id,placeholder})</button>
+            <button class="ts button" id="c">.embed({id,placeholder,events})</button>
+            <button class="ts button" id="d">.embed({id,parameters})</button>
+            <button class="ts button" id="e">.embed({url,options})</button>
+            <button class="ts button" id="f">.embed({url,icon})</button>
+            <button class="ts button" id="g">.embed()</button>
+            <button class="ts button" id="h">.embed('show')</button>
+            <button class="ts button" id="i">.embed('hide')</button>
+            <button class="ts button" id="j">.embed('reset')</button>
+            <button class="ts button" id="k">.embed('get id')</button>
+            <button class="ts button" id="l">.embed('get placeholder')</button>
+            <button class="ts button" id="m">.embed('get source')</button>
+            <button class="ts button" id="n">.embed('get url')</button>
+            <button class="ts button" id="o">.embed('change', 'youtube', 'gDiYdlGpvDc')</button>
+            <button class="ts button" id="p">.embed('change', null, null, url)</button>
+        </fieldset>
+    </div>
+    <!-- -->
+
+    <!-- -->
+    <div class="ts section divider"></div>
+    <!-- -->
+
+    <div id="embed1" class="ts embed" data-parameters="autoplay=true"></div>
+
+    <div id="embed2" class="ts embed" data-url="https://goo.gl/GKpzom" data-icon="map"></div>
+
+    <!-- -->
+    <script>
+        $('#a').on('click', () => {
+            ts('.embed').embed({id: 'XE-oMOEZ7Rc'})
+        })
+        $('#b').on('click', () => {
+            ts('.embed').embed({
+                id: 'XE-oMOEZ7Rc',
+                placeholder: '../../test/va.png'
+            })
+        })
+        $('#c').on('click', () => {
+            ts('.embed').embed({
+                id: 'XE-oMOEZ7Rc',
+                placeholder: 'https://wallpapershome.com/images/wallpapers/autumn-2880x1800-lake-forest-4k-16310.jpg',
+                onDisplay: () => {
+                    console.log('onDisplay')
+                },
+                onPlaceholderDisplay: () => {
+                    console.log('onPlaceholderDisplay')
+                },
+                onCreate: () => {
+                    console.log('onCreate')
+                }
+            })
+        })
+        $('#d').on('click', () => {
+            ts('.embed').embed({
+                id: 'XE-oMOEZ7Rc',
+                parameters: 'autoplay=true'
+            })
+        })
+        $('#e').on('click', () => {
+            ts('.embed').embed({
+                url: 'http://html5demos.com/assets/dizzy.mp4',
+                options: 'autoplay'
+            })
+        })
+        $('#f').on('click', () => {
+            ts('.embed').embed({
+                url: 'https://goo.gl/GKpzom',
+                icon: 'map'
+            })
+        })
+        $('#g').on('click', () => {
+            ts('#embed2.embed').embed()
+        })
+        $('#h').on('click', () => {
+            ts('#embed1.embed').embed('show')
+        })
+        $('#i').on('click', () => {
+            ts('#embed1.embed').embed('hide')
+        })
+        $('#j').on('click', () => {
+            ts('#embed1.embed').embed('reset')
+        })
+        $('#k').on('click', () => {
+            alert(ts('#embed1.embed').embed('get id'))
+        })
+        $('#l').on('click', () => {
+            alert(ts('#embed1.embed').embed('get placeholder'))
+        })
+        $('#m').on('click', () => {
+            alert(ts('#embed1.embed').embed('get source'))
+        })
+        $('#n').on('click', () => {
+            alert(ts('#embed1.embed').embed('get url'))
+        })
+        $('#o').on('click', () => {
+            ts('#embed1.embed').embed('change', 'youtube', 'gDiYdlGpvDc')
+        })
+        $('#p').on('click', () => {
+            ts('#embed1.embed').embed('change', null, null, 'http://html5demos.com/assets/dizzy.mp4')
+        })
+    </script>
+    <!-- -->
+</body>
