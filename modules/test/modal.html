@@ -1,0 +1,150 @@
+<body style="padding: 50px">
+    <link rel="stylesheet" type="text/css" href="../../dist/tocas.css">
+    <script src="../dist/core.js"></script>
+    <script src="../../lib/Selector/dist/selector.js"></script>
+    <script src="../dist/modal.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- -->
+    <div class="ts form">
+        <fieldset>
+            <legend>測試按鈕控制台</legend>
+            <button class="ts button" id="a">.modal('show')</button>
+            <button class="ts button" id="b">.modal('hide')</button>
+            <button class="ts button" id="c">.modal('toggle')</button>
+            <button class="ts button" id="d">b.modal('show')</button>
+            <button class="ts button" id="e">b.modal('hide')</button>
+            <button class="ts button" id="f">ts.modal(title, content, onClose)</button>
+            <button class="ts button" id="g">ts.prompt(title, value, onApprove)</button>
+            <button class="ts button" id="h">ts.modal(prompt)</button>
+            <button class="ts button" id="i">ts.modal(modal)</button>
+            <button class="ts button" id="j">Modal Event Test</button>
+            <button class="ts button" id="k">Prompt Event Test</button>
+        </fieldset>
+    </div>
+    <!-- -->
+
+    <!-- -->
+    <div class="ts a modal">
+        <button class="ts close button"></button>
+        <div class="header">標題</div>
+        <div class="content">內容</div>
+        <div class="actions">
+            <button class="ts deny button">
+                不
+            </button>
+            <button class="ts positive button">
+                是的
+            </button>
+        </div>
+    </div>
+    <!-- -->
+
+    <!-- -->
+    <div class="ts b modal">
+        <button class="ts close button"></button>
+        <div class="header">B 標題</div>
+        <div class="content">內容</div>
+        <div class="actions">
+            <button class="ts deny button">
+                不
+            </button>
+            <button class="ts positive button">
+                是的
+            </button>
+        </div>
+    </div>
+    <!-- -->
+
+    <!-- -->
+    <script>
+        $('#a').on('click', () => {
+            ts('.a.modal').modal('show')
+        })
+        $('#b').on('click', () => {
+            ts('.a.modal').modal('hide')
+        })
+        $('#c').on('click', () => {
+            ts('.a.modal').modal('toggle')
+        })
+        $('#d').on('click', () => {
+            ts('.b.modal').modal('show')
+        })
+        $('#e').on('click', () => {
+            ts('.b.modal').modal('hide')
+        })
+        $('#f').on('click', () => {
+            ts.modal('標題', '內容', () => { alert('確定') })
+        })
+        $('#g').on('click', () => {
+            ts.prompt('你是誰？', 'Yami Odymel', (value) => { alert(value) })
+        })
+        $('#h').on('click', () => {
+            ts.modal({
+                title  : '標題',
+                content: '內容。',
+                prompt : {
+                    type       : 'input',
+                    placeholder: '預置文字',
+                    value      : '預設內容。'
+                },
+                closable : false,
+                onApprove: (value) => { alert(value) },
+            })
+        })
+        $('#i').on('click', () => {
+            ts.modal({
+                title   : '標題',
+                content : '內容。',
+                closable: true,
+                actions : {
+                    positive: '儲存',
+                    negative: '刪除',
+                    ok      : '確定',
+                    cancel  : '取消'
+                },
+                onApprove: () => { return true },
+                onDeny   : () => { return true },
+                onClose  : () => { return true }
+            })
+        })
+        $('#j').on('click', () => {
+            ts.modal({
+                title   : '標題',
+                content : '內容。',
+                closable: true,
+                actions : {
+                    positive: 'Approve',
+                    negative: 'Deny',
+                    ok      : 'Approve',
+                    cancel  : 'Deny'
+                },
+                onApprove: () => { alert('onApprove') },
+                onDeny   : () => { alert('onDeny') },
+                onClose  : () => { alert('onClose') },
+                onIgnore : () => { alert('onIgnore') }
+            })
+        })
+        $('#k').on('click', () => {
+            ts.modal({
+                title   : '標題',
+                content : '內容。',
+                closable: true,
+                prompt  : {
+                    type: 'input',
+                },
+                actions : {
+                    positive: 'Approve',
+                    negative: 'Deny',
+                    ok      : 'Approve',
+                    cancel  : 'Deny'
+                },
+                onApprove: (value) => { alert('onApprove, Value:' + value) },
+                onDeny   : (value) => { alert('onDeny, Value:' + value) },
+                onClose  : (value) => { alert('onClose, Value:' + value) },
+                onIgnore : (value) => { alert('onIgnore, Value:' + value) }
+            })
+        })
+    </script>
+    <!-- -->
+</body>
