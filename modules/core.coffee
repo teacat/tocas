@@ -46,9 +46,10 @@ ts = (selector, context=null) =>
             # 準備一些此元素的資料。
             $this = $selector element
             # 將此元素的資料放置這個模組中。
-            localModule.$origin = $this
-            localModule.$this   = $this
-            localModule.index   = index
+            localModule.$elements = $elements
+            localModule.$origin   = $this
+            localModule.$this     = $this
+            localModule.index     = index
 
             # 取得元素的標籤，並當作設置選項回傳一個物件。
             getAttributeOptions = (object) =>
