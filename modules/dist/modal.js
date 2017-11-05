@@ -100,13 +100,19 @@ Modal = (function() {
       $selector('body').append($dimmer);
       // 綁定淡化幕被按下時，自動關閉對話視窗的點擊事件。
       $dimmer.on('click', (event) => {
-        var ref;
+        var $activeModal, ref;
         // 如果點擊淡化幕但目標其實是子元素就離開。
         if (event.target !== $dimmer.get()) {
           return;
         }
+        // 找尋可供點擊關閉的對話視窗。
+        $activeModal = $dimmer.find(this.selector.CLOSABLE_ACTIVE_MODAL);
+        // 如果沒有的話就離開。
+        if ($activeModal.length === 0) {
+          return;
+        }
         // 關閉可供點擊關閉的對話視窗。
-        this.$this = $dimmer.find(this.selector.CLOSABLE_ACTIVE_MODAL);
+        this.$this = $activeModal;
         this.close();
         return (ref = this.$this.data('onIgnore')) != null ? ref.call(this.$this.get()) : void 0;
       });
@@ -243,12 +249,18 @@ Modal = (function() {
 
 ts(Modal);
 
-ts.prompt = function(title, value = '', onApprove = function() {
+
+// Prompt
+
+// 讓使用者能夠產生臨時輸入對話視窗的函式，
+// 基本上就是更短的 `ts.modal()`。
+ts.prompt = (title, value = '', onApprove = function() {
     return true;
-  }) {
+  }) => {
   return ts.modal({
     title: title,
     prompt: {
+      type: 'input',
       value: value
     },
     closable: false,
@@ -256,17 +268,24 @@ ts.prompt = function(title, value = '', onApprove = function() {
   });
 };
 
-ts.modal = async function(title, content, onClose = function() {}) {
-  var $modal, cancel, customOptions, delay, hasModal, input, isTextarea, modal, negative, ok, options, placeholder, positive, prompt, resizable, value;
-  // 取得現有的臨時對話窗。
+// Modal
+
+// 讓使用者能夠產生臨時對話視窗的函式。
+ts.modal = async(title, content, onClose = function() {}) => {
+  var $modal, cancel, delay, hasModal, isTextarea, negative, ok, options, placeholder, positive, prompt, ref, value;
+  // 取得現有的臨時對話視窗。
   $modal = $selector('[data-modal-temporary]');
+  // 是否有臨時對話視窗的布林值。
   hasModal = $modal.length !== 0;
+  // 延遲函式。
   delay = function(time = 0) {
     return new Promise(function(resolve) {
       return setTimeout(resolve, time);
     });
   };
+  // 如果有臨時對話視窗。
   if (hasModal) {
+    // 而且該對話視窗是啟用狀態的話。
     if ($modal.hasClass('active')) {
       // 隱藏原先的對話視窗。
       ts('[data-modal-temporary]').modal('hide');
@@ -282,92 +301,118 @@ ts.modal = async function(title, content, onClose = function() {}) {
   }
   // 如果 `title` 不是物件，就表示這是簡易對話視窗。
   if (typeof title !== 'object') {
-    // 初始化簡易對話視窗的內容。
-    modal = `<div class=\"header\">${title}</div>\n<div class=\"content\">${content}</div>\n<div class=\"actions\">\n    <button class=\"ts ok button\">\n        確定\n    </button>\n</div>`;
-    
-    $modal.addClass('ts mini modal').html(modal);
-    
-    return ts('[data-modal-temporary]').modal({
+    // 將簡易對話視窗設置為迷你型的，並加上 Tocas 前輟。
+    // 然後套用 HTML 原始碼。
+    $modal.addClass('ts mini modal').html(`<div class=\"header\">${title}</div>\n<div class=\"content\">${content}</div>\n<div class=\"actions\">\n    <button class=\"ts ok button\">\n        確定\n    </button>\n</div>`);
+    // 選擇臨時簡易對話視窗，然後初始化它，並在關閉時呼叫關閉函式。
+    // 初始化完之後就顯示臨時對話視窗。
+    ts('[data-modal-temporary]').modal({
       onClose: function() {
-        onClose.call(this);
-        return $selector('[data-modal-temporary]').remove();
+        return onClose.call(this);
       }
     }).modal('show');
-  } else {
-    customOptions = title;
-    options = {
-      title: null,
-      content: null,
-      closable: true,
-      prompt: null,
-      // type       : 'input'
-      // placeholder: null
-      // value      : null
-      size: 'mini',
-      actions: {
-        positive: null,
-        negative: null,
-        ok: '確定',
-        cancel: null
-      },
-      onApprove: function() {
-        return true;
-      },
-      onDeny: function() {
-        return true;
-      },
-      onClose: function() {},
-      onIgnore: function() {}
-    };
-    options = Object.assign({}, options, customOptions);
-    title = options.title != null ? `<div class='header'>${options.title}</div>` : '';
-    positive = options.actions.positive != null ? `<button class='ts positive button'>${options.actions.positive}</button>` : '';
-    negative = options.actions.negative != null ? `<button class='ts negative button'>${options.actions.negative}</button>` : '';
-    ok = options.actions.ok != null ? `<button class='ts ok button'>${options.actions.ok}</button>` : '';
-    cancel = options.actions.cancel != null ? `<button class='ts cancel button'>${options.actions.cancel}</button>` : '';
-    content = options.content != null ? options.content : '';
-    if (options.prompt != null) {
-      isTextarea = options.prompt.type === 'textarea';
-      placeholder = options.prompt.placeholder != null ? options.prompt.placeholder : '';
-      value = options.prompt.value != null ? options.prompt.value : '';
-      if (isTextarea) {
-        input = `<textarea style=\"min-width: 100%\" rows=\"3\" placeholder=\"${placeholder}\">${value}</textarea>`;
-      } else {
-        input = `<input type=\"text\" placeholder=\"${placeholder}\" value=\"${value}\">`;
-      }
-      resizable = isTextarea ? 'resizable' : '';
-      prompt = `<div class=\"ts fluid ${resizable} input\">\n    ${input}\n</div>`;
-    } else {
-      prompt = '';
-    }
+    return;
+  }
+  // 定義進階臨時對話視窗的可用選項。
+  options = {
+    // 對話視窗的標題，可支援 HTML 原始碼。
+    title: null,
+    // 對話視窗的內容，可支援 HTML 原始碼。
+    content: null,
+    // 是否可供 Esc 或點擊淡化幕來關閉對話視窗。
+    closable: true,
+    // 如果這是一個物件而且 `type` 不是 `nbull` 的話，
+    // 對話視窗就會轉換為可供輸入的 Prompt 型態的視窗。
+    prompt: {
+      // 輸入欄位的種類，可以是 `input` 或 `textarea`。
+      type: null,
+      // 輸入欄位的預置文字。
+      placeholder: null,
+      // 輸入欄位的預設值。
+      value: null
+    },
+    // 對話視窗的大小。
+    size: 'mini',
+    // 對話視窗的動作按鈕文字，當按鈕是 `null` 值時不會顯示。
+    actions: {
+      // 正面的按鈕文字。
+      positive: null,
+      // 負面的按鈕文字。
+      negative: null,
+      // 無語氣的確定按鈕文字。
+      ok: '確定',
+      // 無語氣的取消按鈕文字。
+      cancel: null
+    },
+    // 當正面或確定按鈕被按下時所會呼叫的回呼函式，回傳 `false` 會令對話視窗無法關閉。
+    onApprove: function() {
+      return true;
+    },
+    // 當負面或取消按鈕被按下時所會呼叫的回呼函式，回傳 `false` 會令對話視窗無法關閉。
+    onDeny: function() {
+      return true;
+    },
+    // 當對話視窗關閉時所會呼叫的回呼函式。
+    onClose: function() {},
+    // 當對話視窗因為點擊淡化幕或者按下 Esc 關閉時所會呼叫的函式。
+    onIgnore: function() {}
+  };
+  // 將預設選項與使用者傳入的選項混雜在一起並覆蓋。
+  options = Object.assign({}, options, title);
+  // 如果有標題的話就以模板初始化。
+  title = options.title != null ? `<div class='header'>${options.title}</div>` : '';
+  content = options.content != null ? options.content : '';
+  cancel = options.actions.cancel != null ? `<button class='ts cancel button'>${options.actions.cancel}</button>` : '';
+  ok = options.actions.ok != null ? `<button class='ts ok button'>${options.actions.ok}</button>` : '';
+  negative = options.actions.negative != null ? `<button class='ts negative button'>${options.actions.negative}</button>` : '';
+  positive = options.actions.positive != null ? `<button class='ts positive button'>${options.actions.positive}</button>` : '';
+  prompt = '';
+  // 如果這個對話視窗有指定輸入的型態，就建立一個輸入欄位供稍後插入。
+  if (((ref = options.prompt) != null ? ref.type : void 0) != null) {
+    // 是否有指定輸入欄位要是 `textarea` 型態的布林值。
+    isTextarea = options.prompt.type === 'textarea';
+    // 取得預置文字。
+    placeholder = options.prompt.placeholder != null ? options.prompt.placeholder : '';
+    // 取得預設值。
+    value = options.prompt.value != null ? options.prompt.value : '';
+    // 依照要求的輸入欄位型態產生。
+    prompt = isTextarea ? `<div class=\"ts fluid input\">\n    <textarea style=\"resize: vertical\" rows=\"3\" placeholder=\"${placeholder}\">${value}</textarea>\n</div>` : `<div class=\"ts fluid input\">\n    <input type=\"text\" placeholder=\"${placeholder}\" value=\"${value}\">\n</div>`;
+    // 如果有內容，又有輸入欄位的話，就在輸入欄位前面多一些換行。
     if (content !== '' && prompt !== '') {
       prompt = `<br><br>${prompt}`;
     }
-    modal = `${title}\n<div class=\"content\">${content}${prompt}</div>\n<div class=\"actions\">\n    ${cancel}\n    ${ok}\n    ${negative}\n    ${positive}\n</div>`;
-    $modal.addClass(`ts ${options.size} modal`).html(modal);
-    if (!isTextarea && prompt !== '') {
-      $selector('[data-modal-temporary] .ts.input > *').on('keydown', (event) => {
-        if (event.keyCode !== 13) {
-          return;
-        }
-        ts('[data-modal-temporary]').modal('hide');
-        return options.onApprove.call(this, $selector('[data-modal-temporary] .ts.input > *').val());
-      });
-    }
-    return ts('[data-modal-temporary]').modal({
-      closable: options.closable,
-      onApprove: function() {
-        return options.onApprove.call(this, $selector('[data-modal-temporary] .ts.input > *').val());
-      },
-      onDeny: function() {
-        return options.onDeny.call(this, $selector('[data-modal-temporary] .ts.input > *').val());
-      },
-      onClose: function() {
-        return options.onClose.call(this, $selector('[data-modal-temporary] .ts.input > *').val());
-      },
-      onIgnore: function() {
-        return options.onIgnore.call(this, $selector('[data-modal-temporary] .ts.input > *').val());
-      }
-    }).modal('show');
   }
+  // 加上尺寸選項，並且套用相關 HTML 原始碼，還有 Tocas 前輟來初始化這個臨時對話視窗。
+  $modal.addClass(`ts ${options.size} modal`).html(`${title}\n<div class=\"content\">\n    ${content}\n    ${prompt}\n</div>\n<div class=\"actions\">\n    ${cancel}\n    ${ok}\n    ${negative}\n    ${positive}\n</div>`);
+  // 如果輸入欄位是一般的 `input`，而且這又是個輸入視窗的話。
+  if (!isTextarea && prompt !== '') {
+    // 監聽輸入欄位的按鍵事件。
+    $selector('[data-modal-temporary] .ts.input > *').on('keydown', (event) => {
+      // 如果按下的按鍵不是 Enter 就離開。
+      if (event.keyCode !== 13) {
+        return;
+      }
+      // 否則就呼叫對話視窗的隱藏函式。
+      ts('[data-modal-temporary]').modal('hide');
+      // 並且呼叫確定的回呼函式且帶入輸入欄位的數值。
+      // 模擬使用者按下 Enter 送出資料的手法。
+      return options.onApprove.call($modal.get(), $selector('[data-modal-temporary] .ts.input > *').val());
+    });
+  }
+  // 然後初始化這個進階的臨時對話視窗，接著顯示它。
+  return ts('[data-modal-temporary]').modal({
+    closable: options.closable,
+    onApprove: function() {
+      return options.onApprove.call($modal.get(), $selector('[data-modal-temporary] .ts.input > *').val());
+    },
+    onDeny: function() {
+      return options.onDeny.call($modal.get(), $selector('[data-modal-temporary] .ts.input > *').val());
+    },
+    onClose: function() {
+      return options.onClose.call($modal.get(), $selector('[data-modal-temporary] .ts.input > *').val());
+    },
+    onIgnore: function() {
+      return options.onIgnore.call($modal.get(), $selector('[data-modal-temporary] .ts.input > *').val());
+    }
+  }).modal('show');
 };
