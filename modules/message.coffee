@@ -18,7 +18,7 @@ class Message
 
     # 選擇器名稱。
     selector:
-        CLOSE_BUTTON: '.close.button'
+        CLOSE_BUTTON: '.ts.close.button'
 
     # 元素初始化函式。
     init: =>

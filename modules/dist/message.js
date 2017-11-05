@@ -87,7 +87,7 @@ Message = (function() {
 
   // 選擇器名稱。
   Message.prototype.selector = {
-    CLOSE_BUTTON: '.close.button'
+    CLOSE_BUTTON: '.ts.close.button'
   };
 
   return Message;
