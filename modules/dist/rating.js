@@ -11,6 +11,7 @@ Rating = (function() {
       this.init = this.init.bind(this);
       // 元素摧毀函式。
       this.destroy = this.destroy.bind(this);
+      
       // Set Rating
 
       // 設置指定評分數值，並且變動星星的圖示。
@@ -141,7 +142,7 @@ Rating = (function() {
       }
       // 如果評分是 0 的話。
       if (rating === 0) {
-        await this.delay(300);
+        await this.delay();
         // 就移除所有的選定星星圖示。
         return this.$this.find(this.selector.ICON).removeClass(`${this.className.ACTIVE} ${this.className.SELECTED}`);
       } else {

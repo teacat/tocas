@@ -163,7 +163,7 @@ class Rating
         @$this.data('onRate').call(@$this.get(), rating) if callable
         # 如果評分是 0 的話。
         if rating is 0
-            await @delay(300)
+            await @delay()
             # 就移除所有的選定星星圖示。
             @$this.find(@selector.ICON).removeClass "#{@className.ACTIVE} #{@className.SELECTED}"
         else
