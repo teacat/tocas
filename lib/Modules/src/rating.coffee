@@ -14,7 +14,7 @@ class TocasRating
         # 如果已經有星星的話則移除所有星星。
         $this.find('i').remove()
         # 如果這個評分是不可操作的，則加上停用類別。
-        if interactive
+        if not interactive
             $this.addClass 'disabled'
         # 初始化評分元件的時候，依照設置來決定要在元件內產生幾顆星星元素。
         for _ in [1..maxRating]
