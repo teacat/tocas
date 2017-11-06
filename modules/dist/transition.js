@@ -7,837 +7,213 @@ var Transition;
 Transition = (function() {
   class Transition {
     constructor() {
+      // 類別樣式名稱。
+      //className:
+
+      // 選擇器名稱。
+      //selector:
+
       // 元素初始化函式。
       this.init = this.init.bind(this);
       // 元素摧毀函式。
       this.destroy = this.destroy.bind(this);
-      // Animate
-
-      // 播放動畫。
-      this.animate = this.animate.bind(this);
       
-      // 將新的動畫推入佇列中，如果佇列裡只有這個動畫就立即執行。
+      this.untilVisible = this.untilVisible.bind(this);
+      
       this.push = this.push.bind(this);
       
-      this.execute = this.execute.bind(this);
+      this.start = this.start.bind(this);
+      
+      this.animate = this.animate.bind(this);
+      
+      this.getAnimation = this.getAnimation.bind(this);
       // 模組可用的方法。
       this.methods = this.methods.bind(this);
     }
 
-    init() {
-      // 初始化動畫佇列。
-      this.$this.data('animationQueue', []);
-      // 初始化動畫索引。
-      this.$this.data('animationIndex', 0);
+    init({animation, duration, onComplete, interval}) {
+      
+      //if animation is null
+      //    ts.fn
+
+      this.push(animation, duration, onComplete, interval);
       return ts.fn;
     }
 
     destroy() {}
 
     untilVisible() {
-      return new Promise(function(resolve) {
-        return setInterval(function() {
-          if (!document.hidden) {
-            return resolve();
+      return new Promise((resolve) => {
+        var timer;
+        return timer = setInterval(() => {
+          
+          if (document.hidden) {
+            return;
           }
-        }, 1);
+          
+          resolve();
+          
+          return clearInterval(timer);
+        }, 10);
       });
     }
 
-    async animate({animation, duration, onComplete, group, interval}) {
-      var index, looping, queue;
-      switch (animation) {
-        case 'show':
-          this.$this.removeAttr(this.hiddenName);
-          // 過了動畫的執行時間（相當於動畫執行完畢），我們才繼續。
-          await this.delay(duration);
-          break;
-        case 'hide':
-          this.$this.attr(this.hiddenName, 'true');
-          // 過了動畫的執行時間（相當於動畫執行完畢），我們才繼續。
-          await this.delay(duration);
-          break;
-        case 'toggle':
-          if (this.$this.attr(this.hiddenName) === 'true') {
-            this.$this.removeAttr(this.hiddenName);
-          } else {
-            this.$this.attr(this.hiddenName, 'true');
-          }
-          // 過了動畫的執行時間（相當於動畫執行完畢），我們才繼續。
-          await this.delay(duration);
-          break;
-        case 'delay':
-          // 過了動畫的執行時間（相當於動畫執行完畢），我們才繼續。
-          await this.delay(duration);
-          break;
-        default:
-          // 設置動畫時間。
-          this.$this.css('animation-duration', `${duration}ms`);
-          // 設置動畫名稱。
-          this.$this.attr(this.animationName, animation);
-          await this.delay();
-          // 執行動畫。
-          this.$this.attr(this.animatingName, true);
-          // 過了動畫的執行時間（相當於動畫執行完畢），我們才繼續。
-          await this.delay(duration);
+    push(animation, duration, onComplete, interval) {
+      var data;
+      duration = duration || 800;
+      onComplete = onComplete || function() {};
+      interval = interval || 50;
+      
+      if (animation === null) {
+        return;
+      }
+      
+      data = this.$this.data('animationData');
+      
+      if (data === void 0) {
+        data = {
+          animating: false,
+          index: 0,
+          looping: true,
+          queue: []
+        };
+      }
+      
+      data.queue.push({animation, duration, onComplete, interval});
+      
+      this.$this.data('animationData', data);
+      
+      if (data.queue.length === 1 && this.index === this.$elements.length - 1) {
+        return this.start();
+      }
+    }
+
+    async start() {
+      var $element, element, elements, i, index, len, results;
+      
+      elements = this.$elements.toArray();
+      results = [];
+      
+      for (index = i = 0, len = elements.length; i < len; index = ++i) {
+        element = elements[index];
+        // 持續以 `await` 阻擋，直到此頁面在螢幕上可見。
+        // 這可以避免瀏覽器因為重新繪製而打亂動畫的順序，如果移除此方法會雜亂無章。
+        await this.untilVisible();
+        
+        $element = $selector(element);
+        
+        this.$this = $element;
+        
+        await this.animate(this.getAnimation());
+        if (index === elements.length - 1) {
+          results.push(this.start());
+        } else {
+          results.push(void 0);
+        }
+      }
+      return results;
+    }
+
+    animate({animation, duration, onComplete, interval}) {
+      
+      return new Promise(async(resolve) => {
+        
+        this.$this.attr('data-animation', animation).css('animation-duration', `${duration}ms`);
+        
+        await this.delay();
+        
+        this.$this.attr('data-animating', true);
+        
+        this.$this.one('animationend.animation', () => {
           
-          if (animation.indexOf('in') !== -1) {
-            if (this.$this.attr(this.hiddenName) === 'true') {
-              this.$this.removeAttr(this.hiddenName);
-            }
-          }
-          if (animation.indexOf('out') !== -1) {
-            this.$this.attr(this.hiddenName, 'true');
-          }
-          // 移除動畫效果樣式。
-          this.$this.removeAttr(this.animatingName);
-      }
-      // 呼叫完成函式。
-      onComplete.call(this.$this.get());
-      // 取得動畫佇列。
-      queue = this.$this.data('animationQueue');
-      // 取得目前播放的索引。
-      index = this.$this.data('animationIndex');
-      // 確認是否為無限重複的動畫。
-      looping = this.$this.data('animationLooping');
-      index++;
-      // 如果沒有下一個動畫了，就表示這是最後一個。
-      // 我們就把動畫佇列清空。
-      if (queue[index] === void 0) {
-        index = 0;
-        this.$this.removeAttr(this.animationName).removeAttr(this.animatingName).css('animation-duration', '').data('animationIndex', index);
-        // 如果不需要重複的話，就將佇列清空。
-        if (!looping) {
-          queue = [];
-          this.$this.data('animationQueue', queue);
-          return;
-        }
-      }
-      // 設置新的索引。
-      this.$this.data('animationIndex', index);
-      // 執行下一個動畫。
-      return this.animate(queue[index]);
+          return onComplete.call(this.$this.get());
+        });
+        
+        await this.delay(interval);
+        
+        return resolve();
+      });
     }
 
-    push(animation, duration, onComplete) {
-      var data, queue;
-      // 如果元素還沒初始化的話，就先初始化。
-      if (this.$this.data('animationQueue') === void 0) {
-        this.init();
+    getAnimation() {
+      var animation, data;
+      data = this.$this.data('animationData');
+      
+      animation = data.queue[data.index];
+      
+      data.index++;
+      
+      if (data.index > data.queue.length - 1 && data.looping) {
+        data.index = 0;
       }
-      // 準備好本次的動畫資料。
-      if (typeof duration === 'function') {
-        onComplete = duration;
-        duration = 800;
-      }
-      if (duration === null) {
-        duration = 800;
-      }
-      if (onComplete === null || onComplete === void 0) {
-        onComplete = function() {};
-      }
-      data = {animation, duration, onComplete};
-      // 將本次動畫資料擺入至佇列中。
-      queue = this.$this.data('animationQueue');
-      queue.push(data);
-      // 如果佇列裡只有一個動畫，那麼就是剛才所新增的，直接開始執行。
-      if (queue.length === 1) {
-        return this.animate(data);
-      }
-    }
-
-    execute(options) {
-      var $self, element, elements, i, index, len, results;
-      if (this.index !== 0 && (options.reverse != null) && options.reverse === true) {
-        return ts.fn;
-      }
-      switch (options.animation) {
-        case 'hide':
-        case 'toggle':
-        case 'show':
-          if (options.interval === void 0) {
-            options.interval = 0;
-          }
-          if (options.duration === null) {
-            options.duration = 0;
-          }
-      }
-      options = Object.assign({
-        animation: '',
-        duration: null,
-        interval: 100,
-        reverse: false,
-        group: false,
-        onComplete: function() {},
-        onAllComplete: function() {}
-      }, options);
-      if (options.reverse === true) {
-        elements = $elements.toArray().reverse();
-        results = [];
-        for (index = i = 0, len = elements.length; i < len; index = ++i) {
-          element = elements[index];
-          $self = $selector(element);
-          results.push((async($self) => {
-            await this.delay(options.interval * index);
-            await this.untilVisible();
-            this.$this = $self;
-            return this.push(options.animation, options.duration, options.onComplete);
-          })($self));
-        }
-        return results;
-      } else {
-        return (async() => {          //@$this = @$origin
-          await this.delay(options.interval * this.index);
-          await this.untilVisible();
-          return this.push(options.animation, options.duration, options.onComplete);
-        })();
-      }
+      
+      this.$this.data('animationData', data);
+      return animation;
     }
 
     methods() {
       return {
-        'bounce': (duration, onComplete) => {
-          this.execute({
-            animation: 'bounce',
-            duration,
-            onComplete
-          });
+        // Stop
+
+        stop: () => {
           return ts.fn;
         },
-        'flash': (duration, onComplete) => {
-          this.execute({
-            animation: 'flash',
-            duration,
-            onComplete
-          });
+        // Stop All
+
+        'stop all': () => {
           return ts.fn;
         },
-        'pulse': (duration, onComplete) => {
-          this.execute({
-            animation: 'pulse',
-            duration,
-            onComplete
-          });
+        // Clear Queue
+
+        'clear queue': () => {
           return ts.fn;
         },
-        'rubber band': (duration, onComplete) => {
-          this.execute({
-            animation: 'rubber band',
-            duration,
-            onComplete
-          });
+        // Show
+
+        show: () => {
           return ts.fn;
         },
-        'shake': (duration, onComplete) => {
-          this.execute({
-            animation: 'shake',
-            duration,
-            onComplete
-          });
+        // Hide
+
+        hide: () => {
           return ts.fn;
         },
-        'head shake': (duration, onComplete) => {
-          this.execute({
-            animation: 'head shake',
-            duration,
-            onComplete
-          });
+        // Toggle
+
+        toggle: () => {
           return ts.fn;
         },
-        'swing': (duration, onComplete) => {
-          this.execute({
-            animation: 'swing',
-            duration,
-            onComplete
-          });
+        // Set Looping
+
+        'set looping': () => {
           return ts.fn;
         },
-        'tada': (duration, onComplete) => {
-          this.execute({
-            animation: 'tada',
-            duration,
-            onComplete
-          });
+        // Remove Looping
+
+        'remove looping': () => {
           return ts.fn;
         },
-        'wobble': (duration, onComplete) => {
-          this.execute({
-            animation: 'wobble',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'jello': (duration, onComplete) => {
-          this.execute({
-            animation: 'jello',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'bounce in': (duration, onComplete) => {
-          this.execute({
-            animation: 'bounce in',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'bounce in down': (duration, onComplete) => {
-          this.execute({
-            animation: 'bounce in down',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'bounce in left': (duration, onComplete) => {
-          this.execute({
-            animation: 'bounce in left',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'bounce in right': (duration, onComplete) => {
-          this.execute({
-            animation: 'bounce in right',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'bounce in up': (duration, onComplete) => {
-          this.execute({
-            animation: 'bounce in up',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'bounce out': (duration, onComplete) => {
-          this.execute({
-            animation: 'bounce out',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'bounce down': (duration, onComplete) => {
-          this.execute({
-            animation: 'bounce down',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'bounce out left': (duration, onComplete) => {
-          this.execute({
-            animation: 'bounce out left',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'bounce out right': (duration, onComplete) => {
-          this.execute({
-            animation: 'bounce out right',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'bounce out up': (duration, onComplete) => {
-          this.execute({
-            animation: 'bounce out up',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'fade in': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade in',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
+        // Is Visible
+
+        'is visible': () => {},
+        // Is Animating
+
+        'is animating': () => {},
+        // Is Looping
+
+        'is looping': () => {},
+        // Fade In Down
+
         'fade in down': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade in down',
-            duration,
-            onComplete
-          });
+          this.push('fade in down', duration, onComplete);
           return ts.fn;
         },
-        'fade in down heavily': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade in down heavily',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'fade in left': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade in left',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'fade in left heavily': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade in left heavily',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'fade in right': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade in right',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'fade in right heavily': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade in right heavily',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'fade in up': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade in up',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'fade in up heavily': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade in up heavily',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
+        // Fade Out Down
+
         'fade out down': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade out down',
-            duration,
-            onComplete
-          });
+          this.push('fade out down', duration, onComplete);
           return ts.fn;
-        },
-        'fade out down heavily': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade out down heavily',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'fade out left': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade out left',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'fade out left heavily': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade out left heavily',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'fade out right': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade out right',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'fade out right heavily': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade out right heavily',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'fade out up': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade out up',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'fade out up heavily': (duration, onComplete) => {
-          this.execute({
-            animation: 'fade out up heavily',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'flip': (duration, onComplete) => {
-          this.execute({
-            animation: 'flip',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'flip in x': (duration, onComplete) => {
-          this.execute({
-            animation: 'flip in x',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'flip in y': (duration, onComplete) => {
-          this.execute({
-            animation: 'flip in y',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'flip out x': (duration, onComplete) => {
-          this.execute({
-            animation: 'flip out x',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'flip out y': (duration, onComplete) => {
-          this.execute({
-            animation: 'flip out y',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'light speed in': (duration, onComplete) => {
-          this.execute({
-            animation: 'light speed in',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'light speed out': (duration, onComplete) => {
-          this.execute({
-            animation: 'light speed out',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'rotate in': (duration, onComplete) => {
-          this.execute({
-            animation: 'rotate in',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'rotate in down left': (duration, onComplete) => {
-          this.execute({
-            animation: 'rotate in down left',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'rotate in down right': (duration, onComplete) => {
-          this.execute({
-            animation: 'rotate in down right',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'rotate in up left': (duration, onComplete) => {
-          this.execute({
-            animation: 'rotate in up left',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'rotate in up right': (duration, onComplete) => {
-          this.execute({
-            animation: 'rotate in up right',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'rotate out': (duration, onComplete) => {
-          this.execute({
-            animation: 'rotate out',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'rotate out down left': (duration, onComplete) => {
-          this.execute({
-            animation: 'rotate out down left',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'rotate out down right': (duration, onComplete) => {
-          this.execute({
-            animation: 'rotate out down right',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'rotate out up left': (duration, onComplete) => {
-          this.execute({
-            animation: 'rotate out up left',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'rotate out up right': (duration, onComplete) => {
-          this.execute({
-            animation: 'rotate out up right',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'hinge': (duration, onComplete) => {
-          this.execute({
-            animation: 'hinge',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'roll in': (duration, onComplete) => {
-          this.execute({
-            animation: 'roll in',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'roll out': (duration, onComplete) => {
-          this.execute({
-            animation: 'roll out',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'zoom in': (duration, onComplete) => {
-          this.execute({
-            animation: 'zoom in',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'zoom in down': (duration, onComplete) => {
-          this.execute({
-            animation: 'zoom in down',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'zoom in left': (duration, onComplete) => {
-          this.execute({
-            animation: 'zoom in left',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'zoom in up': (duration, onComplete) => {
-          this.execute({
-            animation: 'zoom in up',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'zoom in right': (duration, onComplete) => {
-          this.execute({
-            animation: 'zoom in right',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'zoom out': (duration, onComplete) => {
-          this.execute({
-            animation: 'zoom out',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'zoom out down': (duration, onComplete) => {
-          this.execute({
-            animation: 'zoom out down',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'zoom out left': (duration, onComplete) => {
-          this.execute({
-            animation: 'zoom out left',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'zoom out right': (duration, onComplete) => {
-          this.execute({
-            animation: 'zoom out right',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'zoom out up': (duration, onComplete) => {
-          this.execute({
-            animation: 'zoom out up',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'slide in down': (duration, onComplete) => {
-          this.execute({
-            animation: 'slide in down',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'slide in left': (duration, onComplete) => {
-          this.execute({
-            animation: 'slide in left',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'slide in right': (duration, onComplete) => {
-          this.execute({
-            animation: 'slide in right',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'slide in up': (duration, onComplete) => {
-          this.execute({
-            animation: 'slide in up',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'slide out down': (duration, onComplete) => {
-          this.execute({
-            animation: 'slide out down',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'slide out left': (duration, onComplete) => {
-          this.execute({
-            animation: 'slide out left',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'slide out right': (duration, onComplete) => {
-          this.execute({
-            animation: 'slide out right',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'slide out up': (duration, onComplete) => {
-          this.execute({
-            animation: 'slide out up',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'toggle': (duration, onComplete) => {
-          this.execute({
-            animation: 'toggle',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'show': (duration, onComplete) => {
-          this.execute({
-            animation: 'show',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'hide': (duration, onComplete) => {
-          this.execute({
-            animation: 'hide',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'delay': (duration, onComplete) => {
-          this.execute({
-            animation: 'delay',
-            duration,
-            onComplete
-          });
-          return ts.fn;
-        },
-        'set looping': (options) => {
-          this.$this.data('animationLooping', true);
-          return ts.fn;
-        },
-        'remove looping': (options) => {
-          this.$this.removeData('animationLooping');
-          return ts.fn;
-        },
-        'stop': function() {},
-        'stop all': function() {}
+        }
       };
     }
 
@@ -847,22 +223,15 @@ Transition = (function() {
   Transition.module = 'transition';
 
   // 模組屬性。
-  //props:
-
-  // 類別樣式名稱。
-  //className:
-
-  // 選擇器名稱。
-  //selector:
-
-  // dd
-  Transition.prototype.hiddenName = 'data-animating-hidden';
-
-  // dd
-  Transition.prototype.animationName = 'data-animation';
-
-  // dd
-  Transition.prototype.animatingName = 'data-animating';
+  Transition.prototype.props = {
+    animation: null,
+    reverse: false,
+    interval: 0,
+    duration: 500,
+    onComplete: function() {},
+    onAllComplete: function() {},
+    onStart: function() {}
+  };
 
   return Transition;
 
