@@ -26,9 +26,18 @@ class Modal
         # 是否綁定鍵盤快捷鍵，如 Esc 鍵以關閉視窗。
         keyboardShortcuts: true
 
+    # 對話視窗的動畫效果。
+    duration: 250
+
+    # 臨時對話視窗的標籤名稱。
+    temporaryName: 'data-modal-temporary'
+
     # 類別樣式名稱。
     className:
+        MODAL        : 'ts modal'
+        MINI_MODAL   : 'ts mini modal'
         MODALS_DIMMER: 'ts modals dimmer'
+        SIZES        : 'mini tiny small large'
         CLOSABLE     : 'closable'
         ACTIVE       : 'active'
         OPENING      : 'opening'
@@ -40,6 +49,8 @@ class Modal
         MODALS_DIMMER        : '.ts.modals.dimmer'
         CLOSING_MODALS_DIMMER: '.ts.modals.closing.dimmer'
         CLOSABLE_ACTIVE_MODAL: '.ts.modal.active.closable'
+        TEMP_MODAL           : "[#{@::temporaryName}]"
+        TEMP_MODAL_INPUT     : "[#{@::temporaryName}] .ts.input > *"
 
     # 元素初始化函式。
     init: =>
@@ -140,7 +151,7 @@ class Modal
         #
         if $selector(".#{@className.ACTIVE}.modal").length isnt 0
             ts('.modal').modal('hide')
-            await @delay 250
+            await @delay @duration
 
         # 鎖定頁面的捲動。
         $selector('body').attr 'data-modal-lock', 'true'
@@ -201,7 +212,7 @@ class Modal
         #
         # 切換對話視窗。
         toggle: =>
-            if @$this.hasClass 'active'
+            if @$this.hasClass @className.ACTIVE
                 @close()
             else
                 @open()
@@ -211,7 +222,7 @@ class Modal
         #
         # 回傳一個表示對話視窗是否正在顯示的布林值。
         'is active': =>
-            return @$this.hasClass 'active'
+            return @$this.hasClass @className.ACTIVE
 
 ts Modal
 
@@ -239,7 +250,7 @@ ts.prompt = (title, value='', onApprove=->true) =>
 # 讓使用者能夠產生臨時對話視窗的函式。
 ts.modal = (title, content, onClose=->) =>
     # 取得現有的臨時對話視窗。
-    $modal   = $selector '[data-modal-temporary]'
+    $modal   = $selector Modal::selector.TEMP_MODAL
     # 是否有臨時對話視窗的布林值。
     hasModal = $modal.length isnt 0
     # 延遲函式。
@@ -248,20 +259,20 @@ ts.modal = (title, content, onClose=->) =>
     # 如果有臨時對話視窗。
     if hasModal
         # 而且該對話視窗是啟用狀態的話。
-        if $modal.hasClass 'active'
+        if $modal.hasClass Modal::className.ACTIVE
             # 隱藏原先的對話視窗。
-            ts('[data-modal-temporary]').modal 'hide'
+            ts(Modal::selector.TEMP_MODAL).modal 'hide'
 
             # 延遲一小段時間讓對話視窗隱藏後才繼續接下來的動作。
             # 避免視窗還沒隱藏，就改變其外觀看起來會很詭異。
-            await delay 250
+            await delay Modal::duration
 
-            # 重設對話視窗的樣式。
-            $modal.removeClass 'mini tiny small large'
+            # 重設對話視窗的尺寸樣式。
+            $modal.removeClass Modal::className.SIZES
     else
         # 如果沒有臨時對話視窗，就自己建立一個，然後推入 Body 中。
         $modal = $selector '<div>'
-            .attr     'data-modal-temporary', 'true'
+            .attr     Modal::temporaryName, 'true'
             .appendTo $selector 'body'
 
     # 如果 `title` 不是物件，就表示這是簡易對話視窗。
@@ -269,7 +280,7 @@ ts.modal = (title, content, onClose=->) =>
         # 將簡易對話視窗設置為迷你型的，並加上 Tocas 前輟。
         # 然後套用 HTML 原始碼。
         $modal
-            .addClass 'ts mini modal'
+            .addClass Modal::className.MINI_MODAL
             .html     """
                 <div class="header">#{title}</div>
                 <div class="content">#{content}</div>
@@ -282,9 +293,18 @@ ts.modal = (title, content, onClose=->) =>
 
         # 選擇臨時簡易對話視窗，然後初始化它，並在關閉時呼叫關閉函式。
         # 初始化完之後就顯示臨時對話視窗。
-        ts '[data-modal-temporary]'
+        ts Modal::selector.TEMP_MODAL
             .modal
-                onClose: -> onClose.call @
+                onClose: =>
+                    # 呼叫關閉函式，並回傳臨時對話視窗元素。
+                    onClose.call $modal.get()
+
+                    # 等待對話視窗關閉動畫。
+                    await delay Modal::duration
+
+                    # 如果此時的臨時對話視窗沒有任何啟用樣式，
+                    # 也就代表沒有另一個行為在開啟對話視窗，我們就可以安心移除這個臨時對話視窗了。
+                    $modal.remove() if not $selector(Modal::selector.TEMP_MODAL).hasClass 'active'
             .modal 'show'
 
         return
@@ -368,7 +388,7 @@ ts.modal = (title, content, onClose=->) =>
 
     # 加上尺寸選項，並且套用相關 HTML 原始碼，還有 Tocas 前輟來初始化這個臨時對話視窗。
     $modal
-        .addClass "ts #{options.size} modal"
+        .addClass "#{Modal::className.MODAL} #{options.size}"
         .html     """
             #{title}
             <div class="content">
@@ -386,27 +406,32 @@ ts.modal = (title, content, onClose=->) =>
     # 如果輸入欄位是一般的 `input`，而且這又是個輸入視窗的話。
     if not isTextarea and prompt isnt ''
         # 監聽輸入欄位的按鍵事件。
-        $selector('[data-modal-temporary] .ts.input > *').on 'keydown', (event) =>
+        $selector(Modal::selector.TEMP_MODAL_INPUT).on 'keydown', (event) =>
             # 如果按下的按鍵不是 Enter 就離開。
             return if event.keyCode isnt 13
 
             # 否則就呼叫對話視窗的隱藏函式。
-            ts('[data-modal-temporary]').modal 'hide'
+            ts(Modal::selector.TEMP_MODAL).modal 'hide'
 
             # 並且呼叫確定的回呼函式且帶入輸入欄位的數值。
             # 模擬使用者按下 Enter 送出資料的手法。
-            options.onApprove.call $modal.get(), $selector('[data-modal-temporary] .ts.input > *').val()
+            options.onApprove.call $modal.get(), $selector(Modal::selector.TEMP_MODAL_INPUT).val()
 
     # 然後初始化這個進階的臨時對話視窗，接著顯示它。
-    ts '[data-modal-temporary]'
+    ts Modal::selector.TEMP_MODAL
         .modal
             closable : options.closable
             onApprove: ->
-                    options.onApprove.call $modal.get(), $selector('[data-modal-temporary] .ts.input > *').val()
+                    options.onApprove.call $modal.get(), $selector(Modal::selector.TEMP_MODAL_INPUT).val()
             onDeny: ->
-                    options.onDeny.call $modal.get(), $selector('[data-modal-temporary] .ts.input > *').val()
+                    options.onDeny.call $modal.get(), $selector(Modal::selector.TEMP_MODAL_INPUT).val()
             onClose: ->
-                    options.onClose.call $modal.get(), $selector('[data-modal-temporary] .ts.input > *').val()
+                    options.onClose.call $modal.get(), $selector(Modal::selector.TEMP_MODAL_INPUT).val()
+                    # 等待對話視窗關閉動畫。
+                    await delay Modal::duration
+                    # 如果此時的臨時對話視窗沒有任何啟用樣式，
+                    # 也就代表沒有另一個行為在開啟對話視窗，我們就可以安心移除這個臨時對話視窗了。
+                    $modal.remove() if not $selector(Modal::selector.TEMP_MODAL).hasClass 'active'
             onIgnore: ->
-                    options.onIgnore.call $modal.get(), $selector('[data-modal-temporary] .ts.input > *').val()
+                    options.onIgnore.call $modal.get(), $selector(Modal::selector.TEMP_MODAL_INPUT).val()
         .modal 'show'

@@ -128,7 +128,7 @@ Modal = (function() {
       
       if ($selector(`.${this.className.ACTIVE}.modal`).length !== 0) {
         ts('.modal').modal('hide');
-        await this.delay(250);
+        await this.delay(this.duration);
       }
       // 鎖定頁面的捲動。
       $selector('body').attr('data-modal-lock', 'true');
@@ -181,7 +181,7 @@ Modal = (function() {
 
         // 切換對話視窗。
         toggle: () => {
-          if (this.$this.hasClass('active')) {
+          if (this.$this.hasClass(this.className.ACTIVE)) {
             this.close();
           } else {
             this.open();
@@ -192,7 +192,7 @@ Modal = (function() {
 
         // 回傳一個表示對話視窗是否正在顯示的布林值。
         'is active': () => {
-          return this.$this.hasClass('active');
+          return this.$this.hasClass(this.className.ACTIVE);
         }
       };
     }
@@ -226,9 +226,18 @@ Modal = (function() {
     keyboardShortcuts: true
   };
 
+  // 對話視窗的動畫效果。
+  Modal.prototype.duration = 250;
+
+  // 臨時對話視窗的標籤名稱。
+  Modal.prototype.temporaryName = 'data-modal-temporary';
+
   // 類別樣式名稱。
   Modal.prototype.className = {
+    MODAL: 'ts modal',
+    MINI_MODAL: 'ts mini modal',
     MODALS_DIMMER: 'ts modals dimmer',
+    SIZES: 'mini tiny small large',
     CLOSABLE: 'closable',
     ACTIVE: 'active',
     OPENING: 'opening',
@@ -240,7 +249,9 @@ Modal = (function() {
     CLOSE_BUTTON: ':scope > .ts.close.button',
     MODALS_DIMMER: '.ts.modals.dimmer',
     CLOSING_MODALS_DIMMER: '.ts.modals.closing.dimmer',
-    CLOSABLE_ACTIVE_MODAL: '.ts.modal.active.closable'
+    CLOSABLE_ACTIVE_MODAL: '.ts.modal.active.closable',
+    TEMP_MODAL: `[${Modal.prototype.temporaryName}]`,
+    TEMP_MODAL_INPUT: `[${Modal.prototype.temporaryName}] .ts.input > *`
   };
 
   return Modal;
@@ -274,7 +285,7 @@ ts.prompt = (title, value = '', onApprove = function() {
 ts.modal = async(title, content, onClose = function() {}) => {
   var $modal, cancel, delay, hasModal, isTextarea, negative, ok, options, placeholder, positive, prompt, ref, value;
   // 取得現有的臨時對話視窗。
-  $modal = $selector('[data-modal-temporary]');
+  $modal = $selector(Modal.prototype.selector.TEMP_MODAL);
   // 是否有臨時對話視窗的布林值。
   hasModal = $modal.length !== 0;
   // 延遲函式。
@@ -286,29 +297,37 @@ ts.modal = async(title, content, onClose = function() {}) => {
   // 如果有臨時對話視窗。
   if (hasModal) {
     // 而且該對話視窗是啟用狀態的話。
-    if ($modal.hasClass('active')) {
+    if ($modal.hasClass(Modal.prototype.className.ACTIVE)) {
       // 隱藏原先的對話視窗。
-      ts('[data-modal-temporary]').modal('hide');
+      ts(Modal.prototype.selector.TEMP_MODAL).modal('hide');
       // 延遲一小段時間讓對話視窗隱藏後才繼續接下來的動作。
       // 避免視窗還沒隱藏，就改變其外觀看起來會很詭異。
-      await delay(250);
-      // 重設對話視窗的樣式。
-      $modal.removeClass('mini tiny small large');
+      await delay(Modal.prototype.duration);
+      // 重設對話視窗的尺寸樣式。
+      $modal.removeClass(Modal.prototype.className.SIZES);
     }
   } else {
     // 如果沒有臨時對話視窗，就自己建立一個，然後推入 Body 中。
-    $modal = $selector('<div>').attr('data-modal-temporary', 'true').appendTo($selector('body'));
+    $modal = $selector('<div>').attr(Modal.prototype.temporaryName, 'true').appendTo($selector('body'));
   }
   // 如果 `title` 不是物件，就表示這是簡易對話視窗。
   if (typeof title !== 'object') {
     // 將簡易對話視窗設置為迷你型的，並加上 Tocas 前輟。
     // 然後套用 HTML 原始碼。
-    $modal.addClass('ts mini modal').html(`<div class=\"header\">${title}</div>\n<div class=\"content\">${content}</div>\n<div class=\"actions\">\n    <button class=\"ts ok button\">\n        確定\n    </button>\n</div>`);
+    $modal.addClass(Modal.prototype.className.MINI_MODAL).html(`<div class=\"header\">${title}</div>\n<div class=\"content\">${content}</div>\n<div class=\"actions\">\n    <button class=\"ts ok button\">\n        確定\n    </button>\n</div>`);
     // 選擇臨時簡易對話視窗，然後初始化它，並在關閉時呼叫關閉函式。
     // 初始化完之後就顯示臨時對話視窗。
-    ts('[data-modal-temporary]').modal({
-      onClose: function() {
-        return onClose.call(this);
+    ts(Modal.prototype.selector.TEMP_MODAL).modal({
+      onClose: async() => {
+        // 呼叫關閉函式，並回傳臨時對話視窗元素。
+        onClose.call($modal.get());
+        // 等待對話視窗關閉動畫。
+        await delay(Modal.prototype.duration);
+        if (!$selector(Modal.prototype.selector.TEMP_MODAL).hasClass('active')) {
+          // 如果此時的臨時對話視窗沒有任何啟用樣式，
+          // 也就代表沒有另一個行為在開啟對話視窗，我們就可以安心移除這個臨時對話視窗了。
+          return $modal.remove();
+        }
       }
     }).modal('show');
     return;
@@ -383,36 +402,43 @@ ts.modal = async(title, content, onClose = function() {}) => {
     }
   }
   // 加上尺寸選項，並且套用相關 HTML 原始碼，還有 Tocas 前輟來初始化這個臨時對話視窗。
-  $modal.addClass(`ts ${options.size} modal`).html(`${title}\n<div class=\"content\">\n    ${content}\n    ${prompt}\n</div>\n<div class=\"actions\">\n    ${cancel}\n    ${ok}\n    ${negative}\n    ${positive}\n</div>`);
+  $modal.addClass(`${Modal.prototype.className.MODAL} ${options.size}`).html(`${title}\n<div class=\"content\">\n    ${content}\n    ${prompt}\n</div>\n<div class=\"actions\">\n    ${cancel}\n    ${ok}\n    ${negative}\n    ${positive}\n</div>`);
   // 如果輸入欄位是一般的 `input`，而且這又是個輸入視窗的話。
   if (!isTextarea && prompt !== '') {
     // 監聽輸入欄位的按鍵事件。
-    $selector('[data-modal-temporary] .ts.input > *').on('keydown', (event) => {
+    $selector(Modal.prototype.selector.TEMP_MODAL_INPUT).on('keydown', (event) => {
       // 如果按下的按鍵不是 Enter 就離開。
       if (event.keyCode !== 13) {
         return;
       }
       // 否則就呼叫對話視窗的隱藏函式。
-      ts('[data-modal-temporary]').modal('hide');
+      ts(Modal.prototype.selector.TEMP_MODAL).modal('hide');
       // 並且呼叫確定的回呼函式且帶入輸入欄位的數值。
       // 模擬使用者按下 Enter 送出資料的手法。
-      return options.onApprove.call($modal.get(), $selector('[data-modal-temporary] .ts.input > *').val());
+      return options.onApprove.call($modal.get(), $selector(Modal.prototype.selector.TEMP_MODAL_INPUT).val());
     });
   }
   // 然後初始化這個進階的臨時對話視窗，接著顯示它。
-  return ts('[data-modal-temporary]').modal({
+  return ts(Modal.prototype.selector.TEMP_MODAL).modal({
     closable: options.closable,
     onApprove: function() {
-      return options.onApprove.call($modal.get(), $selector('[data-modal-temporary] .ts.input > *').val());
+      return options.onApprove.call($modal.get(), $selector(Modal.prototype.selector.TEMP_MODAL_INPUT).val());
     },
     onDeny: function() {
-      return options.onDeny.call($modal.get(), $selector('[data-modal-temporary] .ts.input > *').val());
+      return options.onDeny.call($modal.get(), $selector(Modal.prototype.selector.TEMP_MODAL_INPUT).val());
     },
-    onClose: function() {
-      return options.onClose.call($modal.get(), $selector('[data-modal-temporary] .ts.input > *').val());
+    onClose: async function() {
+      options.onClose.call($modal.get(), $selector(Modal.prototype.selector.TEMP_MODAL_INPUT).val());
+      // 等待對話視窗關閉動畫。
+      await delay(Modal.prototype.duration);
+      if (!$selector(Modal.prototype.selector.TEMP_MODAL).hasClass('active')) {
+        // 如果此時的臨時對話視窗沒有任何啟用樣式，
+        // 也就代表沒有另一個行為在開啟對話視窗，我們就可以安心移除這個臨時對話視窗了。
+        return $modal.remove();
+      }
     },
     onIgnore: function() {
-      return options.onIgnore.call($modal.get(), $selector('[data-modal-temporary] .ts.input > *').val());
+      return options.onIgnore.call($modal.get(), $selector(Modal.prototype.selector.TEMP_MODAL_INPUT).val());
     }
   }).modal('show');
 };
