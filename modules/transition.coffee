@@ -9,13 +9,12 @@ class Transition
 
     # 模組屬性。
     props:
-        animation    : null
-        reverse      : false
-        interval     : 0
-        duration     : 500
-        onComplete   : ->
-        onAllComplete: ->
-        onStart      : ->
+        animation : null
+        reverse   : false
+        interval  : 0
+        duration  : 500
+        onComplete: ->
+        onStart   : ->
 
     # 類別樣式名稱。
     #className:
@@ -104,6 +103,7 @@ class Transition
         onComplete = onComplete or ->
         # 播放下個動畫的相隔毫秒數。
         switch animation
+            # 如果動畫效果是即刻性的（隱藏、顯示），就將 `interval` 預設為 0。
             when 'hide', 'show', 'toggle', 'hide visibility', 'show visibility', 'toggle visibility'
                 interval = interval or 0
             else
@@ -129,47 +129,6 @@ class Transition
             await @delay()
             @start()
 
-    #
-    #
-    #
-    globalAction: (animation) =>
-        new Promise (resolve) =>
-            switch animation
-                #
-                when 'delay'
-                    await @delay duration
-
-                #
-                when 'show'
-                    @$this.removeAttr 'data-animating-hidden'
-
-                #
-                when 'hide'
-                    @$this.attr 'data-animating-hidden', 'true'
-
-                #
-                when 'toggle'
-                    if @$this.attr('data-animating-hidden') is 'true'
-                        @$this.removeAttr 'data-animating-hidden'
-                    else
-                        @$this.attr 'data-animating-hidden', 'true'
-
-                #
-                when 'show visibility'
-                    @$this.removeAttr 'data-animating-hidden'
-
-                #
-                when 'hide visibility'
-                    @$this.attr 'data-animating-hidden', 'true'
-
-                #
-                when 'toggle visibility'
-                    if @$this.attr('data-animating-hidden') is 'true'
-                        @$this.removeAttr 'data-animating-hidden'
-                    else
-                        @$this.attr 'data-animating-hidden', 'true'
-            resolve()
-
     # Start
     #
     # 開始執行元素選擇器裡所有元素的動畫。
@@ -192,67 +151,69 @@ class Transition
 
             # 取得此元素本輪該播放的動畫資料。
             animation = @getAnimation()
-            console.log @$this.data 'animationData'
+
             # 如果動畫佇列是空的，那麼就離開。
             if animation is null
                 return
 
             # 如果這是選擇器的第一個元素。
             if index is 0
+                # 確認是否為全域動畫。
+                isGlobal = false
+
                 switch animation.animation
-                    #
+                    # 延遲。
                     when 'delay'
                         await @delay animation.duration
-                        $selector(@$elements.toArray().splice(1)).each (element) =>
-                            @$this = $selector element
-                            @getAnimation()
-                        @start()
-                        return
+                        isGlobal = yes
 
-                    #
+                    # 顯示。
                     when 'show'
                         @$elements.removeAttr 'data-animating-hidden'
-                        @start()
-                        return
+                        isGlobal = yes
 
-                    #
+                    # 隱藏。
                     when 'hide'
                         @$elements.attr 'data-animating-hidden', 'true'
-                        $selector(@$elements.toArray().splice(1)).each (element) =>
-                            @$this = $selector element
-                            @getAnimation()
-                        @start()
-                        return
+                        isGlobal = yes
 
-                    #
+                    # 切換顯示、隱藏。
                     when 'toggle'
                         if @$this.attr('data-animating-hidden') is 'true'
                             @$this.removeAttr 'data-animating-hidden'
                         else
                             @$this.attr 'data-animating-hidden', 'true'
-                        @start()
-                        return
+                        isGlobal = yes
 
-                    #
+                    # 可見。
                     when 'show visibility'
                         @$this.removeAttr 'data-animating-hidden'
-                        @start()
-                        return
+                        isGlobal = yes
 
-                    #
+                    # 不可見但保有佔用區塊。
                     when 'hide visibility'
                         @$this.attr 'data-animating-hidden', 'true'
-                        @start()
-                        return
+                        isGlobal = yes
 
-                    #
+                    # 切換可見度。
                     when 'toggle visibility'
                         if @$this.attr('data-animating-hidden') is 'true'
                             @$this.removeAttr 'data-animating-hidden'
                         else
                             @$this.attr 'data-animating-hidden', 'true'
-                        @start()
-                        return
+                        isGlobal = yes
+
+                # 如果是全域動畫的話，因為只會執行一次，所以會忽略其他元素的動畫索引。
+                # 為了解決這個問題，我們需要推進其他元素的動畫索引並加ㄧ。
+                if isGlobal
+                    # 遞迴元素選擇器中，除了目前元素以外的所有元素。
+                    # 因為這個元素的動畫索引已經被遞加過了。
+                    $selector(@$elements.toArray().splice(1)).each (element) =>
+                        @$this = $selector element
+                        # 執行取得動畫資料的函式可以自動替動畫索引遞加。
+                        @getAnimation()
+                    @start()
+                    return
 
             # 取得該元素這一輪該播放的動畫，並且開始演繹。
             await @animate animation
@@ -265,23 +226,13 @@ class Transition
     # Animate
     #
     # 執行指定動畫。
-    animate: (options) =>
-        #
-        if options is null
-            return
-
-        await @delay()
-
-        #
-        {animation, duration, onComplete, interval} = options
-
+    animate: ({animation, duration, onComplete, interval}) =>
         # 回傳 Promise，這樣其他函式才能透過 `await` 等待這個動畫執行完
         # 才執行下一個程式。
         new Promise (resolve) =>
+            # 如果動畫名稱中有 `in` 就表示這個動畫會顯示元素，所以就移除元素的隱藏標籤。
             if animation.indexOf('in') isnt -1
                 @$this.removeAttr 'data-animating-hidden'
-            if animation.indexOf('out') isnt -1
-                @$this.attr 'data-animating-hidden', 'true'
 
             # 套用動畫名稱、動畫速度。
             @$this
@@ -298,6 +249,10 @@ class Transition
             @$this.one 'animationend.animation', =>
                 # 呼叫完成函式，並且傳遞自己作為 `this`。
                 onComplete.call @$this.get()
+
+                # 如果動畫名稱中有 `out` 就表示這個動畫會隱藏元素，所以就在動畫結束後加上元素隱藏標籤。
+                if animation.indexOf('out') isnt -1
+                    @$this.attr 'data-animating-hidden', 'true'
 
             # 等待使用者指定的間隔毫秒。
             await @delay interval
@@ -332,16 +287,8 @@ class Transition
         # 套用新的動畫資料變更。
         @setData data
 
-        #
+        # 回傳這次該播放的動畫資料，如果佇列是空的導致無動畫資料則回傳 `null`。
         return if data.queue.length is 0 then null else animation
-
-    #
-    #
-    #
-    skipAnimation: () =>
-        @$elements.each (element) =>
-            @$this = $selector element
-            @getAnimation()
 
     # 模組可用的方法。
     methods: =>

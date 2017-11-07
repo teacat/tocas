@@ -38,8 +38,6 @@ Transition = (function() {
 
       // 將一個新的動畫推入至元素的動畫佇列中。
       this.push = this.push.bind(this);
-      
-      this.globalAction = this.globalAction.bind(this);
       // Start
 
       // 開始執行元素選擇器裡所有元素的動畫。
@@ -53,8 +51,6 @@ Transition = (function() {
       // 取得動畫，並且自動遞加元素內的動畫索引，
       // 如果索引到底則移除整個佇列，或是重設索引（如果允許重複的話）。
       this.getAnimation = this.getAnimation.bind(this);
-      
-      this.skipAnimation = this.skipAnimation.bind(this);
       // 模組可用的方法。
       this.methods = this.methods.bind(this);
     }
@@ -126,6 +122,7 @@ Transition = (function() {
       onComplete = onComplete || function() {};
       // 播放下個動畫的相隔毫秒數。
       switch (animation) {
+        // 如果動畫效果是即刻性的（隱藏、顯示），就將 `interval` 預設為 0。
         case 'hide':
         case 'show':
         case 'toggle':
@@ -151,51 +148,8 @@ Transition = (function() {
       }
     }
 
-    globalAction(animation) {
-      return new Promise(async(resolve) => {
-        switch (animation) {
-          
-          case 'delay':
-            await this.delay(duration);
-            break;
-          
-          case 'show':
-            this.$this.removeAttr('data-animating-hidden');
-            break;
-          
-          case 'hide':
-            this.$this.attr('data-animating-hidden', 'true');
-            break;
-          
-          case 'toggle':
-            if (this.$this.attr('data-animating-hidden') === 'true') {
-              this.$this.removeAttr('data-animating-hidden');
-            } else {
-              this.$this.attr('data-animating-hidden', 'true');
-            }
-            break;
-          
-          case 'show visibility':
-            this.$this.removeAttr('data-animating-hidden');
-            break;
-          
-          case 'hide visibility':
-            this.$this.attr('data-animating-hidden', 'true');
-            break;
-          
-          case 'toggle visibility':
-            if (this.$this.attr('data-animating-hidden') === 'true') {
-              this.$this.removeAttr('data-animating-hidden');
-            } else {
-              this.$this.attr('data-animating-hidden', 'true');
-            }
-        }
-        return resolve();
-      });
-    }
-
     async start() {
-      var $element, animation, element, elements, i, index, len;
+      var $element, animation, element, elements, i, index, isGlobal, len;
       // 將元素選擇器轉換為陣列，這樣才能以迴圈遞迴。
       // 因為 `await` 只能在 `for` 中使用，而不能用在 `.each` 或 `.forEach`。
       elements = this.$elements.toArray();
@@ -212,65 +166,70 @@ Transition = (function() {
         this.$this = $element;
         // 取得此元素本輪該播放的動畫資料。
         animation = this.getAnimation();
-        console.log(this.$this.data('animationData'));
         // 如果動畫佇列是空的，那麼就離開。
         if (animation === null) {
           return;
         }
         // 如果這是選擇器的第一個元素。
         if (index === 0) {
+          // 確認是否為全域動畫。
+          isGlobal = false;
           switch (animation.animation) {
-            
+            // 延遲。
             case 'delay':
               await this.delay(animation.duration);
-              $selector(this.$elements.toArray().splice(1)).each((element) => {
-                this.$this = $selector(element);
-                return this.getAnimation();
-              });
-              this.start();
-              return;
-            
+              isGlobal = true;
+              break;
+            // 顯示。
             case 'show':
               this.$elements.removeAttr('data-animating-hidden');
-              this.start();
-              return;
-            
+              isGlobal = true;
+              break;
+            // 隱藏。
             case 'hide':
               this.$elements.attr('data-animating-hidden', 'true');
-              $selector(this.$elements.toArray().splice(1)).each((element) => {
-                this.$this = $selector(element);
-                return this.getAnimation();
-              });
-              this.start();
-              return;
-            
+              isGlobal = true;
+              break;
+            // 切換顯示、隱藏。
             case 'toggle':
               if (this.$this.attr('data-animating-hidden') === 'true') {
                 this.$this.removeAttr('data-animating-hidden');
               } else {
                 this.$this.attr('data-animating-hidden', 'true');
               }
-              this.start();
-              return;
-            
+              isGlobal = true;
+              break;
+            // 可見。
             case 'show visibility':
               this.$this.removeAttr('data-animating-hidden');
-              this.start();
-              return;
-            
+              isGlobal = true;
+              break;
+            // 不可見但保有佔用區塊。
             case 'hide visibility':
               this.$this.attr('data-animating-hidden', 'true');
-              this.start();
-              return;
-            
+              isGlobal = true;
+              break;
+            // 切換可見度。
             case 'toggle visibility':
               if (this.$this.attr('data-animating-hidden') === 'true') {
                 this.$this.removeAttr('data-animating-hidden');
               } else {
                 this.$this.attr('data-animating-hidden', 'true');
               }
-              this.start();
-              return;
+              isGlobal = true;
+          }
+          // 如果是全域動畫的話，因為只會執行一次，所以會忽略其他元素的動畫索引。
+          // 為了解決這個問題，我們需要推進其他元素的動畫索引並加ㄧ。
+          if (isGlobal) {
+            // 遞迴元素選擇器中，除了目前元素以外的所有元素。
+            // 因為這個元素的動畫索引已經被遞加過了。
+            $selector(this.$elements.toArray().splice(1)).each((element) => {
+              this.$this = $selector(element);
+              // 執行取得動畫資料的函式可以自動替動畫索引遞加。
+              return this.getAnimation();
+            });
+            this.start();
+            return;
           }
         }
         // 取得該元素這一輪該播放的動畫，並且開始演繹。
@@ -283,23 +242,13 @@ Transition = (function() {
       }
     }
 
-    async animate(options) {
-      var animation, duration, interval, onComplete;
-      
-      if (options === null) {
-        return;
-      }
-      await this.delay();
-      
-      ({animation, duration, onComplete, interval} = options);
+    animate({animation, duration, onComplete, interval}) {
       // 回傳 Promise，這樣其他函式才能透過 `await` 等待這個動畫執行完
       // 才執行下一個程式。
       return new Promise(async(resolve) => {
+        // 如果動畫名稱中有 `in` 就表示這個動畫會顯示元素，所以就移除元素的隱藏標籤。
         if (animation.indexOf('in') !== -1) {
           this.$this.removeAttr('data-animating-hidden');
-        }
-        if (animation.indexOf('out') !== -1) {
-          this.$this.attr('data-animating-hidden', 'true');
         }
         // 套用動畫名稱、動畫速度。
         this.$this.attr('data-animation', animation).css('animation-duration', `${duration}ms`);
@@ -310,7 +259,11 @@ Transition = (function() {
         // 當這個元素的動畫執行結束時。
         this.$this.one('animationend.animation', () => {
           // 呼叫完成函式，並且傳遞自己作為 `this`。
-          return onComplete.call(this.$this.get());
+          onComplete.call(this.$this.get());
+          // 如果動畫名稱中有 `out` 就表示這個動畫會隱藏元素，所以就在動畫結束後加上元素隱藏標籤。
+          if (animation.indexOf('out') !== -1) {
+            return this.$this.attr('data-animating-hidden', 'true');
+          }
         });
         // 等待使用者指定的間隔毫秒。
         await this.delay(interval);
@@ -339,19 +292,12 @@ Transition = (function() {
       }
       // 套用新的動畫資料變更。
       this.setData(data);
-      
+      // 回傳這次該播放的動畫資料，如果佇列是空的導致無動畫資料則回傳 `null`。
       if (data.queue.length === 0) {
         return null;
       } else {
         return animation;
       }
-    }
-
-    skipAnimation() {
-      return this.$elements.each((element) => {
-        this.$this = $selector(element);
-        return this.getAnimation();
-      });
     }
 
     methods() {
@@ -930,7 +876,6 @@ Transition = (function() {
     interval: 0,
     duration: 500,
     onComplete: function() {},
-    onAllComplete: function() {},
     onStart: function() {}
   };
 
