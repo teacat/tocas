@@ -38,6 +38,8 @@ Transition = (function() {
 
       // 將一個新的動畫推入至元素的動畫佇列中。
       this.push = this.push.bind(this);
+      
+      this.globalAction = this.globalAction.bind(this);
       // Start
 
       // 開始執行元素選擇器裡所有元素的動畫。
@@ -51,16 +53,13 @@ Transition = (function() {
       // 取得動畫，並且自動遞加元素內的動畫索引，
       // 如果索引到底則移除整個佇列，或是重設索引（如果允許重複的話）。
       this.getAnimation = this.getAnimation.bind(this);
+      
+      this.skipAnimation = this.skipAnimation.bind(this);
       // 模組可用的方法。
       this.methods = this.methods.bind(this);
     }
 
     init({animation, duration, onComplete, interval}) {
-      
-      //if animation is null
-      //    ts.fn
-
-      //@push animation, duration, onComplete, interval
       return ts.fn;
     }
 
@@ -119,7 +118,7 @@ Transition = (function() {
       return data;
     }
 
-    push(animation, duration, onComplete, interval) {
+    async push(animation, duration, onComplete, interval) {
       var data;
       // 動畫的速度毫秒數。
       duration = duration || 800;
@@ -138,10 +137,6 @@ Transition = (function() {
         default:
           interval = interval || 80;
       }
-      // 如果沒有動畫名稱則離開。
-      if (animation === null) {
-        return;
-      }
       // 從元素中取得動畫資料。
       data = this.getData();
       // 將新的動畫推入至動畫佇列中。
@@ -151,76 +146,17 @@ Transition = (function() {
       // 如果動畫佇列只有一個動畫，而且這又是選擇器元素中的最後一個元素，
       // 那麼我們就準備好開始播放整個群組動畫了。
       if (data.queue.length === 1 && this.index === this.$elements.length - 1) {
+        await this.delay();
         return this.start();
       }
     }
 
-    async start() {
-      var $element, animation, element, elements, i, index, len;
-      // 將元素選擇器轉換為陣列，這樣才能以迴圈遞迴。
-      // 因為 `await` 只能在 `for` 中使用，而不能用在 `.each` 或 `.forEach`。
-      elements = this.$elements.toArray();
-      // 遞迴元素選擇器陣列，這樣才能透過 `await` 一個一個逐一執行其動畫。
-      for (index = i = 0, len = elements.length; i < len; index = ++i) {
-        element = elements[index];
-        // 持續以 `await` 阻擋，直到此頁面在螢幕上可見。
-        // 這可以避免瀏覽器因為重新繪製而打亂動畫的順序，如果移除此方法會雜亂無章。
-        // await @untilVisible()
-
-        // 以選擇器選擇此元素。
-        $element = $selector(element);
-        // 替換 $this 為此選擇器。
-        this.$this = $element;
-        
-        animation = this.getAnimation();
-        
-        //if animation is null
-        //    @start()
-        //    return
-        if ((animation != null ? animation.queue.length : void 0) === void 0) {
-          return;
-        }
-        
-        if (index === 0) {
-          console.log(animation != null ? animation.queue : void 0);
-          if ((animation != null ? animation.animation : void 0) === 'hide') {
-            this.$elements.attr('data-animating-hidden', 'true');
-          }
-          if ((animation != null ? animation.animation : void 0) === 'delay') {
-            await this.delay(animation.duration);
-          }
-          this.start();
-          return;
-        }
-        // 取得該元素這一輪該播放的動畫，並且開始演繹。
-        await this.animate(animation);
-        // 如果這個元素是選擇器裡的最後一個元素，那麼就重新執行一輪。
-        // 讓下一輪來決定是否到佇列的最後了好做一些收拾動作，或執行下一輪的動畫。
-        if (index === elements.length - 1) {
-          this.start();
-        }
-      }
-    }
-
-    async animate(options) {
-      var animation, duration, interval, onComplete;
-      
-      if (options === null) {
-        return;
-      }
-      await this.delay();
-      
-      ({animation, duration, onComplete, interval} = options);
-      // 回傳 Promise，這樣其他函式才能透過 `await` 等待這個動畫執行完
-      // 才執行下一個程式。
+    globalAction(animation) {
       return new Promise(async(resolve) => {
-        
         switch (animation) {
           
           case 'delay':
-            if (this.index === 0) {
-              await this.delay(duration);
-            }
+            await this.delay(duration);
             break;
           
           case 'show':
@@ -229,8 +165,7 @@ Transition = (function() {
           
           case 'hide':
             this.$this.attr('data-animating-hidden', 'true');
-            resolve();
-            return;
+            break;
           
           case 'toggle':
             if (this.$this.attr('data-animating-hidden') === 'true') {
@@ -254,21 +189,124 @@ Transition = (function() {
             } else {
               this.$this.attr('data-animating-hidden', 'true');
             }
-            break;
-          default:
-            if (animation.indexOf('in') !== -1) {
-              this.$this.removeAttr('data-animating-hidden');
-            }
-            if (animation.indexOf('out') !== -1) {
-              this.$this.attr('data-animating-hidden', 'true');
-            }
-            // 套用動畫名稱、動畫速度。
-            this.$this.attr('data-animation', animation).css('animation-duration', `${duration}ms`);
-            // 稍微等待一下才套用執行動畫的標籤，這樣才會有動作。
-            await this.delay();
-            // 套用執行動畫的標籤。
-            this.$this.attr('data-animating', true);
         }
+        return resolve();
+      });
+    }
+
+    async start() {
+      var $element, animation, element, elements, i, index, len;
+      // 將元素選擇器轉換為陣列，這樣才能以迴圈遞迴。
+      // 因為 `await` 只能在 `for` 中使用，而不能用在 `.each` 或 `.forEach`。
+      elements = this.$elements.toArray();
+      // 遞迴元素選擇器陣列，這樣才能透過 `await` 一個一個逐一執行其動畫。
+      for (index = i = 0, len = elements.length; i < len; index = ++i) {
+        element = elements[index];
+        // 持續以 `await` 阻擋，直到此頁面在螢幕上可見。
+        // 這可以避免瀏覽器因為重新繪製而打亂動畫的順序，如果移除此方法會雜亂無章。
+        // await @untilVisible()
+
+        // 以選擇器選擇此元素。
+        $element = $selector(element);
+        // 替換 $this 為此選擇器。
+        this.$this = $element;
+        // 取得此元素本輪該播放的動畫資料。
+        animation = this.getAnimation();
+        console.log(this.$this.data('animationData'));
+        // 如果動畫佇列是空的，那麼就離開。
+        if (animation === null) {
+          return;
+        }
+        // 如果這是選擇器的第一個元素。
+        if (index === 0) {
+          switch (animation.animation) {
+            
+            case 'delay':
+              await this.delay(animation.duration);
+              $selector(this.$elements.toArray().splice(1)).each((element) => {
+                this.$this = $selector(element);
+                return this.getAnimation();
+              });
+              this.start();
+              return;
+            
+            case 'show':
+              this.$elements.removeAttr('data-animating-hidden');
+              this.start();
+              return;
+            
+            case 'hide':
+              this.$elements.attr('data-animating-hidden', 'true');
+              $selector(this.$elements.toArray().splice(1)).each((element) => {
+                this.$this = $selector(element);
+                return this.getAnimation();
+              });
+              this.start();
+              return;
+            
+            case 'toggle':
+              if (this.$this.attr('data-animating-hidden') === 'true') {
+                this.$this.removeAttr('data-animating-hidden');
+              } else {
+                this.$this.attr('data-animating-hidden', 'true');
+              }
+              this.start();
+              return;
+            
+            case 'show visibility':
+              this.$this.removeAttr('data-animating-hidden');
+              this.start();
+              return;
+            
+            case 'hide visibility':
+              this.$this.attr('data-animating-hidden', 'true');
+              this.start();
+              return;
+            
+            case 'toggle visibility':
+              if (this.$this.attr('data-animating-hidden') === 'true') {
+                this.$this.removeAttr('data-animating-hidden');
+              } else {
+                this.$this.attr('data-animating-hidden', 'true');
+              }
+              this.start();
+              return;
+          }
+        }
+        // 取得該元素這一輪該播放的動畫，並且開始演繹。
+        await this.animate(animation);
+        // 如果這個元素是選擇器裡的最後一個元素，那麼就重新執行一輪。
+        // 讓下一輪來決定是否到佇列的最後了好做一些收拾動作，或執行下一輪的動畫。
+        if (index === elements.length - 1) {
+          this.start();
+        }
+      }
+    }
+
+    async animate(options) {
+      var animation, duration, interval, onComplete;
+      
+      if (options === null) {
+        return;
+      }
+      await this.delay();
+      
+      ({animation, duration, onComplete, interval} = options);
+      // 回傳 Promise，這樣其他函式才能透過 `await` 等待這個動畫執行完
+      // 才執行下一個程式。
+      return new Promise(async(resolve) => {
+        if (animation.indexOf('in') !== -1) {
+          this.$this.removeAttr('data-animating-hidden');
+        }
+        if (animation.indexOf('out') !== -1) {
+          this.$this.attr('data-animating-hidden', 'true');
+        }
+        // 套用動畫名稱、動畫速度。
+        this.$this.attr('data-animation', animation).css('animation-duration', `${duration}ms`);
+        // 稍微等待一下才套用執行動畫的標籤，這樣才會有動作。
+        await this.delay();
+        // 套用執行動畫的標籤。
+        this.$this.attr('data-animating', true);
         // 當這個元素的動畫執行結束時。
         this.$this.one('animationend.animation', () => {
           // 呼叫完成函式，並且傳遞自己作為 `this`。
@@ -290,7 +328,7 @@ Transition = (function() {
       // 將索引遞加供下次使用。
       data.index++;
       // 如果索引大於佇列的長度，而且又允許重複動畫的話。
-      if (data.index > data.queue.length - 1) {
+      if (data.index - 1 > data.queue.length - 1) {
         // 就重設索引，下次從 0 開始。
         data.index = 0;
         // 如果不允許重複動畫的話。
@@ -307,6 +345,13 @@ Transition = (function() {
       } else {
         return animation;
       }
+    }
+
+    skipAnimation() {
+      return this.$elements.each((element) => {
+        this.$this = $selector(element);
+        return this.getAnimation();
+      });
     }
 
     methods() {
@@ -418,6 +463,456 @@ Transition = (function() {
 
         'fade out down': (duration, onComplete) => {
           this.push('fade out down', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        bounce: (duration, onComplete) => {
+          this.push('bounce', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        flash: (duration, onComplete) => {
+          this.push('flash', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        pulse: (duration, onComplete) => {
+          this.push('pulse', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'rubber band': (duration, onComplete) => {
+          this.push('rubber band', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        shake: (duration, onComplete) => {
+          this.push('shake', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'head shake': (duration, onComplete) => {
+          this.push('head shake', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        swing: (duration, onComplete) => {
+          this.push('swing', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        tada: (duration, onComplete) => {
+          this.push('tada', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        wobble: (duration, onComplete) => {
+          this.push('wobble', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        jello: (duration, onComplete) => {
+          this.push('jello', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'bounce in': (duration, onComplete) => {
+          this.push('bounce in', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'bounce in down': (duration, onComplete) => {
+          this.push('bounce in down', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'bounce in left': (duration, onComplete) => {
+          this.push('bounce in left', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'bounce in right': (duration, onComplete) => {
+          this.push('bounce in right', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'bounce in up': (duration, onComplete) => {
+          this.push('bounce in up', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'bounce out': (duration, onComplete) => {
+          this.push('bounce out', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'bounce down': (duration, onComplete) => {
+          this.push('bounce down', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'bounce out left': (duration, onComplete) => {
+          this.push('bounce out left', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'bounce out right': (duration, onComplete) => {
+          this.push('bounce out right', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'bounce out up': (duration, onComplete) => {
+          this.push('bounce out up', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade in': (duration, onComplete) => {
+          this.push('fade in', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade in down': (duration, onComplete) => {
+          this.push('fade in down', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade in down heavily': (duration, onComplete) => {
+          this.push('fade in down heavily', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade in left': (duration, onComplete) => {
+          this.push('fade in left', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade in left heavily': (duration, onComplete) => {
+          this.push('fade in left heavily', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade in right': (duration, onComplete) => {
+          this.push('fade in right', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade in right heavily': (duration, onComplete) => {
+          this.push('fade in right heavily', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade in up': (duration, onComplete) => {
+          this.push('fade in up', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade in up heavily': (duration, onComplete) => {
+          this.push('fade in up heavily', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade out down': (duration, onComplete) => {
+          this.push('fade out down', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade out down heavily': (duration, onComplete) => {
+          this.push('fade out down heavily', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade out left': (duration, onComplete) => {
+          this.push('fade out left', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade out left heavily': (duration, onComplete) => {
+          this.push('fade out left heavily', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade out right': (duration, onComplete) => {
+          this.push('fade out right', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade out right heavily': (duration, onComplete) => {
+          this.push('fade out right heavily', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade out up': (duration, onComplete) => {
+          this.push('fade out up', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'fade out up heavily': (duration, onComplete) => {
+          this.push('fade out up heavily', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'flip': (duration, onComplete) => {
+          this.push('flip', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'flip in x': (duration, onComplete) => {
+          this.push('flip in x', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'flip in y': (duration, onComplete) => {
+          this.push('flip in y', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'flip out x': (duration, onComplete) => {
+          this.push('flip out x', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'flip out y': (duration, onComplete) => {
+          this.push('flip out y', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'light speed in': (duration, onComplete) => {
+          this.push('light speed in', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'light speed out': (duration, onComplete) => {
+          this.push('light speed out', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'rotate in': (duration, onComplete) => {
+          this.push('rotate in', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'rotate in down left': (duration, onComplete) => {
+          this.push('rotate in down left', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'rotate in down right': (duration, onComplete) => {
+          this.push('rotate in down right', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'rotate in up left': (duration, onComplete) => {
+          this.push('rotate in up left', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'rotate in up right': (duration, onComplete) => {
+          this.push('rotate in up right', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'rotate out': (duration, onComplete) => {
+          this.push('rotate out', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'rotate out down left': (duration, onComplete) => {
+          this.push('rotate out down left', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'rotate out down right': (duration, onComplete) => {
+          this.push('rotate out down right', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'rotate out up left': (duration, onComplete) => {
+          this.push('rotate out up left', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'rotate out up right': (duration, onComplete) => {
+          this.push('rotate out up right', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'hinge': (duration, onComplete) => {
+          this.push('hinge', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'roll in': (duration, onComplete) => {
+          this.push('roll in', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'roll out': (duration, onComplete) => {
+          this.push('roll out', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'zoom in': (duration, onComplete) => {
+          this.push('zoom in', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'zoom in down': (duration, onComplete) => {
+          this.push('zoom in down', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'zoom in left': (duration, onComplete) => {
+          this.push('zoom in left', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'zoom in up': (duration, onComplete) => {
+          this.push('zoom in up', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'zoom in right': (duration, onComplete) => {
+          this.push('zoom in right', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'zoom out': (duration, onComplete) => {
+          this.push('zoom out', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'zoom out down': (duration, onComplete) => {
+          this.push('zoom out down', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'zoom out left': (duration, onComplete) => {
+          this.push('zoom out left', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'zoom out right': (duration, onComplete) => {
+          this.push('zoom out right', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'zoom out up': (duration, onComplete) => {
+          this.push('zoom out up', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'slide in down': (duration, onComplete) => {
+          this.push('slide in down', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'slide in left': (duration, onComplete) => {
+          this.push('slide in left', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'slide in right': (duration, onComplete) => {
+          this.push('slide in right', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'slide in up': (duration, onComplete) => {
+          this.push('slide in up', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'slide out down': (duration, onComplete) => {
+          this.push('slide out down', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'slide out left': (duration, onComplete) => {
+          this.push('slide out left', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'slide out right': (duration, onComplete) => {
+          this.push('slide out right', duration, onComplete);
+          return ts.fn;
+        },
+        // Fade Out Down
+
+        'slide out up': (duration, onComplete) => {
+          this.push('slide out up', duration, onComplete);
           return ts.fn;
         }
       };
