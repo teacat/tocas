@@ -84,10 +84,10 @@ class Transition
     # 初始化元素內的動畫資料。
     initData: =>
         data =
-            animating: false
-            index    : 0
-            looping  : false
-            queue    : []
+            skip   : false
+            index  : -1
+            looping: false
+            queue  : []
 
         @$this.data 'animationData', data
 
@@ -153,8 +153,8 @@ class Transition
             animation = @getAnimation()
 
             # 如果動畫佇列是空的，那麼就離開。
-            if animation is null
-                return
+            if animation is undefined
+                continue
 
             # 如果這是選擇器的第一個元素。
             if index is 0
@@ -223,6 +223,35 @@ class Transition
             if index is elements.length - 1
                 @start()
 
+    #
+    #
+    #
+    delayCheck: (interval) =>
+        new Promise (resolve) =>
+            timer = setInterval =>
+                # 如果頁面還是不可見的，就返回，不要呼叫 Promise 的解決函式。
+                return if not @getData().skip
+
+                console.log 'SKIP!'
+                @$this
+                    .removeAttr 'data-animating-hidden'
+                    .removeAttr 'data-animation'
+                    .removeAttr 'data-animating'
+                    .css        'animation-duration', ''
+
+                @setData
+                    skip: false
+
+                # 頁面可見了，呼叫解決函式！
+                resolve()
+
+                # 清除偵測計時器。
+                clearInterval timer
+            , 1
+
+            await @delay interval
+            resolve()
+
     # Animate
     #
     # 執行指定動畫。
@@ -255,7 +284,7 @@ class Transition
                     @$this.attr 'data-animating-hidden', 'true'
 
             # 等待使用者指定的間隔毫秒。
-            await @delay interval
+            await @delayCheck interval
 
             # 呼叫 Promise 的解決方案，解除 `await` 的阻擋。
             resolve()
@@ -268,27 +297,36 @@ class Transition
         # 取得此元素的動畫資料。
         data = @getData()
 
-        # 基於索引，從動畫佇列取得這次應該播放的動畫。
-        animation = data.queue[data.index]
-
         # 將索引遞加供下次使用。
         data.index++
 
-        # 如果索引大於佇列的長度，而且又允許重複動畫的話。
-        if data.index - 1 > data.queue.length - 1
-            # 就重設索引，下次從 0 開始。
-            data.index = 0
+        # 基於索引，從動畫佇列取得這次應該播放的動畫。
+        animation = data.queue[data.index]
 
-            # 如果不允許重複動畫的話。
-            if not data.looping
-                # 就移除整個動畫佇列。
-                data.queue = []
+        #
+        if animation is undefined
+            #
+            if data.looping
+                #
+                data.index = 0
+
+                #
+                @setData data
+
+                #
+                return data.queue[data.index]
+
+            #
+            data.index = -1
+
+            #
+            data.queue = []
 
         # 套用新的動畫資料變更。
         @setData data
 
         # 回傳這次該播放的動畫資料，如果佇列是空的導致無動畫資料則回傳 `null`。
-        return if data.queue.length is 0 then null else animation
+        return animation
 
     # 模組可用的方法。
     methods: =>
@@ -304,18 +342,43 @@ class Transition
         #
         # 停止目前的這個動畫，執行下一個。
         stop: =>
+            @$elements
+                .removeAttr 'data-animating-hidden'
+                .removeAttr 'data-animation'
+                .removeAttr 'data-animating'
+                .css        'animation-duration', ''
+            @setData
+                skip: true
+
+            # @$this.trigger('animationend')
+
             ts.fn
 
         # Stop All
         #
         # 停止目前的動畫並且移除整個動畫佇列。
         'stop all': =>
+            @$elements
+                .removeAttr 'data-animating-hidden'
+                .removeAttr 'data-animation'
+                .removeAttr 'data-animating'
+                .css        'animation-duration', ''
+            @setData
+                skip: true
+                index: 0
+                queue: []
+            await @delay()
+            @setData
+                index: 0
+                skip: false
             ts.fn
 
         # Clear Queue
         #
         # 執行完目前的動畫後就停止並且移除整個動畫佇列。
         'clear queue': =>
+            @setData
+                queue: []
             ts.fn
 
         # Show

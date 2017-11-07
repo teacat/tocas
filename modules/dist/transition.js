@@ -42,6 +42,8 @@ Transition = (function() {
 
       // 開始執行元素選擇器裡所有元素的動畫。
       this.start = this.start.bind(this);
+      
+      this.delayCheck = this.delayCheck.bind(this);
       // Animate
 
       // 執行指定動畫。
@@ -105,8 +107,8 @@ Transition = (function() {
     initData() {
       var data;
       data = {
-        animating: false,
-        index: 0,
+        skip: false,
+        index: -1,
         looping: false,
         queue: []
       };
@@ -167,8 +169,8 @@ Transition = (function() {
         // 取得此元素本輪該播放的動畫資料。
         animation = this.getAnimation();
         // 如果動畫佇列是空的，那麼就離開。
-        if (animation === null) {
-          return;
+        if (animation === void 0) {
+          continue;
         }
         // 如果這是選擇器的第一個元素。
         if (index === 0) {
@@ -242,6 +244,29 @@ Transition = (function() {
       }
     }
 
+    delayCheck(interval) {
+      return new Promise(async(resolve) => {
+        var timer;
+        timer = setInterval(() => {
+          // 如果頁面還是不可見的，就返回，不要呼叫 Promise 的解決函式。
+          if (!this.getData().skip) {
+            return;
+          }
+          console.log('SKIP!');
+          this.$this.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '');
+          this.setData({
+            skip: false
+          });
+          // 頁面可見了，呼叫解決函式！
+          resolve();
+          // 清除偵測計時器。
+          return clearInterval(timer);
+        }, 1);
+        await this.delay(interval);
+        return resolve();
+      });
+    }
+
     animate({animation, duration, onComplete, interval}) {
       // 回傳 Promise，這樣其他函式才能透過 `await` 等待這個動畫執行完
       // 才執行下一個程式。
@@ -266,7 +291,7 @@ Transition = (function() {
           }
         });
         // 等待使用者指定的間隔毫秒。
-        await this.delay(interval);
+        await this.delayCheck(interval);
         // 呼叫 Promise 的解決方案，解除 `await` 的阻擋。
         return resolve();
       });
@@ -276,28 +301,30 @@ Transition = (function() {
       var animation, data;
       // 取得此元素的動畫資料。
       data = this.getData();
-      // 基於索引，從動畫佇列取得這次應該播放的動畫。
-      animation = data.queue[data.index];
       // 將索引遞加供下次使用。
       data.index++;
-      // 如果索引大於佇列的長度，而且又允許重複動畫的話。
-      if (data.index - 1 > data.queue.length - 1) {
-        // 就重設索引，下次從 0 開始。
-        data.index = 0;
-        // 如果不允許重複動畫的話。
-        if (!data.looping) {
-          // 就移除整個動畫佇列。
-          data.queue = [];
+      // 基於索引，從動畫佇列取得這次應該播放的動畫。
+      animation = data.queue[data.index];
+      
+      if (animation === void 0) {
+        
+        if (data.looping) {
+          
+          data.index = 0;
+          
+          this.setData(data);
+          
+          return data.queue[data.index];
         }
+        
+        data.index = -1;
+        
+        data.queue = [];
       }
       // 套用新的動畫資料變更。
       this.setData(data);
       // 回傳這次該播放的動畫資料，如果佇列是空的導致無動畫資料則回傳 `null`。
-      if (data.queue.length === 0) {
-        return null;
-      } else {
-        return animation;
-      }
+      return animation;
     }
 
     methods() {
@@ -313,18 +340,37 @@ Transition = (function() {
 
         // 停止目前的這個動畫，執行下一個。
         stop: () => {
+          this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '');
+          this.setData({
+            skip: true
+          });
+          // @$this.trigger('animationend')
           return ts.fn;
         },
         // Stop All
 
         // 停止目前的動畫並且移除整個動畫佇列。
-        'stop all': () => {
+        'stop all': async() => {
+          this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '');
+          this.setData({
+            skip: true,
+            index: 0,
+            queue: []
+          });
+          await this.delay();
+          this.setData({
+            index: 0,
+            skip: false
+          });
           return ts.fn;
         },
         // Clear Queue
 
         // 執行完目前的動畫後就停止並且移除整個動畫佇列。
         'clear queue': () => {
+          this.setData({
+            queue: []
+          });
           return ts.fn;
         },
         // Show
