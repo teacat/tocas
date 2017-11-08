@@ -63,44 +63,6 @@ class Transition
 
             #
             check()
-    #
-    #
-    #
-    delayCheck: (interval) =>
-        new Promise (resolve) =>
-            timer = setInterval =>
-
-                data = @data().get()
-                return if not data.skip
-
-
-                @$elements
-                    .removeAttr 'data-animating-hidden'
-                    .removeAttr 'data-animation'
-                    .removeAttr 'data-animating'
-                    .css        'animation-duration', ''
-                    .off        'animationend.animation'
-
-                #
-                resolve()
-
-                # 清除偵測計時器。
-                clearInterval timer
-
-                #
-                await @delay interval
-
-                #
-
-                data.skip = false
-                @data().save(data)
-
-
-            , 10
-
-
-            await @delay interval
-            resolve()
 
     #
     #
@@ -207,8 +169,8 @@ class Transition
     #
     #
     animate: ({animation, reverse, forceOrder, interval, duration, onComplete, onAllComplete, onStart}) =>
+        #
         return new Promise (resolve) =>
-
             # 將元素選擇器轉換為陣列，這樣才能以迴圈遞迴。
             # 因為 `await` 只能在 `for` 中使用，而不能用在 `.each` 或 `.forEach`。
             elements = @$elements.toArray()
@@ -217,33 +179,39 @@ class Transition
             if reverse
                 elements = elements.reverse()
 
-            #switch animation
-            #    when 'delay', 'show', 'hide', 'toggle', 'show visibility', 'hide visibility', 'toggle visibility'
-            #        elements = []
-
+            #
             switch animation
+                #
                 when 'delay'
                     await @delay duration
+                    resolve()
 
+                #
                 when 'show'
                     @$elements.removeAttr 'data-animating-hidden'
+                    resolve()
 
+                #
                 when 'hide'
                     @$elements.attr 'data-animating-hidden', 'true'
+                    resolve()
 
+                #
                 when 'toggle'
                     if @$this.attr('data-animating-hidden') is 'true'
                         @$this.removeAttr 'data-animating-hidden'
                     else
                         @$this.attr 'data-animating-hidden', 'true'
-                #when 'show visibility'
-                #when 'hide visibility'
-                #when 'toggle visibility'
-
-            switch animation
-                when 'delay', 'show', 'hide', 'toggle', 'show visibility', 'hide visibility', 'toggle visibility'
                     resolve()
-                    return
+
+                #
+                #when 'show visibility'
+
+                #
+                #when 'hide visibility'
+
+                #
+                #when 'toggle visibility'
 
             # 遞迴元素選擇器陣列，這樣才能透過 `await` 一個一個逐一執行其動畫。
             for element, index in elements
@@ -278,15 +246,7 @@ class Transition
                         # 呼叫完成函式，並且傳遞自己作為 `this`。
                         onComplete.call $element.get()
 
-
-
-                        #data = @data().get()
-
-                        #data.animated++
-                        #@data().save(data)
-
-
-
+                        #
                         $element
                             .removeAttr 'data-animation'
                             .removeAttr 'data-animating'
@@ -298,42 +258,24 @@ class Transition
 
                         #
                         if index is elements.length - 1
+                            #
                             onAllComplete()
+
+                            #
                             resolve()
 
-                #await @delay interval
-
-
-
-                # 等待使用者指定的間隔毫秒。
-                await @delayCheck interval
-
-
-
-    untilAnimated: =>
-        new Promise (resolve) =>
-            timer = setInterval =>
-                data = @data().get()
-                console.log data.animated, data.queue.length
-                if data.animated < data.queue.length
-                    return
-
-                data.animated = 0
-                @data().save(data)
-                resolve()
-                # 清除偵測計時器。
-                clearInterval timer
-            , 50
-
-
+                #
+                await @delay interval
 
     #
     #
     #
     simplePush: (animation, duration, onComplete) =>
+        #
         if @index isnt 0
             return ts.fn
 
+        #
         @push
             animation : animation
             duration  : duration
@@ -357,49 +299,63 @@ class Transition
         #
         # 停止目前的這個動畫，執行下一個。
         stop: =>
+            #
             @$elements
                 .removeAttr 'data-animating-hidden'
                 .removeAttr 'data-animation'
                 .removeAttr 'data-animating'
                 .css        'animation-duration', ''
                 .off        'animationend.animation'
+
+            #
             await @delay()
-            data = @data().get()
-            data.skip    = true
+
+            #
+            data      = @data().get()
+            data.skip = true
             @data().save(data)
+
             ts.fn
 
         # Stop All
         #
         # 停止目前的動畫並且移除整個動畫佇列。
         'stop all': =>
-            data = @data().get()
-
+            #
+            data         = @data().get()
             data.looping = false
             data.index   = 0
             data.queue   = []
             @data().save(data)
+
+            #
             @$elements
                 .removeAttr 'data-animating-hidden'
                 .removeAttr 'data-animation'
                 .removeAttr 'data-animating'
                 .css        'animation-duration', ''
                 .off        'animationend.animation'
-            await @delay()
-            data.skip    = true
-            @data().save(data)
-            ts.fn
 
+            #
+            await @delay()
+
+            #
+            data.skip = true
+            @data().save(data)
+
+            ts.fn
 
         # Clear Queue
         #
         # 執行完目前的動畫後就停止並且移除整個動畫佇列。
         'clear queue': =>
-            data = @data().get()
+            #
+            data         = @data().get()
             data.looping = false
             data.index   = 0
             data.queue   = []
             @data().save(data)
+
             ts.fn
 
         # Show

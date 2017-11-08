@@ -18,8 +18,6 @@ Transition = (function() {
       // 這是避免瀏覽器在不可見的時候會進行重繪，導致動畫亂序。
       this.untilVisible = this.untilVisible.bind(this);
       
-      this.delayCheck = this.delayCheck.bind(this);
-      
       this.data = this.data.bind(this);
       
       this.push = this.push.bind(this);
@@ -29,7 +27,6 @@ Transition = (function() {
       this.getAnimation = this.getAnimation.bind(this);
       
       this.animate = this.animate.bind(this);
-      this.untilAnimated = this.untilAnimated.bind(this);
       
       this.simplePush = this.simplePush.bind(this);
       
@@ -65,31 +62,6 @@ Transition = (function() {
         document.addEventListener('visibilitychange', check);
         
         return check();
-      });
-    }
-
-    delayCheck(interval) {
-      return new Promise(async(resolve) => {
-        var timer;
-        timer = setInterval(async() => {
-          var data;
-          data = this.data().get();
-          if (!data.skip) {
-            return;
-          }
-          this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').off('animationend.animation');
-          
-          resolve();
-          // 清除偵測計時器。
-          clearInterval(timer);
-          
-          await this.delay(interval);
-          
-          data.skip = false;
-          return this.data().save(data);
-        }, 10);
-        await this.delay(interval);
-        return resolve();
       });
     }
 
@@ -181,6 +153,7 @@ Transition = (function() {
     }
 
     animate({animation, reverse, forceOrder, interval, duration, onComplete, onAllComplete, onStart}) {
+      
       return new Promise(async(resolve) => {
         var $element, element, elements, fn, i, index, len, results;
         // 將元素選擇器轉換為陣列，這樣才能以迴圈遞迴。
@@ -190,40 +163,39 @@ Transition = (function() {
         if (reverse) {
           elements = elements.reverse();
         }
-        //switch animation
-        //    when 'delay', 'show', 'hide', 'toggle', 'show visibility', 'hide visibility', 'toggle visibility'
-        //        elements = []
+        
         switch (animation) {
+          
           case 'delay':
             await this.delay(duration);
+            resolve();
             break;
+          
           case 'show':
             this.$elements.removeAttr('data-animating-hidden');
+            resolve();
             break;
+          
           case 'hide':
             this.$elements.attr('data-animating-hidden', 'true');
+            resolve();
             break;
+          
           case 'toggle':
             if (this.$this.attr('data-animating-hidden') === 'true') {
               this.$this.removeAttr('data-animating-hidden');
             } else {
               this.$this.attr('data-animating-hidden', 'true');
             }
-        }
-        //when 'show visibility'
-        //when 'hide visibility'
-        //when 'toggle visibility'
-        switch (animation) {
-          case 'delay':
-          case 'show':
-          case 'hide':
-          case 'toggle':
-          case 'show visibility':
-          case 'hide visibility':
-          case 'toggle visibility':
             resolve();
-            return;
         }
+
+//when 'show visibility'
+
+//when 'hide visibility'
+
+//when 'toggle visibility'
+
 // 遞迴元素選擇器陣列，這樣才能透過 `await` 一個一個逐一執行其動畫。
         
         fn = async($element, index) => {
@@ -243,10 +215,7 @@ Transition = (function() {
           return $element.one('animationend.animation', () => {
             // 呼叫完成函式，並且傳遞自己作為 `this`。
             onComplete.call($element.get());
-            //data = @data().get()
-
-            //data.animated++
-            //@data().save(data)
+            
             $element.removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '');
             // 如果動畫名稱中有 `out` 就表示這個動畫會隱藏元素，所以就在動畫結束後加上元素隱藏標籤。
             if (animation.indexOf('out') !== -1) {
@@ -254,7 +223,9 @@ Transition = (function() {
             }
             
             if (index === elements.length - 1) {
+              
               onAllComplete();
+              
               return resolve();
             }
           });
@@ -267,38 +238,19 @@ Transition = (function() {
           // 這可以避免瀏覽器因為重新繪製而打亂動畫的順序，如果移除此方法會雜亂無章。
           await this.untilVisible();
           fn($element, index);
-          //await @delay interval
-
-          // 等待使用者指定的間隔毫秒。
-          results.push((await this.delayCheck(interval)));
+          
+          results.push((await this.delay(interval)));
         }
         return results;
       });
     }
 
-    untilAnimated() {
-      return new Promise((resolve) => {
-        var timer;
-        return timer = setInterval(() => {
-          var data;
-          data = this.data().get();
-          console.log(data.animated, data.queue.length);
-          if (data.animated < data.queue.length) {
-            return;
-          }
-          data.animated = 0;
-          this.data().save(data);
-          resolve();
-          // 清除偵測計時器。
-          return clearInterval(timer);
-        }, 50);
-      });
-    }
-
     simplePush(animation, duration, onComplete) {
+      
       if (this.index !== 0) {
         return ts.fn;
       }
+      
       this.push({
         animation: animation,
         duration: duration,
@@ -322,8 +274,11 @@ Transition = (function() {
         // 停止目前的這個動畫，執行下一個。
         stop: async() => {
           var data;
+          
           this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').off('animationend.animation');
+          
           await this.delay();
+          
           data = this.data().get();
           data.skip = true;
           this.data().save(data);
@@ -334,13 +289,17 @@ Transition = (function() {
         // 停止目前的動畫並且移除整個動畫佇列。
         'stop all': async() => {
           var data;
+          
           data = this.data().get();
           data.looping = false;
           data.index = 0;
           data.queue = [];
           this.data().save(data);
+          
           this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').off('animationend.animation');
+          
           await this.delay();
+          
           data.skip = true;
           this.data().save(data);
           return ts.fn;
@@ -350,6 +309,7 @@ Transition = (function() {
         // 執行完目前的動畫後就停止並且移除整個動畫佇列。
         'clear queue': () => {
           var data;
+          
           data = this.data().get();
           data.looping = false;
           data.index = 0;
