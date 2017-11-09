@@ -30,6 +30,7 @@ Transition = (function() {
 
       // 如果本次動畫佇列已經被標記為「離開」時，就重設並回傳 `true`。
       this.isQuited = this.isQuited.bind(this);
+      this.cleanTimer = this.cleanTimer.bind(this);
       // Animate
 
       // 以指定動畫演繹選擇器中所有元素。
@@ -89,7 +90,8 @@ Transition = (function() {
           queue: [],
           animating: false,
           queuing: false,
-          quited: false
+          quited: false,
+          timer: false
         };
         document.body.$data.animationData = data;
       }
@@ -109,6 +111,8 @@ Transition = (function() {
 
     async push(options) {
       var data;
+      // 稍後一下等待保存變更。
+      await this.delay();
       options.duration = options.duration || 1000;
       options.onComplete = options.onComplete || function() {};
       // 取得目前選擇器的動畫資料。
@@ -129,6 +133,8 @@ Transition = (function() {
 
     async play() {
       var animation, data;
+      
+      this.cleanTimer();
       // 取得目前選擇器的動畫資料。
       data = this.data().get();
       // 表示目前正在執行動畫。
@@ -172,6 +178,28 @@ Transition = (function() {
         return true;
       }
       return false;
+    }
+
+    cleanTimer() {
+      var data, timer;
+      if (this.data().get().timer === true) {
+        return;
+      }
+      data = this.data().get();
+      data.timer = true;
+      this.data().save(data);
+      return timer = setInterval(() => {
+        if (this.data().get().quited === false) {
+          return;
+        }
+        data = this.data().get();
+        data.animating = false;
+        //data.quited    = false
+        data.timer = false;
+        this.data().save(data);
+        this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').off('animationend');
+        return clearInterval(timer);
+      }, 1);
     }
 
     animate({animation, reverse, forceOrder, interval, duration, onComplete, onAllComplete, onStart}) {
@@ -319,39 +347,25 @@ Transition = (function() {
 
         // 停止目前的動畫並且移除整個動畫佇列。
         'stop all': () => {
-          var beforeQueue;
+          var data;
           if (this.index !== 0) {
             return ts.fn;
           }
-          
-          beforeQueue = this.data().get().queue;
-          (async() => {
-            var afterQueue, data;
-            // 重設選擇器中的動畫設定。
-            data = this.data().get();
-            data.index = 0;
-            data.quited = true;
-            //data.animating = false
-            this.data().save(data);
-            // 移除所有元素和動畫有關的標籤。
-            this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').trigger('animationend');
-            
-            await this.delay();
-            
-            afterQueue = this.data().get().queue;
-            //console.log beforeQueue.length, afterQueue.length
-
-            if (beforeQueue.length === afterQueue.length) {
-              
-              data.looping = false;
-              data.queue = [];
-            } else {
-              
-              data.queue = this.data().get().queue.slice(-afterQueue.length);
-              console.log(data.queue.length);
-            }
-            return this.data().save(data);
-          })();
+          // 重設選擇器中的動畫設定。
+          data = this.data().get();
+          data.index = 0;
+          data.looping = false;
+          data.queue = [];
+          data.quited = true;
+          data.animating = false;
+          this.data().save(data);
+          // 移除所有元素和動畫有關的標籤。
+          //@$elements
+          //    .removeAttr 'data-animating-hidden'
+          //    .removeAttr 'data-animation'
+          //    .removeAttr 'data-animating'
+          //    .css        'animation-duration', ''
+          //    .trigger    'animationend'
           return ts.fn;
         },
         // Clear Queue

@@ -76,6 +76,7 @@ class Transition
                 animating: false
                 queuing  : false
                 quited   : false
+                timer    : false
             document.body.$data.animationData = data
 
         # 回傳下列可用的輔助函式。
@@ -93,6 +94,9 @@ class Transition
     #
     # 將新的動畫資料推入至目前選擇器的佇列中。
     push: (options) =>
+        # 稍後一下等待保存變更。
+        await @delay()
+
         options.duration   = options.duration   or 1000
         options.onComplete = options.onComplete or ->
 
@@ -121,6 +125,9 @@ class Transition
     #
     # 取得選擇器目前該播放的動畫，並且開始演繹。
     play: =>
+        #
+        @cleanTimer()
+
         # 取得目前選擇器的動畫資料。
         data = @data().get()
 
@@ -172,6 +179,34 @@ class Transition
             @data().save(data)
             return true
         return false
+
+    cleanTimer: =>
+        if @data().get().timer is true
+            return
+
+        data       = @data().get()
+        data.timer = true
+        @data().save(data)
+
+        timer = setInterval =>
+            if @data().get().quited is false
+                return
+
+            data           = @data().get()
+            data.animating = false
+            #data.quited    = false
+            data.timer     = false
+            @data().save(data)
+
+            @$elements
+                .removeAttr 'data-animating-hidden'
+                .removeAttr 'data-animation'
+                .removeAttr 'data-animating'
+                .css        'animation-duration', ''
+                .off        'animationend'
+
+            clearInterval(timer)
+        , 1
 
     # Animate
     #
@@ -345,43 +380,22 @@ class Transition
             if @index isnt 0
                 return ts.fn
 
-            #
-            beforeQueue = @data().get().queue
+            # 重設選擇器中的動畫設定。
+            data           = @data().get()
+            data.index     = 0
+            data.looping   = false
+            data.queue     = []
+            data.quited    = true
+            data.animating = false
+            @data().save(data)
 
-            do =>
-                # 重設選擇器中的動畫設定。
-                data           = @data().get()
-                data.index     = 0
-                data.quited    = true
-                #data.animating = false
-                @data().save(data)
-
-                # 移除所有元素和動畫有關的標籤。
-                @$elements
-                    .removeAttr 'data-animating-hidden'
-                    .removeAttr 'data-animation'
-                    .removeAttr 'data-animating'
-                    .css        'animation-duration', ''
-                    .trigger    'animationend'
-
-                #
-                await @delay()
-
-                #
-                afterQueue = @data().get().queue
-
-                #console.log beforeQueue.length, afterQueue.length
-
-                #
-                if beforeQueue.length is afterQueue.length
-                    #
-                    data.looping = false
-                    data.queue   = []
-                else
-                    #
-                    data.queue = @data().get().queue[-afterQueue.length..]
-                    console.log data.queue.length
-                @data().save(data)
+            # 移除所有元素和動畫有關的標籤。
+            #@$elements
+            #    .removeAttr 'data-animating-hidden'
+            #    .removeAttr 'data-animation'
+            #    .removeAttr 'data-animating'
+            #    .css        'animation-duration', ''
+            #    .trigger    'animationend'
 
             ts.fn
 
