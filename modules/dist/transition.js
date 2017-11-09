@@ -26,6 +26,10 @@ Transition = (function() {
 
       // 取得選擇器目前該播放的動畫，並且開始演繹。
       this.play = this.play.bind(this);
+      // Is Quited
+
+      // 如果本次動畫佇列已經被標記為「離開」時，就重設並回傳 `true`。
+      this.isQuited = this.isQuited.bind(this);
       // Animate
 
       // 以指定動畫演繹選擇器中所有元素。
@@ -82,7 +86,9 @@ Transition = (function() {
         data[this.$elements.selector] = {
           looping: false,
           index: 0,
-          queue: []
+          queue: [],
+          animating: false,
+          quited: false
         };
         document.body.$data.animationData = data;
       }
@@ -102,6 +108,7 @@ Transition = (function() {
 
     async push(options) {
       var data;
+      await this.delay();
       options.duration = options.duration || 1000;
       options.onComplete = options.onComplete || function() {};
       // 取得目前選擇器的動畫資料。
@@ -124,12 +131,15 @@ Transition = (function() {
       var animation, data;
       // 取得目前選擇器的動畫資料。
       data = this.data().get();
+      // 表示目前正在執行動畫。
+      data.animating = true;
       // 從動畫資料中的佇列與索引取得出本次該播放的動畫。
       animation = data.queue[data.index];
       // 如果本次動畫不存在。
       if (animation === void 0) {
         // 就重設動畫索引。
         data.index = 0;
+        data.animating = false;
         this.data().save(data);
         // 如果這個選擇器的動畫是可供重複的，那麼就重頭開始播放動畫。
         if (data.looping) {
@@ -152,11 +162,27 @@ Transition = (function() {
       return this.play();
     }
 
+    isQuited() {
+      var data;
+      if (this.data().get().quited) {
+        data = this.data().get();
+        data.animating = false;
+        data.quited = false;
+        this.data().save(data);
+        return true;
+      }
+      return false;
+    }
+
     animate({animation, reverse, forceOrder, interval, duration, onComplete, onAllComplete, onStart}) {
       // 回傳 Promise 物件才能夠阻擋到所有元素在本輪都演繹結束。
       return new Promise(async(resolve) => {
-        var $element, data, element, elements, fn, i, index, len;
-        data = this.data().get();
+        var $element, element, elements, fn, i, index, len;
+        // 如果動畫佇列在這個時候被終止就停止演繹。
+        if (this.isQuited()) {
+          resolve();
+          return;
+        }
         // 將元素選擇器轉換為陣列，這樣才能以迴圈遞迴。
         // 因為 `await` 只能在 `for` 中使用，而不能用在 `.each` 或 `.forEach`。
         elements = this.$elements.toArray();
@@ -214,9 +240,9 @@ Transition = (function() {
           // 套用執行動畫的標籤。
           $element.attr('data-animating', true);
           // 當這個元素的動畫執行結束時。
-          return $element.one('animationend', () => {
-            // 如果動畫佇列在這個時候被清空，就終止。
-            if (this.data().get().queue.length === 0) {
+          return $element.one('animationend', async() => {
+            // 如果動畫佇列在這個時候被終止就結束。
+            if (this.isQuited()) {
               return;
             }
             // 呼叫完成函式，並且傳遞自己作為 `this`。
@@ -231,15 +257,17 @@ Transition = (function() {
             if (index === elements.length - 1) {
               // 就呼叫所有動畫完成的回呼函式。
               onAllComplete();
+              // 稍微等待一下。
+              await this.delay();
               // 然後呼叫 Promise 的解決函式，這樣就可以進行下一輪的動畫了。
               return resolve();
             }
-          }).emulate('animationend', duration);
+          }).emulate('animationend', duration + interval + 10);
         };
         for (index = i = 0, len = elements.length; i < len; index = ++i) {
           element = elements[index];
-          // 如果動畫佇列在這個時候被清空，就終止演繹。
-          if (this.data().get().queue.length === 0) {
+          // 如果動畫佇列在這個時候被終止就停止演繹。
+          if (this.isQuited()) {
             return;
           }
           // 已選擇器選擇這個元素。
@@ -284,37 +312,61 @@ Transition = (function() {
         // 停止目前的這個動畫，執行下一個。
         stop: () => {
           
-          this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').off('animationend');
-          
-          //await @delay()
+          this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').trigger('animationend');
           return ts.fn;
         },
         // Stop All
 
         // 停止目前的動畫並且移除整個動畫佇列。
         'stop all': () => {
-          var data;
-          // 重設選擇器中的動畫設定。
-          data = this.data().get();
-          data.looping = false;
-          data.index = 0;
-          data.queue = [];
-          this.data().save(data);
-          // 移除所有元素和動畫有關的標籤。
-          this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').off('animationend');
+          var beforeQueue;
+          if (this.index !== 0) {
+            return ts.fn;
+          }
+          
+          beforeQueue = this.data().get().queue;
+          (async() => {
+            var afterQueue, data;
+            // 重設選擇器中的動畫設定。
+            data = this.data().get();
+            data.index = 0;
+            data.quited = true;
+            //data.animating = false
+            this.data().save(data);
+            // 移除所有元素和動畫有關的標籤。
+            this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').trigger('animationend');
+            
+            await this.delay();
+            
+            afterQueue = this.data().get().queue;
+            //console.log beforeQueue.length, afterQueue.length
+
+            if (beforeQueue.length === afterQueue.length) {
+              
+              data.looping = false;
+              data.queue = [];
+            } else {
+              
+              data.queue = this.data().get().queue.slice(-afterQueue.length);
+              console.log(data.queue.length);
+            }
+            return this.data().save(data);
+          })();
           return ts.fn;
         },
         // Clear Queue
 
         // 執行完目前的動畫後就停止並且移除整個動畫佇列。
         'clear queue': () => {
-          var data;
-          // 重設選擇器中的動畫設定。
-          data = this.data().get();
-          data.looping = false;
-          data.index = 0;
-          data.queue = [];
-          this.data().save(data);
+          (() => {
+            var data;
+            // 重設選擇器中的動畫設定。
+            data = this.data().get();
+            data.looping = false;
+            data.index = 0;
+            data.queue = [];
+            return this.data().save(data);
+          })();
           return ts.fn;
         },
         // Show
@@ -357,10 +409,14 @@ Transition = (function() {
 
         // 允許動畫佇列執行到底之後重頭開始，不斷地循環。
         'set looping': () => {
-          var data;
-          data = this.data().get();
-          data.looping = true;
-          this.data().save(data);
+          (async() => {
+            var data;
+            await this.delay();
+            await this.delay();
+            data = this.data().get();
+            data.looping = true;
+            return this.data().save(data);
+          })();
           return ts.fn;
         },
         // Remove Looping
@@ -380,7 +436,9 @@ Transition = (function() {
         // Is Animating
 
         // 取得一個元素是否正在進行動畫的布林值。
-        'is animating': () => {},
+        'is animating': () => {
+          return this.data().get().animating;
+        },
         // Is Looping
 
         // 取得一個元素的動畫佇列是否允許循環的布林值。
