@@ -26,11 +26,6 @@ Transition = (function() {
 
       // 取得選擇器目前該播放的動畫，並且開始演繹。
       this.play = this.play.bind(this);
-      // Is Quited
-
-      // 如果本次動畫佇列已經被標記為「離開」時，就重設並回傳 `true`。
-      this.isQuited = this.isQuited.bind(this);
-      this.cleanTimer = this.cleanTimer.bind(this);
       // Animate
 
       // 以指定動畫演繹選擇器中所有元素。
@@ -111,8 +106,6 @@ Transition = (function() {
 
     async push(options) {
       var data;
-      // 稍後一下等待保存變更。
-      await this.delay();
       options.duration = options.duration || 1000;
       options.onComplete = options.onComplete || function() {};
       // 取得目前選擇器的動畫資料。
@@ -133,8 +126,6 @@ Transition = (function() {
 
     async play() {
       var animation, data;
-      
-      this.cleanTimer();
       // 取得目前選擇器的動畫資料。
       data = this.data().get();
       // 表示目前正在執行動畫。
@@ -162,55 +153,14 @@ Transition = (function() {
       this.data().save(data);
       // 播放本次動畫並且到所有元素都演繹本次動畫結束才繼續。
       await this.animate(animation);
-      // 稍後一下。
-      await this.delay();
       // 播放下次的動畫。
       return this.play();
-    }
-
-    isQuited() {
-      var data;
-      if (this.data().get().quited) {
-        data = this.data().get();
-        data.animating = false;
-        data.quited = false;
-        this.data().save(data);
-        return true;
-      }
-      return false;
-    }
-
-    cleanTimer() {
-      var data, timer;
-      if (this.data().get().timer === true) {
-        return;
-      }
-      data = this.data().get();
-      data.timer = true;
-      this.data().save(data);
-      return timer = setInterval(() => {
-        if (this.data().get().quited === false) {
-          return;
-        }
-        data = this.data().get();
-        data.animating = false;
-        //data.quited    = false
-        data.timer = false;
-        this.data().save(data);
-        this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').off('animationend');
-        return clearInterval(timer);
-      }, 1);
     }
 
     animate({animation, reverse, forceOrder, interval, duration, onComplete, onAllComplete, onStart}) {
       // 回傳 Promise 物件才能夠阻擋到所有元素在本輪都演繹結束。
       return new Promise(async(resolve) => {
-        var $element, element, elements, fn, i, index, len;
-        // 如果動畫佇列在這個時候被終止就停止演繹。
-        if (this.isQuited()) {
-          resolve();
-          return;
-        }
+        var $element, element, elements, fn, i, index, len, results;
         // 將元素選擇器轉換為陣列，這樣才能以迴圈遞迴。
         // 因為 `await` 只能在 `for` 中使用，而不能用在 `.each` 或 `.forEach`。
         elements = this.$elements.toArray();
@@ -261,18 +211,17 @@ Transition = (function() {
           if (animation.indexOf('in') !== -1) {
             $element.removeAttr('data-animating-hidden');
           }
+          if ($element.prev().attr('data-animatable') !== 'true' && index !== 0) {
+            return;
+          }
           // 套用動畫名稱、動畫速度。
-          $element.attr('data-animation', animation).css('animation-duration', `${duration}ms`);
+          $element.attr('data-animatable', 'true').attr('data-animation', animation).css('animation-duration', `${duration}ms`);
           // 稍微等待一下才套用執行動畫的標籤，這樣才會有動作。
           await this.delay();
           // 套用執行動畫的標籤。
           $element.attr('data-animating', true);
           // 當這個元素的動畫執行結束時。
           return $element.one('animationend', async() => {
-            // 如果動畫佇列在這個時候被終止就結束。
-            if (this.isQuited()) {
-              return;
-            }
             // 呼叫完成函式，並且傳遞自己作為 `this`。
             onComplete.call($element.get());
             // 動畫結束後移除自己所以和動畫有關的標籤。
@@ -292,12 +241,11 @@ Transition = (function() {
             }
           }).emulate('animationend', duration + interval + 10);
         };
+        results = [];
         for (index = i = 0, len = elements.length; i < len; index = ++i) {
           element = elements[index];
           // 如果動畫佇列在這個時候被終止就停止演繹。
-          if (this.isQuited()) {
-            return;
-          }
+
           // 已選擇器選擇這個元素。
           $element = $selector(element);
           // 持續以 `await` 阻擋，直到此頁面在螢幕上可見。
@@ -305,8 +253,9 @@ Transition = (function() {
           await this.untilVisible();
           fn($element, index);
           // 等待指定延遲才演繹下個元素。
-          await this.delay(interval);
+          results.push((await this.delay(interval)));
         }
+        return results;
       });
     }
 
@@ -360,12 +309,7 @@ Transition = (function() {
           data.animating = false;
           this.data().save(data);
           // 移除所有元素和動畫有關的標籤。
-          //@$elements
-          //    .removeAttr 'data-animating-hidden'
-          //    .removeAttr 'data-animation'
-          //    .removeAttr 'data-animating'
-          //    .css        'animation-duration', ''
-          //    .trigger    'animationend'
+          this.$elements.removeAttr('data-animatable').removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').off('animationend');
           return ts.fn;
         },
         // Clear Queue
@@ -423,14 +367,10 @@ Transition = (function() {
 
         // 允許動畫佇列執行到底之後重頭開始，不斷地循環。
         'set looping': () => {
-          (async() => {
-            var data;
-            await this.delay();
-            await this.delay();
-            data = this.data().get();
-            data.looping = true;
-            return this.data().save(data);
-          })();
+          var data;
+          data = this.data().get();
+          data.looping = true;
+          this.data().save(data);
           return ts.fn;
         },
         // Remove Looping

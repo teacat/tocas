@@ -94,9 +94,6 @@ class Transition
     #
     # 將新的動畫資料推入至目前選擇器的佇列中。
     push: (options) =>
-        # 稍後一下等待保存變更。
-        await @delay()
-
         options.duration   = options.duration   or 1000
         options.onComplete = options.onComplete or ->
 
@@ -125,9 +122,6 @@ class Transition
     #
     # 取得選擇器目前該播放的動畫，並且開始演繹。
     play: =>
-        #
-        @cleanTimer()
-
         # 取得目前選擇器的動畫資料。
         data = @data().get()
 
@@ -162,51 +156,8 @@ class Transition
         # 播放本次動畫並且到所有元素都演繹本次動畫結束才繼續。
         await @animate animation
 
-        # 稍後一下。
-        await @delay()
-
         # 播放下次的動畫。
         @play()
-
-    # Is Quited
-    #
-    # 如果本次動畫佇列已經被標記為「離開」時，就重設並回傳 `true`。
-    isQuited: =>
-        if @data().get().quited
-            data           = @data().get()
-            data.animating = false
-            data.quited    = false
-            @data().save(data)
-            return true
-        return false
-
-    cleanTimer: =>
-        if @data().get().timer is true
-            return
-
-        data       = @data().get()
-        data.timer = true
-        @data().save(data)
-
-        timer = setInterval =>
-            if @data().get().quited is false
-                return
-
-            data           = @data().get()
-            data.animating = false
-            #data.quited    = false
-            data.timer     = false
-            @data().save(data)
-
-            @$elements
-                .removeAttr 'data-animating-hidden'
-                .removeAttr 'data-animation'
-                .removeAttr 'data-animating'
-                .css        'animation-duration', ''
-                .off        'animationend'
-
-            clearInterval(timer)
-        , 1
 
     # Animate
     #
@@ -214,11 +165,6 @@ class Transition
     animate: ({animation, reverse, forceOrder, interval, duration, onComplete, onAllComplete, onStart}) =>
         # 回傳 Promise 物件才能夠阻擋到所有元素在本輪都演繹結束。
         return new Promise (resolve) =>
-            # 如果動畫佇列在這個時候被終止就停止演繹。
-            if @isQuited()
-                resolve()
-                return
-
             # 將元素選擇器轉換為陣列，這樣才能以迴圈遞迴。
             # 因為 `await` 只能在 `for` 中使用，而不能用在 `.each` 或 `.forEach`。
             elements = @$elements.toArray()
@@ -268,7 +214,6 @@ class Transition
             # 遞迴元素選擇器陣列，這樣才能透過 `await` 一個一個逐一執行其動畫。
             for element, index in elements
                 # 如果動畫佇列在這個時候被終止就停止演繹。
-                return if @isQuited()
 
                 # 已選擇器選擇這個元素。
                 $element = $selector element
@@ -286,8 +231,12 @@ class Transition
                     if animation.indexOf('in') isnt -1
                         $element.removeAttr 'data-animating-hidden'
 
+                    if $element.prev().attr('data-animatable') isnt 'true' and index isnt 0
+                        return
+
                     # 套用動畫名稱、動畫速度。
                     $element
+                        .attr 'data-animatable'   , 'true'
                         .attr 'data-animation'    , animation
                         .css  'animation-duration', "#{duration}ms"
 
@@ -300,9 +249,6 @@ class Transition
                     # 當這個元素的動畫執行結束時。
                     $element
                         .one 'animationend', =>
-                            # 如果動畫佇列在這個時候被終止就結束。
-                            return if @isQuited()
-
                             # 呼叫完成函式，並且傳遞自己作為 `this`。
                             onComplete.call $element.get()
 
@@ -390,12 +336,13 @@ class Transition
             @data().save(data)
 
             # 移除所有元素和動畫有關的標籤。
-            #@$elements
-            #    .removeAttr 'data-animating-hidden'
-            #    .removeAttr 'data-animation'
-            #    .removeAttr 'data-animating'
-            #    .css        'animation-duration', ''
-            #    .trigger    'animationend'
+            @$elements
+                .removeAttr 'data-animatable'
+                .removeAttr 'data-animating-hidden'
+                .removeAttr 'data-animation'
+                .removeAttr 'data-animating'
+                .css        'animation-duration', ''
+                .off        'animationend'
 
             ts.fn
 
@@ -452,12 +399,10 @@ class Transition
         #
         # 允許動畫佇列執行到底之後重頭開始，不斷地循環。
         'set looping': =>
-            do =>
-                await @delay()
-                await @delay()
-                data = @data().get()
-                data.looping = yes
-                @data().save(data)
+            data = @data().get()
+            data.looping = yes
+            @data().save(data)
+
             ts.fn
 
         # Remove Looping
