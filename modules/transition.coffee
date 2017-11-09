@@ -12,9 +12,6 @@ class Transition
         animation    : null
         # 這個動畫是否要反序執行。
         reverse      : false
-        # 強制逐序進行，等元素動畫結束後才執行下一個，
-        # 而不是元素動畫開始後相隔數毫秒就執行下一個元素的動畫（啟用此功能會看起來較不順暢）。
-        forceOrder   : false
         # 此動畫的元素間隔毫秒。
         interval     : 80
         # 此動畫的速度毫秒。
@@ -28,18 +25,8 @@ class Transition
 
     #
     init: (options) =>
-        #
-        #data = @data().get()
-
-        #
-        #if data is undefined
-        #    @data().save
-        #        stacks: {}
 
         ts.fn
-
-        #
-        #if options.animation isnt null
 
     # Until Visible
     #
@@ -48,58 +35,65 @@ class Transition
     untilVisible: =>
         new Promise (resolve) =>
             check = =>
-                #
+                # 如果頁面是處於不可見狀態就返回，持續阻擋。
                 if document.visibilityState isnt 'visible'
                     return
 
-                #
+                # 如果可見了，就呼叫解決函式。
                 resolve()
 
-                #
+                # 然後移除頁面的可見度變更監聽事件。
                 document.removeEventListener 'visibilitychange', check
 
-            #
+            # 新增頁面可見度變更監聽事件，當可見度變更時就呼叫一次檢查函式。
             document.addEventListener 'visibilitychange', check
 
-            #
+            # 立即檢查一次。
             check()
 
+    # Data
     #
-    #
-    #
-    data: (selector) =>
-        data = $selector('body').data('animationData')
+    # 取得動畫資料。
+    data: =>
+        # 如果主要的資料中心不存在，就初始化一個。
+        if document.body.$data is undefined
+            document.body.$data = {}
 
+        # 從資料中心取得動畫資料。
+        data = document.body.$data.animationData
+
+        # 如果動畫資料不存在就初始化一個。
         if data is undefined
             data = {}
-            $selector('body').data('animationData', {})
+            document.body.$data.animationData = data
 
+        # 如果動畫資料裡沒有這個選擇器的資料，就初始化一個。
         if data[@$elements.selector] is undefined
             data[@$elements.selector] =
                 looping : false
                 index   : 0
                 queue   : []
-                animated: 0
-            $selector('body').data('animationData', data)
+            document.body.$data.animationData = data
 
+        # 回傳下列可用的輔助函式。
         return
-            #
+            # save 會儲存新的動畫資料到目前的選擇器中。
             save: (newData) =>
                 data[@$elements.selector] = newData
-                $selector('body').data('animationData', data)
+                document.body.$data.animationData = data
 
-            #
+            # get 會取得目前選擇器的動畫資料。
             get: =>
                 data[@$elements.selector]
 
+    # Push
     #
-    #
-    #
+    # 將新的動畫資料推入至目前選擇器的佇列中。
     push: (options) =>
         options.duration   = options.duration   or 1000
         options.onComplete = options.onComplete or ->
 
-        #
+        # 取得目前選擇器的動畫資料。
         data = @data().get()
 
         # 將本次的動畫推入至選擇器內的動畫佇列中。
@@ -108,69 +102,66 @@ class Transition
             @props...
             # 加上使用者自訂的選項。
             options...
-            #
-            skip: false
         }
 
         # 將這個變更保存到主要中心。
         @data().save(data)
 
-        #
+        # 稍後一下等待保存變更。
         await @delay()
 
-        #
+        # 如果這是第一個動畫，就開始播放。
         if data.index is 0
             @play()
 
+    # Play
     #
-    #
-    #
+    # 取得選擇器目前該播放的動畫，並且開始演繹。
     play: =>
-        animation = @getAnimation()
-
-        if animation is undefined
-            return
-
-        await @animate animation
-
-        #
-        @play()
-
-    #
-    #
-    #
-    getAnimation: =>
-        # 從中心取得主要資料。
+        # 取得目前選擇器的動畫資料。
         data = @data().get()
 
-        #
+        # 從動畫資料中的佇列與索引取得出本次該播放的動畫。
         animation = data.queue[data.index]
 
-        #
-        data.index++
-
-        #
-        if data.queue[data.index] is undefined
-            #
+        # 如果本次動畫不存在。
+        if animation is undefined
+            # 就重設動畫索引。
             data.index = 0
+            @data().save(data)
 
-            #
+            # 如果這個選擇器的動畫是可供重複的，那麼就重頭開始播放動畫。
             if data.looping
-                animation = data.queue[data.index]
-            else
-                #
-                data.queue = []
+                @play()
+                return
 
+            # 不然就清空動畫佇列。
+            data.queue = []
+            @data().save(data)
+
+            return
+
+        # 動畫索引遞加。
+        data.index++
         @data().save(data)
 
-        return animation
+        # 播放本次動畫並且到所有元素都演繹本次動畫結束才繼續。
+        await @animate animation
 
+        # 稍後一下。
+        await @delay()
+
+        # 播放下次的動畫。
+        @play()
+
+    # Animate
     #
-    #
-    #
+    # 以指定動畫演繹選擇器中所有元素。
     animate: ({animation, reverse, forceOrder, interval, duration, onComplete, onAllComplete, onStart}) =>
-        #
+        # 回傳 Promise 物件才能夠阻擋到所有元素在本輪都演繹結束。
         return new Promise (resolve) =>
+            data = @data().get()
+
             # 將元素選擇器轉換為陣列，這樣才能以迴圈遞迴。
             # 因為 `await` 只能在 `for` 中使用，而不能用在 `.each` 或 `.forEach`。
             elements = @$elements.toArray()
@@ -179,30 +170,34 @@ class Transition
             if reverse
                 elements = elements.reverse()
 
-            #
+            # 如果動畫是下列自訂動畫，就做額外處理。
             switch animation
-                #
+                # delay 會延遲一段時間。
                 when 'delay'
                     await @delay duration
                     resolve()
+                    return
 
-                #
+                # show 會讓元素可見，並且沒有延遲時間。
                 when 'show'
                     @$elements.removeAttr 'data-animating-hidden'
                     resolve()
+                    return
 
-                #
+                # hide 會讓元素隱藏，並且沒有延遲時間。
                 when 'hide'
                     @$elements.attr 'data-animating-hidden', 'true'
                     resolve()
+                    return
 
-                #
+                # toggle 會切換元素的可見與隱藏，並且沒有延遲時間。
                 when 'toggle'
                     if @$this.attr('data-animating-hidden') is 'true'
                         @$this.removeAttr 'data-animating-hidden'
                     else
                         @$this.attr 'data-animating-hidden', 'true'
                     resolve()
+                    return
 
                 #
                 #when 'show visibility'
@@ -215,15 +210,20 @@ class Transition
 
             # 遞迴元素選擇器陣列，這樣才能透過 `await` 一個一個逐一執行其動畫。
             for element, index in elements
+                # 如果動畫佇列在這個時候被清空，就終止演繹。
+                if @data().get().queue.length is 0
+                    return
+
+                # 已選擇器選擇這個元素。
                 $element = $selector element
 
                 # 持續以 `await` 阻擋，直到此頁面在螢幕上可見。
                 # 這可以避免瀏覽器因為重新繪製而打亂動畫的順序，如果移除此方法會雜亂無章。
                 await @untilVisible()
 
-                #
+                # 以閉包方式執行本次動畫，避免 For 迴圈覆蓋了元素變數。
                 do ($element, index) =>
-                    #
+                    # 本次動畫開始，呼叫開始回呼函式。
                     onStart.call $element.get()
 
                     # 如果動畫名稱中有 `in` 就表示這個動畫會顯示元素，所以就移除元素的隱藏標籤。
@@ -242,40 +242,47 @@ class Transition
                     $element.attr 'data-animating', true
 
                     # 當這個元素的動畫執行結束時。
-                    $element.one 'animationend.animation', =>
-                        # 呼叫完成函式，並且傳遞自己作為 `this`。
-                        onComplete.call $element.get()
+                    $element
+                        .one 'animationend', =>
+                            # 如果動畫佇列在這個時候被清空，就終止。
+                            if @data().get().queue.length is 0
+                                return
 
-                        #
-                        $element
-                            .removeAttr 'data-animation'
-                            .removeAttr 'data-animating'
-                            .css        'animation-duration', ''
+                            # 呼叫完成函式，並且傳遞自己作為 `this`。
+                            onComplete.call $element.get()
 
-                        # 如果動畫名稱中有 `out` 就表示這個動畫會隱藏元素，所以就在動畫結束後加上元素隱藏標籤。
-                        if animation.indexOf('out') isnt -1
-                            $element.attr 'data-animating-hidden', 'true'
+                            # 動畫結束後移除自己所以和動畫有關的標籤。
+                            $element
+                                .removeAttr 'data-animation'
+                                .removeAttr 'data-animating'
+                                .css        'animation-duration', ''
 
-                        #
-                        if index is elements.length - 1
-                            #
-                            onAllComplete()
+                            # 如果動畫名稱中有 `out` 就表示這個動畫會隱藏元素，所以就在動畫結束後加上元素隱藏標籤。
+                            if animation.indexOf('out') isnt -1
+                                $element.attr 'data-animating-hidden', 'true'
 
-                            #
-                            resolve()
+                            # 如果這是本次動畫中的最後一個元素，而且又演繹結束的話。
+                            if index is elements.length - 1
+                                # 就呼叫所有動畫完成的回呼函式。
+                                onAllComplete()
 
-                #
+                                # 然後呼叫 Promise 的解決函式，這樣就可以進行下一輪的動畫了。
+                                resolve()
+                        .emulate 'animationend', duration
+
+                # 等待指定延遲才演繹下個元素。
                 await @delay interval
 
+    # Simple Push
     #
-    #
-    #
+    # 簡易版的 Push，將動畫推入至動畫佇列中。
     simplePush: (animation, duration, onComplete) =>
-        #
+        # 如果這不是選擇器中的第一個元素就離開，
+        # 因為這個函式只能被執行一次避免重複。
         if @index isnt 0
             return ts.fn
 
-        #
+        # 推入簡化的動畫資料到佇列中。
         @push
             animation : animation
             duration  : duration
@@ -305,15 +312,12 @@ class Transition
                 .removeAttr 'data-animation'
                 .removeAttr 'data-animating'
                 .css        'animation-duration', ''
-                .off        'animationend.animation'
+                .off        'animationend'
 
             #
-            await @delay()
+            #await @delay()
 
-            #
-            data      = @data().get()
-            data.skip = true
-            @data().save(data)
+
 
             ts.fn
 
@@ -321,27 +325,20 @@ class Transition
         #
         # 停止目前的動畫並且移除整個動畫佇列。
         'stop all': =>
-            #
+            # 重設選擇器中的動畫設定。
             data         = @data().get()
             data.looping = false
             data.index   = 0
             data.queue   = []
             @data().save(data)
 
-            #
+            # 移除所有元素和動畫有關的標籤。
             @$elements
                 .removeAttr 'data-animating-hidden'
                 .removeAttr 'data-animation'
                 .removeAttr 'data-animating'
                 .css        'animation-duration', ''
-                .off        'animationend.animation'
-
-            #
-            await @delay()
-
-            #
-            data.skip = true
-            @data().save(data)
+                .off        'animationend'
 
             ts.fn
 
@@ -349,7 +346,7 @@ class Transition
         #
         # 執行完目前的動畫後就停止並且移除整個動畫佇列。
         'clear queue': =>
-            #
+            # 重設選擇器中的動畫設定。
             data         = @data().get()
             data.looping = false
             data.index   = 0
@@ -422,10 +419,19 @@ class Transition
         # 取得一個元素是否正在進行動畫的布林值。
         'is animating': =>
 
+
         # Is Looping
         #
         # 取得一個元素的動畫佇列是否允許循環的布林值。
         'is looping': =>
+            @data().get().looping
+
+        # Get Animation Name
+        #
+        # 取得一個元素的動畫佇列是否允許循環的布林值。
+        'get animation name': =>
+            data = @data().get()
+            data.queue?[data.index]?.animation
 
         # Fade Out Down
         #

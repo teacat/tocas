@@ -9,25 +9,30 @@ Transition = (function() {
     constructor() {
       
       this.init = this.init.bind(this);
-      
-      //if options.animation isnt null
-
       // Until Visible
 
       // 此函式會以 `await` 的方式持續阻擋，直到頁面在客戶端上可見為止。
       // 這是避免瀏覽器在不可見的時候會進行重繪，導致動畫亂序。
       this.untilVisible = this.untilVisible.bind(this);
-      
+      // Data
+
+      // 取得動畫資料。
       this.data = this.data.bind(this);
-      
+      // Push
+
+      // 將新的動畫資料推入至目前選擇器的佇列中。
       this.push = this.push.bind(this);
-      
+      // Play
+
+      // 取得選擇器目前該播放的動畫，並且開始演繹。
       this.play = this.play.bind(this);
-      
-      this.getAnimation = this.getAnimation.bind(this);
-      
+      // Animate
+
+      // 以指定動畫演繹選擇器中所有元素。
       this.animate = this.animate.bind(this);
-      
+      // Simple Push
+
+      // 簡易版的 Push，將動畫推入至動畫佇列中。
       this.simplePush = this.simplePush.bind(this);
       
       this.destroy = this.destroy.bind(this);
@@ -36,12 +41,6 @@ Transition = (function() {
     }
 
     init(options) {
-      
-      //data = @data().get()
-
-      //if data is undefined
-      //    @data().save
-      //        stacks: {}
       return ts.fn;
     }
 
@@ -49,45 +48,52 @@ Transition = (function() {
       return new Promise((resolve) => {
         var check;
         check = () => {
-          
+          // 如果頁面是處於不可見狀態就返回，持續阻擋。
           if (document.visibilityState !== 'visible') {
             return;
           }
-          
+          // 如果可見了，就呼叫解決函式。
           resolve();
-          
+          // 然後移除頁面的可見度變更監聽事件。
           return document.removeEventListener('visibilitychange', check);
         };
-        
+        // 新增頁面可見度變更監聽事件，當可見度變更時就呼叫一次檢查函式。
         document.addEventListener('visibilitychange', check);
-        
+        // 立即檢查一次。
         return check();
       });
     }
 
-    data(selector) {
+    data() {
       var data;
-      data = $selector('body').data('animationData');
+      // 如果主要的資料中心不存在，就初始化一個。
+      if (document.body.$data === void 0) {
+        document.body.$data = {};
+      }
+      // 從資料中心取得動畫資料。
+      data = document.body.$data.animationData;
+      // 如果動畫資料不存在就初始化一個。
       if (data === void 0) {
         data = {};
-        $selector('body').data('animationData', {});
+        document.body.$data.animationData = data;
       }
+      // 如果動畫資料裡沒有這個選擇器的資料，就初始化一個。
       if (data[this.$elements.selector] === void 0) {
         data[this.$elements.selector] = {
           looping: false,
           index: 0,
-          queue: [],
-          animated: 0
+          queue: []
         };
-        $selector('body').data('animationData', data);
+        document.body.$data.animationData = data;
       }
       return {
-        
+        // save 會儲存新的動畫資料到目前的選擇器中。
+        // 回傳下列可用的輔助函式。
         save: (newData) => {
           data[this.$elements.selector] = newData;
-          return $selector('body').data('animationData', data);
+          return document.body.$data.animationData = data;
         },
-        
+        // get 會取得目前選擇器的動畫資料。
         get: () => {
           return data[this.$elements.selector];
         }
@@ -98,64 +104,59 @@ Transition = (function() {
       var data;
       options.duration = options.duration || 1000;
       options.onComplete = options.onComplete || function() {};
-      
+      // 取得目前選擇器的動畫資料。
       data = this.data().get();
       // 將本次的動畫推入至選擇器內的動畫佇列中。
       // 預設的動畫選項。
       // 加上使用者自訂的選項。
-      data.queue.push(Object.assign({}, this.props, options, {
-        
-        skip: false
-      }));
+      data.queue.push(Object.assign({}, this.props, options));
       // 將這個變更保存到主要中心。
       this.data().save(data);
-      
+      // 稍後一下等待保存變更。
       await this.delay();
-      
+      // 如果這是第一個動畫，就開始播放。
       if (data.index === 0) {
         return this.play();
       }
     }
 
     async play() {
-      var animation;
-      animation = this.getAnimation();
+      var animation, data;
+      // 取得目前選擇器的動畫資料。
+      data = this.data().get();
+      // 從動畫資料中的佇列與索引取得出本次該播放的動畫。
+      animation = data.queue[data.index];
+      // 如果本次動畫不存在。
       if (animation === void 0) {
+        // 就重設動畫索引。
+        data.index = 0;
+        this.data().save(data);
+        // 如果這個選擇器的動畫是可供重複的，那麼就重頭開始播放動畫。
+        if (data.looping) {
+          this.play();
+          return;
+        }
+        // 不然就清空動畫佇列。
+        data.queue = [];
+        this.data().save(data);
         return;
       }
+      // 動畫索引遞加。
+      data.index++;
+      this.data().save(data);
+      // 播放本次動畫並且到所有元素都演繹本次動畫結束才繼續。
       await this.animate(animation);
-      
+      // 稍後一下。
+      await this.delay();
+      // 播放下次的動畫。
       return this.play();
     }
 
-    getAnimation() {
-      var animation, data;
-      // 從中心取得主要資料。
-      data = this.data().get();
-      
-      animation = data.queue[data.index];
-      
-      data.index++;
-      
-      if (data.queue[data.index] === void 0) {
-        
-        data.index = 0;
-        
-        if (data.looping) {
-          animation = data.queue[data.index];
-        } else {
-          
-          data.queue = [];
-        }
-      }
-      this.data().save(data);
-      return animation;
-    }
-
     animate({animation, reverse, forceOrder, interval, duration, onComplete, onAllComplete, onStart}) {
-      
+      // 回傳 Promise 物件才能夠阻擋到所有元素在本輪都演繹結束。
       return new Promise(async(resolve) => {
-        var $element, element, elements, fn, i, index, len, results;
+        var $element, data, element, elements, fn, i, index, len;
+        data = this.data().get();
         // 將元素選擇器轉換為陣列，這樣才能以迴圈遞迴。
         // 因為 `await` 只能在 `for` 中使用，而不能用在 `.each` 或 `.forEach`。
         elements = this.$elements.toArray();
@@ -163,24 +164,24 @@ Transition = (function() {
         if (reverse) {
           elements = elements.reverse();
         }
-        
+        // 如果動畫是下列自訂動畫，就做額外處理。
         switch (animation) {
-          
+          // delay 會延遲一段時間。
           case 'delay':
             await this.delay(duration);
             resolve();
-            break;
-          
+            return;
+          // show 會讓元素可見，並且沒有延遲時間。
           case 'show':
             this.$elements.removeAttr('data-animating-hidden');
             resolve();
-            break;
-          
+            return;
+          // hide 會讓元素隱藏，並且沒有延遲時間。
           case 'hide':
             this.$elements.attr('data-animating-hidden', 'true');
             resolve();
-            break;
-          
+            return;
+          // toggle 會切換元素的可見與隱藏，並且沒有延遲時間。
           case 'toggle':
             if (this.$this.attr('data-animating-hidden') === 'true') {
               this.$this.removeAttr('data-animating-hidden');
@@ -188,6 +189,7 @@ Transition = (function() {
               this.$this.attr('data-animating-hidden', 'true');
             }
             resolve();
+            return;
         }
 
 //when 'show visibility'
@@ -197,9 +199,9 @@ Transition = (function() {
 //when 'toggle visibility'
 
 // 遞迴元素選擇器陣列，這樣才能透過 `await` 一個一個逐一執行其動畫。
-        
+        // 以閉包方式執行本次動畫，避免 For 迴圈覆蓋了元素變數。
         fn = async($element, index) => {
-          
+          // 本次動畫開始，呼叫開始回呼函式。
           onStart.call($element.get());
           // 如果動畫名稱中有 `in` 就表示這個動畫會顯示元素，所以就移除元素的隱藏標籤。
           if (animation.indexOf('in') !== -1) {
@@ -212,45 +214,53 @@ Transition = (function() {
           // 套用執行動畫的標籤。
           $element.attr('data-animating', true);
           // 當這個元素的動畫執行結束時。
-          return $element.one('animationend.animation', () => {
+          return $element.one('animationend', () => {
+            // 如果動畫佇列在這個時候被清空，就終止。
+            if (this.data().get().queue.length === 0) {
+              return;
+            }
             // 呼叫完成函式，並且傳遞自己作為 `this`。
             onComplete.call($element.get());
-            
+            // 動畫結束後移除自己所以和動畫有關的標籤。
             $element.removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '');
             // 如果動畫名稱中有 `out` 就表示這個動畫會隱藏元素，所以就在動畫結束後加上元素隱藏標籤。
             if (animation.indexOf('out') !== -1) {
               $element.attr('data-animating-hidden', 'true');
             }
-            
+            // 如果這是本次動畫中的最後一個元素，而且又演繹結束的話。
             if (index === elements.length - 1) {
-              
+              // 就呼叫所有動畫完成的回呼函式。
               onAllComplete();
-              
+              // 然後呼叫 Promise 的解決函式，這樣就可以進行下一輪的動畫了。
               return resolve();
             }
-          });
+          }).emulate('animationend', duration);
         };
-        results = [];
         for (index = i = 0, len = elements.length; i < len; index = ++i) {
           element = elements[index];
+          // 如果動畫佇列在這個時候被清空，就終止演繹。
+          if (this.data().get().queue.length === 0) {
+            return;
+          }
+          // 已選擇器選擇這個元素。
           $element = $selector(element);
           // 持續以 `await` 阻擋，直到此頁面在螢幕上可見。
           // 這可以避免瀏覽器因為重新繪製而打亂動畫的順序，如果移除此方法會雜亂無章。
           await this.untilVisible();
           fn($element, index);
-          
-          results.push((await this.delay(interval)));
+          // 等待指定延遲才演繹下個元素。
+          await this.delay(interval);
         }
-        return results;
       });
     }
 
     simplePush(animation, duration, onComplete) {
-      
+      // 如果這不是選擇器中的第一個元素就離開，
+      // 因為這個函式只能被執行一次避免重複。
       if (this.index !== 0) {
         return ts.fn;
       }
-      
+      // 推入簡化的動畫資料到佇列中。
       this.push({
         animation: animation,
         duration: duration,
@@ -272,36 +282,26 @@ Transition = (function() {
         // Stop
 
         // 停止目前的這個動畫，執行下一個。
-        stop: async() => {
-          var data;
+        stop: () => {
           
-          this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').off('animationend.animation');
+          this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').off('animationend');
           
-          await this.delay();
-          
-          data = this.data().get();
-          data.skip = true;
-          this.data().save(data);
+          //await @delay()
           return ts.fn;
         },
         // Stop All
 
         // 停止目前的動畫並且移除整個動畫佇列。
-        'stop all': async() => {
+        'stop all': () => {
           var data;
-          
+          // 重設選擇器中的動畫設定。
           data = this.data().get();
           data.looping = false;
           data.index = 0;
           data.queue = [];
           this.data().save(data);
-          
-          this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').off('animationend.animation');
-          
-          await this.delay();
-          
-          data.skip = true;
-          this.data().save(data);
+          // 移除所有元素和動畫有關的標籤。
+          this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').off('animationend');
           return ts.fn;
         },
         // Clear Queue
@@ -309,7 +309,7 @@ Transition = (function() {
         // 執行完目前的動畫後就停止並且移除整個動畫佇列。
         'clear queue': () => {
           var data;
-          
+          // 重設選擇器中的動畫設定。
           data = this.data().get();
           data.looping = false;
           data.index = 0;
@@ -384,7 +384,17 @@ Transition = (function() {
         // Is Looping
 
         // 取得一個元素的動畫佇列是否允許循環的布林值。
-        'is looping': () => {},
+        'is looping': () => {
+          return this.data().get().looping;
+        },
+        // Get Animation Name
+
+        // 取得一個元素的動畫佇列是否允許循環的布林值。
+        'get animation name': () => {
+          var data, ref, ref1;
+          data = this.data().get();
+          return (ref = data.queue) != null ? (ref1 = ref[data.index]) != null ? ref1.animation : void 0 : void 0;
+        },
         // Fade Out Down
 
         bounce: (duration, onComplete) => {
@@ -773,9 +783,6 @@ Transition = (function() {
     animation: null,
     // 這個動畫是否要反序執行。
     reverse: false,
-    // 強制逐序進行，等元素動畫結束後才執行下一個，
-    // 而不是元素動畫開始後相隔數毫秒就執行下一個元素的動畫（啟用此功能會看起來較不順暢）。
-    forceOrder: false,
     // 此動畫的元素間隔毫秒。
     interval: 80,
     // 此動畫的速度毫秒。
