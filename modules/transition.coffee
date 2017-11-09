@@ -74,6 +74,7 @@ class Transition
                 index    : 0
                 queue    : []
                 animating: false
+                queuing  : false
                 quited   : false
             document.body.$data.animationData = data
 
@@ -92,8 +93,6 @@ class Transition
     #
     # 將新的動畫資料推入至目前選擇器的佇列中。
     push: (options) =>
-        await @delay()
-
         options.duration   = options.duration   or 1000
         options.onComplete = options.onComplete or ->
 

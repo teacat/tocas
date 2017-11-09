@@ -88,6 +88,7 @@ Transition = (function() {
           index: 0,
           queue: [],
           animating: false,
+          queuing: false,
           quited: false
         };
         document.body.$data.animationData = data;
@@ -108,7 +109,6 @@ Transition = (function() {
 
     async push(options) {
       var data;
-      await this.delay();
       options.duration = options.duration || 1000;
       options.onComplete = options.onComplete || function() {};
       // 取得目前選擇器的動畫資料。
