@@ -74,8 +74,6 @@ class Transition
                 index    : 0
                 queue    : []
                 animating: false
-                queuing  : false
-                quited   : false
                 timer    : false
             document.body.$data.animationData = data
 
@@ -159,10 +157,38 @@ class Transition
         # 播放下次的動畫。
         @play()
 
+    #
+    #
+    #
+    display: ($element, action) =>
+        switch action
+            when 'show'
+                #
+                display = $element.attr('data-animate-display')
+                if display is 'none'
+                    return
+                display = display or 'block'
+
+                #
+                $element.css 'display', 'block'
+
+            when 'hide'
+                #
+                display = $element.css 'display'
+                display = display or 'block'
+
+                #
+                $element.attr('data-animate-display', display)
+
+                #
+                $element.css 'display', 'none'
+
     # Animate
     #
     # 以指定動畫演繹選擇器中所有元素。
     animate: ({animation, reverse, forceOrder, interval, duration, onComplete, onAllComplete, onStart}) =>
+        if animation.indexOf('out') isnt -1
+            reverse = true
         # 回傳 Promise 物件才能夠阻擋到所有元素在本輪都演繹結束。
         return new Promise (resolve) =>
             # 將元素選擇器轉換為陣列，這樣才能以迴圈遞迴。
@@ -183,13 +209,15 @@ class Transition
 
                 # show 會讓元素可見，並且沒有延遲時間。
                 when 'show'
-                    @$elements.removeAttr 'data-animating-hidden'
+                    @$elements.forEach (element, index) =>
+                        @display $selector(element), 'show'
                     resolve()
                     return
 
                 # hide 會讓元素隱藏，並且沒有延遲時間。
                 when 'hide'
-                    @$elements.attr 'data-animating-hidden', 'true'
+                    @$elements.forEach (element, index) =>
+                        @display $selector(element), 'hide'
                     resolve()
                     return
 
@@ -203,13 +231,25 @@ class Transition
                     return
 
                 #
-                #when 'show visibility'
+                when 'show visibility'
+                    @$elements.removeAttr 'data-animating-hidden'
+                    resolve()
+                    return
 
                 #
-                #when 'hide visibility'
+                when 'hide visibility'
+                    @$elements.attr 'data-animating-hidden', 'true'
+                    resolve()
+                    return
 
                 #
-                #when 'toggle visibility'
+                when 'toggle visibility'
+                    if @$this.attr('data-animating-hidden') is 'true'
+                        @$this.removeAttr 'data-animating-hidden'
+                    else
+                        @$this.attr 'data-animating-hidden', 'true'
+                    resolve()
+                    return
 
             # 遞迴元素選擇器陣列，這樣才能透過 `await` 一個一個逐一執行其動畫。
             for element, index in elements
@@ -227,11 +267,8 @@ class Transition
                     # 本次動畫開始，呼叫開始回呼函式。
                     onStart.call $element.get()
 
-                    # 如果動畫名稱中有 `in` 就表示這個動畫會顯示元素，所以就移除元素的隱藏標籤。
-                    if animation.indexOf('in') isnt -1
-                        $element.removeAttr 'data-animating-hidden'
-
-                    if $element.prev().attr('data-animatable') isnt 'true' and index isnt 0
+                    #
+                    if $element.prev().length isnt 0 and $element.prev().attr('data-animatable') isnt 'true'
                         return
 
                     # 套用動畫名稱、動畫速度。
@@ -239,6 +276,11 @@ class Transition
                         .attr 'data-animatable'   , 'true'
                         .attr 'data-animation'    , animation
                         .css  'animation-duration', "#{duration}ms"
+
+                    # 如果動畫名稱中有 `in` 就表示這個動畫會顯示元素，所以就移除元素的隱藏標籤。
+                    if animation.indexOf('in') isnt -1
+                        @display $element, 'show'
+                        #$element.removeAttr 'data-animating-hidden'
 
                     # 稍微等待一下才套用執行動畫的標籤，這樣才會有動作。
                     await @delay()
@@ -252,15 +294,17 @@ class Transition
                             # 呼叫完成函式，並且傳遞自己作為 `this`。
                             onComplete.call $element.get()
 
+                            # 如果動畫名稱中有 `out` 就表示這個動畫會隱藏元素，所以就在動畫結束後加上元素隱藏標籤。
+                            if animation.indexOf('out') isnt -1
+                                @display $element, 'hide'
+
+                                #$element.attr 'data-animating-hidden', 'true'
+
                             # 動畫結束後移除自己所以和動畫有關的標籤。
                             $element
                                 .removeAttr 'data-animation'
                                 .removeAttr 'data-animating'
                                 .css        'animation-duration', ''
-
-                            # 如果動畫名稱中有 `out` 就表示這個動畫會隱藏元素，所以就在動畫結束後加上元素隱藏標籤。
-                            if animation.indexOf('out') isnt -1
-                                $element.attr 'data-animating-hidden', 'true'
 
                             # 如果這是本次動畫中的最後一個元素，而且又演繹結束的話。
                             if index is elements.length - 1
@@ -272,7 +316,7 @@ class Transition
 
                                 # 然後呼叫 Promise 的解決函式，這樣就可以進行下一輪的動畫了。
                                 resolve()
-                        .emulate 'animationend', duration + interval + 10
+                        .emulate 'animationend', duration + interval
 
                 # 等待指定延遲才演繹下個元素。
                 await @delay interval
@@ -310,28 +354,16 @@ class Transition
         #
         # 停止目前的這個動畫，執行下一個。
         stop: =>
-            #
-            @$elements
-                .removeAttr 'data-animating-hidden'
-                .removeAttr 'data-animation'
-                .removeAttr 'data-animating'
-                .css        'animation-duration', ''
-                .trigger    'animationend'
-            ts.fn
+            data = @data().get()
 
-        # Stop All
-        #
-        # 停止目前的動畫並且移除整個動畫佇列。
-        'stop all': =>
-            if @index isnt 0
+            #
+            if @index isnt 0 or data.animating is false
                 return ts.fn
 
-            # 重設選擇器中的動畫設定。
-            data           = @data().get()
-            data.index     = 0
+            #
+            data.queue     = data.queue[data.index..]
             data.looping   = false
-            data.queue     = []
-            data.quited    = true
+            data.index     = 0
             data.animating = false
             @data().save(data)
 
@@ -344,19 +376,57 @@ class Transition
                 .css        'animation-duration', ''
                 .off        'animationend'
 
+            @$elements.forEach (element) =>
+                console.log 'wow'
+                @display $selector(element), 'show'
+
+            @play()
+
+            #
+            ts.fn
+
+        # Stop All
+        #
+        # 停止目前的動畫並且移除整個動畫佇列。
+        'stop all': =>
+            data = @data().get()
+
+            #
+            if @index isnt 0 or data.animating is false
+                return ts.fn
+
+            # 重設選擇器中的動畫設定。
+            data.index     = 0
+            data.looping   = false
+            data.queue     = []
+            data.animating = false
+            @data().save(data)
+
+            # 移除所有元素和動畫有關的標籤。
+            @$elements
+                .removeAttr 'data-animatable'
+                .removeAttr 'data-animating-hidden'
+                .removeAttr 'data-animation'
+                .removeAttr 'data-animating'
+                .css        'animation-duration', ''
+                .off        'animationend'
+
+            @$elements.forEach (element) =>
+                @display $selector(element), 'show'
+
             ts.fn
 
         # Clear Queue
         #
         # 執行完目前的動畫後就停止並且移除整個動畫佇列。
         'clear queue': =>
-            do =>
-                # 重設選擇器中的動畫設定。
-                data         = @data().get()
-                data.looping = false
-                data.index   = 0
-                data.queue   = []
-                @data().save(data)
+            # 重設選擇器中的動畫設定。
+            data         = @data().get()
+            data.looping = false
+            data.index   = 0
+            data.queue   = []
+            @data().save(data)
+
             ts.fn
 
         # Show
@@ -438,175 +508,175 @@ class Transition
             data = @data().get()
             data.queue?[data.index]?.animation
 
-        # Fade Out Down
+        # Bounce
         #
         #
         bounce: (duration, onComplete) =>
             @simplePush 'bounce', duration, onComplete
 
-        # Fade Out Down
+        # Flash
         #
         #
         flash: (duration, onComplete) =>
             @simplePush 'flash', duration, onComplete
 
-        # Fade Out Down
+        # Pulse
         #
         #
         pulse: (duration, onComplete) =>
             @simplePush 'pulse', duration, onComplete
 
-        # Fade Out Down
+        # Rubber Band
         #
         #
         'rubber band': (duration, onComplete) =>
             @simplePush 'rubber band', duration, onComplete
 
-        # Fade Out Down
+        # Shake
         #
         #
         shake: (duration, onComplete) =>
             @simplePush 'shake', duration, onComplete
 
-        # Fade Out Down
+        # Head Shake
         #
         #
         'head shake': (duration, onComplete) =>
             @simplePush 'head shake', duration, onComplete
 
-        # Fade Out Down
+        # Swing
         #
         #
         swing: (duration, onComplete) =>
             @simplePush 'swing', duration, onComplete
 
-        # Fade Out Down
+        # Tada
         #
         #
         tada: (duration, onComplete) =>
             @simplePush 'tada', duration, onComplete
 
-        # Fade Out Down
+        # Wobble
         #
         #
         wobble: (duration, onComplete) =>
             @simplePush 'wobble', duration, onComplete
 
-        # Fade Out Down
+        # Jello
         #
         #
         jello: (duration, onComplete) =>
             @simplePush 'jello', duration, onComplete
 
-        # Fade Out Down
+        # Bounce In
         #
         #
         'bounce in': (duration, onComplete) =>
             @simplePush 'bounce in', duration, onComplete
 
-        # Fade Out Down
+        # Bounce In Down
         #
         #
         'bounce in down': (duration, onComplete) =>
             @simplePush 'bounce in down', duration, onComplete
 
-        # Fade Out Down
+        # Bounce In Left
         #
         #
         'bounce in left': (duration, onComplete) =>
             @simplePush 'bounce in left', duration, onComplete
 
-        # Fade Out Down
+        # Bounce In Right
         #
         #
         'bounce in right': (duration, onComplete) =>
             @simplePush 'bounce in right', duration, onComplete
 
-        # Fade Out Down
+        # Bounce In Up
         #
         #
         'bounce in up': (duration, onComplete) =>
             @simplePush 'bounce in up', duration, onComplete
 
-        # Fade Out Down
+        # Bounce Out
         #
         #
         'bounce out': (duration, onComplete) =>
             @simplePush 'bounce out', duration, onComplete
 
-        # Fade Out Down
+        # Bounce Down
         #
         #
         'bounce down': (duration, onComplete) =>
             @simplePush 'bounce down', duration, onComplete
 
-        # Fade Out Down
+        # Bounce Out Left
         #
         #
         'bounce out left': (duration, onComplete) =>
             @simplePush 'bounce out left', duration, onComplete
 
-        # Fade Out Down
+        # Bounce Out Right
         #
         #
         'bounce out right': (duration, onComplete) =>
             @simplePush 'bounce out right', duration, onComplete
 
-        # Fade Out Down
+        # Bounce Out Up
         #
         #
         'bounce out up': (duration, onComplete) =>
             @simplePush 'bounce out up', duration, onComplete
 
-        # Fade Out Down
+        # Fade In
         #
         #
         'fade in': (duration, onComplete) =>
             @simplePush 'fade in', duration, onComplete
 
-        # Fade Out Down
+        # Fade In Down
         #
         #
         'fade in down': (duration, onComplete) =>
             @simplePush 'fade in down', duration, onComplete
 
-        # Fade Out Down
+        # Fade In Down Heavily
         #
         #
         'fade in down heavily': (duration, onComplete) =>
             @simplePush 'fade in down heavily', duration, onComplete
 
-        # Fade Out Down
+        # Fade In Left
         #
         #
         'fade in left': (duration, onComplete) =>
             @simplePush 'fade in left', duration, onComplete
 
-        # Fade Out Down
+        # Fade In Left Heavily
         #
         #
         'fade in left heavily': (duration, onComplete) =>
             @simplePush 'fade in left heavily', duration, onComplete
 
-        # Fade Out Down
+        # Fade In Right
         #
         #
         'fade in right': (duration, onComplete) =>
             @simplePush 'fade in right', duration, onComplete
 
-        # Fade Out Down
+        # Fade In Right Heavily
         #
         #
         'fade in right heavily': (duration, onComplete) =>
             @simplePush 'fade in right heavily', duration, onComplete
 
-        # Fade Out Down
+        # Fade In Up
         #
         #
         'fade in up': (duration, onComplete) =>
             @simplePush 'fade in up', duration, onComplete
 
-        # Fade Out Down
+        # Fade In Up Heavily
         #
         #
         'fade in up heavily': (duration, onComplete) =>
@@ -618,211 +688,211 @@ class Transition
         'fade out down': (duration, onComplete) =>
             @simplePush 'fade out down', duration, onComplete
 
-        # Fade Out Down
+        # Fade Out Down Heavily
         #
         #
         'fade out down heavily': (duration, onComplete) =>
             @simplePush 'fade out down heavily', duration, onComplete
 
-        # Fade Out Down
+        # Fade Out Left
         #
         #
         'fade out left': (duration, onComplete) =>
             @simplePush 'fade out left', duration, onComplete
 
-        # Fade Out Down
+        # Fade Out Left Heavily
         #
         #
         'fade out left heavily': (duration, onComplete) =>
             @simplePush 'fade out left heavily', duration, onComplete
 
-        # Fade Out Down
+        # Fade Out Right
         #
         #
         'fade out right': (duration, onComplete) =>
             @simplePush 'fade out right', duration, onComplete
 
-        # Fade Out Down
+        # Fade Out Right Heavily
         #
         #
         'fade out right heavily': (duration, onComplete) =>
             @simplePush 'fade out right heavily', duration, onComplete
 
-        # Fade Out Down
+        # Fade Out Up
         #
         #
         'fade out up': (duration, onComplete) =>
             @simplePush 'fade out up', duration, onComplete
 
-        # Fade Out Down
+        # Fade Out Up Heavily
         #
         #
         'fade out up heavily': (duration, onComplete) =>
             @simplePush 'fade out up heavily', duration, onComplete
 
-        # Fade Out Down
+        # Flip
         #
         #
         'flip': (duration, onComplete) =>
             @simplePush 'flip', duration, onComplete
 
-        # Fade Out Down
+        # Flip In X
         #
         #
         'flip in x': (duration, onComplete) =>
             @simplePush 'flip in x', duration, onComplete
 
-        # Fade Out Down
+        # Flip In Y
         #
         #
         'flip in y': (duration, onComplete) =>
             @simplePush 'flip in y', duration, onComplete
 
-        # Fade Out Down
+        # Flip Out X
         #
         #
         'flip out x': (duration, onComplete) =>
             @simplePush 'flip out x', duration, onComplete
 
-        # Fade Out Down
+        # Flip Out Y
         #
         #
         'flip out y': (duration, onComplete) =>
             @simplePush 'flip out y', duration, onComplete
 
-        # Fade Out Down
+        # Light Speed In
         #
         #
         'light speed in': (duration, onComplete) =>
             @simplePush 'light speed in', duration, onComplete
 
-        # Fade Out Down
+        # Light Speed Out
         #
         #
         'light speed out': (duration, onComplete) =>
             @simplePush 'light speed out', duration, onComplete
 
-        # Fade Out Down
+        # Rotate In
         #
         #
         'rotate in': (duration, onComplete) =>
             @simplePush 'rotate in', duration, onComplete
 
-        # Fade Out Down
+        # Rotate In Down Left
         #
         #
         'rotate in down left': (duration, onComplete) =>
             @simplePush 'rotate in down left', duration, onComplete
 
-        # Fade Out Down
+        # Rotate In Down Right
         #
         #
         'rotate in down right': (duration, onComplete) =>
             @simplePush 'rotate in down right', duration, onComplete
 
-        # Fade Out Down
+        # Rotate In Up Left
         #
         #
         'rotate in up left': (duration, onComplete) =>
             @simplePush 'rotate in up left', duration, onComplete
 
-        # Fade Out Down
+        # Rotate In Up Right
         #
         #
         'rotate in up right': (duration, onComplete) =>
             @simplePush 'rotate in up right', duration, onComplete
 
-        # Fade Out Down
+        # Rotate Out
         #
         #
         'rotate out': (duration, onComplete) =>
             @simplePush 'rotate out', duration, onComplete
 
-        # Fade Out Down
+        # Rotate Out Down Left
         #
         #
         'rotate out down left': (duration, onComplete) =>
             @simplePush 'rotate out down left', duration, onComplete
 
-        # Fade Out Down
+        # Rotate Out Down Right
         #
         #
         'rotate out down right': (duration, onComplete) =>
             @simplePush 'rotate out down right', duration, onComplete
 
-        # Fade Out Down
+        # Rotate Out Up Left
         #
         #
         'rotate out up left': (duration, onComplete) =>
             @simplePush 'rotate out up left', duration, onComplete
 
-        # Fade Out Down
+        # Rotate Out Up Right
         #
         #
         'rotate out up right': (duration, onComplete) =>
             @simplePush 'rotate out up right', duration, onComplete
 
-        # Fade Out Down
+        # Hinge
         #
         #
         'hinge': (duration, onComplete) =>
             @simplePush 'hinge', duration, onComplete
 
-        # Fade Out Down
+        # Roll In
         #
         #
         'roll in': (duration, onComplete) =>
             @simplePush 'roll in', duration, onComplete
 
-        # Fade Out Down
+        # Roll Out
         #
         #
         'roll out': (duration, onComplete) =>
             @simplePush 'roll out', duration, onComplete
 
-        # Fade Out Down
+        # Zoom In
         #
         #
         'zoom in': (duration, onComplete) =>
             @simplePush 'zoom in', duration, onComplete
 
-        # Fade Out Down
+        # Zoom In Down
         #
         #
         'zoom in down': (duration, onComplete) =>
             @simplePush 'zoom in down', duration, onComplete
 
-        # Fade Out Down
+        # Zoom In Left
         #
         #
         'zoom in left': (duration, onComplete) =>
             @simplePush 'zoom in left', duration, onComplete
 
-        # Fade Out Down
+        # Zoom In Up
         #
         #
         'zoom in up': (duration, onComplete) =>
             @simplePush 'zoom in up', duration, onComplete
 
-        # Fade Out Down
+        # Zoom In Right
         #
         #
         'zoom in right': (duration, onComplete) =>
             @simplePush 'zoom in right', duration, onComplete
 
-        # Fade Out Down
+        # Zoom Out
         #
         #
         'zoom out': (duration, onComplete) =>
             @simplePush 'zoom out', duration, onComplete
 
-        # Fade Out Down
+        # Zoom Out Down
         #
         #
         'zoom out down': (duration, onComplete) =>
             @simplePush 'zoom out down', duration, onComplete
 
-        # Fade Out Down
+        # Zoom Out Left
         #
         #
         'zoom out left': (duration, onComplete) =>
@@ -834,55 +904,55 @@ class Transition
         'zoom out right': (duration, onComplete) =>
             @simplePush 'zoom out right', duration, onComplete
 
-        # Fade Out Down
+        # Zoom Out Up
         #
         #
         'zoom out up': (duration, onComplete) =>
             @simplePush 'zoom out up', duration, onComplete
 
-        # Fade Out Down
+        # Slide In Down
         #
         #
         'slide in down': (duration, onComplete) =>
             @simplePush 'slide in down', duration, onComplete
 
-        # Fade Out Down
+        # Slide In Left
         #
         #
         'slide in left': (duration, onComplete) =>
             @simplePush 'slide in left', duration, onComplete
 
-        # Fade Out Down
+        # Slide In Right
         #
         #
         'slide in right': (duration, onComplete) =>
             @simplePush 'slide in right', duration, onComplete
 
-        # Fade Out Down
+        # Slide In Up
         #
         #
         'slide in up': (duration, onComplete) =>
             @simplePush 'slide in up', duration, onComplete
 
-        # Fade Out Down
+        # Slide Out Down
         #
         #
         'slide out down': (duration, onComplete) =>
             @simplePush 'slide out down', duration, onComplete
 
-        # Fade Out Down
+        # Slide Out Left
         #
         #
         'slide out left': (duration, onComplete) =>
             @simplePush 'slide out left', duration, onComplete
 
-        # Fade Out Down
+        # Slide Out Right
         #
         #
         'slide out right': (duration, onComplete) =>
             @simplePush 'slide out right', duration, onComplete
 
-        # Fade Out Down
+        # Slide Out Up
         #
         #
         'slide out up': (duration, onComplete) =>

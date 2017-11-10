@@ -26,6 +26,8 @@ Transition = (function() {
 
       // 取得選擇器目前該播放的動畫，並且開始演繹。
       this.play = this.play.bind(this);
+      
+      this.display = this.display.bind(this);
       // Animate
 
       // 以指定動畫演繹選擇器中所有元素。
@@ -84,8 +86,6 @@ Transition = (function() {
           index: 0,
           queue: [],
           animating: false,
-          queuing: false,
-          quited: false,
           timer: false
         };
         document.body.$data.animationData = data;
@@ -157,7 +157,33 @@ Transition = (function() {
       return this.play();
     }
 
+    display($element, action) {
+      var display;
+      switch (action) {
+        case 'show':
+          
+          display = $element.attr('data-animate-display');
+          if (display === 'none') {
+            return;
+          }
+          display = display || 'block';
+          
+          return $element.css('display', 'block');
+        case 'hide':
+          
+          display = $element.css('display');
+          display = display || 'block';
+          
+          $element.attr('data-animate-display', display);
+          
+          return $element.css('display', 'none');
+      }
+    }
+
     animate({animation, reverse, forceOrder, interval, duration, onComplete, onAllComplete, onStart}) {
+      if (animation.indexOf('out') !== -1) {
+        reverse = true;
+      }
       // 回傳 Promise 物件才能夠阻擋到所有元素在本輪都演繹結束。
       return new Promise(async(resolve) => {
         var $element, element, elements, fn, i, index, len, results;
@@ -177,12 +203,16 @@ Transition = (function() {
             return;
           // show 會讓元素可見，並且沒有延遲時間。
           case 'show':
-            this.$elements.removeAttr('data-animating-hidden');
+            this.$elements.forEach((element, index) => {
+              return this.display($selector(element), 'show');
+            });
             resolve();
             return;
           // hide 會讓元素隱藏，並且沒有延遲時間。
           case 'hide':
-            this.$elements.attr('data-animating-hidden', 'true');
+            this.$elements.forEach((element, index) => {
+              return this.display($selector(element), 'hide');
+            });
             resolve();
             return;
           // toggle 會切換元素的可見與隱藏，並且沒有延遲時間。
@@ -194,28 +224,43 @@ Transition = (function() {
             }
             resolve();
             return;
+          
+          case 'show visibility':
+            this.$elements.removeAttr('data-animating-hidden');
+            resolve();
+            return;
+          
+          case 'hide visibility':
+            this.$elements.attr('data-animating-hidden', 'true');
+            resolve();
+            return;
+          
+          case 'toggle visibility':
+            if (this.$this.attr('data-animating-hidden') === 'true') {
+              this.$this.removeAttr('data-animating-hidden');
+            } else {
+              this.$this.attr('data-animating-hidden', 'true');
+            }
+            resolve();
+            return;
         }
-
-//when 'show visibility'
-
-//when 'hide visibility'
-
-//when 'toggle visibility'
-
 // 遞迴元素選擇器陣列，這樣才能透過 `await` 一個一個逐一執行其動畫。
         // 以閉包方式執行本次動畫，避免 For 迴圈覆蓋了元素變數。
         fn = async($element, index) => {
           // 本次動畫開始，呼叫開始回呼函式。
           onStart.call($element.get());
-          // 如果動畫名稱中有 `in` 就表示這個動畫會顯示元素，所以就移除元素的隱藏標籤。
-          if (animation.indexOf('in') !== -1) {
-            $element.removeAttr('data-animating-hidden');
-          }
-          if ($element.prev().attr('data-animatable') !== 'true' && index !== 0) {
+          
+          if ($element.prev().length !== 0 && $element.prev().attr('data-animatable') !== 'true') {
             return;
           }
           // 套用動畫名稱、動畫速度。
           $element.attr('data-animatable', 'true').attr('data-animation', animation).css('animation-duration', `${duration}ms`);
+          // 如果動畫名稱中有 `in` 就表示這個動畫會顯示元素，所以就移除元素的隱藏標籤。
+          if (animation.indexOf('in') !== -1) {
+            this.display($element, 'show');
+          }
+          //$element.removeAttr 'data-animating-hidden'
+
           // 稍微等待一下才套用執行動畫的標籤，這樣才會有動作。
           await this.delay();
           // 套用執行動畫的標籤。
@@ -224,12 +269,14 @@ Transition = (function() {
           return $element.one('animationend', async() => {
             // 呼叫完成函式，並且傳遞自己作為 `this`。
             onComplete.call($element.get());
-            // 動畫結束後移除自己所以和動畫有關的標籤。
-            $element.removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '');
             // 如果動畫名稱中有 `out` 就表示這個動畫會隱藏元素，所以就在動畫結束後加上元素隱藏標籤。
             if (animation.indexOf('out') !== -1) {
-              $element.attr('data-animating-hidden', 'true');
+              this.display($element, 'hide');
             }
+            //$element.attr 'data-animating-hidden', 'true'
+
+            // 動畫結束後移除自己所以和動畫有關的標籤。
+            $element.removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '');
             // 如果這是本次動畫中的最後一個元素，而且又演繹結束的話。
             if (index === elements.length - 1) {
               // 就呼叫所有動畫完成的回呼函式。
@@ -239,7 +286,7 @@ Transition = (function() {
               // 然後呼叫 Promise 的解決函式，這樣就可以進行下一輪的動畫了。
               return resolve();
             }
-          }).emulate('animationend', duration + interval + 10);
+          }).emulate('animationend', duration + interval);
         };
         results = [];
         for (index = i = 0, len = elements.length; i < len; index = ++i) {
@@ -288,8 +335,26 @@ Transition = (function() {
 
         // 停止目前的這個動畫，執行下一個。
         stop: () => {
+          var data;
+          data = this.data().get();
           
-          this.$elements.removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').trigger('animationend');
+          if (this.index !== 0 || data.animating === false) {
+            return ts.fn;
+          }
+          
+          data.queue = data.queue.slice(data.index);
+          data.looping = false;
+          data.index = 0;
+          data.animating = false;
+          this.data().save(data);
+          // 移除所有元素和動畫有關的標籤。
+          this.$elements.removeAttr('data-animatable').removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').off('animationend');
+          this.$elements.forEach((element) => {
+            console.log('wow');
+            return this.display($selector(element), 'show');
+          });
+          this.play();
+          
           return ts.fn;
         },
         // Stop All
@@ -297,34 +362,35 @@ Transition = (function() {
         // 停止目前的動畫並且移除整個動畫佇列。
         'stop all': () => {
           var data;
-          if (this.index !== 0) {
+          data = this.data().get();
+          
+          if (this.index !== 0 || data.animating === false) {
             return ts.fn;
           }
           // 重設選擇器中的動畫設定。
-          data = this.data().get();
           data.index = 0;
           data.looping = false;
           data.queue = [];
-          data.quited = true;
           data.animating = false;
           this.data().save(data);
           // 移除所有元素和動畫有關的標籤。
           this.$elements.removeAttr('data-animatable').removeAttr('data-animating-hidden').removeAttr('data-animation').removeAttr('data-animating').css('animation-duration', '').off('animationend');
+          this.$elements.forEach((element) => {
+            return this.display($selector(element), 'show');
+          });
           return ts.fn;
         },
         // Clear Queue
 
         // 執行完目前的動畫後就停止並且移除整個動畫佇列。
         'clear queue': () => {
-          (() => {
-            var data;
-            // 重設選擇器中的動畫設定。
-            data = this.data().get();
-            data.looping = false;
-            data.index = 0;
-            data.queue = [];
-            return this.data().save(data);
-          })();
+          var data;
+          // 重設選擇器中的動畫設定。
+          data = this.data().get();
+          data.looping = false;
+          data.index = 0;
+          data.queue = [];
+          this.data().save(data);
           return ts.fn;
         },
         // Show
@@ -407,147 +473,147 @@ Transition = (function() {
           data = this.data().get();
           return (ref = data.queue) != null ? (ref1 = ref[data.index]) != null ? ref1.animation : void 0 : void 0;
         },
-        // Fade Out Down
+        // Bounce
 
         bounce: (duration, onComplete) => {
           return this.simplePush('bounce', duration, onComplete);
         },
-        // Fade Out Down
+        // Flash
 
         flash: (duration, onComplete) => {
           return this.simplePush('flash', duration, onComplete);
         },
-        // Fade Out Down
+        // Pulse
 
         pulse: (duration, onComplete) => {
           return this.simplePush('pulse', duration, onComplete);
         },
-        // Fade Out Down
+        // Rubber Band
 
         'rubber band': (duration, onComplete) => {
           return this.simplePush('rubber band', duration, onComplete);
         },
-        // Fade Out Down
+        // Shake
 
         shake: (duration, onComplete) => {
           return this.simplePush('shake', duration, onComplete);
         },
-        // Fade Out Down
+        // Head Shake
 
         'head shake': (duration, onComplete) => {
           return this.simplePush('head shake', duration, onComplete);
         },
-        // Fade Out Down
+        // Swing
 
         swing: (duration, onComplete) => {
           return this.simplePush('swing', duration, onComplete);
         },
-        // Fade Out Down
+        // Tada
 
         tada: (duration, onComplete) => {
           return this.simplePush('tada', duration, onComplete);
         },
-        // Fade Out Down
+        // Wobble
 
         wobble: (duration, onComplete) => {
           return this.simplePush('wobble', duration, onComplete);
         },
-        // Fade Out Down
+        // Jello
 
         jello: (duration, onComplete) => {
           return this.simplePush('jello', duration, onComplete);
         },
-        // Fade Out Down
+        // Bounce In
 
         'bounce in': (duration, onComplete) => {
           return this.simplePush('bounce in', duration, onComplete);
         },
-        // Fade Out Down
+        // Bounce In Down
 
         'bounce in down': (duration, onComplete) => {
           return this.simplePush('bounce in down', duration, onComplete);
         },
-        // Fade Out Down
+        // Bounce In Left
 
         'bounce in left': (duration, onComplete) => {
           return this.simplePush('bounce in left', duration, onComplete);
         },
-        // Fade Out Down
+        // Bounce In Right
 
         'bounce in right': (duration, onComplete) => {
           return this.simplePush('bounce in right', duration, onComplete);
         },
-        // Fade Out Down
+        // Bounce In Up
 
         'bounce in up': (duration, onComplete) => {
           return this.simplePush('bounce in up', duration, onComplete);
         },
-        // Fade Out Down
+        // Bounce Out
 
         'bounce out': (duration, onComplete) => {
           return this.simplePush('bounce out', duration, onComplete);
         },
-        // Fade Out Down
+        // Bounce Down
 
         'bounce down': (duration, onComplete) => {
           return this.simplePush('bounce down', duration, onComplete);
         },
-        // Fade Out Down
+        // Bounce Out Left
 
         'bounce out left': (duration, onComplete) => {
           return this.simplePush('bounce out left', duration, onComplete);
         },
-        // Fade Out Down
+        // Bounce Out Right
 
         'bounce out right': (duration, onComplete) => {
           return this.simplePush('bounce out right', duration, onComplete);
         },
-        // Fade Out Down
+        // Bounce Out Up
 
         'bounce out up': (duration, onComplete) => {
           return this.simplePush('bounce out up', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade In
 
         'fade in': (duration, onComplete) => {
           return this.simplePush('fade in', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade In Down
 
         'fade in down': (duration, onComplete) => {
           return this.simplePush('fade in down', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade In Down Heavily
 
         'fade in down heavily': (duration, onComplete) => {
           return this.simplePush('fade in down heavily', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade In Left
 
         'fade in left': (duration, onComplete) => {
           return this.simplePush('fade in left', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade In Left Heavily
 
         'fade in left heavily': (duration, onComplete) => {
           return this.simplePush('fade in left heavily', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade In Right
 
         'fade in right': (duration, onComplete) => {
           return this.simplePush('fade in right', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade In Right Heavily
 
         'fade in right heavily': (duration, onComplete) => {
           return this.simplePush('fade in right heavily', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade In Up
 
         'fade in up': (duration, onComplete) => {
           return this.simplePush('fade in up', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade In Up Heavily
 
         'fade in up heavily': (duration, onComplete) => {
           return this.simplePush('fade in up heavily', duration, onComplete);
@@ -557,177 +623,177 @@ Transition = (function() {
         'fade out down': (duration, onComplete) => {
           return this.simplePush('fade out down', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade Out Down Heavily
 
         'fade out down heavily': (duration, onComplete) => {
           return this.simplePush('fade out down heavily', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade Out Left
 
         'fade out left': (duration, onComplete) => {
           return this.simplePush('fade out left', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade Out Left Heavily
 
         'fade out left heavily': (duration, onComplete) => {
           return this.simplePush('fade out left heavily', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade Out Right
 
         'fade out right': (duration, onComplete) => {
           return this.simplePush('fade out right', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade Out Right Heavily
 
         'fade out right heavily': (duration, onComplete) => {
           return this.simplePush('fade out right heavily', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade Out Up
 
         'fade out up': (duration, onComplete) => {
           return this.simplePush('fade out up', duration, onComplete);
         },
-        // Fade Out Down
+        // Fade Out Up Heavily
 
         'fade out up heavily': (duration, onComplete) => {
           return this.simplePush('fade out up heavily', duration, onComplete);
         },
-        // Fade Out Down
+        // Flip
 
         'flip': (duration, onComplete) => {
           return this.simplePush('flip', duration, onComplete);
         },
-        // Fade Out Down
+        // Flip In X
 
         'flip in x': (duration, onComplete) => {
           return this.simplePush('flip in x', duration, onComplete);
         },
-        // Fade Out Down
+        // Flip In Y
 
         'flip in y': (duration, onComplete) => {
           return this.simplePush('flip in y', duration, onComplete);
         },
-        // Fade Out Down
+        // Flip Out X
 
         'flip out x': (duration, onComplete) => {
           return this.simplePush('flip out x', duration, onComplete);
         },
-        // Fade Out Down
+        // Flip Out Y
 
         'flip out y': (duration, onComplete) => {
           return this.simplePush('flip out y', duration, onComplete);
         },
-        // Fade Out Down
+        // Light Speed In
 
         'light speed in': (duration, onComplete) => {
           return this.simplePush('light speed in', duration, onComplete);
         },
-        // Fade Out Down
+        // Light Speed Out
 
         'light speed out': (duration, onComplete) => {
           return this.simplePush('light speed out', duration, onComplete);
         },
-        // Fade Out Down
+        // Rotate In
 
         'rotate in': (duration, onComplete) => {
           return this.simplePush('rotate in', duration, onComplete);
         },
-        // Fade Out Down
+        // Rotate In Down Left
 
         'rotate in down left': (duration, onComplete) => {
           return this.simplePush('rotate in down left', duration, onComplete);
         },
-        // Fade Out Down
+        // Rotate In Down Right
 
         'rotate in down right': (duration, onComplete) => {
           return this.simplePush('rotate in down right', duration, onComplete);
         },
-        // Fade Out Down
+        // Rotate In Up Left
 
         'rotate in up left': (duration, onComplete) => {
           return this.simplePush('rotate in up left', duration, onComplete);
         },
-        // Fade Out Down
+        // Rotate In Up Right
 
         'rotate in up right': (duration, onComplete) => {
           return this.simplePush('rotate in up right', duration, onComplete);
         },
-        // Fade Out Down
+        // Rotate Out
 
         'rotate out': (duration, onComplete) => {
           return this.simplePush('rotate out', duration, onComplete);
         },
-        // Fade Out Down
+        // Rotate Out Down Left
 
         'rotate out down left': (duration, onComplete) => {
           return this.simplePush('rotate out down left', duration, onComplete);
         },
-        // Fade Out Down
+        // Rotate Out Down Right
 
         'rotate out down right': (duration, onComplete) => {
           return this.simplePush('rotate out down right', duration, onComplete);
         },
-        // Fade Out Down
+        // Rotate Out Up Left
 
         'rotate out up left': (duration, onComplete) => {
           return this.simplePush('rotate out up left', duration, onComplete);
         },
-        // Fade Out Down
+        // Rotate Out Up Right
 
         'rotate out up right': (duration, onComplete) => {
           return this.simplePush('rotate out up right', duration, onComplete);
         },
-        // Fade Out Down
+        // Hinge
 
         'hinge': (duration, onComplete) => {
           return this.simplePush('hinge', duration, onComplete);
         },
-        // Fade Out Down
+        // Roll In
 
         'roll in': (duration, onComplete) => {
           return this.simplePush('roll in', duration, onComplete);
         },
-        // Fade Out Down
+        // Roll Out
 
         'roll out': (duration, onComplete) => {
           return this.simplePush('roll out', duration, onComplete);
         },
-        // Fade Out Down
+        // Zoom In
 
         'zoom in': (duration, onComplete) => {
           return this.simplePush('zoom in', duration, onComplete);
         },
-        // Fade Out Down
+        // Zoom In Down
 
         'zoom in down': (duration, onComplete) => {
           return this.simplePush('zoom in down', duration, onComplete);
         },
-        // Fade Out Down
+        // Zoom In Left
 
         'zoom in left': (duration, onComplete) => {
           return this.simplePush('zoom in left', duration, onComplete);
         },
-        // Fade Out Down
+        // Zoom In Up
 
         'zoom in up': (duration, onComplete) => {
           return this.simplePush('zoom in up', duration, onComplete);
         },
-        // Fade Out Down
+        // Zoom In Right
 
         'zoom in right': (duration, onComplete) => {
           return this.simplePush('zoom in right', duration, onComplete);
         },
-        // Fade Out Down
+        // Zoom Out
 
         'zoom out': (duration, onComplete) => {
           return this.simplePush('zoom out', duration, onComplete);
         },
-        // Fade Out Down
+        // Zoom Out Down
 
         'zoom out down': (duration, onComplete) => {
           return this.simplePush('zoom out down', duration, onComplete);
         },
-        // Fade Out Down
+        // Zoom Out Left
 
         'zoom out left': (duration, onComplete) => {
           return this.simplePush('zoom out left', duration, onComplete);
@@ -737,47 +803,47 @@ Transition = (function() {
         'zoom out right': (duration, onComplete) => {
           return this.simplePush('zoom out right', duration, onComplete);
         },
-        // Fade Out Down
+        // Zoom Out Up
 
         'zoom out up': (duration, onComplete) => {
           return this.simplePush('zoom out up', duration, onComplete);
         },
-        // Fade Out Down
+        // Slide In Down
 
         'slide in down': (duration, onComplete) => {
           return this.simplePush('slide in down', duration, onComplete);
         },
-        // Fade Out Down
+        // Slide In Left
 
         'slide in left': (duration, onComplete) => {
           return this.simplePush('slide in left', duration, onComplete);
         },
-        // Fade Out Down
+        // Slide In Right
 
         'slide in right': (duration, onComplete) => {
           return this.simplePush('slide in right', duration, onComplete);
         },
-        // Fade Out Down
+        // Slide In Up
 
         'slide in up': (duration, onComplete) => {
           return this.simplePush('slide in up', duration, onComplete);
         },
-        // Fade Out Down
+        // Slide Out Down
 
         'slide out down': (duration, onComplete) => {
           return this.simplePush('slide out down', duration, onComplete);
         },
-        // Fade Out Down
+        // Slide Out Left
 
         'slide out left': (duration, onComplete) => {
           return this.simplePush('slide out left', duration, onComplete);
         },
-        // Fade Out Down
+        // Slide Out Right
 
         'slide out right': (duration, onComplete) => {
           return this.simplePush('slide out right', duration, onComplete);
         },
-        // Fade Out Down
+        // Slide Out Up
 
         'slide out up': (duration, onComplete) => {
           return this.simplePush('slide out up', duration, onComplete);
