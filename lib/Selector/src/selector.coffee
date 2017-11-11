@@ -661,15 +661,18 @@ $selector.fn.setTimer =
                     @$timers[options.name].passed = 0
                 else
                     # 不然就移除計時器資訊。
-                    clearInterval @$timers[options.name].timer
+                    clearInterval @$timers[options.name]?.timer
                     # 移除在 DOM 元素內的這個計時器物件。
-                    delete @$timers[options.name]
+                    #delete @$timers[options.name]
+
             # 在此元素內初始化計時器物件。
             @$timers[options.name] =
                 timer      : setInterval timer, 10
                 passed     : 0
                 callback   : options.callback
                 interval   : options.interval
+                looping    : options.looping
+                visible    : options.visible
                 initializer: timer
                 paused     : false
 
@@ -696,6 +699,7 @@ $selector.fn.playTimer =
                 return
             if not @$timers[name].paused
                 return
+
             # 重新初始化計數計時器來達到繼續的效果。
             @$timers[name].timer = setInterval @$timers[name].initializer, 10
             # 表示重新啟動。
@@ -709,6 +713,7 @@ $selector.fn.removeTimer =
         @each ->
             if not @$timers?[name]?
                 return
+
             # 清除計數計時器。
             clearInterval @$timers[name].timer
             # 移除在 DOM 元素內的計時器物件。
