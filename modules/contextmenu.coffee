@@ -11,28 +11,20 @@ class ContextMenu
     props:
         # 複合式選單應該出現在游標的哪個位置，如：`top left`、`top right`、`bottom left`、`bottom right`。
         position: 'auto'
-
         # 複合式選單離游標的距離（單位：像素）。
         distance: 0
-
         # 是否停用。
         disable: false
-
         # 目標選擇器。
         target: null
-
         # 複合式選單是否可因為使用者點擊選單外面而自動關閉。
         closable: true
-
         # 複合式選單是否可以因為在觸控裝置上長按而顯示。
         touch   : true
-
         # 當複合式選單出現時所會呼叫的回呼函式。
         onShow  : (target) => true
-
         # 當複合式選單隱藏時所會呼叫的回呼函式。
         onHide  : => true
-
         # 當複合式選單被點擊項目時所會呼叫的回呼函式。
         onSelect: (value, element) => true
 
