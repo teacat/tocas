@@ -1,0 +1,100 @@
+<body style="padding: 50px">
+    <link rel="stylesheet" type="text/css" href="../../dist/tocas.css">
+    <script src="../dist/core.js"></script>
+    <script src="../../lib/Selector/dist/selector.js"></script>
+    <script src="../dist/contextmenu.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- -->
+    <div class="ts form">
+        <fieldset>
+            <legend>測試按鈕控制台</legend>
+            <button class="ts button" id="a">.contextmenu()</button>
+            <button class="ts button" id="b">.contextmenu({options})</button>
+            <button class="ts button" id="c">.contextmenu('show', 300, 300)</button>
+            <button class="ts button" id="d">.contextmenu('hide')</button>
+            <button class="ts button" id="e">.contextmenu('enable')</button>
+            <button class="ts button" id="f">.contextmenu('disable')</button>
+            <button class="ts button" id="g">.contextmenu('is enable')</button>
+            <button class="ts button" id="h">.contextmenu('is disable')</button>
+            <button class="ts button" id="i">.contextmenu('is visible')</button>
+            <button class="ts button" id="j">.contextmenu('is hidden')</button>
+            <button class="ts button" id="k">.contextmenu('destroy')</button>
+            <button class="ts button" id="l">.contextmenu('show at element')</button>
+        </fieldset>
+    </div>
+    <!-- -->
+
+    <!-- -->
+    <div class="ts section divider"></div>
+    <!-- -->
+
+    <div class="ts contextmenu">
+        <a href="#!" class="item" data-value="1">項目 1</a>
+        <a href="#!" class="item" data-value="2">項目 2</a>
+        <a href="#!" class="item" data-value="3">項目 3</a>
+        <a href="#!" class="item" data-value="4">項目 4</a>
+    </div>
+
+    <div class="ts a segment">
+        A 文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字。
+    </div>
+
+    <div class="ts b segment">
+        B 文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字文字。
+    </div>
+
+    <!-- -->
+    <script>
+        $('#a').on('click', () => {
+            ts('.contextmenu').contextmenu()
+        })
+        $('#b').on('click', () => {
+            ts('.contextmenu').contextmenu({
+                target  : '.ts.a.segment',
+                onSelect: (value, element) => {
+                    console.log(value, element)
+                },
+                onShow: () => {
+                    console.log('show')
+                    return true
+                },
+                onHide: () => {
+                    console.log('hide')
+                    return true
+                }
+            })
+        })
+        $('#c').on('click', () => {
+            ts('.contextmenu').contextmenu('show', 300, 300)
+        })
+        $('#d').on('click', () => {
+            ts('.contextmenu').contextmenu('hide')
+        })
+        $('#e').on('click', () => {
+            ts('.contextmenu').contextmenu('enable')
+        })
+        $('#f').on('click', () => {
+            ts('.contextmenu').contextmenu('disable')
+        })
+        $('#g').on('click', () => {
+            alert(ts('.contextmenu').contextmenu('is enable'))
+        })
+        $('#h').on('click', () => {
+            alert(ts('.contextmenu').contextmenu('is disable'))
+        })
+        $('#i').on('click', () => {
+            alert(ts('.contextmenu').contextmenu('is visible'))
+        })
+        $('#j').on('click', () => {
+            alert(ts('.contextmenu').contextmenu('is hidden'))
+        })
+        $('#k').on('click', () => {
+            ts('.contextmenu').contextmenu('destroy')
+        })
+        $('#l').on('click', () => {
+            ts('.contextmenu').contextmenu('show at element', '.ts.b.segment')
+        })
+    </script>
+    <!-- -->
+</body>
