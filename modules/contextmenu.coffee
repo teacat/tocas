@@ -52,6 +52,7 @@ class ContextMenu
     # 選擇器名稱。
     selector:
         BODY: 'body'
+        ITEM: ':scope > .item'
 
     # 元素初始化函式。
     init: =>
@@ -62,19 +63,18 @@ class ContextMenu
 
         # 監聽父容器的多功能事件，並且開啟指定複合式選單。
         @$parent().on 'contextmenu.contextmenu', (event) =>
-            #
+            # 阻止系統原生的多功能事件（如：右鍵選單、長按選單）。
             event.preventDefault()
 
-            #
+            # 如果選單正處於停用中，就返回。
             return if @$this.data 'disable'
 
-            #
+            # 在指定的位置展開複合式選單。
             @show event.clientX, event.clientY
 
         # 監聽複合式選單內所有項目的點擊事件，並在點擊後呼叫複合式選單的相關函式供使用者處理。
-        @$this.find(':scope > .item').on 'click.contextmenu', (event) =>
+        @$this.find(@selector.ITEM).on 'click.contextmenu', (event) =>
             @$this.data('onSelect').call @$this.get(), $selector(event.target).attr('data-value'), event.target
-
         ts.fn
 
     # 元素摧毀函式。
@@ -86,7 +86,7 @@ class ContextMenu
         @$parent().off 'contextmenu.contextmenu'
 
         # 移除複合式選單內項目的點擊事件。
-        @$this.find(':scope > .item').off 'click.contextmenu'
+        @$this.find(@selector.ITEM).off 'click.contextmenu'
 
     # $Parent
     #
@@ -102,7 +102,7 @@ class ContextMenu
     # 收起複合式選單。
     contract: =>
         # 如果這個複合式選單不是可見的，就不需要收起。
-        if not @$this.hasClass 'visible'
+        if not @$this.hasClass @className.VISIBLE
             return
 
         # 呼叫 `onHide` 回呼函式，如果回傳的是 `false` 就不要收起。
@@ -199,17 +199,6 @@ class ContextMenu
 
     # 模組可用的方法。
     methods: =>
-
-        # Show At Element
-        #
-        #
-        #'show at element': (selector) =>
-        #    @$this.data 'target', [selector, @$parent]
-        #
-        #    @destroy()
-        #    @init()
-        #
-        #    ts.fn
 
         # Show
         #

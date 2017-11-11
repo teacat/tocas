@@ -45,17 +45,17 @@ ContextMenu = (function() {
       });
       // 監聽父容器的多功能事件，並且開啟指定複合式選單。
       this.$parent().on('contextmenu.contextmenu', (event) => {
-        
+        // 阻止系統原生的多功能事件（如：右鍵選單、長按選單）。
         event.preventDefault();
-        
+        // 如果選單正處於停用中，就返回。
         if (this.$this.data('disable')) {
           return;
         }
-        
+        // 在指定的位置展開複合式選單。
         return this.show(event.clientX, event.clientY);
       });
       // 監聽複合式選單內所有項目的點擊事件，並在點擊後呼叫複合式選單的相關函式供使用者處理。
-      this.$this.find(':scope > .item').on('click.contextmenu', (event) => {
+      this.$this.find(this.selector.ITEM).on('click.contextmenu', (event) => {
         return this.$this.data('onSelect').call(this.$this.get(), $selector(event.target).attr('data-value'), event.target);
       });
       return ts.fn;
@@ -67,7 +67,7 @@ ContextMenu = (function() {
       // 移除父容器的多功能監聽事件。
       this.$parent().off('contextmenu.contextmenu');
       // 移除複合式選單內項目的點擊事件。
-      return this.$this.find(':scope > .item').off('click.contextmenu');
+      return this.$this.find(this.selector.ITEM).off('click.contextmenu');
     }
 
     $parent() {
@@ -80,7 +80,7 @@ ContextMenu = (function() {
 
     contract() {
       // 如果這個複合式選單不是可見的，就不需要收起。
-      if (!this.$this.hasClass('visible')) {
+      if (!this.$this.hasClass(this.className.VISIBLE)) {
         return;
       }
       // 呼叫 `onHide` 回呼函式，如果回傳的是 `false` 就不要收起。
@@ -158,16 +158,6 @@ ContextMenu = (function() {
 
     methods() {
       return {
-        // Show At Element
-
-        //'show at element': (selector) =>
-        //    @$this.data 'target', [selector, @$parent]
-
-        //    @destroy()
-        //    @init()
-
-        //    ts.fn
-
         // Show
 
         // 在目前游標或指定的位置顯示複合選單。
@@ -285,7 +275,8 @@ ContextMenu = (function() {
 
   // 選擇器名稱。
   ContextMenu.prototype.selector = {
-    BODY: 'body'
+    BODY: 'body',
+    ITEM: ':scope > .item'
   };
 
   return ContextMenu;
