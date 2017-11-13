@@ -32,7 +32,7 @@
     <div class="ts section divider"></div>
     <!-- -->
 
-    <div class="ts snackbar">
+    <div class="ts a snackbar">
         <div class="content"></div>
         <a class="action"></a>
     </div>
@@ -40,7 +40,7 @@
     <!-- -->
     <script>
         $('#a').on('click', () => {
-            ts('.snackbar').snackbar({
+            ts('.a.snackbar').snackbar({
                 content: '檔案已經成功地送出了。',
                 action : {
                     text    : '還原',
@@ -49,22 +49,22 @@
                 onClose : () => { console.log('close')  },
                 onIgnore: () => { console.log('ignore') },
                 onAction: () => { console.log('action') }
-            })
+            }).snackbar('show')
         })
         $('#b').on('click', () => {
-            ts('.snackbar').snackbar('show')
+            ts('.a.snackbar').snackbar('show')
         })
         $('#c').on('click', () => {
-            ts('.snackbar').snackbar('hide')
+            ts('.a.snackbar').snackbar('hide')
         })
         $('#d').on('click', () => {
-            ts('.snackbar').snackbar('toggle')
+            ts('.a.snackbar').snackbar('toggle')
         })
         $('#e').on('click', () => {
-            alert(ts('.snackbar').snackbar('is visible'))
+            alert(ts('.a.snackbar').snackbar('is visible'))
         })
         $('#f').on('click', () => {
-            alert(ts('.snackbar').snackbar('is hidden'))
+            alert(ts('.a.snackbar').snackbar('is hidden'))
         })
         $('#g').on('click', () => {
             ts.snackbar({
@@ -122,33 +122,41 @@
                     text: '呼叫另一個 Snackbar'
                 },
                 onAction : () => {
+                    console.log('action')
                     ts.snackbar({
                         content  : '剝完了。',
                         action   : {
                             text: '好的'
-                        }
+                        },
+                        onClose  : () => { console.log('close')  },
+                        onIgnore : () => { console.log('ignore') },
+                        onAction : () => { console.log('action') }
                     })
                 }
             })
         })
         $('#l').on('click', () => {
-            ts('.snackbar').snackbar({
+            ts('.a.snackbar').snackbar({
                 content  : '這個有點像洋蔥一樣。',
                 action   : {
                     text: '呼叫另一個 Snackbar'
                 },
                 onAction : () => {
-                    ts('.snackbar').snackbar({
+                    console.log('action')
+                    ts('.a.snackbar').snackbar({
                         content  : '剝完了。',
                         action   : {
                             text: '好的'
-                        }
-                    })
+                        },
+                        onClose  : () => { console.log('close')  },
+                        onIgnore : () => { console.log('ignore') },
+                        onAction : () => { console.log('action') }
+                    }).snackbar('show')
                 }
-            })
+            }).snackbar('show')
         })
         $('#m').on('click', () => {
-            ts('.snackbar').snackbar({
+            ts('.a.snackbar').snackbar({
                 content: '檔案已經成功地送出了。',
                 action : {
                     text    : '還原',
@@ -158,10 +166,10 @@
                 onClose : () => { console.log('close')  },
                 onIgnore: () => { console.log('ignore') },
                 onAction: () => { console.log('action') }
-            })
+            }).snackbar('show')
         })
         $('#n').on('click', () => {
-            ts('.snackbar').snackbar({
+            ts('.a.snackbar').snackbar({
                 content: '檔案已經成功地送出了。',
                 action : {
                     text    : '還原',
@@ -171,10 +179,10 @@
                 onClose : () => { console.log('close')  },
                 onIgnore: () => { console.log('ignore') },
                 onAction: () => { console.log('action') }
-            })
+            }).snackbar('show')
         })
         $('#o').on('click', () => {
-            ts('.snackbar').snackbar({
+            ts('.a.snackbar').snackbar({
                 content: '檔案已經成功地送出了。',
                 action : {
                     text    : '還原',
@@ -184,14 +192,14 @@
                 onClose : () => { console.log('close')  },
                 onIgnore: () => { console.log('ignore') },
                 onAction: () => { console.log('action') }
-            })
+            }).snackbar('show')
         })
     </script>
     <!-- -->
     <style type="text/css">
-    .snackbar .action,
+    /**.snackbar .action,
     .snackbar .content {
         pointer-events: none;
-    }
+    }*/
     </style>
 </body>
