@@ -95,9 +95,9 @@ Modal = (function() {
         return $dimmer;
       }
       // 沒有的話就建立一個新的對話視窗淡化幕。
-      $dimmer = $selector('<div>').addClass(this.className.MODALS_DIMMER);
+      $dimmer = $selector(this.selector.DIV).addClass(this.className.MODALS_DIMMER);
       // 將淡化幕推入到網頁中。
-      $selector('body').append($dimmer);
+      $selector(this.selector.BODY).append($dimmer);
       // 綁定淡化幕被按下時，自動關閉對話視窗的點擊事件。
       $dimmer.on('click', (event) => {
         var $activeModal, ref;
@@ -122,16 +122,16 @@ Modal = (function() {
 
     async open() {
       // 如果要開啟的對話視窗早已開啟，就離開此程式。
-      if (this.$this.hasClass(this.className.ACTIVE)) {
-        return;
-      }
-      
-      if ($selector(`.${this.className.ACTIVE}.modal`).length !== 0) {
-        ts('.modal').modal('hide');
+      //if @$this.hasClass(@className.ACTIVE)
+      //    return
+
+      // 如果有已開啟的對話視窗則關閉它。
+      if ($selector(this.selector.ACTIVE_MODAL).length !== 0) {
+        ts(this.selector.ACTIVE_MODAL).modal('hide');
         await this.delay(this.duration);
       }
       // 鎖定頁面的捲動。
-      $selector('body').attr('data-modal-lock', 'true');
+      $selector(this.selector.BODY).attr('data-modal-lock', 'true');
       // 將對話視窗的淡化幕設置為啟用、開啟中。
       this.$this.parent().addClass(`${this.className.ACTIVE} ${this.className.OPENING}`);
       // 將對話視窗設置為啟用、開啟中。
@@ -148,7 +148,7 @@ Modal = (function() {
         return;
       }
       // 解除頁面的捲動鎖定。
-      $selector('body').removeAttr('data-modal-lock');
+      $selector(this.selector.BODY).removeAttr('data-modal-lock');
       // 將對話視窗的淡化幕設置為關閉中。
       this.$this.parent().addClass(this.className.CLOSING);
       // 將對話視窗設置為啟用、關閉中。
@@ -222,6 +222,14 @@ Modal = (function() {
     onClose: () => {},
     // 當視窗是以點擊背景關閉時所呼叫的函式。
     onIgnore: () => {},
+    
+    onShow: () => {},
+    
+    onVisible: () => {},
+    
+    onClosed: () => {},
+    
+    duration: 250,
     // 是否綁定鍵盤快捷鍵，如 Esc 鍵以關閉視窗。
     keyboardShortcuts: true
   };
@@ -250,6 +258,9 @@ Modal = (function() {
     MODALS_DIMMER: '.ts.modals.dimmer',
     CLOSING_MODALS_DIMMER: '.ts.modals.closing.dimmer',
     CLOSABLE_ACTIVE_MODAL: '.ts.modal.active.closable',
+    ACTIVE_MODAL: '.ts.active.modal',
+    BODY: 'body',
+    DIV: '<div>',
     TEMP_MODAL: `[${Modal.prototype.temporaryName}]`,
     TEMP_MODAL_INPUT: `[${Modal.prototype.temporaryName}] .ts.input > *`
   };
