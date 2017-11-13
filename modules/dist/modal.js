@@ -211,17 +211,17 @@ Modal = (function() {
     // 是否可由點擊背景來關閉對話視窗。
     closable: true,
     // 同意時所被呼叫的函式，如果這個函式回傳 false 的話將不會關閉對話視窗。
-    onApprove: function() {
+    onApprove: () => {
       return true;
     },
     // 拒絕時所被呼叫的函式，如果這個函式回傳 false 的話將不會關閉對話視窗。
-    onDeny: function() {
+    onDeny: () => {
       return true;
     },
     // 當視窗被關閉時所呼叫的函式。
-    onClose: function() {},
+    onClose: () => {},
     // 當視窗是以點擊背景關閉時所呼叫的函式。
-    onIgnore: function() {},
+    onIgnore: () => {},
     // 是否綁定鍵盤快捷鍵，如 Esc 鍵以關閉視窗。
     keyboardShortcuts: true
   };
@@ -431,7 +431,7 @@ ts.modal = async(title, content, onClose = function() {}) => {
       options.onClose.call($modal.get(), $selector(Modal.prototype.selector.TEMP_MODAL_INPUT).val());
       // 等待對話視窗關閉動畫。
       await delay(Modal.prototype.duration);
-      if (!$selector(Modal.prototype.selector.TEMP_MODAL).hasClass('active')) {
+      if (!$modal.hasClass(Modal.prototype.className.ACTIVE)) {
         // 如果此時的臨時對話視窗沒有任何啟用樣式，
         // 也就代表沒有另一個行為在開啟對話視窗，我們就可以安心移除這個臨時對話視窗了。
         return $modal.remove();

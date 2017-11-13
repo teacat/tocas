@@ -16,13 +16,13 @@ class Modal
         # 是否可由點擊背景來關閉對話視窗。
         closable : true
         # 同意時所被呼叫的函式，如果這個函式回傳 false 的話將不會關閉對話視窗。
-        onApprove: -> true
+        onApprove: => true
         # 拒絕時所被呼叫的函式，如果這個函式回傳 false 的話將不會關閉對話視窗。
-        onDeny   : -> true
+        onDeny   : => true
         # 當視窗被關閉時所呼叫的函式。
-        onClose  : ->
+        onClose  : =>
         # 當視窗是以點擊背景關閉時所呼叫的函式。
-        onIgnore : ->
+        onIgnore : =>
         # 是否綁定鍵盤快捷鍵，如 Esc 鍵以關閉視窗。
         keyboardShortcuts: true
 
@@ -431,7 +431,7 @@ ts.modal = (title, content, onClose=->) =>
                     await delay Modal::duration
                     # 如果此時的臨時對話視窗沒有任何啟用樣式，
                     # 也就代表沒有另一個行為在開啟對話視窗，我們就可以安心移除這個臨時對話視窗了。
-                    $modal.remove() if not $selector(Modal::selector.TEMP_MODAL).hasClass 'active'
+                    $modal.remove() if not $modal.hasClass Modal::className.ACTIVE
             onIgnore: ->
                     options.onIgnore.call $modal.get(), $selector(Modal::selector.TEMP_MODAL_INPUT).val()
         .modal 'show'
