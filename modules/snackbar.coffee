@@ -22,13 +22,21 @@ class Snackbar
         # 當點心條因為放置而自動關閉時所會呼叫的回呼函式。
         onIgnore : =>
         # 當動作按鈕被按下時所呼叫的回呼函式。
-        onAction : =>
+        onAction : => true
         # 點心條到自動消失所耗費的毫秒時間，如果設為 `0` 則表示永不自動消失。
         delay    : 3500
         # 點心條可否手動忽略，例如：滑開。
-        closable : true
+        closable : true ########FDSFKOSDJFOKSDJFOJSDOFJOSDJFOOSDFIOJSDIOFJSIFJIOSDIJF
+        # 點心條出現的螢幕位置，如：`top left`、`top right`、`bottom left`、`bottom right`
+        position : 'bottom left'
         # 點心條是否應該在滑鼠指向時，持續顯示避免自動消失。
         hoverStay: true
+
+    #
+    duration: 300
+
+    # 臨時點心條的標籤名稱。
+    temporaryName: 'data-snackbar-temporary'
 
     # 類別樣式名稱。
     className:
@@ -39,11 +47,16 @@ class Snackbar
         WARNING  : 'warning'
         POSITIVE : 'positive'
         NEGATIVE : 'negative'
+        TOP      : 'top'
+        LEFT     : 'left'
+        BOTTOM   : 'bottom'
+        RIGHT    : 'right'
 
     # 選擇器名稱。
     selector:
-        CONTENT: '.content'
-        ACTION : '.action'
+        TEMP_SNACKBAR: "[#{@::temporaryName}]"
+        CONTENT      : '.content'
+        ACTION       : '.action'
 
     # 元素初始化函式。
     init: =>
@@ -58,6 +71,8 @@ class Snackbar
                 @$this.attr 'data-mouseon', 'true'
             @$this.on 'mouseleave.snackbar', =>
                 @$this.attr 'data-mouseon', 'false'
+
+
 
         @show()
 
@@ -75,14 +90,48 @@ class Snackbar
     #
     #
     show: =>
+        @$this
+            .on 'mousedown.snackbarMove', (event) =>
+                startX  = event.clientX
+                offsetX = parseInt @$this.css 'left'
+                console.log offsetX, startX
+                @$this.on 'mousemove.snackbarMove', (event) =>
+
+                    @$this.css 'left', offsetX + event.clientX - startX
+
+                    console.log (event.clientX / startX) * 1
+                    @$this.css 'opacity', (event.clientX / startX) * 1
+                    if (event.clientX / startX) * 1 < 0.5
+                        @hide()
+            .on 'mouseup.snackbarMove', =>
+                @$this.off 'mousedown.snackbarMove'
+                @$this.off 'mousemove.snackbarMove'
+            .on 'mouseout.snackbarMove', =>
+                @$this.off 'mousedown.snackbarMove'
+                @$this.off 'mousemove.snackbarMove'
+        #
+        #
+        #
+        #
+        # 呼叫 onIgnore 如果這個時候還有舊的 Snackbar
+        # 但你怎麼確定這個 onIgnore 也是舊的？？？？？？？？？？？？？？
+
+        @$this = $selector("ts snackbar #{@className.ACTIVE}")
+        @hide()
+        @$this = @$origin
+
+
+        await @delay()
+
+
         # 移除啟用和動畫效果，並且重新套用一次。
         # 在動畫結束後移除動畫樣式。
         @$this
-            .removeClass "#{@className.ACTIVE} #{@className.ANIMATING}"
-            .addClass    "#{@className.ACTIVE} #{@className.ANIMATING}"
+            .removeClass "#{@className.ACTIVE} #{@className.ANIMATING} #{@className.TOP} #{@className.LEFT} #{@className.BOTTOM} #{@className.RIGHT}"
+            .addClass    "#{@className.ACTIVE} #{@className.ANIMATING} #{@$this.data('position')}"
             .one         'animationend', =>
                 @$this.removeClass @className.ANIMATING
-            .emulate 'animationend', 300
+            .emulate 'animationend', @duration
             .attr    'data-mouseon', 'false'
 
         # 替換點心條的 HTML 內容。
@@ -147,8 +196,7 @@ class Snackbar
                 @$this.data('onIgnore').call(@$this.get())
 
         #
-        if @$this.data('onClose').call(@$this.get()) is false
-            return
+        @$this.data('onClose').call(@$this.get())
 
         #
         @$this
@@ -204,3 +252,41 @@ ts Snackbar
 
 
 ts.snackbar = (options) =>
+    #
+    $snackbar   = $selector Snackbar::selector.TEMP_SNACKBAR
+    #
+    hasSnackbar = $snackbar.length isnt 0
+    # 延遲函式。
+    delay       = (time=0) -> new Promise (resolve) -> setTimeout(resolve, time)
+    #
+    options     = {
+        Snackbar.prototype.props...
+        options...
+    }
+
+    do =>
+        await delay()
+
+        if not hasSnackbar
+            # 如果沒有臨時對話視窗，就自己建立一個，然後推入 Body 中。
+            $snackbar = $selector '<div>'
+                .attr     Snackbar::temporaryName, 'true'
+                .addClass 'ts snackbar'
+                .html     """
+                    <div class="content"></div>
+                    <a class="action href="#!"></a>
+                """
+                .appendTo $selector 'body'
+
+        #
+        ts Snackbar::selector.TEMP_SNACKBAR
+            .snackbar {
+                options...
+                onClose: =>
+                    options.onClose.call $snackbar.get()
+                    # 等待對話視窗關閉動畫。
+                    await delay Snackbar::duration
+                    # 如果此時的臨時對話視窗沒有任何啟用樣式，
+                    # 也就代表沒有另一個行為在開啟對話視窗，我們就可以安心移除這個臨時對話視窗了。
+                    $snackbar.remove() if not $snackbar.hasClass Snackbar::className.ACTIVE
+            }

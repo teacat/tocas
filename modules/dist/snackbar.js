@@ -47,13 +47,40 @@ Snackbar = (function() {
       return this.$this.off('mouseleave.snackbar');
     }
 
-    show() {
+    async show() {
       var $action, $content, action, content, timer;
+      this.$this.on('mousedown.snackbarMove', (event) => {
+        var offsetX, startX;
+        startX = event.clientX;
+        offsetX = parseInt(this.$this.css('left'));
+        console.log(offsetX, startX);
+        return this.$this.on('mousemove.snackbarMove', (event) => {
+          this.$this.css('left', offsetX + event.clientX - startX);
+          console.log((event.clientX / startX) * 1);
+          this.$this.css('opacity', (event.clientX / startX) * 1);
+          if ((event.clientX / startX) * 1 < 0.5) {
+            return this.hide();
+          }
+        });
+      }).on('mouseup.snackbarMove', () => {
+        this.$this.off('mousedown.snackbarMove');
+        return this.$this.off('mousemove.snackbarMove');
+      }).on('mouseout.snackbarMove', () => {
+        this.$this.off('mousedown.snackbarMove');
+        return this.$this.off('mousemove.snackbarMove');
+      });
+      
+      // 呼叫 onIgnore 如果這個時候還有舊的 Snackbar
+      // 但你怎麼確定這個 onIgnore 也是舊的？？？？？？？？？？？？？？
+      this.$this = $selector(`ts snackbar ${this.className.ACTIVE}`);
+      this.hide();
+      this.$this = this.$origin;
+      await this.delay();
       // 移除啟用和動畫效果，並且重新套用一次。
       // 在動畫結束後移除動畫樣式。
-      this.$this.removeClass(`${this.className.ACTIVE} ${this.className.ANIMATING}`).addClass(`${this.className.ACTIVE} ${this.className.ANIMATING}`).one('animationend', () => {
+      this.$this.removeClass(`${this.className.ACTIVE} ${this.className.ANIMATING} ${this.className.TOP} ${this.className.LEFT} ${this.className.BOTTOM} ${this.className.RIGHT}`).addClass(`${this.className.ACTIVE} ${this.className.ANIMATING} ${this.$this.data('position')}`).one('animationend', () => {
         return this.$this.removeClass(this.className.ANIMATING);
-      }).emulate('animationend', 300).attr('data-mouseon', 'false');
+      }).emulate('animationend', this.duration).attr('data-mouseon', 'false');
       // 替換點心條的 HTML 內容。
       content = this.$this.data('content');
       if (content !== '') {
@@ -116,9 +143,7 @@ Snackbar = (function() {
           this.$this.data('onIgnore').call(this.$this.get());
       }
       
-      if (this.$this.data('onClose').call(this.$this.get()) === false) {
-        return;
-      }
+      this.$this.data('onClose').call(this.$this.get());
       
       return this.$this.removeClass(this.className.ACTIVE).addClass(this.className.ANIMATING).one('animationend', () => {
         return this.$this.removeClass(this.className.ANIMATING);
@@ -188,14 +213,24 @@ Snackbar = (function() {
     // 當點心條因為放置而自動關閉時所會呼叫的回呼函式。
     onIgnore: () => {},
     // 當動作按鈕被按下時所呼叫的回呼函式。
-    onAction: () => {},
+    onAction: () => {
+      return true;
+    },
     // 點心條到自動消失所耗費的毫秒時間，如果設為 `0` 則表示永不自動消失。
     delay: 3500,
     // 點心條可否手動忽略，例如：滑開。
-    closable: true,
+    closable: true, //#######FDSFKOSDJFOKSDJFOJSDOFJOSDJFOOSDFIOJSDIOFJSIFJIOSDIJF
+    // 點心條出現的螢幕位置，如：`top left`、`top right`、`bottom left`、`bottom right`
+    position: 'bottom left',
     // 點心條是否應該在滑鼠指向時，持續顯示避免自動消失。
     hoverStay: true
   };
+
+  
+  Snackbar.prototype.duration = 300;
+
+  // 臨時點心條的標籤名稱。
+  Snackbar.prototype.temporaryName = 'data-snackbar-temporary';
 
   // 類別樣式名稱。
   Snackbar.prototype.className = {
@@ -205,11 +240,16 @@ Snackbar = (function() {
     INFO: 'info',
     WARNING: 'warning',
     POSITIVE: 'positive',
-    NEGATIVE: 'negative'
+    NEGATIVE: 'negative',
+    TOP: 'top',
+    LEFT: 'left',
+    BOTTOM: 'bottom',
+    RIGHT: 'right'
   };
 
   // 選擇器名稱。
   Snackbar.prototype.selector = {
+    TEMP_SNACKBAR: `[${Snackbar.prototype.temporaryName}]`,
     CONTENT: '.content',
     ACTION: '.action'
   };
@@ -220,4 +260,38 @@ Snackbar = (function() {
 
 ts(Snackbar);
 
-ts.snackbar = (options) => {};
+ts.snackbar = (options) => {
+  var $snackbar, delay, hasSnackbar;
+  
+  $snackbar = $selector(Snackbar.prototype.selector.TEMP_SNACKBAR);
+  
+  hasSnackbar = $snackbar.length !== 0;
+  // 延遲函式。
+  delay = function(time = 0) {
+    return new Promise(function(resolve) {
+      return setTimeout(resolve, time);
+    });
+  };
+  
+  options = Object.assign({}, Snackbar.prototype.props, options);
+  return (async() => {
+    await delay();
+    if (!hasSnackbar) {
+      // 如果沒有臨時對話視窗，就自己建立一個，然後推入 Body 中。
+      $snackbar = $selector('<div>').attr(Snackbar.prototype.temporaryName, 'true').addClass('ts snackbar').html("<div class=\"content\"></div>\n<a class=\"action href=\"#!\"></a>").appendTo($selector('body'));
+    }
+    
+    return ts(Snackbar.prototype.selector.TEMP_SNACKBAR).snackbar(Object.assign({}, options, {
+      onClose: async() => {
+        options.onClose.call($snackbar.get());
+        // 等待對話視窗關閉動畫。
+        await delay(Snackbar.prototype.duration);
+        if (!$snackbar.hasClass(Snackbar.prototype.className.ACTIVE)) {
+          // 如果此時的臨時對話視窗沒有任何啟用樣式，
+          // 也就代表沒有另一個行為在開啟對話視窗，我們就可以安心移除這個臨時對話視窗了。
+          return $snackbar.remove();
+        }
+      }
+    }));
+  })();
+};

@@ -18,7 +18,12 @@
             <button class="ts button" id="g">ts.snackbar({options})</button>
             <button class="ts button" id="h">ts.snackbar({delay:0})</button>
             <button class="ts button" id="i">ts.snackbar({closable:false})</button>
-            <button class="ts button" id="j">ts.snackbar({hoverStay:true})</button>
+            <button class="ts button" id="j">ts.snackbar({hoverStay:false})</button>
+            <button class="ts button" id="k">ts.snackbar(snackbar)</button>
+            <button class="ts button" id="l">.snackbar(snackbar)</button>
+            <button class="ts button" id="m">.snackbar(top left)</button>
+            <button class="ts button" id="n">.snackbar(top right)</button>
+            <button class="ts button" id="o">.snackbar(bottom right)</button>
         </fieldset>
     </div>
     <!-- -->
@@ -56,10 +61,10 @@
             ts('.snackbar').snackbar('toggle')
         })
         $('#e').on('click', () => {
-            ts('.snackbar').snackbar('is visible')
+            alert(ts('.snackbar').snackbar('is visible'))
         })
         $('#f').on('click', () => {
-            ts('.snackbar').snackbar('is hidden')
+            alert(ts('.snackbar').snackbar('is hidden'))
         })
         $('#g').on('click', () => {
             ts.snackbar({
@@ -103,13 +108,90 @@
         })
         $('#j').on('click', () => {
             ts.snackbar({
-                content  : '滑鼠移過來，這個點心條就不會自動關閉。',
-                hoverStay: true,
+                content  : '滑鼠移過來，這個點心條還是ㄧ樣會自動關閉。',
+                hoverStay: false,
                 onClose  : () => { console.log('close')  },
                 onIgnore : () => { console.log('ignore') },
                 onAction : () => { console.log('action') }
             })
         })
+        $('#k').on('click', () => {
+            ts.snackbar({
+                content  : '這個有點像洋蔥一樣。',
+                action   : {
+                    text: '呼叫另一個 Snackbar'
+                },
+                onAction : () => {
+                    ts.snackbar({
+                        content  : '剝完了。',
+                        action   : {
+                            text: '好的'
+                        }
+                    })
+                }
+            })
+        })
+        $('#l').on('click', () => {
+            ts('.snackbar').snackbar({
+                content  : '這個有點像洋蔥一樣。',
+                action   : {
+                    text: '呼叫另一個 Snackbar'
+                },
+                onAction : () => {
+                    ts('.snackbar').snackbar({
+                        content  : '剝完了。',
+                        action   : {
+                            text: '好的'
+                        }
+                    })
+                }
+            })
+        })
+        $('#m').on('click', () => {
+            ts('.snackbar').snackbar({
+                content: '檔案已經成功地送出了。',
+                action : {
+                    text    : '還原',
+                    emphasis: 'negative'
+                },
+                position: 'top left',
+                onClose : () => { console.log('close')  },
+                onIgnore: () => { console.log('ignore') },
+                onAction: () => { console.log('action') }
+            })
+        })
+        $('#n').on('click', () => {
+            ts('.snackbar').snackbar({
+                content: '檔案已經成功地送出了。',
+                action : {
+                    text    : '還原',
+                    emphasis: 'negative'
+                },
+                position: 'top right',
+                onClose : () => { console.log('close')  },
+                onIgnore: () => { console.log('ignore') },
+                onAction: () => { console.log('action') }
+            })
+        })
+        $('#o').on('click', () => {
+            ts('.snackbar').snackbar({
+                content: '檔案已經成功地送出了。',
+                action : {
+                    text    : '還原',
+                    emphasis: 'negative'
+                },
+                position: 'bottom right',
+                onClose : () => { console.log('close')  },
+                onIgnore: () => { console.log('ignore') },
+                onAction: () => { console.log('action') }
+            })
+        })
     </script>
     <!-- -->
+    <style type="text/css">
+    .snackbar .action,
+    .snackbar .content {
+        pointer-events: none;
+    }
+    </style>
 </body>
