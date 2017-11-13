@@ -11,7 +11,6 @@ Rating = (function() {
       this.init = this.init.bind(this);
       // 元素摧毀函式。
       this.destroy = this.destroy.bind(this);
-      
       // Set Rating
 
       // 設置指定評分數值，並且變動星星的圖示。
