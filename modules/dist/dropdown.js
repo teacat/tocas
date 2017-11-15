@@ -57,7 +57,7 @@ Dropdown = (function() {
         return;
       }
       return this.$this.css('z-index', this.zIndex.MENU).removeClass(this.className.VISIBLE).addClass(`${this.className.HIDDEN} ${this.className.ANIMATING}`).one('animationend', () => {
-        return this.$this.removeClass(this.className.ANIMATING);
+        return this.$this.removeClass(`${this.className.ANIMATING} ${this.className.UPWARD} ${this.className.DOWNWARD} ${this.className.LEFTWARD} ${this.className.RIGHTWARD}`);
       }).emulate('animtionend', this.duration);
     }
 
@@ -75,7 +75,6 @@ Dropdown = (function() {
         noDropdownParent = $target.closest(this.selector.NOT_BASIC_DROPDOWN).length === 0;
         
         notDropdown = !$target.hasClass(this.className.DROPDOWN);
-        console.log(noDropdownParent, notDropdown);
         
         if (noDropdownParent && notDropdown) {
           return ts(this.selector.VISIBLE_DROPDOWN).dropdown('hide');
@@ -83,19 +82,22 @@ Dropdown = (function() {
       });
       this.$this.on('click', (event) => {
         var $target, dropdownParent, isDropdown, isItem, isVisible, itemParent, menuParent;
-        this.$this.removeClass('upward downward leftward rightward');
-        switch (this.quadrant()) {
-          case 'top left':
-            this.$this.addClass('downward rightward');
-            break;
-          case 'top right':
-            this.$this.addClass('downward leftward');
-            break;
-          case 'bottom left':
-            this.$this.addClass('upward rightward');
-            break;
-          case 'bottom right':
-            this.$this.addClass('upward leftward');
+        
+        if (!this.$this.hasClass(this.className.DOWNWARD) && !this.$this.hasClass(this.className.UPWARD) && !this.$this.hasClass(this.className.RIGHTWARD) && !this.$this.hasClass(this.className.LEFTWARD)) {
+          
+          switch (this.quadrant()) {
+            case 'top left':
+              this.$this.addClass(`${this.className.DOWNWARD} ${this.className.RIGHTWARD}`);
+              break;
+            case 'top right':
+              this.$this.addClass(`${this.className.DOWNWARD} ${this.className.LEFTWARD}`);
+              break;
+            case 'bottom left':
+              this.$this.addClass(`${this.className.UPWARD} ${this.className.RIGHTWARD}`);
+              break;
+            case 'bottom right':
+              this.$this.addClass(`${this.className.UPWARD} ${this.className.LEFTWARD}`);
+          }
         }
         
         $target = $selector(event.target);
@@ -106,27 +108,17 @@ Dropdown = (function() {
         dropdownParent = $target.parent().hasClass(this.className.DROPDOWN);
         menuParent = $target.parent().hasClass(this.className.MENU);
         itemParent = $target.parent().hasClass(this.className.ITEM);
-        // 如果點擊的是下拉式選單本體，或是下拉式選單中的圖示與文字。
-        if (isDropdown || dropdownParent) {
-          // 如果下拉式選單正在顯示的話。
-          if (isVisible) {
-            // 就隱藏下拉式選單。
-            ts(this.selector.DROPDOWN).dropdown('hide');
-          } else {
-            
-            ts(this.selector.DROPDOWN).dropdown('hide');
-            // 不然就展開下拉式選單。
-            this.expand();
-          }
-        }
         switch (false) {
           // 如果點擊的是下拉式選單本體，或是下拉式選單中的圖示與文字。
-          case !(isDropdown && dropdownParent):
+
+          case !(isDropdown || dropdownParent):
             // 如果下拉式選單正在顯示的話。
             if (isVisible) {
               // 就隱藏下拉式選單。
               return ts(this.selector.DROPDOWN).dropdown('hide');
             } else {
+              
+              ts(this.selector.DROPDOWN).dropdown('hide');
               // 不然就展開下拉式選單。
               return this.expand();
             }
@@ -136,39 +128,6 @@ Dropdown = (function() {
             return this.event('onSelect', this.$this.get(), $target.attr('data-value'), $target.get());
         }
       });
-      //isDropdownText    = $target.hasClass @className.TEXT
-      //isDropdownIcon    = $target.hasClass @className.ICON
-      //isDropdownImage   = $target.hasClass @className.IMAGE
-      //hasDropdownParent = $target.parent().hasClass @className.DROPDOWN
-      //parentIsItem      = $target.parent().hasClass @className.ITEM
-      //targetIsDropdown  = $target.hasClass @className.DROPDOWN
-      //isItem            = $target.hasClass @className.ITEM
-      //isTsMenuItem      = $target.closest  @selector.MENU
-      //isVisible         = $target.hasClass @className.VISIBLE
-
-      //switch
-      //    #
-      //    when isTsMenuItem and isDropdown and parentIsItem      and targetIsDropdown and !isVisible
-      //    ,    isTsMenuItem and isDropdown and !parentIsItem     and targetIsDropdown and !isVisible
-      //    ,    isTsMenuItem and isDropdown and hasDropdownParent and parentIsItem and !isVisible
-      //    ,    isDropdown   and isTsMenuItem and !isVisible
-      //    ,    isDropdown   and targetIsDropdown and !isVisible
-      //    ,    isDropdown   and isDropdownIcon  and hasDropdownParent and !isVisible
-      //    ,    isDropdown   and isDropdownImage and hasDropdownParent and !isVisible
-      //    ,    isDropdown   and isDropdownText  and hasDropdownParent and !isVisible
-      //        # 關閉其他可見的下拉式選單。
-      //        ts(@selector.DROPDOWN).dropdown 'hide'
-
-      //        #
-      //        @expand()
-
-      //    #
-      //    # when isDropdown and isItem
-      //    # ,    isDropdown and parentIsItem
-      //    when isVisible
-      //        console.log 'y'
-      //        # 關閉其他可見的下拉式選單。
-      //        ts(@selector.DROPDOWN).dropdown 'hide'
       return ts.fn;
     }
 
@@ -255,7 +214,11 @@ Dropdown = (function() {
     ICON: 'icon',
     IMAGE: 'image',
     ITEM: 'item',
-    MENU: 'menu'
+    MENU: 'menu',
+    UPWARD: 'upward',
+    DOWNWARD: 'downward',
+    LEFTWARD: 'leftward',
+    RIGHTWARD: 'rightward'
   };
 
   // 選擇器名稱。

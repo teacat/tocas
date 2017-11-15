@@ -45,6 +45,10 @@ class Dropdown
         IMAGE    : 'image'
         ITEM     : 'item'
         MENU     : 'menu'
+        UPWARD   : 'upward'
+        DOWNWARD : 'downward'
+        LEFTWARD : 'leftward'
+        RIGHTWARD: 'rightward'
 
     # 選擇器名稱。
     selector:
@@ -103,7 +107,8 @@ class Dropdown
             .removeClass @className.VISIBLE
             .addClass    "#{@className.HIDDEN} #{@className.ANIMATING}"
             .one         'animationend', =>
-                @$this.removeClass @className.ANIMATING
+                @$this
+                    .removeClass "#{@className.ANIMATING} #{@className.UPWARD} #{@className.DOWNWARD} #{@className.LEFTWARD} #{@className.RIGHTWARD}"
             .emulate 'animtionend', @duration
 
     event: (event, arg, arg2, arg3) =>
@@ -122,24 +127,26 @@ class Dropdown
                 noDropdownParent = $target.closest(@selector.NOT_BASIC_DROPDOWN).length is 0
                 #
                 notDropdown      = not $target.hasClass @className.DROPDOWN
-                console.log noDropdownParent, notDropdown
+
                 #
                 if noDropdownParent and notDropdown
                     ts(@selector.VISIBLE_DROPDOWN).dropdown 'hide'
 
 
         @$this.on 'click', (event) =>
-            @$this.removeClass 'upward downward leftward rightward'
 
-            switch @quadrant()
-                when 'top left'
-                    @$this.addClass 'downward rightward'
-                when 'top right'
-                    @$this.addClass 'downward leftward'
-                when 'bottom left'
-                    @$this.addClass 'upward rightward'
-                when 'bottom right'
-                    @$this.addClass 'upward leftward'
+            #
+            if not @$this.hasClass(@className.DOWNWARD) and not @$this.hasClass(@className.UPWARD) and not @$this.hasClass(@className.RIGHTWARD) and not @$this.hasClass(@className.LEFTWARD)
+                #
+                switch @quadrant()
+                    when 'top left'
+                        @$this.addClass "#{@className.DOWNWARD} #{@className.RIGHTWARD}"
+                    when 'top right'
+                        @$this.addClass "#{@className.DOWNWARD} #{@className.LEFTWARD}"
+                    when 'bottom left'
+                        @$this.addClass "#{@className.UPWARD} #{@className.RIGHTWARD}"
+                    when 'bottom right'
+                        @$this.addClass "#{@className.UPWARD} #{@className.LEFTWARD}"
 
             #
             $target = $selector event.target
@@ -152,68 +159,23 @@ class Dropdown
             menuParent     = $target.parent().hasClass @className.MENU
             itemParent     = $target.parent().hasClass @className.ITEM
 
-            # 如果點擊的是下拉式選單本體，或是下拉式選單中的圖示與文字。
-            if isDropdown or dropdownParent
-                # 如果下拉式選單正在顯示的話。
-                if isVisible
-                    # 就隱藏下拉式選單。
-                    ts(@selector.DROPDOWN).dropdown 'hide'
-                else
-                    #
-                    ts(@selector.DROPDOWN).dropdown 'hide'
-                    # 不然就展開下拉式選單。
-                    @expand()
-
+            #
             switch
                 # 如果點擊的是下拉式選單本體，或是下拉式選單中的圖示與文字。
-                when isDropdown and dropdownParent
+                when isDropdown or dropdownParent
                     # 如果下拉式選單正在顯示的話。
                     if isVisible
                         # 就隱藏下拉式選單。
                         ts(@selector.DROPDOWN).dropdown 'hide'
                     else
+                        #
+                        ts(@selector.DROPDOWN).dropdown 'hide'
                         # 不然就展開下拉式選單。
                         @expand()
 
                 # 如果點擊的是選單內的項目。
                 when isItem
                     @event 'onSelect', @$this.get(), $target.attr('data-value'), $target.get()
-
-
-            #isDropdownText    = $target.hasClass @className.TEXT
-            #isDropdownIcon    = $target.hasClass @className.ICON
-            #isDropdownImage   = $target.hasClass @className.IMAGE
-            #hasDropdownParent = $target.parent().hasClass @className.DROPDOWN
-            #parentIsItem      = $target.parent().hasClass @className.ITEM
-            #targetIsDropdown  = $target.hasClass @className.DROPDOWN
-            #isItem            = $target.hasClass @className.ITEM
-            #isTsMenuItem      = $target.closest  @selector.MENU
-            #isVisible         = $target.hasClass @className.VISIBLE
-
-            #
-            #switch
-            #    #
-            #    when isTsMenuItem and isDropdown and parentIsItem      and targetIsDropdown and !isVisible
-            #    ,    isTsMenuItem and isDropdown and !parentIsItem     and targetIsDropdown and !isVisible
-            #    ,    isTsMenuItem and isDropdown and hasDropdownParent and parentIsItem and !isVisible
-            #    ,    isDropdown   and isTsMenuItem and !isVisible
-            #    ,    isDropdown   and targetIsDropdown and !isVisible
-            #    ,    isDropdown   and isDropdownIcon  and hasDropdownParent and !isVisible
-            #    ,    isDropdown   and isDropdownImage and hasDropdownParent and !isVisible
-            #    ,    isDropdown   and isDropdownText  and hasDropdownParent and !isVisible
-            #        # 關閉其他可見的下拉式選單。
-            #        ts(@selector.DROPDOWN).dropdown 'hide'
-#
-            #        #
-            #        @expand()
-#
-            #    #
-            #    # when isDropdown and isItem
-            #    # ,    isDropdown and parentIsItem
-            #    when isVisible
-            #        console.log 'y'
-            #        # 關閉其他可見的下拉式選單。
-            #        ts(@selector.DROPDOWN).dropdown 'hide'
 
         ts.fn
 
