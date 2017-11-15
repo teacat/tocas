@@ -19,6 +19,7 @@ Dropdown = (function() {
 
       // 閉合目前的下拉式選單。
       this.contract = this.contract.bind(this);
+      this.event = this.event.bind(this);
       // 元素初始化函式。
       this.init = this.init.bind(this);
       // 元素摧毀函式。
@@ -52,21 +53,36 @@ Dropdown = (function() {
     }
 
     contract() {
+      if (!this.$this.hasClass(this.className.VISIBLE)) {
+        return;
+      }
       return this.$this.css('z-index', this.zIndex.MENU).removeClass(this.className.VISIBLE).addClass(`${this.className.HIDDEN} ${this.className.ANIMATING}`).one('animationend', () => {
         return this.$this.removeClass(this.className.ANIMATING);
       }).emulate('animtionend', this.duration);
     }
 
+    event(event, arg, arg2, arg3) {
+      var ref;
+      return (ref = this.$this.data(event)) != null ? ref.call(arg, arg2, arg3) : void 0;
+    }
+
     init() {
       $selector(document).off('click.dropdown').on('click.dropdown', (event) => {
-        console.log;
-        if ($selector(event.target).closest('.dropdown:not(.basic)') === null && !this.$selector(event.target).hasClass('dropdown')) {
-          return ts('.ts.dropdown:not(.basic).visible').dropdown('hide');
+        var $target, noDropdownParent, notDropdown;
+        
+        $target = $selector(event.target);
+        
+        noDropdownParent = $target.closest(this.selector.NOT_BASIC_DROPDOWN).length === 0;
+        
+        notDropdown = !$target.hasClass(this.className.DROPDOWN);
+        console.log(noDropdownParent, notDropdown);
+        
+        if (noDropdownParent && notDropdown) {
+          return ts(this.selector.VISIBLE_DROPDOWN).dropdown('hide');
         }
       });
-      //contractDropdown '.ts.dropdown:not(.basic).visible'
       this.$this.on('click', (event) => {
-        var $target;
+        var $target, dropdownParent, isDropdown, isItem, isVisible, itemParent, menuParent;
         this.$this.removeClass('upward downward leftward rightward');
         switch (this.quadrant()) {
           case 'top left':
@@ -82,10 +98,44 @@ Dropdown = (function() {
             this.$this.addClass('upward leftward');
         }
         
-        return $target = $selector(event.target);
+        $target = $selector(event.target);
+        
+        isDropdown = this.$this.hasClass(this.className.DROPDOWN);
+        isVisible = this.$this.hasClass(this.className.VISIBLE);
+        isItem = $target.hasClass(this.className.ITEM);
+        dropdownParent = $target.parent().hasClass(this.className.DROPDOWN);
+        menuParent = $target.parent().hasClass(this.className.MENU);
+        itemParent = $target.parent().hasClass(this.className.ITEM);
+        // 如果點擊的是下拉式選單本體，或是下拉式選單中的圖示與文字。
+        if (isDropdown || dropdownParent) {
+          // 如果下拉式選單正在顯示的話。
+          if (isVisible) {
+            // 就隱藏下拉式選單。
+            ts(this.selector.DROPDOWN).dropdown('hide');
+          } else {
+            
+            ts(this.selector.DROPDOWN).dropdown('hide');
+            // 不然就展開下拉式選單。
+            this.expand();
+          }
+        }
+        switch (false) {
+          // 如果點擊的是下拉式選單本體，或是下拉式選單中的圖示與文字。
+          case !(isDropdown && dropdownParent):
+            // 如果下拉式選單正在顯示的話。
+            if (isVisible) {
+              // 就隱藏下拉式選單。
+              return ts(this.selector.DROPDOWN).dropdown('hide');
+            } else {
+              // 不然就展開下拉式選單。
+              return this.expand();
+            }
+            break;
+          // 如果點擊的是選單內的項目。
+          case !isItem:
+            return this.event('onSelect', this.$this.get(), $target.attr('data-value'), $target.get());
+        }
       });
-      
-      //isDropdown        = @$this.hasClass  @className.DROPDOWN
       //isDropdownText    = $target.hasClass @className.TEXT
       //isDropdownIcon    = $target.hasClass @className.ICON
       //isDropdownImage   = $target.hasClass @className.IMAGE
@@ -180,6 +230,7 @@ Dropdown = (function() {
     onNoResults: () => {},
     onShow: () => {},
     onHide: () => {},
+    onSelect: (value, element) => {},
     values: null,
     on: 'click',
     allowReselection: false,
@@ -203,16 +254,19 @@ Dropdown = (function() {
     TEXT: 'text',
     ICON: 'icon',
     IMAGE: 'image',
-    ITEM: 'item'
+    ITEM: 'item',
+    MENU: 'menu'
   };
 
   // 選擇器名稱。
   Dropdown.prototype.selector = {
     DROPDOWN: '.ts.dropdown',
     VISIBLE_DROPDOWN: '.ts.visible.dropdown',
-    MENU: '.ts.menu'
+    MENU: '.ts.menu',
+    NOT_BASIC_DROPDOWN: '.ts.dropdown:not(.basic)'
   };
 
+  //.ts.dropdown:not(.basic).visible
   Dropdown.prototype.zIndex = {
     MENU: 9,
     ACTIVE: 10,

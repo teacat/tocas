@@ -20,6 +20,7 @@ class Dropdown
         onNoResults: =>
         onShow: =>
         onHide: =>
+        onSelect: (value, element) =>
         values: null
         on: 'click'
         allowReselection: false
@@ -43,13 +44,15 @@ class Dropdown
         ICON     : 'icon'
         IMAGE    : 'image'
         ITEM     : 'item'
+        MENU     : 'menu'
 
     # 選擇器名稱。
     selector:
-        DROPDOWN        : '.ts.dropdown'
-        VISIBLE_DROPDOWN: '.ts.visible.dropdown'
-        MENU            : '.ts.menu'
-
+        DROPDOWN          : '.ts.dropdown'
+        VISIBLE_DROPDOWN  : '.ts.visible.dropdown'
+        MENU              : '.ts.menu'
+        NOT_BASIC_DROPDOWN: '.ts.dropdown:not(.basic)'
+        #.ts.dropdown:not(.basic).visible
     zIndex:
         MENU   : 9
         ACTIVE : 10
@@ -92,6 +95,9 @@ class Dropdown
     #
     # 閉合目前的下拉式選單。
     contract: =>
+        if not @$this.hasClass @className.VISIBLE
+            return
+
         @$this
             .css         'z-index', @zIndex.MENU
             .removeClass @className.VISIBLE
@@ -100,6 +106,8 @@ class Dropdown
                 @$this.removeClass @className.ANIMATING
             .emulate 'animtionend', @duration
 
+    event: (event, arg, arg2, arg3) =>
+        @$this.data(event)?.call arg, arg2, arg3
 
     # 元素初始化函式。
     init: =>
@@ -107,10 +115,17 @@ class Dropdown
         $selector(document)
             .off 'click.dropdown'
             .on  'click.dropdown', (event) =>
-                console.log
-                if $selector(event.target).closest('.dropdown:not(.basic)') is null and !@$selector(event.target).hasClass('dropdown')
-                    ts('.ts.dropdown:not(.basic).visible').dropdown('hide')
-                    #contractDropdown '.ts.dropdown:not(.basic).visible'
+
+                #
+                $target          = $selector event.target
+                #
+                noDropdownParent = $target.closest(@selector.NOT_BASIC_DROPDOWN).length is 0
+                #
+                notDropdown      = not $target.hasClass @className.DROPDOWN
+                console.log noDropdownParent, notDropdown
+                #
+                if noDropdownParent and notDropdown
+                    ts(@selector.VISIBLE_DROPDOWN).dropdown 'hide'
 
 
         @$this.on 'click', (event) =>
@@ -126,13 +141,45 @@ class Dropdown
                 when 'bottom right'
                     @$this.addClass 'upward leftward'
 
-
-
             #
             $target = $selector event.target
 
             #
-            #isDropdown        = @$this.hasClass  @className.DROPDOWN
+            isDropdown     = @$this.hasClass @className.DROPDOWN
+            isVisible      = @$this.hasClass @className.VISIBLE
+            isItem         = $target.hasClass @className.ITEM
+            dropdownParent = $target.parent().hasClass @className.DROPDOWN
+            menuParent     = $target.parent().hasClass @className.MENU
+            itemParent     = $target.parent().hasClass @className.ITEM
+
+            # 如果點擊的是下拉式選單本體，或是下拉式選單中的圖示與文字。
+            if isDropdown or dropdownParent
+                # 如果下拉式選單正在顯示的話。
+                if isVisible
+                    # 就隱藏下拉式選單。
+                    ts(@selector.DROPDOWN).dropdown 'hide'
+                else
+                    #
+                    ts(@selector.DROPDOWN).dropdown 'hide'
+                    # 不然就展開下拉式選單。
+                    @expand()
+
+            switch
+                # 如果點擊的是下拉式選單本體，或是下拉式選單中的圖示與文字。
+                when isDropdown and dropdownParent
+                    # 如果下拉式選單正在顯示的話。
+                    if isVisible
+                        # 就隱藏下拉式選單。
+                        ts(@selector.DROPDOWN).dropdown 'hide'
+                    else
+                        # 不然就展開下拉式選單。
+                        @expand()
+
+                # 如果點擊的是選單內的項目。
+                when isItem
+                    @event 'onSelect', @$this.get(), $target.attr('data-value'), $target.get()
+
+
             #isDropdownText    = $target.hasClass @className.TEXT
             #isDropdownIcon    = $target.hasClass @className.ICON
             #isDropdownImage   = $target.hasClass @className.IMAGE
