@@ -33,7 +33,7 @@
         transform: matrix3d(1, 0, 0, 0, 0, -0.001, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
     50.05%
         opacity: 0
-        transform: matrix3d(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) 
+        transform: matrix3d(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
     100%
         opacity: 0
         transform: matrix3d(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
@@ -101,6 +101,7 @@
 //-------------------//
 
 .ts.basic.dropdown,
+.ts.selection.dropdown,
 .ts.form select
     transition         : box-shadow $input_transitionDuration ease-in-out
     line-height        : $dropdown_lineHeight
@@ -113,7 +114,7 @@
     border-radius      : $dropdown_borderRadius
     background-size    : $dropdown_arrowSize
     background-repeat  : no-repeat
-    padding-right      : calc(#{$dropdown_horizontalPadding} + #{$dropdown_arrowSize} * 1.2)
+    padding-right      : calc(#{$dropdown_horizontalPadding} + #{$dropdown_arrowSize} * 1.35)
     //padding-right      : calc(#{$dropdown_horizontalPadding} + #{$dropdown_arrowSize} * 2 + #{$dropdown_horizontalPadding})
     //background-position: right #{$dropdown_horizontalPadding} top calc(#{$dropdown_verticalPadding} + #{$dropdown_arrowSize} - (1em / 2) + (#{$dropdown_lineHeight} - 1em ))
     background-position: right #{$dropdown_horizontalPadding} center
@@ -121,10 +122,107 @@
     +basic-dropdown-variant($dropdown_textColor, $dropdown_backgroundColor, $dropdown_borderColor, $dropdown_arrowBackgroundURL)
 
 .ts.basic.dropdown:hover:hover:hover:hover:hover,
+.ts.selection.dropdown:hover,
 .ts.form select:hover
     cursor          : pointer
     //background: rgb(250, 250, 250)
     border-color    : $dropdown_hoverBorderColor
+
+//.ts.basic.dropdown:focus:focus:focus:focus:focus,
+//.ts.form select:focus
+//    border-color: #00ADEA
+
+//-------------------//
+//     Selection
+//-------------------//
+.ts.selection.dropdown
+    min-width: 14em
+
+.ts.selection.dropdown .default.text
+    color: nth($grey, 6)
+
+.ts.selection.dropdown.downward.visible.animating,
+.ts.selection.dropdown.downward.visible,
+    border-bottom-left-radius : 0
+    border-bottom-right-radius: 0
+
+.ts.selection.dropdown.downward.visible
+    border-color: #96c8da
+
+.ts.selection.dropdown .menu .message
+    user-select: none
+    pointer-events: none
+    color: nth($grey, 6)
+    padding: $dropdown_messagePadding
+
+.ts.selection.dropdown.downward .menu
+    border-color: #96c8da
+    border-top: 1px solid #f5f5f5
+
+    min-width: calc(100% + 2px)
+    max-width: calc(100% + 2px)
+    box-shadow: 0 2px 3px 0 rgba(34,36,38,.15)
+
+    left: -1px
+
+    border-top-left-radius : 0
+    border-top-right-radius: 0
+
+
+.ts.selection.dropdown .menu .item
+    overflow: hidden
+    white-space: nowrap
+    text-overflow: ellipsis
+    display: block
+
+.ts.selection.dropdown .menu .item:not(:first-child)
+    border-top: 1px solid #f5f5f5
+
+//-------------------//
+// Multiple Selection
+//-------------------//
+
+
+.ts.multiple.selection.dropdown
+    cursor: text
+    //padding: 0.38571em 2.385em 0.385em 0.585em
+    padding: 0.249em 2.385em 0.249em 0.585em
+
+.ts.multiple.selection.dropdown .labels
+    display: inline
+
+.ts.multiple.selection.dropdown
+    user-select: none
+
+
+.ts.multiple.selection.dropdown .labels .ts.label
+    margin-bottom: .2em
+    margin-top: .2em
+    pointer-events: none
+    user-select: none
+
+.ts.multiple.selection.dropdown .labels .ts.label,
+.ts.multiple.selection.dropdown .labels .ts.label:hover
+    cursor: default
+
+.ts.multiple.selection.dropdown .labels .ts.label:hover,
+.ts.multiple.selection.dropdown .labels .ts.label:active
+    pointer-events: none
+
+.ts.multiple.selection.dropdown .labels .ts.label .ts.close.button
+    pointer-events: auto
+
+.ts.multiple.selection.dropdown input.search
+    display: inline
+    color: $inputTextColor
+    padding: 0
+    max-width: 100%
+    //margin: .45238095em 0 .45238095em .64285714em
+    margin: .33238095em 0 .33238095em .2em
+    min-width: 1em
+    width: 1em
+    line-height: 1.6em
+    //line-height: 1.21428571em
 
 //-------------------//
 //       Size
@@ -384,20 +482,19 @@
 
     position  : relative
     cursor    : pointer
-    display   : flex
-    border    : $dropdown_itemBorder
+
+
     height    : $dropdown_itemHeight
     text-align: $dropdown_itemTextAlign
 
-    border-top : $dropdown_itemDivider
     line-height: $dropdown_itemLineHeight
     font-size  : $dropdown_itemFontSize
-    color      : $dropdown_itemColor
+
 
     padding       : $dropdown_itemPadding !important
     font-size     : $dropdown_itemFontSize
     text-transform: $dropdown_itemTextTransform
-    font-weight   : $dropdown_itemFontWeight
+
     box-shadow    : $dropdown_itemBoxShadow
 
     border-radius: 0
@@ -407,6 +504,17 @@
     margin-right: 0 !important
 
     -webkit-touch-callout: none
+
+.ts.contextmenu > .item.item.item.item.item.item:not(.active):not(.selected),
+.ts.dropdown .menu > .item.item.item.item.item.item:not(.active):not(.selected)
+    font-weight: $dropdown_itemFontWeight
+    color      : $dropdown_itemColor
+
+.ts.contextmenu > .item.item.item.item.item.item,
+.ts.dropdown:not(.selection) .menu > .item.item.item.item.item.item
+    display   : flex
+    border-top : $dropdown_itemDivider
+    border     : $dropdown_itemBorder
 
 .ts.contextmenu > .item:first-child,
 .ts.dropdown .menu > .item:first-child
@@ -554,11 +662,11 @@
 //       Hover
 //-------------------//
 
-.ts.contextmenu.visible > .item.item:hover,
-.ts.dropdown .menu > .item.item:hover
+.ts.contextmenu.visible > .item:hover:not(:active):not(.active):not(.selected),
+.ts.dropdown .menu > .item:hover:not(:active):not(.active):not(.selected)
     background: $dropdown_hoveredItemBackground !important
-    color           : $dropdown_hoveredItemColor !important
-    z-index         : $z_dropdown_hovered
+    color     : $dropdown_hoveredItemColor !important
+    z-index   : $z_dropdown_hovered
 
 //-------------------//
 //       Active
@@ -566,14 +674,22 @@
 
 .ts.contextmenu.visible .active.item,
 .ts.dropdown .menu .active.item
-    background: $dropdown_activeItemBackground !important
-    font-weight     : $dropdown_activeItemFontWeight
-    color           : $dropdown_activeItemColor
-    z-index         : $z_dropdown_active
+    background : $dropdown_activeItemBackground !important
+    font-weight: $dropdown_activeItemFontWeight
+    color      : $dropdown_activeItemColor
+    z-index    : $z_dropdown_active
 
 .ts.contextmenu.visible > .item.item:active,
 .ts.dropdown .menu > .item.item:active
     background: $dropdown_activeItemBackground !important
+
+//-------------------//
+//      Selected
+//-------------------//
+
+.ts.dropdown .menu .selected.item
+    background : $dropdown_selectedItemBackground !important
+    color      : $dropdown_selectedItemColor
 
 //-------------------//
 //     Animation
@@ -583,13 +699,13 @@
 .ts.contextmenu.downward.hidden.animating,
 .ts.dropdown.upward.hidden.animating .menu,
 .ts.dropdown.downward.hidden.animating .menu
-    animation: dropdown-contract 300ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+    animation: dropdown-contract 250ms cubic-bezier(0.22, 0.61, 0.36, 1) both
 
 .ts.contextmenu.downward.visible.animating,
 .ts.contextmenu.upward.visible.animating,
 .ts.dropdown.downward.visible.animating .menu,
 .ts.dropdown.upward.visible.animating .menu
-    animation: dropdown-expand 300ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+    animation: dropdown-expand 250ms cubic-bezier(0.22, 0.61, 0.36, 1) both
 
 //-------------------//
 //     Directions
