@@ -43,6 +43,10 @@ ts = (selector, context=null) =>
             # 初始化這個模組。
             localModule       = new module()
             localModule.delay = (time=0) -> new Promise (resolve) -> setTimeout(resolve, time)
+            localModule.createElement = (html) =>
+                container           = document.createElement 'div'
+                container.innerHTML = html
+                container.firstChild
             # 準備一些此元素的資料。
             $this = $selector element
             # 將此元素的資料放置這個模組中。

@@ -59,6 +59,12 @@ ts = (selector, context = null) => {
           return setTimeout(resolve, time);
         });
       };
+      localModule.createElement = (html) => {
+        var container;
+        container = document.createElement('div');
+        container.innerHTML = html;
+        return container.firstChild;
+      };
       // 準備一些此元素的資料。
       $this = $selector(element);
       // 將此元素的資料放置這個模組中。
