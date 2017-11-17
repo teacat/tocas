@@ -139,6 +139,24 @@ $selector.fn.find =
         @collectSwap ->
             @querySelectorAll(selector)
 
+# Insert Before
+#
+#
+$selector.fn.insertBefore =
+    value: (target) ->
+        @each ->
+            $selector(target).each (element) =>
+                element.parentNode.insertBefore(@, element)
+
+# Insert After
+#
+#
+$selector.fn.insertAfter =
+    value: (target) ->
+        @each ->
+            $selector(target).each (element) =>
+                element.parentNode.insertBefore(@, element.nextSibling)
+
 # Wrap
 #
 # 將元素用指定元素包覆起來。
