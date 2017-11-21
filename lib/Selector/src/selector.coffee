@@ -186,6 +186,9 @@ $selector.fn.append =
         if element.isSelector isnt undefined
             @each ->
                 element.each (e) => @appendChild(if shouldClone then e.cloneNode(true) else e)
+        else if typeof element is 'string'
+            @each ->
+                @insertAdjacentHTML('beforeend', element)
         else
             @each ->
                 @appendChild(if shouldClone then element.cloneNode(true) else element)
@@ -207,6 +210,9 @@ $selector.fn.prepend =
         if element.isSelector isnt undefined
             @each ->
                 element.each (e) => @prepend(if shouldClone then e.cloneNode(true) else e)
+        else if typeof element is 'string'
+            @each ->
+                @insertAdjacentHTML('afterbegin', element)
         else
             @each ->
                 @prepend(if shouldClone then element.cloneNode(true) else element)
@@ -256,6 +262,21 @@ $selector.fn.children =
     value: (selector) ->
         @collectSwap ->
             @querySelectorAll if selector? then ":scope > #{selector}" else ':scope > *'
+
+#
+#
+#
+$selector.fn.replaceWith =
+    value: (selector) ->
+        element = $selector(selector).get()
+        @each ->
+            @replaceWith(element)
+
+#
+#
+#
+$selector.fn.last =
+    value: () -> @eq(@length-1)
 
 # Next
 #
