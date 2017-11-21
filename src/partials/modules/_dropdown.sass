@@ -135,39 +135,69 @@
 //-------------------//
 //     Selection
 //-------------------//
+.ts.dropdown select
+    display: none
+
 .ts.selection.dropdown
     min-width: 14em
+    min-height: calc(#{$inputLineHeight} + #{$dropdown_verticalPadding * 2} + #{$input_borderWidth * 2})
 
-.ts.selection.dropdown .default.text
+.ts.selection.dropdown .placeholder.text
     color: nth($grey, 6)
+
+.ts.selection.dropdown.upward.visible.animating,
+.ts.selection.dropdown.upward.visible,
+    border-top-left-radius : 0
+    border-top-right-radius: 0
 
 .ts.selection.dropdown.downward.visible.animating,
 .ts.selection.dropdown.downward.visible,
     border-bottom-left-radius : 0
     border-bottom-right-radius: 0
 
-.ts.selection.dropdown.downward.visible
+.ts.selection.dropdown.visible
     border-color: #96c8da
 
 .ts.selection.dropdown .menu .message
     user-select: none
     pointer-events: none
+    display: none
     color: nth($grey, 6)
     padding: $dropdown_messagePadding
 
+.ts.selection.dropdown .menu .message.active
+    display: block
+
+.ts.selection.dropdown.upward .menu,
 .ts.selection.dropdown.downward .menu
     border-color: #96c8da
-    border-top: 1px solid #f5f5f5
 
     min-width: calc(100% + 2px)
     max-width: calc(100% + 2px)
-    box-shadow: 0 2px 3px 0 rgba(34,36,38,.15)
+
 
     left: -1px
+
+
+.ts.selection.dropdown.upward .menu
+    border-bottom: 1px solid #f5f5f5
+    box-shadow   : 0 -2px 3px 0 rgba(34,36,38,.15)
+
+    border-bottom-left-radius : 0
+    border-bottom-right-radius: 0
+
+.ts.selection.dropdown.downward .menu
+    border-top: 1px solid #f5f5f5
+    box-shadow: 0 2px 3px 0 rgba(34,36,38,.15)
 
     border-top-left-radius : 0
     border-top-right-radius: 0
 
+
+.ts.selection.dropdown .menu
+    max-height: 50vh
+    overflow-x: hidden
+    overflow-y: auto
 
 .ts.selection.dropdown .menu .item
     overflow: hidden
@@ -175,16 +205,39 @@
     text-overflow: ellipsis
     display: block
 
+.ts.search.dropdown input.search:focus + .text
+    color: rgba(115,115,115,.87) !important
+
+.ts.search.dropdown input.search:focus + .text .flag,
+.ts.search.dropdown input.search:focus + .text .icon
+    opacity: .45
+
+.ts.selection.dropdown .text.filtered,
+.ts.selection.dropdown .menu .item.filtered,
+.ts.selection.dropdown .menu .item[data-value='']
+    display: none
+
 .ts.selection.dropdown .menu .item:not(:first-child)
     border-top: 1px solid #f5f5f5
+
+
+.ts.search.selection.dropdown input.search
+    position: absolute
+    left: 0
+    top: 0
+    padding: $dropdown_padding
+
+.ts.search.selection.dropdown .text
+
 
 //-------------------//
 // Multiple Selection
 //-------------------//
 
+.ts.search.selection.dropdown
+    cursor: text
 
 .ts.multiple.selection.dropdown
-    cursor: text
     //padding: 0.38571em 2.385em 0.385em 0.585em
     padding: 0.249em 2.385em 0.249em 0.585em
 
@@ -212,9 +265,14 @@
 .ts.multiple.selection.dropdown .labels .ts.label .ts.close.button
     pointer-events: auto
 
+.ts.multiple.selection.dropdown .menu .item.selected.active
+    display: none
+
 .ts.multiple.selection.dropdown input.search
+    position: relative
     display: inline
     color: $inputTextColor
+    background: transparent
     padding: 0
     max-width: 100%
     //margin: .45238095em 0 .45238095em .64285714em
@@ -223,6 +281,12 @@
     width: 1em
     line-height: 1.6em
     //line-height: 1.21428571em
+
+.ts.multiple.selection.dropdown .text.placeholder
+    position: absolute
+    left: 0
+    top: 0
+    padding: .78571em 1em
 
 //-------------------//
 //       Size
