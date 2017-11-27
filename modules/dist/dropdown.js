@@ -7,307 +7,222 @@ var Dropdown;
 Dropdown = (function() {
   class Dropdown {
     constructor() {
-      // Quadrant
+      /*
+      Action
+      */
+      // Bind
 
-      // 取得下拉式選單的元素象限並給予應該朝哪個方向展開。
-      this.quadrant = this.quadrant.bind(this);
-      
-      this.selection = this.selection.bind(this);
-      
-      this.searchSelection = this.searchSelection.bind(this);
-      
-      this.multipleSelection = this.multipleSelection.bind(this);
-      
-      this.multipleSearchSelection = this.multipleSearchSelection.bind(this);
-      // Set Quadrant
+      // 監聽下拉式選單所需的事件。
+      this.bind = this.bind.bind(this);
+      // Document Keyboard Listener
 
-      // 取得選單的象限，並以此為據向某方向展開。
-      this.setQuadrant = this.setQuadrant.bind(this);
+      // 頁面鍵盤事件監聽函式。
+      this.documentKeyboardListener = this.documentKeyboardListener.bind(this);
+      // Document Listener
+
+      // 頁面點擊事件處理函式。
+      this.documentListener = this.documentListener.bind(this);
+      // Input Listener
+
+      // 搜尋欄位的輸入事件處理函式。
+      this.inputListener = this.inputListener.bind(this);
+      // Dropdown Listener
+
+      // 下拉式選單的點擊事件處理函式。
+      this.dropdownListener = this.dropdownListener.bind(this);
+      /*
+      View
+      */
+      // Initialize
+
+      // 初始化一個選單應有的容器與元素，但不包括資料元素。
+      this.initialize = this.initialize.bind(this);
+      // Render Text
+
+      // 基於現況，處理下拉式選單的文字。
+      this.renderText = this.renderText.bind(this);
+      // Render
+
+      // 依照同步的資料重新渲染選單的元素。
+      this.render = this.render.bind(this);
+      // Sync
+
+      // 解析 `select` 元素目前的資料並單向同步到此選單元素。
+      this.sync = this.sync.bind(this);
+      // Scroll To Selected
+
+      // 將選單捲動到選擇的選項。
+      this.scrollToSelected = this.scrollToSelected.bind(this);
+      // No Results
+
+      // 切換「找不到資料」訊息的可見度。
+      this.noResults = this.noResults.bind(this);
+      // Addition
+
+      // 依照輸入的值與目前設定判斷是否有必要提示使用者是否要新增自定值。
+      this.addition = this.addition.bind(this);
+      // Filter
+
+      // 以指定的值過濾並隱藏不相符的選項。
+      this.filter = this.filter.bind(this);
       // Expand
 
-      // 展開目前的下拉式選單。
+      // 展開下拉式選單。
       this.expand = this.expand.bind(this);
       // Contract
 
-      // 閉合目前的下拉式選單。
+      // 收合下拉式選單。
       this.contract = this.contract.bind(this);
-      // Convertor
+      // Set Direction
 
-      // 從現有的 `<select>` 元素中取得相關資料並且轉換成可供 Tocas Dropdown 模組解析的物件。
-      this.convertor = this.convertor.bind(this);
-      // Generator
-
-      // 依照下拉式選單的樣式，產生相對應的模板 HTML 原始碼。
-      this.generator = this.generator.bind(this);
-      // Document Listener
-
-      // 頁面監聽器。
-      this.documentListener = this.documentListener.bind(this);
-      // Add Value
-
-      // 建立新值。
-      this.addValue = this.addValue.bind(this);
-      // Placeholder Listener
-
-      this.watchText = this.watchText.bind(this);
-      // Search Listener
-
-      // 搜尋輸入欄位的輸入監聽事件。
-      this.searchListener = this.searchListener.bind(this);
-      // Message
-
-      // 控制「找不到資料」訊息元素的可見度。
-      this.message = this.message.bind(this);
-      // Filter
-
-      // 依照輸入的值來過濾沒必要的選項元素並將其隱藏。
-      this.filter = this.filter.bind(this);
-      // Scroll To Selected
-
-      // 將選單的捲軸位置捲到選擇的元素。
-      this.scrollToSelected = this.scrollToSelected.bind(this);
-      // Dropdown Listener
-
-      // 下拉式選單點擊事件監聽函式。
-      this.dropdownListener = this.dropdownListener.bind(this);
-      // Event
-
-      // 呼叫指定的事件。
-      this.event = this.event.bind(this);
-      // Add Label
-
-      // 建立一個新的標籤。
-      this.addLabel = this.addLabel.bind(this);
-      // Remove Label
-
-      // 移除多選下拉式選單中的一個標籤，如果沒有指定則移除最後的一個標籤。
-      this.removeLabel = this.removeLabel.bind(this);
-      // Unselect
-
-      // 取消選取某個選項。
-      this.unselect = this.unselect.bind(this);
-      
-      this.removeOption = this.removeOption.bind(this);
-      // Change Value
-
-      // 更改一個下拉式選單的選擇值，並與 `<select>` 同步。
-      this.changeValue = this.changeValue.bind(this);
-      // Resync
-
-      // 將下拉式選單的內容資料與真實的 `<select>` 同步，此為單向同步，從 `<select>` 同步到選單資料。
-      this.resync = this.resync.bind(this);
-      // Set Text
-
-      // 設置下拉式選單的文字。
-      this.setText = this.setText.bind(this);
-      // Repaint
-
-      // 依據下拉式選單的內容（須先與 `<select>` 同步）資料來重新繪製下拉式選單的真實樣貌。
-      this.repaint = this.repaint.bind(this);
-      // 元素初始化函式。
-      this.init = this.init.bind(this);
+      // 取得下拉式選單的元素象限並加上方向位置。
+      this.setDirection = this.setDirection.bind(this);
+      /*
+      Update
+      */
       // Data
 
       // 取得下拉式選單的資料，這個資料是從 `<select>` 所取得並整理的。
       this.data = this.data.bind(this);
+      // Add Options
+
+      // 新增選項。
+      this.addOption = this.addOption.bind(this);
+      // Remove Option
+
+      // 移除指定選項。
+      this.removeOption = this.removeOption.bind(this);
+      // Unselect Option
+
+      // 取消選取某個指定選項。
+      this.unselectOption = this.unselectOption.bind(this);
+      
+      this.preselectOption = this.preselectOption.bind(this);
+      // Select Option
+
+      // 選擇某個指定的選項。
+      this.selectOption = this.selectOption.bind(this);
+      // Get Selectable
+
+      // 取得現在是否有項目可供選擇的布林值。
+      this.getSelectable = this.getSelectable.bind(this);
+      // Add Label
+
+      // 在標籤容器中產生一個新的標籤元素。
+      this.addLabel = this.addLabel.bind(this);
+      // Remove Label
+
+      // 在標籤容器中移除一個指定的標籤元素。
+      this.removeLabel = this.removeLabel.bind(this);
       // Get Option
 
-      // 依照傳入的索引取得相對應的選項資料。
+      // 從傳入的值取得指定的選項。
       this.getOption = this.getOption.bind(this);
+      
+      this.basicDropdownListener = this.basicDropdownListener.bind(this);
+      
+      this.bindBasic = this.bindBasic.bind(this);
+      
+      this.event = this.event.bind(this);
+      // 元素初始化函式。
+      this.init = this.init.bind(this);
       // 元素摧毀函式。
       this.destroy = this.destroy.bind(this);
       // 模組可用的方法。
       this.methods = this.methods.bind(this);
     }
 
-    quadrant() {
-      var height, heightHalf, position, width, widthHalf;
-      position = this.$this.get().getBoundingClientRect();
-      width = window.innerWidth;
-      widthHalf = width / 2;
-      height = window.innerHeight;
-      heightHalf = height / 2;
-      if (position.left < widthHalf && position.top < heightHalf) {
-        return 'top left';
-      } else if (position.left < widthHalf && position.top > heightHalf) {
-        return 'bottom left';
-      } else if (position.left > widthHalf && position.top > heightHalf) {
-        return 'bottom right';
-      } else if (position.left > widthHalf && position.top < heightHalf) {
-        return 'top right';
+    bind() {
+      // 頁面點擊關閉下拉式選單的監聽事件。
+      $selector(document).off('click.dropdown').on('click.dropdown', (event) => {
+        return this.documentListener($selector(event.target));
+      // 頁面的鍵盤點擊事件，用以選擇項目。
+      }).on('keydown', this.documentKeyboardListener);
+      // 下拉式選單點擊的切換事件。
+      this.$this.on('click', this.dropdownListener);
+      // 搜尋欄位的輸入事件。
+      return this.$this.find(this.selector.SEARCH).on('keydown input', this.inputListener);
+    }
+
+    documentKeyboardListener(event) {
+      var $item, $next, $prev, ref, value;
+      
+      if ($selector('body').find('.visible.dropdown').length !== 0) {
+        event.preventDefault();
       }
-    }
-
-    selection() {}
-
-    searchSelection() {}
-
-    multipleSelection() {}
-
-    multipleSearchSelection() {}
-
-    setQuadrant() {
-      // 如果使用者沒有手動設置選單應該向何處展開的話。
-      if (!this.$this.hasClass(this.className.DOWNWARD) && !this.$this.hasClass(this.className.UPWARD) && !this.$this.hasClass(this.className.RIGHTWARD) && !this.$this.hasClass(this.className.LEFTWARD)) {
-        // 就取得選單的象限，然後依此決定要往哪個方向展開。
-        switch (this.quadrant()) {
-          case 'top left':
-            return this.$this.addClass(`${this.className.DOWNWARD} ${this.className.RIGHTWARD}`);
-          case 'top right':
-            return this.$this.addClass(`${this.className.DOWNWARD} ${this.className.LEFTWARD}`);
-          case 'bottom left':
-            return this.$this.addClass(`${this.className.UPWARD} ${this.className.RIGHTWARD}`);
-          case 'bottom right':
-            return this.$this.addClass(`${this.className.UPWARD} ${this.className.LEFTWARD}`);
-        }
-      }
-    }
-
-    expand() {
-      // 設置選單的展開方向。
-      this.setQuadrant();
-      return this.$this.css('z-index', this.zIndex.ACTIVE).removeClass(this.className.HIDDEN).addClass(`${this.className.VISIBLE} ${this.className.ANIMATING}`).one('animationend', () => {
-        return this.$this.removeClass(this.className.ANIMATING);
-      }).emulate('animtionend', this.duration);
-    }
-
-    contract() {
+      // 如果頁面鍵盤按下時，這個下拉式選單不是開啟的，
+      // 那麼就不關這個選單的事，返回。
       if (!this.$this.hasClass(this.className.VISIBLE)) {
         return;
       }
-      return this.$this.css('z-index', this.zIndex.MENU).removeClass(this.className.VISIBLE).addClass(`${this.className.HIDDEN} ${this.className.ANIMATING}`).one('animationend', () => {
-        return this.$this.removeClass(`${this.className.ANIMATING} ${this.className.UPWARD} ${this.className.DOWNWARD} ${this.className.LEFTWARD} ${this.className.RIGHTWARD}`);
-      }).emulate('animtionend', this.duration);
+      
+      $item = this.$this.find(this.selector.ACTIVE_ITEM_UNFILTERED);
+      $prev = $item.prev();
+      $next = $item.next();
+      // 取得搜尋輸入欄位目前的值。
+      value = this.$this.find(this.selector.SEARCH).val();
+      // 如果沒有已選的選項，就選擇第一個選項。
+      if ($item.length === 0) {
+        // 選擇選單中的第一個可用項目。
+        this.selectOption(this.$this.find(this.selector.ITEM_NOT_FILTERED).eq(0).attr('data-value'));
+        // 重新渲染文字。
+        this.renderText();
+        return;
+      }
+      // 依照按鍵代號執行不同的事情。
+      switch (event.keyCode) {
+        // Enter 按鍵。
+        case this.key.ENTER:
+          event.preventDefault();
+          // 選擇正在啟用的項目。
+          this.selectOption(this.$this.find(this.selector.ACTIVE_ITEM).attr('data-value'));
+          // 清空搜尋欄位的文字。
+          this.$this.find(this.selector.SEARCH).val('');
+          // 重新渲染文字。
+          this.renderText();
+          // 如果這不是多選選單，或已經沒有可選的選項。
+          if (!this.data().get().multiple || !this.getSelectable()) {
+            // 就關閉下拉式選單。
+            this.contract();
+          }
+          // 如果這個選單可供搜尋，而且又不是多選選單。
+          if (this.data().get().searchable && !this.data().get().multiple) {
+            return (ref = this.$this.find(this.selector.SEARCH).get()) != null ? ref.blur() : void 0;
+          }
+          break;
+        // 上按鍵。
+        case this.key.UP:
+          event.preventDefault();
+          
+          if ($prev.length === 0 || $prev.is('.message, .filtered')) {
+            return;
+          }
+          // 選擇上個項目。
+          this.selectOption($prev.attr('data-value'));
+          // 重新渲染文字。
+          return this.renderText();
+        // 下按鍵。
+        case this.key.DOWN:
+          event.preventDefault();
+          
+          if ($next.length === 0 || $next.is(this.selector.FILTERED)) {
+            return;
+          }
+          // 選擇下個項目。
+          this.selectOption($next.attr('data-value'));
+          // 重新渲染文字。
+          return this.renderText();
+      }
     }
 
-    convertor($select) {
-      var multiple, placeholder, searchable, selectData, selected, values;
-      // 如果這個選單不是一個 `select` 元素就離開。
-      if (!$select.is('select')) {
-        return false;
-      }
-      // 是否可供多選。
-      multiple = $select.attr('multiple') != null;
-      // 是否可供輸入搜尋。
-      searchable = $select.hasClass('search');
-      // 現有且可供使用的值。
-      values = {};
-      // 已選取的值。
-      selected = null;
-      // 預置文字內容。
-      placeholder = null;
-      // 取得每一個選項，推入選項陣列中。
-      $select.find('option').each((element) => {
-        var $element, isDisabled, isSelected, text, value;
-        // 已選擇器選取此選項。
-        $element = $selector(element);
-        // 取得此選項的值。
-        value = $element.val();
-        // 取得此選項的 HTML 內容或者純文字。
-        text = $element.attr('data-text') || $element.text();
-        // 這個選項是否已選擇。
-        isSelected = $element.attr('selected') != null;
-        // 這個選項是否已停用。
-        isDisabled = $element.attr('disabled') != null;
-        // 將這個選項存入總值物件中。
-        values[value] = {
-          text: text,
-          selected: isSelected,
-          disabled: isDisabled
-        };
-        // 如果這個選項有被選擇的話，則保存這個值為預設選擇值。
-        if (isSelected) {
-          selected = value;
-        }
-        // 如果這個的值是空的話，則作為預置文字。
-        if (value === '') {
-          return placeholder = text;
-        }
-      });
-      // 集合本次的所有資料。
-      selectData = {multiple, searchable, $select, values, selected, placeholder};
-      // 儲存到 Tocas 下拉式選單中，這樣就能確保選單與 `select` 元素的內容相符。
-      this.data().save(selectData);
-      // 回傳這個新的同步資料。
-      return selectData;
-    }
-
-    generator(data) {
-      var $selection, classes, hiddenField, items, labelContainer, message, option, placeholder, ref, ref1, searchInput, selectedText, selection, text, value;
+    documentListener($target) {
+      var noDropdownParent;
       
-      items = '';
-      
-      hiddenField = '';
-      
-      labelContainer = '';
-      
-      searchInput = '';
-      
-      placeholder = '';
-      
-      selectedText = '';
-      
-      classes = 'selection';
-      // 如果這個選單有選項的話。
-      if (data.values != null) {
-        ref = data.values;
-        // 遍歷並根據每個選項來產生一個項目的 HTML。
-        for (value in ref) {
-          option = ref[value];
-          // 單個下拉式選單項目。
-          items += `<div class=\"item\" data-value=\"${value}\">\n    ${option.text}\n</div>`;
-        }
+      if ($target.hasClass('close')) {
+        return;
       }
-      // 如果這個下拉式選單可供搜尋的話。
-      if (data.searchable) {
-        // 加上搜尋樣式。
-        classes += ' search';
-        // 建立供使用者輸入的搜尋輸入欄位。
-        searchInput = "<input type=\"text\" class=\"search\">";
-      }
-      // 初始化一個空的文字容器。
-      text = "<div class=\"text\"></div>";
-      // 如果有選擇的值。
-      if (data.selected != null) {
-        // 就將文字容器改為已選擇值的文字。
-        text = `<div class=\"text\">${data.values[data.selected].text}</div>`;
-      // 不然如果有預置文字但沒有已選值的話。
-      } else if (data.placeholder != null) {
-        // 在沒有值的情況下所使用的預置文字。
-        text = `<div class=\"placeholder text\">${data.placeholder}</div>`;
-      }
-      // 如果這個下拉式選單是可供多選的話。
-      if (data.multiple) {
-        // 就加入多選樣式。
-        classes += ' multiple';
-        // 建立用以擺置標籤的主容器。
-        labelContainer = "<div class=\"labels\"></div>";
-      }
-      // 初始化一個無資料的訊息提示元素。
-      message = "<div class=\"message\">No results found.</div>";
-      // 總結並組合以上所有元素成為單一個 Tocas 下拉式選單。
-      selection = `<div class=\"ts ${classes} dropdown\">\n    ${hiddenField}\n    ${labelContainer}\n    ${searchInput}\n    ${text}\n    <div class=\"menu\">\n        ${items}\n        ${message}\n    </div>\n</div>`;
-      // 將這個結合的 HTML 建立成一個元素。
-      selection = this.createElement(selection);
-      if ((ref1 = data.$select) != null) {
-        ref1.clone().removeAttr('class').prependTo(selection);
-      }
-      // 用選擇器選取這個新的元素。
-      $selection = $selector(selection);
-      // 如果這個新選單允許搜尋的話，就監聽搜尋欄位的輸入事件。
-      if (data.searchable) {
-        $selection.find('input.search').on('keydown input', this.searchListener);
-      }
-      // 回傳選擇器。
-      return $selection;
-    }
-
-    documentListener(event) {
-      var $target, noDropdownParent;
-      // 取得此次點擊的目標。
-      $target = $selector(event.target);
       // 點擊目標是不是沒有下拉式選單父容器的布林值。
-      noDropdownParent = $target.closest('.ts.dropdown').length === 0;
+      noDropdownParent = $target.closest(this.selector.DROPDOWN).length === 0;
       // 如果點擊的目標不是下拉式選單內的元素，也不是下拉式選單本體。
       if (noDropdownParent) {
         // 那麼就隱藏所有可見的下拉式選單。
@@ -315,50 +230,7 @@ Dropdown = (function() {
       }
     }
 
-    addValue(text, value) {
-      var htmlText;
-      // 如果這個值早已存在，那麼就略過。
-      if (this.getOption(value) !== void 0) {
-        return;
-      }
-      // 取得 HTML 文字。
-      htmlText = text;
-      // 取得一般文字。
-      text = $selector('<div>').html(text).text();
-      // 將新的元素推入至 `select` 元素中。
-      this.$this.find('select').append(`<option value=\"${value}\" data-text=\"${htmlText}\">${text}</option>`);
-      // 將新項目推入至選單中。
-      this.$this.find('.menu').append(`<div class=\"item\" data-value=\"${value}\">${htmlText}</div>`);
-      this.resync();
-      return this.repaint();
-    }
-
-    watchText() {
-      var data, ref, value;
-      
-      data = this.data().get();
-      // 取得搜尋輸入欄位的值。
-      value = (ref = this.$this.find('input.search').val()) != null ? ref.trim() : void 0;
-      
-      if (value === void 0) {
-        value = '';
-      }
-      // 如果搜尋輸入欄位的值是空的，就顯示原本選取的值。
-      if (value === '') {
-        if (data.multiple && this.$this.find('.labels .label').length === 0) {
-          return this.$this.find('.text').removeClass('filtered');
-        } else if (!data.multiple) {
-          return this.$this.find('.text').removeClass('filtered');
-        } else {
-          return this.$this.find('.text').addClass('filtered');
-        }
-      } else {
-        // 如果不是空的則隱藏選取值的文字。
-        return this.$this.find('.text').addClass('filtered');
-      }
-    }
-
-    searchListener(event) {
+    inputListener(event) {
       var $input, calculateWidth, value;
       // 用選擇器選取輸入欄位。
       $input = $selector(event.target);
@@ -379,117 +251,87 @@ Dropdown = (function() {
       // 如果事件種類是 `input` 就執行輸入欄位的長度計算，然後離開。
       // 因為我們同時監聽 `keydown` 和 `input` 事件，避免重複觸發。
       if (event.type === 'input') {
-        
+        // 透過搜尋的值過濾內容。
         this.filter(value);
-        
+        // 如果這個值不存在，那麼就依照設定顯示提示看要不要讓使用者自己手動新增。
+        this.addition(value);
+        // 如果選單允許多選，就計算輸入欄位的響應式長度。
         if (this.data().get().multiple) {
           // 以欄位內的文字作為基礎來更改搜尋欄位的長度，也就是響應式長度。
           $input.css('width', calculateWidth());
         }
-        
-        this.watchText();
+        // 重新渲染文字。
+        this.renderText();
         return;
       }
-      // 如果沒有接收到按鍵代號的話就離開。
-      if (!event.keyCode) {
-        return;
+      // 如果監聽種類是 `keydown` 的話（這才能捕捉 `backspace` 按鍵）。
+      if (event.type === 'keydown') {
+        // 展開下拉式選單，避免被奇異現象給隱藏了。
+        this.expand();
       }
       // 依照按鍵代號執行不同的事情。
       switch (event.keyCode) {
         // Enter 按鍵。
-        case 13:
+        case this.key.ENTER:
+          // 如果文字只有空白就禁止 Enter 動作。
+          if (value.trim() === '') {
+            return;
+          }
+          // 如果這個值早已被選擇就離開。
+          if (this.data().get().selected.includes(value)) {
+            return;
+          }
           // 建立使用者輸入的值。
-          this.addValue(value, value);
-          // 建立一個新的標籤。
+          this.addOption(value, value);
+          // 建立一個新的標籤並選取。
           this.addLabel(value);
-          // 更改選取的值為這個新建立的值。
-          this.changeValue(value);
           // 重設輸入欄位的值、寬度，並且重新聚焦在該欄位上。
-          return $input.val('').css('width', '1em').get().focus();
+          $input.val('').get().focus();
+          // 如果是多選選單就重設響應式輸入欄位的寬度。
+          if (this.data().get().multiple) {
+            $input.css('width', '1em');
+          }
+          // 重設過濾器。
+          this.filter('');
+          // 如果沒有其他可選的選項，就關閉下拉式選單。
+          if (!this.getSelectable()) {
+            return this.contract();
+          }
+          break;
         // Backspace 按鍵。
-        case 8:
+        case this.key.BACKSPACE:
           // 如果輸入欄位的游標在第一個，而且使用者又按下 Backspace 的話。
           if ($input.get().selectionStart === 0) {
+            // removeOption()
+
             // 就移除最後一個新增的標籤。
             return this.removeLabel();
           }
-          break;
-        // 上按鍵。
-        case 38:
-          break;
-        // 下按鍵。
-        case 40:
-          break;
-        // 左按鍵。
-        case 37:
-          break;
-        // 右按鍵。
-        case 39:
-          break;
       }
-    }
-
-    message(action) {
-      switch (action) {
-        case 'show':
-          return this.$this.find('.message').addClass('active');
-        case 'hide':
-          return this.$this.find('.message').removeClass('active');
-      }
-    }
-
-    filter(value) {
-      var $filtered, $items, fullTextSearch, items;
-      // 取得所有項目。
-      $items = this.$this.find('.menu .item');
-      // 是否允許全文搜尋。
-      fullTextSearch = this.$this.data('fullTextSearch');
-      // 移除所有已過濾的值，並且重新過濾一次。
-      items = $items.removeClass('filtered').toArray().filter((item) => {
-        // 如果允許全文搜尋。
-        if (fullTextSearch) {
-          // 檢查選項裡的文字是不是有包含搜尋的值。
-          return !item.innerText.trim().toLowerCase().includes(value.toLowerCase());
-        } else {
-          // 檢查選項裡的文字開頭是不是跟搜尋的值類似。
-          return !item.innerText.trim().toLowerCase().startsWith(value.toLowerCase());
-        }
-      });
-      // 用選擇器選擇所有該過濾的選項元素。
-      $filtered = $selector(items);
-      // 如果要過濾的選項數量跟原先的項目數量ㄧ樣。
-      if ($filtered.length === $items.length) {
-        // 那麼就顯示無資料訊息。
-        this.message('show');
-      } else {
-        this.message('hide');
-      }
-      // 過濾該過濾的項目元素。
-      return $filtered.addClass('filtered');
-    }
-
-    scrollToSelected() {
-      var offsetTop, ref;
-      offsetTop = (ref = this.$this.find('.menu .item.selected').get()) != null ? ref.offsetTop : void 0;
-      return this.$this.find('.menu').get().scrollTop = offsetTop;
     }
 
     dropdownListener(event) {
-      var $item, $target, data, isCloseButton, isDropdown, isInput, isItem, isMultiple, isVisible, ref;
+      var $item, $target, isAddition, isCloseButton, isDropdown, isInput, isItem, isMultiple, isSearchable, isVisible, ref, value;
       // 以選擇器選擇點擊目標，這不一定是下拉式選單本身。
       $target = $selector(event.target);
+      // 取得項目本身。
+      $item = $target.closest(this.selector.ITEM);
       // 是否點擊一個標籤移除按鈕。
-      isCloseButton = $target.closest('.ts.close.button').length !== 0;
+      isCloseButton = $target.closest(this.selector.DEFAULT_BUTTON).length !== 0;
+      // 是否點擊一個額外追加選項的項目。
+      isAddition = $target.closest(this.selector.ADDITION_ITEM).length !== 0;
       // 點擊的目標是不是在下拉式選單內且並不是一個項目也不是一個標籤。
-      isDropdown = $target.closest('.dropdown').length !== 0 && $target.closest('.item').length === 0 && $target.closest('.labels').length === 0;
-      
-      isMultiple = this.$this.hasClass('multiple');
+      isDropdown = $target.closest(this.selector.DROPDOWN).length !== 0 && $item.length === 0 && $target.closest(this.selector.LABELS).length === 0 && !isAddition;
+      // 是否為多選選單。
+      isMultiple = this.data().get().multiple;
       // 點擊的目標是不是輸入欄位。
-      isInput = $target.closest('input').length !== 0;
+      isInput = $target.closest(this.selector.SEARCH).length !== 0;
       // 點擊的目標是不是一個項目。
-      isItem = $target.closest('.item').length !== 0;
-      
-      isVisible = this.$this.hasClass('visible');
+      isItem = $item.length !== 0;
+      // 是否正在展開。
+      isVisible = this.$this.hasClass(this.className.VISIBLE);
+      // 是否可供搜尋。
+      isSearchable = this.data().get().searchable;
       switch (false) {
         // 如果是標籤的移除按鈕。
         // 依照不同的點擊目標處理不同的事。
@@ -507,15 +349,29 @@ Dropdown = (function() {
             this.expand();
           }
           // 如果下拉式選單不是多選的話。
-          if (!this.$this.hasClass('multiple')) {
+          if (!isMultiple) {
             // 將選單捲動到選擇的那一個選項。
             this.scrollToSelected();
-            
-            this.$this.find('.menu .item').removeClass('filtered');
+            // 移除先前過濾的所有值。
+            this.filter();
           }
           // 如果這個下拉式選單可供搜尋的話。
-          if (this.$this.hasClass('search')) {
-            return (ref = this.$this.find(this.selector.SEARCH).get()) != null ? ref.focus() : void 0;
+          if (isSearchable) {
+            if ((ref = this.$this.find(this.selector.SEARCH).get()) != null) {
+              ref.focus();
+            }
+            
+            if (this.$this.find(this.selector.ACTIVE_ITEM_UNFILTERED).length === 0) {
+              value = this.$this.find(this.selector.ITEM_NOT_FILTERED).eq(0).attr('data-value');
+              
+              //if isMultiple
+              //    @addLabel value
+
+              // 選擇選單中的第一個可用項目。
+              this.selectOption(value);
+              // 重新渲染文字。
+              return this.renderText();
+            }
           }
           break;
         // 如果是第一次在行動裝置上點擊，就展開列表。
@@ -523,221 +379,352 @@ Dropdown = (function() {
 
         // 如果點擊的是項目。
         case !isItem:
-          // 取得點擊的項目本身。
-          $item = $target.closest('.item');
+          // 如果點擊的是追加項目的選項，那就離開。
+          if (isAddition) {
+            return;
+          }
+          // 如果是多選選單就新增標籤。
+          this.addLabel($item.attr('data-value'));
           // 更改下拉式選單所選擇的值到點擊的新值。
-          this.changeValue($item.attr('data-value'));
-          // 取得下拉式選單的資料。
-          data = this.data().get();
+          this.selectOption($item.attr('data-value'));
+          // 移除先前過濾的所有值。
+          this.filter();
           // 如果選單不是多選的話。
-          if (!data.multiple) {
-            // 清除搜尋輸入欄位的值。
-            this.$this.find('input.search').val('');
-            
-            this.watchText();
+          if (!isMultiple) {
             // 點擊項目後就關閉下拉式選單。
             this.contract();
           }
-          // 如果選單是多選，但是已經沒有項目可供選擇的話。
-          if (data.multiple && this.$this.find('select option:not([selected])').length === 1) {
-            // 關閉下拉式選單。
-            return this.contract();
+          // 如果是多選選單。
+          if (isMultiple) {
+            // 如果可供搜尋的話。
+            if (isSearchable) {
+              // 自動聚焦輸入欄位。
+              this.$this.find(this.selector.SEARCH).get().focus();
+            }
+            
+            // 行動裝置需要避免此動作，防止鍵盤不斷跳出來。
+
+            // 取得搜尋欄位的值。
+            value = this.$this.find(this.selector.SEARCH).val();
+            // 如果沒有可供選取的選項或者搜尋欄位有字使用者卻點擊選項時。
+            if (!this.getSelectable() || (value !== '' && (value != null))) {
+              // 關閉下拉式選單。
+              this.contract();
+            }
           }
+          // 清除搜尋輸入欄位的值。
+          this.$this.find(this.selector.SEARCH).val('');
+          // 重新渲染文字。
+          return this.renderText();
       }
     }
 
-    event() {}
-
-    addLabel(value) {
-      var classes, label, option, text;
-      option = this.getOption(value);
-      if (option === void 0) {
-        return;
+    initialize() {
+      var $dropdown, classes, data, input, labels, multiple, placeholder, searchable, select, selected, text, values;
+      ({multiple, searchable, selected, placeholder, values} = this.data().get());
+      // 初始化一個樣式字串。
+      classes = '';
+      // 取得原始的選項。
+      select = `<select class=\"${(searchable ? 'search' : void 0)}\" ${(multiple ? 'multiple' : void 0)}>\n    ${this.$this.html()}\n</select>`;
+      // 如果這個選單是多選的，那麼就初始化標籤容器。
+      if (multiple) {
+        classes += ' multiple';
+        labels = "<div class=\"labels\"></div>";
       }
-      // 移除文字和值開頭與結尾的多餘空白。
-      text = option.text.trim();
-      value = value.trim();
-      // 如果文字是空白的，那麼就沒必要加入。
-      if (text === '') {
-        return;
+      // 如果這個選單可供搜尋，那麼就初始化搜尋欄位。
+      if (searchable) {
+        classes += ' search';
+        input = "<input type=\"text\" class=\"search\">";
       }
-      // 呼叫 labelClass 函式來檢查這個標籤有沒有必要新增額外的自訂類別或語義。
-      classes = this.$this.data('labelClass').call(this.$this.get(), text, value) || '';
-      // 以模板初始化一個標籤元素。
-      label = this.createElement(`<a class=\"${this.className.DEFAULT_LABEL} ${classes}\" data-value=\"${value}\">\n    ${text}\n    <button class=\"${this.className.DEFAULT_BUTTON}\"></button>\n</a>`);
-      // 監聽這個標籤裡的關閉按鈕事件。
-      $selector(label).find(this.selector.DEFAULT_BUTTON).on('click', async() => {
-        await this.delay();
-        return this.removeLabel(value);
-      });
-      // 如果回傳的標籤沒有問題，而且是正常的 HTML 元素。
-      if (label !== false && label instanceof HTMLElement) {
-        // 那麼就可以插入到標籤容器中了。
-        this.$this.find(this.selector.LABELS).append(label);
-        
-        this.watchText();
-        // 插入之後隱藏這個值在選單內的項目。
-        return this.$this.find(`.menu .item[data-value='${value}']`).addClass('selected active filtered');
+      // 如果這個選單有已選的值，那麼就呈現它。
+      if ((selected[0] != null) && !multiple) {
+        text = `<div class=\"text\">${values[selected[0]].text}</div>`;
+      // 或者有預置文字，就使用預置文字。
+      } else if (placeholder != null) {
+        text = `<div class=\"placeholder text\">${placeholder}</div>`;
       }
+      // 建立元素。
+      $dropdown = $selector(this.createElement(`<div class=\"ts ${classes} selection dropdown\">\n    ${select}\n    ${labels || ''}\n    ${input || ''}\n    ${text || '<div class="text"></div>'}\n    <div class=\"menu\">\n        <div class=\"message\">沒有相關資料。</div>\n    </div>\n</div>`));
+      // 備份這個元素的資料。
+      data = this.$this.get().$data;
+      // 將自己替換成 Tocas 下拉式選單。
+      this.$this.replaceWith($dropdown);
+      // 更換自己的資料。
+      this.$this = $dropdown;
+      return this.$this.get().$data = data;
     }
 
-    removeLabel(value = null) {
-      var $label;
-      // 取得這個值相對應的標籤。
-      $label = this.$this.find(`.labels .label[data-value='${value}']`);
-      // 如果無法取得標籤。
-      if ($label.length === 0) {
-        // 就以最後新增的標籤為主。
-        $label = this.$this.find('.labels .label').last();
-        // 值則從最後新增的標籤取得。
-        value = $label.attr('data-value');
-      }
-      // 移除這個標籤。
-      $label.remove();
-      
-      this.unselect(value);
-      
-      this.watchText();
-      // 重新渲染。
-      this.resync();
-      return this.repaint();
-    }
-
-    unselect(value) {
-      // 在 `select` 中尋找相對應的選項元素，然後取消選取。
-      this.$this.find(`select option[value='${value}']`).removeAttr('selected');
-      // 顯示選單裡相對應的選項，因為原本被藏起來了。
-      return this.$this.find(`.menu .item[data-value='${value}']`).removeClass('filtered');
-    }
-
-    removeOption(value) {}
-
-    changeValue(value) {
-      var data;
-      // 取得選單資料。
-      data = this.data().get();
-      // 如果選單不是多選的話。
-      if (!data.multiple) {
-        // 將所有選項都取消選取。
-        this.$this.find('select option').removeAttr('selected');
-      }
-      // 找到相對應的選項，然後選取。
-      this.$this.find(`select option[value='${value}']`).attr('selected', 'selected');
-      // 重新渲染。
-      this.resync();
-      return this.repaint();
-    }
-
-    resync() {
-      
-      return this.convertor(this.$this.find('select'));
-    }
-
-    setText(type, text) {
-      var $text;
-      // 尋找下拉式選單內的文字項目。
-      $text = this.$this.find('.text');
-      // 依照文字種類執行相對應的動作。
-      switch (type) {
-        // 如果是值文字的話就移除預置樣式。
-        case 'text':
-          $text.removeClass('placeholder');
-          break;
-        // 如果是預置文字的話就增加預置樣式。
-        case 'placeholder':
-          $text.addClass('placeholder');
-      }
-      // 設置文字。
-      return $text.html(text);
-    }
-
-    repaint() {
-      var allSelected, data, option, ref, value;
-      // 取得現有的選單資料。
-      data = this.data().get();
-      switch (false) {
+    renderText() {
+      var $text, multiple, placeholder, ref, selected, value, values;
+      ({selected, values, placeholder, multiple} = this.data().get());
+      // 尋找目前值文字，並且重設。
+      $text = this.$this.find(this.selector.TEXT).removeClass(`${this.className.PLACEHOLDER} ${this.className.FILTERED}`).html('');
+      // 取得搜尋輸入欄位的值。
+      value = ((ref = this.$this.find(this.selector.SEARCH).val()) != null ? ref.trim() : void 0) || '';
+      // 如果搜尋輸入欄位的值是空的，就顯示原本選取的值。
+      if (value === '') {
+        // 如果是多選選單，而且標籤也不是空的話就隱藏文字。
+        if (multiple && this.$this.find(this.selector.LABEL).length !== 0) {
+          return $text.addClass(this.className.FILTERED);
         // 如果有選取的值。
-        // 基於現有的選取值進行決定。
-        case data.selected == null:
+        } else if (selected[0] != null) {
           // 取得這個值的文字並且套用到選單上。
-          this.setText('text', data.values[data.selected].text);
-          // 在選單裡將這個選取的選項套用選取樣式。
-          this.$this.find(`.menu .item[data-value='${data.selected}']`).addClass('selected active');
-          break;
+          return $text.html(values[selected[0]].text);
         // 如果有預置文字的話。
-        case data.placeholder == null:
-          this.setText('placeholder', data.placeholder);
-          break;
-        default:
-          // 如果沒有選取的值也沒有預置文字。
-          this.setText('text', '');
+        } else if (placeholder != null) {
+          return $text.addClass(this.className.PLACEHOLDER).html(placeholder);
+        }
+      } else {
+        // 如果不是空的則隱藏選取值的文字。
+        return $text.addClass(this.className.FILTERED);
       }
-      // 如果沒有值選項的話則離開。
-      if (!data.values) {
-        return;
-      }
+    }
+
+    render() {
+      var $item, allSelected, multiple, option, placeholder, selected, value, values;
+      ({selected, values, placeholder, multiple} = this.data().get());
       // 先假設所有的值都被選取了，等一下逐一過濾。
       allSelected = true;
       // 清空所有標籤。
       this.$this.find('.labels').html('');
-      ref = data.values;
       // 遍歷值選項陣列。
-      for (value in ref) {
-        option = ref[value];
+      for (value in values) {
+        option = values[value];
         // 如果這是預置元素則跳到下一個。
         if (value === '') {
           continue;
         }
-        // 如果這個選項沒有被選取。
+        // 建立新選項並推入選單中。
+        this.addOption(value, option.text);
+        // 取得這個選項在選單內的元素。
+        $item = this.$this.find(`.menu .item[data-value='${value}']`);
+        // 如果選項是沒有被選取。
         if (!option.selected) {
           // 表明並不是所有的值都被選取了
           allSelected = false;
-          // 移除這個選項在選單中的選取樣式。
-          this.$this.find(`.menu .item[data-value='${value}']`).removeClass('selected active');
           // 直接繼續下一輪。
           continue;
         }
         // 如果這個下拉式選單是可供多選且這個值被選取的話。
-        if (data.multiple) {
+        if (multiple) {
           // 替這個選項建立標籤到下拉式選單中。
           this.addLabel(value);
         }
+        // 選擇該項目。
+        this.selectOption(value);
       }
+      // 渲染值文字。
+      this.renderText();
       // 如果全部的標籤都被選取，而且這個下拉式選單支援多選的話。
-      if (allSelected && data.multiple) {
-        // 就顯示找不到資料的訊息。
-        return this.message('show');
+      // 就顯示找不到資料的訊息。
+      return this.noResults(allSelected && multiple);
+    }
+
+    sync() {
+      var $select, multiple, placeholder, searchable, selected, values;
+      // 找尋 `select` 元素當同步來源。
+      $select = this.$this.find(this.selector.SELECT);
+      // 如果下拉式選單內沒有 `select` 元素，這可能是第一次同步，這個時候自己就是 `select`。
+      if ($select.length === 0) {
+        $select = this.$this;
+      }
+      // 是否可供多選。
+      multiple = $select.attr('multiple') != null;
+      // 是否可供輸入搜尋。
+      searchable = $select.hasClass('search');
+      // 現有且可供使用的值。
+      values = {};
+      // 已選取的值。
+      selected = [];
+      // 預置文字內容。
+      placeholder = null;
+      // 取得每一個選項，推入選項陣列中。
+      $select.find(this.selector.OPTION).each((element) => {
+        var $element, isDisabled, isSelected, text, value;
+        // 已選擇器選取此選項。
+        $element = $selector(element);
+        // 取得此選項的值。
+        value = $element.val();
+        // 取得此選項的 HTML 內容或者純文字。
+        text = $element.attr('data-text') || $element.text();
+        // 這個選項是否已選擇。
+        isSelected = $element.attr('selected') != null;
+        // 這個選項是否已停用。
+        isDisabled = $element.attr('disabled') != null;
+        // 將這個選項存入總值物件中。
+        values[value] = {
+          text: text,
+          selected: isSelected,
+          disabled: isDisabled
+        };
+        // 如果這個選項有被選擇的話，則保存這個值為預設選擇值。
+        if (isSelected) {
+          selected.push(value);
+        }
+        // 如果這個的值是空的話，則作為預置文字。
+        if (value === '') {
+          return placeholder = text;
+        }
+      });
+      // 儲存到 Tocas 下拉式選單中，這樣就能確保選單與 `select` 元素的內容相符。
+      return this.data().save({multiple, searchable, values, selected, placeholder});
+    }
+
+    scrollToSelected() {
+      var ref;
+      return this.$this.find(this.selector.MENU).get().scrollTop = (ref = this.$this.find(this.selector.SELECTED_ITEM).get()) != null ? ref.offsetTop : void 0;
+    }
+
+    noResults(show) {
+      if (show) {
+        
+        this.event('onNoResults', this.$this.get());
+        return this.$this.find(this.selector.MESSAGE).addClass(this.className.ACTIVE);
       } else {
-        // 不然就移除訊息。
-        return this.message('hide');
+        return this.$this.find(this.selector.MESSAGE).removeClass(this.className.ACTIVE);
       }
     }
 
-    init() {
-      var $dropdown, data;
-      // 將 `<select>` 選單轉換成 Tocas 的下拉式選單。
-      $dropdown = this.generator(this.convertor(this.$this));
-      // 先保存舊的資料。
-      data = this.$this.get().$data;
-      // 將 Tocas 的下拉式選單替換掉原本的 `<select>` 選單。
-      this.$this.replaceWith($dropdown);
-      // 重新取代下拉式選單元素。
-      this.$this = $dropdown;
-      // 還原資料。
-      this.$this.get().$data = data;
-      // 重新繪製下拉式選單。
-      this.repaint();
-      // 監聽頁面的點擊事件，當點擊非下拉式選單的元素時就收合所有選單。
-      $selector(document).off('click.dropdown').on('click.dropdown', this.documentListener);
-      // 監聽選單的點擊事件。
-      this.$this.on('click', this.dropdownListener);
-      return ts.fn;
+    addition(value = null) {
+      var $addition;
+      // 尋找是否有現成的自訂值訊息。
+      $addition = this.$this.find(this.selector.ADDITION_ITEM);
+      // 如果沒有值，或者這個值早就存在就移除自訂值訊息。
+      if (value === null || value.trim() === '' || this.getOption(value) !== void 0) {
+        $addition.remove();
+        return;
+      }
+      // 移除找不到資料提示。
+      this.noResults(false);
+      // 如果沒有現成的自訂值訊息。
+      if ($addition.length === 0) {
+        // 就建立一個，並且推入選單中作為選項。
+        this.$this.find(this.selector.MENU).prepend(`<div class=\"${this.className.ADDITION_ITEM}\">\n    建立 <strong>${value}</strong> 選項\n</div>`);
+      } else {
+        // 否則就替換訊息內容。
+        $addition.html(`建立 <strong>${value}</strong> 選項`);
+      }
+      // 尋找新的自訂值訊息。
+      $addition = this.$this.find(this.selector.ADDITION_ITEM);
+      // 監聽自訂值訊息的點擊事件。
+      return $addition.off('click').on('click', async() => {
+        // 建立使用者輸入的值。
+        this.addOption(value, value);
+        // 如果選單是多選選單。
+        if (this.data().get().multiple) {
+          // 點擊自訂值訊息的時候就追加一個新的標籤。
+          this.addLabel(value);
+          // 如果這個選單可供搜尋。
+          if (this.data().get().searchable) {
+            // 新增自訂值後就自動重新聚焦搜尋輸入欄位。
+            this.$this.find(this.selector.SEARCH).get().focus();
+          }
+        }
+        // 選擇這個新的值。
+        this.selectOption(value);
+        // 移除先前過濾的所有值。
+        this.filter();
+        // 清除搜尋輸入欄位的值。
+        this.$this.find(this.selector.SEARCH).val('');
+        // 重新渲染文字。
+        this.renderText();
+        // 移除自訂值訊息元素。
+        $addition.remove();
+        // 稍後一下。
+        await this.delay(this.duration / 2);
+        // 收起選單。
+        return this.contract();
+      });
+    }
+
+    filter(value = null) {
+      var $filtered, $items, $unselected, fullTextSearch, items;
+      // 取得所有項目。
+      $items = this.$this.find(this.selector.ITEM);
+      $unselected = this.$this.find(this.selector.UNSELECTED_ITEM);
+      // 先取消過濾所有項目。
+      $items.removeClass(this.className.FILTERED);
+      // 檢查是否有可選項目，沒有則顯示無資料訊息。
+      this.noResults(!this.getSelectable());
+      // 如果值是空的就到此為止。
+      if (value === null || value === '') {
+        return;
+      }
+      // 是否允許全文搜尋。
+      fullTextSearch = this.$this.data('fullTextSearch');
+      // 取得不相關的選項。
+      items = $items.toArray().filter((item) => {
+        // 如果這個選項已經被選取了，那麼也納入不相關。
+        if (this.data().get().selected.includes(item.getAttribute('data-value'))) {
+          return true;
+        }
+        // 如果允許全文搜尋。
+        if (fullTextSearch) {
+          // 檢查選項裡的文字是不是有包含搜尋的值。
+          return !item.innerText.trim().toLowerCase().includes(value.toLowerCase());
+        } else {
+          // 檢查選項裡的文字開頭是不是跟搜尋的值類似。
+          return !item.innerText.trim().toLowerCase().startsWith(value.toLowerCase());
+        }
+      });
+      // 用選擇器選擇所有該過濾的選項元素。
+      $filtered = $selector(items);
+      // 如果要過濾的選項數量跟原先的項目數量ㄧ樣，那麼就顯示無資料訊息。
+      this.noResults($filtered.length === $items.length);
+      // 過濾該過濾的項目元素。
+      return $filtered.addClass(this.className.FILTERED);
+    }
+
+    expand() {
+      if (this.$this.hasClass(this.className.VISIBLE)) {
+        return;
+      }
+      
+      this.event('onShow', this.$this.get());
+      // 設置選單的展開方向。
+      this.setDirection();
+      return this.$this.css('z-index', this.zIndex.ACTIVE).removeClass(this.className.HIDDEN).addClass(`${this.className.VISIBLE} ${this.className.ANIMATING}`).one('animationend', () => {
+        if (this.$this.hasClass(this.className.VISIBLE)) {
+          return this.$this.removeClass(this.className.ANIMATING);
+        }
+      });
+    }
+
+    contract() {
+      // 如果這個選單不可見的話就沒必要關閉。
+      if (!this.$this.hasClass(this.className.VISIBLE)) {
+        return;
+      }
+      
+      this.event('onHide', this.$this.get());
+      return this.$this.css('z-index', this.zIndex.MENU).removeClass(this.className.VISIBLE).addClass(`${this.className.HIDDEN} ${this.className.ANIMATING}`).one('animationend', () => {
+        if (this.$this.hasClass(this.className.HIDDEN)) {
+          return this.$this.removeClass(`${this.className.ANIMATING} ${this.className.UPWARD} ${this.className.DOWNWARD} ${this.className.LEFTWARD} ${this.className.RIGHTWARD}`);
+        }
+      });
+    }
+
+    setDirection() {
+      var height, heightHalf, position, width, widthHalf;
+      position = this.$this.get().getBoundingClientRect();
+      width = window.innerWidth;
+      widthHalf = width / 2;
+      height = window.innerHeight;
+      heightHalf = height / 2;
+      if (position.left < widthHalf && position.top < heightHalf) {
+        return this.$this.addClass(`${this.className.DOWNWARD} ${this.className.RIGHTWARD}`);
+      } else if (position.left < widthHalf && position.top > heightHalf) {
+        return this.$this.addClass(`${this.className.UPWARD} ${this.className.RIGHTWARD}`);
+      } else if (position.left > widthHalf && position.top > heightHalf) {
+        return this.$this.addClass(`${this.className.UPWARD} ${this.className.LEFTWARD}`);
+      } else if (position.left > widthHalf && position.top < heightHalf) {
+        return this.$this.addClass(`${this.className.DOWNWARD} ${this.className.LEFTWARD}`);
+      }
     }
 
     data() {
       return {
         // 保存新的資料。
-        // 回傳一連串可用函式。
         save: (newData) => {
           return this.selectData = newData;
         },
@@ -752,8 +739,236 @@ Dropdown = (function() {
       };
     }
 
+    addOption(value, text) {
+      var htmlText;
+      // 取得 HTML 文字。
+      htmlText = text;
+      // 取得一般文字。
+      text = $selector('<div>').html(text).text();
+      // 將元素推入至 `select` 元素中如果沒有相同值的元素。
+      if (this.$this.find(this.selector.SPECIFIED_OPTION(value)).length === 0) {
+        this.$this.find(this.selector.SELECT).append(`<option value=\"${value}\" data-text=\"${htmlText}\">${text}</option>`);
+      }
+      // 建立新選項並推入選單中如果沒有相同值的元素。
+      if (this.$this.find(this.selector.SPECIFIED_ITEM(value)).length === 0) {
+        this.$this.find(this.selector.MENU).append(`<div class=\"item\" data-value=\"${value}\">\n    ${htmlText}\n</div>`);
+      }
+      // 將目前資料從 `select` 中同步。
+      return this.sync();
+    }
+
+    removeOption(value) {
+      this.$this.find(this.selector.SPECIFIED_OPTION(value)).remove();
+      this.$this.find(this.selector.SPECIFIED_ITEM(value)).remove();
+      // 將目前資料從 `select` 中同步。
+      return this.sync();
+    }
+
+    unselectOption(value = null) {
+      var data;
+      // 如果值是空的。
+      if (value === null) {
+        // 清空所有已選擇的選項。
+        this.$this.find(this.selector.OPTION).removeAttr('selected');
+        this.$this.find(this.selector.ITEM).removeClass(`${this.className.SELECTED} ${this.className.ACTIVE}`);
+        // 如果是多選選單就移除所有已過濾的選項。
+        if (this.data().multiple) {
+          this.$this.find(this.selector.ITEM).removeClass(this.className.FILTERED);
+        }
+        // 從目前的選擇陣列中移除。
+        data = this.data().get();
+        data.selected = [];
+        this.data().save(data);
+      } else {
+        // 在 `select` 中尋找相對應的選項元素，然後取消選取。
+        // 若不是空的。
+        this.$this.find(this.selector.SPECIFIED_OPTION(value)).removeAttr('selected');
+        // 顯示選單裡相對應的選項，因為原本被藏起來了。
+        this.$this.find(this.selector.SPECIFIED_ITEM(value)).removeClass(`${this.className.SELECTED} ${this.className.ACTIVE} ${this.className.FILTERED}`);
+        // 從目前的選擇陣列中移除。
+        data = this.data().get();
+        data.selected = data.selected.filter((element) => {
+          return element !== value;
+        });
+        this.data().save(data);
+      }
+      // 依照情況看是否要顯示無資料訊息。
+      return this.noResults(!this.getSelectable());
+    }
+
+    preselectOption(value) {
+      // 選取選單中的選項。
+      return $item.addClass(`${this.className.SELECTED} ${this.className.ACTIVE}`);
+    }
+
+    selectOption(value) {
+      var $item, $option, data;
+      // 如果沒有該元素則離開。
+      if (this.getOption(value) === void 0) {
+        return;
+      }
+      // 取得資料。
+      data = this.data().get();
+      // 如果是多選選單，但沒有該元素的標籤也離開。
+      if (data.multiple && this.$this.find(this.selector.SPECIFIED_LABEL(value)).length === 0) {
+        return;
+      }
+      // 移除自訂值訊息。
+      this.addition();
+      // 在 `select` 中尋找相對應的選項元素。
+      $option = this.$this.find(this.selector.SPECIFIED_OPTION(value));
+      // 在選單中尋找相對應的元素。
+      $item = this.$this.find(this.selector.SPECIFIED_ITEM(value));
+      // 如果該元素已被選取則停止繼續。
+      if ($option.attr('selected')) {
+        return;
+      }
+      // 如果是單選選單就移除其他已選取的選項。
+      if (!data.multiple) {
+        this.unselectOption();
+      }
+      // 選取 `select` 中的選項。
+      $option.attr('selected', 'selected');
+      // 選取選單中的選項。
+      $item.addClass(`${this.className.SELECTED} ${this.className.ACTIVE}`);
+      // 如果是多選選單。
+      if (data.multiple) {
+        // 隱藏選單裡相對應的選項。
+        $item.addClass(this.className.FILTERED);
+      }
+      // 如果已經有選取這個選項了就離開。
+      if (data.selected.indexOf(value) !== -1) {
+        return;
+      }
+      // 將這個新的選取值推入選單資料中。
+      data.selected.push(value);
+      this.data().save(data);
+      return this.noResults(!this.getSelectable());
+    }
+
+    getSelectable() {
+      return this.$this.find(this.selector.SELECTABLE_OPTION).length !== 0;
+    }
+
+    addLabel(value) {
+      var label, option, text;
+      // 從傳入的值取得相對應的選項。
+      option = this.getOption(value);
+      // 如果該選項不存在，就不要建立該選項的標籤。
+      if (option === void 0) {
+        return;
+      }
+      // 移除文字和值開頭與結尾的多餘空白。
+      text = option.text.trim();
+      value = value.trim();
+      // 如果文字是空白的，那麼就沒必要加入。
+      if (text === '') {
+        return;
+      }
+      // 以模板初始化一個標籤元素。
+      label = this.createElement(`<a class=\"${this.className.DEFAULT_LABEL}\" data-value=\"${value}\">\n    ${text}\n    <button class=\"${this.className.DEFAULT_BUTTON}\"></button>\n</a>`);
+      // 監聽這個標籤裡的關閉按鈕事件。
+      $selector(label).find(this.selector.DEFAULT_BUTTON).on('click', () => {
+        // 移除自己的值並取消選取。
+        this.removeLabel(value);
+        // 重新渲染文字。
+        this.renderText();
+        // 如果這個選單可供搜尋。
+        if (this.data().get().searchable) {
+          // 那麼就在移除標籤後重新聚焦搜尋輸入欄位。
+          this.$this.find(this.selector.SEARCH).get().focus();
+          // 避免行動裝置自動 focus
+
+          // 重新依照搜尋輸入欄位的值過濾，避免移除的值突然出現在選單中。
+          this.filter(this.$this.find(this.selector.SEARCH).val());
+          // 重新檢查自訂值訊息是否該出現。
+          return this.addition(this.$this.find(this.selector.SEARCH).val());
+        }
+      });
+      // 將這個新標籤推入至標籤容器中。
+      this.$this.find(this.selector.SELF_LABELS).append(label);
+      // 選取這個值。
+      return this.selectOption(value);
+    }
+
+    removeLabel(value) {
+      var $label;
+      // 取得這個值相對應的標籤。
+      $label = this.$this.find(this.selector.SPECIFIED_LABEL(value));
+      // 如果無法取得標籤。
+      if ($label.length === 0) {
+        // 就以最後新增的標籤為主。
+        $label = this.$this.find(this.selector.LABEL).last();
+        // 值則從最後新增的標籤取得。
+        value = $label.attr('data-value');
+      }
+      if (value === void 0) {
+        return;
+      }
+      // 移除這個標籤。
+      $label.remove();
+      // 取消選取這個值。
+      return this.unselectOption(value);
+    }
+
     getOption(value) {
       return this.data().get().values[value];
+    }
+
+    basicDropdownListener(event) {
+      var $item, $target, isDropdown, isItem, isVisible;
+      // 以選擇器選擇點擊目標，這不一定是下拉式選單本身。
+      $target = $selector(event.target);
+      // 取得項目本身。
+      $item = $target.closest('.item:not(.dropdown)');
+      // 點擊的目標是不是在下拉式選單內且並不是一個項目也不是一個標籤。
+      isDropdown = $target.closest(this.selector.DROPDOWN).length !== 0 && $item.length === 0;
+      // 點擊的目標是不是一個項目。
+      isItem = $item.length !== 0;
+      // 是否正在展開。
+      isVisible = this.$this.hasClass(this.className.VISIBLE);
+      switch (false) {
+        // 如果是下拉式選單本身。
+
+        case !isDropdown:
+          // 如果點擊的下拉式選單不是展開的話。
+          if (!isVisible) {
+            // 展開下拉式選單。
+            return this.expand();
+          } else {
+            return this.contract();
+          }
+          break;
+        // 如果點擊的是項目。
+        case !isItem:
+          // 點擊項目後就關閉下拉式選單。
+          return this.contract();
+      }
+    }
+
+    bindBasic() {
+      // 頁面點擊關閉下拉式選單的監聽事件。
+      $selector(document).off('click.dropdown').on('click.dropdown', (event) => {
+        return this.documentListener($selector(event.target));
+      });
+      // 下拉式選單點擊的切換事件。
+      return this.$this.on('click', this.basicDropdownListener);
+    }
+
+    event(name, self, arg, arg2) {
+      return this.$this.data(name).call(self, arg, arg2);
+    }
+
+    init() {
+      if (this.$this.is('select')) {
+        this.sync();
+        this.initialize();
+        this.render();
+        this.bind();
+      } else {
+        this.bindBasic();
+      }
+      return ts.fn;
     }
 
     destroy() {}
@@ -895,7 +1110,11 @@ Dropdown = (function() {
         'get default text': () => {},
         // Get Placeholder Text
 
-        'get placeholder text': () => {}
+        'get placeholder text': () => {},
+        // Refresh
+
+        // 更新下拉式選單的視圖。
+        refresh: () => {}
       };
     }
 
@@ -917,11 +1136,13 @@ Dropdown = (function() {
       return this;
     },
     
+    // 當上述函式回傳下列物件時就修改元素。
     // {
-    //     image: ''
-    //     icon: ''
-    //    emphasis: ''
-    //    class: ''
+    //     image   : ''
+    //     icon    : ''
+    //     emphasis: ''
+    //     class   : ''
+    //     element : @
     // }
 
     // 當使用者再多選選單移除了一個值所會呼叫的回呼函式。
@@ -940,54 +1161,24 @@ Dropdown = (function() {
     onSelect: (value, element) => {},
     // 用以初始化選單內容的選項，當這個選項是 `false` 而不是陣列的時候會從 HTML 架構初始化。
     values: false,
-    // 開啟選單的事件名稱，可以是 `click`、`hover`。
-    //on           : 'click'
-
-    labelClass: (text, value) => {
-      return null;
-    },
     // 是否允許重新選取，當設為 `true` 時，就算使用者選取了正在選取的值，仍會呼叫 `onChange`。
     allowReselection: false,
     // 是否允許使用者擅自新增選單值。
     allowAdditions: false,
     // 當使用者新增了值並移除後，是否要在選單中隱藏這個值。
     hideAdditions: true,
-    
-    //action          : 'auto'
     // 搜尋的底限字數，超過此字數才會開始搜尋。
     minCharacters: 1,
     // 搜尋時的依據，可用：`both` 符合文字或值、`value` 符合值、`text` 符合文字。
     match: 'both',
     // 是否要進行全文搜尋，若為 `true` 只要搜尋的值符合選項文字其中即可；`false` 則會強迫搜尋的值必須和選項文字開頭相符。
     fullTextSearch: false,
-    
-    sortSelect: false,
-    
-    selectOnKeydown: true,
-    
-    //forceSelection  : true
     // 是否要使用標籤而非純計數文字。
     useLabels: true,
-    
-    //allowCategorySelection: false
-
-    //placeholder           : 'auto'
     // 多選選單是否使用標籤？若設置為 `false` 會以「已選擇 x 個」純文字替代標籤。
     useLabels: true,
     // 多選選單最多可以選擇幾個項目？設置為 `0` 表示無限。
-    maxSelections: 0,
-    
-    storedData: {
-      default: '',
-      placeholder: '',
-      values: []
-    },
-    
-    storedDefaultData: {
-      default: '',
-      placeholder: '',
-      values: []
-    }
+    maxSelections: 0
   };
 
   // 類別樣式名稱。
@@ -1010,22 +1201,57 @@ Dropdown = (function() {
     LABELS: 'labels',
     CLOSE: 'close',
     DEFAULT_LABEL: 'ts compact label',
-    DEFAULT_BUTTON: 'ts tiny close button'
+    DEFAULT_BUTTON: 'ts tiny close button',
+    FILTERED: 'filtered',
+    PLACEHOLDER: 'placeholder',
+    SELECTED: 'selected',
+    ACTIVE: 'active',
+    ADDITION_ITEM: 'addition item'
   };
 
   // 選擇器名稱。
   Dropdown.prototype.selector = {
+    OPTION: 'option',
     DROPDOWN: '.ts.dropdown',
     VISIBLE_DROPDOWN: '.ts.visible.dropdown',
-    MENU: '.ts.menu',
-    NOT_BASIC_DROPDOWN: '.ts.dropdown:not(.basic)',
     DEFAULT_BUTTON: '.ts.tiny.close.button',
-    LABEL: ':scope > .labels > .ts.label',
-    LABELS: ':scope > .labels',
-    SEARCH: 'input.search'
+    LABELS: '.labels',
+    SELF_LABELS: ':scope > .labels',
+    SEARCH: 'input.search',
+    ITEM: '.item:not(.addition)',
+    ACTIVE_ITEM: '.active.item',
+    UNSELECTED_ITEM: '.item:not(.selected):not(.addition)',
+    ACTIVE_ITEM_UNFILTERED: '.active.item:not(.filtered):not(.addition)',
+    ITEM_NOT_FILTERED: '.item:not(.filtered):not(.addition)',
+    FILTERED: '.filtered',
+    TEXT: '.text',
+    LABEL: '.labels .label',
+    MESSAGE: '.message',
+    MENU: '.menu',
+    ADDITION_ITEM: '.addition.item',
+    SELECT: 'select',
+    SELECTED_ITEM: '.item.selected',
+    SELECTABLE_OPTION: 'select option:not([selected]):not([value=""])',
+    SPECIFIED_OPTION: (v) => {
+      return `select option[value='${v}']`;
+    },
+    SPECIFIED_ITEM: (v) => {
+      return `.menu .item[data-value='${v}']`;
+    },
+    SPECIFIED_LABEL: (v) => {
+      return `.labels .label[data-value='${v}']`;
+    }
   };
 
-  //.ts.dropdown:not(.basic).visible
+  // 鍵盤按鍵代號。
+  Dropdown.prototype.key = {
+    ENTER: 13,
+    BACKSPACE: 8,
+    UP: 38,
+    DOWN: 40,
+    LEFT: 37,
+    RIGHT: 39
+  };
 
   // 下拉式選單所會用到的 z 軸索引。
   Dropdown.prototype.zIndex = {
