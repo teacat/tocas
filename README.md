@@ -194,9 +194,9 @@ Commits written in English are welcomed.
 
 [Spectre](https://picturepan2.github.io/spectre/)
 
-[SUI Mobile](https://github.com/sdc-alibaba/SUI-Mobile)
-
 [SUI](http://sui.taobao.org/sui/docs/)
+
+[SUI Mobile](https://github.com/sdc-alibaba/SUI-Mobile)
 
 [Tapestry](http://tapestry.wisembly.com/)
 
