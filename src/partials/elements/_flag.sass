@@ -2,53 +2,140 @@
 
 //*******************************//
 //              Main
+//  http://flag-icon-css.lip.is/
 //*******************************//
 
 i.flag:not(.icon)
-    background-size: contain
-    background-position: 50%
-    background-repeat: no-repeat
     display: inline-block
-    width: 16px
-    height: 11px
-    line-height: 11px
-    vertical-align: baseline
-    margin: 0 .5em 0 0
-    text-decoration: inherit
-    speak: none
-    font-smoothing: antialiased
+
+    background-size    : contain
+    background-position: 50%
+    background-repeat  : no-repeat
+
+    vertical-align     : baseline
+    text-decoration    : inherit
+    speak              : none
     backface-visibility: hidden
-    width: (4 / 3) * 1em
-    line-height: 1em
-
-i.flag:not(.icon):before
-    content: '\00a0'
-
-i.flag.squared:not(.icon):before
-    width: 1em
 
 //-------------------//
-//       Padded
+//       Sizes
+//-------------------//
+
+i.flag:not(.icon).mini
+    width : (4 / 3) * $flag_miniSize
+    height: $flag_miniSize
+i.flag:not(.icon).tiny
+    width : (4 / 3) * $flag_tinySize
+    height: $flag_tinySize
+i.flag:not(.icon).small
+    width : (4 / 3) * $flag_smallSize
+    height: $flag_smallSize
+i.flag:not(.icon),
+i.flag:not(.icon).medium
+    width : (4 / 3) * $flag_mediumSize
+    height: $flag_mediumSize
+i.flag:not(.icon).large
+    width : (4 / 3) * $flag_largeSize
+    height: $flag_largeSize
+i.flag:not(.icon).big
+    width : (4 / 3) * $flag_bigSize
+    height: $flag_bigSize
+i.flag:not(.icon).huge
+    width : (4 / 3) * $flag_hugeSize
+    height: $flag_hugeSize
+i.flag:not(.icon).massive
+    width : (4 / 3) * $flag_massiveSize
+    height: $flag_massiveSize
+
+i.flag:not(.icon).mini.squared,
+i.flag:not(.icon).mini.circular
+    width: $flag_miniSize
+i.flag:not(.icon).tiny.squared,
+i.flag:not(.icon).tiny.circular
+    width: $flag_tinySize
+i.flag:not(.icon).small.squared,
+i.flag:not(.icon).small.circular
+    width: $flag_smallSize
+i.flag:not(.icon).squared,
+i.flag:not(.icon).medium.squared,
+i.flag:not(.icon).circular,
+i.flag:not(.icon).medium.circular
+    width: $flag_mediumSize
+i.flag:not(.icon).large.squared,
+i.flag:not(.icon).large.circular
+    width: $flag_largeSize
+i.flag:not(.icon).big.squared,
+i.flag:not(.icon).big.circular
+    width: $flag_bigSize
+i.flag:not(.icon).huge.squared,
+i.flag:not(.icon).huge.circular
+    width: $flag_hugeSize
+i.flag:not(.icon).massive.squared,
+i.flag:not(.icon).massive.circular
+    width: $flag_massiveSize
+
+//-------------------//
+//      Bordered
+//-------------------//
+
+i.flag:not(.icon).bordered
+    border         : $flag_border
+    background-size: cover
+
+//-------------------//
+//       Aligns
+//-------------------//
+
+i.flag:not(.icon)[class*="left aligned"]
+    text-align: right
+
+i.flag:not(.icon)[class*="center aligned"]
+    text-align: center
+
+i.flag:not(.icon)[class*="right aligned"]
+    text-align: right
+
+//-------------------//
+//       Rounded
+//-------------------//
+
+i.flag:not(.icon).rounded
+    border-radius: $flag_borderRadius
+
+//-------------------//
+//      Circular
+//-------------------//
+
+i.flag:not(.icon).circular
+    border-radius: $circularRadius
+
+//-------------------//
+//       Disabled
+//-------------------//
+
+i.flag:not(.icon).disabled
+    opacity: $disabledOpacity !important
+
+//-------------------//
+//       Flags
 //-------------------//
 
 =flag($iso, $country, $alias:"", $alias2: "")
-    %flag
+    i.flag:not(.icon)[class*="#{$country}"],
+    i.#{$iso}.flag:not(.icon)
         background-image: url(#{$flag_imageBasePath}#{$flag_4by3ImagePath}/#{$iso}.svg)
 
-        &.squared
-                background-image: url(#{$flag_imageBasePath}#{$flag_1by1ImagePath}/#{$iso}.svg)
-
-    i.#{$country}.flag:not(.icon),
-    i.#{$iso}.flag:not(.icon)
-        @extend %flag
+        &.squared,
+        &.circular
+            background-image: url(#{$flag_imageBasePath}#{$flag_1by1ImagePath}/#{$iso}.svg)
 
     @if $alias != ""
         i.flag:not(.icon)[class*="#{$alias}"]
-            @extend %flag
+            @extend i.#{$iso}.flag:not(.icon)
 
     @if $alias2 != ""
-        i.flag:not(.icon)[class*="#{$alias}"]
-            @extend %flag
+        i.flag:not(.icon)[class*="#{$alias2}"]
+            @extend i.#{$iso}.flag:not(.icon)
 
 +flag(ad, andorra)
 +flag(ae, uae, united arab emirates)
@@ -176,8 +263,8 @@ i.flag.squared:not(.icon):before
 +flag(ki, kiribati)
 +flag(km, comoros)
 +flag(kn, saint kitts and nevis, saint kitts, nevis)
-+flag(kp, north krea)
-+flag(kr, south krea)
++flag(kp, north korea)
++flag(kr, south korea, korea)
 +flag(kw, kuwait)
 +flag(ky, cayman islands)
 +flag(kz, kazakhstan)
@@ -265,8 +352,8 @@ i.flag.squared:not(.icon):before
 +flag(sr, suriname)
 +flag(ss, south sudan)
 +flag(st, sao tome)
-+flag(sv, el Salvador)
-+flag(sx, sint Maarten)
++flag(sv, el salvador)
++flag(sx, sint maarten)
 +flag(sy, syria)
 +flag(sz, swaziland)
 +flag(tc, caicos islands)
@@ -292,14 +379,14 @@ i.flag.squared:not(.icon):before
 +flag(us, united states, america)
 +flag(uy, uruguay)
 +flag(uz, uzbekistan)
-+flag(va, vatican City)
-+flag(vc, saint Vincent)
++flag(va, vatican city)
++flag(vc, saint vincent)
 +flag(ve, venezuela)
 +flag(vg, british virgin islands)
 +flag(vi, us virgin islands)
 +flag(vn, vietnam)
 +flag(vu, vanuatu)
-+flag(wf, wallis and futuna)
++flag(wf, wallis and futuna, wallis, futuna)
 +flag(ws, samoa)
 +flag(ye, yemen)
 +flag(yt, mayotte)
