@@ -152,9 +152,9 @@ Commits written in English are welcomed.
 
 [Bass CSS](http://www.basscss.com/)
 
-[Bootstrap Material Design](http://rosskevin.github.io/bootstrap-material-design/)
-
 [Bootstrap](http://v4-alpha.getbootstrap.com/)
+
+[Bootstrap Material Design](http://rosskevin.github.io/bootstrap-material-design/)
 
 [Bttn CSS](https://bttn.surge.sh/)
 
@@ -204,7 +204,7 @@ Commits written in English are welcomed.
 
 [Vital UI Kit](https://gss-fed.github.io/vital-ui-kit/index.html)
 
-[Vue Material](https://vuematerial.github.io)
+[Vue Material](https://vuematerial.io/)
 
 [Vux](https://vux.li/)
 
