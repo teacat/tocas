@@ -130,6 +130,7 @@ func (p *Parser) sections(chapter *goquery.Selection) (sections []*Section) {
 
 		//
 		code = regexp.MustCompile(`\[\[(.*?)\]\]`).ReplaceAllString(code, `<mark>$1</mark>`)
+		code = regexp.MustCompile(`{{(.*?)}}`).ReplaceAllString(code, `<a href="/elements/#{name}">$1</a>`)
 
 		// 將本段落匯集成一個建構體。
 		sections = append(sections, &Section{
