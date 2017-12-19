@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../dist/tocas.css">
     <link rel="stylesheet" href="../assets/highlight.css">
     <link rel="stylesheet" href="../images/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/theme-monokai.js" defer></script>
@@ -16,6 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-css.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-html.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="../assets/highlight.js" defer></script>
     <title>Document</title>
     <style>
@@ -31,7 +32,7 @@
         }
         h2:not(:first-child) {
 
-            margin-top: 3.5em !important;
+            margin-top: 4.5em !important;
         }
         .icon-logo {
             font-size: 4em;
@@ -41,7 +42,10 @@
             color: #5a5a5a;
         }
         h3 {
-            margin-top: 3em !important;
+            margin-top: 4em !important;
+        }
+        .ts.segments {
+            margin-top: 2.3em !important;
         }
     </style>
 </head>
@@ -99,37 +103,38 @@
             <!-- / 主要 Logo -->
 
             <!-- 搜尋輸入欄位 -->
-            <div class="ts fluid input">
+            <div class="ts top attached fluid input">
                 <input type="text" placeholder="搜尋">
             </div>
             <!-- / 搜尋輸入欄位 -->
 
             <!-- 元件選單 -->
-            <div class="ts top attached evenly divided tabbed menu">
+            <div class="ts attached evenly divided menu">
                 <a href="#!" class="active item">元件</a>
                 <a href="#!" class="item">章節列表</a>
             </div>
+
             <div class="ts bottom attached large vertical menu" >
                 <!-- 一般元素 -->
                 <div class="item">
                     一般元素
                     <div class="menu">
-                        <a href="#!" class="item">按鈕</a>
-                        <a href="#!" class="item">容器</a>
-                        <a href="#!" class="item">分隔線</a>
-                        <a href="#!" class="item">標題</a>
-                        <a href="#!" class="item">圖示</a>
-                        <a href="#!" class="item">輸入欄位</a>
-                        <a href="#!" class="item">板岩</a>
-                        <a href="#!" class="item">標籤</a>
-                        <a href="#!" class="item">圖片</a>
-                        <a href="#!" class="item">清單</a>
-                        <a href="#!" class="item">讀取指示器</a>
-                        <a href="#!" class="item">引言</a>
-                        <a href="#!" class="item">片段</a>
-                        <a href="#!" class="item">步驟</a>
-                        <a href="#!" class="item">國旗</a>
-                        <a href="#!" class="item">預置區塊</a>
+                        <a href="#!" class="item" data-tooltip=".ts.button" data-tooltip-position="left">按鈕</a>
+                        <a href="#!" class="item" data-tooltip=".ts.container" data-tooltip-position="left">容器</a>
+                        <a href="#!" class="item" data-tooltip=".ts.divider" data-tooltip-position="left">分隔線</a>
+                        <a href="#!" class="item" data-tooltip=".ts.title" data-tooltip-position="left">標題</a>
+                        <a href="#!" class="item" data-tooltip="i.icon" data-tooltip-position="left">圖示</a>
+                        <a href="#!" class="item" data-tooltip=".ts.input" data-tooltip-position="left">輸入欄位</a>
+                        <a href="#!" class="item" data-tooltip=".ts.slate" data-tooltip-position="left">板岩</a>
+                        <a href="#!" class="item" data-tooltip=".ts.label" data-tooltip-position="left">標籤</a>
+                        <a href="#!" class="item" data-tooltip=".ts.image" data-tooltip-position="left">圖片</a>
+                        <a href="#!" class="item" data-tooltip=".ts.list" data-tooltip-position="left">清單</a>
+                        <a href="#!" class="item" data-tooltip=".ts.loader" data-tooltip-position="left">讀取指示器</a>
+                        <a href="#!" class="item" data-tooltip=".ts.quote" data-tooltip-position="left">引言</a>
+                        <a href="#!" class="item" data-tooltip=".ts.segment" data-tooltip-position="left">片段</a>
+                        <a href="#!" class="item" data-tooltip=".ts.steps" data-tooltip-position="left">步驟</a>
+                        <a href="#!" class="item" data-tooltip=".ts.flag" data-tooltip-position="left">國旗 <span class="ts warning right floated label">新的</span></a>
+                        <a href="#!" class="item" data-tooltip=".ts.placeholder" data-tooltip-position="left">預置區塊 <span class="ts warning right floated label">新的</span></a>
                     </div>
                 </div>
                 <!-- / 一般元素 -->
@@ -138,13 +143,12 @@
                 <div class="item">
                     聚合型
                     <div class="menu">
-                        <a href="#!" class="item">麵包屑</a>
-                        <a href="#!" class="item">表單</a>
-                        <a href="#!" class="item">網格系統</a>
-                        <a href="#!" class="item">分隔線</a>
-                        <a href="#!" class="item">選單</a>
-                        <a href="#!" class="item">訊息</a>
-                        <a href="#!" class="item">表格</a>
+                        <a href="#!" class="item" data-tooltip=".ts.breadcrumb" data-tooltip-position="left">麵包屑</a>
+                        <a href="#!" class="item" data-tooltip=".ts.form" data-tooltip-position="left">表單</a>
+                        <a href="#!" class="item" data-tooltip=".ts.grid" data-tooltip-position="left">網格系統</a>
+                        <a href="#!" class="item" data-tooltip=".ts.menu" data-tooltip-position="left">選單</a>
+                        <a href="#!" class="item" data-tooltip=".ts.message" data-tooltip-position="left">訊息</a>
+                        <a href="#!" class="item" data-tooltip=".ts.table" data-tooltip-position="left">表格</a>
                     </div>
                 </div>
                 <!-- / 聚合型 -->
@@ -153,25 +157,25 @@
                 <div class="item">
                     模塊
                     <div class="menu">
-                        <a href="#!" class="item">手風琴</a>
-                        <a href="#!" class="item">日曆</a>
-                        <a href="#!" class="item">核取方塊</a>
-                        <a href="#!" class="item">淡化幕</a>
-                        <a href="#!" class="item">下拉式選單</a>
-                        <a href="#!" class="item">進度列</a>
-                        <a href="#!" class="item">滑桿</a>
-                        <a href="#!" class="item">彈出式訊息</a>
-                        <a href="#!" class="item">對話視窗</a>
-                        <a href="#!" class="item">嵌入物件</a>
-                        <a href="#!" class="item">側邊欄</a>
-                        <a href="#!" class="item">點心條</a>
-                        <a href="#!" class="item">分頁籤</a>
-                        <a href="#!" class="item">複合功能選單</a>
-                        <a href="#!" class="item">捲動監聽</a>
-                        <a href="#!" class="item">幻燈片</a>
-                        <a href="#!" class="item">圖片比較</a>
-                        <a href="#!" class="item">搜尋</a>
-                        <a href="#!" class="item">評分</a>
+                        <a href="#!" class="item" data-tooltip=".ts.accordion" data-tooltip-position="left">手風琴</a>
+                        <a href="#!" class="item" data-tooltip=".ts.calendar" data-tooltip-position="left">日曆</a>
+                        <a href="#!" class="item" data-tooltip=".ts.checkbox" data-tooltip-position="left">核取方塊</a>
+                        <a href="#!" class="item" data-tooltip=".ts.dimmer" data-tooltip-position="left">淡化幕</a>
+                        <a href="#!" class="item" data-tooltip=".ts.dropdown" data-tooltip-position="left">下拉式選單</a>
+                        <a href="#!" class="item" data-tooltip=".ts.progress" data-tooltip-position="left">進度列</a>
+                        <a href="#!" class="item" data-tooltip=".ts.slider" data-tooltip-position="left">滑桿</a>
+                        <a href="#!" class="item" data-tooltip=".ts.popup" data-tooltip-position="left">彈出式訊息</a>
+                        <a href="#!" class="item" data-tooltip=".ts.modal" data-tooltip-position="left">對話視窗</a>
+                        <a href="#!" class="item" data-tooltip=".ts.embed" data-tooltip-position="left">嵌入物件</a>
+                        <a href="#!" class="item" data-tooltip=".ts.sidebar" data-tooltip-position="left">側邊欄</a>
+                        <a href="#!" class="item" data-tooltip=".ts.snackbar" data-tooltip-position="left">點心條</a>
+                        <a href="#!" class="item" data-tooltip=".ts.tab" data-tooltip-position="left">分頁籤</a>
+                        <a href="#!" class="item" data-tooltip=".ts.context.menu" data-tooltip-position="left">複合功能選單</a>
+                        <a href="#!" class="item" data-tooltip=".ts.scrollspy" data-tooltip-position="left">捲動監聽</a>
+                        <a href="#!" class="item" data-tooltip=".ts.carousel" data-tooltip-position="left">幻燈片 <span class="ts warning right floated label">新的</span></a>
+                        <a href="#!" class="item" data-tooltip=".ts.comparison" data-tooltip-position="left">圖片比較 <span class="ts warning right floated label">新的</span></a>
+                        <a href="#!" class="item" data-tooltip=".ts.search" data-tooltip-position="left">搜尋 <span class="ts warning right floated label">新的</span></a>
+                        <a href="#!" class="item" data-tooltip=".ts.rating" data-tooltip-position="left">評分 <span class="ts warning right floated label">新的</span></a>
                     </div>
                 </div>
                 <!-- / 模塊 -->
@@ -180,12 +184,12 @@
                 <div class="item">
                     視圖型
                     <div class="menu">
-                        <a href="#!" class="item">卡片</a>
-                        <a href="#!" class="item">對話</a>
-                        <a href="#!" class="item">留言</a>
-                        <a href="#!" class="item">動態消息</a>
-                        <a href="#!" class="item">項目</a>
-                        <a href="#!" class="item">統計數據</a>
+                        <a href="#!" class="item" data-tooltip=".ts.card" data-tooltip-position="left">卡片</a>
+                        <a href="#!" class="item" data-tooltip=".ts.speeches" data-tooltip-position="left">對話</a>
+                        <a href="#!" class="item" data-tooltip=".ts.comments" data-tooltip-position="left">留言</a>
+                        <a href="#!" class="item" data-tooltip=".ts.feed" data-tooltip-position="left">動態消息</a>
+                        <a href="#!" class="item" data-tooltip=".ts.items" data-tooltip-position="left">項目</a>
+                        <a href="#!" class="item" data-tooltip=".ts.statistic" data-tooltip-position="left">統計數據</a>
                     </div>
                 </div>
                 <!-- / 視圖型 -->
@@ -218,7 +222,7 @@
                     <h3 class="ts header">
                         {{.Title}}
                         <!-- 原始碼按鈕 -->
-                        <button class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
                             <i class="code icon"></i> 原始碼
                         </button>
                         <!-- / 原始碼按鈕 -->
@@ -230,15 +234,15 @@
                     <!-- / 解說 -->
 
                     <!-- 示範區域 -->
-                    <div class="ts padded segments">
+                    <div class="ts padded segments" data-show-code="false">
                         <!-- 展示區塊 -->
-                        <div class="ts segment">
+                        <div class="ts basic fitted clearing segment">
                             {{.Example}}
                         </div>
                         <!-- / 展示區塊 -->
 
                         <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment">
+                        <div class="ts tertiary segment" hidden>
                             <pre>{{.Code}}</pre>
                         </div>
                         <!-- / 原始碼區塊 -->
@@ -277,6 +281,7 @@
 
             <!-- 空白分隔線 -->
             <div class="ts hidden divider"></div>
+            <div class="ts hidden section divider"></div>
             <!-- / 空白分隔線 -->
 
             <!-- 底部說明 -->
@@ -287,6 +292,27 @@
     </div>
     <!-- / 底部片段 -->
 
+    <script>
+        $('[data-ts-toggle]').on('click', function() {
+            var $segment
 
+            $segment = $(this).parent().nextAll('.ts.segments').first()
+            $example = $segment.find('.ts.segment').first()
+            $code    = $segment.find('.ts.segment').last()
+
+            if ($segment.attr('data-show-code') == 'true') {
+                $segment.attr('data-show-code', 'false')
+
+
+
+                $example.addClass('fitted basic')
+                $code.attr('hidden', 'hidden')
+            } else {
+                $segment.attr('data-show-code', 'true')
+                $example.removeClass('fitted basic')
+                $code.removeAttr('hidden')
+            }
+        })
+    </script>
 </body>
 </html>
