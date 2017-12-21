@@ -1,6 +1,10 @@
+---
+layout: single
+---
+
 # 分隔線
 
-
+.ts.divider
 
 ## 種類
 
@@ -79,7 +83,6 @@
 ### 清理浮動
 
 分隔線可以透過 <span class="ts label">clear: both;</span> 清理上一個元素的浮動狀態。
-
 
 ```html
 月月，搭拉安！

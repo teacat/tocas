@@ -1,6 +1,13 @@
+---
+layout: single
+tabs  :
+    - styles
+    - module
+---
+
 # 下拉式選單
 
-
+.ts.dropdown
 
 ## 種類
 

@@ -1,6 +1,10 @@
+---
+layout: single
+---
+
 # 動態
 
-
+.ts.feed
 
 ## 種類
 

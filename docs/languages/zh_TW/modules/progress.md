@@ -1,6 +1,10 @@
+---
+layout: single
+---
+
 # 進度列
 
-
+.ts.progress
 
 ## 種類
 

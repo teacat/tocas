@@ -1,3 +1,7 @@
+---
+layout: single
+---
+
 # 按鈕
 
 .ts.button

@@ -1,6 +1,10 @@
+---
+layout: single
+---
+
 # 日曆
 
-
+.ts.calendar
 
 ## 種類
 

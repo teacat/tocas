@@ -1,140 +1,292 @@
-# 讀取指示器
+---
+layout: single
+---
 
-<p>讀取指示器有兩個種類，一個是讀取中，另一個則是未知。未知通常用在還在準備的狀態，例如檔案讀取中，一旦檔案讀取完畢開始上傳，就可以改用讀取中的狀態。</p>
+# 片段
+
+.ts.segment
+
+## 說明
+
+片段通常可以拿來包裝文章內容，但並不適合獨立當作一個卡片使用。
 
 ## 種類
 
-讀取指示器具有不同的種類。
+片段具有不同的種類。
 
-### 基本
+### 片段
 
-一個最基本的讀取指示器，讀取指示器通常都是隱藏的，直至給予 <span class="ts horizontal label">active</span> 或放置於一個 <span class="ts horizontal label">active dimmer</span> 的容器中才會顯示。
+一個最基本的片段。
 
 ```html
-<div class="ts {{segment}}">
-    <p>看似最重要的東西卻沒能被妥善利用，</p>
-    <p>沒有人能發現這一點，因為他們早已活在過去，</p>
-    <p>才剛開始的序章卻被放在頁尾。</p>
-    <div class="ts [[active]] {{dimmer}}">
-        <div class="ts [[loader]]"></div>
-    </div>
+<div class="ts [[segment]]">
+    <p>烈日高照，前方的道路什麼都看不見，</p>
+    <p>「很高興能和你見面。」一個細微的聲音好似那邊傳來，</p>
+    <p>明明不清楚前方的事物，卻感覺自己正在邁向的是一個新世界。</p>
 </div>
 ```
 
-### 文字讀取指示器
+### 抬舉
 
-讀取指示器可以帶有文字。
+片段可以加深陰影，看起來像被抬舉，或是浮在空中。
 
 ```html
-<div class="ts {{segment}}">
-    <div class="ts active {{dimmer}}">
-        <div class="ts [[text loader]]">讀取中</div>
-    </div>
-    <p>看似最重要的東西卻沒能被妥善利用，</p>
-    <p>沒有人能發現這一點，因為他們早已活在過去，</p>
-    <p>才剛開始的序章卻被放在頁尾。</p>
+<div class="ts [[raised]] segment">
+    <p>在最糟糕的事情發生之前，</p>
+    <p>我儘可能地想找出原因，</p>
+    <p>原來是 — 自己。</p>
 </div>
-<br>
-<div class="ts {{segment}}">
-    <div class="ts active inverted {{dimmer}}">
-        <div class="ts [[text loader]]">讀取中</div>
-    </div>
-    <p>看似最重要的東西卻沒能被妥善利用，</p>
-    <p>沒有人能發現這一點，因為他們早已活在過去，</p>
-    <p>才剛開始的序章卻被放在頁尾。</p>
+```
+
+### 語意
+
+片段也具有語意。
+
+```html
+<div class="ts [[primary]] segment">
+    <p>主要語意。</p>
+</div>
+<div class="ts [[info]] segment">
+    <p>提醒語意。</p>
+</div>
+<div class="ts [[warning]] segment">
+    <p>警告語意。</p>
+</div>
+```
+
+### 肯定和否定
+
+片段也可以帶有肯定或否定的語氣。
+
+```html
+<div class="ts [[positive]] segment">
+    <p>正面語意。</p>
+</div>
+<div class="ts [[negative]] segment">
+    <p>否定語意。</p>
+</div>
+```
+
+### 反色和語意
+
+片段的語意可以更為明顯，甚至是反色地。
+
+```html
+<div class="ts [[inverted primary]] segment">
+    <p>主要語意。</p>
+</div>
+<div class="ts [[inverted info]] segment">
+    <p>提醒語意。</p>
+</div>
+<div class="ts [[inverted warning]] segment">
+    <p>警告語意。</p>
+</div>
+<div class="ts [[inverted positive]] segment">
+    <p>正面語意。</p>
+</div>
+<div class="ts [[inverted negative]] segment">
+    <p>否定語意。</p>
+</div>
+<div class="ts [[inverted]] segment">
+    <p>反色語意。</p>
+</div>
+```
+
+### 發音方式
+
+片段可以有不同的發音方式來強調或是以清淡地方式來描繪。
+
+```html
+<div class="ts segment">
+    <p>我是一般的片段。</p>
+</div>
+<div class="ts [[secondary]] segment">
+    <p>我是次要發音方式的片段。</p>
+</div>
+<div class="ts [[tertiary]] segment">
+    <p>我是其次發音方式的片段。</p>
+</div>
+```
+
+## 群組
+
+可以聚集多個片段為一體。
+
+### 片段群組
+
+片段可以組合成一個群組。
+
+```html
+<div class="ts [[segments]]">
+    <div class="ts segment">任何人皆自由且平等。</div>
+    <div class="ts segment">莫忘初衷。</div>
+    <div class="ts segment">永遠不放棄。</div>
+    <div class="ts segment">為全民、大眾所設計、運作並傾聽。</div>
+</div>
+```
+
+#### 群組和語意
+
+群組中的片段也可以具有語意。
+
+```html
+<div class="ts segments">
+    <div class="ts [[primary]] segment">任何人皆自由且平等。</div>
+    <div class="ts [[info]] segment">莫忘初衷。</div>
+    <div class="ts [[warning]] segment">永遠不放棄。</div>
+    <div class="ts [[positive]] segment">為全民、大眾所設計、運作並傾聽。</div>
+</div>
+```
+
+#### 不同地發音語氣
+
+群組中的片段也可以用不同的語氣發音。
+
+```html
+<div class="ts segments">
+    <div class="ts segment">任何人皆自由且平等。</div>
+    <div class="ts [[secondary]] segment">莫忘初衷。</div>
+    <div class="ts [[tertiary]] segment">永遠不放棄。</div>
 </div>
 ```
 
 ## 狀態
 
-讀取指示器帶有不同的狀態。
-
-### 未知
-
-用以顯示未知、或是準備中的狀態。
-
-```html
-<div class="ts {{segment}}">
-    <div class="ts active {{dimmer}}">
-        <div class="ts [[indeterminate]] text loader">準備檔案中</div>
-    </div>
-    <p>看似最重要的東西卻沒能被妥善利用，</p>
-    <p>沒有人能發現這一點，因為他們早已活在過去，</p>
-    <p>才剛開始的序章卻被放在頁尾。</p>
-</div>
-```
-
-### 啟用中
-
-正在啟用中的讀取指示器，沒有 <span class="ts horizontal label">dimmer</span> 的話可能會讓你的讀取指示器不清不楚。
-
-```html
-<div class="ts {{segment}}">
-    <div class="ts [[active]] loader"></div>
-    <p>看似最重要的東西卻沒能被妥善利用，</p>
-    <p>沒有人能發現這一點，因為他們早已活在過去，</p>
-    <p>才剛開始的序章卻被放在頁尾。</p>
-</div>
-```
+片段可以處於不同的狀態。
 
 ### 已停用
 
-讀取指示器可以呈現被停用，或是隱藏狀態。
+淡化片段，用以顯示這個片段不再可用。
 
 ```html
-<div class="ts {{segment}}">
-    <div class="ts [[disabled]] loader"></div>
-    <p></p>
+<div class="ts [[disabled]] segment">
+    <p>那傢伙不常說話，但是從她的言行舉止中，</p>
+    <p>好像有什麼是能被發現的。</p>
+</div>
+```
+
+### 讀取中
+
+片段可以顯示一個正在讀取的圖示。
+
+```html
+<div class="ts [[loading]] segment">
+    <p>月月，搭拉安！。</p>
+    <p>月月，搭拉安！。</p>
+    <p>月月，搭拉安！。</p>
 </div>
 ```
 
 ## 外觀
 
-讀取指示器有不同的外觀、尺寸。
+片段可以有不同的外觀點綴。
 
-### 同列區塊
+### 增加內距
 
-將讀取指示器從浮動改為一個區塊。
+片段的內距可以更大。
 
 ```html
-<div class="ts active [[inline]] loader"></div>
-<div class="ts active [[inline]] large loader"></div>
-<div class="ts active [[inline]] big loader"></div>
+<div class="ts segment">一般片段。</div>
+<div class="ts [[padded]] segment">增加內距的片段。</div>
+<div class="ts [[very padded]] segment">非常內距的片段。</div>
 ```
 
-### 同列置中
+### 縮減內距
 
-讀取指示器就算是區塊也可以置中。
+你可以移除所有內距、或水平和垂直內距。
 
 ```html
-<div class="ts active [[centered]] inline loader"></div>
+<div class="ts [[vertically fitted]] segment">這個片段沒有垂直內距。</div>
+<div class="ts [[fitted]] segment">這個片段沒有內距。</div>
+<div class="ts [[horizontally fitted]] segment">這個片段沒有水平內距。</div>
 ```
 
-### 尺寸
+### 輕巧版
 
-讀取指示器具有許多不同的尺寸。
+片段的寬度以內容為主。
 
 ```html
-<div class="ts active inline [[mini]] loader"></div>
-<div class="ts active inline [[tiny]] loader"></div>
-<div class="ts active inline [[small]] loader"></div>
-<div class="ts active inline [[medium]] loader"></div>
-<div class="ts active inline [[large]] loader"></div>
-<div class="ts active inline [[big]] loader"></div>
-<div class="ts active inline [[huge]] loader"></div>
-<div class="ts active inline [[massive]] loader"></div>
+<div class="ts [[compact]] segment">
+    月月，搭拉安！
+</div>
 ```
 
-### 反色
+### 浮動清理
 
-讀取指示器的顏色可以是相反地。
+片段可以帶有 <span class="ts horizontal label">clear: both;</span> 的樣式用來整理內部的浮動元素。
+
 
 ```html
-<div class="ts inverted {{segment}}">
-    <div class="ts active [[inverted]] loader"></div>
-    <br>
-    <br>
-    <br>
-    <br>
+<div class="ts [[clearing]] segment">
+    <button class="ts right floated {{button}}">浮動按鈕</button>
+</div>
+```
+
+### 流動
+
+片段可以是流動寬度並移除相關圓角用以貼齊螢幕左右。
+
+```html
+<div class="ts [[fluid]] segment">
+    這個片段適合用來貼齊容器左右邊。
+</div>
+```
+
+### 文字對齊
+
+片段的文字對齊可以改變。
+
+```html
+<div class="ts [[left aligned]] segment">
+    這段文字是置左對齊。
+</div>
+<div class="ts [[center aligned]] segment">
+    這段文字是置中對齊。
+</div>
+<div class="ts [[right aligned]] segment">
+    這段文字是置右對齊。
+</div>
+```
+
+### 平面化
+
+片段可以是平面化，不具有陰影的。
+
+```html
+<div class="ts [[flatted]] segment">
+    這個片段是平的。
+</div>
+```
+
+### 無框線
+
+片段可以沒有框線。
+
+```html
+<div class="ts [[borderless]] segment">
+    這個片段沒有框線。
+</div>
+```
+
+### 浮動
+
+片段可以向左或向右浮動。
+
+```html
+<div class="ts [[left floated]] segment">
+    <p>我向左浮動。</p>
+</div>
+<div class="ts [[right floated]] segment">
+    <p>我向右浮動。</p>
+</div>
+```
+
+### 基本
+
+片段可以是只有基本結構的。
+
+```html
+<div class="ts [[basic]] segment">
+    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
 </div>
 ```

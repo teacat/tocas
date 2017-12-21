@@ -1,6 +1,13 @@
+---
+layout: single
+tabs  :
+    - styles
+    - module
+---
+
 # 分頁籤
 
-
+.ts.tab
 
 ## 種類
 

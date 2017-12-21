@@ -1,6 +1,10 @@
+---
+layout: single
+---
+
 # 輸入欄位
 
-
+.ts.input
 
 ## 種類
 
@@ -8,7 +12,7 @@
 
 ### 輸入欄位
 
-一個普通的基本欄位可以是正常的 <span class="ts horizontal label">input</span> 或 <span class="ts horizontal label">textarea</span> 甚至是任何 <span class="ts horizontal label">[contenteditable]</span> 的元素。
+一個普通的基本欄位可以是正常的 `input` 或 `textarea` 甚至是任何 `[contenteditable]` 的元素。
 
 ```html
 <div class="ts [[input]]">

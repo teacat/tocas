@@ -1,6 +1,10 @@
+---
+layout: single
+---
+
 # 麵包屑
 
-
+.ts.breadcrumb
 
 ## 種類
 

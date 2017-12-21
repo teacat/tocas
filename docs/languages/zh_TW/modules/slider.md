@@ -1,6 +1,10 @@
+---
+layout: single
+---
+
 # 滑桿
 
-
+.ts.slider
 
 ## 種類
 

@@ -1,6 +1,10 @@
+---
+layout: single
+---
+
 # 步驟
 
-
+.ts.step
 
 ## 種類
 

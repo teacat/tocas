@@ -1,6 +1,10 @@
+---
+layout: single
+---
+
 # 標題
 
-
+.ts.header
 
 ## 種類
 
@@ -8,7 +12,7 @@
 
 ### 基本標題
 
-基於 <span class="ts label">h1</span> 到 <span class="ts label">h6</span> 的標題，這個標題的大小依照頁面基準文字大小為主。
+基於 `h1` 到 `h6` 的標題，這個標題的大小依照頁面基準文字大小為主。
 
 ```html
 <h1 class="ts [[header]]">標題 1</h1>

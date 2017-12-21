@@ -1,6 +1,13 @@
+---
+layout: single
+tabs  :
+    - styles
+    - module
+---
+
 # 訊息
 
-
+.ts.message
 
 ## 種類
 

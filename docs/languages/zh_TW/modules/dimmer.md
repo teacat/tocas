@@ -1,6 +1,10 @@
+---
+layout: single
+---
+
 # 淡化幕
 
-
+.ts.dimmer
 
 ## 種類
 

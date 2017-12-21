@@ -1,6 +1,13 @@
+---
+layout: single
+tabs  :
+    - styles
+    - module
+---
+
 # 核取方塊
 
-
+.ts.checkbox
 
 ## 種類
 
