@@ -31,11 +31,11 @@ Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說�
 
 ### 欄位
 
-<p>我們稱被劃分開來的區塊為「欄位」，而每個欄位的寬度都是可以自己決定的。一個網格系統被劃分為<strong>十六格</strong>，這將使的你的網格系統更加地具有彈性。</p>
+我們稱被劃分開來的區塊為「欄位」，而每個欄位的寬度都是可以自己決定的。一個網格系統被劃分為**十六格**，這將使的你的網格系統更加地具有彈性。
 
-<p>這個範例的第一行有<strong>四個欄位</strong>，這意味著每一個欄位都是<strong>四格寬</strong>，而四格寬的欄位共有<strong>四個</strong>，那就是 <span class="ts horizontal label">4 * 4 = 16 </span> 也就剛好符合了一行所能夠承受的<strong>最大格數（十六格）</strong>。</p>
+這個範例的第一行有**四個欄位**，這意味著每一個欄位都是**四格寬**，而四格寬的欄位共有**四個**，那就是 `4 * 4 = 16` 也就剛好符合了一行所能夠承受的**最大格數（十六格）**。
 
-<p>另一行是則是由<strong>兩格寬</strong>、<strong>八格寬</strong>還有<strong>六格寬</strong>的欄位所組成，這意味著 <span class="ts horizontal label">2 + 8 + 6 = 16 </span>，也就剛好達到了一行的最大格數。</p>
+另一行是則是由**兩格寬**、**八格寬**還有**六格寬**的欄位所組成，這意味著 `2 + 8 + 6 = 16`，也就剛好達到了一行的最大格數。
 
 
 ```html
@@ -52,8 +52,7 @@ Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說�
 
 ### 列
 
-<p>「列」用來確保「欄位」<strong>不會因為超過十六格而自動換行</strong>。</p>
-<p>同時「列」也可以確保自己是獨立的一行。</p>
+「列」用來確保「欄位」**不會因為超過十六格而自動換行**。同時「列」也可以確保自己是獨立的一行。
 
 
 ```html
@@ -78,7 +77,7 @@ Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說�
 
 ### 較寬鬆的網格
 
-當你發現欄位和欄位之間太相近，你可以考慮透過 <span class="ts horizontal label">relaxed grid</span> 來增加欄位之間的間距。
+當你發現欄位和欄位之間太相近，你可以考慮透過 `relaxed grid` 來增加欄位之間的間距。
 
 ```html
 <div class="ts grid">
@@ -101,7 +100,7 @@ Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說�
 
 ### 自動換行
 
-一旦該行的欄位超過十六格（意指「寬度」，而<strong>不是欄位數量</strong>），就會自動換到下一行。
+一旦該行的欄位超過十六格（意指「寬度」，而**不是欄位數量**），就會自動換到下一行。
 
 ```html
 <div class="ts grid">
@@ -118,7 +117,7 @@ Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說�
 
 ### 內容
 
-<p>欄位<strong>不應該被套用任何自訂的樣式</strong>，欄位只是一個容器，你應該在裡面放入你要的元素和樣式，而<strong>不是直接在欄位上更改</strong>。</p>
+欄位**不應該被套用任何自訂的樣式**，欄位只是一個容器，你應該在裡面放入你要的元素和樣式，而**不是直接在欄位上更改**。
 
 
 ```html
@@ -137,8 +136,9 @@ Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說�
 
 ### 寬度
 
-<p>欄位的寬度由 <span class="ts horizontal label">* wide</span> 決定，例如 <span class="ts horizontal label">one wide</span> 就是一格，<span class="ts horizontal label">sixteen wide</span> 則是十六格。</p>
-<p>十六格剛好會符合一行最大的寬度，八格則是填滿一行的一半。</p>
+欄位的寬度由 `* wide` 決定，例如 `one wide` 就是一格，`sixteen wide` 則是十六格。
+
+十六格剛好會符合一行最大的寬度，八格則是填滿一行的一半。
 
 
 ```html
@@ -157,7 +157,7 @@ Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說�
 
 ### 拉伸的
 
-<p>不指定欄位寬度的時候，單個、或多個欄位可以被拉伸到填滿整個網格系統，並將其他欄位縮短至它們的內容寬度。這很適合用在兩欄式的排版，或是輸入欄位與按鈕。</p>
+不指定欄位寬度的時候，單個、或多個欄位可以被拉伸到填滿整個網格系統，並將其他欄位縮短至它們的內容寬度。這很適合用在兩欄式的排版，或是輸入欄位與按鈕。
 
 
 ```html
@@ -179,9 +179,11 @@ Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說�
 
 ### 寬度細分
 
-<p>你可以在「列」裡面規劃這一列應該要有幾個欄位，例如 <span class="ts horizontal label">two column</span> 就能夠指列有<strong>兩個欄位</strong>，也就是一格欄位有<strong>八格寬</strong>。</p>
-<p>因為一列最多允許十六格，為了達成一列中有兩個欄位，即是 <span class="horizontal label">16 / 2 = 8</span>。</p>
-<p>當你了解如何善用寬度細分，你也能夠將一列切成三個欄位，甚至四個、五個，而不會因為欄位寬度無法除盡十六而作罷。</p>
+你可以在「列」裡面規劃這一列應該要有幾個欄位，例如 `two column` 就能夠指列有**兩個欄位**，也就是一格欄位有**八格寬**。
+
+因為一列最多允許十六格，為了達成一列中有兩個欄位，即是 `16 / 2 = 8`。
+
+當你了解如何善用寬度細分，你也能夠將一列切成三個欄位，甚至四個、五個，而不會因為欄位寬度無法除盡十六而作罷。
 
 
 ```html
@@ -234,9 +236,11 @@ Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說�
 
 ### 寬度細分
 
-<p>這和「列」的寬度細分相同，但你可以<strong>直接在網格上進行細分</strong>，例如 <span class="ts horizontal label">four column</span> 就能夠指定網格系統的一行會有<strong>四個欄位</strong>，也就是一格欄位有<strong>四格寬</strong>。</p>
-<p>因為一列最多允許十六格，為了達成一列中有四個欄位，即是 <span class="ts horizontal label">16 / 4 = 4</span>。</p>
-<p>透過這種方法不需要手動設定每一個欄位要有幾格寬，十分地方便。</p>
+這和「列」的寬度細分相同，但你可以**直接在網格上進行細分**，例如 `four column` 就能夠指定網格系統的一行會有**四個欄位**，也就是一格欄位有**四格寬**。
+
+因為一列最多允許十六格，為了達成一列中有四個欄位，即是 `16 / 4 = 4`。
+
+透過這種方法不需要手動設定每一個欄位要有幾格寬，十分地方便。
 
 
 ```html
@@ -264,8 +268,7 @@ Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說�
 
 ### 內容對齊
 
-<p>網格系統內的欄位內容可以對齊左、右、甚至中間，</p>
-<p>這個設定可以配置於整個網格系統、單列、甚至單個欄位。</p>
+網格系統內的欄位內容可以對齊左、右、甚至中間，這個設定可以配置於整個網格系統、單列、甚至單個欄位。
 
 
 ```html
@@ -280,8 +283,7 @@ Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說�
 
 ## 響應式網格
 
-<p>響應式網格可以在行動裝置或小型螢幕上自動縮放，</p>
-<p>你甚至只需要加一個樣式，其他讓我們來就好了。</p>
+響應式網格可以在行動裝置或小型螢幕上自動縮放，你甚至只需要加一個樣式，其他讓我們來就好了。
 
 
 ### 自動層疊
@@ -330,7 +332,7 @@ Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說�
 
 ### 雙倍層疊
 
-這會讓你的欄位在手機和平板上以雙倍的寬度增加，例如一個<strong>八個欄位</strong>的行會在平板上成為<strong>四個欄位</strong>然後手機上會是<strong>兩個欄位</strong>。
+這會讓你的欄位在手機和平板上以雙倍的寬度增加，例如一個**八個欄位**的行會在平板上成為**四個欄位**然後手機上會是**兩個欄位**。
 
 ```html
 <div class="ts grid">
@@ -363,36 +365,15 @@ Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說�
 
 ### 手動調整
 
-<p>你可以自訂在不同裝置上欄位所佔的格數，你總共有這些裝置可供選擇。</p>
-<table class="ts small stackable definition table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>&lt; 767px</th>
-            <th>&gt; 767px</th>
-            <th>&gt; 991px</th>
-            <th>&gt; 1199px</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>樣式名稱</td>
-            <td><span class="ts horizontal label">mobile</span></td>
-            <td><span class="ts horizontal label">tablet</span></td>
-            <td><span class="ts horizontal label">computer</span></td>
-            <td><span class="ts horizontal label">large screen</span></td>
-        </tr>
-        <tr>
-            <td>裝置稱呼</td>
-            <td>行動裝置</td>
-            <td>平板</td>
-            <td>一般電腦</td>
-            <td>大型螢幕</td>
-        </tr>
-    </tbody>
-</table>
-<p>透過 <span class="ts horizontal label">[格數] wide [裝置]</span> 使用這些裝置，就像 <span class="ts horizontal label">one wide computer</span> 即是在電腦上成為一格寬。</p>
+你可以自訂在不同裝置上欄位所佔的格數，你總共有這些裝置可供選擇。
 
+|          | < 767px  | > 767px  | > 991px    | > 1199px       |
+|----------|----------|----------|------------|----------------|
+| 樣式名稱  | `mobile` | `tablet` | `computer` | `large screen` |
+| 裝置稱呼  | 行動裝置  | 平板      | 一般電腦     | 大型螢幕       |
+
+
+透過 `[格數] wide [裝置]` 使用這些裝置，就像 `one wide computer` 即是在電腦上成為一格寬。
 
 ```html
 <div class="ts grid">
@@ -409,7 +390,7 @@ Tocas UI 的網格系統和 Bootstrap 的較為不同，比起 Bootstrap 來說�
 
 ### 手動隱藏
 
-你可以透過 <span class="ts horizontal label">[裝置] only</span> 在不同裝置上隱藏特定列、欄位。
+你可以透過 `[裝置] only` 在不同裝置上隱藏特定列、欄位。
 
 ```html
 <div class="ts grid">

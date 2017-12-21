@@ -80,7 +80,7 @@ layout: single
 
 ### 簡化
 
-你可以直接透過 <span class="ts horizontal label">&lt;ol&gt;</span> 和 <span class="ts horizontal label">&lt;ul&gt;</span> 標籤來簡化清單的使用方式。
+你可以直接透過 `<ol>` 和 `<ul>` 標籤來簡化清單的使用方式。
 
 ```html
 <[[ol]] class="ts list">
@@ -442,7 +442,7 @@ layout: single
 
 ### 自訂標點
 
-你能夠透過 <span class="ts horizontal label">[value]</span> 來變更清單中的標記符號。
+你能夠透過 `[value]` 來變更清單中的標記符號。
 
 ```html
 <ol class="ts list">

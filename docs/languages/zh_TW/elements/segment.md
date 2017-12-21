@@ -213,7 +213,7 @@ layout: single
 
 ### 浮動清理
 
-片段可以帶有 <span class="ts horizontal label">clear: both;</span> 的樣式用來整理內部的浮動元素。
+片段可以帶有 `clear: both` 的樣式用來整理內部的浮動元素。
 
 
 ```html

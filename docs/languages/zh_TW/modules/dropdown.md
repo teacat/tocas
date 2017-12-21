@@ -73,7 +73,7 @@ tabs  :
 
 ### 複選
 
-選單可以加上 <span class="ts horizontal label">multiple</span> 來允許複選。
+選單可以加上 `multiple` 來允許複選。
 
 ```html
 <select class="ts basic dropdown" size="3" [[multiple]]>

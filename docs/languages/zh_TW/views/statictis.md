@@ -223,7 +223,7 @@ layout: single
 
 ### 均分寬度
 
-統計數據的寬度可以平均劃分，從 <span class="ts horizontal label">one</span> 到 <span class="ts horizontal label">ten</span>。
+統計數據的寬度可以平均劃分，從 `one` 到 `ten`。
 
 ```html
 <div class="ts [[three]] statistics">

@@ -577,7 +577,7 @@ tabs  :
 
 ### 註釋
 
-你可以透過 <span class="ts horizontal label">&lt;caption&gt;</span> 來詮釋一個表格。
+你可以透過 `<caption>` 來詮釋一個表格。
 
 ```html
 <table class="ts table">
@@ -642,7 +642,7 @@ tabs  :
 
 ### 固定
 
-表格可以套用 <span class="ts horizontal label">table-layout: fixed</span> 來讓表格內容有固定的寬度。
+表格可以套用 `table-layout: fixed` 來讓表格內容有固定的寬度。
 
 
 ```html
@@ -676,7 +676,7 @@ tabs  :
 
 #### 和單行搭配的固定表格
 
-這將會讓的欄位遇到該換行時不進行換行，並以 <span class="ts horizontal label">...</span> 安插於文字後方。
+這將會讓的欄位遇到該換行時不進行換行，並以 `...` 安插於文字後方。
 
 ```html
 <table class="ts [[fixed]] [[single line]] table">
@@ -1118,7 +1118,7 @@ tabs  :
 
 ### 欄位均分
 
-你可以從 <span class="ts horizontal label">one</span> 至 <span class="ts horizontal label">ten</span> 來選出你要將欄位自動均分為幾等分。
+你可以從 `one` 至 `ten` 來選出你要將欄位自動均分為幾等分。
 
 ```html
 <table class="ts [[three column]] table">

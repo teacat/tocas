@@ -16,7 +16,7 @@ layout: single
 
 ### 基本
 
-一個最基本的讀取指示器，讀取指示器通常都是隱藏的，直至給予 <span class="ts horizontal label">active</span> 或放置於一個 <span class="ts horizontal label">active dimmer</span> 的容器中才會顯示。
+一個最基本的讀取指示器，讀取指示器通常都是隱藏的，直至給予 `active` 或放置於一個 `active dimmer` 的容器中才會顯示。
 
 ```html
 <div class="ts {{segment}}">
@@ -74,7 +74,7 @@ layout: single
 
 ### 啟用中
 
-正在啟用中的讀取指示器，沒有 <span class="ts horizontal label">dimmer</span> 的話可能會讓你的讀取指示器不清不楚。
+正在啟用中的讀取指示器，沒有 `dimmer` 的話可能會讓你的讀取指示器不清不楚。
 
 ```html
 <div class="ts {{segment}}">

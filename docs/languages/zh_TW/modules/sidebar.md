@@ -18,7 +18,7 @@ layout: single
 
 ### 頁面推動器和側邊欄
 
-側邊欄出現時會將頁面向特定方向推動，為了達到這個效果，網頁中 <span class="ts horizontal label">&lt;body&gt;</span> 的結構就必須像下面這樣做。
+側邊欄出現時會將頁面向特定方向推動，為了達到這個效果，網頁中 `&lt;body&gt;` 的結構就必須像下面這樣做。
 
 ```html
 <body>
@@ -67,7 +67,7 @@ layout: single
 
 ### 垂直選單
 
-側邊欄也能夠是一個由選單元件所組成的，這會很常用到。搭配 <span class="ts horizontal label">inverted</span> 的反色語氣能讓側邊選單更加的明顯。
+側邊欄也能夠是一個由選單元件所組成的，這會很常用到。搭配 `inverted` 的反色語氣能讓側邊選單更加的明顯。
 
 ```html
 <div class="ts static visible left sidebar inverted [[vertical menu]]">
@@ -167,45 +167,13 @@ layout: single
 
 ### 寬度
 
-<p>你可以更改側邊欄的寬度。</p>
-<table class="ts small stackable definition table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>64px</th>
-            <th>180px</th>
-            <th>230px</th>
-            <th>300px</th>
-            <th>360px</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>樣式名稱</td>
-            <td><span class="ts horizontal label">very thin</span></td>
-            <td><span class="ts horizontal label">thin</span></td>
-            <td>預設</td>
-            <td><span class="ts horizontal label">wide</span></td>
-            <td><span class="ts horizontal label">very wide</span></td>
-        </tr>
-        <tr>
-            <td>中文稱呼</td>
-            <td>非常窄</td>
-            <td>窄的</td>
-            <td></td>
-            <td>寬的</td>
-            <td>非常寬</td>
-        </tr>
-        <tr>
-            <td>行動裝置全寬</td>
-            <td><i class="x icon"></i></td>
-            <td><i class="x icon"></i></td>
-            <td><i class="x icon"></i></td>
-            <td><i class="positive check icon"></i></td>
-            <td><i class="positive check icon"></i></td>
-        </tr>
-    </tbody>
-</table>
+你可以更改側邊欄的寬度。
+
+|              | 64px                   | 180px                   | 230px                 | 300px                                | 360px                               |
+|--------------|------------------------|-------------------------|-----------------------|--------------------------------------|-------------------------------------|
+| 樣式名稱      | `very thin`             | `thin`                 | 預設                    | `wide`                              | `very wide`                         |
+| 中文稱呼      | 非常窄                   | 窄的                    |                        | 寬的                                 | 非常寬                               |
+| 行動裝置全寬   | <i class="x icon"></i>  | <i class="x icon"></i> | <i class="x icon"></i> | <i class="positive check icon"></i> | <i class="positive check icon"></i> |
 
 
 ```html

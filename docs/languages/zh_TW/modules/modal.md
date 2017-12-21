@@ -204,7 +204,7 @@ tabs  :
 
 ### 顯示
 
-帶有 <span class="ts horizontal label">[open]</span> 元素標籤的對話視窗會被顯示出來。
+帶有 `[open]` 元素標籤的對話視窗會被顯示出來。
 
 ```html
 <dialog class="ts fullscreen modal" [[open]]>

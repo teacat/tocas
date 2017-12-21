@@ -792,7 +792,7 @@ layout: single
 
 ### 卡片欄數
 
-卡片群組可以設定欄位數量，並在超過時自動換行，允許的卡片數量從 <span class="ts horizontal label">one</span> 至 <span class="ts horizontal label">ten</span>。
+卡片群組可以設定欄位數量，並在超過時自動換行，允許的卡片數量從 `one` 至 `ten`。
 
 ```html
 <div class="ts [[four]] cards">
@@ -953,7 +953,7 @@ layout: single
 
 ### 瀑布流
 
-卡片群組可以是呈現一個瀑布流的樣式，你可以透過 <span class="ts horizontal label">one</span> 到 <span class="ts horizontal label">ten</span> 指定瀑布流的排數。
+卡片群組可以是呈現一個瀑布流的樣式，你可以透過 `one` 到 `ten` 指定瀑布流的排數。
 
 ```html
 <div class="ts [[three]] [[waterfall]] cards">

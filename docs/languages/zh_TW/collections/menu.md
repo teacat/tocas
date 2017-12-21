@@ -622,7 +622,7 @@ layout: single
 
 ### 手動均分
 
-你可以自訂選單中應有幾個項目，從 <span class="ts horizontal label">one</span> 到 <span class="ts horizontal label">ten</span>。
+你可以自訂選單中應有幾個項目，從 `one` 到 `ten`。
 
 ```html
 <div class="ts [[four item]] menu">

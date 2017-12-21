@@ -251,7 +251,7 @@ layout: single
 
 #### 自訂條件文字
 
-你也能夠透過 <span class="ts horizontal label">[data-text]</span> 來變動條件文字，但注意文字字數不可超過圓圈大小。
+你也能夠透過 `[data-text]` 來變動條件文字，但注意文字字數不可超過圓圈大小。
 
 ```html
 <div class="ts buttons">

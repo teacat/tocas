@@ -41,7 +41,7 @@ tabs  :
 
 ### 附著於其他元素
 
-彈出式訊息也可以套用在一般的文字或是連結甚至其他元素上，需要注意的是這依賴著 <span class="ts horizontal label">:after</span> 與 <span class="ts horizontal label">:before</span> 選擇器，任何不是「容器」的都不適用，如：文字欄位、圖示、影像等。
+彈出式訊息也可以套用在一般的文字或是連結甚至其他元素上，需要注意的是這依賴著 `:after` 與 `:before` 選擇器，任何不是「容器」的都不適用，如：文字欄位、圖示、影像等。
 <br><br>
 你需要有個額外的容器包覆這些不適用的元素，然後在容器上配置彈出式訊息，請參閱下面這個範例。
 
@@ -69,7 +69,7 @@ tabs  :
 
 ### 無彈出式訊息
 
-有些時候你可能已經有外掛、或是插件來協助你完成彈出式訊息的實作，倘若你的外掛、插件也使用到了 <span class="ts horizontal label">[data-tooltip]</span> 屬性，這個時候可能會與 Tocas UI 有所衝突，為此，你可以在該元素上加上 <span class="ts horizontal label">.untooltipped</span> 樣式即可停用 Tocas UI 的彈出式訊息。
+有些時候你可能已經有外掛、或是插件來協助你完成彈出式訊息的實作，倘若你的外掛、插件也使用到了 `[data-tooltip]` 屬性，這個時候可能會與 Tocas UI 有所衝突，為此，你可以在該元素上加上 `.untooltipped` 樣式即可停用 Tocas UI 的彈出式訊息。
 
 
 ```html

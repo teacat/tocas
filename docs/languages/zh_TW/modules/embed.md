@@ -35,7 +35,7 @@ tabs  :
 
 ### 自訂影片
 
-你可以手動指定影片的來源網址，當來源影片是 <span class="ts horizontal label">mov</span>、<span class="ts horizontal label">mp4</span>、<span class="ts horizontal label">ogg</span>、<span class="ts horizontal label">webm</span> 格式的時候，會由 HTML5 影片播放器播放。
+你可以手動指定影片的來源網址，當來源影片是 `mov`、`mp4`、`ogg`、`webm` 格式的時候，會由 HTML5 影片播放器播放。
 
 ```html
 <div class="ts embed" [[data-url]]="http://html5demos.com/assets/dizzy.mp4" data-placeholder="!-16:9-!" data-icon="right circle arrow" data-options="controls, autoplay"></div>
@@ -89,36 +89,12 @@ tabs  :
 
 ### 長寬比
 
-你可以很簡單的透過像是 <span class="ts horizontal label">4:3</span>、<span class="ts horizontal label">16:9</span> 更改嵌入物件的長寬比，並且保持他們一定的比例。這個表格列出了你所能使用的長寬比。
-<br>
-<table class="ts small stackable definition table">
-    <tbody>
-        <tr>
-            <td>寬型</td>
-            <td><span class="ts">21:9</span></td>
-            <td><span class="ts">18:9</span></td>
-            <td><span class="ts">16:9</span></td>
-            <td><span class="ts">5:2</span></td>
-            <td><span class="ts">9:18</span></td>
-        </tr>
-        <tr>
-            <td>方型</td>
-            <td><span class="ts">1:1</span></td>
-            <td><span class="ts">4:3</span></td>
-            <td><span class="ts">3:2</span></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>長型</td>
-            <td><span class="ts">9:16</span></td>
-            <td><span class="ts">3:4</span></td>
-            <td><span class="ts">2:3</span></td>
-            <td></td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
+你可以很簡單的透過像是 `4:3`、`16:9` 更改嵌入物件的長寬比，並且保持他們一定的比例。這個表格列出了你所能使用的長寬比。
+
+| 寬型  | `21:9` | `18:9` | `16:9` | `5:2` | `9:18` |
+|------|--------|--------|--------|-------|--------|
+| 方型  | `1:1`  | `4:3`  | `3:2`  |       |        |
+| 長型  | `9:16` | `3:4`  | `2:3`  |       |        |
 
 
 ```html

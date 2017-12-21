@@ -10,36 +10,10 @@ layout: single
 
 容器用來保持文字在中間，如此一來就不會因為螢幕太寬而導致文字區域太寬，你也可以在裡面放置格線系統，這樣就可以讓內容集中在螢幕中間。這裡是不同容器之間的寬度資訊表格。
 
-<table class="ts small stackable definition table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>1200px</th>
-            <th>100%</th>
-            <th>860px</th>
-            <th>992px</th>
-            <th>700px</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>樣式名稱</td>
-            <td><span class="ts label">container</span></td>
-            <td><span class="ts label">fluid container</span></td>
-            <td><span class="ts label">text container</span></td>
-            <td><span class="ts label">narrow container</span></td>
-            <td><span class="ts label">very narrow container</span></td>
-        </tr>
-        <tr>
-            <td>裝置稱呼</td>
-            <td>容器</td>
-            <td>流動容器</td>
-            <td>文字容器</td>
-            <td>窄形容器</td>
-            <td>超窄容器</td>
-        </tr>
-    </tbody>
-</table>
+|          | 1200px      | 100%              | 860px            | 992px              | 700px                   |
+|----------|-------------|-------------------|------------------|--------------------|-------------------------|
+| 樣式名稱  | `container` | `fluid container` | `text container` | `narrow container` | `very narrow container` |
+| 裝置稱呼  | 容器         | 流動容器           | 文字容器           | 窄形容器             | 超窄容器                 |
 
 ## 容器
 

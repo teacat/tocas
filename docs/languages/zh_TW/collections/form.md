@@ -172,7 +172,7 @@ layout: single
 
 ### 文字區塊
 
-你可以在表單內放入文字區塊的欄位，搭配 HTML5 原生的 <span class="ts horizontal label">rows</span> 可以指定文字區塊的預設高度。
+你可以在表單內放入文字區塊的欄位，搭配 HTML5 原生的 `rows` 可以指定文字區塊的預設高度。
 
 ```html
 <div class="ts form">
@@ -193,7 +193,7 @@ layout: single
 
 ### 核取方塊
 
-你也可以將核取方塊做成一個欄位來使用。如果你希望省去 <span class="ts horizontal label">[id=""]</span> 和 <span class="ts horizontal label">[for=""]</span> 的困擾， 那麼你可以參考<a href="/modules/checkbox">核取方塊章節</a>。
+你也可以將核取方塊做成一個欄位來使用。如果你希望省去 `[id=""]` 和 `[for=""]` 的困擾， 那麼你可以參考[核取方塊章節](/modules/checkbox)。
 
 ```html
 <div class="ts form">
@@ -591,7 +591,7 @@ layout: single
 
 ## 群組組織
 
-透過 <span class="ts horizontal label">&lt;fieldset&gt;</span> 標籤你可以包覆一個欄位群組，並凸顯、說明其群組的用意。
+透過 `<fieldset>` 標籤你可以包覆一個欄位群組，並凸顯、說明其群組的用意。
 
 ### 基本組織
 
@@ -667,7 +667,7 @@ layout: single
 
 ### 平均劃分
 
-群組中的欄位寬度可以被平均劃分，從 <span class="ts horizontal label">one</span> 至 <span class="ts horizontal label">ten</span>。
+群組中的欄位寬度可以被平均劃分，從 `one` 至 `ten`。
 
 ```html
 <div class="ts form">

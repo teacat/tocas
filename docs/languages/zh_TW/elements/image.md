@@ -170,7 +170,7 @@ layout: single
 
 ### 尺寸
 
-更改圖片的大小，大小從 <span class="ts horizontal label">mini</span> 到 <span class="ts horizontal label">massive</span>。
+更改圖片的大小，大小從 `mini` 到 `massive`。
 
 ```html
 <img class="ts [[mini]] image" src="!-1:1-!">

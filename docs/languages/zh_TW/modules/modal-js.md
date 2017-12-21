@@ -15,26 +15,12 @@ tabs  :
 
 ### 顯示與隱藏
 
-如果你希望這個對話視窗能夠彈出並且遮蔽背景，那麼你就需要將其包含在一個 <span class="ts horizontal label">.ts.modals.dimmer</span> 的淡化幕中。在淡化幕中的對話視窗預設是隱藏的，除非透過 JavaScript 呼叫該對話視窗才會顯示。
-<br>
-<table class="ts small stackable definition table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>註釋</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>show</td>
-            <td>顯示對話視窗。</td>
-        </tr>
-        <tr>
-            <td>hide</td>
-            <td>隱藏對話視窗。</td>
-        </tr>
-    </tbody>
-</table>
+如果你希望這個對話視窗能夠彈出並且遮蔽背景，那麼你就需要將其包含在一個 `.ts.modals.dimmer` 的淡化幕中。在淡化幕中的對話視窗預設是隱藏的，除非透過 JavaScript 呼叫該對話視窗才會顯示。
+
+|      | 註釋          |
+|------|--------------|
+| show | 顯示對話視窗。 |
+| hide | 隱藏對話視窗。 |
 
 
 ```html
@@ -73,7 +59,7 @@ ts('#modal').modal("show")
 <div class="ts modals dimmer">
     <dialog id="closableModal" class="ts [[closable]] tiny modal">
         <div class="content">
-            <p>點擊淡化幕也能夠關閉這個視窗，因為這是個 <span class="ts horizontal label">closable</span> 對話視窗。</p>
+            <p>點擊淡化幕也能夠關閉這個視窗，因為這是個 `closable` 對話視窗。</p>
         </div>
         <div class="actions">
             <button class="ts deny {{button}}">
@@ -93,34 +79,14 @@ ts('#closableModal').modal("show")
 
 ### 設置選項
 
-在預設對話視窗行為中只要是類別名稱為 <span class="ts horizontal label">.deny</span>、<span class="ts horizontal label">.negative</span>、<span class="ts horizontal label">.cancel</span> 的元素被按下都會呼叫<strong>取消回呼函式</strong>，而 <span class="ts horizontal label">.approve</span>、<span class="ts horizontal label">.positive</span>、<span class="ts horizontal label">.ok</span> 則會呼叫<strong>成功回呼函式</strong>，你能夠在選項中自行改變這一點。
-<br>
-<table class="ts small stackable definition table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>註釋</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>approve</td>
-            <td>會呼叫同意回呼函式的元素選擇器（預設：<span class="ts horizontal label">.approve, .positive, .ok</span>）</td>
-        </tr>
-        <tr>
-            <td>deny</td>
-            <td>會呼叫拒絕回呼函式的元素選擇器（預設：<span class="ts horizontal label">.deny, .negative, .cancel</span>）</td>
-        </tr>
-        <tr>
-            <td>onApprove</td>
-            <td>同意時所被呼叫的函式，如果這個函式回傳 <span class="ts horizontal label">false</span> 的話將不會關閉對話視窗。</td>
-        </tr>
-        <tr>
-            <td>onDeny</td>
-            <td>拒絕時所被呼叫的函式，如果這個函式回傳 <span class="ts horizontal label">false</span> 的話將不會關閉對話視窗。</td>
-        </tr>
-    </tbody>
-</table>
+在預設對話視窗行為中只要是類別名稱為 `.deny`、`.negative`、`.cancel` 的元素被按下都會呼叫**取消回呼函式**，而 `.approve`、`.positive`、`.ok` 則會呼叫**成功回呼函式**，你能夠在選項中自行改變這一點。
+
+|           | 註釋                                                          |
+|-----------|--------------------------------------------------------------|
+| approve   | 會呼叫同意回呼函式的元素選擇器（預設：`.approve, .positive, .ok`）  |
+| deny      | 會呼叫拒絕回呼函式的元素選擇器（預設：`.deny, .negative, .cancel`） |
+| onApprove | 同意時所被呼叫的函式，如果這個函式回傳 `false` 的話將不會關閉對話視窗。 |
+| onDeny    | 拒絕時所被呼叫的函式，如果這個函式回傳 `false` 的話將不會關閉對話視窗。 |
 
 
 ```html

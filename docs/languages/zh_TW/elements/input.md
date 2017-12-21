@@ -301,7 +301,7 @@ layout: single
 
 ### 無邊框
 
-輸入欄位可以沒有邊框，有時可以和基本樣式 <span class="ts horizontal label">.basic</span> 一同搭配。
+輸入欄位可以沒有邊框，有時可以和基本樣式 `.basic` 一同搭配。
 
 ```html
 <div class="ts [[borderless]] input">

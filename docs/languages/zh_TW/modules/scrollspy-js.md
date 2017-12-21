@@ -19,21 +19,11 @@ tabs  :
 
 ### 初始化
 
-<p>選單中的項目必須是帶有錨點的連結，且頁面上需要有相對應的元素編號（ID），這樣捲動監聽才能夠正常運作。除此之外，作為錨點的頁面元素需要有 <span class="ts horizontal label">[data-scrollspy="選單名稱"]</span> 來對應相關選單。</p>
-<table class="ts small celled stackable definition table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>註釋</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>target</td>
-            <td>指定特定選單的選擇器，容器的捲動將會應設在這個選單上。</td>
-        </tr>
-    </tbody>
-</table>
+選單中的項目必須是帶有錨點的連結，且頁面上需要有相對應的元素編號（ID），這樣捲動監聽才能夠正常運作。除此之外，作為錨點的頁面元素需要有 `[data-scrollspy="選單名稱"]` 來對應相關選單。
+
+|           | 註釋                                           |
+|-----------|-----------------------------------------------|
+| target    | 指定特定選單的選擇器，容器的捲動將會應設在這個選單上。 |
 
 
 ```html
