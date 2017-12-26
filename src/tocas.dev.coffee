@@ -158,7 +158,7 @@ ts.fn.on = (eventName, selector, handler, once) ->
   #      \   /
   #       [0]
   #          \
-  #            once :bool         
+  #            once :bool
   ###
 
   @each ->
@@ -230,7 +230,7 @@ ts.fn.on = (eventName, selector, handler, once) ->
       ###* Push handler or anonymous function into that event list ###
 
       eventHandler = @ts_eventHandler[event].list
-      data = 
+      data =
         func: handler
         once: once
 
@@ -601,11 +601,11 @@ ts.fn.attr = (attr, value) ->
 
 ###*
 # Remove Attr
-# 
+#
 # Remove an attribute from an element.
-# 
+#
 # @param string attr   The name of the attribute.
-# 
+#
 # @return object
 ###
 
@@ -1093,13 +1093,13 @@ ts.fn.tab = (option) ->
             # There's only one tab module if the `data-tab-group` is empty.
             if tabGroup is null
                 # So we deactive all the tab buttons first.
-                ts('[data-tab]:not(.tab):not([data-tab-group]')
+                ts('[data-tab]:not(.tab):not([data-tab-group])')
                     .removeClass 'active'
                 # And deactive all the tab pages.
-                ts('[data-tab]:not([data-tab-group]')
+                ts('[data-tab]:not([data-tab-group])')
                     .removeClass 'active'
                 # Now active the target tab page.
-                ts(".tab[data-tab='#{tabName}']:not([data-tab-group]")
+                ts(".tab[data-tab='#{tabName}']:not([data-tab-group])")
                     .addClass 'active'
             else
                 ts("[data-tab-group='#{tabGroup}']:not(.tab)")

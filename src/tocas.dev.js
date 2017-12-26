@@ -164,7 +164,7 @@ ts.fn.on = function(eventName, selector, handler, once) {
    *      \   /
    *       [0]
    *          \
-   *            once :bool         
+   *            once :bool
    */
   return this.each(function() {
     var data, event, eventHandler, events, i;
@@ -617,11 +617,11 @@ ts.fn.attr = function(attr, value) {
 
 /**
  * Remove Attr
- * 
+ *
  * Remove an attribute from an element.
- * 
+ *
  * @param string attr   The name of the attribute.
- * 
+ *
  * @return object
  */
 ts.fn.removeAttr = function(attr) {
@@ -1070,11 +1070,11 @@ ts.fn.tab = function(option) {
       // There's only one tab module if the `data-tab-group` is empty.
       if (tabGroup === null) {
         // So we deactive all the tab buttons first.
-        ts('[data-tab]:not(.tab):not([data-tab-group]').removeClass('active');
+        ts('[data-tab]:not(.tab):not([data-tab-group])').removeClass('active');
         // And deactive all the tab pages.
-        ts('[data-tab]:not([data-tab-group]').removeClass('active');
+        ts('[data-tab]:not([data-tab-group])').removeClass('active');
         // Now active the target tab page.
-        ts(`.tab[data-tab='${tabName}']:not([data-tab-group]`).addClass('active');
+        ts(`.tab[data-tab='${tabName}']:not([data-tab-group])`).addClass('active');
       } else {
         ts(`[data-tab-group='${tabGroup}']:not(.tab)`).removeClass('active');
         ts(`.tab[data-tab-group='${tabGroup}']`).removeClass('active');
