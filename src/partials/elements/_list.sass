@@ -126,6 +126,15 @@ ol:not(.ts):not(.unstyled) li[value]:before
     content: attr(data-value)
 
 //-------------------//
+//      Floated
+//-------------------//
+
+.ts.list[class*="right floated"]
+    float: right
+.ts.list[class*="left floated"]
+    float: left
+
+//-------------------//
 //      Bulleted
 //-------------------//
 
@@ -184,17 +193,25 @@ ul:not(.ts):not(.unstyled) ul:not(.ts) ul:not(.ts) li:before,
 //-------------------//
 
 ul.ts.horizontal.bulleted.list li,
-.ts.horizontal.bulleted.list > .item
+.ts.horizontal.bulleted.list > .item,
+ul.ts.horizontal.middoted.list li,
+.ts.horizontal.middoted.list > .item
     margin-left : 0
-    margin-right: 0
+    margin-right: -#{$list_horizontalBulletSpacing / 2.25}
 
 ul.ts.horizontal.bulleted.list li:not(:first-child):before,
 .ts.horizontal.bulleted.list > .item:not(:first-child):before,
+ul.ts.horizontal.middoted.list li:not(:first-child):before,
+.ts.horizontal.middoted.list > .item:not(:first-child):before,
     +extend(is-dot)
 
     margin-left : calc(#{$list_horizontalBulletSpacing} / 1.5)
     margin-right: calc(#{$list_horizontalBulletSpacing} / 1.5)
     content     : '•'
+
+ul.ts.horizontal.middoted.list li:not(:first-child):before,
+.ts.horizontal.middoted.list > .item:not(:first-child):before,
+    content: '·'
 
 //-------------------//
 //      Ordered
@@ -629,8 +646,8 @@ ol.ts.horizontal.list li:before,
 //-------------------//
 
 .ts.list.horizontal
-    display: inline-block
-    margin : 0
+    display  : inline-block
+    margin   : 0
 
 .ts.list.horizontal .item
     display: inline-block
