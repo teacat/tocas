@@ -736,22 +736,66 @@
     box-shadow: $input_underlinedShadow $input_successFocusBorderColor
 
 //-------------------//
+//       Number
+//-------------------//
+
+.ts.input.number input
+    flex         : 1
+    width        : $input_numberWidth
+    text-align   : center
+    border-radius: 0
+
+.ts.input.number input::-webkit-outer-spin-button,
+.ts.input.number input::-webkit-inner-spin-button
+    -webkit-appearance: none
+    margin            : 0
+
+.ts.input.number button:first-child
+    border-top-right-radius   : 0
+    border-bottom-right-radius: 0
+    border-right              : none
+
+.ts.input.number input + button
+    border-top-left-radius   : 0
+    border-bottom-left-radius: 0
+    border-left              : none
+
+.ts.input.number .ts.button.increase,
+.ts.input.number .ts.button.decrease
+    padding-left : $input_numberButtonHorizontalPadding
+    padding-right: $input_numberButtonHorizontalPadding
+
+.ts.input.number .ts.button.increase:after
+    font-family: $input_numberButtonFontFamily
+    content    : $input_numberIncreaseButtonContent
+
+.ts.input.number .ts.button.decrease:after
+    font-family: $input_numberButtonFontFamily
+    content    : $input_numberDecreaseButtonContent
+
+//-------------------//
 //      Attached
 //-------------------//
 
 .ts.input[class*="top attached"] input,
 .ts.input[class*="top attached"] textarea,
-.ts.input[class*="top attached"] *[contenteditable]
+.ts.input[class*="top attached"] *[contenteditable],
+.ts.input.number[class*="top attached"] .increase.button,
+.ts.input.number[class*="top attached"] .decrease.button
     +extend(top-attached)
 
 .ts.input.attached:not([class*="bottom attached"]):not([class*="top attached"]) input,
 .ts.input.attached:not([class*="bottom attached"]):not([class*="top attached"]) textarea,
-.ts.input.attached:not([class*="bottom attached"]):not([class*="top attached"]) *[contenteditable]
+.ts.input.attached:not([class*="bottom attached"]):not([class*="top attached"]) *[contenteditable],
+.ts.input.number.attached:not([class*="bottom attached"]):not([class*="top attached"]) .increase.button,
+.ts.input.number.attached:not([class*="bottom attached"]):not([class*="top attached"]) .decrease.button
     +extend(attached)
 
 .ts.input[class*="bottom attached"] input,
 .ts.input[class*="bottom attached"] textarea,
-.ts.input[class*="bottom attached"] *[contenteditable]
+.ts.input[class*="bottom attached"] *[contenteditable],
+.ts.input.number[class*="bottom attached"] .increase.button,
+.ts.input.number[class*="bottom attached"] .decrease.button,
     +extend(bottom-attached)
 
 //-------------------//
