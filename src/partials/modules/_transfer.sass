@@ -13,40 +13,60 @@
 
 .ts.transfer.fluid
     display: flex
-    width: 100%
+    width  : 100%
 
 //-------------------//
 //     Stackable
 //-------------------//
 
 .ts.transfer.stackable
+    +rwd-serious(mobile)
+        flex-direction: column
 
+        .list
+            flex: auto
+
+        .actions
+            flex-direction: row
+            padding       : $transfer_actionPadding 0
+
+            .button
+                &.add:after
+                    content: $transfer_verticalAddButtonIcon
+
+                &.remove:after
+                    content: $transfer_verticalRemoveButtonIcon
+
+                &:not(:last-child)
+                    margin      : 0
+                    margin-right: $transfer_actionButtonGap
 
 //*******************************//
 //              List
 //*******************************//
 
 .ts.transfer .list
-    flex         : 1
-    border       : $transfer_border
-    border-radius: $transfer_borderRadius
-
-    width: 210px
-    height: 260px
     display: flex
+    width  : $transfer_listWidth
+    height : $transfer_listHeight
+    flex   : 1
+
     flex-direction: column
+    border        : $transfer_border
+    border-radius : $transfer_borderRadius
 
 //*******************************//
 //             Header
 //*******************************//
 
 .ts.transfer .list .header
-    font-weight: 500
-    color: $transfer_headerTextColor
-    padding: $transfer_padding
+    color        : $transfer_headerTextColor
+    padding      : $transfer_padding
+    font-weight  : $transfer_headerFontWeight
     border-bottom: $transfer_headerDividerBorderBottom
-    white-space: nowrap
-    overflow: hidden
+
+    white-space  : nowrap
+    overflow     : hidden
     text-overflow: ellipsis
 
 //-------------------//
@@ -65,61 +85,63 @@
 //*******************************//
 
 .ts.transfer .list .search
-    padding: $transfer_padding
+    padding      : $transfer_padding
     border-bottom: $transfer_headerDividerBorderBottom
 
 .ts.transfer .list .search input
-    background: transparent
-    border: 1px solid #EEE
-    border-radius: 4px
-    padding: .4em 1em
-    padding-left: calc(#{$transfer_horizontalPadding * 2} + .6em)
-    font-size: .9em
-    line-height: 1
-    width: 100%
+    width        : 100%
+    background   : transparent
+    border       : $transfer_searchBorder
+    border-radius: $transfer_searchBorderRadius
+    font-size    : $transfer_searchFontSize
+    line-height  : 1
+    padding      : $transfer_searchPadding
+    padding-left : $transfer_searchIconDistance
 
 .ts.transfer .list .search:after
-    position: absolute
-    left: 1em
-    top: .9em
-    margin-left: 1em
-    pointer-events: none
-    opacity: .6
-    z-index: 1
-    font-size: .9em
+    position   : absolute
+    left       : $transfer_searchHorizontalPadding
+    top        : $transfer_searchVerticalPadding * 2
+    content    : $transfer_searchIcon
+    font-size  : $transfer_searchFontSize
     font-family: Icons
-    content: '\f002'
+
+    margin-left   : $transfer_horizontalPadding
+    pointer-events: none
+
+    opacity: $transfer_searchIconOpacity
+    z-index: $z_transfer_search
 
 .ts.transfer .list .header + .search
-    margin-top: -1px
-    background: #fff
-
+    margin-top : -#{$transfer_headerDividerWidth * 2}
     padding-top: 0
+    background : $transfer_backgroundColor
 
 .ts.transfer .list .header + .search:after
-    top: .35em
+    top: $transfer_searchIconOffset
 
 //*******************************//
 //             Items
 //*******************************//
 
 .ts.transfer .list .items
+    flex    : 1
     overflow: scroll
-    flex: 1
 
 //*******************************//
 //             Item
 //*******************************//
 
 .ts.transfer .list .items .item
-    cursor: pointer
-    padding: $transfer_itemPadding
-    white-space: nowrap
-    overflow: hidden
+    cursor     : pointer
+    padding    : $transfer_itemPadding
+
+    white-space  : nowrap
+    overflow     : hidden
     text-overflow: ellipsis
 
 .ts.transfer .list .items .item:not(:last-child)
-    border-bottom: 1px solid nth($grey, 4)
+    border-bottom: $transfer_itemBorder
 
 //-------------------//
 //     Borderless
@@ -129,41 +151,40 @@
     border-bottom: none
 
 .ts.transfer .list .items .item:hover
+    color     : $transfer_hoverTextColor
     background: $transfer_hoverBackgroundColor
-    color: $transfer_hoverTextColor
 
 .ts.transfer .list .items .item:active
+    color     : $transfer_activeTextColor
     background: $transfer_activeBackgroundColor
-    color: $transfer_activeTextColor
 
 .ts.transfer .list .items .item.selected
+    color     : $transfer_selectedTextColor
     background: $transfer_selectedBackgroundColor
-    color: $transfer_selectedTextColor
 
 //*******************************//
 //            Actions
 //*******************************//
 
 .ts.transfer .actions
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 0 1em;
+    display        : flex
+    flex-direction : column
+    align-items    : center
+    justify-content: center
+    padding        : 0 $transfer_actionPadding
 
 .ts.transfer .actions .button
-    padding-left: 1em
-    padding-right: 1em
-    font-size: .8em
+    padding  : $transfer_actionButtonPadding
+    font-size: $transfer_actionButtonFontSize
 
 .ts.transfer .actions .button:not(:last-child)
-    margin-bottom: 1em
+    margin-bottom: $transfer_actionButtonGap
 
 .ts.transfer .actions .button:after
     font-family: Icons
 
 .ts.transfer .actions .add.button:after
-    content: '\f054'
+    content: $transfer_addButtonIcon
 
 .ts.transfer .actions .remove.button:after
-    content: '\f053'
+    content: $transfer_removeButtonIcon
