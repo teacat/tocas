@@ -1,74 +1,1046 @@
-var Tocas,animationEnd,bindModalButtons,closeModal,contractDropdown,detectDropdown,expandDropdown,quadrant,slider_progressColor,slider_trackColor,z_dropdownActive,z_dropdownHovered,z_dropdownMenu;Tocas=(function(){var compact,dropzoneNumber,emptyArray,filter,isArray,isEmptyOrWhiteSpace,isObject,queue,slice,tocas,ts;ts=void 0;emptyArray=[];slice=emptyArray.slice;filter=emptyArray.filter;queue=[];tocas={};isArray=Array.isArray||function(obj){return obj instanceof Array;};isObject=function(obj){return obj instanceof Object;};isEmptyOrWhiteSpace=function(str){return str===null||str.match(/^\s*$/)!==null;};dropzoneNumber=0;compact=function(array){return filter.call(array,function(item){return item!==null;});};tocas.init=function(selector,context){var dom;dom=void 0;if(typeof selector==='string'){if(selector[0]==='<'){return tocas.fragment(selector);}
-selector=selector.trim();if(typeof context!=='undefined'){return ts(selector).find(context);}
-dom=tocas.select(document,selector);}else if(tocas.isTocas(selector)){return selector;}else{if(isArray(selector)){dom=compact(selector);}else if(isObject(selector)){dom=[selector];selector=null;}}
-return tocas.Tocas(dom,selector);};tocas.fragment=function(selector){var $element,attrObj,attrs,content,contentMatch,contentRegEx,hasAttr,hasContent,i,mainAll,mainAttrs,mainElement,match,noContent,regEx;noContent=/^<([^\/].*?)>$/;regEx=/(?:<)(.*?)( .*?)?(?:>)/;match=regEx.exec(selector);mainAll=match[0];mainElement=match[1];mainAttrs=match[2];hasAttr=typeof mainAttrs!=='undefined';hasContent=!mainAll.match(noContent);if(hasContent){contentRegEx=new RegExp(mainAll+'(.*?)(?:</'+mainElement+'>)$');contentMatch=contentRegEx.exec(selector);content=contentMatch[1];}
-if(hasAttr){attrs=mainAttrs.split(/(?:\s)?(.*?)=(?:"|')(.*?)(?:"|')/).filter(Boolean);attrObj={};i=0;while(i<attrs.length){if((i+2)%2===0){attrObj[attrs[i]]=attrs[i+1];}
-i++;}}
-$element=ts(document.createElement(mainElement));if(hasAttr){$element.attr(attrObj);}
-if(hasContent){$element.html(content);}
-return $element;};tocas.isTocas=function(obj){return obj instanceof tocas.Tocas;};tocas.select=function(element,selector){var e;try{return slice.call(element.querySelectorAll(selector));}catch(error){e=error;console.log('TOCAS ERROR: Something wrong while selecting '+selector+' element.');}};tocas.Tocas=function(dom,selector){dom=dom||[];dom.__proto__=ts.fn;dom.selector=selector||'';return dom;};ts=function(selector,context){if(typeof selector==='function'){document.addEventListener('DOMContentLoaded',selector);}else{return tocas.init(selector,context);}};ts.fn={each:function(callback){emptyArray.every.call(this,function(index,element){return callback.call(index,element,index)!==false;});return this;},slice:function(){return ts(slice.apply(this,arguments));},eq:function(index){return this.slice(index,index+1);}};if(!window.ts){window.ts=ts;}})(Tocas);ts.fn.on=function(eventName,selector,handler,once){var hasSelector;once=once||false;hasSelector=true;if(typeof selector!=='string'){hasSelector=false;handler=selector;}
-if(typeof handler!=='function'){once=handler;}
-return this.each(function(){var data,event,eventHandler,events,i;if(typeof this.addEventListener==='undefined'){console.log('TOCAS ERROR: Event listener is not worked with this element.');return false;}
-if(typeof this.ts_eventHandler==='undefined'){this.ts_eventHandler={};}
-events=eventName.split(' ');for(i in events){event=events[i];if(typeof this.ts_eventHandler[event]==='undefined'){this.ts_eventHandler[event]={registered:false,list:[]};}
-if(this.ts_eventHandler[event].registered===false){this.addEventListener(event,function(evt){var e,inSelector;if(typeof this.ts_eventHandler[event]!=='undefined'){for(e in this.ts_eventHandler[event].list){if(typeof this.ts_eventHandler[event].list[e].selector!=='undefined'){inSelector=false;ts(this.ts_eventHandler[event].list[e].selector).each(function(i,el){if(evt.target===el){inSelector=true;}});if(!inSelector){return;}}
-this.ts_eventHandler[event].list[e].func.call(this,evt);if(this.ts_eventHandler[event].list[e].once){delete this.ts_eventHandler[event].list[e];}}}});this.ts_eventHandler[event].registered=true;}
-eventHandler=this.ts_eventHandler[event].list;data={func:handler,once:once};if(hasSelector){data.selector=selector;}
-eventHandler.push(data);this.ts_eventHandler[event].list=eventHandler;}});};ts.fn.one=function(eventName,selector,handler){return this.each(function(){ts(this).on(eventName,selector,handler,true);});};ts.fn.off=function(eventName,handler){return this.each(function(){var e;if(typeof this.ts_eventHandler==='undefined'){return;}
-if(typeof this.ts_eventHandler[eventName]==='undefined'){return;}
-console.log(handler);if(typeof handler==='undefined'){this.ts_eventHandler[eventName].list=[];return;}
-for(e in this.ts_eventHandler[eventName].list){if(handler===this.ts_eventHandler[eventName].list[e].func){delete this.ts_eventHandler[eventName].list[e];}}});};ts.fn.css=function(property,value){var css,cssObject,i;css='';if(property!==null&&value!==null){css=property+':'+value+';';}else if(typeof property==='object'&&!Array.isArray(property)&&value===null){for(i in property){if(property.hasOwnProperty(i)){css+=i+':'+property[i]+';';}}}else if(Array.isArray(property)&&value===null){cssObject={};this.each(function(){var i;for(i in property){cssObject[property[i]]=ts(this).getCss(property[i]);}});return cssObject;}else if(property!==null&&value===null){return ts(this).getCss(property);}
-return this.each(function(){if(typeof this.style==='undefined'){return;}
-this.style.cssText=this.style.cssText+css;});};ts.fn.hasClass=function(classes){if(0 in this){if(this[0].classList){return this[0].classList.contains(classes);}else{return new RegExp('(^| )'+classes+'( |$)','gi').test(this[0].className);}}};ts.fn.classList=function(){var i;var classes,i;classes=[];if(0 in this){if(this[0].classList){i=0;while(i<this[0].classList.length){classes.push(this[0].classList[i]);i++;}}else{for(i in this[0].className.split(' ')){classes.push(this[0].className.split(' ')[i]);}}}
-return classes;};ts.fn.addClass=function(classes){if(classes===null){return;}
-return this.each(function(){var i,list;list=classes.split(' ');for(i in list){if(list[i]===''){i++;continue;}
-if(this.classList){this.classList.add(list[i]);}else{this.className+=' '+list[i];}}});};ts.fn.removeClass=function(classes){return this.each(function(){var i,list;if(!classes){this.className='';}else{list=classes.split(' ');for(i in list){if(list[i]===''){i++;continue;}
-if(this.classList){this.classList.remove(list[i]);}else if(typeof this.className!=='undefined'){this.className=this.className.replace(new RegExp('(^|\\b)'+classes.split(' ').join('|')+'(\\b|$)','gi'),' ');}}}});};ts.fn.toggleClass=function(classes){return this.each(function(){var i,index,list,objClassList;list=void 0;index=void 0;objClassList=void 0;list=classes.split(' ');for(i in list){if(this.classList){this.classList.toggle(list[i]);}else{objClassList=this.className.split(' ');index=list.indexOf(list[i]);if(index>=0){objClassList.splice(index,1);}else{objClassList.push(list[i]);}
-this.className=list[i].join(' ');}}});};ts.fn.getCss=function(property){var err;try{if(0 in this){return document.defaultView.getComputedStyle(this[0],null).getPropertyValue(property);}else{return null;}}catch(error){err=error;return null;}};ts.fn.remove=function(){return this.each(function(){this.parentNode.removeChild(this);});};ts.fn.children=function(){var list;list=[];this.each(function(i,el){list.push.apply(list,el.children);});return ts(list);};ts.fn.find=function(selector){var list;if(typeof selector!=='string'){return null;}
-list=[];this.each(function(i,el){list.push.apply(list,el.querySelectorAll(selector));});if(list.length){return ts(list);}else{return null;}};ts.fn.parent=function(){if(0 in this){return ts(this[0].parentNode);}else{return null;}};ts.fn.parents=function(selector){var selector;var selector;var parents,that;that=this;selector=selector||null;parents=[];if(selector!==null){selector=ts(selector);}
-while(that){that=ts(that).parent()[0];if(!that){break;}
-if(selector===null||selector!==null&&Array.prototype.indexOf.call(selector,that)!==-1){parents.push(that);}}
-return ts(parents);};ts.fn.closest=function(selector){var selector;var that;that=this;selector=ts(selector);while(true){that=ts(that).parent()[0];if(!that){return null;}
-if(Array.prototype.indexOf.call(selector,that)!==-1){return ts(that);}}};ts.fn.contains=function(wants){var isTrue,selector;selector=ts(wants);isTrue=false;this.each(function(i,el){var children,si;children=el.childNodes;si=0;while(si<selector.length){if(Array.prototype.indexOf.call(children,selector[si])!==-1){isTrue=true;}
-si++;}});return isTrue;};ts.fn.attr=function(attr,value){value=value===null?null:value;if(typeof attr==='object'&&!value){return this.each(function(){var i;for(i in attr){this.setAttribute(i,attr[i]);}});}else if(attr!==null&&typeof value!=='undefined'){return this.each(function(){this.setAttribute(attr,value);});}else if(attr!==null&&!value){if(0 in this){return this[0].getAttribute(attr);}else{return null;}}};ts.fn.removeAttr=function(attr){return this.each(function(){this.removeAttribute(attr);});};animationEnd='webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';quadrant=function(el){var height,heightHalf,position,width,widthHalf;position=el.getBoundingClientRect();width=window.innerWidth;widthHalf=width / 2;height=window.innerHeight;heightHalf=height / 2;if(position.left<widthHalf&&position.top<heightHalf){return 2;}else if(position.left<widthHalf&&position.top>heightHalf){return 3;}else if(position.left>widthHalf&&position.top>heightHalf){return 4;}else if(position.left>widthHalf&&position.top<heightHalf){return 1;}};z_dropdownMenu=9;z_dropdownActive=10;z_dropdownHovered=11;slider_trackColor="#e9e9e9";slider_progressColor="rgb(150, 150, 150)";expandDropdown=function(target){return ts(target).css('z-index',z_dropdownActive).removeClass('hidden').addClass('visible').addClass('animating').one(animationEnd,function(){return ts(target).removeClass('animating');});};contractDropdown=function(target){return ts(target).css('z-index',z_dropdownMenu).removeClass('visible').addClass('hidden').addClass('animating').one(animationEnd,function(){return ts(target).removeClass('animating');});};detectDropdown=function(target,event){var hasDropdownParent,isDropdown,isDropdownIcon,isDropdownImage,isDropdownText,isItem,isTsMenuItem,parentIsItem,targetIsDropdown;isDropdown=ts(target).hasClass('dropdown');isDropdownText=ts(event.target).hasClass('text');isDropdownIcon=ts(event.target).hasClass('icon');isDropdownImage=ts(event.target).hasClass('image');hasDropdownParent=ts(event.target).parent().hasClass('dropdown');parentIsItem=ts(event.target).parent().hasClass('item');targetIsDropdown=ts(event.target).hasClass('dropdown');isItem=ts(event.target).hasClass('item');isTsMenuItem=ts(event.target).closest('.ts.menu');if((isTsMenuItem&&isDropdown&&parentIsItem&&targetIsDropdown)||(isTsMenuItem&&isDropdown&&!parentIsItem&&targetIsDropdown)||(isTsMenuItem&&isDropdown&&hasDropdownParent&&parentIsItem)){return expandDropdown(target);}else if((isDropdown&&isItem)||(isDropdown&&parentIsItem)){return contractDropdown('.ts.dropdown.visible');}else if(isDropdown&&isTsMenuItem){return expandDropdown(target);}else if(isDropdown&&targetIsDropdown){return expandDropdown(target);}else if(isDropdown&&isDropdownIcon&&hasDropdownParent){return expandDropdown(target);}else if(isDropdown&&isDropdownImage&&hasDropdownParent){return expandDropdown(target);}else if(isDropdown&&isDropdownText&&hasDropdownParent){return expandDropdown(target);}};ts(document).on('click',function(event){if(ts(event.target).closest('.dropdown:not(.basic)')===null&&!ts(event.target).hasClass('dropdown')){return contractDropdown('.ts.dropdown:not(.basic).visible');}});ts.fn.dropdown=function(command){return this.each(function(){return ts(this).on('click',function(e){ts(this).removeClass('upward downward leftward rightward');if(quadrant(this)===2){ts(this).addClass('downward rightward');}else if(quadrant(this)===3){ts(this).addClass('upward rightward');}else if(quadrant(this)===1){ts(this).addClass('downward leftward');}else if(quadrant(this)===4){ts(this).addClass('upward leftward');}
-contractDropdown('.ts.dropdown.visible');return detectDropdown(this,e);});});};ts.fn.checkbox=function(){return this.each(function(){return ts(this).on('click',function(e){var isRadio,name,tsThis;isRadio=ts(this).hasClass('radio');if(isRadio){tsThis=ts(this).find('input[type="radio"]');}else{tsThis=ts(this).find('input[type="checkbox"]');}
-if(tsThis===null){}else if(isRadio){name=tsThis.attr('name');ts(`input[type='radio'][name='${name}']`).removeAttr('checked');return tsThis.attr('checked','checked');}else{if(tsThis.attr('checked')==='checked'){return tsThis.removeAttr('checked');}else{return tsThis.attr('checked','checked');}}});});};ts.fn.tablesort=function(){return this.each(function(){var table;if(!ts(this).hasClass("sortable")){return;}
-table=this;return ts(this).find("thead th").each(function(i){return ts(this).on("click",function(){var isAsc,sortTable;isAsc=ts(this).hasClass('ascending');ts(this).closest('thead').find('th').removeClass('sorted ascending descending');sortTable=function(table,col,reverse){var element,j,len,results,tb,tr;tb=table.tBodies[0];tr=Array.prototype.slice.call(tb.rows,0);reverse=-((+reverse)||-1);tr=tr.sort(function(a,b){return reverse*(a.cells[col].textContent.trim().localeCompare(b.cells[col].textContent.trim()));});results=[];for(j=0,len=tr.length;j<len;j++){element=tr[j];results.push(tb.appendChild(element));}
-return results;};sortTable(table,i,isAsc);return ts(this).addClass(isAsc?'sorted descending':'sorted ascending');});});});};closeModal=function(modal){if(ts(modal).hasClass('opening')||ts(modal).hasClass('closing')){return;}
-ts(modal).closest('.ts.modals.dimmer').addClass('closing').one(animationEnd,function(){var dimmer;dimmer=this;return setTimeout(function(){ts(dimmer).removeClass('closing').removeClass('active');return ts('body').removeAttr('data-modal-lock');},30);});return ts(modal).addClass('closing').one(animationEnd,function(){return ts(this).removeClass('closing').removeAttr('open');});};bindModalButtons=function(modal,approve,deny,approveCallback,denyCalback,overwrite){var isset,tsApprove,tsDeny;tsApprove=ts(modal).find(approve);tsDeny=ts(modal).find(deny);isset=ts(modal).attr("data-modal-initialized")!==null;if(tsApprove!==null){if(overwrite){tsApprove.off('click');}
-if(overwrite||!isset&&!overwrite){tsApprove.on('click',function(){if(approveCallback.call(modal)!==false){return closeModal(modal);}});}}
-if(tsDeny!==null){if(overwrite){tsDeny.off('click');}
-if(overwrite||!isset&&!overwrite){tsDeny.on('click',function(){if(denyCalback.call(modal)!==false){return closeModal(modal);}});}}
-return ts(modal).attr('data-modal-initialized','true');};ts.fn.modal=function(option){return this.each(function(i){var approve,closeBtn,deny,modal,onApprove,onDeny,tsDimmer,tsModal;if(i>0||typeof this==='undefined'){return;}
-modal=this;tsModal=ts(this);tsDimmer=tsModal.closest('.ts.modals.dimmer');closeBtn=tsModal.find('.close.icon');if(tsDimmer===null){return;}
-if(option==='show'){ts('body').attr('data-modal-lock','true');tsDimmer.addClass('active').addClass('opening').one(animationEnd,function(){return ts(this).removeClass('opening');}).on('click',function(e){if(ts(modal).hasClass('closable')){if(e.target===this){return closeModal(modal);}}});if(closeBtn!==null){closeBtn.on('click',function(){return closeModal(modal);});}
-bindModalButtons(modal,'.positive, .approve, .ok','.negative, .deny, .cancel',function(){return true;},function(){return true;},false);return tsModal.attr('open','open').addClass('opening').one(animationEnd,function(){return tsModal.removeClass('opening');});}else if(option==='hide'){return closeModal(this);}else if(typeof option==='object'){approve=option.approve||'.positive, .approve, .ok';deny=option.deny||'.negative, .deny, .cancel';onDeny=option.onDeny||function(){return true;};onApprove=option.onApprove||function(){return true;};modal=this;return bindModalButtons(modal,approve,deny,onApprove,onDeny,true);}});};ts.fn.sidebar=function(options,selector,eventName){var closable,closeVisibleSidebars,dimPage,exclusive,pusher,scrollLock;dimPage=(options!=null?options.dimPage:void 0)||false;exclusive=(options!=null?options.exclusive:void 0)||false;scrollLock=(options!=null?options.scrollLock:void 0)||false;closable=(options!=null?options.closable:void 0)||true;pusher=document.querySelector('.pusher');closeVisibleSidebars=function(){ts('.ts.sidebar.visible:not(.static)').addClass('animating').removeClass('visible').one(animationEnd,function(){return ts(this).removeClass('animating');});return ts('.pusher').removeClass('dimmed').removeAttr('data-pusher-lock');};if(pusher.getAttribute('data-closable-bind')!=='true'){pusher.addEventListener('click',function(e){if(pusher.getAttribute('data-sidebar-closing')!=='true'){return closeVisibleSidebars();}});}
-pusher.setAttribute('data-closable-bind',true);return this.each(function(){var that;if(options==='toggle'||options==='hide'||options==='show'){ts(this).addClass('animating');pusher.setAttribute('data-sidebar-closing','true');setTimeout(function(){return pusher.removeAttribute('data-sidebar-closing');},300);if(this.getAttribute('data-dim-page')===null){this.setAttribute('data-dim-page',dimPage);}
-if(this.getAttribute('data-scroll-lock')===null){this.setAttribute('data-scroll-lock',scrollLock);}
-if(!ts(this).hasClass('visible')&&options==='hide'){ts(this).removeClass('animating');}
-if((ts(this).hasClass('visible')&&options==='toggle')||options==='hide'){ts('.pusher').removeClass('dimmed').removeAttr('data-pusher-lock');return ts(this).removeClass('visible').one(animationEnd,function(){return ts(this).removeClass('animating');});}else{if(this.getAttribute('data-exclusive')==='true'){closeVisibleSidebars();}
-if(this.getAttribute('data-dim-page')==='true'){ts('.pusher').addClass('dimmed');}
-if(this.getAttribute('data-scroll-lock')==='true'){ts('.pusher').attr('data-pusher-lock','true');}
-return ts(this).addClass('visible').removeClass('animating');}}else if(options==='attach events'){that=this;switch(eventName){case'show':return ts(selector).attr('data-sidebar-trigger','true').on('click',function(){return ts(that).sidebar('show');});case'hide':return ts(selector).attr('data-sidebar-trigger','true').on('click',function(){return ts(that).sidebar('hide');});case'toggle':return ts(selector).attr('data-sidebar-trigger','true').on('click',function(){return ts(that).sidebar('toggle');});}}else if(typeof options==='object'){this.setAttribute('data-closable',closable);this.setAttribute('data-scroll-lock',scrollLock);this.setAttribute('data-exclusive',exclusive);return this.setAttribute('data-dim-page',dimPage);}});};ts.fn.tab=function(option){return this.each(function(){var onSwitch;onSwitch=(option!=null?option.onSwitch:void 0)||function(){};return ts(this).on('click',function(){var tabGroup,tabName;if(ts(this).hasClass('active')){return;}
-tabName=ts(this).attr('data-tab');if(tabName===null){return;}
-tabGroup=ts(this).attr('data-tab-group');onSwitch(tabName,tabGroup);if(tabGroup===null){ts('[data-tab]:not(.tab):not([data-tab-group])').removeClass('active');ts('[data-tab]:not([data-tab-group]').removeClass('active');ts(`.tab[data-tab='${tabName}']:not([data-tab-group]`).addClass('active');}else{ts(`[data-tab-group='${tabGroup}']:not(.tab)`).removeClass('active');ts(`.tab[data-tab-group='${tabGroup}']`).removeClass('active');ts(`.tab[data-tab='${tabName}'][data-tab-group='${tabGroup}']`).addClass('active');}
-return ts(this).addClass('active');});});};ts.fn.popup=function(){return this.each(function(){var android,iOS,userAgent,winPhone;userAgent=navigator.userAgent||navigator.vendor||window.opera;winPhone=new RegExp("windows phone","i");android=new RegExp("android","i");iOS=new RegExp("iPad|iPhone|iPod","i");if(winPhone.test(userAgent)||android.test(userAgent)||(iOS.test(userAgent)&&!window.MSStream)){return ts(this).addClass('untooltipped');}});};ts.fn.slider=function(option){var counter,modify,outerCounter;outerCounter=option!=null?option.outerCounter:void 0;counter=option!=null?option.counter:void 0;modify=function(sliderEl,inputEl,counter,outerCounter){var counterEl,value;value=(inputEl.value-inputEl.getAttribute('min'))/(inputEl.getAttribute('max'-inputEl.getAttribute('min')));if(value===Number.POSITIVE_INFINITY){value=inputEl.value / 100;}
-if(counter!=null){counterEl=ts(sliderEl).find(counter);if(counterEl!=null){counterEl[0].innerText=inputEl.value;}}
-if(outerCounter!=null){ts(outerCounter).innerText=inputEl.value;}
-return ts(inputEl).css('background-image',`-webkit-gradient(linear,left top,right top,color-stop(${value},${slider_progressColor}),color-stop(${value},${slider_trackColor}))`);};return this.each(function(){var inputEl,sliderEl;sliderEl=this;inputEl=ts(this).find('input[type="range"]');modify(this,inputEl[0],counter,outerCounter);return inputEl.on('input',function(){return modify(sliderEl,this,counter,outerCounter);});});};ts.fn.editable=function(option){var autoClose,autoReplace,inputWrapper,onEdit,onEdited;autoReplace=(option!=null?option.autoReplace:void 0)||true;onEdit=(option!=null?option.onEdit:void 0)||function(){};onEdited=(option!=null?option.onEdited:void 0)||function(){};autoClose=(option!=null?option.autoClose:void 0)||true;inputWrapper=this;if(autoClose){ts(document).on('click',function(event){if(ts(event.target).closest('.ts.input')===null){return inputWrapper.each(function(){var contenteditable,input,text;input=ts(this).find('input');contenteditable=ts(this).find('[contenteditable]');text=ts(this).find('.text')[0];if(autoReplace){if(input!=null){text.innerText=input[0].value;}else if(contenteditable!=null){text.innerText=contenteditable[0].value;}}
-onEdited(this);return ts(this).removeClass('editing');});}});}
-return this.each(function(){var contenteditable,input;input=ts(this).find('input');contenteditable=ts(this).find('[contenteditable]');return ts(this).on('click',function(){ts(this).addClass('editing');onEdit(this);if(input!=null){return input[0].focus();}else if(contenteditable!=null){return contenteditable[0].focus();}});});};ts.fn.message=function(){return this.each(function(){return ts(this).find('i.close').on('click',function(){return ts(this).closest('.ts.message').addClass('hidden');});});};ts.fn.snackbar=function(option){var action,actionEmphasis,content,hoverStay,interval,onAction,onClose;content=(option!=null?option.content:void 0)||null;action=(option!=null?option.action:void 0)||null;actionEmphasis=(option!=null?option.actionEmphasis:void 0)||null;onClose=(option!=null?option.onClose:void 0)||function(){};onAction=(option!=null?option.onAction:void 0)||function(){};hoverStay=(option!=null?option.hoverStay:void 0)||false;interval=3500;if(content===null){return;}
-return this.each(function(){var ActionEl,close,contentEl,snackbar;snackbar=this;contentEl=ts(snackbar).find('.content');ActionEl=ts(snackbar).find('.action');ts(snackbar).removeClass('active animating').addClass('active animating').one(animationEnd,function(){return ts(this).removeClass('animating');}).attr('data-mouseon','false');contentEl[0].innerText=content;if(ActionEl!=null){ActionEl[0].innerText=action;}
-if((actionEmphasis!=null)&&(ActionEl!=null)){ActionEl.removeClass('primary info warning negative positive').addClass(actionEmphasis);}
-close=function(){ts(snackbar).removeClass('active').addClass('animating').one(animationEnd,function(){ts(this).removeClass('animating');return onClose(snackbar,content,action);});return clearTimeout(snackbar.snackbarTimer);};if(ActionEl!=null){ActionEl.off('click');ActionEl.on('click',function(){close();return onAction(snackbar,content,action);});}
-if(hoverStay){ts(snackbar).on('mouseenter',function(){return ts(this).attr('data-mouseon','true');});ts(snackbar).on('mouseleave',function(){return ts(this).attr('data-mouseon','false');});}
-clearTimeout(snackbar.snackbarTimer);return snackbar.snackbarTimer=setTimeout(function(){var hoverChecker;if(hoverStay){return hoverChecker=setInterval(function(){if(ts(snackbar).attr('data-mouseon')==='false'){close();return clearInterval(hoverChecker);}},600);}else{return close();}},interval);});};ts.fn.contextmenu=function(option){var menu;menu=(option!=null?option.menu:void 0)||null;ts(document).on('click',function(event){return ts('.ts.contextmenu.visible').removeClass('visible').addClass('hidden animating').one(animationEnd,function(){return ts(this).removeClass('visible animating downward upward rightward leftward');});});return this.each(function(){return ts(this).on('contextmenu',function(e){var h,r,w;event.preventDefault();ts(menu).addClass('visible');r=ts(menu)[0].getBoundingClientRect();ts(menu).removeClass('visible');w=window.innerWidth / 2;h=window.innerHeight / 2;ts(menu).removeClass('downward upward rightward leftward');if(e.clientX<w&&e.clientY<h){ts(menu).addClass('downward rightward').css('left',e.clientX+'px').css('top',e.clientY+'px');}else if(e.clientX<w&&e.clientY>h){ts(menu).addClass('upward rightward').css('left',e.clientX+'px').css('top',e.clientY-r.height+'px');}else if(e.clientX>w&&e.clientY>h){ts(menu).addClass('upward leftward').css('left',e.clientX-r.width+'px').css('top',e.clientY-r.height+'px');}else if(e.clientX>w&&e.clientY<h){ts(menu).addClass('downward leftward').css('left',e.clientX-r.width+'px').css('top',e.clientY+'px');}
-return ts(menu).removeClass('hidden').addClass('visible animating').one(animationEnd,function(){return ts(this).removeClass('animating');});});});};ts.fn.embed=function(option){return this.each(function(){var embedEl,icon,iconEl,id,options,placeholder,placeholderEl,query,source,url;source=this.getAttribute('data-source');url=this.getAttribute('data-url');id=this.getAttribute('data-id');placeholder=this.getAttribute('data-placeholder');options=this.getAttribute('data-options')||'';query=this.getAttribute('data-query')||'';icon=this.getAttribute('data-icon')||'video play';embedEl=this;if(this.getAttribute('data-embed-actived')){return;}
-if(query!==''){query='?'+query;}
-if(placeholder){placeholderEl=document.createElement('img');placeholderEl.src=placeholder;placeholderEl.className='placeholder';this.appendChild(placeholderEl);}
-if(icon&&(source||url||id)){iconEl=document.createElement('i');iconEl.className=icon+' icon';ts(iconEl).on('click',function(){var iframeEl,urlExtension,videoEl;urlExtension=url?url.split('.').pop():'';if(urlExtension.toUpperCase().indexOf('MOV')!==-1||urlExtension.toUpperCase().indexOf('MP4')!==-1||urlExtension.toUpperCase().indexOf('WEBM')!==-1||urlExtension.toUpperCase().indexOf('OGG')!==-1){videoEl=document.createElement('video');videoEl.src=url;if(options!==''){options.split(',').forEach(function(pair){var key,p,value;p=pair.split('=');key=p[0];value=p[1]||'';return videoEl.setAttribute(key.trim(),value.trim());});}
-ts(embedEl).addClass('active');return embedEl.appendChild(videoEl);}else{iframeEl=document.createElement('iframe');iframeEl.width='100%';iframeEl.height='100%';iframeEl.frameborder='0';iframeEl.scrolling='no';iframeEl.setAttribute('webkitAllowFullScreen','');iframeEl.setAttribute('mozallowfullscreen','');iframeEl.setAttribute('allowFullScreen','');if(source){switch(source){case'youtube':iframeEl.src='https://www.youtube.com/embed/'+id+query;break;case'vimeo':iframeEl.src='https://player.vimeo.com/video/'+id+query;}}else if(url){iframeEl.src=url+query;}
-ts(embedEl).addClass('active');return embedEl.appendChild(iframeEl);}});this.appendChild(iconEl);}
-return this.setAttribute('data-embed-actived','true');});};ts.fn.accordion=function(){};ts.fn.scrollspy=function(options){var anchors,container,target,tsTarget;target=document.querySelector(options.target);tsTarget=ts(target);container=this[0];anchors=document.querySelectorAll(`[data-scrollspy='${target.id}']`);if(this[0]===document.body){container=document;}
-return Array.from(anchors).forEach(function(element,index,array){var anchor,event,link;anchor=element;link=`[href='#${anchor.id}']`;event=function(){var containerRect,containerTop,continerIsBottom,length,rect;rect=anchor.getBoundingClientRect();if(container===document){containerRect=document.documentElement.getBoundingClientRect();continerIsBottom=document.body.scrollHeight-(document.body.scrollTop+window.innerHeight)===0;}else{containerRect=container.getBoundingClientRect();continerIsBottom=container.scrollHeight-(container.scrollTop+container.clientHeight)===0;}
-containerTop=containerRect.top<0?0:containerRect.top;if(rect.top-containerTop<10||(continerIsBottom&&(index===array.length-1))){tsTarget.find(link).addClass('active');length=tsTarget.find('.active').length;return tsTarget.find('.active').each(function(index){if(index!==length-1){return ts(this).removeClass('active');}});}else{return tsTarget.find(link).removeClass('active');}};event.call(this);container.addEventListener('scroll',event);return window.addEventListener('hashchange',event);});};
+// Generated by CoffeeScript 2.0.0-beta4
+// 主要的選擇器函式。
+var ts;
+
+ts = function(selector, context) {
+  var nodes, ref, tag;
+  nodes = [];
+  // 如果選擇器是文字，但是是標籤（如：`<div>`）就建立新的元素
+  if (typeof selector === 'string' && selector[0] === '<') {
+    tag = selector.match(/<(.*)\/>|<(.*)>/);
+    nodes = [document.createElement((ref = tag[1]) != null ? ref : tag[2])];
+  // 如果選擇器是一般的文字，就選取元素。
+  } else if (typeof selector === 'string' && context === void 0) {
+    document.querySelectorAll(selector).forEach(function(element) {
+      return nodes.push(element);
+    });
+  // 如果選擇器有上下文選擇器，就透過選擇器找出上下文元素。
+  } else if (typeof context === 'string') {
+    nodes = ts(selector).find(context).toArray();
+  // 如果選擇器是 NodeList 就轉換成元素陣列然後取出來接著繼續。
+  } else if (selector instanceof NodeList) {
+    selector.forEach(function(element) {
+      return nodes.push(element);
+    });
+  // 如果選擇器是陣列，就當作是元素陣列，取出來然後繼續。
+  // 或傳入的是一個選擇器，就取出裡面的元素然後繼續。
+  } else if (Array.isArray(selector) || (selector != null ? selector.isSelector : void 0) === true) {
+    nodes = nodes.concat(selector);
+  // 如果是單個 DOM 元素，就放入選擇器然後繼續。
+  } else if (selector instanceof HTMLElement || selector instanceof HTMLDocument || selector instanceof HTMLBodyElement) {
+    nodes = [selector];
+  }
+  // 保存目前的選擇器文字與上下文選擇器文字。
+  nodes.selector = typeof selector === 'string' ? selector : null;
+  nodes.context = typeof context === 'string' ? context : null;
+  // 將自訂的選擇器方法插入到節點陣列中，這樣才能夠串連使用。
+  Object.defineProperties(nodes, ts.fn);
+  // 將節點陣列標註為是選擇器，這樣才能判斷傳入的是不是我們自己的選擇器。
+  Object.defineProperty(nodes, 'isSelector', {
+    value: true
+  });
+  return nodes;
+};
+
+// 函式鏈。
+ts.fn = {};
+
+// 輔助函式。
+ts.helper = {};
+
+
+ts.helper.eventAlias = function(event) {
+  var alias;
+  event = event.split('.');
+  alias = event[1] !== void 0 ? `.${event[1]}` : '';
+  if (event.indexOf('animationend') !== -1) {
+    return `webkitAnimationEnd${alias} mozAnimationEnd${alias} MSAnimationEnd${alias} oanimationend${alias} animationend${alias}`;
+  } else if (event.indexOf('transitionend') !== -1) {
+    return `webkitTransitionEnd${alias} mozTransitionEnd${alias} oTransitionEnd${alias} msTransitionEnd${alias} transitionend${alias}`;
+  } else {
+    return event[0];
+  }
+};
+
+// Get
+
+// 取得選擇器內的指定元素，並且回傳一個 DOM 元素而非選擇器。
+ts.fn.get = {
+  value: function(index = 0) {
+    return this[index];
+  }
+};
+
+// ToArray
+
+// 將選擇器轉換成帶有節點的一般陣列。
+ts.fn.toArray = {
+  value: function() {
+    var array;
+    array = [];
+    this.forEach(function(element) {
+      return array.push(element);
+    });
+    return array;
+  }
+};
+
+// Each
+
+// 遍歷整個選擇器陣列。
+ts.fn.each = {
+  value: function(callback) {
+    this.forEach(function(element, index) {
+      return callback.call(element, element, index);
+    });
+    return this;
+  }
+};
+
+// CollectSwap
+
+// 將收集到的元素替換掉目前選擇器內的所有元素。
+ts.fn.collectSwap = {
+  value: function(callback) {
+    var collection, newSelector;
+    collection = [];
+    this.each(function(element, index) {
+      var result;
+      result = callback.call(element, element, index);
+      if (result === void 0 || result === null) {
+        return;
+      }
+      if (result instanceof NodeList) {
+        return result.forEach(function(el) {
+          return collection.push(el);
+        });
+      } else if (Array.isArray(result)) {
+        return collection = collection.concat(result);
+      } else {
+        if (collection.indexOf(result) === -1) {
+          return collection.push(result);
+        }
+      }
+    });
+    // 透過 Set 型態移除重複的節點。
+    collection = new Set(collection);
+    // 然後將 Set 轉換成陣列，建立新的選擇器。
+    newSelector = ts([...collection]);
+    // 保存選擇器之前的所有節點。
+    Object.defineProperty(newSelector, 'prevObject', {
+      value: this
+    });
+    // 回傳這個新的選擇器。
+    return newSelector;
+  }
+};
+
+// Eq
+
+// 取得選擇器的指定元素，然後繼續回傳僅帶有該元素的選擇器。
+ts.fn.eq = {
+  value: function(index) {
+    return ts(this.get(index));
+  }
+};
+
+// Parent
+
+// 回傳元素的父元素選擇器。
+ts.fn.parent = {
+  value: function() {
+    return this.collectSwap(function() {
+      return this.parentNode;
+    });
+  }
+};
+
+// Closest
+
+// 回傳最接近指定的父元素選擇器。
+ts.fn.closest = {
+  value: function(selector) {
+    return this.collectSwap(function() {
+      return this.closest(selector);
+    });
+  }
+};
+
+// Find
+
+// 在目前元素中搜尋指定元素並回傳其選擇器。
+ts.fn.find = {
+  value: function(selector) {
+    return this.collectSwap(function() {
+      return this.querySelectorAll(selector);
+    });
+  }
+};
+
+// Insert Before
+
+ts.fn.insertBefore = {
+  value: function(target) {
+    return this.each(function() {
+      return ts(target).each((element) => {
+        return element.parentNode.insertBefore(this, element);
+      });
+    });
+  }
+};
+
+// Insert After
+
+ts.fn.insertAfter = {
+  value: function(target) {
+    return this.each(function() {
+      return ts(target).each((element) => {
+        return element.parentNode.insertBefore(this, element.nextSibling);
+      });
+    });
+  }
+};
+
+// Wrap
+
+// 將元素用指定元素包覆起來。
+ts.fn.wrap = {
+  value: function(element) {
+    return this.each(function() {
+      if (this.nextSibling) {
+        this.parentNode.insertBefore(element, this.nextSibling);
+      } else {
+        this.parentNode.appendChild(element);
+      }
+      return element.appendChild(this);
+    });
+  }
+};
+
+// Clone
+
+// 複製元素。
+ts.fn.clone = {
+  value: function() {
+    return this.collectSwap(function() {
+      return this.cloneNode(true);
+    });
+  }
+};
+
+// Append
+
+// 將元素插入在目前選擇器元素的內部最後面。
+ts.fn.append = {
+  value: function(element) {
+    var shouldClone;
+    shouldClone = this.length !== 1;
+    if (element.isSelector !== void 0) {
+      return this.each(function() {
+        return element.each((e) => {
+          return this.appendChild(shouldClone ? e.cloneNode(true) : e);
+        });
+      });
+    } else if (typeof element === 'string') {
+      return this.each(function() {
+        return this.insertAdjacentHTML('beforeend', element);
+      });
+    } else {
+      return this.each(function() {
+        return this.appendChild(shouldClone ? element.cloneNode(true) : element);
+      });
+    }
+  }
+};
+
+// AppendTo
+
+// 將目前選擇器元素插入到指定元素的內部最後面。
+ts.fn.appendTo = {
+  value: function(selector) {
+    return this.each(function() {
+      return ts(selector).append(this);
+    });
+  }
+};
+
+// Prepend
+
+// 將元素插入在目前選擇器元素的內部最前面。
+ts.fn.prepend = {
+  value: function(element) {
+    var shouldClone;
+    shouldClone = this.length !== 1;
+    if (element.isSelector !== void 0) {
+      return this.each(function() {
+        return element.each((e) => {
+          return this.prepend(shouldClone ? e.cloneNode(true) : e);
+        });
+      });
+    } else if (typeof element === 'string') {
+      return this.each(function() {
+        return this.insertAdjacentHTML('afterbegin', element);
+      });
+    } else {
+      return this.each(function() {
+        return this.prepend(shouldClone ? element.cloneNode(true) : element);
+      });
+    }
+  }
+};
+
+// PrependTo
+
+// 將目前選擇器元素插入到指定元素的內部最前面。
+ts.fn.prependTo = {
+  value: function(selector) {
+    return this.each(function() {
+      return ts(selector).prepend(this);
+    });
+  }
+};
+
+// Remove
+
+// 將選擇器元素從頁面上中移除。
+ts.fn.remove = {
+  value: function() {
+    return this.each(function() {
+      var ref;
+      return (ref = this.parentNode) != null ? ref.removeChild(this) : void 0;
+    });
+  }
+};
+
+// Is
+
+// 選擇一些元素，然後用來比對目前的選擇器元素是否在這群當中。
+ts.fn.is = {
+  value: function(selector) {
+    var compareElements, isInElements;
+    compareElements = document.querySelectorAll(selector);
+    isInElements = false;
+    this.each(function() {
+      return compareElements.forEach(function(compareElement) {
+        if (this === compareElement) {
+          return isInElements = true;
+        }
+      }, this);
+    });
+    return isInElements;
+  }
+};
+
+// Slice
+
+// 替元素陣列進行切分。
+ts.fn.slice = {
+  value: function(from, to) {
+    return ts(this.toArray().slice(from, to));
+  }
+};
+
+// Children
+
+// 取得容器裡的第一層子節點。
+ts.fn.children = {
+  value: function(selector) {
+    return this.collectSwap(function() {
+      return this.querySelectorAll(selector != null ? `:scope > ${selector}` : ':scope > *');
+    });
+  }
+};
+
+
+ts.fn.replaceWith = {
+  value: function(selector) {
+    var element;
+    element = ts(selector).get();
+    return this.each(function() {
+      return this.replaceWith(element);
+    });
+  }
+};
+
+
+ts.fn.last = {
+  value: function() {
+    return this.eq(this.length - 1);
+  }
+};
+
+// Next
+
+// 下一個元素。
+ts.fn.next = {
+  value: function() {
+    return this.collectSwap(function() {
+      return this.nextElementSibling;
+    });
+  }
+};
+
+// Prev
+
+// 上一個元素。
+ts.fn.prev = {
+  value: function() {
+    return this.collectSwap(function() {
+      return this.previousElementSibling;
+    });
+  }
+};
+
+// NextAll
+
+// 這個元素之後的所有同階層元素。
+ts.fn.nextAll = {
+  value: function(selector) {
+    return this.collectSwap(function() {
+      var $children, $parent, $self, index;
+      $self = ts(this);
+      $parent = $self.parent();
+      $children = selector != null ? $parent.find(`:scope > ${selector}`) : $parent.find(':scope > *');
+      index = $self.index();
+      return $children.slice(index + 1);
+    });
+  }
+};
+
+// PrevAll
+
+// 這個元素之前的所有同階層元素。
+ts.fn.prevAll = {
+  value: function(selector) {
+    return this.collectSwap(function() {
+      var $children, $parent, $self, index;
+      $self = ts(this);
+      $parent = $self.parent();
+      $children = selector != null ? $parent.find(`:scope > ${selector}`) : $parent.find(':scope > *');
+      index = $self.index();
+      return $children.slice(0, index);
+    });
+  }
+};
+
+// AddBack
+
+// 在目前的選擇器節點陣列中加上先前選擇的所有節點。
+ts.fn.addBack = {
+  value: function() {
+    if (this.prevObject) {
+      this.prevObject.toArray().forEach((element) => {
+        return this.push(element);
+      });
+    }
+    return this;
+  }
+};
+
+// Index
+
+// 該元素在容器內的索引。
+ts.fn.index = {
+  value: function() {
+    var index, node;
+    node = this.get(0);
+    index = 0;
+    if (node == null) {
+      return -1;
+    }
+    while ((node = node.previousElementSibling)) {
+      index++;
+    }
+    return index;
+  }
+};
+
+// Attr
+
+// 取得或是建立新的標籤到目前的選擇器元素。
+ts.fn.attr = {
+  value: function(name, value) {
+    var ref;
+    // 如果有 value 就設置簡單鍵值資料。
+    if (value !== void 0) {
+      return this.each(function() {
+        return this.setAttribute(name, value);
+      });
+    // 如果傳入的是物件就設置多重資料。
+    } else if (typeof name === 'object') {
+      return this.each(function() {
+        var key, results;
+        results = [];
+        for (key in name) {
+          results.push(this.setAttribute(key, name[key]));
+        }
+        return results;
+      });
+    } else {
+      return (ref = this.get()) != null ? ref.getAttribute(name) : void 0;
+    }
+  }
+};
+
+// RemoveAttr
+
+// 移除目前選擇器元素的指定標籤。
+ts.fn.removeAttr = {
+  value: function(name) {
+    return this.each(function() {
+      return this.removeAttribute(name);
+    });
+  }
+};
+
+// AddClass
+
+// 在目前選擇器元素插入新的樣式類別名稱。
+ts.fn.addClass = {
+  value: function(names) {
+    return this.each(function() {
+      return DOMTokenList.prototype.add.apply(this.classList, names.split(' ').filter(Boolean));
+    });
+  }
+};
+
+// RemoveClass
+
+// 移除目前選擇器元素的指定樣式類別。
+ts.fn.removeClass = {
+  value: function(names) {
+    return this.each(function() {
+      return DOMTokenList.prototype.remove.apply(this.classList, names.split(' ').filter(Boolean));
+    });
+  }
+};
+
+// ToggleClass
+
+// 切換目前選擇器元素的樣式。
+ts.fn.toggleClass = {
+  value: function(names) {
+    return this.each(function() {
+      return names.split(' ').forEach(function(name) {
+        return this.classList.toggle(name);
+      }, this);
+    });
+  }
+};
+
+// HasClass
+
+// 回傳選擇器元素是否帶有指定樣式類別，是布林值。
+ts.fn.hasClass = {
+  value: function(name) {
+    var ref;
+    return (ref = this.get(0)) != null ? ref.classList.contains(name) : void 0;
+  }
+};
+
+// CSS
+
+// 將選擇器元素套用指定的 CSS 樣式。
+ts.fn.css = {
+  value: function(name, value) {
+    var key;
+    // 有 name 也有 value 就設置樣式。
+    if (typeof name === 'string' && value !== void 0) {
+      return this.each(function() {
+        return this.style[name] = value;
+      });
+    // 有 name 但沒有 value 就取得樣式。
+    } else if (typeof name === 'string' && value === void 0) {
+      if (this.get() != null) {
+        return document.defaultView.getComputedStyle(this.get(), null).getPropertyValue(name);
+      } else {
+        return null;
+      }
+    // 有 name 但他是 object，就設置多重樣式。
+    } else if (typeof name === 'object') {
+      for (key in name) {
+        this.each(function() {
+          return this.style[key] = name[key];
+        });
+      }
+      return this;
+    }
+  }
+};
+
+// On
+
+// 綁定並註冊一個事件監聽器。
+ts.fn.on = {
+  value: function(events, handler, options) {
+    events = ts.helper.eventAlias(events);
+    // $events.click =
+    // {
+    //     anonymous: [
+    //         {
+    //             once: true,
+    //             func: func()
+    //         }
+    //     ]
+    //     alias1:
+    //     {
+    //         once: true,
+    //         func: func()
+    //     }
+    // }
+    return this.each(function() {
+      if (this.addEventListener === void 0) {
+        return;
+      }
+      if (this.$events === void 0) {
+        this.$events = {};
+      }
+      return events.split(' ').forEach(function(eventName) {
+        var event, eventAlias, hasAlias;
+        event = eventName.split('.');
+        // 透過事件的「event.alias」取得「點」後面的別名。
+        hasAlias = event.length > 1;
+        eventName = event[0];
+        eventAlias = hasAlias ? event[1] : null;
+        // 如果事件還沒在這個物件內產生過，就初始化一個事件結構。
+        if (this.$events[eventName] === void 0) {
+          this.$events[eventName] = {
+            anonymous: []
+          };
+          // 然後建立一個管理多個事件的事件管理處理程式。
+          this.addEventListener(eventName, function(event) {
+            var alias, index, item, results;
+            // 如果該事件已經被移除則停止後續的反應。
+            if (this.$events[eventName] === void 0) {
+              return;
+            }
+            results = [];
+            // 將被觸發的事件裡面的所有處理程式全部呼叫一次。
+            for (alias in this.$events[eventName]) {
+              // 如果這是匿名函式陣列的話。
+              if (alias === 'anonymous') {
+                // 將所有匿名函式呼叫一次。
+                //@$events[eventName][alias].forEach (item, index) ->
+                //    item.func.call(@, event)
+                //    # 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
+                //    if item.once is true
+                //        @$events[eventName][alias].splice(index, 1)
+                //, @
+                index = this.$events[eventName][alias].length;
+                results.push((function() {
+                  var results1;
+                  results1 = [];
+                  while (index--) {
+                    item = this.$events[eventName][alias][index];
+                    item.func.call(this, event);
+                    // 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
+                    if (item.once === true) {
+                      results1.push(this.$events[eventName][alias].splice(index, 1));
+                    } else {
+                      results1.push(void 0);
+                    }
+                  }
+                  return results1;
+                }).call(this));
+              } else {
+                // 不然如果是別名函式的話。
+                this.$events[eventName][alias].func.call(this, event);
+                // 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
+                if (this.$events[eventName][alias].once === true) {
+                  results.push(delete this.$events[eventName][alias]);
+                } else {
+                  results.push(void 0);
+                }
+              }
+            }
+            return results;
+          });
+        }
+        // 將新的事件處理程式註冊到事件清單中。
+        // 如果有別名，就不要推送到匿名陣列中，我們替這個別名另開物件。
+        if (hasAlias) {
+          return this.$events[eventName][eventAlias] = {
+            func: handler,
+            once: options != null ? options.once : void 0
+          };
+        } else {
+          // 如果沒有，就照常推進匿名陣列中。
+          return this.$events[eventName].anonymous.push({
+            func: handler,
+            once: options != null ? options.once : void 0
+          });
+        }
+      }, this);
+    });
+  }
+};
+
+// One
+
+// 綁定一次性的事件監聽器，當被觸發之後就會被移除。
+ts.fn.one = {
+  value: function(events, handler) {
+    events = ts.helper.eventAlias(events);
+    return this.each(function() {
+      return ts(this).on(events, handler, {
+        once: true
+      });
+    });
+  }
+};
+
+// Off
+
+// 註銷事件監聽器。
+ts.fn.off = {
+  value: function(events, handler) {
+    events = ts.helper.eventAlias(events);
+    return this.each(function() {
+      return events.split(' ').forEach((eventName) => {
+        var event, eventAlias, hasAlias;
+        if (this.$events === void 0) {
+          return;
+        }
+        if (this.$events[eventName] === void 0) {
+          return;
+        }
+        event = eventName.split('.');
+        // 透過事件的「event.alias」取得「點」後面的別名。
+        hasAlias = event.length > 1;
+        eventName = event[0];
+        eventAlias = hasAlias ? event[1] : null;
+        if (hasAlias) {
+          delete this.$events[eventName][eventAlias];
+          return;
+        }
+        if (handler === void 0) {
+          this.$events[eventName].anonymous = [];
+          return;
+        }
+        return this.$events[eventName].anonymous.forEach((item, index) => {
+          if (handler === item.func) {
+            return this.$events[eventName].anonymous.splice(index, 1);
+          }
+        });
+      }, this);
+    });
+  }
+};
+
+// Trigger
+
+// 觸發指定事件。
+ts.fn.trigger = {
+  value: function(events) {
+    if (events === 'animationend') {
+      events = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+    }
+    if (events === 'transitionend') {
+      events = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
+    }
+    return this.each(function() {
+      return events.split(' ').forEach((eventName) => {
+        var event;
+        event = new Event(eventName);
+        return this.dispatchEvent(event);
+      });
+    });
+  }
+};
+
+// Emulate
+
+// 在指定的秒數過後觸發指定事件，若已被觸發則不再次觸發。
+// 這能用以強迫讓某個事件發生。
+ts.fn.emulate = {
+  value: function(event, duration) {
+    return this.each(function() {
+      var called;
+      called = false;
+      ts(this).one(event, function() {
+        return called = true;
+      });
+      return setTimeout(() => {
+        if (!called) {
+          return ts(this).trigger(event);
+        }
+      }, duration);
+    });
+  }
+};
+
+// Text
+
+// 變更或取得選擇器元素的內容文字。
+ts.fn.text = {
+  value: function(text) {
+    var ref;
+    if (text !== void 0) {
+      return this.each(function() {
+        return this.innerText = text;
+      });
+    } else {
+      return (ref = this.get()) != null ? ref.innerText : void 0;
+    }
+  }
+};
+
+// Val
+
+// 變更或取得選擇器元素的值。
+ts.fn.val = {
+  value: function(value) {
+    var ref;
+    if (value !== void 0) {
+      return this.each(function() {
+        return this.value = value;
+      });
+    } else {
+      return (ref = this.get()) != null ? ref.value : void 0;
+    }
+  }
+};
+
+// HTML
+
+// 變更或取得選擇器元素的 HTML。
+ts.fn.html = {
+  value: function(html) {
+    var ref;
+    if (html !== void 0) {
+      return this.each(function() {
+        return this.innerHTML = html;
+      });
+    } else {
+      return (ref = this.get()) != null ? ref.innerHTML : void 0;
+    }
+  }
+};
+
+// Empty
+
+// 將選擇器元素的內容清除，例如值或文字。
+ts.fn.empty = {
+  value: function() {
+    return this.each(function() {
+      if (this.value !== void 0) {
+        this.value = null;
+      }
+      if (this.innerHTML !== void 0) {
+        this.innerHTML = null;
+      }
+      if (this.innerText !== void 0) {
+        return this.innerText = null;
+      }
+    });
+  }
+};
+
+// Prop
+
+// 變更或取得選擇器元素的屬性，例如 `.src`、`.width`。
+ts.fn.prop = {
+  value: function(name, value) {
+    var key, ref;
+    // 有 name 也有 value 就設置屬性。
+    if (typeof name === 'string' && value !== void 0) {
+      return this.each(function() {
+        return this[name] = value;
+      });
+    // 有 name 但沒有 value 就取得屬性。
+    } else if (typeof name === 'string' && value === void 0) {
+      return (ref = this.get()) != null ? ref[name] : void 0;
+    // 有 name 但他是 object，就設置多重屬性。
+    } else if (typeof name === 'object') {
+      for (key in name) {
+        this.each(function() {
+          return this[key] = name[key];
+        });
+      }
+      return this;
+    }
+  }
+};
+
+// Data
+
+// 在選擇器元素中存放資料，類似 Attr 但頁面不可見。
+ts.fn.data = {
+  value: function(name, value) {
+    var key, ref, ref1;
+    // 有 name 也有 value 就設置資料。
+    if (typeof name === 'string' && value !== void 0) {
+      return this.each(function() {
+        if (this.$data === void 0) {
+          this.$data = {};
+        }
+        return this.$data[name] = value;
+      });
+    // 有 name 但沒有 value 就取得資料。
+    } else if (typeof name === 'string' && value === void 0) {
+      return (ref = this.get()) != null ? (ref1 = ref.$data) != null ? ref1[name] : void 0 : void 0;
+    // 有 name 但他是 object，就設置多重樣式。
+    } else if (typeof name === 'object') {
+      for (key in name) {
+        this.each(function() {
+          if (this.$data === void 0) {
+            this.$data = {};
+          }
+          return this.$data[key] = name[key];
+        });
+      }
+      return this;
+    }
+  }
+};
+
+// Remove Data
+
+// 移除指定的資料。
+ts.fn.removeData = {
+  value: function(name) {
+    return this.each(function() {
+      if (this.$data[name] != null) {
+        return delete this.$data[name];
+      }
+    });
+  }
+};
+
+// Has Timer
+
+// 確認是否有指定的計時器。
+ts.fn.hasTimer = {
+  value: function(name) {
+    var ref, ref1;
+    return ((ref = this.get(0)) != null ? (ref1 = ref.$timers) != null ? ref1[name] : void 0 : void 0) != null;
+  }
+};
+
+// Get Timer
+
+// 取得計時器內容。
+ts.fn.getTimer = {
+  value: function(name) {
+    var ref, ref1;
+    return (ref = this.get(0)) != null ? (ref1 = ref.$timers) != null ? ref1[name] : void 0 : void 0;
+  }
+};
+
+// Set Timer
+
+// 設置一個新的計時器。
+ts.fn.setTimer = {
+  value: function(options) {
+    options = Object.assign({}, {
+      name: '',
+      callback: function() {},
+      interval: 0,
+      looping: false,
+      visible: false
+    }, options);
+    return this.each(function() {
+      var timer;
+      if (this.$timers === void 0) {
+        this.$timers = {};
+      }
+      if (this.$timers[options.name] !== void 0) {
+        clearInterval(this.$timers[options.name].timer);
+      }
+      timer = () => {
+        var ref;
+        // 當設置有說明，頁面不可見的時候就不要繼續計時。
+        if (options.visible && document.hidden) {
+          return;
+        }
+        // 替計時器加上 10 毫秒。
+        this.$timers[options.name].passed += 10;
+        // 如果計時器的經過時間還不到使用者設定的時間
+        // 就返回而不要繼續執行。
+        if (this.$timers[options.name].passed < options.interval) {
+          return;
+        }
+        // 呼叫回呼函式。
+        options.callback();
+        // 如果要循環的話，就在計時器執行後重設時間即可。
+        if (options.looping) {
+          return this.$timers[options.name].passed = 0;
+        } else {
+          // 不然就移除計時器資訊。
+          return clearInterval((ref = this.$timers[options.name]) != null ? ref.timer : void 0);
+        }
+      };
+      // 移除在 DOM 元素內的這個計時器物件。
+      //delete @$timers[options.name]
+
+      // 在此元素內初始化計時器物件。
+      return this.$timers[options.name] = {
+        timer: setInterval(timer, 10),
+        passed: 0,
+        callback: options.callback,
+        interval: options.interval,
+        looping: options.looping,
+        visible: options.visible,
+        initializer: timer,
+        paused: false
+      };
+    });
+  }
+};
+
+// Pause Timer
+
+// 暫停一個計時器。
+ts.fn.pauseTimer = {
+  value: function(name) {
+    return this.each(function() {
+      var ref;
+      if (((ref = this.$timers) != null ? ref[name] : void 0) == null) {
+        return;
+      }
+      // 清除計數計時器達到暫停效果。
+      clearInterval(this.$timers[name].timer);
+      // 表示暫停。
+      return this.$timers[name].paused = true;
+    });
+  }
+};
+
+// Play Timer
+
+// 重啟一個計時器。
+ts.fn.playTimer = {
+  value: function(name) {
+    return this.each(function() {
+      var ref;
+      if (((ref = this.$timers) != null ? ref[name] : void 0) == null) {
+        return;
+      }
+      if (!this.$timers[name].paused) {
+        return;
+      }
+      // 重新初始化計數計時器來達到繼續的效果。
+      this.$timers[name].timer = setInterval(this.$timers[name].initializer, 10);
+      // 表示重新啟動。
+      return this.$timers[name].paused = false;
+    });
+  }
+};
+
+// Remove Timer
+
+// 移除一個計時器。
+ts.fn.removeTimer = {
+  value: function(name) {
+    return this.each(function() {
+      var ref;
+      if (((ref = this.$timers) != null ? ref[name] : void 0) == null) {
+        return;
+      }
+      // 清除計數計時器。
+      clearInterval(this.$timers[name].timer);
+      // 移除在 DOM 元素內的計時器物件。
+      return delete this.$timers[name];
+    });
+  }
+};
