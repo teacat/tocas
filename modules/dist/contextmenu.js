@@ -244,7 +244,7 @@ ContextMenu = (function() {
     // 複合式選單是否可因為使用者點擊選單外面而自動關閉。
     closable: true,
     // 複合式選單是否可以因為在觸控裝置上長按而顯示。
-    touch: true,
+    touch: true, //#######FDSFKOSDJFOKSDJFOJSDOFJOSDJFOOSDFIOJSDIOFJSIFJIOSDIJF
     // 當複合式選單出現時所會呼叫的回呼函式。
     onShow: (target) => {
       return true;
@@ -254,9 +254,7 @@ ContextMenu = (function() {
       return true;
     },
     // 當複合式選單被點擊項目時所會呼叫的回呼函式。
-    onSelect: (value, element) => {
-      return true;
-    }
+    onSelect: (value, element) => {}
   };
 
   // 選單閉合的毫秒時間。
