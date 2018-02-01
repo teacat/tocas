@@ -42,15 +42,26 @@ details summary:active
     transition: $accordion_contentTransition
 
 .ts.accordion .content:not(.active)
-    display: none
+    display: none !important
 
 //-------------------//
 //        Icon
 //-------------------//
 
 .ts.accordion .title .dropdown.icon
-    transition: $accordion_iconTransition
+    //transition: $accordion_iconTransition
 
 .ts.accordion .title:not(.active) .dropdown.icon,
 details:not([open]) summary .dropdown.icon
     transform: rotate(-90deg)
+
+//-------------------//
+//     Coupling
+//-------------------//
+
+.ts.accordion.menu .title i.dropdown.icon
+    float    : right
+    transform: rotate(90deg)
+
+.ts.accordion.menu .title.active i.dropdown.icon
+    transform: rotate(0deg)
