@@ -26,6 +26,8 @@ ts = function(selector, context) {
   // 或傳入的是一個選擇器，就取出裡面的元素然後繼續。
   } else if (Array.isArray(selector) || (selector != null ? selector.isSelector : void 0) === true) {
     nodes = nodes.concat(selector);
+    selector = selector.selector;
+    context = selector != null ? selector.context : void 0;
   // 如果是單個 DOM 元素，就放入選擇器然後繼續。
   } else if (selector instanceof HTMLElement || selector instanceof HTMLDocument || selector instanceof HTMLBodyElement) {
     nodes = [selector];
@@ -50,15 +52,16 @@ ts.helper = {};
 
 
 ts.helper.eventAlias = function(event) {
-  var alias;
-  event = event.split('.');
-  alias = event[1] !== void 0 ? `.${event[1]}` : '';
-  if (event.indexOf('animationend') !== -1) {
-    return `webkitAnimationEnd${alias} mozAnimationEnd${alias} MSAnimationEnd${alias} oanimationend${alias} animationend${alias}`;
-  } else if (event.indexOf('transitionend') !== -1) {
-    return `webkitTransitionEnd${alias} mozTransitionEnd${alias} oTransitionEnd${alias} msTransitionEnd${alias} transitionend${alias}`;
-  } else {
-    return event[0];
+  var alias, pair;
+  pair = event.split('.');
+  alias = pair[1] !== void 0 ? `.${pair[1]}` : '';
+  switch (false) {
+    case pair.indexOf('animationend') === -1:
+      return `webkitAnimationEnd${alias} mozAnimationEnd${alias} MSAnimationEnd${alias} oanimationend${alias} animationend${alias}`;
+    case pair.indexOf('transitionend') === -1:
+      return `webkitTransitionEnd${alias} mozTransitionEnd${alias} oTransitionEnd${alias} msTransitionEnd${alias} transitionend${alias}`;
+    default:
+      return event;
   }
 };
 
@@ -572,19 +575,71 @@ ts.fn.css = {
 
 // 綁定並註冊一個事件監聽器。
 ts.fn.on = {
-  value: function(events, handler, options) {
+  value: function() {
+    var data, events, handler, options, selector;
+    switch (arguments.length) {
+      // Event 與 Handler。
+      case 2:
+        events = arguments[0];
+        handler = arguments[1];
+        break;
+      // Event 與 Selector 與 Handler。
+      // Event 與 Data 與 Handler。
+      // Event 與 Handler 與 Options。
+      case 3:
+        events = arguments[0];
+        handler = arguments[2];
+        switch (typeof arguments[1]) {
+          case "string":
+            selector = arguments[1];
+            break;
+          case "function":
+            handler = arguments[1];
+            options = arguments[2];
+            break;
+          default:
+            data = arguments[1];
+        }
+        break;
+      // Event 與 Selector 與 Data 與 Handler。
+      // Event 與 Selector 與 Handler 與 Options。
+      case 4:
+        events = arguments[0];
+        selector = arguments[1];
+        handler = arguments[3];
+        switch (typeof arguments[2]) {
+          case "function":
+            handler = arguments[2];
+            options = arguments[3];
+            break;
+          default:
+            data = arguments[2];
+        }
+        break;
+      // Event 與 Selector 與 Data 與 Handler 與 Options。
+      case 5:
+        events = arguments[0];
+        selector = arguments[1];
+        data = arguments[2];
+        handler = arguments[3];
+        options = arguments[4];
+    }
     events = ts.helper.eventAlias(events);
     // $events.click =
     // {
     //     anonymous: [
     //         {
-    //             once: true,
-    //             func: func()
+    //             once    : true,
+    //             selector: ".button",
+    //             data    : {},
+    //             func    : func()
     //         }
     //     ]
     //     alias1:
     //     {
     //         once: true,
+    //         selector: ".button",
+    //         data    : {},
     //         func: func()
     //     }
     // }
@@ -609,7 +664,11 @@ ts.fn.on = {
           };
           // 然後建立一個管理多個事件的事件管理處理程式。
           this.addEventListener(eventName, function(event) {
-            var alias, index, item, results;
+            var alias, calledAlias, closest, context, hasArgs, index, item, ref, ref1, results;
+            
+            hasArgs = ((ref = event.detail) != null ? (ref1 = ref.args) != null ? ref1.length : void 0 : void 0) > 0;
+            
+            calledAlias = event.detail.alias;
             // 如果該事件已經被移除則停止後續的反應。
             if (this.$events[eventName] === void 0) {
               return;
@@ -617,22 +676,38 @@ ts.fn.on = {
             results = [];
             // 將被觸發的事件裡面的所有處理程式全部呼叫一次。
             for (alias in this.$events[eventName]) {
+              if (calledAlias && calledAlias !== alias) {
+                continue;
+              }
+              // 設置事件的上下文。
+              context = this;
+              // 如果這個事件有選擇器的話，則使用該選擇器為主。
+              if (this.$events[eventName][alias].selector !== void 0) {
+                selector = this.$events[eventName][alias].selector;
+                closest = ts(event.target).closest(selector);
+                
+                if (closest.length === 0) {
+                  continue;
+                } else {
+                  // 替換上下文為選擇器元素。
+                  context = closest.get();
+                }
+              }
+              // 將事件預資料放入事件中供處理函式取得。
+              event.data = this.$events[eventName][alias].data;
               // 如果這是匿名函式陣列的話。
               if (alias === 'anonymous') {
-                // 將所有匿名函式呼叫一次。
-                //@$events[eventName][alias].forEach (item, index) ->
-                //    item.func.call(@, event)
-                //    # 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
-                //    if item.once is true
-                //        @$events[eventName][alias].splice(index, 1)
-                //, @
                 index = this.$events[eventName][alias].length;
                 results.push((function() {
                   var results1;
                   results1 = [];
                   while (index--) {
                     item = this.$events[eventName][alias][index];
-                    item.func.call(this, event);
+                    if (hasArgs) {
+                      item.func.call(context, event, ...event.detail.args);
+                    } else {
+                      item.func.call(context, event);
+                    }
                     // 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
                     if (item.once === true) {
                       results1.push(this.$events[eventName][alias].splice(index, 1));
@@ -644,7 +719,11 @@ ts.fn.on = {
                 }).call(this));
               } else {
                 // 不然如果是別名函式的話。
-                this.$events[eventName][alias].func.call(this, event);
+                if (hasArgs) {
+                  this.$events[eventName][alias].func.call(context, event, ...event.detail.args);
+                } else {
+                  this.$events[eventName][alias].func.call(context, event);
+                }
                 // 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
                 if (this.$events[eventName][alias].once === true) {
                   results.push(delete this.$events[eventName][alias]);
@@ -661,12 +740,16 @@ ts.fn.on = {
         if (hasAlias) {
           return this.$events[eventName][eventAlias] = {
             func: handler,
+            selector: selector,
+            data: data,
             once: options != null ? options.once : void 0
           };
         } else {
           // 如果沒有，就照常推進匿名陣列中。
           return this.$events[eventName].anonymous.push({
             func: handler,
+            selector: selector,
+            data: data,
             once: options != null ? options.once : void 0
           });
         }
@@ -732,16 +815,21 @@ ts.fn.off = {
 // 觸發指定事件。
 ts.fn.trigger = {
   value: function(events) {
-    if (events === 'animationend') {
-      events = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-    }
-    if (events === 'transitionend') {
-      events = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend';
-    }
+    var customArguments;
+    events = ts.helper.eventAlias(events);
+    customArguments = [].slice.call(arguments, 1);
     return this.each(function() {
       return events.split(' ').forEach((eventName) => {
-        var event;
-        event = new Event(eventName);
+        var alias, event, name;
+        event = eventName.split('.');
+        name = event[0];
+        alias = event.length > 1 ? event[1] : null;
+        event = new CustomEvent(name, {
+          detail: {
+            args: customArguments,
+            alias: alias
+          }
+        });
         return this.dispatchEvent(event);
       });
     });

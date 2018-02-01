@@ -18,7 +18,9 @@ ts = (selector, context) ->
     # 如果選擇器是陣列，就當作是元素陣列，取出來然後繼續。
     # 或傳入的是一個選擇器，就取出裡面的元素然後繼續。
     else if Array.isArray(selector) or selector?.isSelector is true
-        nodes = nodes.concat(selector)
+        nodes    = nodes.concat(selector)
+        selector = selector.selector
+        context  = selector?.context
     # 如果是單個 DOM 元素，就放入選擇器然後繼續。
     else if selector instanceof HTMLElement  or
             selector instanceof HTMLDocument or
@@ -43,15 +45,16 @@ ts.fn = {}
 ts.helper = {}
 #
 ts.helper.eventAlias = (event) ->
-    event = event.split('.')
-    alias = if event[1] isnt undefined then ".#{event[1]}" else ''
+    pair  = event.split('.')
+    alias = if pair[1] isnt undefined then ".#{pair[1]}" else ''
 
-    if event.indexOf('animationend') isnt -1
-        return "webkitAnimationEnd#{alias} mozAnimationEnd#{alias} MSAnimationEnd#{alias} oanimationend#{alias} animationend#{alias}"
-    else if event.indexOf('transitionend') isnt -1
-        return "webkitTransitionEnd#{alias} mozTransitionEnd#{alias} oTransitionEnd#{alias} msTransitionEnd#{alias} transitionend#{alias}"
-    else
-        return event[0]
+    switch
+        when pair.indexOf('animationend') isnt -1
+            "webkitAnimationEnd#{alias} mozAnimationEnd#{alias} MSAnimationEnd#{alias} oanimationend#{alias} animationend#{alias}"
+        when pair.indexOf('transitionend') isnt -1
+            "webkitTransitionEnd#{alias} mozTransitionEnd#{alias} oTransitionEnd#{alias} msTransitionEnd#{alias} transitionend#{alias}"
+        else
+            event
 
 # Get
 #
@@ -420,20 +423,63 @@ ts.fn.css =
 #
 # 綁定並註冊一個事件監聽器。
 ts.fn.on =
-    value: (events, handler, options) ->
+    value: () ->
+        switch arguments.length
+            # Event 與 Handler。
+            when 2
+                events  = arguments[0]
+                handler = arguments[1]
+            # Event 與 Selector 與 Handler。
+            # Event 與 Data 與 Handler。
+            # Event 與 Handler 與 Options。
+            when 3
+                events  = arguments[0]
+                handler = arguments[2]
+                switch typeof arguments[1]
+                    when "string"
+                        selector = arguments[1]
+                    when "function"
+                        handler  = arguments[1]
+                        options  = arguments[2]
+                    else
+                        data     = arguments[1]
+            # Event 與 Selector 與 Data 與 Handler。
+            # Event 與 Selector 與 Handler 與 Options。
+            when 4
+                events   = arguments[0]
+                selector = arguments[1]
+                handler  = arguments[3]
+                switch typeof arguments[2]
+                    when "function"
+                        handler  = arguments[2]
+                        options  = arguments[3]
+                    else
+                        data     = arguments[2]
+            # Event 與 Selector 與 Data 與 Handler 與 Options。
+            when 5
+                events   = arguments[0]
+                selector = arguments[1]
+                data     = arguments[2]
+                handler  = arguments[3]
+                options  = arguments[4]
+
         events = ts.helper.eventAlias(events)
 
         # $events.click =
         # {
         #     anonymous: [
         #         {
-        #             once: true,
-        #             func: func()
+        #             once    : true,
+        #             selector: ".button",
+        #             data    : {},
+        #             func    : func()
         #         }
         #     ]
         #     alias1:
         #     {
         #         once: true,
+        #         selector: ".button",
+        #         data    : {},
         #         func: func()
         #     }
         # }
@@ -456,35 +502,55 @@ ts.fn.on =
 
                     # 然後建立一個管理多個事件的事件管理處理程式。
                     @addEventListener eventName, (event) ->
+                        #
+                        hasArgs     = event.detail?.args?.length > 0
+                        #
+                        calledAlias = event.detail.alias
+
                         # 如果該事件已經被移除則停止後續的反應。
                         if @$events[eventName] is undefined
                             return
 
                         # 將被觸發的事件裡面的所有處理程式全部呼叫一次。
                         for alias of @$events[eventName]
+                            if calledAlias and calledAlias isnt alias
+                                continue
+
+                            # 設置事件的上下文。
+                            context = @
+                            # 如果這個事件有選擇器的話，則使用該選擇器為主。
+                            if @$events[eventName][alias].selector isnt undefined
+                                selector = @$events[eventName][alias].selector
+                                closest  = ts(event.target).closest(selector)
+                                #
+                                if closest.length is 0
+                                    continue
+                                else
+                                    # 替換上下文為選擇器元素。
+                                    context = closest.get()
+
+                            # 將事件預資料放入事件中供處理函式取得。
+                            event.data = @$events[eventName][alias].data
+
                             # 如果這是匿名函式陣列的話。
                             if alias is 'anonymous'
-                                # 將所有匿名函式呼叫一次。
-                                #@$events[eventName][alias].forEach (item, index) ->
-                                #    item.func.call(@, event)
-                                #    # 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
-                                #    if item.once is true
-                                #        @$events[eventName][alias].splice(index, 1)
-                                #, @
-
                                 index = @$events[eventName][alias].length
                                 while index--
                                     item = @$events[eventName][alias][index]
-                                    item.func.call(@, event)
+                                    if hasArgs
+                                        item.func.call(context, event, event.detail.args...)
+                                    else
+                                        item.func.call(context, event)
                                     # 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
                                     if item.once is true
                                         @$events[eventName][alias].splice(index, 1)
 
-
-
                             # 不然如果是別名函式的話。
                             else
-                                @$events[eventName][alias].func.call(@, event)
+                                if hasArgs
+                                    @$events[eventName][alias].func.call(context, event, event.detail.args...)
+                                else
+                                    @$events[eventName][alias].func.call(context, event)
                                 # 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
                                 if @$events[eventName][alias].once is true
                                    delete @$events[eventName][alias]
@@ -493,13 +559,17 @@ ts.fn.on =
                 # 如果有別名，就不要推送到匿名陣列中，我們替這個別名另開物件。
                 if hasAlias
                     @$events[eventName][eventAlias] =
-                        func: handler
-                        once: options?.once
+                        func    : handler
+                        selector: selector
+                        data    : data
+                        once    : options?.once
                 # 如果沒有，就照常推進匿名陣列中。
                 else
                     @$events[eventName].anonymous.push
-                        func: handler
-                        once: options?.once
+                        func    : handler
+                        selector: selector
+                        data    : data
+                        once    : options?.once
             , @
 
 # One
@@ -548,12 +618,20 @@ ts.fn.off =
 # 觸發指定事件。
 ts.fn.trigger =
     value: (events) ->
-        events = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend'    if events is 'animationend'
-        events = 'webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend' if events is 'transitionend'
+        events          = ts.helper.eventAlias(events)
+        customArguments = [].slice.call arguments, 1
 
         @each ->
             events.split(' ').forEach (eventName) =>
-                event = new Event eventName
+                event = eventName.split('.')
+                name  = event[0]
+                alias = if event.length > 1 then event[1] else null
+
+                event = new CustomEvent name,
+                    detail:
+                        args : customArguments
+                        alias: alias
+
                 @dispatchEvent event
 
 # Emulate
