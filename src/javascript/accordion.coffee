@@ -9,6 +9,8 @@ ts.fn.accordion = value: ->
     EventKey   = ".#{Name}"
     # 設定鍵名。
     SettingKey = "#{Name}"
+    #
+    ModuleNamespace = "module-#{Name}"
 
     # 模組設定。
     Settings =
@@ -67,11 +69,15 @@ ts.fn.accordion = value: ->
     Data.$MODULES.each ->
         # 本元素。
         $this = ts @
+        element = @
         #
         $title   = $this.find Selector.TITLE
         $content = $this.find Selector.CONTENT
         #
+        methodInvoked = typeof Data.QUERY is 'string'
         settings = {}
+        #
+        instance = undefined
 
         # 模組主體。
         module =
@@ -81,23 +87,70 @@ ts.fn.accordion = value: ->
             # 初始化
 
             initialize: =>
-                settings = Settings
-                $this.data SettingKey, Settings
-
                 module.debug '初始化手風琴', $this
 
-                $this.on Event.CLICK, Selector.TITLE, ->
-                    module.toggle $title.indexOf @
-                $this.on Event.OPENING, (event, context) ->
-                    settings.onOpening.call context, event
-                $this.on Event.OPEN, (event, context) ->
-                    settings.onOpen.call context, event
-                $this.on Event.CLOSING, (event, context) ->
-                    settings.onClosing.call context, event
-                $this.on Event.CLOSE, (event, context) ->
-                    settings.onClose.call context, event
-                $this.on Event.CHANGE, (event, context) ->
-                    settings.onChange.call context, event
+                module.bind.events()
+                if settings.observeChanges
+                    module.observeChanges()
+
+                module.instantiate()
+
+            # Bind
+            #
+            # 綁定
+
+            bind:
+
+                # Events
+                #
+                # 事件
+
+                events:
+                    $this.on Event.CLICK, Selector.TITLE, ->
+                        module.toggle $title.indexOf @
+                    $this.on Event.OPENING, (event, context) ->
+                        settings.onOpening.call context, event
+                    $this.on Event.OPEN, (event, context) ->
+                        settings.onOpen.call context, event
+                    $this.on Event.CLOSING, (event, context) ->
+                        settings.onClosing.call context, event
+                    $this.on Event.CLOSE, (event, context) ->
+                        settings.onClose.call context, event
+                    $this.on Event.CHANGE, (event, context) ->
+                        settings.onChange.call context, event
+
+            # Instantiate
+            #
+            # 實例化
+
+            instantiate: =>
+                module.debug '實例化手風琴', $this
+
+                instance = module
+                $this.data ModuleNamespace, module
+
+            # Observe Changes
+            #
+            # 結構異動觀察者
+
+            observeChanges: =>
+                if not 'MutationObserver' in window
+                    return
+                observer = new MutationObserver (mutations) ->
+                    module.debug "DOM 樹狀結構已變更，更新快取資料"
+                    module.refresh()
+                observer.observe element,
+                    childList : true
+                    subtree   : true
+                module.debug "已設置 DOM 樹狀結構異動觀察者", observer
+
+            # Refresh
+            #
+            # 更新資料
+
+            refresh: =>
+                $title   = $this.find Selector.TITLE
+                $content = $this.find Selector.CONTENT
 
             # Destroy
             #
@@ -106,7 +159,7 @@ ts.fn.accordion = value: ->
             destroy: ->
                 module.debug '摧毀手風琴', $this
 
-                $this.removeData SettingKey
+                $this.removeData ModuleNamespace
                      .off        EventKey
 
             # Open
@@ -199,6 +252,7 @@ ts.fn.accordion = value: ->
 
             debug: ->
                 return if not settings.debug or settings.silent
+
                 module.debug = Function.prototype.bind.call console.info, console, "#{Name}:"
                 module.debug.apply console, arguments
 
@@ -208,6 +262,7 @@ ts.fn.accordion = value: ->
 
             error: ->
                 return if settings.silent
+
                 module.error = Function.prototype.bind.call console.error, console, "#{Name}:"
                 module.error.apply console, arguments
 
@@ -215,8 +270,17 @@ ts.fn.accordion = value: ->
             #
             # 模組呼叫點
 
-            invoke: =>
-                switch Data.QUERY
+            invoke: (query, passedArguments, context) =>
+                if methodInvoked
+                    if instance is undefined
+                        module.initialize()
+                    module.invoke Data.QUERY
+                else
+                    if instance isnt undefined
+                        instance.invoke 'destroy'
+                    module.initialize()
+
+                switch Data.query
 
                     # Open
                     #
