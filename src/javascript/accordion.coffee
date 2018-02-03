@@ -2,7 +2,7 @@
 #
 # 手風琴
 
-ts.fn.accordion = value: ->
+ts.fn.accordion = value: (parameters) ->
 
     # ------------------------------------------------------------------------
     # 變數與常數設置
@@ -11,9 +11,9 @@ ts.fn.accordion = value: ->
     # 模組名稱。
     NAME             = 'accordion'
     # 模組事件鍵名。
-    EVENT_NAMESPACE  = ".#{Name}"
+    EVENT_NAMESPACE  = ".#{NAME}"
     # 模組命名空間。
-    MODULE_NAMESPACE = "module-#{Name}"
+    MODULE_NAMESPACE = "module-#{NAME}"
 
     # 模組設定。
     Settings =
@@ -60,6 +60,20 @@ ts.fn.accordion = value: ->
         ACTIVE_CONTENT: '.active.content'
         ACTIVE        : '.active'
 
+    # ------------------------------------------------------------------------
+    #
+    # ------------------------------------------------------------------------
+
+    $allModules    = ts @
+    query          = arguments[0]
+    queryArguments = [].slice.call arguments, 1
+    methodInvoked  = typeof query is 'string'
+    returnedValue  = undefined
+
+    # ------------------------------------------------------------------------
+    #
+    # ------------------------------------------------------------------------
+
     ts(@).each ->
 
         # ------------------------------------------------------------------------
@@ -67,7 +81,14 @@ ts.fn.accordion = value: ->
         # ------------------------------------------------------------------------
 
         $this    = ts @
-        settings = Settings
+        element  = @
+        $title   = $this.find Selector.TITLE
+        $content = $this.find Selector.CONTENT
+        instance = $this.data MODULE_NAMESPACE
+        settings = if Object.prototype.toString.call(parameters) is '[object Object]'
+        then {Settings..., parameters...}
+        else {Settings...}
+        module   = undefined
 
         # ------------------------------------------------------------------------
         # 模組定義
@@ -80,12 +101,20 @@ ts.fn.accordion = value: ->
             # 初始化
 
             initialize: ->
+                module.debug '初始化手風琴', element
+                module.bind.events()
+                if settings.observeChanges
+                    module.observeChanges()
+                module.instantiate()
 
             # Instantiate
             #
             # 實例化
 
             instantiate: ->
+                module.debug '實例化手風琴', element
+                instance = module
+                $this.data MODULE_NAMESPACE, instance
 
             # Observe Changes
             #
@@ -93,7 +122,7 @@ ts.fn.accordion = value: ->
 
             observeChanges: ->
                 if not 'MutationObserver' in window
-                    module.debug "找不到樹狀結構變更觀測者，略過結構監聽動作"
+                    module.debug "找不到樹狀結構變更觀測者，略過結構監聽動作", element
                     return
                 observer = new MutationObserver (mutations) ->
                     module.debug "DOM 樹狀結構已變更，更新快取資料"
@@ -116,7 +145,7 @@ ts.fn.accordion = value: ->
             # 摧毀
 
             destroy: ->
-                module.debug '摧毀手風琴', $this
+                module.debug '摧毀手風琴', element
                 $this.removeData MODULE_NAMESPACE
                      .off        EVENT_NAMESPACE
 
@@ -125,6 +154,65 @@ ts.fn.accordion = value: ->
             # 模組呼叫點
 
             invoke: (query, passedArguments, context) ->
+                object          = instance
+                maxDepth        = undefined
+                found           = undefined
+                response        = undefined
+                passedArguments = passedArguments or queryArguments
+                context         = element or context
+
+                if typeof query is 'string' and object isnt undefined
+                    query    = query.split /[\. ]/
+                    maxDepth = query.length - 1
+                    query.forEach (value, depth) ->
+                        camelCaseValue = if depth isnt maxDepth then value + query[depth + 1].charAt(0).toUpperCase() + query[depth + 1].slice(1) else query
+                        if Object.prototype.toString.call(object[camelCaseValue]) is '[object Object]' and depth isnt maxDepth
+                            object = object[camelCaseValue]
+                        else if object[camelCaseValue] isnt undefined
+                            found = object[camelCaseValue]
+                            return false
+                        else if $.isPlainObject(object[value]) and depth isnt maxDepth
+                            object = object[value]
+                        else if object[value] isnt undefined
+                            found = object[value]
+                            return false
+                        else
+                            module.error error.method, query
+                            return false
+                        return
+                if typeof found is 'function'
+                    response = found.apply context, passedArguments
+                else if found isnt undefined
+                    response = found
+                if Array.isArray returnedValue
+                    returnedValue.push response
+                else if returnedValue isnt undefined
+                    returnedValue = [
+                        returnedValue
+                        response
+                    ]
+                else if response isnt undefined
+                    returnedValue = response
+                found
+
+            # Debug
+            #
+            # 除錯訊息
+
+            debug: ->
+                return if not settings.debug or settings.silent
+                module.debug = Function.prototype.bind.call console.info, console, "#{NAME}:"
+                module.debug.apply console, arguments
+
+            # Error
+            #
+            # 錯誤訊息
+
+            error: ->
+                return if settings.silent
+                module.error = Function.prototype.bind.call console.error, console, "#{NAME}:"
+                module.error.apply console, arguments
+
 
             # ------------------------------------------------------------------------
             # 自訂函式
@@ -135,7 +223,7 @@ ts.fn.accordion = value: ->
             # 展開
 
             open: (index) ->
-                module.debug '開啟手風琴分頁', index, $this
+                module.debug '開啟手風琴分頁', index, element
                 $t = $title.eq   index
                 $c = $content.eq index
 
@@ -143,7 +231,7 @@ ts.fn.accordion = value: ->
                     return
 
                 if settings.exclusive
-                    module.debug '由於手風琴分頁同時間僅能有一個打開，因此關閉其他分頁', index, $this
+                    module.debug '由於手風琴分頁同時間僅能有一個打開，因此關閉其他分頁', index, element
                     module.closeAll()
 
                 $this.trigger Event.OPENING, $c.get()
@@ -158,7 +246,7 @@ ts.fn.accordion = value: ->
             # 閉合
 
             close: (index) ->
-                module.debug '關閉手風琴分頁', index, $this
+                module.debug '關閉手風琴分頁', index, element
                 $t = $title.eq   index
                 $c = $content.eq index
 
@@ -174,7 +262,7 @@ ts.fn.accordion = value: ->
 
                 # 如果需要的話，一同關閉子手風琴。
                 if settings.closeNested
-                    module.debug '關閉子手風琴因應設定', index, $this
+                    module.debug '關閉子手風琴因應設定', index, element
                     ts($this.find(Selector.ACCORDION)).accordion 'close all'
 
             # Close Others
@@ -182,7 +270,7 @@ ts.fn.accordion = value: ->
             # 閉合指定以外
 
             closeOthers: (index) ->
-                module.debug '關閉指定手風琴分頁以外的其他分頁', index, $this
+                module.debug '關閉指定手風琴分頁以外的其他分頁', index, element
                 module.closeAll()
                 module.open index
 
@@ -191,7 +279,7 @@ ts.fn.accordion = value: ->
             # 閉合所有
 
             closeAll: ->
-                module.debug '關閉所有手風琴分頁', $this
+                module.debug '關閉所有手風琴分頁', element
                 module.close i for i in [0..$this.find(Selector.TITLE).length-1]
 
             # Toggle
@@ -199,12 +287,12 @@ ts.fn.accordion = value: ->
             # 切換開合
 
             toggle: (index) ->
-                module.debug '切換手風琴分頁', index, $this
+                module.debug '切換手風琴分頁', index, element
                 $t = $title.eq index
 
                 if $t.hasClass ClassName.ACTIVE
                     if not settings.collapsible
-                        module.debug '手風琴不允許閉合唯一分頁，略過切換步驟', index, $this
+                        module.debug '手風琴不允許閉合唯一分頁，略過切換步驟', index, element
                         return
                     module.close index
                 else
@@ -237,3 +325,15 @@ ts.fn.accordion = value: ->
         # ------------------------------------------------------------------------
         # Tocas 核心安插
         # ------------------------------------------------------------------------
+
+        if methodInvoked
+            if instance is undefined
+                module.initialize()
+            module.invoke query
+
+        else
+            if instance isnt undefined
+                instance.invoke 'destroy'
+            module.initialize()
+
+    return if returnedValue isnt undefined then returnedValue else ts
