@@ -65,6 +65,11 @@ ts.helper.eventAlias = function(event) {
   }
 };
 
+// 是否為物件。
+ts.isPlainObject = function(object) {
+  return Object.prototype.toString.call(object) === '[object Object]';
+};
+
 // Get
 
 // 取得選擇器內的指定元素，並且回傳一個 DOM 元素而非選擇器。
@@ -785,32 +790,60 @@ ts.fn.off = {
   value: function(events, handler) {
     events = ts.helper.eventAlias(events);
     return this.each(function() {
+      if (this.$events === void 0) {
+        return;
+      }
       return events.split(' ').forEach((eventName) => {
-        var event, eventAlias, hasAlias;
-        if (this.$events === void 0) {
-          return;
-        }
-        if (this.$events[eventName] === void 0) {
-          return;
-        }
+        var alias, aliasName, event, hasAlias, isAlias, results;
+        // 將事件名稱由中間的「.」切成兩半。
         event = eventName.split('.');
-        // 透過事件的「event.alias」取得「點」後面的別名。
-        hasAlias = event.length > 1;
-        eventName = event[0];
-        eventAlias = hasAlias ? event[1] : null;
-        if (hasAlias) {
-          delete this.$events[eventName][eventAlias];
-          return;
+        // 如果事件開頭是「.」符號，表示這是個別名，不是事件名稱。
+        isAlias = eventName[0] === '.';
+        // 如果事件分切後有兩個項目，表示這個事件有別名。
+        hasAlias = event.length === 2 && event[0] !== '';
+        if (hasAlias || isAlias) {
+          // 如果有別名的話，取得別名。
+          aliasName = event[1];
         }
-        if (handler === void 0) {
-          this.$events[eventName].anonymous = [];
-          return;
+        // 如果此事件不是只有別名的話，取得事件名稱。
+        eventName = !isAlias ? event[0] : void 0;
+        switch (false) {
+          // 當有指定監聽函式時。
+          case !(handler !== void 0 && this.$events[eventName] !== void 0):
+            return this.$events[eventName].anonymous.forEach((item, index) => {
+              if (handler === item.func) {
+                return this.$events[eventName].anonymous.splice(index, 1);
+              }
+            });
+          // 當本事件名稱不僅是別名時。
+          case !(!isAlias && hasAlias && this.$events[eventName] !== void 0):
+            // 移除指定事件的別名監聽函式。
+            return delete this.$events[eventName][aliasName];
+          // 當僅有指定別名時。
+          case !(isAlias && !hasAlias):
+            results = [];
+            // 移除所有與此別名有關的事件監聽器。
+            for (event in this.$events) {
+              results.push((function() {
+                var results1;
+                results1 = [];
+                for (alias in this.$events[event]) {
+                  if (aliasName === alias) {
+                    results1.push(delete this.$events[event][aliasName]);
+                  } else {
+                    results1.push(void 0);
+                  }
+                }
+                return results1;
+              }).call(this));
+            }
+            return results;
+            break;
+          // 當僅有指定事件名稱時。
+          case this.$events[eventName] === void 0:
+            // 清空該事件的所有事件監聽器。
+            return delete this.$events[eventName];
         }
-        return this.$events[eventName].anonymous.forEach((item, index) => {
-          if (handler === item.func) {
-            return this.$events[eventName].anonymous.splice(index, 1);
-          }
-        });
       }, this);
     });
   }

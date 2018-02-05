@@ -55,6 +55,9 @@ ts.helper.eventAlias = (event) ->
             "webkitTransitionEnd#{alias} mozTransitionEnd#{alias} oTransitionEnd#{alias} msTransitionEnd#{alias} transitionend#{alias}"
         else
             event
+# 是否為物件。
+ts.isPlainObject = (object) ->
+    Object.prototype.toString.call(object) is '[object Object]'
 
 # Get
 #
@@ -588,29 +591,42 @@ ts.fn.one =
 ts.fn.off =
     value: (events, handler) ->
         events = ts.helper.eventAlias(events)
-
         @each ->
+            return if @$events is undefined
+
             events.split(' ').forEach (eventName) =>
-                return if @$events            is undefined
-                return if @$events[eventName] is undefined
+                # 將事件名稱由中間的「.」切成兩半。
+                event    = eventName.split('.')
+                # 如果事件開頭是「.」符號，表示這是個別名，不是事件名稱。
+                isAlias  = eventName[0] is '.'
+                # 如果事件分切後有兩個項目，表示這個事件有別名。
+                hasAlias = event.length == 2 and event[0] isnt ''
+                # 如果有別名的話，取得別名。
+                aliasName = event[1] if hasAlias or isAlias
+                # 如果此事件不是只有別名的話，取得事件名稱。
+                eventName = if not isAlias then event[0] else undefined
 
-                event      = eventName.split('.')
-                # 透過事件的「event.alias」取得「點」後面的別名。
-                hasAlias   = event.length > 1
-                eventName  = event[0]
-                eventAlias = if hasAlias then event[1] else null
-
-                if hasAlias
-                    delete @$events[eventName][eventAlias]
-                    return
-
-                if handler is undefined
-                    @$events[eventName].anonymous = []
-                    return
-
-                @$events[eventName].anonymous.forEach (item, index) =>
-                    if handler is item.func
-                        @$events[eventName].anonymous.splice(index, 1)
+                switch
+                    # 當有指定監聽函式時。
+                    when handler isnt undefined and @$events[eventName] isnt undefined
+                        @$events[eventName].anonymous.forEach (item, index) =>
+                            if handler is item.func
+                                @$events[eventName].anonymous.splice(index, 1)
+                    # 當本事件名稱不僅是別名時。
+                    when not isAlias and hasAlias and @$events[eventName] isnt undefined
+                        # 移除指定事件的別名監聽函式。
+                        delete @$events[eventName][aliasName]
+                    # 當僅有指定別名時。
+                    when isAlias and not hasAlias
+                        # 移除所有與此別名有關的事件監聽器。
+                        for event of @$events
+                            for alias of @$events[event]
+                                if aliasName is alias
+                                    delete @$events[event][aliasName]
+                    # 當僅有指定事件名稱時。
+                    when @$events[eventName] isnt undefined
+                        # 清空該事件的所有事件監聽器。
+                        delete @$events[eventName]
             , @
 
 # Trigger
