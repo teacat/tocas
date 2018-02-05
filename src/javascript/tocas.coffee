@@ -43,7 +43,7 @@ ts.fn = {}
 
 # 輔助函式。
 ts.helper = {}
-#
+# 事件輔助函式。
 ts.helper.eventAlias = (event) ->
     pair  = event.split('.')
     alias = if pair[1] isnt undefined then ".#{pair[1]}" else ''
@@ -144,7 +144,7 @@ ts.fn.find =
 
 # Insert Before
 #
-#
+# 將選擇器元素安插在指定元素前。
 ts.fn.insertBefore =
     value: (target) ->
         @each ->
@@ -153,7 +153,7 @@ ts.fn.insertBefore =
 
 # Insert After
 #
-#
+# 將選擇器元素安插在指定元素後。
 ts.fn.insertAfter =
     value: (target) ->
         @each ->
@@ -266,18 +266,18 @@ ts.fn.children =
         @collectSwap ->
             @querySelectorAll if selector? then ":scope > #{selector}" else ':scope > *'
 
+# Replace With
 #
-#
-#
+# 將元素替換為指定選擇器元素。
 ts.fn.replaceWith =
     value: (selector) ->
         element = ts(selector).get()
         @each ->
             @replaceWith(element)
 
+# Last
 #
-#
-#
+# 選擇器中的最後一個元素。
 ts.fn.last =
     value: () -> @eq(@length-1)
 
@@ -502,9 +502,9 @@ ts.fn.on =
 
                     # 然後建立一個管理多個事件的事件管理處理程式。
                     @addEventListener eventName, (event) ->
-                        #
+                        # 是否有自訂參數。
                         hasArgs     = event.detail?.args?.length > 0
-                        #
+                        # 是否有呼叫事件別名。
                         calledAlias = event.detail.alias
 
                         # 如果該事件已經被移除則停止後續的反應。
@@ -522,7 +522,7 @@ ts.fn.on =
                             if @$events[eventName][alias].selector isnt undefined
                                 selector = @$events[eventName][alias].selector
                                 closest  = ts(event.target).closest(selector)
-                                #
+                                # 如果找不到指定選擇棄的元素，就不要觸發此事件。
                                 if closest.length is 0
                                     continue
                                 else

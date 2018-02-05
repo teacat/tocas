@@ -50,7 +50,7 @@ ts.fn = {};
 // 輔助函式。
 ts.helper = {};
 
-
+// 事件輔助函式。
 ts.helper.eventAlias = function(event) {
   var alias, pair;
   pair = event.split('.');
@@ -182,6 +182,7 @@ ts.fn.find = {
 
 // Insert Before
 
+// 將選擇器元素安插在指定元素前。
 ts.fn.insertBefore = {
   value: function(target) {
     return this.each(function() {
@@ -194,6 +195,7 @@ ts.fn.insertBefore = {
 
 // Insert After
 
+// 將選擇器元素安插在指定元素後。
 ts.fn.insertAfter = {
   value: function(target) {
     return this.each(function() {
@@ -354,7 +356,9 @@ ts.fn.children = {
   }
 };
 
+// Replace With
 
+// 將元素替換為指定選擇器元素。
 ts.fn.replaceWith = {
   value: function(selector) {
     var element;
@@ -365,7 +369,9 @@ ts.fn.replaceWith = {
   }
 };
 
+// Last
 
+// 選擇器中的最後一個元素。
 ts.fn.last = {
   value: function() {
     return this.eq(this.length - 1);
@@ -665,9 +671,9 @@ ts.fn.on = {
           // 然後建立一個管理多個事件的事件管理處理程式。
           this.addEventListener(eventName, function(event) {
             var alias, calledAlias, closest, context, hasArgs, index, item, ref, ref1, results;
-            
+            // 是否有自訂參數。
             hasArgs = ((ref = event.detail) != null ? (ref1 = ref.args) != null ? ref1.length : void 0 : void 0) > 0;
-            
+            // 是否有呼叫事件別名。
             calledAlias = event.detail.alias;
             // 如果該事件已經被移除則停止後續的反應。
             if (this.$events[eventName] === void 0) {
@@ -685,7 +691,7 @@ ts.fn.on = {
               if (this.$events[eventName][alias].selector !== void 0) {
                 selector = this.$events[eventName][alias].selector;
                 closest = ts(event.target).closest(selector);
-                
+                // 如果找不到指定選擇棄的元素，就不要觸發此事件。
                 if (closest.length === 0) {
                   continue;
                 } else {
