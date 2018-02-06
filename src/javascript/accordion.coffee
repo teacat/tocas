@@ -18,25 +18,27 @@ ts.fn.accordion = value: (parameters) ->
     # 模組設定。
     Settings =
         # 是否僅允許單個手風琴只有一個分頁能被打開。
-        exclusive  : true
+        exclusive     : true
         # 消音所有提示，甚至是錯誤訊息。
-        silent     : false
+        silent        : false
         # 顯示除錯訊息。
-        debug      : true
+        debug         : true
+        # 監聽 DOM 結構異動並自動重整快取。
+        observeChanges: true
         # 展開的手風琴是否可以被關閉。
-        collapsible: false
+        collapsible   : false
         # 當手風琴被關閉時，是否一同閉合子手風琴。
-        closeNested: true
+        closeNested   : true
         # 當手風琴正在展開時所會呼叫的函式。
-        onOpening: ->
+        onOpening     : ->
         # 當手風琴展開時所會呼叫的函式。
-        onOpen   : ->
+        onOpen        : ->
         # 當手風琴正在關閉時所會呼叫的函式。
-        onClosing: ->
+        onClosing     : ->
         # 當手風琴關閉時所會呼叫的函式。
-        onClose  : ->
+        onClose       : ->
         # 當手風琴被切換開關時所會呼叫的函式。
-        onChange : ->
+        onChange      : ->
 
     # 事件名稱。
     Event =
@@ -60,8 +62,12 @@ ts.fn.accordion = value: (parameters) ->
         ACTIVE_CONTENT: '.active.content'
         ACTIVE        : '.active'
 
+    # 錯誤訊息。
+    Error =
+        METHOD: '欲呼叫的方法並不存在'
+
     # ------------------------------------------------------------------------
-    #
+    # 私有變數
     # ------------------------------------------------------------------------
 
     $allModules    = ts @
@@ -71,10 +77,10 @@ ts.fn.accordion = value: (parameters) ->
     returnedValue  = undefined
 
     # ------------------------------------------------------------------------
-    #
+    # 元素遍歷
     # ------------------------------------------------------------------------
 
-    ts(@).each ->
+    $allModules.each ->
 
         # ------------------------------------------------------------------------
         # 區域變數
@@ -85,138 +91,13 @@ ts.fn.accordion = value: (parameters) ->
         $title   = $this.find Selector.TITLE
         $content = $this.find Selector.CONTENT
         instance = $this.data MODULE_NAMESPACE
-        settings = if Object.prototype.toString.call(parameters) is '[object Object]'
-        then {Settings..., parameters...}
-        else {Settings...}
-        module   = undefined
+        settings = if ts.isPlainObject(parameters) then {Settings..., parameters...} else {Settings...}
 
         # ------------------------------------------------------------------------
         # 模組定義
         # ------------------------------------------------------------------------
 
         module =
-
-            # Initialize
-            #
-            # 初始化
-
-            initialize: ->
-                module.debug '初始化手風琴', element
-                module.bind.events()
-                if settings.observeChanges
-                    module.observeChanges()
-                module.instantiate()
-
-            # Instantiate
-            #
-            # 實例化
-
-            instantiate: ->
-                module.debug '實例化手風琴', element
-                instance = module
-                $this.data MODULE_NAMESPACE, instance
-
-            # Observe Changes
-            #
-            # 結構異動觀察者
-
-            observeChanges: ->
-                if not 'MutationObserver' in window
-                    module.debug "找不到樹狀結構變更觀測者，略過結構監聽動作", element
-                    return
-                observer = new MutationObserver (mutations) ->
-                    module.debug "DOM 樹狀結構已變更，更新快取資料"
-                    module.refresh()
-                observer.observe element,
-                    childList : true
-                    subtree   : true
-                module.debug "已設置 DOM 樹狀結構異動觀察者", observer
-
-            # Refresh
-            #
-            # 更新資料
-
-            refresh: ->
-                $title   = $this.find Selector.TITLE
-                $content = $this.find Selector.CONTENT
-
-            # Destroy
-            #
-            # 摧毀
-
-            destroy: ->
-                module.debug '摧毀手風琴', element
-                $this.removeData MODULE_NAMESPACE
-                     .off        EVENT_NAMESPACE
-
-            # Invoke
-            #
-            # 模組呼叫點
-
-            invoke: (query, passedArguments, context) ->
-                object          = instance
-                maxDepth        = undefined
-                found           = undefined
-                response        = undefined
-                passedArguments = passedArguments or queryArguments
-                context         = element or context
-
-                if typeof query is 'string' and object isnt undefined
-                    query    = query.split /[\. ]/
-                    maxDepth = query.length - 1
-                    query.forEach (value, depth) ->
-                        camelCaseValue = if depth isnt maxDepth then value + query[depth + 1].charAt(0).toUpperCase() + query[depth + 1].slice(1) else query
-                        if Object.prototype.toString.call(object[camelCaseValue]) is '[object Object]' and depth isnt maxDepth
-                            object = object[camelCaseValue]
-                        else if object[camelCaseValue] isnt undefined
-                            found = object[camelCaseValue]
-                            return false
-                        else if $.isPlainObject(object[value]) and depth isnt maxDepth
-                            object = object[value]
-                        else if object[value] isnt undefined
-                            found = object[value]
-                            return false
-                        else
-                            module.error error.method, query
-                            return false
-                        return
-                if typeof found is 'function'
-                    response = found.apply context, passedArguments
-                else if found isnt undefined
-                    response = found
-                if Array.isArray returnedValue
-                    returnedValue.push response
-                else if returnedValue isnt undefined
-                    returnedValue = [
-                        returnedValue
-                        response
-                    ]
-                else if response isnt undefined
-                    returnedValue = response
-                found
-
-            # Debug
-            #
-            # 除錯訊息
-
-            debug: ->
-                return if not settings.debug or settings.silent
-                module.debug = Function.prototype.bind.call console.info, console, "#{NAME}:"
-                module.debug.apply console, arguments
-
-            # Error
-            #
-            # 錯誤訊息
-
-            error: ->
-                return if settings.silent
-                module.error = Function.prototype.bind.call console.error, console, "#{NAME}:"
-                module.error.apply console, arguments
-
-
-            # ------------------------------------------------------------------------
-            # 自訂函式
-            # ------------------------------------------------------------------------
 
             # Open
             #
@@ -291,10 +172,10 @@ ts.fn.accordion = value: (parameters) ->
                 $t = $title.eq index
 
                 if $t.hasClass ClassName.ACTIVE
-                    if not settings.collapsible
-                        module.debug '手風琴不允許閉合唯一分頁，略過切換步驟', index, element
+                    if settings.collapsible
+                        module.close index
                         return
-                    module.close index
+                    module.debug '手風琴不允許閉合開啟的分頁，略過切換步驟', index, element
                 else
                     module.open index
 
@@ -321,6 +202,146 @@ ts.fn.accordion = value: (parameters) ->
                         settings.onClose.call context, event
                     $this.on Event.CHANGE, (event, context) ->
                         settings.onChange.call context, event
+
+            # ------------------------------------------------------------------------
+            # 模組核心
+            # ------------------------------------------------------------------------
+
+            # Initialize
+            #
+            # 初始化
+
+            initialize: ->
+                module.debug '初始化手風琴', element
+                module.bind.events()
+                if settings.observeChanges
+                    module.observeChanges()
+                module.instantiate()
+
+            # Instantiate
+            #
+            # 實例化
+
+            instantiate: ->
+                module.debug '實例化手風琴', element
+                instance = module
+                $this.data MODULE_NAMESPACE, instance
+
+            # Observe Changes
+            #
+            # 結構異動觀察者
+
+            observeChanges: ->
+                if not 'MutationObserver' of window
+                    module.debug '找不到樹狀結構變更觀測者，略過結構監聽動作', element
+                    return
+                observer = new MutationObserver (mutations) ->
+                    module.debug 'DOM 樹狀結構已變更，更新快取資料'
+                    module.refresh()
+                observer.observe element,
+                    childList : true
+                    subtree   : true
+                module.debug '已設置 DOM 樹狀結構異動觀察者', observer
+
+            # Refresh
+            #
+            # 更新資料
+
+            refresh: ->
+                $title   = $this.find Selector.TITLE
+                $content = $this.find Selector.CONTENT
+
+            # Destroy
+            #
+            # 摧毀
+
+            destroy: ->
+                module.debug '摧毀手風琴', element
+                $this.removeData MODULE_NAMESPACE
+                     .off        EVENT_NAMESPACE
+
+            # Invoke
+            #
+            # 模組呼叫點
+
+            invoke: (query, passedArguments, context) ->
+                object          = instance
+                maxDepth        = undefined
+                found           = undefined
+                response        = undefined
+                passedArguments = passedArguments or queryArguments
+                context         = element or context
+
+                # 如果語法是字串，本地區域也有被定義的話。
+                if typeof query is 'string' and object isnt undefined
+                    # 將語法以空白分隔。
+                    query    = query.split /[\. ]/
+                    # 取得此語法的深度。
+                    maxDepth = query.length - 1
+                    # 解析語法的每個片段。
+                    for value, depth in query
+                        # 將語法轉換成駝峰式大小寫，用以對應本地模組的函式名稱。
+                        camelCaseValue = if depth isnt maxDepth then value + query[depth + 1].charAt(0).toUpperCase() + query[depth + 1].slice(1) else query
+                        # 如果此駝峰是大小寫有對應到模組中的物件，而且語法還未到底，那麼就依照此物件遞迴搜尋。
+                        if ts.isPlainObject(object[camelCaseValue]) and depth isnt maxDepth
+                            object = object[camelCaseValue]
+                        # 如果語法駝峰式大小寫有對應到模組的一個函式，則使用該函式。
+                        else if object[camelCaseValue] isnt undefined
+                            found = object[camelCaseValue]
+                            break
+                        # 如果語法有對應到模組中的物件，而且語法還未到底，那麼就依照此物件遞迴搜尋。
+                        else if ts.isPlainObject(object[value]) and depth isnt maxDepth
+                            object = object[value]
+                        # 如果語法有對應一個函式，則使用該函式。
+                        else if object[value] isnt undefined
+                            found = object[value]
+                            break
+                        # 如果語法沒有對應到任何東西則表示錯誤。
+                        else
+                            module.error Error.METHOD, query
+                            break
+                # 決定回應的結果。
+                switch
+                    # 當找到的對應物件是個函式，就呼叫該函式並取得其結果。
+                    when typeof found is 'function'
+                        response = found.apply context, passedArguments
+                    # 當找到的物件不是函式，就當其為結果。
+                    when found isnt undefined
+                        response = found
+                # 決定如何處置欲回傳的值。
+                switch
+                    # 當回傳的值是一個陣列，就將回應結果推入回傳值陣列中。
+                    when Array.isArray returnedValue
+                        returnedValue.push response
+                    # 如果回傳的值不是陣列，則建立一個陣列並包含自己和回應結果。
+                    when returnedValue isnt undefined
+                        returnedValue = [
+                            returnedValue
+                            response
+                        ]
+                    # 當有回應時，就將回傳值設為其回應結果。
+                    when response isnt undefined
+                        returnedValue = response
+                # 回傳找到的物件。
+                found
+
+            # Debug
+            #
+            # 除錯訊息
+
+            debug: ->
+                return if not settings.debug or settings.silent
+                module.debug = Function.prototype.bind.call console.info, console, "#{NAME}:"
+                module.debug.apply console, arguments
+
+            # Error
+            #
+            # 錯誤訊息
+
+            error: ->
+                return if settings.silent
+                module.error = Function.prototype.bind.call console.error, console, "#{NAME}:"
+                module.error.apply console, arguments
 
         # ------------------------------------------------------------------------
         # Tocas 核心安插
