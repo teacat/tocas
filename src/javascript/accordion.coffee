@@ -22,7 +22,7 @@ ts.fn.accordion = value: (parameters) ->
         # 消音所有提示，甚至是錯誤訊息。
         silent        : false
         # 顯示除錯訊息。
-        debug         : true
+        debug         : false
         # 監聽 DOM 結構異動並自動重整快取。
         observeChanges: true
         # 展開的手風琴是否可以被關閉。
