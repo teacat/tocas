@@ -27,6 +27,8 @@ ts.fn.carousel = value: (parameters) ->
         interval      : 4000
         # 是否要自動播放。
         autoplay      : true
+        # 當幻燈片變更時所呼叫的函式。
+        onChange      : ->
         # 指示器選項。
         indicator  :
             # 指示器的外觀，`rounded` 為圓角矩形，`circular` 為圓形。
@@ -47,8 +49,13 @@ ts.fn.carousel = value: (parameters) ->
                 left : 'chevron left'
                 # 右圖示的圖示名稱
                 right: 'chevron right'
-        # 當幻燈片變更時所呼叫的函式。
-        onChange      : ->
+        #
+        metadata:
+            sliding: 'sliding'
+            index  : 'index'
+            content: 'content'
+
+
 
     # 事件名稱。
     Event =
@@ -71,14 +78,14 @@ ts.fn.carousel = value: (parameters) ->
 
     # 選擇器名稱。
     Selector =
-        ITEM          : '.item'
-        CHILD_ITEM    : ':scope > .item'
-        CONTROLS_LEFT : '.controls > .left'
-        CONTROLS_RIGHT: '.controls > .right'
-        ITEMS_ITEM    : '.items > .item'
-        ACTIVE_ITEM   : '.items > .item.active'
-        FIRST_ITEM    : '.items > .item:first-child'
-        LAST_ITEM     : '.items > .item:last-child'
+        ITEM           : '.item'
+        CHILD_ITEM     : ':scope > .item'
+        CONTROLS_LEFT  : '.controls > .left'
+        CONTROLS_RIGHT : '.controls > .right'
+        ITEMS_ITEM     : '.items > .item'
+        ACTIVE_ITEM    : '.items > .item.active'
+        FIRST_ITEM     : '.items > .item:first-child'
+        LAST_ITEM      : '.items > .item:last-child'
         INDICATORS_ITEM: '.indicators > .item'
 
     # 錯誤訊息。
@@ -109,6 +116,8 @@ ts.fn.carousel = value: (parameters) ->
         element  = @
         instance = $this.data MODULE_NAMESPACE
         settings = if ts.isPlainObject(parameters) then {Settings..., parameters...} else {Settings...}
+        duration = 700
+        metadata = Settings.metadata
 
         # ------------------------------------------------------------------------
         # 模組定義
@@ -122,6 +131,68 @@ ts.fn.carousel = value: (parameters) ->
 
             play: ->
                 module.debug '播放幻燈片', element
+                # 如果已經有設置計時器就表示正在播放（或計時器正暫停中）。
+                if module.has.timer()
+                    # 重新啟動計時。
+                    module.start.timer()
+                else
+                    module.set.timer()
+
+
+
+            # Set
+            #
+            # 設置
+
+            set:
+                timer: ->
+                    $this.setTimer
+                        name    : 'autoplay'
+                        callback: module.next
+                        interval: 5000
+                        looping : true
+                        visible : true
+
+                sliding: (bool) ->
+                    $this.data metadata.sliding, bool
+                index: (index) ->
+                    $this.data metadata.index, index
+                content: (content) ->
+                    $this.data metadata.content, content
+
+            # Get
+            #
+            # 取得
+
+            get:
+                index: ->
+                    $this.data metadata.index
+                content: ->
+                    $this.data metadata.content
+
+            start:
+                timer: ->
+                    $this.playTimer 'autoplay'
+
+            stop:
+                timer: ->
+                    $this.pauseTimer 'autoplay'
+
+            has:
+                timer: ->
+                    $this.hasTimer 'autoplay'
+
+            remove:
+                timer: ->
+                    $this.removeTimer 'autoplay'
+
+            should:
+                autoplay: ->
+                    settings.autoplay
+
+            is:
+                sliding: ->
+                    $this.data metadata.sliding
 
             # Pause
             #
@@ -129,6 +200,60 @@ ts.fn.carousel = value: (parameters) ->
 
             pause: ->
                 module.debug '暫停幻燈片', element
+                # 移除這個計時器。
+                module.stop.timer()
+
+            # Slide
+            #
+            # 往指定方向滑行
+
+            slide: (direction, $nextElement) ->
+                module.debug '幻燈片往指定方向切換', direction, $nextElement, element
+                # 如果正在滑動中，則取消本次的指令。
+                if module.is.sliding()
+                    return
+                # 標記幻燈片正在滑動中，避免重複執行發生問題。
+                module.set.sliding true
+                # 取得幻燈片移動的方向該往左邊還是右邊。
+                switch direction
+                    when 'next'
+                        movingDirection = 'left'
+                    when 'previous'
+                        movingDirection = 'right'
+                # 取得目前正在顯示的幻燈片。
+                $current = $this.find Selector.ACTIVE_ITEM
+                # 依照方向來決定下一個幻燈片是哪個元素，如果沒有下個元素則為最後（或第一個），那麼就取得最邊緣的那個元素。
+                switch
+                    when $nextElement isnt undefined
+                        $next = $nextElement
+                    when direction is 'next'
+                        $next = $current.next()
+                        $next = if $next.length is 0 then $this.find(Selector.FIRST_ITEM) else $next
+                    else
+                        $next = $current.prev()
+                        $next = if $next.length is 0 then $this.find(Selector.LAST_ITEM) else $next
+                # 移除所有指示器的啟用樣式，然後替指定指示器加上已啟用樣式。
+                $this.find(Selector.INDICATORS_ITEM).removeClass(ClassName.ACTIVE).eq($next.index()).addClass ClassName.ACTIVE
+                # 替下一個幻燈片加上順序並重新繪製。
+                $next.addClass(direction).reflow()
+                # 替目前的幻燈片加上移動效果。
+                $current.addClass "#{ClassName.MOVING} #{movingDirection}"
+                # 我們同時也移動下一個幻燈片進來。
+                $next.addClass "#{ClassName.MOVING} #{movingDirection}"
+                # 設置新的索引。
+                module.set.index $next.index()
+                # 呼叫指定事件。
+                $this.trigger Event.CHANGE, element, module.get.index()
+                # 當目前舊的幻燈片移動完畢時。
+                $current
+                    .one 'transitionend', =>
+                        # 順便移除下個幻燈片的移動效果，並且加上已啟用樣式。
+                        $next.removeClass("#{ClassName.MOVING} #{movingDirection} #{direction}").addClass ClassName.ACTIVE
+                        # 同時移除這個舊的幻燈片樣式。
+                        $current.removeClass "#{ClassName.ACTIVE} #{ClassName.MOVING} #{movingDirection} #{direction}"
+                        # 滑動結束。
+                        module.set.sliding false
+                    .emulate 'transitionend', duration
 
             # Slide To
             #
@@ -136,6 +261,15 @@ ts.fn.carousel = value: (parameters) ->
 
             slideTo: (index) ->
                 module.debug '滑到指定幻燈片索引', index, element
+                $eqItem = $this.find(Selector.ITEMS_ITEM).eq index
+                current = module.get.index()
+                # 如果沒有指定的幻燈片索引或與現在的索引相同則離開。
+                if $eqItem.length is 0 or current is index
+                    return
+                else
+                    # 比對目前的索引還有準備跳往的索引來決定應該往又還是往左滑。
+                    direction = if index > current then 'next' else 'previous'
+                    module.slide direction, $eqItem
 
             # Next
             #
@@ -143,6 +277,7 @@ ts.fn.carousel = value: (parameters) ->
 
             next: ->
                 module.debug '下一張幻燈片', element
+                module.slide 'next'
 
             # Previous
             #
@@ -150,15 +285,30 @@ ts.fn.carousel = value: (parameters) ->
 
             previous: ->
                 module.debug '上一張幻燈片', element
+                module.slide 'previous'
 
             # Get Index
             #
             # 取得目前幻燈片索引
 
             getIndex: ->
-                module.debug '取得幻燈片索引', element
+                module.debug '取得幻燈片索引', module.get.index(), element
+                module.get.index()
 
+            # Templates
+            #
+            # 模板
 
+            templates:
+
+                # Controls
+                #
+                # 控制按鈕
+
+                controls: (left, right) -> """
+                    <a href="#!" class="left"><i class="#{left} icon"></i></a>
+                    <a href="#!" class="right"><i class="#{right} icon"></i></a>
+                """
 
             # Bind
             #
@@ -171,18 +321,29 @@ ts.fn.carousel = value: (parameters) ->
                 # 事件
 
                 events: =>
-                    $this.on Event.CLICK, Selector.TITLE, ->
-                        module.toggle $title.indexOf @
-                    $this.on Event.OPENING, (event, context) ->
-                        settings.onOpening.call context, event
-                    $this.on Event.OPEN, (event, context) ->
-                        settings.onOpen.call context, event
-                    $this.on Event.CLOSING, (event, context) ->
-                        settings.onClosing.call context, event
-                    $this.on Event.CLOSE, (event, context) ->
-                        settings.onClose.call context, event
-                    $this.on Event.CHANGE, (event, context) ->
-                        settings.onChange.call context, event
+                    module.debug '綁定事件', element
+                    $this.on Event.CHANGE, (event, context, index) ->
+                        settings.onChange.call context, event, index
+
+                # Control Events
+                #
+                # 控制按鈕事件
+
+                controlEvents: =>
+                    module.debug '綁定控制按鈕事件', element
+                    $this.on Event.CLICK, Selector.CONTROLS_LEFT, =>
+                        module.previous()
+                    $this.on Event.CLICK, Selector.CONTROLS_RIGHT, =>
+                        module.next()
+
+                # Indicator Events
+                #
+                # 指示器事件
+
+                indicatorEvents: ($indicators) =>
+                    module.debug '綁定指示器事件', element
+                    $indicators.find(Selector.ITEM).each (element, index) =>
+                        ts(element).on Event.CLICK, => module.slideTo index
 
             # ------------------------------------------------------------------------
             # 模組核心
@@ -195,6 +356,55 @@ ts.fn.carousel = value: (parameters) ->
             initialize: ->
                 module.debug '初始化幻燈片', element
                 module.bind.events()
+                # 保存這個幻燈片的內容，供日後若需摧毀可重生。
+                module.set.content $this.html()
+                # 建立項目容器，用來包裹所有的幻燈片。
+                $items = ts('<div>').addClass ClassName.ITEMS
+                # 取得使用者已經擺置的幻燈片。
+                $children = $this.find Selector.CHILD_ITEM
+                # 給第一個幻燈片啟用樣式。
+                $children.eq(0).addClass ClassName.ACTIVE
+                # 將這些幻燈片移動到項目容器中。
+                $items.append $children
+                # 清除原先幻燈片的所有內容。
+                $this.html ''
+                # 如果有控制元素設置。
+                if settings.control
+                    overlapped = if settings.control.overlapped                 then ClassName.OVERLAPPED else ''
+                    compact    = if settings.control.style is ClassName.COMPACT then ClassName.COMPACT    else ''
+                    # 建立控制元素，並且加上指定的圖示。
+                    left           = settings.control.icon.left
+                    right          = settings.control.icon.right
+                    controlClasses = "#{overlapped} #{compact} #{ClassName.CONTROLS}"
+                    $control       = ts('<div>').addClass(controlClasses).html module.templates.controls left, right
+                    # 移動到幻燈片容器中。
+                    $this.append $control
+                    module.bind.controlEvents()
+                # 將幻燈片容器在控制元素之後插入，
+                # 這樣才能透過控制元素的樣式來取決幻燈片容器的樣式。
+                # CSS Selector 的 `x + x`。
+                $this.append $items
+                # 如果有指示器設置。
+                if settings.indicator
+                    overlapped = if settings.indicator.overlapped                   then ClassName.OVERLAPPED else ''
+                    navigable  = if settings.indicator.navigable                    then ClassName.NAVIGABLE  else ''
+                    style      = if settings.indicator.style isnt ClassName.ROUNDED then ClassName.CIRCULAR   else ''
+                    # 建立指示器元素，並且決定是否可供導覽點按。
+                    $indicators = ts('<div>').addClass "#{navigable} #{overlapped} #{style} #{ClassName.INDICATORS}"
+                    # 替幻燈片產生指示器的元素。
+                    for index in [1..$children.length]
+                        active = if index is 1 then " #{ClassName.ACTIVE}" else ''
+                        $indicators.append ts('<div>').addClass "#{active} #{ClassName.ITEM}"
+                    # 如果可供導覽點按，則綁定點擊事件。
+                    if settings.indicator.navigable
+                        module.bind.indicatorEvents $indicators
+                # 移動到幻燈片容器中。
+                $this.append $indicators
+                # 初始化索引為零。
+                module.set.index 0
+                # 如果要自動播放的話則建立計時器。
+                if module.should.autoplay()
+                    module.play()
                 if settings.observeChanges
                     module.observeChanges()
                 module.instantiate()
@@ -238,6 +448,10 @@ ts.fn.carousel = value: (parameters) ->
 
             destroy: ->
                 module.debug '摧毀幻燈片', element
+                # 移除所有計時器。
+                module.remove.timer()
+                # 重生幻燈片原本的 HTML 內容。
+                $this.html module.get.content()
                 $this.removeData MODULE_NAMESPACE
                      .off        EVENT_NAMESPACE
 
