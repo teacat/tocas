@@ -377,6 +377,12 @@ ts.fn.removeAttr =
 # 在目前選擇器元素插入新的樣式類別名稱。
 ts.fn.addClass =
     value: (names) ->
+        if typeof names is 'object'
+            newNames = ''
+            for name of names
+                if names[name] is true
+                    newNames += " #{name}"
+            names = newNames
         @each ->
             DOMTokenList.prototype.add.apply(@classList, names.split(' ').filter(Boolean))
 
@@ -385,6 +391,12 @@ ts.fn.addClass =
 # 移除目前選擇器元素的指定樣式類別。
 ts.fn.removeClass =
     value: (names) ->
+        if typeof names is 'object'
+            newNames = ''
+            for name of names
+                if names[name] is true
+                    newNames += " #{name}"
+            names = newNames
         @each ->
             DOMTokenList.prototype.remove.apply(@classList, names.split(' ').filter(Boolean))
 
@@ -508,7 +520,7 @@ ts.fn.on =
                         # 是否有自訂參數。
                         hasArgs     = event.detail?.args?.length > 0
                         # 是否有呼叫事件別名。
-                        calledAlias = event.detail.alias
+                        calledAlias = event.detail?.alias
 
                         # 如果該事件已經被移除則停止後續的反應。
                         if @$events[eventName] is undefined
@@ -851,3 +863,12 @@ ts.fn.removeTimer =
             clearInterval @$timers[name].timer
             # 移除在 DOM 元素內的計時器物件。
             delete @$timers[name]
+
+# Reflow
+#
+# 讓瀏覽器重整流程。
+
+ts.fn.reflow =
+    value: ->
+        @each ->
+            `void(this.offsetHeight)`

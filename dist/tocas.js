@@ -512,6 +512,16 @@ ts.fn.removeAttr = {
 // 在目前選擇器元素插入新的樣式類別名稱。
 ts.fn.addClass = {
   value: function(names) {
+    var name, newNames;
+    if (typeof names === 'object') {
+      newNames = '';
+      for (name in names) {
+        if (names[name] === true) {
+          newNames += ` ${name}`;
+        }
+      }
+      names = newNames;
+    }
     return this.each(function() {
       return DOMTokenList.prototype.add.apply(this.classList, names.split(' ').filter(Boolean));
     });
@@ -523,6 +533,16 @@ ts.fn.addClass = {
 // 移除目前選擇器元素的指定樣式類別。
 ts.fn.removeClass = {
   value: function(names) {
+    var name, newNames;
+    if (typeof names === 'object') {
+      newNames = '';
+      for (name in names) {
+        if (names[name] === true) {
+          newNames += ` ${name}`;
+        }
+      }
+      names = newNames;
+    }
     return this.each(function() {
       return DOMTokenList.prototype.remove.apply(this.classList, names.split(' ').filter(Boolean));
     });
@@ -675,11 +695,11 @@ ts.fn.on = {
           };
           // 然後建立一個管理多個事件的事件管理處理程式。
           this.addEventListener(eventName, function(event) {
-            var alias, calledAlias, closest, context, hasArgs, index, item, ref, ref1, results;
+            var alias, calledAlias, closest, context, hasArgs, index, item, ref, ref1, ref2, results;
             // 是否有自訂參數。
             hasArgs = ((ref = event.detail) != null ? (ref1 = ref.args) != null ? ref1.length : void 0 : void 0) > 0;
             // 是否有呼叫事件別名。
-            calledAlias = event.detail.alias;
+            calledAlias = (ref2 = event.detail) != null ? ref2.alias : void 0;
             // 如果該事件已經被移除則停止後續的反應。
             if (this.$events[eventName] === void 0) {
               return;
@@ -1168,6 +1188,17 @@ ts.fn.removeTimer = {
       clearInterval(this.$timers[name].timer);
       // 移除在 DOM 元素內的計時器物件。
       return delete this.$timers[name];
+    });
+  }
+};
+
+// Reflow
+
+// 讓瀏覽器重整流程。
+ts.fn.reflow = {
+  value: function() {
+    return this.each(function() {
+      return void(this.offsetHeight);
     });
   }
 };
