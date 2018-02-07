@@ -242,13 +242,18 @@ ts.fn.carousel = {
         slide: function(direction, $nextElement) {
           var $current, $next, movingDirection;
           module.debug('幻燈片往指定方向切換', direction, $nextElement, element);
+          // 如果正在滑動中，則取消本次的指令。
           if (module.is.sliding()) {
             return;
           }
+          // 標記幻燈片正在滑動中，避免重複執行發生問題。
           module.set.sliding(true);
+          // 取得幻燈片移動的方向該往左邊還是右邊。
           movingDirection = module.get.movingDirection(direction);
+          // 取得目前正在顯示的幻燈片。
           $current = $this.find(Selector.ACTIVE_ITEM);
           switch (false) {
+            // 依照方向來決定下一個幻燈片是哪個元素，如果沒有下個元素則為最後（或第一個），那麼就取得最邊緣的那個元素。
             case $nextElement === void 0:
               $next = $nextElement;
               break;
@@ -260,15 +265,25 @@ ts.fn.carousel = {
               $next = $current.prev();
               $next = $next.length === 0 ? $this.find(Selector.LAST_ITEM) : $next;
           }
+          // 移除所有指示器的啟用樣式，然後替指定指示器加上已啟用樣式。
           $this.find(Selector.INDICATORS_ITEM).removeClass(ClassName.ACTIVE).eq($next.index()).addClass(ClassName.ACTIVE);
+          // 替下一個幻燈片加上順序並重新繪製。
           $next.addClass(direction).reflow();
+          // 替目前的幻燈片加上移動效果。
           $current.addClass(`${ClassName.MOVING} ${movingDirection}`);
+          // 我們同時也移動下一個幻燈片進來。
           $next.addClass(`${ClassName.MOVING} ${movingDirection}`);
+          // 設置新的索引。
           module.set.index($next.index());
+          // 呼叫指定事件。
           $this.trigger(Event.CHANGE, element, module.get.index());
+          // 當目前舊的幻燈片移動完畢時。
           return $current.one('transitionend', () => {
+            // 順便移除下個幻燈片的移動效果，並且加上已啟用樣式。
             $next.removeClass(`${ClassName.MOVING} ${movingDirection} ${direction}`).addClass(ClassName.ACTIVE);
+            // 同時移除這個舊的幻燈片樣式。
             $current.removeClass(`${ClassName.ACTIVE} ${ClassName.MOVING} ${movingDirection} ${direction}`);
+            // 滑動結束。
             return module.set.sliding(false);
           }).emulate('transitionend', duration);
         },
@@ -278,11 +293,15 @@ ts.fn.carousel = {
         slideTo: function(index) {
           var $eqItem, current;
           module.debug('滑到指定幻燈片索引', index, element);
+          // 找出指定的幻燈片。
           $eqItem = $this.find(Selector.ITEMS_ITEM).eq(index);
+          // 取得目前的幻燈片索引。
           current = module.get.index();
+          // 如果沒有指定的幻燈片索引或與現在的索引相同則離開。
           if ($eqItem.length === 0 || current === index) {
             return;
           }
+          // 向指定方向滑動並展現指定幻燈片。
           return module.slide(module.get.direction(index, current), $eqItem);
         },
         // Next
@@ -364,36 +383,54 @@ ts.fn.carousel = {
         initialize: function() {
           var $children, $control, $indicator, $indicators, $items, i, index, ref;
           module.debug('初始化幻燈片', element);
+          // 保存這個幻燈片的內容，供日後若需摧毀可重生。
           module.set.content($this.html());
+          // 建立項目容器，用來包裹所有的幻燈片。
           $items = ts('<div>').addClass(ClassName.ITEMS);
+          // 取得使用者已經擺置的幻燈片。
           $children = $this.find(Selector.CHILD_ITEM);
+          // 給第一個幻燈片啟用樣式。
           $children.eq(0).addClass(ClassName.ACTIVE);
+          // 將這些幻燈片移動到項目容器中。
           $items.append($children);
+          // 清除原先幻燈片的所有內容。
           $this.html('');
+          // 如果有控制元素設置。
           if (settings.control) {
+            // 建立控制元素，並且加上指定的圖示。
             $control = ts('<div>').html(module.templates.controls()).addClass(ClassName.CONTROLS).addClass({
               [`${ClassName.OVERLAPPED}`]: settings.control.overlapped,
               [`${ClassName.COMPACT}`]: settings.control.style === ClassName.COMPACT
             });
+            // 移動到幻燈片容器中。
             $this.append($control);
           }
+          // 將幻燈片容器在控制元素之後插入，
+          // 這樣才能透過控制元素的樣式來取決幻燈片容器的樣式。
+          // CSS Selector 的 `x + x`。
           $this.append($items);
+          // 如果有指示器設置。
           if (settings.indicator) {
+            // 建立指示器元素，並且決定是否可供導覽點按。
             $indicators = ts('<div>').addClass(ClassName.INDICATORS).addClass({
               [`${ClassName.OVERLAPPED}`]: settings.indicator.overlapped,
               [`${ClassName.NAVIGABLE}`]: settings.indicator.navigable,
               [`${ClassName.CIRCULAR}`]: settings.indicator.style !== ClassName.ROUNDED
             });
+            // 替幻燈片產生指示器的元素。
             for (index = i = 1, ref = $children.length; 1 <= ref ? i <= ref : i >= ref; index = 1 <= ref ? ++i : --i) {
               $indicator = ts('<div>').addClass(ClassName.ITEM).addClass({
                 [`${ClassName.ACTIVE}`]: index === 1
               });
               $indicators.append($indicator);
             }
+            // 移動到幻燈片容器中。
             $this.append($indicators);
           }
+          // 初始化索引為零。
           module.set.index(0);
           module.bind.events();
+          // 如果要自動播放的話則建立計時器。
           if (module.should.autoplay()) {
             module.play();
           }
