@@ -70,6 +70,38 @@ ts.isPlainObject = function(object) {
   return Object.prototype.toString.call(object) === '[object Object]';
 };
 
+// 延展物件的函式，與 ES 的 `...` 不同之處在於 extend 並不會替換掉整個子物件，而會以補插的方式執行。
+// https://gomakethings.com/vanilla-javascript-version-of-jquery-extend/
+ts.extend = function() {
+  var deep, extended, i, length, merge, obj;
+  extended = {};
+  deep = true;
+  i = 0;
+  length = arguments.length;
+  if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
+    deep = arguments[0];
+    i++;
+  }
+  merge = function(obj) {
+    var prop;
+    for (prop in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, prop)) {
+        if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+          extended[prop] = ts.extend(true, extended[prop], obj[prop]);
+        } else {
+          extended[prop] = obj[prop];
+        }
+      }
+    }
+  };
+  while (i < length) {
+    obj = arguments[i];
+    merge(obj);
+    i++;
+  }
+  return extended;
+};
+
 // Get
 
 // 取得選擇器內的指定元素，並且回傳一個 DOM 元素而非選擇器。
@@ -666,13 +698,14 @@ ts.fn.on = {
     //             func    : func()
     //         }
     //     ]
-    //     alias1:
-    //     {
-    //         once: true,
-    //         selector: ".button",
-    //         data    : {},
-    //         func: func()
-    //     }
+    //     alias1: [
+    //         {
+    //             once    : true,
+    //             selector: ".button",
+    //             data    : {},
+    //             func    : func()
+    //         }
+    //    ]
     // }
     return this.each(function() {
       if (this.addEventListener === void 0) {
@@ -695,7 +728,7 @@ ts.fn.on = {
           };
           // 然後建立一個管理多個事件的事件管理處理程式。
           this.addEventListener(eventName, function(event) {
-            var alias, calledAlias, closest, context, hasArgs, index, item, ref, ref1, ref2, results;
+            var alias, calledAlias, closest, context, hasArgs, index, ref, ref1, ref2, results, single;
             // 是否有自訂參數。
             hasArgs = ((ref = event.detail) != null ? (ref1 = ref.args) != null ? ref1.length : void 0 : void 0) > 0;
             // 是否有呼叫事件別名。
@@ -710,58 +743,42 @@ ts.fn.on = {
               if (calledAlias && calledAlias !== alias) {
                 continue;
               }
-              // 設置事件的上下文。
-              context = this;
-              // 如果這個事件有選擇器的話，則使用該選擇器為主。
-              if (this.$events[eventName][alias].selector !== void 0) {
-                selector = this.$events[eventName][alias].selector;
-                closest = ts(event.target).closest(selector);
-                // 如果找不到指定選擇棄的元素，就不要觸發此事件。
-                if (closest.length === 0) {
-                  continue;
-                } else {
-                  // 替換上下文為選擇器元素。
-                  context = closest.get();
-                }
-              }
-              // 將事件預資料放入事件中供處理函式取得。
-              event.data = this.$events[eventName][alias].data;
-              // 如果這是匿名函式陣列的話。
-              if (alias === 'anonymous') {
-                index = this.$events[eventName][alias].length;
-                results.push((function() {
-                  var results1;
-                  results1 = [];
-                  while (index--) {
-                    item = this.$events[eventName][alias][index];
-                    if (hasArgs) {
-                      item.func.call(context, event, ...event.detail.args);
+              index = this.$events[eventName][alias].length;
+              results.push((function() {
+                var results1;
+                results1 = [];
+                while (index--) {
+                  single = this.$events[eventName][alias][index];
+                  // 設置事件的上下文。
+                  context = this;
+                  // 如果這個事件有選擇器的話，則使用該選擇器為主。
+                  if (single.selector !== void 0) {
+                    selector = single.selector;
+                    closest = ts(event.target).closest(selector);
+                    // 如果找不到指定選擇棄的元素，就不要觸發此事件。
+                    if (closest.length === 0) {
+                      continue;
                     } else {
-                      item.func.call(context, event);
-                    }
-                    // 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
-                    if (item.once === true) {
-                      results1.push(this.$events[eventName][alias].splice(index, 1));
-                    } else {
-                      results1.push(void 0);
+                      // 替換上下文為選擇器元素。
+                      context = closest.get();
                     }
                   }
-                  return results1;
-                }).call(this));
-              } else {
-                // 不然如果是別名函式的話。
-                if (hasArgs) {
-                  this.$events[eventName][alias].func.call(context, event, ...event.detail.args);
-                } else {
-                  this.$events[eventName][alias].func.call(context, event);
+                  // 將事件預資料放入事件中供處理函式取得。
+                  event.data = single.data;
+                  if (hasArgs) {
+                    single.func.call(context, event, ...event.detail.args);
+                  } else {
+                    single.func.call(context, event);
+                  }
+                  // 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
+                  if (single.once === true) {
+                    results1.push(this.$events[eventName][alias].splice(index, 1));
+                  } else {
+                    results1.push(void 0);
+                  }
                 }
-                // 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
-                if (this.$events[eventName][alias].once === true) {
-                  results.push(delete this.$events[eventName][alias]);
-                } else {
-                  results.push(void 0);
-                }
-              }
+                return results1;
+              }).call(this));
             }
             return results;
           });
@@ -769,12 +786,15 @@ ts.fn.on = {
         // 將新的事件處理程式註冊到事件清單中。
         // 如果有別名，就不要推送到匿名陣列中，我們替這個別名另開物件。
         if (hasAlias) {
-          return this.$events[eventName][eventAlias] = {
+          if (this.$events[eventName][eventAlias] === void 0) {
+            this.$events[eventName][eventAlias] = [];
+          }
+          return this.$events[eventName][eventAlias].push({
             func: handler,
             selector: selector,
             data: data,
             once: options != null ? options.once : void 0
-          };
+          });
         } else {
           // 如果沒有，就照常推進匿名陣列中。
           return this.$events[eventName].anonymous.push({

@@ -59,6 +59,30 @@ ts.helper.eventAlias = (event) ->
 ts.isPlainObject = (object) ->
     Object.prototype.toString.call(object) is '[object Object]'
 
+# 延展物件的函式，與 ES 的 `...` 不同之處在於 extend 並不會替換掉整個子物件，而會以補插的方式執行。
+# https://gomakethings.com/vanilla-javascript-version-of-jquery-extend/
+ts.extend =->
+    extended = {}
+    deep     = true
+    i        = 0
+    length   = arguments.length
+    if Object::toString.call(arguments[0]) == '[object Boolean]'
+        deep = arguments[0]
+        i++
+    merge = (obj) ->
+        for prop of obj
+            if Object::hasOwnProperty.call(obj, prop)
+                if deep and Object::toString.call(obj[prop]) == '[object Object]'
+                    extended[prop] = ts.extend(true, extended[prop], obj[prop])
+                else
+                    extended[prop] = obj[prop]
+        return
+    while i < length
+        obj = arguments[i]
+        merge obj
+        i++
+    extended
+
 # Get
 #
 # 取得選擇器內的指定元素，並且回傳一個 DOM 元素而非選擇器。
@@ -490,13 +514,14 @@ ts.fn.on =
         #             func    : func()
         #         }
         #     ]
-        #     alias1:
-        #     {
-        #         once: true,
-        #         selector: ".button",
-        #         data    : {},
-        #         func: func()
-        #     }
+        #     alias1: [
+        #         {
+        #             once    : true,
+        #             selector: ".button",
+        #             data    : {},
+        #             func    : func()
+        #         }
+        #    ]
         # }
 
         @each ->
@@ -528,52 +553,43 @@ ts.fn.on =
 
                         # 將被觸發的事件裡面的所有處理程式全部呼叫一次。
                         for alias of @$events[eventName]
+
                             if calledAlias and calledAlias isnt alias
                                 continue
 
-                            # 設置事件的上下文。
-                            context = @
-                            # 如果這個事件有選擇器的話，則使用該選擇器為主。
-                            if @$events[eventName][alias].selector isnt undefined
-                                selector = @$events[eventName][alias].selector
-                                closest  = ts(event.target).closest(selector)
-                                # 如果找不到指定選擇棄的元素，就不要觸發此事件。
-                                if closest.length is 0
-                                    continue
-                                else
-                                    # 替換上下文為選擇器元素。
-                                    context = closest.get()
+                            index = @$events[eventName][alias].length
+                            while index--
+                                single = @$events[eventName][alias][index]
 
-                            # 將事件預資料放入事件中供處理函式取得。
-                            event.data = @$events[eventName][alias].data
-
-                            # 如果這是匿名函式陣列的話。
-                            if alias is 'anonymous'
-                                index = @$events[eventName][alias].length
-                                while index--
-                                    item = @$events[eventName][alias][index]
-                                    if hasArgs
-                                        item.func.call(context, event, event.detail.args...)
+                                # 設置事件的上下文。
+                                context = @
+                                # 如果這個事件有選擇器的話，則使用該選擇器為主。
+                                if single.selector isnt undefined
+                                    selector = single.selector
+                                    closest  = ts(event.target).closest(selector)
+                                    # 如果找不到指定選擇棄的元素，就不要觸發此事件。
+                                    if closest.length is 0
+                                        continue
                                     else
-                                        item.func.call(context, event)
-                                    # 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
-                                    if item.once is true
-                                        @$events[eventName][alias].splice(index, 1)
+                                        # 替換上下文為選擇器元素。
+                                        context = closest.get()
+                                # 將事件預資料放入事件中供處理函式取得。
+                                event.data = single.data
 
-                            # 不然如果是別名函式的話。
-                            else
                                 if hasArgs
-                                    @$events[eventName][alias].func.call(context, event, event.detail.args...)
+                                    single.func.call(context, event, event.detail.args...)
                                 else
-                                    @$events[eventName][alias].func.call(context, event)
+                                    single.func.call(context, event)
                                 # 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。
-                                if @$events[eventName][alias].once is true
-                                   delete @$events[eventName][alias]
+                                if single.once is true
+                                    @$events[eventName][alias].splice(index, 1)
 
                 # 將新的事件處理程式註冊到事件清單中。
                 # 如果有別名，就不要推送到匿名陣列中，我們替這個別名另開物件。
                 if hasAlias
-                    @$events[eventName][eventAlias] =
+                    if @$events[eventName][eventAlias] is undefined
+                        @$events[eventName][eventAlias] = []
+                    @$events[eventName][eventAlias].push
                         func    : handler
                         selector: selector
                         data    : data
