@@ -3,16 +3,16 @@
 <script src="../../dist/tocas.js"></script>
 <script src="../../dist/carousel.js"></script>
 <link rel="stylesheet" href="../../dist/tocas.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="./tool.js"></script>
 </head>
-<body style="padding: 50px">
-    <!-- 幻燈片 -->
-    <div class="ts carousel" style="width: 500px">
+<body>
+    <div class="ts carousel" style="height: 300px">
         <!-- 單個項目 -->
         <div class="item">
             <!-- 背景圖片 -->
             <div class="covered image">
-                <img src="../va.png">
+                <img src="../../test/va.png">
             </div>
             <!-- / 背景圖片 -->
 
@@ -29,7 +29,7 @@
         <div class="item">
             <!-- 背景圖片 -->
             <div class="covered image">
-                <img src="../va.png">
+                <img src="../../test/va.png">
             </div>
             <!-- / 背景圖片 -->
 
@@ -46,7 +46,7 @@
         <div class="item">
             <!-- 背景圖片 -->
             <div class="covered image">
-                <img src="../va.png">
+                <img src="../../test/va.png">
             </div>
             <!-- / 背景圖片 -->
 
@@ -59,9 +59,60 @@
         </div>
         <!-- / 單個項目 -->
     </div>
-    <!-- / 幻燈片 -->
-<script>
-    ts('.carousel').carousel()
-</script>
+
+    <!-- -->
+    <script>
+        testUnit({
+            core: {
+                'Carousel': () => {
+                    ts('.carousel').carousel()
+                },
+                'Not Autoplay': () => {
+                    ts('.carousel').carousel({
+                        autoplay: false
+                    })
+                },
+                'Circular Indicator': () => {
+                    ts('.carousel').carousel({
+                        indicator: {
+                            style: 'circular'
+                        }
+                    })
+                },
+                'Compact Control': () => {
+                    ts('.carousel').carousel({
+                        control: {
+                            style: 'compact'
+                        }
+                    })
+                },
+            },
+            method: {
+                'Play': () => {
+                    ts('.carousel').carousel('play')
+                },
+                'Pause': () => {
+                    ts('.carousel').carousel('pause')
+                },
+                'Next': () => {
+                    ts('.carousel').carousel('next')
+                },
+                'Previous': () => {
+                    ts('.carousel').carousel('previous')
+                },
+                'Slide To 2': () => {
+                    ts('.carousel').carousel('slide to', 2)
+                },
+                'Get Index': () => {
+                    alert(ts('.carousel').carousel('get index'))
+                },
+                'Destroy': () => {
+                    ts('.carousel').carousel('destroy')
+                },
+            }
+        })
+    </script>
+    <!-- -->
 </body>
 </html>
+</body>
