@@ -52,11 +52,12 @@ ts.fn.carousel = {
           right: 'chevron right'
         }
       },
-      
+      // 中繼資料名稱。
       metadata: {
         sliding: 'sliding',
         index: 'index',
-        content: 'content'
+        content: 'content',
+        autoplay: 'autoplay'
       }
     };
     // 事件名稱。
@@ -115,7 +116,7 @@ ts.fn.carousel = {
       $this = ts(this);
       element = this;
       instance = $this.data(MODULE_NAMESPACE);
-      settings = ts.isPlainObject(parameters) ? Object.assign({}, Settings, parameters) : Object.assign({}, Settings);
+      settings = ts.isPlainObject(parameters) ? ts.extend(Settings, parameters) : ts.extend(Settings);
       duration = 700;
       metadata = Settings.metadata;
       // ------------------------------------------------------------------------
@@ -139,9 +140,9 @@ ts.fn.carousel = {
         set: {
           timer: function() {
             return $this.setTimer({
-              name: 'autoplay',
+              name: settings.metadata.autoplay,
               callback: module.next,
-              interval: 5000,
+              interval: settings.interval,
               looping: true,
               visible: true
             });
@@ -186,7 +187,7 @@ ts.fn.carousel = {
         // 開始
         start: {
           timer: function() {
-            return $this.playTimer('autoplay');
+            return $this.playTimer(settings.metadata.autoplay);
           }
         },
         // Stop
@@ -194,7 +195,7 @@ ts.fn.carousel = {
         // 停止
         stop: {
           timer: function() {
-            return $this.pauseTimer('autoplay');
+            return $this.pauseTimer(settings.metadata.autoplay);
           }
         },
         // Has
@@ -202,7 +203,7 @@ ts.fn.carousel = {
         // 是否有
         has: {
           timer: function() {
-            return $this.hasTimer('autoplay');
+            return $this.hasTimer(settings.metadata.autoplay);
           }
         },
         // Remove
@@ -210,7 +211,7 @@ ts.fn.carousel = {
         // 移除
         remove: {
           timer: function() {
-            return $this.removeTimer('autoplay');
+            return $this.removeTimer(settings.metadata.autoplay);
           }
         },
         // Should
@@ -245,6 +246,11 @@ ts.fn.carousel = {
           // 如果正在滑動中，則取消本次的指令。
           if (module.is.sliding()) {
             return;
+          }
+          // 重設自動播放的計時器。
+          if (module.has.timer()) {
+            module.remove.timer();
+            module.set.timer();
           }
           // 標記幻燈片正在滑動中，避免重複執行發生問題。
           module.set.sliding(true);
@@ -346,6 +352,7 @@ ts.fn.carousel = {
               module.bind.indicatorEvents();
             }
             return $this.on(Event.CHANGE, function(event, context, index) {
+              module.debug("發生 CHANGE 事件", context);
               return settings.onChange.call(context, event, index);
             });
           },
@@ -355,9 +362,11 @@ ts.fn.carousel = {
           controlEvents: () => {
             module.debug('綁定控制按鈕事件', element);
             $this.on(Event.CLICK, Selector.CONTROLS_LEFT, () => {
+              module.debug("左控制按鈕發生 CLICK 事件", this);
               return module.previous();
             });
             return $this.on(Event.CLICK, Selector.CONTROLS_RIGHT, () => {
+              module.debug("右控制按鈕發生 CLICK 事件", this);
               return module.next();
             });
           },
@@ -368,6 +377,7 @@ ts.fn.carousel = {
             module.debug('綁定指示器事件', element);
             return $this.find(Selector.INDICATORS_ITEM).each((element, index) => {
               return ts(element).on(Event.CLICK, () => {
+                module.debug("指示器發生 CLICK 事件", this);
                 return module.slideTo(index);
               });
             });
@@ -469,11 +479,7 @@ ts.fn.carousel = {
         // Refresh
 
         // 更新資料
-        refresh: function() {
-          var $content, $title;
-          $title = $this.find(Selector.TITLE);
-          return $content = $this.find(Selector.CONTENT);
-        },
+        refresh: function() {},
         // Destroy
 
         // 摧毀

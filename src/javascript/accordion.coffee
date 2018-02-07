@@ -22,11 +22,11 @@ ts.fn.accordion = value: (parameters) ->
         # 消音所有提示，甚至是錯誤訊息。
         silent        : false
         # 顯示除錯訊息。
-        debug         : false
+        debug         : true
         # 監聽 DOM 結構異動並自動重整快取。
         observeChanges: true
         # 展開的手風琴是否可以被關閉。
-        collapsible   : false
+        collapsible   : true
         # 當手風琴被關閉時，是否一同閉合子手風琴。
         closeNested   : true
         # 當手風琴正在展開時所會呼叫的函式。
@@ -91,7 +91,7 @@ ts.fn.accordion = value: (parameters) ->
         $title   = $this.find Selector.TITLE
         $content = $this.find Selector.CONTENT
         instance = $this.data MODULE_NAMESPACE
-        settings = if ts.isPlainObject(parameters) then {Settings..., parameters...} else {Settings...}
+        settings = if ts.isPlainObject(parameters) then ts.extend(Settings, parameters) else ts.extend(Settings)
 
         # ------------------------------------------------------------------------
         # 模組定義
@@ -104,7 +104,6 @@ ts.fn.accordion = value: (parameters) ->
             # 展開
 
             open: (index) ->
-                module.debug '開啟手風琴分頁', index, element
                 $t = $title.eq   index
                 $c = $content.eq index
 
@@ -114,6 +113,8 @@ ts.fn.accordion = value: (parameters) ->
                 if settings.exclusive
                     module.debug '由於手風琴分頁同時間僅能有一個打開，因此關閉其他分頁', index, element
                     module.closeAll()
+
+                module.debug '開啟手風琴分頁', index, element
 
                 $this.trigger Event.OPENING, $c.get()
                 $this.trigger Event.OPEN   , $c.get()
@@ -153,7 +154,6 @@ ts.fn.accordion = value: (parameters) ->
             closeOthers: (index) ->
                 module.debug '關閉指定手風琴分頁以外的其他分頁', index, element
                 module.closeAll()
-                module.open index
 
             # Close All
             #
@@ -191,16 +191,22 @@ ts.fn.accordion = value: (parameters) ->
 
                 events: =>
                     $this.on Event.CLICK, Selector.TITLE, ->
+                        module.debug '發生 CLICK 事件', element, @
                         module.toggle $title.indexOf @
                     $this.on Event.OPENING, (event, context) ->
+                        module.debug '發生 OPENING 事件', context
                         settings.onOpening.call context, event
                     $this.on Event.OPEN, (event, context) ->
+                        module.debug '發生 OPEN 事件', context
                         settings.onOpen.call context, event
                     $this.on Event.CLOSING, (event, context) ->
+                        module.debug "發生 CLOSING 事件", context
                         settings.onClosing.call context, event
                     $this.on Event.CLOSE, (event, context) ->
+                        module.debug "發生 CLOSE 事件", context
                         settings.onClose.call context, event
                     $this.on Event.CHANGE, (event, context) ->
+                        module.debug "發生 CHANGE 事件", context
                         settings.onChange.call context, event
 
             # ------------------------------------------------------------------------

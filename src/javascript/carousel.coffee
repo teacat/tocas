@@ -49,13 +49,12 @@ ts.fn.carousel = value: (parameters) ->
                 left : 'chevron left'
                 # 右圖示的圖示名稱
                 right: 'chevron right'
-        #
+        # 中繼資料名稱。
         metadata:
-            sliding: 'sliding'
-            index  : 'index'
-            content: 'content'
-
-
+            sliding : 'sliding'
+            index   : 'index'
+            content : 'content'
+            autoplay: 'autoplay'
 
     # 事件名稱。
     Event =
@@ -117,7 +116,7 @@ ts.fn.carousel = value: (parameters) ->
         $this    = ts @
         element  = @
         instance = $this.data MODULE_NAMESPACE
-        settings = if ts.isPlainObject(parameters) then {Settings..., parameters...} else {Settings...}
+        settings = if ts.isPlainObject(parameters) then ts.extend(Settings, parameters) else ts.extend(Settings)
         duration = 700
         metadata = Settings.metadata
 
@@ -145,9 +144,9 @@ ts.fn.carousel = value: (parameters) ->
             set:
                 timer: ->
                     $this.setTimer
-                        name    : 'autoplay'
+                        name    : settings.metadata.autoplay
                         callback: module.next
-                        interval: 5000
+                        interval: settings.interval
                         looping : true
                         visible : true
                 sliding: (bool) ->
@@ -177,7 +176,7 @@ ts.fn.carousel = value: (parameters) ->
 
             start:
                 timer: ->
-                    $this.playTimer 'autoplay'
+                    $this.playTimer settings.metadata.autoplay
 
             # Stop
             #
@@ -185,7 +184,7 @@ ts.fn.carousel = value: (parameters) ->
 
             stop:
                 timer: ->
-                    $this.pauseTimer 'autoplay'
+                    $this.pauseTimer settings.metadata.autoplay
 
             # Has
             #
@@ -193,7 +192,7 @@ ts.fn.carousel = value: (parameters) ->
 
             has:
                 timer: ->
-                    $this.hasTimer 'autoplay'
+                    $this.hasTimer settings.metadata.autoplay
 
             # Remove
             #
@@ -201,7 +200,7 @@ ts.fn.carousel = value: (parameters) ->
 
             remove:
                 timer: ->
-                    $this.removeTimer 'autoplay'
+                    $this.removeTimer settings.metadata.autoplay
 
             # Should
             #
@@ -236,6 +235,10 @@ ts.fn.carousel = value: (parameters) ->
                 # 如果正在滑動中，則取消本次的指令。
                 if module.is.sliding()
                     return
+                # 重設自動播放的計時器。
+                if module.has.timer()
+                    module.remove.timer()
+                    module.set.timer()
                 # 標記幻燈片正在滑動中，避免重複執行發生問題。
                 module.set.sliding true
                 # 取得幻燈片移動的方向該往左邊還是右邊。
@@ -347,6 +350,7 @@ ts.fn.carousel = value: (parameters) ->
                     if settings.indicator?.navigable
                         module.bind.indicatorEvents()
                     $this.on Event.CHANGE, (event, context, index) ->
+                        module.debug "發生 CHANGE 事件", context
                         settings.onChange.call context, event, index
 
                 # Control Events
@@ -356,8 +360,10 @@ ts.fn.carousel = value: (parameters) ->
                 controlEvents: =>
                     module.debug '綁定控制按鈕事件', element
                     $this.on Event.CLICK, Selector.CONTROLS_LEFT, =>
+                        module.debug "左控制按鈕發生 CLICK 事件", @
                         module.previous()
                     $this.on Event.CLICK, Selector.CONTROLS_RIGHT, =>
+                        module.debug "右控制按鈕發生 CLICK 事件", @
                         module.next()
 
                 # Indicator Events
@@ -369,7 +375,9 @@ ts.fn.carousel = value: (parameters) ->
                     $this
                         .find Selector.INDICATORS_ITEM
                         .each (element, index) =>
-                            ts(element).on Event.CLICK, => module.slideTo index
+                            ts(element).on Event.CLICK, =>
+                                module.debug "指示器發生 CLICK 事件", @
+                                module.slideTo index
 
             # ------------------------------------------------------------------------
             # 模組核心
@@ -475,8 +483,6 @@ ts.fn.carousel = value: (parameters) ->
             # 更新資料
 
             refresh: ->
-                $title   = $this.find Selector.TITLE
-                $content = $this.find Selector.CONTENT
 
             # Destroy
             #

@@ -22,11 +22,11 @@ ts.fn.accordion = {
       // 消音所有提示，甚至是錯誤訊息。
       silent: false,
       // 顯示除錯訊息。
-      debug: false,
+      debug: true,
       // 監聽 DOM 結構異動並自動重整快取。
       observeChanges: true,
       // 展開的手風琴是否可以被關閉。
-      collapsible: false,
+      collapsible: true,
       // 當手風琴被關閉時，是否一同閉合子手風琴。
       closeNested: true,
       // 當手風琴正在展開時所會呼叫的函式。
@@ -87,7 +87,7 @@ ts.fn.accordion = {
       $title = $this.find(Selector.TITLE);
       $content = $this.find(Selector.CONTENT);
       instance = $this.data(MODULE_NAMESPACE);
-      settings = ts.isPlainObject(parameters) ? Object.assign({}, Settings, parameters) : Object.assign({}, Settings);
+      settings = ts.isPlainObject(parameters) ? ts.extend(Settings, parameters) : ts.extend(Settings);
       // ------------------------------------------------------------------------
       // 模組定義
       // ------------------------------------------------------------------------
@@ -97,7 +97,6 @@ ts.fn.accordion = {
         // 展開
         open: function(index) {
           var $c, $t;
-          module.debug('開啟手風琴分頁', index, element);
           $t = $title.eq(index);
           $c = $content.eq(index);
           if ($t.hasClass(ClassName.ACTIVE)) {
@@ -107,6 +106,7 @@ ts.fn.accordion = {
             module.debug('由於手風琴分頁同時間僅能有一個打開，因此關閉其他分頁', index, element);
             module.closeAll();
           }
+          module.debug('開啟手風琴分頁', index, element);
           $this.trigger(Event.OPENING, $c.get());
           $this.trigger(Event.OPEN, $c.get());
           $this.trigger(Event.CHANGE, $c.get());
@@ -140,8 +140,7 @@ ts.fn.accordion = {
         // 閉合指定以外
         closeOthers: function(index) {
           module.debug('關閉指定手風琴分頁以外的其他分頁', index, element);
-          module.closeAll();
-          return module.open(index);
+          return module.closeAll();
         },
         // Close All
 
@@ -181,21 +180,27 @@ ts.fn.accordion = {
           // 事件
           events: () => {
             $this.on(Event.CLICK, Selector.TITLE, function() {
+              module.debug('發生 CLICK 事件', element, this);
               return module.toggle($title.indexOf(this));
             });
             $this.on(Event.OPENING, function(event, context) {
+              module.debug('發生 OPENING 事件', context);
               return settings.onOpening.call(context, event);
             });
             $this.on(Event.OPEN, function(event, context) {
+              module.debug('發生 OPEN 事件', context);
               return settings.onOpen.call(context, event);
             });
             $this.on(Event.CLOSING, function(event, context) {
+              module.debug("發生 CLOSING 事件", context);
               return settings.onClosing.call(context, event);
             });
             $this.on(Event.CLOSE, function(event, context) {
+              module.debug("發生 CLOSE 事件", context);
               return settings.onClose.call(context, event);
             });
             return $this.on(Event.CHANGE, function(event, context) {
+              module.debug("發生 CHANGE 事件", context);
               return settings.onChange.call(context, event);
             });
           }
