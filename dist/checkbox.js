@@ -262,7 +262,8 @@ ts.fn.checkbox = {
 
         // 更新資料
         refresh: function() {
-          return $input = $this.find(Selector.INPUT);
+          $input = $this.find(Selector.INPUT);
+          return inputElement = $input.get();
         },
         // Destroy
 

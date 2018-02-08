@@ -87,7 +87,7 @@ ts.fn.checkbox = value: (parameters) ->
 
         $this        = ts @
         element      = @
-        $input       = $this.find(Selector.INPUT)
+        $input       = $this.find Selector.INPUT
         inputElement = $input.get()
         instance     = $this.data MODULE_NAMESPACE
         settings     = if ts.isPlainObject(parameters) then ts.extend(Settings, parameters) else ts.extend(Settings)
@@ -261,7 +261,8 @@ ts.fn.checkbox = value: (parameters) ->
             # 更新資料
 
             refresh: ->
-                $input = $this.find(Selector.INPUT)
+                $input       = $this.find Selector.INPUT
+                inputElement = $input.get()
 
             # Destroy
             #
