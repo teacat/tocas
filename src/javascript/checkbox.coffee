@@ -200,20 +200,26 @@ ts.fn.checkbox = value: (parameters) ->
 
                 events: =>
                     $this.on Event.CLICK, ->
-                        module.toggle() if module.is.enable
+                        module.debug '發生 CLICK 事件', element
+                        module.toggle() if module.is.enable()
                     $this.on Event.CHECKED, (event, context) ->
+                        module.debug '發生 CHECKED 事件', element
                         settings.onChecked.call context, event
                     $this.on Event.UNCHECKED, (event, context) ->
+                        module.debug '發生 UNCHECKED 事件', element
                         settings.onUnchecked.call context, event
                     #$this.on Event.BEFORE_CHECKED, (event, context) ->
                     #    settings.onBeforeChecked.call context, event
                     #$this.on Event.BEFORE_UNCHECKED, (event, context) ->
                     #    settings.onBeforeUnchecked.call context, event
                     $this.on Event.ENABLE, (event, context) ->
+                        module.debug '發生 ENABLE 事件', element
                         settings.onEnable.call context, event
                     $this.on Event.DISABLE, (event, context) ->
+                        module.debug '發生 DISABLE 事件', element
                         settings.onDisable.call context, event
                     $this.on Event.CHANGE, (event, context) ->
+                        module.debug '發生 CHANGE 事件', element
                         settings.onChange.call context, event
 
             # ------------------------------------------------------------------------

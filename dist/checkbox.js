@@ -191,14 +191,17 @@ ts.fn.checkbox = {
           // 事件
           events: () => {
             $this.on(Event.CLICK, function() {
-              if (module.is.enable) {
+              module.debug('發生 CLICK 事件', element);
+              if (module.is.enable()) {
                 return module.toggle();
               }
             });
             $this.on(Event.CHECKED, function(event, context) {
+              module.debug('發生 CHECKED 事件', element);
               return settings.onChecked.call(context, event);
             });
             $this.on(Event.UNCHECKED, function(event, context) {
+              module.debug('發生 UNCHECKED 事件', element);
               return settings.onUnchecked.call(context, event);
             });
             //$this.on Event.BEFORE_CHECKED, (event, context) ->
@@ -206,12 +209,15 @@ ts.fn.checkbox = {
             //$this.on Event.BEFORE_UNCHECKED, (event, context) ->
             //    settings.onBeforeUnchecked.call context, event
             $this.on(Event.ENABLE, function(event, context) {
+              module.debug('發生 ENABLE 事件', element);
               return settings.onEnable.call(context, event);
             });
             $this.on(Event.DISABLE, function(event, context) {
+              module.debug('發生 DISABLE 事件', element);
               return settings.onDisable.call(context, event);
             });
             return $this.on(Event.CHANGE, function(event, context) {
+              module.debug('發生 CHANGE 事件', element);
               return settings.onChange.call(context, event);
             });
           }
