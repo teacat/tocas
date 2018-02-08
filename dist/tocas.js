@@ -553,6 +553,8 @@ ts.fn.addClass = {
         }
       }
       names = newNames;
+    } else {
+      names = Array.prototype.slice.call(arguments).join(' ');
     }
     return this.each(function() {
       return DOMTokenList.prototype.add.apply(this.classList, names.split(' ').filter(Boolean));
@@ -574,6 +576,8 @@ ts.fn.removeClass = {
         }
       }
       names = newNames;
+    } else {
+      names = Array.prototype.slice.call(arguments).join(' ');
     }
     return this.each(function() {
       return DOMTokenList.prototype.remove.apply(this.classList, names.split(' ').filter(Boolean));

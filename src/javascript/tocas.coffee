@@ -407,6 +407,8 @@ ts.fn.addClass =
                 if names[name] is true
                     newNames += " #{name}"
             names = newNames
+        else
+            names = Array.prototype.slice.call(arguments).join(' ')
         @each ->
             DOMTokenList.prototype.add.apply(@classList, names.split(' ').filter(Boolean))
 
@@ -421,6 +423,8 @@ ts.fn.removeClass =
                 if names[name] is true
                     newNames += " #{name}"
             names = newNames
+        else
+            names = Array.prototype.slice.call(arguments).join(' ')
         @each ->
             DOMTokenList.prototype.remove.apply(@classList, names.split(' ').filter(Boolean))
 
