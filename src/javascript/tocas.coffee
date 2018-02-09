@@ -59,6 +59,10 @@ ts.helper.eventAlias = (event) ->
 ts.isPlainObject = (object) ->
     Object.prototype.toString.call(object) is '[object Object]'
 
+# 是否為可觸控裝置。
+ts.isTouchDevice = ->
+    'ontouchstart' of window or navigator.maxTouchPoints
+
 # 延展物件的函式，與 ES 的 `...` 不同之處在於 extend 並不會替換掉整個子物件，而會以補插的方式執行。
 # https://gomakethings.com/vanilla-javascript-version-of-jquery-extend/
 ts.extend =->
