@@ -23,13 +23,8 @@ ts.fn.contextmenu = {
       debug: true,
       // 監聽 DOM 結構異動並自動重整快取。
       observeChanges: true,
-      // 複合式選單應該出現在游標的哪個位置，如：`top left`、`top right`、`bottom left`、`bottom right`。
-      position: 'auto',
-      // 複合式選單離游標的距離（單位：像素）。
-      distance: {
-        x: 0,
-        y: 0
-      },
+      // 是否停用此複合式選單。
+      disable: false,
       // 目標選擇器。
       target: null,
       // 複合式選單是否可因為使用者點擊選單外面而自動關閉。
@@ -37,9 +32,13 @@ ts.fn.contextmenu = {
       // 複合式選單是否可以因為在觸控裝置上長按而顯示。
       touch: true,
       // 當複合式選單出現時所會呼叫的回呼函式。
-      onShow: function(target) {},
+      onShow: function(target, x, y) {
+        return true;
+      },
       // 當複合式選單隱藏時所會呼叫的回呼函式。
-      onHide: function() {},
+      onHide: function() {
+        return true;
+      },
       // 當複合式選單被停用時所會呼叫的回呼函式。
       onDisable: function() {},
       // 當複合式選單被啟用時所會呼叫的回呼函式。
@@ -98,7 +97,7 @@ ts.fn.contextmenu = {
       element = this;
       instance = $this.data(MODULE_NAMESPACE);
       settings = ts.isPlainObject(parameters) ? ts.extend(Settings, parameters) : ts.extend(Settings);
-      $parent = settings.target || $this.parent();
+      $parent = !settings.target ? $this.parent() : ts(settings.target);
       hiddenDuration = 80;
       visibleDuration = 10;
       edgePadding = 10;
@@ -106,29 +105,17 @@ ts.fn.contextmenu = {
       // 模組定義
       // ------------------------------------------------------------------------
       module = {
-        getMenuRect: () => {
-          var rect;
-          module.set.visible();
-          rect = element.getBoundingClientRect();
-          module.set.hidden();
-          return rect;
-        },
-        set: {
-          visible: function() {
-            return $this.addClass(ClassName.VISIBLE);
-          },
-          hidden: function() {
-            return $this.removeClass(ClassName.VISIBLE);
-          }
-        },
         // Show
 
         // 在目前游標或指定的位置顯示複合選單。
         show: (x, y) => {
           var h, left, r, top, w;
-          r = module.getMenuRect();
+          r = module.get.rect();
           w = window.innerWidth;
           h = window.innerHeight;
+          if (!module.trigger.show(x, y)) {
+            return;
+          }
           if (x < edgePadding) {
             left = edgePadding;
           } else if (x + r.width + edgePadding > w) {
@@ -155,7 +142,9 @@ ts.fn.contextmenu = {
           if (module.is.hidden()) {
             return;
           }
-          $this.trigger(Event.HIDE, element);
+          if (!module.trigger.hide()) {
+            return;
+          }
           return $this.off('animationend').removeClass(ClassName.VISIBLE).addClass(ClassName.HIDDEN, ClassName.ANIMATING).one('animationend', () => {
             return $this.removeClass(ClassName.ANIMATING);
           }).emulate('animationend', hiddenDuration);
@@ -163,17 +152,44 @@ ts.fn.contextmenu = {
         // Disable
 
         // 停用複合選單的監聽事件，避免顯示。
-        disable: () => {},
+        disable: () => {
+          return module.set.disable();
+        },
         // Enable
 
         // 啟用複合選單的監聽事件。
-        enable: () => {},
+        enable: () => {
+          return module.set.enable();
+        },
+        // Set
+
+        // 設置
+        set: {
+          visible: function() {
+            return $this.addClass(ClassName.VISIBLE);
+          },
+          hidden: function() {
+            return $this.removeClass(ClassName.VISIBLE);
+          },
+          disable: function() {
+            $this.trigger(Event.DISABLE, element);
+            return settings.disable = true;
+          },
+          enable: function() {
+            $this.trigger(Event.ENABLE, element);
+            return settings.disable = false;
+          }
+        },
         // Is
 
         // 是否
         is: {
-          disable: function() {},
-          enable: function() {},
+          disable: function() {
+            return settings.disable;
+          },
+          enable: function() {
+            return !settings.disable;
+          },
           visible: function() {
             return $this.hasClass(ClassName.VISIBLE);
           },
@@ -188,7 +204,29 @@ ts.fn.contextmenu = {
 
         // 取得
         get: {
-          name: function() {}
+          rect: function() {
+            var rect;
+            module.set.visible();
+            rect = element.getBoundingClientRect();
+            module.set.hidden();
+            return rect;
+          },
+          value: function(element) {
+            return ts(element).attr('data-value');
+          }
+        },
+        // Trigger
+
+        // 觸發
+        trigger: {
+          show: function(x, y) {
+            module.debug('發生 SHOW 事件', element, document.elementFromPoint(x, y), x, y);
+            return settings.onShow.call(element, document.elementFromPoint(x, y), x, y);
+          },
+          hide: function() {
+            module.debug('發生 HIDE 事件', element);
+            return settings.onHide.call(element);
+          }
         },
         // Bind
 
@@ -199,33 +237,36 @@ ts.fn.contextmenu = {
           // 事件
           events: () => {
             $body.on(Event.CLICK, function() {
+              module.debug('發生 CLICK 事件', element);
               if (module.is.closable()) {
                 return module.hide();
               }
             });
             $parent.on(Event.CONTEXTMENU, function(event) {
+              module.debug('發生 CONTEXTMENU 事件', element);
               event.preventDefault();
               if (module.is.disable()) {
+                return;
+              }
+              if (!settings.touch && ts.isTouchDevice()) {
                 return;
               }
               return module.show(event.clientX, event.clientY);
             });
             $item.on(Event.CLICK, function() {
-              return $this.trigger(Event.SELECT, element, ts(this).attr('data-value'), this);
-            });
-            $this.on(Event.SHOW, function(event, context) {
-              return settings.onShow.call(context, event);
-            });
-            $this.on(Event.HIDE, function(event, context) {
-              return settings.onHide.call(context, event);
+              module.debug('發生 CLICK 事件', element);
+              return $this.trigger(Event.SELECT, element, module.get.value(this), this);
             });
             $this.on(Event.SELECT, function(event, context, value, element) {
+              module.debug('發生 SELECT 事件', element, value);
               return settings.onSelect.call(context, event, value, element);
             });
             $this.on(Event.DISABLE, function(event, context) {
+              module.debug('發生 DISABLE 事件', element);
               return settings.onDisable.call(context, event);
             });
             return $this.on(Event.ENABLE, function(event, context) {
+              module.debug('發生 ENABLE 事件', element);
               return settings.onEnable.call(context, event);
             });
           }
@@ -283,6 +324,7 @@ ts.fn.contextmenu = {
           module.debug('摧毀複合式選單', element);
           $this.removeData(MODULE_NAMESPACE).off(EVENT_NAMESPACE);
           $body.off(EVENT_NAMESPACE);
+          $item.off(EVENT_NAMESPACE);
           return $parent.off(EVENT_NAMESPACE);
         },
         // Invoke

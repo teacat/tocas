@@ -23,28 +23,24 @@ ts.fn.contextmenu = value: (parameters) ->
         debug         : true
         # 監聽 DOM 結構異動並自動重整快取。
         observeChanges: true
-        # 複合式選單應該出現在游標的哪個位置，如：`top left`、`top right`、`bottom left`、`bottom right`。
-        position      : 'auto'
-        # 複合式選單離游標的距離（單位：像素）。
-        distance      :
-            x: 0
-            y: 0
+        # 是否停用此複合式選單。
+        disable       : false
         # 目標選擇器。
-        target   : null
+        target        : null
         # 複合式選單是否可因為使用者點擊選單外面而自動關閉。
-        closable : true
+        closable      : true
         # 複合式選單是否可以因為在觸控裝置上長按而顯示。
-        touch    : true
+        touch         : true
         # 當複合式選單出現時所會呼叫的回呼函式。
-        onShow   : (target) ->
+        onShow        : (target, x, y) -> true
         # 當複合式選單隱藏時所會呼叫的回呼函式。
-        onHide   : ->
+        onHide        : -> true
         # 當複合式選單被停用時所會呼叫的回呼函式。
-        onDisable: ->
+        onDisable     : ->
         # 當複合式選單被啟用時所會呼叫的回呼函式。
-        onEnable : ->
+        onEnable      : ->
         # 當複合式選單被點擊項目時所會呼叫的回呼函式。
-        onSelect : (value, element) ->
+        onSelect      : (value, element) ->
 
     # 事件名稱。
     Event =
@@ -101,7 +97,7 @@ ts.fn.contextmenu = value: (parameters) ->
         element         = @
         instance        = $this.data MODULE_NAMESPACE
         settings        = if ts.isPlainObject(parameters) then ts.extend(Settings, parameters) else ts.extend(Settings)
-        $parent         = settings.target or $this.parent()
+        $parent         = if not settings.target then $this.parent() else ts(settings.target)
         hiddenDuration  = 80
         visibleDuration = 10
         edgePadding     = 10
@@ -112,25 +108,16 @@ ts.fn.contextmenu = value: (parameters) ->
 
         module =
 
-            getMenuRect: =>
-                module.set.visible()
-                rect = element.getBoundingClientRect()
-                module.set.hidden()
-                return rect
-
-            set:
-                visible: ->
-                    $this.addClass ClassName.VISIBLE
-                hidden: ->
-                    $this.removeClass ClassName.VISIBLE
-
             # Show
             #
             # 在目前游標或指定的位置顯示複合選單。
             show: (x, y) =>
-                r = module.getMenuRect()
+                r = module.get.rect()
                 w = window.innerWidth
                 h = window.innerHeight
+
+                if not module.trigger.show x, y
+                    return
 
                 if x < edgePadding
                     left = edgePadding
@@ -152,7 +139,7 @@ ts.fn.contextmenu = value: (parameters) ->
                     .off         'animationend'
                     .removeClass ClassName.HIDDEN
                     .addClass    ClassName.VISIBLE, ClassName.ANIMATING
-                    .one 'animationend', =>
+                    .one         'animationend', =>
                         $this.removeClass ClassName.ANIMATING
                     .emulate 'animationend', visibleDuration
 
@@ -163,9 +150,8 @@ ts.fn.contextmenu = value: (parameters) ->
                 module.debug '隱藏複合式選單', element
                 if module.is.hidden()
                     return
-
-                $this.trigger Event.HIDE, element
-
+                if not module.trigger.hide()
+                    return
                 $this
                     .off         'animationend'
                     .removeClass ClassName.VISIBLE
@@ -178,15 +164,29 @@ ts.fn.contextmenu = value: (parameters) ->
             #
             # 停用複合選單的監聽事件，避免顯示。
             disable: =>
+                module.set.disable()
 
             # Enable
             #
             # 啟用複合選單的監聽事件。
             enable: =>
+                module.set.enable()
 
+            # Set
+            #
+            # 設置
 
-
-
+            set:
+                visible: ->
+                    $this.addClass ClassName.VISIBLE
+                hidden: ->
+                    $this.removeClass ClassName.VISIBLE
+                disable: ->
+                    $this.trigger Event.DISABLE, element
+                    settings.disable = true
+                enable: ->
+                    $this.trigger Event.ENABLE, element
+                    settings.disable = false
 
             # Is
             #
@@ -194,25 +194,40 @@ ts.fn.contextmenu = value: (parameters) ->
 
             is:
                 disable: ->
-
+                    settings.disable
                 enable: ->
-
+                    not settings.disable
                 visible: ->
                     $this.hasClass ClassName.VISIBLE
                 hidden: ->
                     not $this.hasClass ClassName.VISIBLE
-
                 closable: ->
                     settings.closable
-
 
             # Get
             #
             # 取得
 
             get:
-                name: ->
+                rect: ->
+                    module.set.visible()
+                    rect = element.getBoundingClientRect()
+                    module.set.hidden()
+                    return rect
+                value: (element) ->
+                    ts(element).attr 'data-value'
 
+            # Trigger
+            #
+            # 觸發
+
+            trigger:
+                show: (x, y) ->
+                    module.debug '發生 SHOW 事件', element, document.elementFromPoint(x, y), x, y
+                    settings.onShow.call element, document.elementFromPoint(x, y), x ,y
+                hide: ->
+                    module.debug '發生 HIDE 事件', element
+                    settings.onHide.call element
 
             # Bind
             #
@@ -226,22 +241,27 @@ ts.fn.contextmenu = value: (parameters) ->
 
                 events: =>
                     $body.on Event.CLICK, ->
+                        module.debug '發生 CLICK 事件', element
                         module.hide() if module.is.closable()
                     $parent.on Event.CONTEXTMENU, (event) ->
+                        module.debug '發生 CONTEXTMENU 事件', element
                         event.preventDefault()
-                        return if module.is.disable()
+                        if module.is.disable()
+                            return
+                        if not settings.touch and ts.isTouchDevice()
+                            return
                         module.show event.clientX, event.clientY
                     $item.on Event.CLICK, ->
-                        $this.trigger Event.SELECT, element, ts(@).attr('data-value'), @
-                    $this.on Event.SHOW, (event, context) ->
-                        settings.onShow.call context, event
-                    $this.on Event.HIDE, (event, context) ->
-                        settings.onHide.call context, event
+                        module.debug '發生 CLICK 事件', element
+                        $this.trigger Event.SELECT, element, module.get.value(@), @
                     $this.on Event.SELECT, (event, context, value, element) ->
+                        module.debug '發生 SELECT 事件', element, value
                         settings.onSelect.call context, event, value, element
                     $this.on Event.DISABLE, (event, context) ->
+                        module.debug '發生 DISABLE 事件', element
                         settings.onDisable.call context, event
                     $this.on Event.ENABLE, (event, context) ->
+                        module.debug '發生 ENABLE 事件', element
                         settings.onEnable.call context, event
 
             # ------------------------------------------------------------------------
@@ -290,7 +310,6 @@ ts.fn.contextmenu = value: (parameters) ->
 
             refresh: ->
 
-
             # Destroy
             #
             # 摧毀
@@ -300,6 +319,7 @@ ts.fn.contextmenu = value: (parameters) ->
                 $this.removeData MODULE_NAMESPACE
                      .off        EVENT_NAMESPACE
                 $body.off   EVENT_NAMESPACE
+                $item.off   EVENT_NAMESPACE
                 $parent.off EVENT_NAMESPACE
 
             # Invoke
