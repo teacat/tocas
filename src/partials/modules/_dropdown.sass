@@ -38,7 +38,6 @@
         opacity: 0
         transform: matrix3d(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
 
-
 @keyframes dropdown-expand
     0%
         opacity: 0
@@ -76,6 +75,19 @@
         transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
     100%
         transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+
+
+@keyframes contextmenu-hidden
+    0%
+        opacity: 1
+    100%
+        opacity: 0
+
+@keyframes contextmenu-visible
+    0%
+        opacity: 0
+    100%
+        opacity: 1
 
 //*******************************//
 //            Variations
@@ -759,17 +771,19 @@
 //     Animation
 //-------------------//
 
-.ts.contextmenu.upward.hidden.animating,
-.ts.contextmenu.downward.hidden.animating,
 .ts.dropdown.upward.hidden.animating .menu,
 .ts.dropdown.downward.hidden.animating .menu
-    animation: dropdown-contract 250ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+    animation: dropdown-contract 300ms cubic-bezier(0.22, 0.61, 0.36, 1) both
 
-.ts.contextmenu.downward.visible.animating,
-.ts.contextmenu.upward.visible.animating,
 .ts.dropdown.downward.visible.animating .menu,
 .ts.dropdown.upward.visible.animating .menu
-    animation: dropdown-expand 250ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+    animation: dropdown-expand 300ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+
+.ts.contextmenu.hidden.animating
+    animation: contextmenu-hidden 80ms linear both
+
+.ts.contextmenu.visible.animating
+    animation: contextmenu-visible 10ms linear both
 
 //-------------------//
 //     Directions
