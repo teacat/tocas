@@ -276,10 +276,10 @@
 //       Error
 //-------------------//
 
-.ts.form .field.error,
-.ts.form .field.error label
+.ts.form .field.error.error,
+.ts.form .field.error.error label
     color: $form_errorTextColor
-.ts.form .field.error label
+.ts.form .field.error.error label
     font-weight: $form_errorLabelFontWeight
 
 //-------------------//
@@ -345,32 +345,61 @@
 //      Required
 //-------------------//
 
-.ts.form .required.fields:not(.grouped) > .field > .checkbox:after,
-.ts.form .required.field > .checkbox:after,
-.ts.form .required.fields:not(.grouped) > .field > .checkboxes > .checkbox:after,
-.ts.form .required.field > .checkboxes > .checkbox:after,
-.ts.form .required.fields:not(.grouped) > .field > label:after,
-.ts.form .required.fields.grouped > label:after,
-.ts.form .required.field > label:after
+.ts.form:not(.horizontal) .required.fields:not(.grouped) > .field > .checkbox:after,
+.ts.form:not(.horizontal) .required.field > .checkbox:after,
+.ts.form:not(.horizontal) .required.fields:not(.grouped) > .field > .checkboxes > .checkbox:after,
+.ts.form:not(.horizontal) .required.field > .checkboxes > .checkbox:after,
+.ts.form:not(.horizontal) .required.fields:not(.grouped) > .field > label:after,
+.ts.form:not(.horizontal) .required.fields.grouped > label:after,
+.ts.form:not(.horizontal) .required.field > label:after
     margin     : $form_requiredMargin
     content    : $form_requiredContent
     color      : $form_requiredColor
     font-weight: $form_requiredFontWeight
 
-.ts.form .required.fields:not(.grouped) > .field > label:after,
-.ts.form .required.fields.grouped > label:after,
-.ts.form .required.field > label:after
+.ts.form:not(.horizontal) .required.fields:not(.grouped) > .field > label:after,
+.ts.form:not(.horizontal) .required.fields.grouped > label:after,
+.ts.form:not(.horizontal) .required.field > label:after
     display       : inline-block
     vertical-align: top
 
-.ts.form .required.fields:not(.grouped) > .field > .checkbox:after,
-.ts.form .required.field > .checkbox:after
+.ts.form:not(.horizontal) .required.fields:not(.grouped) > .field > .checkbox:after,
+.ts.form:not(.horizontal) .required.field > .checkbox:after
     position: absolute
     top     : 0%
     left    : 100%
 
-.ts.form .required.field > label ~ .checkbox:after,
-.ts.form .required.field > label ~ .checkboxes > .checkbox:after
+.ts.form:not(.horizontal) .required.field > label ~ .checkbox:after,
+.ts.form:not(.horizontal) .required.field > label ~ .checkboxes > .checkbox:after
+    display: none
+
+/** Horizontal */
+.ts.form.horizontal .required.fields:not(.grouped) > .field > .checkbox:before,
+.ts.form.horizontal .required.field > .checkbox:before,
+.ts.form.horizontal .required.fields:not(.grouped) > .field > .checkboxes > .checkbox:before,
+.ts.form.horizontal .required.field > .checkboxes > .checkbox:before,
+.ts.form.horizontal .required.fields:not(.grouped) > .field > label:before,
+.ts.form.horizontal .required.fields.grouped > label:before,
+.ts.form.horizontal .required.field > label:before
+    margin     : $form_requiredMargin
+    content    : $form_requiredContent
+    color      : $form_requiredColor
+    font-weight: $form_requiredFontWeight
+
+.ts.form.horizontal .required.fields:not(.grouped) > .field > label:before,
+.ts.form.horizontal .required.fields.grouped > label:before,
+.ts.form.horizontal .required.field > label:before
+    display       : inline-block
+    vertical-align: top
+
+.ts.form.horizontal .required.fields:not(.grouped) > .field > .checkbox:before,
+.ts.form.horizontal .required.field > .checkbox:before
+    position: absolute
+    top     : 0%
+    left    : 100%
+
+.ts.form.horizontal .required.field > label ~ .checkbox:before,
+.ts.form.horizontal .required.field > label ~ .checkboxes > .checkbox:before
     display: none
 
 //-------------------//
@@ -433,6 +462,27 @@
     font-size: $huge
 .ts.form.massive
     font-size: $massive
+
+//-------------------//
+//      Inverted
+//-------------------//
+
+.ts.form.inverted .field > label
+    color: $form_invertedTextColor
+.ts.form.inverted .field > small
+    color: $form_invertedTextColor
+.ts.form.inverted fieldset
+    border: $form_invertedFieldsetBorder
+.ts.form.inverted fieldset legend
+    color: $form_invertedLegendTextColor
+.ts.form.inverted fieldset.secondary legend
+    color: $form_invertedLegendSecondaryTextColor
+.ts.form.inverted fieldset.tertiary legend
+    color: $form_invertedLegendTertiaryTextColor
+.ts.form.inverted fieldset.secondary
+    background: $form_invertedFieldsetSecondaryBackgroundColor
+.ts.form.inverted fieldset.tertiary
+    background: $form_invertedFieldsetTertiaryBackgroundColor
 
 //*******************************//
 //             Fields
