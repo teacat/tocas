@@ -123,6 +123,7 @@
 //-------------------//
 
 .ts.checkbox.disabled,
+.ts.checkboxes.disabled,
 .ts.checkbox input[disabled]
     cursor        : not-allowed
     pointer-events: none
@@ -299,6 +300,108 @@
 .ts.checkbox.inverted label,
 .ts.checkboxes.inverted label
     color: $invertedTextColor
+
+//-------------------//
+//     Segmented
+//-------------------//
+
+.ts.segmented.checkboxes
+    border       : $checkbox_segmentedBorder
+    border-radius: $checkbox_segmentedBorderRadius
+
+.ts.segmented.checkboxes .ts.checkbox
+    margin : 0
+    z-index: $z_checkbox_segmented
+
+.ts.segmented.checkboxes .ts.checkbox label
+    padding: $checkbox_segmentedPadding
+    color  : $checkbox_checkedBackgroundColor
+
+    text-align     : center
+    display        : flex
+    align-items    : center
+    justify-content: center
+
+.ts.segmented.checkboxes .ts.checkbox label:before
+    position: absolute
+    left    : 0
+    right   : 0
+    top     : 0
+    bottom  : 0
+    width   : auto
+    height  : auto
+
+    background   : transparent
+    border-radius: 0
+    z-index      : $z_checkbox_segmentedLabel
+
+/** Vertical */
+.ts.segmented.checkboxes:not(.horizontal) .ts.checkbox label:before
+    border-bottom: $checkbox_segmentedBorder
+.ts.segmented.checkboxes:not(.horizontal) .ts.checkbox.disabled label:before
+    border-bottom: 0
+.ts.segmented.checkboxes:not(.horizontal) .ts.disabled.checkbox + .ts.checkbox label:before
+    border-top: $checkbox_segmentedBorder
+
+/** Horizontal Stackable */
+.ts.segmented.checkboxes.horizontal.stackable .ts.checkbox
+    +rwd-serious(mobile)
+        margin-bottom: 0
+.ts.segmented.checkboxes.horizontal.stackable .ts.checkbox label:before
+    +rwd-serious(mobile)
+        border-bottom: $checkbox_segmentedBorder
+        border-right : 0
+.ts.segmented.checkboxes.horizontal.stackable .ts.disabled.checkbox + .ts.checkbox label:before
+    +rwd-serious(mobile)
+        border-left: 0
+        border-top : $checkbox_segmentedBorder
+.ts.segmented.checkboxes.horizontal.stackable .ts.checkbox.disabled label:before,
+.ts.segmented.checkboxes.horizontal.stackable .ts.checkbox:last-child label:before
+    +rwd-serious(mobile)
+        border-bottom : 0
+
+/** Border Radius */
+.ts.segmented.checkboxes:not(.horizontal) .ts.checkbox:first-child label:before
+    border-top-left-radius : $checkbox_segmentedBorderRadius
+    border-top-right-radius: $checkbox_segmentedBorderRadius
+.ts.segmented.checkboxes:not(.horizontal) .ts.checkbox:last-child label:before
+    border-bottom-left-radius : $checkbox_segmentedBorderRadius
+    border-bottom-right-radius: $checkbox_segmentedBorderRadius
+.ts.segmented.checkboxes.horizontal .ts.checkbox:first-child label:before
+    border-top-left-radius   : $checkbox_segmentedBorderRadius
+    border-bottom-left-radius: $checkbox_segmentedBorderRadius
+.ts.segmented.checkboxes.horizontal .ts.checkbox:last-child label:before
+    border-top-right-radius   : $checkbox_segmentedBorderRadius
+    border-bottom-right-radius: $checkbox_segmentedBorderRadius
+
+/** Inverted */
+.ts.segmented.checkboxes.inverted .ts.checkbox label:hover:before
+    background: $checkbox_segmentedInvertedHoverBackgroundColor
+.ts.segmented.checkboxes.inverted .ts.checkbox label:active:before
+    background: $checkbox_segmentedInvertedActiveBackgroundColor
+
+/** Color */
+.ts.segmented.checkboxes .ts.checkbox label:hover:before
+    background: $checkbox_segmentedHoverBackgroundColor
+.ts.segmented.checkboxes .ts.checkbox label:active:before
+    background: $checkbox_segmentedActiveBackgroundColor
+.ts.segmented.checkboxes .ts.checkbox input:checked + label:hover:before
+    background: $checkbox_checkedHoverBackgroundColor
+.ts.segmented.checkboxes .ts.checkbox input:checked + label:active:before
+    background: $checkbox_checkedActiveBackgroundColor
+.ts.segmented.checkboxes .ts.checkbox input:checked + label:before
+    background: $checkbox_checkedBackgroundColor
+.ts.segmented.checkboxes .ts.checkbox input:checked + label
+    color: $checkbox_segmentedActiveTextColor
+
+/** Horizontal */
+.ts.segmented.horizontal.checkboxes .ts.checkbox label:before
+    border-right : $checkbox_segmentedBorder
+.ts.segmented.horizontal.checkboxes .ts.checkbox:last-child label:before,
+.ts.segmented.horizontal.checkboxes .ts.checkbox.disabled label:before
+    border-right : 0
+.ts.segmented.horizontal.checkboxes .ts.disabled.checkbox + .ts.checkbox label:before
+    border-left : $checkbox_segmentedBorder
 
 //-------------------//
 //      Compact
