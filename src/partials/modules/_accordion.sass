@@ -45,7 +45,7 @@ details summary:active
     display: none !important
 
 //-------------------//
-//        Icon
+//       Icon
 //-------------------//
 
 .ts.accordion .title .dropdown.icon
@@ -54,6 +54,69 @@ details summary:active
 .ts.accordion .title:not(.active) .dropdown.icon,
 details:not([open]) summary .dropdown.icon
     transform: rotate(-90deg)
+
+//-------------------//
+//     Segmented
+//-------------------//
+
+.ts.accordion.segmented
+    border       : $accordion_segmentedBorder
+    border-radius: $accordion_segmentedBorderRadius
+    box-shadow   : $accordion_segmentedBoxShadow
+
+.ts.accordion.segmented .title
+    color      : $accordion_segmentedTitleTextColor
+    opacity    : 1
+    font-weight: $accordion_segmentedTitleFontWeight
+
+.ts.accordion.segmented .title:hover
+    color: $accordion_segmentedTitleHoverTextColor
+
+.ts.accordion.segmented .title.active:hover
+    opacity: 1
+
+.ts.accordion.segmented .content,
+.ts.accordion.segmented .title
+    border-top: $accordion_segmentedBorder
+    padding   : $accordion_segmentedPadding
+
+.ts.accordion.segmented .title.active
+    color: $accordion_segmentedActiveTitleTextColor
+
+.ts.accordion.segmented .active.content,
+.ts.accordion.segmented .title:first-child
+    border-top: 0
+
+.ts.accordion.segmented .active.title + .active.content
+    padding-top: 0
+
+//-------------------//
+//      Attached
+//-------------------//
+
+.ts.attached.segmented.accordion
+    box-shadow: $accordion_segmentedTopAttachedBoxShadow
+
+.ts.segmented.accordion[class*="top attached"]
+    +extend(top-attached)
+
+.ts.segmented.accordion.attached:not([class*="top attached"]):not([class*="bottom attached"])
+    +extend(attached)
+
+.ts.segmented.accordion[class*="bottom attached"]
+    +extend(bottom-attached)
+
+    box-shadow: $accordion_segmentedBottomAttachedBoxShadow
+
+//-------------------//
+//  Accordion Field
+//-------------------//
+
+.ts.accordion.field .title
+    padding: 0
+
+.ts.accordion.field .title.active
+    padding-bottom: $accordion_fieldPaddingBottom
 
 //-------------------//
 //     Coupling
