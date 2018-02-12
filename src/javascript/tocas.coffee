@@ -282,6 +282,15 @@ ts.fn.is =
 
         return isInElements
 
+# Not
+#
+# 將指定元素從選擇器中剔除。
+ts.fn.not =
+    value: (selector) ->
+        ts @toArray().filter (element) =>
+            element isnt selector
+
+
 # Slice
 #
 # 替元素陣列進行切分。

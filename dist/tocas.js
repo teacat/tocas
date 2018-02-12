@@ -378,6 +378,17 @@ ts.fn.is = {
   }
 };
 
+// Not
+
+// 將指定元素從選擇器中剔除。
+ts.fn.not = {
+  value: function(selector) {
+    return ts(this.toArray().filter((element) => {
+      return element !== selector;
+    }));
+  }
+};
+
 // Slice
 
 // 替元素陣列進行切分。
