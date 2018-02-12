@@ -11,39 +11,29 @@ function testUnit(unit) {
             width: 240px;
             overflow: scroll;
         ">
-            <fieldset>
-                <legend>Core Panel</legend>
-                <div></div>
-            </fieldset>
-            <fieldset>
-                <legend>Method Panel</legend>
-                <div></div>
-            </fieldset>
         </div>
     `)
-    for (coreFunction in unit.core) {
-        $button = $(`
+
+    for (fieldset in unit) {
+        $fieldset = $(`
+        <fieldset>
+            <legend>${fieldset}</legend>
+            <div></div>
+        </fieldset>
+        `)
+        for (func in unit[fieldset]) {
+            $button = $(`
                 <button class="ts fluid button"
                     style="
                         margin-bottom: 8px
                 ">
-                    ${coreFunction}
+                    ${func}
                 </button>
             `)
-        $button.on('click', unit.core[coreFunction])
-        $form.find('fieldset:first-child').append($button)
-    }
-    for (methodFunction in unit.method) {
-        $button = $(`
-                <button class="ts fluid button"
-                    style="
-                        margin-bottom: 8px
-                ">
-                    ${methodFunction}
-                </button>
-            `)
-        $button.on('click', unit.method[methodFunction])
-        $form.find('fieldset:nth-child(2)').append($button)
+            $button.on('click', unit[fieldset][func])
+            $fieldset.find('div').append($button)
+        }
+        $form.append($fieldset)
     }
     $('body').css('padding', '50px').css('padding-left', 'calc(240px + 50px)').prepend($form)
 }
