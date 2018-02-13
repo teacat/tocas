@@ -14,21 +14,23 @@
     $hoverColor           : nth($colors, 2)
     $disabledColor        : nth($colors, 8)
 
-    background: $backgroundColor
-    border-color    : $borderColor
+    background  : $backgroundColor
+    border-color: $borderColor
 
     .item.item,
     .item .menu .item
         border-color: $borderColor
-        color: $color
+        color       : $color
 
     a.item.item:active:not(.disabled),
+    .item.item.dropdown:active:not(.disabled),
     .item .menu a.item:active:not(.disabled),
     .item.item.active:not(.disabled),
     .item .menu .item.active:not(.disabled)
         color: $activeColor
 
     a.item.item:active:not(.disabled),
+    .item.item.dropdown:active:not(.disabled),
     .item.item.active:not(.disabled),
     &:not(.link) .item.dropdown.visible
         background: $backgroundActiveColor
@@ -37,9 +39,10 @@
         background: $color
 
     a.item.item:hover:not(.active):not(:active):not(.disabled),
+    .item.item.dropdown:hover:not(.active):not(.visible):not(:active):not(.disabled),
     .item .menu a.item:hover:not(.active):not(:active):not(.disabled)
         background: $backgroundHoverColor
-        color           : $hoverColor
+        color     : $hoverColor
 
     .item.disabled,
     .item.disabled *:not(.label),
@@ -57,8 +60,8 @@
     $hoverColor           : nth($colors, 2)
     $disabledColor        : nth($colors, 8)
 
-    background: $backgroundColor
-    border-color    : $borderColor
+    background  : $backgroundColor
+    border-color: $borderColor
 
     .item,
     .item .menu .item,
@@ -86,13 +89,13 @@
 //*******************************//
 
 .ts.menu
-    display         : flex
-    font-size       : $medium
-    margin          : $menu_margin
-    background: $menu_backgroundColor
-    border-radius   : $menu_borderRadius
-    border          : $menu_border
-    box-shadow      : $menu_boxShadow
+    display      : flex
+    font-size    : $medium
+    margin       : $menu_margin
+    background   : $menu_backgroundColor
+    border-radius: $menu_borderRadius
+    border       : $menu_border
+    box-shadow   : $menu_boxShadow
 
     &:first-child
         margin-top: 0
@@ -115,7 +118,7 @@
 //-------------------//
 
 .ts.menu.pagination
-    margin: 0
+    margin : 0
     display: inline-flex
 
 //-------------------//
@@ -157,11 +160,13 @@
 .ts.menu .item:last-child
     margin-right: 0
 
-.ts.menu a.item:hover
+.ts.menu a.item:hover,
+.ts.menu .item.dropdown.item:hover
     cursor: pointer
     color : $menu_itemHoverTextColor
 
-.ts.menu:not(.fitted) a.item:hover
+.ts.menu:not(.fitted) a.item:hover,
+.ts.menu:not(.fitted) .item.dropdown.item:hover
     background: $menu_itemHoverBackgroundColor
 
 //-------------------//
@@ -204,6 +209,7 @@
 
 .ts.menu:not(.link):not(.fitted) a.item:active,
 .ts.menu:not(.link):not(.fitted) .item.active,
+.ts.menu:not(.link):not(.fitted) .item.dropdown:active,
 .ts.menu:not(.link):not(.fitted) .item.dropdown.visible
     background: $menu_itemActiveBackgroundColor
 
