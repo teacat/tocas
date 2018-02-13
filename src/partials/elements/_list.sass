@@ -799,80 +799,122 @@ ol.ts.horizontal.list li:before,
     border-left: $list_segmentedIndicatedBorder $list_invertedIndicatedBorderColor
 
 //-------------------//
-//      Divided
+// Divided & Celled
 //-------------------//
 
-.ts.divided.list > .item
+.ts.divided.list > .item,
+.ts.celled.list > .item
     border-top: $list_dividedBorder
 
-.ts.divided.list .list > .item
+.ts.divided.list .list > .item,
+.ts.celled.list .list > .item
     border-top: $list_dividedChildListBorder
 
-.ts.divided.list .item .list > .item
+.ts.divided.list .item .list > .item,
+.ts.celled.list .item .list > .item
     border-top: $list_dividedChildItemBorder
 
 .ts.divided.list .list > .item:first-child,
 .ts.divided.list > .item:first-child
     border-top: none
 
+.ts.celled.list:not(.horizontal) .list > .item:first-child,
+.ts.celled.list:not(.horizontal) > .item:first-child
+    padding-top: $list_itemVerticalPadding
+
+.ts.celled.list:not(.horizontal) > .item:last-child
+    border-bottom : $list_dividedBorder
+    padding-bottom: $list_itemVerticalPadding
+
 /* Sub Menu */
-.ts.divided.list:not(.horizontal) .list > .item:first-child
+.ts.divided.list:not(.horizontal) .list > .item:first-child,
+.ts.celled.list:not(.horizontal) .list > .item:first-child
     border-top-width: $list_dividedBorderWidth
 
 /* Divided bulleted */
 .ts.divided.bulleted.list:not(.horizontal),
-.ts.divided.bulleted.list .list
+.ts.divided.bulleted.list .list,
+.ts.celled.bulleted.list:not(.horizontal),
+.ts.celled.bulleted.list .list
     margin-left : 0em
     padding-left: 0em
 
-.ts.divided.bulleted.list > .item:not(.horizontal)
+.ts.divided.bulleted.list > .item:not(.horizontal),
+.ts.celled.bulleted.list > .item:not(.horizontal)
     padding-left: $list_bulletDistance
 
 /* Divided Ordered */
-.ts.divided.ordered.list
+.ts.divided.ordered.list,
+.ts.celled.ordered.list
     margin-left: 0em
 
 .ts.divided.ordered.list .list > .item,
-.ts.divided.ordered.list > .item
+.ts.divided.ordered.list > .item,
+.ts.celled.ordered.list .list > .item,
+.ts.celled.ordered.list > .item
     padding-left: $list_orderedCountDistance
 
-.ts.divided.ordered.list .item .list
+.ts.divided.ordered.list .item .list,
+.ts.celled.ordered.list .item .list
     margin-left   : 0em
     margin-right  : 0em
     padding-bottom: $list_itemVerticalPadding
 
-.ts.divided.ordered.list .item .list > .item
+.ts.divided.ordered.list .item .list > .item,
+.ts.celled.ordered.list .item .list > .item
     padding-left: $list_orderedChildCountDistance
 
 /* Divided Selection */
 .ts.divided.selection.list .list > .item,
-.ts.divided.selection.list > .item
+.ts.divided.selection.list > .item,
+.ts.celled.selection.list .list > .item,
+.ts.celled.selection.list > .item
     margin       : 0em
     border-radius: 0em
 
 /* Divided horizontal */
-.ts.divided.horizontal.list
+.ts.divided.horizontal.list,
+.ts.celled.horizontal.list
     margin-left: 0em
+    font-size  : 0
 
-.ts.divided.horizontal.list > .item:not(:first-child)
+.ts.divided.horizontal.list > .item,
+.ts.celled.horizontal.list > .item
+    font-size: 1rem
+
+.ts.celled.horizontal.list > .item
+    padding-left: $list_horizontalDividedSpacing
+
+.ts.divided.horizontal.list > .item:not(:first-child),
+.ts.celled.horizontal.list > .item:not(:first-child)
     padding-left: $list_horizontalDividedSpacing
 
 .ts.divided.horizontal.list > .item:not(:last-child)
     padding-right: $list_horizontalDividedSpacing
 
-.ts.divided.horizontal.list > .item
+.ts.celled.horizontal.list > .item
+    padding-right: $list_horizontalDividedSpacing
+
+.ts.divided.horizontal.list > .item,
+.ts.celled.horizontal.list > .item
     border-top : none
     border-left: $list_dividedBorder
     margin     : 0em
     line-height: $list_horizontalDividedLineHeight
 
-.ts.horizontal.divided.list > .item:first-child
-    border-left: none
+.ts.divided.horizontal.list > .item:first-child
+    border-left: 0
+
+.ts.horizontal.celled.list > .item:last-child
+    border-right: $list_dividedBorder
 
 /* Inverted */
 .ts.divided.inverted.list > .item,
 .ts.divided.inverted.list > .list,
-.ts.divided.inverted.horizontal.list > .item
+.ts.divided.inverted.horizontal.list > .item,
+.ts.celled.inverted.list > .item,
+.ts.celled.inverted.list > .list,
+.ts.celled.inverted.horizontal.list > .item
     border-color: $list_dividedInvertedBorderColor
 
 //-------------------//
@@ -907,6 +949,9 @@ ol.ts.horizontal.list li:before,
     padding-right: $list_relaxedHorizontalPadding
 
 /* Very Relaxed */
+.ts[class*="very relaxed"].celled.list:not(.horizontal) > .item:first-child
+    padding-top: $list_veryRelaxedItemVerticalPadding
+
 .ts[class*="very relaxed"].list:not(.horizontal) > .item:not(:first-child)
     padding-top: $list_veryRelaxedItemVerticalPadding
 
@@ -920,6 +965,22 @@ ol.ts.horizontal.list li:before,
 
 .ts.horizontal[class*="very relaxed"].list .list > .item:not(:last-child),
 .ts.horizontal[class*="very relaxed"].list > .item:not(:last-child)
+    padding-right: $list_veryRelaxedHorizontalPadding
+
+/* Celled */
+.ts.relaxed.celled.list:not(.horizontal) > .item:first-child
+    padding-top: $list_relaxedItemVerticalPadding
+
+.ts[class*="very relaxed"].celled.list:not(.horizontal) > .item:first-child
+    padding-top: $list_veryRelaxedItemVerticalPadding
+
+.ts.horizontal.celled.relaxed.list > .item
+    padding-left : $list_relaxedHorizontalPadding
+    padding-right: $list_relaxedHorizontalPadding
+
+.ts.horizontal[class*="very relaxed"].celled.list .list > .item,
+.ts.horizontal[class*="very relaxed"].celled.list > .item
+    padding-left : $list_veryRelaxedHorizontalPadding
     padding-right: $list_veryRelaxedHorizontalPadding
 
 //-------------------//
