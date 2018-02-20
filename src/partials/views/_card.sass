@@ -26,7 +26,7 @@
     > .content
         color: $color
 
-        .header
+        .header:not(.ts)
             color: $headerColor
             .sub.header
                 color: $subHeaderColor
@@ -98,8 +98,9 @@
 //       Raised
 //-------------------//
 
-.ts.card.raised
+.ts.card.raised.raised.raised.raised.raised.raised
     box-shadow: $card_raisedBoxShadow
+    z-index   : $z_card_raised
 
 //-------------------//
 //      Content
@@ -109,6 +110,75 @@
     position : relative
     padding  : $card_padding
     flex-grow: 1
+
+//-------------------//
+//     Horizontal
+//-------------------//
+
+.ts.horizontal.card,
+.ts.horizontal.cards > .ts.card
+    flex-direction: row
+
+.ts.horizontal.card > .extra.content
+    border-top   : none
+    border-bottom: none
+    border-left  : $card_extraBorder
+    border-right : $card_extraBorder
+.ts.horizontal.card > .extra.content + .content
+    border-top: none
+.ts.horizontal.card > .content + .extra.content:first-child
+    border-left: none
+.ts.horizontal.card > .content + .extra.content:last-child
+    border-right: none
+
+.ts.horizontal.card > .image img,
+.ts.horizontal.cards > .ts.card > .image img
+    max-width: initial
+
+.ts.horizontal.card > .image:first-child img,
+.ts.horizontal.cards > .ts.card > .image:first-child img,
+.ts.horizontal.collapsed.cards > .ts.card:not(:last-child) > .image:last-child img,
+.ts.collapsed.cards > .ts.horizontal.card:not(:last-child) > .image:last-child img
+    border-top-right-radius   : 0
+    border-bottom-right-radius: 0
+.ts.horizontal.card > .image:last-child img,
+.ts.horizontal.cards > .ts.card > .image:last-child img,
+.ts.horizontal.collapsed.cards > .ts.card:not(:first-child) > .image:first-child img,
+.ts.collapsed.cards > .ts.horizontal.card:not(:first-child) > .image:first-child img
+    border-top-left-radius   : 0
+    border-bottom-left-radius: 0
+.ts.horizontal.card > .image:first-child:last-child img,
+.ts.horizontal.cards > .ts.card > .image:first-child:last-child img
+    border-radius: $card_borderRadius
+
+//-------------------//
+//     Collapsed
+//-------------------//
+
+.ts.collapsed.cards
+    margin: 0
+
+.ts.collapsed.cards > .ts.card
+    margin: 0
+    width : auto
+    flex  : 1
+
+.ts.collapsed.cards > .ts.card:first-child
+    border-top-right-radius   : 0
+    border-bottom-right-radius: 0
+.ts.collapsed.cards > .ts.card:last-child
+    border-top-left-radius   : 0
+    border-bottom-left-radius: 0
+
+.ts.collapsed.cards > .ts.card:not(:last-child)
+    border-right: 0
+
+.ts.collapsed.cards > .ts.card:not(:first-child):not(:last-child)
+    border-radius: 0
+.ts.collapsed.cards > .ts.card:not(:first-child):not(:last-child):not(a)
+    box-shadow   : $card_collapsedBoxShadow
+.ts.collapsed.cards > a.ts.card:not(:first-child):not(:last-child):not(:hover)
+    box-shadow   : $card_collapsedBoxShadow
 
 //-------------------//
 //       Padded
