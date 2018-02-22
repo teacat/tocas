@@ -1,7 +1,6 @@
 # 主要的選擇器函式。
 ts = (selector, context) ->
     nodes = []
-
     # 如果選擇器是文字，但是是標籤（如：`<div>`）就建立新的元素
     if typeof selector is 'string' and selector[0] is '<'
         tag   = selector.match(/<(.*)\/>|<(.*)>/)
@@ -35,14 +34,17 @@ ts = (selector, context) ->
     # 將節點陣列標註為是選擇器，這樣才能判斷傳入的是不是我們自己的選擇器。
     Object.defineProperty nodes, 'isSelector',
         value: true
-
     return nodes
+
+# 註冊到視窗上。
+window.ts = ts
 
 # 函式鏈。
 ts.fn = {}
 
 # 輔助函式。
 ts.helper = {}
+
 # 事件輔助函式。
 ts.helper.eventAlias = (event) ->
     pair  = event.split('.')
@@ -86,6 +88,130 @@ ts.extend =->
         merge obj
         i++
     extended
+
+# 註冊 Tocas 模塊
+ts.register = ({NAME, MODULE_NAMESPACE, Settings}, starter) =>
+    ts.fn[NAME] = value: (parameters) ->
+        $allModules    = ts @
+        query          = arguments[0]
+        queryArguments = [].slice.call arguments, 1
+        methodInvoked  = typeof query is 'string'
+        returnedValue  = undefined
+
+        consoleText = (args) =>
+            "%c#{NAME}%c #{args[0]}#{'\n' if args.length > 1}"
+        headerCSS = """
+            background   : #EEE;
+            color        : #5A5A5A;
+            font-size    : 1em;
+            padding      : 5px 8px;
+            line-height  : 30px;
+            border-radius: 1000em;
+        """
+        errorHeaderCSS = """
+            #{headerCSS}
+            background: #CE5F58;
+            color: #FFF;
+        """
+        messageCSS = """
+            font-weight: bold;
+        """
+
+        $allModules.each ->
+            $this    = ts @
+            element  = @
+            instance = $this.data MODULE_NAMESPACE
+            settings = if ts.isPlainObject(parameters) then ts.extend(Settings, parameters) else ts.extend(Settings)
+
+            debug = ->
+                return if not settings.debug or settings.silent
+                debug = Function.prototype.bind.call console.info, console, consoleText(arguments), headerCSS, messageCSS
+                debug.apply console, Array.prototype.slice.call(arguments, 1)
+
+            error = ->
+                return if settings.silent
+                error = Function.prototype.bind.call console.error, console, consoleText(arguments), errorHeaderCSS, messageCSS
+                error.apply console, Array.prototype.slice.call(arguments, 1)
+
+            instantiate = =>
+                module.instantiate()
+                instance = module
+                $this.data MODULE_NAMESPACE, instance
+
+            initialize = =>
+                module.initialize()
+                if settings.observeChanges
+                    observeChanges()
+                instantiate()
+
+            observeChanges = =>
+                if not 'MutationObserver' of window
+                    debug '找不到樹狀結構變更觀測者，略過結構監聽動作', element
+                    return
+                observer = new MutationObserver (mutations) =>
+                    debug 'DOM 樹狀結構已變更，更新快取資料'
+                    module.refresh()
+                observer.observe element,
+                    childList : true
+                    subtree   : true
+                debug '已設置 DOM 樹狀結構異動觀察者', observer
+
+            invoke = (query, passedArguments, context) =>
+                object          = instance
+                maxDepth        = undefined
+                found           = undefined
+                response        = undefined
+                passedArguments = passedArguments or queryArguments
+                context         = element or context
+
+                if typeof query is 'string' and object isnt undefined
+                    query    = query.split /[\. ]/
+                    maxDepth = query.length - 1
+
+                    for value, depth in query
+                        camelCaseValue = query
+                        if depth isnt maxDepth
+                            camelCaseValue = value + query[depth + 1].charAt(0).toUpperCase() + query[depth + 1].slice(1)
+
+                        switch
+                            when ts.isPlainObject(object[camelCaseValue]) and depth isnt maxDepth
+                                object = object[camelCaseValue]
+                            when object[camelCaseValue] isnt undefined
+                                found = object[camelCaseValue]
+                                break
+                            when ts.isPlainObject(object[value]) and depth isnt maxDepth
+                                object = object[value]
+                            when object[value] isnt undefined
+                                found = object[value]
+                                break
+                            else
+                                error '欲呼叫的方法並不存在', query
+                                break
+                switch
+                    when typeof found is 'function'
+                        response = found.apply context, passedArguments
+                    when found isnt undefined
+                        response = found
+                switch
+                    when response is $allModules
+                        returnedValue = $allModules
+                    else
+                        returnedValue = response
+                found
+
+            module = starter({$allModules, $this, element, debug, settings, instance})
+
+            if methodInvoked
+                if instance is undefined
+                    initialize()
+                invoke query
+
+            else
+                if instance isnt undefined
+                    invoke 'destroy'
+                initialize()
+
+        return if returnedValue isnt undefined then returnedValue else $allModules
 
 # Get
 #
@@ -438,6 +564,7 @@ ts.fn.removeClass =
             names = newNames
         else
             names = Array.prototype.slice.call(arguments).join(' ')
+        #console.log @
         @each ->
             DOMTokenList.prototype.remove.apply(@classList, names.split(' ').filter(Boolean))
 
