@@ -83,9 +83,6 @@
     // 模組定義
     // ------------------------------------------------------------------------
     return module = {
-      // Open
-
-      // 展開
       open: (index) => {
         if (module.is.active(index)) {
           return;
@@ -99,9 +96,6 @@
         module.set.active(index);
         return $allModules;
       },
-      // Close
-
-      // 閉合
       close: (index) => {
         debug('關閉手風琴分頁', index, element);
         if (module.is.hidden(index)) {
@@ -115,23 +109,14 @@
         }
         return $allModules;
       },
-      // Close Children
-
-      // 關閉子手風琴
       closeChildren: () => {
         return $this.find(Selector.ACCORDION).accordion('close all');
       },
-      // Close Others
-
-      // 閉合指定以外
       closeOthers: (index) => {
         debug('關閉指定手風琴分頁以外的其他分頁', index, element);
         module.closeAll();
         return $allModules;
       },
-      // Close All
-
-      // 閉合所有
       closeAll: () => {
         var i, j, ref;
         debug('關閉所有手風琴分頁', element);
@@ -140,9 +125,6 @@
         }
         return $allModules;
       },
-      // Toggle
-
-      // 切換開合
       toggle: (index) => {
         debug('切換手風琴分頁', index, element);
         if (module.is.active(index)) {
@@ -156,9 +138,6 @@
         }
         return $allModules;
       },
-      // Trigger
-
-      // 觸發
       trigger: {
         open: (index) => {
           $this.trigger(Event.OPENING, $content.eq(index).get());
@@ -171,9 +150,6 @@
           return $this.trigger(Event.CHANGE, $content.eq(index).get());
         }
       },
-      // Is
-
-      // 是否
       is: {
         active: (index) => {
           return $title.eq(index).hasClass(ClassName.ACTIVE);
@@ -182,9 +158,6 @@
           return !module.is.active(index);
         }
       },
-      // Set
-
-      // 設置
       set: {
         active: (index) => {
           $title.eq(index).addClass(ClassName.ACTIVE);
@@ -195,9 +168,6 @@
           return $content.eq(index).removeClass(ClassName.ACTIVE);
         }
       },
-      // Bind
-
-      // 綁定
       bind: {
         events: () => {
           $this.on(Event.CLICK, Selector.TITLE, function() {
@@ -229,31 +199,18 @@
       // ------------------------------------------------------------------------
       // 基礎方法
       // ------------------------------------------------------------------------
-
-      // Initialize
-
-      // 初始化
       initialize: () => {
         debug('初始化手風琴', element);
         return module.bind.events();
       },
-      // Instantiate
-
-      // 實例化
       instantiate: () => {
         return debug('實例化手風琴', element);
       },
-      // Refresh
-
-      // 更新資料
       refresh: () => {
         $title = $this.find(Selector.TITLE);
         $content = $this.find(Selector.CONTENT);
         return $allModules;
       },
-      // Destroy
-
-      // 摧毀
       destroy: () => {
         debug('摧毀手風琴', element);
         $this.removeData(MODULE_NAMESPACE).off(EVENT_NAMESPACE);
