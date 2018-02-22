@@ -24,6 +24,7 @@
 
     a.item.item:active:not(.disabled),
     .item.item.dropdown:active:not(.disabled),
+    .item.item.dropdown.visible,
     .item .menu a.item:active:not(.disabled),
     .item.item.active:not(.disabled),
     .item .menu .item.active:not(.disabled)
@@ -47,7 +48,7 @@
     .item.disabled,
     .item.disabled *:not(.label),
     .item.disabled .list .item,
-    .item > .menu .item.disabled
+    .item .menu .item.disabled
         color: $disabledColor
 
 @mixin menu-pure-variant($colors)
@@ -195,6 +196,9 @@
     border-top-right-radius   : $menu_borderRadius
     border-bottom-right-radius: $menu_borderRadius
 
+.ts.menu .item.dropdown
+    user-select: none
+
 //-------------------//
 //       Texts
 //-------------------//
@@ -315,20 +319,6 @@
 // Secondary Pointing
 .ts.menu.pointing.secondary.borderless
     border-bottom-color: transparent
-
-//-------------------//
-//       Aligns
-//-------------------//
-
-.ts.menu .item[class*="center aligned"]
-    text-align      : center
-    justify-content: center
-.ts.menu .item[class*="left aligned"]
-    text-align      : left
-    justify-content: flex-start
-.ts.menu .item[class*="right aligned"]
-    text-align      : right
-    justify-content: flex-end
 
 //-------------------//
 //     Stackable
@@ -795,39 +785,39 @@
 //     Item Menu
 //-------------------//
 
-.ts.vertical.menu .item > .menu
+.ts.vertical.menu .item  .menu
     display: block
     margin : $menu_subMenuMargin
 
-.ts.vertical.menu .item > .menu .item
+.ts.vertical.menu .item  .menu .item
     border       : 0
     display      : block
     border-radius: 0
     padding      : $menu_subMenuVerticalPadding $menu_subMenuHorizontalPadding
     font-size    : $menu_subMenuFontSize
 
-.ts.vertical.menu:not(.inverted) .item > .menu .item:not(.disabled)
+.ts.vertical.menu:not(.inverted) .item  .menu .item:not(.disabled)
     color: $menu_subMenuTextColor
 
-.ts.vertical.menu.inverted .item > .menu .item
+.ts.vertical.menu.inverted .item  .menu .item
     opacity: $menu_invertedSubMenuItemOpacity
 
-.ts.vertical.menu .item > .menu .item:hover:hover:hover:hover:hover:hover
+.ts.vertical.menu .item  .menu .item:hover:hover:hover:hover:hover:hover
     background: transparent
     opacity         : 1
 
-.ts.vertical.menu:not(.inverted) .item > .menu .item:hover
+.ts.vertical.menu:not(.inverted) .item  .menu .item:hover
     color: $darkTextColor
 
-.ts.vertical.menu .item > .menu .item:active:active,
-.ts.vertical.menu .item > .menu .item.active.active
+.ts.vertical.menu .item  .menu .item:active:active,
+.ts.vertical.menu .item  .menu .item.active.active
     background: transparent
 
-.ts.vertical.menu .item > .menu .item.active.active
+.ts.vertical.menu .item  .menu .item.active.active
     font-weight     : $menu_subMenuActiveFontWeight
     opacity         : 1
 
-.ts.vertical.menu:not(.inverted) .item > .menu .item.active
+.ts.vertical.menu:not(.inverted) .item  .menu .item.active
     color: $menu_subMenuActiveTextColor
 
 //-------------------//
@@ -959,6 +949,20 @@
     flex           : 1
     align-items    : center
     justify-content: center
+
+//-------------------//
+//       Aligns
+//-------------------//
+
+.ts.menu .item[class*="center aligned"]
+    text-align      : center
+    justify-content: center
+.ts.menu .item[class*="left aligned"]
+    text-align      : left
+    justify-content: flex-start
+.ts.menu .item[class*="right aligned"]
+    text-align      : right
+    justify-content: flex-end
 
 //-------------------//
 //       Items
