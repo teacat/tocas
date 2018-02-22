@@ -87,8 +87,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             debug '開啟手風琴分頁', index, element
             module.trigger.open index
             module.set.active   index
-
-            $allModules
+            return $allModules
 
         close: (index) =>
             debug '關閉手風琴分頁', index, element
@@ -99,8 +98,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             if settings.closeNested
                 debug '關閉子手風琴因應設定', index, element
                 module.closeChildren()
-
-            $allModules
+            return $allModules
 
         closeChildren: =>
             $this.find(Selector.ACCORDION).accordion 'close all'
@@ -108,14 +106,12 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         closeOthers: (index) =>
             debug '關閉指定手風琴分頁以外的其他分頁', index, element
             module.closeAll()
-
-            $allModules
+            return $allModules
 
         closeAll: =>
             debug '關閉所有手風琴分頁', element
             module.close i for i in [0..$title.length-1]
-
-            $allModules
+            return $allModules
 
         toggle: (index) =>
             debug '切換手風琴分頁', index, element
@@ -126,11 +122,9 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     debug '手風琴不允許閉合開啟的分頁，略過切換步驟', index, element
             else
                 module.open index
-
-            $allModules
+            return $allModules
 
         trigger:
-
             open: (index) =>
                 $this.trigger Event.OPENING, $content.eq(index).get()
                 $this.trigger Event.OPEN   , $content.eq(index).get()
@@ -142,7 +136,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $this.trigger Event.CHANGE , $content.eq(index).get()
 
         is:
-
             active: (index) =>
                 $title
                     .eq       index
@@ -152,7 +145,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 not module.is.active index
 
         set:
-
             active: (index) =>
                 $title
                     .eq       index
@@ -170,7 +162,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     .removeClass ClassName.ACTIVE
 
         bind:
-
             events: =>
                 $this.on Event.CLICK, Selector.TITLE, ->
                     debug '發生 CLICK 事件', element, @
@@ -205,12 +196,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         refresh: =>
             $title   = $this.find Selector.TITLE
             $content = $this.find Selector.CONTENT
-
-            $allModules
+            return $allModules
 
         destroy: =>
             debug '摧毀手風琴', element
             $this.removeData MODULE_NAMESPACE
                  .off        EVENT_NAMESPACE
-
-            $allModules
+            return $allModules
