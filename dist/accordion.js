@@ -17,14 +17,14 @@
 
   // 模組設定。
   Settings = {
-    // 是否僅允許單個手風琴只有一個分頁能被打開。
-    exclusive: true,
     // 消音所有提示，甚至是錯誤訊息。
     silent: false,
     // 顯示除錯訊息。
     debug: true,
     // 監聽 DOM 結構異動並自動重整快取。
     observeChanges: true,
+    // 是否僅允許單個手風琴只有一個分頁能被打開。
+    exclusive: true,
     // 展開的手風琴是否可以被關閉。
     collapsible: true,
     // 當手風琴被關閉時，是否一同閉合子手風琴。
