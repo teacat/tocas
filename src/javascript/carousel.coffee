@@ -350,12 +350,13 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
         initialize: =>
             debug '初始化幻燈片', element
+            module.set.content module.get.html()
+
             $children = $this.find Selector.CHILD_ITEM
             $items    = ts '<div>'
                 .addClass ClassName.ITEMS
                 .append   $children
 
-            module.set.content module.get.html()
             module.remove.html()
 
             if settings.control
@@ -382,6 +383,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         destroy: =>
             debug '摧毀幻燈片', element
             module.remove.timer()
+
             module.set.html  module.get.content()
             $this.removeData MODULE_NAMESPACE
                  .off        EVENT_NAMESPACE

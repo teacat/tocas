@@ -420,9 +420,9 @@
       initialize: () => {
         var $children, $items;
         debug('初始化幻燈片', element);
+        module.set.content(module.get.html());
         $children = $this.find(Selector.CHILD_ITEM);
         $items = ts('<div>').addClass(ClassName.ITEMS).append($children);
-        module.set.content(module.get.html());
         module.remove.html();
         if (settings.control) {
           $this.append(module.create.$control());
