@@ -129,7 +129,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $this.trigger Event.OPENING, $content.eq(index).get()
                 $this.trigger Event.OPEN   , $content.eq(index).get()
                 $this.trigger Event.CHANGE , $content.eq(index).get()
-
             close: (index) =>
                 $this.trigger Event.CLOSING, $content.eq(index).get()
                 $this.trigger Event.CLOSE  , $content.eq(index).get()
@@ -140,7 +139,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $title
                     .eq       index
                     .hasClass ClassName.ACTIVE
-
             hidden: (index) =>
                 not module.is.active index
 
@@ -152,7 +150,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $content
                     .eq       index
                     .addClass ClassName.ACTIVE
-
             hidden: (index) =>
                 $title
                     .eq          index
