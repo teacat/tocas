@@ -1375,10 +1375,10 @@
     }
   };
 
-  // Reflow
+  // Repaint
 
-  // 讓瀏覽器重整流程。
-  ts.fn.reflow = {
+  // 讓瀏覽器重繪元素。
+  ts.fn.repaint = {
     value: function() {
       return this.each(function() {
         return void(this.offsetHeight);

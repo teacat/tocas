@@ -1024,11 +1024,11 @@ ts.fn.removeTimer =
             # 移除在 DOM 元素內的計時器物件。
             delete @$timers[name]
 
-# Reflow
+# Repaint
 #
-# 讓瀏覽器重整流程。
+# 讓瀏覽器重繪元素。
 
-ts.fn.reflow =
+ts.fn.repaint =
     value: ->
         @each ->
             `void(this.offsetHeight)`
