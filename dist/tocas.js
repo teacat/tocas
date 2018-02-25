@@ -111,6 +111,14 @@
     return extended;
   };
 
+  // 建立元素
+  ts.createElement = (html) => {
+    var div;
+    div = document.createElement('div');
+    div.innerHTML = html.trim();
+    return div.firstChild;
+  };
+
   // 註冊 Tocas 模塊
   ts.register = ({NAME, MODULE_NAMESPACE, Settings}, starter) => {
     return ts.fn[NAME] = {
@@ -911,6 +919,12 @@
                   var results1;
                   results1 = [];
                   while (index--) {
+                    if (this.$events[eventName] === void 0) {
+                      continue;
+                    }
+                    if (this.$events[eventName][alias] === void 0) {
+                      continue;
+                    }
                     single = this.$events[eventName][alias][index];
                     // 設置事件的上下文。
                     context = this;

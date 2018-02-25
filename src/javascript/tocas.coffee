@@ -89,6 +89,12 @@ ts.extend =->
         i++
     extended
 
+# 建立元素
+ts.createElement = (html) =>
+    div = document.createElement('div')
+    div.innerHTML = html.trim()
+    div.firstChild
+
 # 註冊 Tocas 模塊
 ts.register = ({NAME, MODULE_NAMESPACE, Settings}, starter) =>
     ts.fn[NAME] = value: (parameters) ->
@@ -703,6 +709,11 @@ ts.fn.on =
 
                             index = @$events[eventName][alias].length
                             while index--
+                                if @$events[eventName] is undefined
+                                    continue
+                                if @$events[eventName][alias] is undefined
+                                    continue
+
                                 single = @$events[eventName][alias][index]
 
                                 # 設置事件的上下文。
