@@ -33,15 +33,25 @@
     width  : $comparison_beforeWidth
     z-index: $z_comparison_before
 
-.ts.comparison .before img
-
 .ts.comparison .after
     max-width: 100%
     min-width: 0
     z-index  : $z_comparison_after
     width    : $comparison_afterWidth
 
-.ts.comparison .after img
+.ts.comparison .before img,
+.ts.comparison .after img,
+.ts.comparison img.before,
+.ts.comparison img.after
+    position       : absolute
+    width          : 100%
+    height         : 100%
+    object-fit     : cover
+    object-position: left center
+    pointer-events : none
+
+.ts.comparison img.after
+    width: 50%
 
 //-------------------//
 //       Resizer
@@ -91,7 +101,8 @@
     height  : $comparison_resizerCircularHeight
 
 .ts.comparison .divider.resizer
-    width: $comparison_resizerDividerWidth
+    padding: 0
+    width  : $comparison_resizerDividerWidth
 
 //-------------------//
 //        Label
@@ -107,8 +118,9 @@
     color  : $comparison_labelColor
     padding: $comparison_labelPadding
 
-    background: $comparison_labelBackgroundColor
-    font-size : $comparison_labelFontSize
+    background : $comparison_labelBackgroundColor
+    font-size  : $comparison_labelFontSize
+    white-space: nowrap
 
 .ts.comparison .before label
     right: $comparison_labelDistance
