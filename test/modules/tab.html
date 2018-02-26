@@ -1,0 +1,115 @@
+<html>
+<head>
+<script src="../../dist/tocas.js"></script>
+<script src="../../dist/tab.js"></script>
+<link rel="stylesheet" href="../../dist/tocas.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="./tool.js"></script>
+</head>
+<body>
+    <div class="ts top attached tabbed menu">
+        <a href="#!" class="active item" data-tab="獨立分頁A">分頁 A</a>
+        <a href="#!" class="item" data-tab="獨立分頁B">分頁 B</a>
+        <a href="#!" class="item" data-tab="獨立分頁C">分頁 C</a>
+    </div>
+    <div data-tab="獨立分頁A" class="ts active bottom attached tab segment">
+        第一個分頁內容！
+    </div>
+    <div data-tab="獨立分頁B" class="ts bottom attached tab segment">
+        然後這是第二個。
+    </div>
+    <div data-tab="獨立分頁C" class="ts bottom attached tab segment">
+        然後這是第三個啦～
+    </div>
+
+    <br><br>
+
+
+    <div class="ts top attached tabbed menu">
+        <a href="#!" class="active item" data-tab="分頁A" data-tab-group="群組A">分頁 A</a>
+        <a href="#!" class="item" data-tab="分頁B" data-tab-group="群組A">分頁 B</a>
+    </div>
+    <div data-tab="分頁A" data-tab-group="群組A" class="ts active bottom attached tab segment">
+        <p>第一個分頁內容！</p>
+        <!-- -->
+        <div class="ts top attached tabbed menu">
+            <a href="#!" class="active item" data-tab="分頁A" data-tab-group="群組A-A">分頁 A-A/A</a>
+            <a href="#!" class="item" data-tab="分頁B" data-tab-group="群組A-A">分頁 A-A/B</a>
+        </div>
+        <div data-tab="分頁A" data-tab-group="群組A-A" class="ts active bottom attached tab segment">
+            <p>第一個分頁內容！</p>
+            <!-- -->
+            <div class="ts top attached tabbed menu">
+                <a href="#!" class="active item" data-tab="分頁A" data-tab-group="群組A-A-A">分頁 A-A-A/A</a>
+                <a href="#!" class="item" data-tab="分頁B" data-tab-group="群組A-A-A">分頁 A-A-A/B</a>
+            </div>
+            <div data-tab="分頁A" data-tab-group="群組A-A-A" class="ts active bottom attached tab segment">
+                <p>第一個分頁內容！</p>
+            </div>
+            <div data-tab="分頁B" data-tab-group="群組A-A-A" class="ts bottom attached tab segment">
+                <p>然後這是第二個。</p>
+            </div>
+        </div>
+        <div data-tab="分頁B" data-tab-group="群組A-A" class="ts bottom attached tab segment">
+            <p>然後這是第二個。</p>
+            <!-- -->
+            <div class="ts top attached tabbed menu">
+                <a href="#!" class="active item" data-tab="分頁A" data-tab-group="群組A-A-B">分頁 A-A-B/A</a>
+                <a href="#!" class="item" data-tab="分頁B" data-tab-group="群組A-A-B">分頁 A-A-B/B</a>
+            </div>
+            <div data-tab="分頁A" data-tab-group="群組A-A-B" class="ts active bottom attached tab segment">
+                <p>第一個分頁內容！</p>
+            </div>
+            <div data-tab="分頁B" data-tab-group="群組A-A-B" class="ts bottom attached tab segment">
+                <p>然後這是第二個。</p>
+            </div>
+        </div>
+    </div>
+    <div data-tab="分頁B" data-tab-group="群組A" class="ts bottom attached tab segment">
+        <p>然後這是第二個。</p>
+        <div class="ts top attached tabbed menu">
+            <a href="#!" class="active item" data-tab="分頁A" data-tab-group="群組A-B">分頁 A-B/A</a>
+            <a href="#!" class="item" data-tab="分頁B" data-tab-group="群組A-B">分頁 A-B/B</a>
+        </div>
+        <!-- -->
+        <div data-tab="分頁A" data-tab-group="群組A-B" class="ts active bottom attached tab segment">
+            <p>第一個分頁內容！</p>
+        </div>
+        <!-- -->
+        <div data-tab="分頁B" data-tab-group="群組A-B" class="ts bottom attached tab segment">
+            <p>然後這是第二個。</p>
+        </div>
+    </div>
+
+    <!-- -->
+    <script>
+        testUnit({
+            Core: {
+                'Tab': () => {
+                    ts('.menu .item').tab()
+                },
+            },
+            Method: {
+                'Change Tab': () => {
+                    ts('.tab').tab('change tab', '分頁B')
+                },
+                'Destroy': () => {
+                    ts('.menu .item').tab('destroy')
+                },
+            },
+            Get: {
+                'Path': () => {
+                    ts('.tab[data-tab="分頁A"][data-tab-group="群組A-A-B"]').tab('get path')
+                },
+            },
+            Is: {
+                'Tab': () => {
+                    alert(ts('.tab[data-tab="分頁A"]').tab('is tab'))
+                },
+            }
+        })
+    </script>
+    <!-- -->
+</body>
+</html>
+</body>
