@@ -12,7 +12,7 @@ MODULE_NAMESPACE = "module-#{NAME}"
 # 模組設定。
 Settings =
     # 消音所有提示，甚至是錯誤訊息。
-    silent        : false
+    silent        : true
     # 顯示除錯訊息。
     debug         : true
     # 監聽 DOM 結構異動並自動重整快取。
@@ -108,18 +108,18 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             tab: (name, group) =>
                 module.show       name, group
                 module.hideOthers name, group
+                module.store.path name, group
 
         is:
             tab: =>
 
         store:
             path: (name, group) =>
-                module.parse.hash (hashName, hashGroup) =>
-                    if hashGroup is group
-                        return false
-                    else
-                        return true
-                module.add.hash name, group
+                hash = module.parse.hash (hashName, hashGroup) =>
+                    return hashGroup isnt group
+                hash.push "#{group}/#{name}"
+                module.set.hash hash.join ','
+
 
         has:
             group: (element) =>
@@ -130,24 +130,11 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 ts(element).attr Attribute.TAB
             group: (element) =>
                 ts(element).attr Attribute.GROUP
-            path: =>
-                path = []
-                getParent = (element) =>
-
-                    name  = module.get.name  element
-                    group = module.get.group element
-                    path.push "#{group}/#{name}"
-
-                    $parentTab = ts(element).parent().closest('[data-tab]')
-
-                    if $parentTab.length isnt 0
-                        getParent($parentTab.get())
-
-
-                getParent(element)
-                return path.reverse().join(',')
             hash: =>
-                decodeURIComponent window.location.hash[1..]
+                if window.location.hash
+                    decodeURIComponent window.location.hash[1..]
+                else
+                    ''
             menuItems:
                 except: (name) =>
                     ts Selector.MENU_ITEM name
@@ -155,50 +142,41 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                         .find Selector.ITEM
                         .not  Selector.MENU_ITEM name
 
-        set:
-            state: =>
-            hash: (hash) =>
-                setTimeout ->
-                    history.pushState null, null, "##{decodeURIComponent(hash)}"
-                , 0
-
-        add:
-            hash: (name, group) =>
-                module.set.hash("#{module.get.hash()},#{group}/#{name}")
-
-        parse:
-            hash: (callback) =>
-                if not window.location.hash
-                    return
-                hash = decodeURIComponent window.location.hash[1..]
-                    .split ','
-                    .filter (value) =>
-                        parsed = value.split '/'
-                        name   = parsed[1]
-                        group  = parsed[0]
-                        return callback name, group
-                #module.set.hash hash
-
         apply:
             hash: =>
                 module.parse.hash (name, group) =>
                     module.change.tab name, group
-                    true
+                    return true
+
+        parse:
+            hash: (callback) =>
+                module.get.hash().split(',').filter (value) =>
+                    parsed    = value.split('/')
+                    hashGroup = parsed[0]
+                    hashName  = parsed[1]
+                    return false if value is ''
+                    return callback.call value, hashName, hashGroup
+
+        set:
+            state: =>
+            hash: (hash) =>
+                history.pushState null, null, "##{decodeURIComponent(hash)}"
 
         bind:
             events: =>
+                $this.attr 'href', 'javascript:void(0)'
                 $this.on Event.CLICK, ->
                     name = module.get.name @
                     if module.has.group @
                         group = module.get.group @
                         module.change.tab name, group
-                        module.store.path name, group
                     else
                         module.change.tab name
-                ts(window).on 'popstate', =>
-                    module.parse.hash (name, group) =>
-                        module.change.tab name, group
-                        true
+
+                #ts(window).on 'popstate', =>
+                #    module.parse.hash (name, group) =>
+                #        module.change.tab name, group
+
 
         # ------------------------------------------------------------------------
         # 基礎方法

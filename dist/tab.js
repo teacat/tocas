@@ -18,7 +18,7 @@
   // 模組設定。
   Settings = {
     // 消音所有提示，甚至是錯誤訊息。
-    silent: false,
+    silent: true,
     // 顯示除錯訊息。
     debug: true,
     // 監聽 DOM 結構異動並自動重整快取。
@@ -120,7 +120,8 @@
       change: {
         tab: (name, group) => {
           module.show(name, group);
-          return module.hideOthers(name, group);
+          module.hideOthers(name, group);
+          return module.store.path(name, group);
         }
       },
       is: {
@@ -128,14 +129,12 @@
       },
       store: {
         path: (name, group) => {
-          module.parse.hash((hashName, hashGroup) => {
-            if (hashGroup === group) {
-              return false;
-            } else {
-              return true;
-            }
+          var hash;
+          hash = module.parse.hash((hashName, hashGroup) => {
+            return hashGroup !== group;
           });
-          return module.add.hash(name, group);
+          hash.push(`${group}/${name}`);
+          return module.set.hash(hash.join(','));
         }
       },
       has: {
@@ -150,24 +149,12 @@
         group: (element) => {
           return ts(element).attr(Attribute.GROUP);
         },
-        path: () => {
-          var getParent, path;
-          path = [];
-          getParent = (element) => {
-            var $parentTab, group, name;
-            name = module.get.name(element);
-            group = module.get.group(element);
-            path.push(`${group}/${name}`);
-            $parentTab = ts(element).parent().closest('[data-tab]');
-            if ($parentTab.length !== 0) {
-              return getParent($parentTab.get());
-            }
-          };
-          getParent(element);
-          return path.reverse().join(',');
-        },
         hash: () => {
-          return decodeURIComponent(window.location.hash.slice(1));
+          if (window.location.hash) {
+            return decodeURIComponent(window.location.hash.slice(1));
+          } else {
+            return '';
+          }
         },
         menuItems: {
           except: (name) => {
@@ -175,35 +162,6 @@
           }
         }
       },
-      set: {
-        state: () => {},
-        hash: (hash) => {
-          return setTimeout(function() {
-            return history.pushState(null, null, `#${decodeURIComponent(hash)}`);
-          }, 0);
-        }
-      },
-      add: {
-        hash: (name, group) => {
-          return module.set.hash(`${module.get.hash()},${group}/${name}`);
-        }
-      },
-      parse: {
-        hash: (callback) => {
-          var hash;
-          if (!window.location.hash) {
-            return;
-          }
-          return hash = decodeURIComponent(window.location.hash.slice(1)).split(',').filter((value) => {
-            var group, name, parsed;
-            parsed = value.split('/');
-            name = parsed[1];
-            group = parsed[0];
-            return callback(name, group);
-          });
-        }
-      },
-      //module.set.hash hash
       apply: {
         hash: () => {
           return module.parse.hash((name, group) => {
@@ -212,27 +170,45 @@
           });
         }
       },
+      parse: {
+        hash: (callback) => {
+          return module.get.hash().split(',').filter((value) => {
+            var hashGroup, hashName, parsed;
+            parsed = value.split('/');
+            hashGroup = parsed[0];
+            hashName = parsed[1];
+            if (value === '') {
+              return false;
+            }
+            return callback.call(value, hashName, hashGroup);
+          });
+        }
+      },
+      set: {
+        state: () => {},
+        hash: (hash) => {
+          return history.pushState(null, null, `#${decodeURIComponent(hash)}`);
+        }
+      },
       bind: {
         events: () => {
-          $this.on(Event.CLICK, function() {
+          $this.attr('href', 'javascript:void(0)');
+          return $this.on(Event.CLICK, function() {
             var group, name;
             name = module.get.name(this);
             if (module.has.group(this)) {
               group = module.get.group(this);
-              module.change.tab(name, group);
-              return module.store.path(name, group);
+              return module.change.tab(name, group);
             } else {
               return module.change.tab(name);
             }
           });
-          return ts(window).on('popstate', () => {
-            return module.parse.hash((name, group) => {
-              module.change.tab(name, group);
-              return true;
-            });
-          });
         }
       },
+      //ts(window).on 'popstate', =>
+      //    module.parse.hash (name, group) =>
+      //        module.change.tab name, group
+
       // ------------------------------------------------------------------------
       // 基礎方法
       // ------------------------------------------------------------------------
