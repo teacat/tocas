@@ -21,9 +21,10 @@ ts = (selector, context) ->
         selector = selector.selector
         context  = selector?.context
     # 如果是單個 DOM 元素，就放入選擇器然後繼續。
-    else if selector instanceof HTMLElement  or
-            selector instanceof HTMLDocument or
-            selector instanceof HTMLBodyElement
+    else if selector instanceof HTMLElement     or
+            selector instanceof HTMLDocument    or
+            selector instanceof HTMLBodyElement or
+            selector is window
         nodes = [selector]
 
     # 保存目前的選擇器文字與上下文選擇器文字。
@@ -420,7 +421,7 @@ ts.fn.is =
 ts.fn.not =
     value: (selector) ->
         ts @toArray().filter (element) =>
-            element isnt selector
+            ts(selector).indexOf(element) is -1
 
 
 # Slice

@@ -30,7 +30,7 @@
       selector = selector.selector;
       context = selector != null ? selector.context : void 0;
     // 如果是單個 DOM 元素，就放入選擇器然後繼續。
-    } else if (selector instanceof HTMLElement || selector instanceof HTMLDocument || selector instanceof HTMLBodyElement) {
+    } else if (selector instanceof HTMLElement || selector instanceof HTMLDocument || selector instanceof HTMLBodyElement || selector === window) {
       nodes = [selector];
     }
     // 保存目前的選擇器文字與上下文選擇器文字。
@@ -534,7 +534,7 @@
   ts.fn.not = {
     value: function(selector) {
       return ts(this.toArray().filter((element) => {
-        return element !== selector;
+        return ts(selector).indexOf(element) === -1;
       }));
     }
   };
