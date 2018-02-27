@@ -22,9 +22,7 @@ Settings =
     # 當分頁被開啟時所會呼叫的回呼函式。
     onLoad        : (tabName) =>
     # 是否要紀錄分頁籤的開關歷程至瀏覽器的上下頁歷程中。
-    history       : true
-    # 欲採用何種分頁籤手法？可用：`hash` 或 `state`。
-    historyType   : 'hash'
+    history       : false
 
 # 中繼資料名稱。
 Metadata =
@@ -53,6 +51,7 @@ Selector =
     TAB             : (name) => ".tab[#{Attribute.TAB}='#{name}']"
     ANY_TAB         : '.tab[data-tab]'
     ACTIVE_TAB      : '.active.tab[data-tab]'
+    HIDDEN_TAB      : '.tab[data-tab]:not(.active)'
     MENU            : '.menu'
     MENU_ITEM       : (name) => ".menu .item[#{Attribute.TAB}='#{name}']"
     ITEM            : '.item'
@@ -70,19 +69,22 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
     # 區域變數
     # ------------------------------------------------------------------------
 
+    separator = ','
 
     # ------------------------------------------------------------------------
     # 模組定義
     # ------------------------------------------------------------------------
 
     module =
-
         change:
-            tab: (name, recursive=true) =>
+            tab: (name, recursive=true, update=true) =>
                 name = module.decode name
 
                 openAndCloseOthers = (value) =>
-                    ts Selector.MENU_ITEM value
+                    $item = ts Selector.MENU_ITEM value
+                    $tab  = ts Selector.TAB       value
+
+                    $item
                         .addClass ClassName.ACTIVE
                         .closest  Selector.MENU
                         .find     Selector.ITEM
@@ -91,18 +93,14 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                             ts Selector.TAB ts(@).attr Attribute.TAB
                                 .removeClass ClassName.ACTIVE
                         .removeClass ClassName.ACTIVE
-
-                    $tab = ts Selector.TAB value
                     $tab
                         .addClass ClassName.ACTIVE
 
-                    $item = ts Selector.MENU_ITEM value
-
-                    if not $item.tab 'is loaded'
-                        $item.trigger Event.FIRSTLOAD, $tab.get(), value
-                        $item.tab 'set loaded', true
+                    if $item.tab 'not loaded'
+                        $item
+                            .trigger Event.FIRSTLOAD, $tab.get(), value
+                            .tab    'set loaded', true
                     $item.trigger Event.LOAD, $tab.get(), value
-
 
                 if recursive
                     ts Selector.TAB name
@@ -111,9 +109,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 else
                     openAndCloseOthers name
 
-                module.update.hash()
-
-
+                if update
+                    module.update.hash()
 
                 return $allModules
 
@@ -132,14 +129,14 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                         .closest Selector.ANY_TAB
                     if $parentTab.length isnt 0
                         getParent $parentTab
-                    return paths
                 getParent $this
+                return paths
             tab: =>
-                ts(Selector.TAB(module.get.name())).get()
+                module.get.$tab().get()
             $tab: =>
-                ts(Selector.TAB(module.get.name()))
+                ts Selector.TAB module.get.name()
             path: =>
-                module.get.paths().join ','
+                module.get.paths().join separator
             hash: =>
                 hash = window.location.hash
                 return if hash then module.decode(hash[1..]) else ''
@@ -160,48 +157,47 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             loaded: =>
                 $this.data(Metadata.LOADED) is true
 
+        not:
+            loaded: =>
+                not module.is.loaded()
+
         apply:
             hash: =>
                 setTimeout ->
-                    if not module.has.hash()
-                        return
                     hash = module.get.hash()
-                    if module.same.hash(hash)
+                    if hash is '' or module.same.hash hash
                         return
                     hash
-                        .split ','
+                        .split   separator
                         .forEach (value) =>
-                            module.change.tab value
+                            module.change.tab value, true, false
                 , 0
 
         update:
             hash: =>
                 hash = []
                 ts(Selector.ACTIVE_TAB).each ->
-                    $tab       = ts @
-                    $parentTab = $tab
-                        .parent()
-                        .closest Selector.ANY_TAB
-                    if $parentTab.length isnt 0 and not $parentTab.hasClass ClassName.ACTIVE
+                    $tab = ts @
+                    if $tab.closest(Selector.HIDDEN_TAB).length isnt 0
                         return
-                    if $tab.find(Selector.ACTIVE_TAB).length isnt 0
+                    if $tab.find(Selector.ACTIVE_TAB).length    isnt 0
                         return
-
                     hash.push $tab.tab 'get name'
-
-                hash = "##{hash.join(',')}"
-
+                hash = "##{hash.join(separator)}"
                 if settings.history
                     history.pushState null, null, hash
                 else
                     history.replaceState null, null, hash
+
         same:
             hash: (hash) =>
                 same = true
                 hash
-                    .split ','
+                    .split   separator
                     .forEach (value) =>
-                        if not ts(Selector.TAB(value)).hasClass ClassName.ACTIVE
+                        if not same
+                            return
+                        if ts(Selector.TAB(value)).closest(Selector.HIDDEN_TAB).length isnt 0
                             same = false
                 return same
 
@@ -219,8 +215,11 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     settings.onLoad.call context, event, name
 
                 if settings.history
-                    ts(window).on Event.POPSTATE, =>
-                        module.apply.hash()
+                    ts(window)
+                        .off Event.POPSTATE
+                        .on  Event.POPSTATE, =>
+                            debug '發生 POPSTATE 事件', window
+                            module.apply.hash()
 
                 $this.attr 'href', 'javascript:void(0)'
 

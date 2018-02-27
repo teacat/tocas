@@ -28,9 +28,7 @@
     // 當分頁被開啟時所會呼叫的回呼函式。
     onLoad: (tabName) => {},
     // 是否要紀錄分頁籤的開關歷程至瀏覽器的上下頁歷程中。
-    history: true,
-    // 欲採用何種分頁籤手法？可用：`hash` 或 `state`。
-    historyType: 'hash'
+    history: false
   };
 
   // 中繼資料名稱。
@@ -66,6 +64,7 @@
     },
     ANY_TAB: '.tab[data-tab]',
     ACTIVE_TAB: '.active.tab[data-tab]',
+    HIDDEN_TAB: '.tab[data-tab]:not(.active)',
     MENU: '.menu',
     MENU_ITEM: (name) => {
       return `.menu .item[${Attribute.TAB}='${name}']`;
@@ -80,30 +79,29 @@
   // 模組註冊
   // ------------------------------------------------------------------------
   ts.register({NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, element, debug, settings, index}) => {
-    var module;
+    var module, separator;
     // ------------------------------------------------------------------------
     // 區域變數
     // ------------------------------------------------------------------------
-
+    separator = ',';
     // ------------------------------------------------------------------------
     // 模組定義
     // ------------------------------------------------------------------------
     return module = {
       change: {
-        tab: (name, recursive = true) => {
+        tab: (name, recursive = true, update = true) => {
           var openAndCloseOthers;
           name = module.decode(name);
           openAndCloseOthers = (value) => {
             var $item, $tab;
-            ts(Selector.MENU_ITEM(value)).addClass(ClassName.ACTIVE).closest(Selector.MENU).find(Selector.ITEM).not(Selector.MENU_ITEM(value)).each(function() {
+            $item = ts(Selector.MENU_ITEM(value));
+            $tab = ts(Selector.TAB(value));
+            $item.addClass(ClassName.ACTIVE).closest(Selector.MENU).find(Selector.ITEM).not(Selector.MENU_ITEM(value)).each(function() {
               return ts(Selector.TAB(ts(this).attr(Attribute.TAB))).removeClass(ClassName.ACTIVE);
             }).removeClass(ClassName.ACTIVE);
-            $tab = ts(Selector.TAB(value));
             $tab.addClass(ClassName.ACTIVE);
-            $item = ts(Selector.MENU_ITEM(value));
-            if (!$item.tab('is loaded')) {
-              $item.trigger(Event.FIRSTLOAD, $tab.get(), value);
-              $item.tab('set loaded', true);
+            if ($item.tab('not loaded')) {
+              $item.trigger(Event.FIRSTLOAD, $tab.get(), value).tab('set loaded', true);
             }
             return $item.trigger(Event.LOAD, $tab.get(), value);
           };
@@ -112,7 +110,9 @@
           } else {
             openAndCloseOthers(name);
           }
-          module.update.hash();
+          if (update) {
+            module.update.hash();
+          }
           return $allModules;
         }
       },
@@ -131,20 +131,20 @@
             paths.push($element.attr(Attribute.TAB));
             $parentTab = $element.parent().closest(Selector.ANY_TAB);
             if ($parentTab.length !== 0) {
-              getParent($parentTab);
+              return getParent($parentTab);
             }
-            return paths;
           };
-          return getParent($this);
+          getParent($this);
+          return paths;
         },
         tab: () => {
-          return ts(Selector.TAB(module.get.name())).get();
+          return module.get.$tab().get();
         },
         $tab: () => {
           return ts(Selector.TAB(module.get.name()));
         },
         path: () => {
-          return module.get.paths().join(',');
+          return module.get.paths().join(separator);
         },
         hash: () => {
           var hash;
@@ -177,19 +177,21 @@
           return $this.data(Metadata.LOADED) === true;
         }
       },
+      not: {
+        loaded: () => {
+          return !module.is.loaded();
+        }
+      },
       apply: {
         hash: () => {
           return setTimeout(function() {
             var hash;
-            if (!module.has.hash()) {
-              return;
-            }
             hash = module.get.hash();
-            if (module.same.hash(hash)) {
+            if (hash === '' || module.same.hash(hash)) {
               return;
             }
-            return hash.split(',').forEach((value) => {
-              return module.change.tab(value);
+            return hash.split(separator).forEach((value) => {
+              return module.change.tab(value, true, false);
             });
           }, 0);
         }
@@ -199,10 +201,9 @@
           var hash;
           hash = [];
           ts(Selector.ACTIVE_TAB).each(function() {
-            var $parentTab, $tab;
+            var $tab;
             $tab = ts(this);
-            $parentTab = $tab.parent().closest(Selector.ANY_TAB);
-            if ($parentTab.length !== 0 && !$parentTab.hasClass(ClassName.ACTIVE)) {
+            if ($tab.closest(Selector.HIDDEN_TAB).length !== 0) {
               return;
             }
             if ($tab.find(Selector.ACTIVE_TAB).length !== 0) {
@@ -210,7 +211,7 @@
             }
             return hash.push($tab.tab('get name'));
           });
-          hash = `#${hash.join(',')}`;
+          hash = `#${hash.join(separator)}`;
           if (settings.history) {
             return history.pushState(null, null, hash);
           } else {
@@ -222,8 +223,11 @@
         hash: (hash) => {
           var same;
           same = true;
-          hash.split(',').forEach((value) => {
-            if (!ts(Selector.TAB(value)).hasClass(ClassName.ACTIVE)) {
+          hash.split(separator).forEach((value) => {
+            if (!same) {
+              return;
+            }
+            if (ts(Selector.TAB(value)).closest(Selector.HIDDEN_TAB).length !== 0) {
               return same = false;
             }
           });
@@ -247,7 +251,8 @@
             return settings.onLoad.call(context, event, name);
           });
           if (settings.history) {
-            ts(window).on(Event.POPSTATE, () => {
+            ts(window).off(Event.POPSTATE).on(Event.POPSTATE, () => {
+              debug('發生 POPSTATE 事件', window);
               return module.apply.hash();
             });
           }
