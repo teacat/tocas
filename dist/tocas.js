@@ -135,7 +135,7 @@
         headerCSS = "background   : #EEE;\ncolor        : #5A5A5A;\nfont-size    : 1em;\npadding      : 5px 8px;\nline-height  : 30px;\nborder-radius: 1000em;";
         errorHeaderCSS = `${headerCSS}\nbackground: #CE5F58;\ncolor: #FFF;`;
         messageCSS = "font-weight: bold;";
-        $allModules.each(function() {
+        $allModules.each(function(_, index) {
           var $this, debug, element, error, initialize, instance, instantiate, invoke, module, observeChanges, settings;
           $this = ts(this);
           element = this;
@@ -235,7 +235,7 @@
             }
             return found;
           };
-          module = starter({$allModules, $this, element, debug, settings, instance});
+          module = starter({$allModules, $this, element, debug, settings, instance, index});
           if (methodInvoked) {
             if (instance === void 0) {
               initialize();

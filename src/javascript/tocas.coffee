@@ -124,7 +124,7 @@ ts.register = ({NAME, MODULE_NAMESPACE, Settings}, starter) =>
             font-weight: bold;
         """
 
-        $allModules.each ->
+        $allModules.each (_, index) ->
             $this    = ts @
             element  = @
             instance = $this.data MODULE_NAMESPACE
@@ -206,7 +206,7 @@ ts.register = ({NAME, MODULE_NAMESPACE, Settings}, starter) =>
                         returnedValue = response
                 found
 
-            module = starter({$allModules, $this, element, debug, settings, instance})
+            module = starter({$allModules, $this, element, debug, settings, instance, index})
 
             if methodInvoked
                 if instance is undefined
