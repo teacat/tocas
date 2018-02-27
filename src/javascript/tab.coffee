@@ -22,7 +22,7 @@ Settings =
     # 當分頁被開啟時所會呼叫的回呼函式。
     onLoad        : (tabName) =>
     # 是否要紀錄分頁籤的開關歷程至瀏覽器的上下頁歷程中。
-    history       : false
+    history       : true
 
 # 中繼資料名稱。
 Metadata =
@@ -78,59 +78,58 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
     module =
         change:
             tab: (name, recursive=true, update=true) =>
-                name = module.decode name
+                name  = module.decode name
+                paths = if recursive then ts(Selector.TAB(name)).tab('get paths') else [name]
 
-                openAndCloseOthers = (value) =>
-                    $item = ts Selector.MENU_ITEM value
-                    $tab  = ts Selector.TAB       value
-
+                for path in paths
+                    $item = ts Selector.MENU_ITEM path
+                    $tab  = ts Selector.TAB       path
+                    $tab.tab  'set active'
                     $item
-                        .addClass ClassName.ACTIVE
-                        .closest  Selector.MENU
-                        .find     Selector.ITEM
-                        .not      Selector.MENU_ITEM value
-                        .each ->
-                            ts Selector.TAB ts(@).attr Attribute.TAB
-                                .removeClass ClassName.ACTIVE
-                        .removeClass ClassName.ACTIVE
-                    $tab
-                        .addClass ClassName.ACTIVE
-
+                        .tab 'set active'
+                        .tab 'hide others'
                     if $item.tab 'not loaded'
                         $item
-                            .trigger Event.FIRSTLOAD, $tab.get(), value
-                            .tab    'set loaded', true
-                    $item.trigger Event.LOAD, $tab.get(), value
-
-                if recursive
-                    ts Selector.TAB name
-                        .tab     'get paths'
-                        .forEach openAndCloseOthers
-                else
-                    openAndCloseOthers name
+                            .trigger Event.FIRSTLOAD, $tab.get(), path
+                            .tab     'set loaded', true
+                    $item.trigger Event.LOAD, $tab.get(), path
 
                 if update
                     module.update.hash()
 
                 return $allModules
 
-        decode: (uri) =>
-            decodeURIComponent uri
+        hide:
+            others: =>
+                $items = module.get.relative.$items()
+                $items.tab 'set hidden'
+                $items.each ->
+                    ts @
+                        .tab 'get $tab'
+                        .tab 'set hidden'
 
         get:
             name: =>
                 $this.attr Attribute.TAB
             paths: =>
-                paths = []
-                getParent = ($element) =>
-                    paths.push $element.attr Attribute.TAB
-                    $parentTab = $element
-                        .parent()
-                        .closest Selector.ANY_TAB
-                    if $parentTab.length isnt 0
-                        getParent $parentTab
-                getParent $this
-                return paths
+                paths   = []
+                $parent = $this
+                until $parent.length is 0
+                    paths.push $parent.tab 'get name'
+                    $parent  = $parent.tab 'get parent $tab'
+                paths
+            active:
+                $tab: =>
+                    ts(Selector.ACTIVE_TAB)
+            relative:
+                $items: =>
+                    $this
+                        .closest  Selector.MENU
+                        .find     Selector.ITEM
+                        .not      $this
+            parent:
+                $tab:
+                    $this.parent().closest Selector.ANY_TAB
             tab: =>
                 module.get.$tab().get()
             $tab: =>
@@ -141,13 +140,29 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 hash = window.location.hash
                 return if hash then module.decode(hash[1..]) else ''
 
+        decode: (uri) =>
+            decodeURIComponent uri
+
         has:
             hash: =>
                 not not window.location.hash
+            parent:
+                tab: =>
+                    $this.parent().closest(Selector.ANY_TAB).length isnt 0
+            hidden:
+                parent: =>
+                    $this.closest(Selector.HIDDEN_TAB).length isnt 0
+            active:
+                children: =>
+                    $this.find(Selector.ACTIVE_TAB).length isnt 0
 
         set:
             loaded: (bool) =>
                 $this.data Metadata.LOADED, bool
+            hidden: =>
+                $this.removeClass ClassName.ACTIVE
+            active: =>
+                $this.addClass ClassName.ACTIVE
 
         is:
             active: =>
@@ -164,11 +179,12 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         apply:
             hash: =>
                 setTimeout ->
-                    hash = module.get.hash()
-                    if hash is '' or module.same.hash hash
+                    if not module.has.hash()
                         return
-                    hash
-                        .split   separator
+                    hash = module.get.hash()
+                    if module.same.hash hash
+                        return
+                    hash.split   separator
                         .forEach (value) =>
                             module.change.tab value, true, false
                 , 0
@@ -176,13 +192,14 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         update:
             hash: =>
                 hash = []
-                ts(Selector.ACTIVE_TAB).each ->
+                module.get.active.$tab().each ->
                     $tab = ts @
-                    if $tab.closest(Selector.HIDDEN_TAB).length isnt 0
+                    if $tab.tab 'has hidden parent'
                         return
-                    if $tab.find(Selector.ACTIVE_TAB).length    isnt 0
+                    if $tab.tab 'has active children'
                         return
                     hash.push $tab.tab 'get name'
+
                 hash = "##{hash.join(separator)}"
                 if settings.history
                     history.pushState null, null, hash
@@ -192,20 +209,18 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         same:
             hash: (hash) =>
                 same = true
-                hash
-                    .split   separator
+                hash.split   separator
                     .forEach (value) =>
                         if not same
                             return
-                        if ts(Selector.TAB(value)).closest(Selector.HIDDEN_TAB).length isnt 0
+                        if ts(Selector.TAB(value)).tab 'has hidden parent'
                             same = false
                 return same
 
         bind:
             events: =>
                 $this.on Event.CLICK, =>
-                    if module.is.active()
-                        return
+                    return if module.is.active()
                     module.change.tab module.get.name(), false
                 $this.on Event.FIRSTLOAD, (event, context, name) =>
                     debug '發生 FIRSTLOAD 事件', context, name
@@ -213,15 +228,15 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $this.on Event.LOAD, (event, context, name) =>
                     debug '發生 LOAD 事件', context, name
                     settings.onLoad.call context, event, name
-
-                if settings.history
-                    ts(window)
-                        .off Event.POPSTATE
-                        .on  Event.POPSTATE, =>
-                            debug '發生 POPSTATE 事件', window
-                            module.apply.hash()
-
                 $this.attr 'href', 'javascript:void(0)'
+
+                if not settings.history
+                    return
+                ts(window)
+                    .off Event.POPSTATE
+                    .on  Event.POPSTATE, =>
+                        debug '發生 POPSTATE 事件', window
+                        module.apply.hash()
 
         # ------------------------------------------------------------------------
         # 基礎方法

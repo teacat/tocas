@@ -28,7 +28,7 @@
     // 當分頁被開啟時所會呼叫的回呼函式。
     onLoad: (tabName) => {},
     // 是否要紀錄分頁籤的開關歷程至瀏覽器的上下頁歷程中。
-    history: false
+    history: true
   };
 
   // 中繼資料名稱。
@@ -90,25 +90,19 @@
     return module = {
       change: {
         tab: (name, recursive = true, update = true) => {
-          var openAndCloseOthers;
+          var $item, $tab, i, len, path, paths;
           name = module.decode(name);
-          openAndCloseOthers = (value) => {
-            var $item, $tab;
-            $item = ts(Selector.MENU_ITEM(value));
-            $tab = ts(Selector.TAB(value));
-            $item.addClass(ClassName.ACTIVE).closest(Selector.MENU).find(Selector.ITEM).not(Selector.MENU_ITEM(value)).each(function() {
-              return ts(Selector.TAB(ts(this).attr(Attribute.TAB))).removeClass(ClassName.ACTIVE);
-            }).removeClass(ClassName.ACTIVE);
-            $tab.addClass(ClassName.ACTIVE);
+          paths = recursive ? ts(Selector.TAB(name)).tab('get paths') : [name];
+          for (i = 0, len = paths.length; i < len; i++) {
+            path = paths[i];
+            $item = ts(Selector.MENU_ITEM(path));
+            $tab = ts(Selector.TAB(path));
+            $tab.tab('set active');
+            $item.tab('set active').tab('hide others');
             if ($item.tab('not loaded')) {
-              $item.trigger(Event.FIRSTLOAD, $tab.get(), value).tab('set loaded', true);
+              $item.trigger(Event.FIRSTLOAD, $tab.get(), path).tab('set loaded', true);
             }
-            return $item.trigger(Event.LOAD, $tab.get(), value);
-          };
-          if (recursive) {
-            ts(Selector.TAB(name)).tab('get paths').forEach(openAndCloseOthers);
-          } else {
-            openAndCloseOthers(name);
+            $item.trigger(Event.LOAD, $tab.get(), path);
           }
           if (update) {
             module.update.hash();
@@ -116,26 +110,42 @@
           return $allModules;
         }
       },
-      decode: (uri) => {
-        return decodeURIComponent(uri);
+      hide: {
+        others: () => {
+          var $items;
+          $items = module.get.relative.$items();
+          $items.tab('set hidden');
+          return $items.each(function() {
+            return ts(this).tab('get $tab').tab('set hidden');
+          });
+        }
       },
       get: {
         name: () => {
           return $this.attr(Attribute.TAB);
         },
         paths: () => {
-          var getParent, paths;
+          var $parent, paths;
           paths = [];
-          getParent = ($element) => {
-            var $parentTab;
-            paths.push($element.attr(Attribute.TAB));
-            $parentTab = $element.parent().closest(Selector.ANY_TAB);
-            if ($parentTab.length !== 0) {
-              return getParent($parentTab);
-            }
-          };
-          getParent($this);
+          $parent = $this;
+          while ($parent.length !== 0) {
+            paths.push($parent.tab('get name'));
+            $parent = $parent.tab('get parent $tab');
+          }
           return paths;
+        },
+        active: {
+          $tab: () => {
+            return ts(Selector.ACTIVE_TAB);
+          }
+        },
+        relative: {
+          $items: () => {
+            return $this.closest(Selector.MENU).find(Selector.ITEM).not($this);
+          }
+        },
+        parent: {
+          $tab: $this.parent().closest(Selector.ANY_TAB)
         },
         tab: () => {
           return module.get.$tab().get();
@@ -156,14 +166,38 @@
           }
         }
       },
+      decode: (uri) => {
+        return decodeURIComponent(uri);
+      },
       has: {
         hash: () => {
           return !!window.location.hash;
+        },
+        parent: {
+          tab: () => {
+            return $this.parent().closest(Selector.ANY_TAB).length !== 0;
+          }
+        },
+        hidden: {
+          parent: () => {
+            return $this.closest(Selector.HIDDEN_TAB).length !== 0;
+          }
+        },
+        active: {
+          children: () => {
+            return $this.find(Selector.ACTIVE_TAB).length !== 0;
+          }
         }
       },
       set: {
         loaded: (bool) => {
           return $this.data(Metadata.LOADED, bool);
+        },
+        hidden: () => {
+          return $this.removeClass(ClassName.ACTIVE);
+        },
+        active: () => {
+          return $this.addClass(ClassName.ACTIVE);
         }
       },
       is: {
@@ -186,8 +220,11 @@
         hash: () => {
           return setTimeout(function() {
             var hash;
+            if (!module.has.hash()) {
+              return;
+            }
             hash = module.get.hash();
-            if (hash === '' || module.same.hash(hash)) {
+            if (module.same.hash(hash)) {
               return;
             }
             return hash.split(separator).forEach((value) => {
@@ -200,13 +237,13 @@
         hash: () => {
           var hash;
           hash = [];
-          ts(Selector.ACTIVE_TAB).each(function() {
+          module.get.active.$tab().each(function() {
             var $tab;
             $tab = ts(this);
-            if ($tab.closest(Selector.HIDDEN_TAB).length !== 0) {
+            if ($tab.tab('has hidden parent')) {
               return;
             }
-            if ($tab.find(Selector.ACTIVE_TAB).length !== 0) {
+            if ($tab.tab('has active children')) {
               return;
             }
             return hash.push($tab.tab('get name'));
@@ -227,7 +264,7 @@
             if (!same) {
               return;
             }
-            if (ts(Selector.TAB(value)).closest(Selector.HIDDEN_TAB).length !== 0) {
+            if (ts(Selector.TAB(value)).tab('has hidden parent')) {
               return same = false;
             }
           });
@@ -250,13 +287,14 @@
             debug('發生 LOAD 事件', context, name);
             return settings.onLoad.call(context, event, name);
           });
-          if (settings.history) {
-            ts(window).off(Event.POPSTATE).on(Event.POPSTATE, () => {
-              debug('發生 POPSTATE 事件', window);
-              return module.apply.hash();
-            });
+          $this.attr('href', 'javascript:void(0)');
+          if (!settings.history) {
+            return;
           }
-          return $this.attr('href', 'javascript:void(0)');
+          return ts(window).off(Event.POPSTATE).on(Event.POPSTATE, () => {
+            debug('發生 POPSTATE 事件', window);
+            return module.apply.hash();
+          });
         }
       },
       // ------------------------------------------------------------------------
