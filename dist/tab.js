@@ -5,7 +5,7 @@
   // ------------------------------------------------------------------------
 
   // 模組名稱。
-  var Attribute, ClassName, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, NAME, Selector, Settings;
+  var Attribute, ClassName, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, Metadata, NAME, Selector, Settings;
 
   NAME = 'tab';
 
@@ -18,32 +18,33 @@
   // 模組設定。
   Settings = {
     // 消音所有提示，甚至是錯誤訊息。
-    silent: true,
+    silent: false,
     // 顯示除錯訊息。
     debug: true,
     // 監聽 DOM 結構異動並自動重整快取。
     observeChanges: true,
     // 當分頁第一次開啟時所會呼叫的回呼函式。
-    onFirstLoad: (tabName, groupName) => {},
+    onFirstLoad: (tabName) => {},
     // 當分頁被開啟時所會呼叫的回呼函式。
-    onLoad: (tabName, groupName) => {},
-    // 當分頁被切換時所會呼叫的回呼函式
-    onSwitch: (tabName, groupName) => {},
-    // HTML5 的 state 基礎路徑。
-    path: false,
-    // 是否紀錄 HTML5 的 state 分頁籤異動至瀏覽器瀏覽紀錄供上下頁返回與切換。
-    history: false,
+    onLoad: (tabName) => {},
+    // 是否要紀錄分頁籤的開關歷程至瀏覽器的上下頁歷程中。
+    history: true,
     // 欲採用何種分頁籤手法？可用：`hash` 或 `state`。
     historyType: 'hash'
+  };
+
+  // 中繼資料名稱。
+  Metadata = {
+    LOADED: 'loaded'
   };
 
   // 事件名稱。
   Event = {
     FIRSTLOAD: `firstload${EVENT_NAMESPACE}`,
     LOAD: `load${EVENT_NAMESPACE}`,
-    SWITCH: `switch${EVENT_NAMESPACE}`,
     CLICK: `click${EVENT_NAMESPACE}`,
-    HASHCHANGE: `hashchange${EVENT_NAMESPACE}`
+    HASHCHANGE: `hashchange${EVENT_NAMESPACE}`,
+    POPSTATE: `popstate${EVENT_NAMESPACE}`
   };
 
   // 標籤名稱。
@@ -54,27 +55,18 @@
 
   // 樣式名稱。
   ClassName = {
-    ACTIVE: 'active'
+    ACTIVE: 'active',
+    TAB: 'tab'
   };
 
   // 選擇器名稱。
   Selector = {
-    GROUP_TABS: (group) => {
-      return `.tab[${Attribute.GROUP}='${group}']`;
-    },
-    GROUP_TAB: (name, group) => {
-      return `.tab[${Attribute.TAB}='${name}'][${Attribute.GROUP}='${group}']`;
-    },
     TAB: (name) => {
       return `.tab[${Attribute.TAB}='${name}']`;
     },
-    ANY_TAB: '.tab',
-    MENU_GROUP_ITEMS: (group) => {
-      return `.menu .item[${Attribute.GROUP}='${group}']`;
-    },
-    MENU_GROUP_ITEM: (name, group) => {
-      return `.menu .item[${Attribute.TAB}='${name}'][${Attribute.GROUP}='${group}']`;
-    },
+    ANY_TAB: '.tab[data-tab]',
+    ACTIVE_TAB: '.active.tab[data-tab]',
+    MENU: '.menu',
     MENU_ITEM: (name) => {
       return `.menu .item[${Attribute.TAB}='${name}']`;
     },
@@ -87,7 +79,7 @@
   // ------------------------------------------------------------------------
   // 模組註冊
   // ------------------------------------------------------------------------
-  ts.register({NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, element, debug, settings}) => {
+  ts.register({NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, element, debug, settings, index}) => {
     var module;
     // ------------------------------------------------------------------------
     // 區域變數
@@ -97,123 +89,179 @@
     // 模組定義
     // ------------------------------------------------------------------------
     return module = {
-      hideOthers: (name, group) => {
-        if (group === void 0) {
-          return module.get.menuItems.except(name).each(function() {
-            ts(this).removeClass(ClassName.ACTIVE);
-            return ts(Selector.TAB(module.get.name(this))).removeClass(ClassName.ACTIVE);
-          });
-        } else {
-          ts(Selector.MENU_GROUP_ITEMS(group)).not(Selector.MENU_GROUP_ITEM(name, group)).removeClass(ClassName.ACTIVE);
-          return ts(Selector.GROUP_TABS(group)).not(Selector.GROUP_TAB(name, group)).removeClass(ClassName.ACTIVE);
-        }
-      },
-      show: (name, group) => {
-        if (group === void 0) {
-          ts(Selector.MENU_ITEM(name)).addClass(ClassName.ACTIVE);
-          return ts(Selector.TAB(name)).addClass(ClassName.ACTIVE);
-        } else {
-          ts(Selector.MENU_GROUP_ITEM(name, group)).addClass(ClassName.ACTIVE);
-          return ts(Selector.GROUP_TAB(name, group)).addClass(ClassName.ACTIVE);
-        }
-      },
       change: {
-        tab: (name, group) => {
-          module.show(name, group);
-          module.hideOthers(name, group);
-          return module.store.path(name, group);
+        tab: (name, recursive = true) => {
+          var openAndCloseOthers;
+          name = module.decode(name);
+          openAndCloseOthers = (value) => {
+            var $item, $tab;
+            ts(Selector.MENU_ITEM(value)).addClass(ClassName.ACTIVE).closest(Selector.MENU).find(Selector.ITEM).not(Selector.MENU_ITEM(value)).each(function() {
+              return ts(Selector.TAB(ts(this).attr(Attribute.TAB))).removeClass(ClassName.ACTIVE);
+            }).removeClass(ClassName.ACTIVE);
+            $tab = ts(Selector.TAB(value));
+            $tab.addClass(ClassName.ACTIVE);
+            $item = ts(Selector.MENU_ITEM(value));
+            if (!$item.tab('is loaded')) {
+              $item.trigger(Event.FIRSTLOAD, $tab.get(), value);
+              $item.tab('set loaded', true);
+            }
+            return $item.trigger(Event.LOAD, $tab.get(), value);
+          };
+          if (recursive) {
+            ts(Selector.TAB(name)).tab('get paths').forEach(openAndCloseOthers);
+          } else {
+            openAndCloseOthers(name);
+          }
+          module.update.hash();
+          return $allModules;
         }
       },
-      is: {
-        tab: () => {}
-      },
-      store: {
-        path: (name, group) => {
-          var hash;
-          hash = module.parse.hash((hashName, hashGroup) => {
-            return hashGroup !== group;
-          });
-          hash.push(`${group}/${name}`);
-          return module.set.hash(hash.join(','));
-        }
-      },
-      has: {
-        group: (element) => {
-          return module.get.group(element) !== null;
-        }
+      decode: (uri) => {
+        return decodeURIComponent(uri);
       },
       get: {
-        name: (element) => {
-          return ts(element).attr(Attribute.TAB);
+        name: () => {
+          return $this.attr(Attribute.TAB);
         },
-        group: (element) => {
-          return ts(element).attr(Attribute.GROUP);
+        paths: () => {
+          var getParent, paths;
+          paths = [];
+          getParent = ($element) => {
+            var $parentTab;
+            paths.push($element.attr(Attribute.TAB));
+            $parentTab = $element.parent().closest(Selector.ANY_TAB);
+            if ($parentTab.length !== 0) {
+              getParent($parentTab);
+            }
+            return paths;
+          };
+          return getParent($this);
+        },
+        tab: () => {
+          return ts(Selector.TAB(module.get.name())).get();
+        },
+        $tab: () => {
+          return ts(Selector.TAB(module.get.name()));
+        },
+        path: () => {
+          return module.get.paths().join(',');
         },
         hash: () => {
-          if (window.location.hash) {
-            return decodeURIComponent(window.location.hash.slice(1));
+          var hash;
+          hash = window.location.hash;
+          if (hash) {
+            return module.decode(hash.slice(1));
           } else {
             return '';
           }
+        }
+      },
+      has: {
+        hash: () => {
+          return !!window.location.hash;
+        }
+      },
+      set: {
+        loaded: (bool) => {
+          return $this.data(Metadata.LOADED, bool);
+        }
+      },
+      is: {
+        active: () => {
+          return $this.hasClass(ClassName.ACTIVE);
         },
-        menuItems: {
-          except: (name) => {
-            return ts(Selector.MENU_ITEM(name)).parent().find(Selector.ITEM).not(Selector.MENU_ITEM(name));
-          }
+        tab: () => {
+          return $this.hasClass(ClassName.TAB);
+        },
+        loaded: () => {
+          return $this.data(Metadata.LOADED) === true;
         }
       },
       apply: {
         hash: () => {
-          return module.parse.hash((name, group) => {
-            module.change.tab(name, group);
-            return true;
-          });
-        }
-      },
-      parse: {
-        hash: (callback) => {
-          return module.get.hash().split(',').filter((value) => {
-            var hashGroup, hashName, parsed;
-            parsed = value.split('/');
-            hashGroup = parsed[0];
-            hashName = parsed[1];
-            if (value === '') {
-              return false;
+          return setTimeout(function() {
+            var hash;
+            if (!module.has.hash()) {
+              return;
             }
-            return callback.call(value, hashName, hashGroup);
-          });
+            hash = module.get.hash();
+            if (module.same.hash(hash)) {
+              return;
+            }
+            return hash.split(',').forEach((value) => {
+              return module.change.tab(value);
+            });
+          }, 0);
         }
       },
-      set: {
-        state: () => {},
+      update: {
+        hash: () => {
+          var hash;
+          hash = [];
+          ts(Selector.ACTIVE_TAB).each(function() {
+            var $parentTab, $tab;
+            $tab = ts(this);
+            $parentTab = $tab.parent().closest(Selector.ANY_TAB);
+            if ($parentTab.length !== 0 && !$parentTab.hasClass(ClassName.ACTIVE)) {
+              return;
+            }
+            if ($tab.find(Selector.ACTIVE_TAB).length !== 0) {
+              return;
+            }
+            return hash.push($tab.tab('get name'));
+          });
+          hash = `#${hash.join(',')}`;
+          if (settings.history) {
+            return history.pushState(null, null, hash);
+          } else {
+            return history.replaceState(null, null, hash);
+          }
+        }
+      },
+      same: {
         hash: (hash) => {
-          return history.pushState(null, null, `#${decodeURIComponent(hash)}`);
+          var same;
+          same = true;
+          hash.split(',').forEach((value) => {
+            if (!ts(Selector.TAB(value)).hasClass(ClassName.ACTIVE)) {
+              return same = false;
+            }
+          });
+          return same;
         }
       },
       bind: {
         events: () => {
-          $this.attr('href', 'javascript:void(0)');
-          return $this.on(Event.CLICK, function() {
-            var group, name;
-            name = module.get.name(this);
-            if (module.has.group(this)) {
-              group = module.get.group(this);
-              return module.change.tab(name, group);
-            } else {
-              return module.change.tab(name);
+          $this.on(Event.CLICK, () => {
+            if (module.is.active()) {
+              return;
             }
+            return module.change.tab(module.get.name(), false);
           });
+          $this.on(Event.FIRSTLOAD, (event, context, name) => {
+            debug('發生 FIRSTLOAD 事件', context, name);
+            return settings.onFirstLoad.call(context, event, name);
+          });
+          $this.on(Event.LOAD, (event, context, name) => {
+            debug('發生 LOAD 事件', context, name);
+            return settings.onLoad.call(context, event, name);
+          });
+          if (settings.history) {
+            ts(window).on(Event.POPSTATE, () => {
+              return module.apply.hash();
+            });
+          }
+          return $this.attr('href', 'javascript:void(0)');
         }
       },
-      //ts(window).on 'popstate', =>
-      //    module.parse.hash (name, group) =>
-      //        module.change.tab name, group
-
       // ------------------------------------------------------------------------
       // 基礎方法
       // ------------------------------------------------------------------------
       initialize: () => {
         debug('初始化分頁籤', element);
+        if (module.is.tab()) {
+          return;
+        }
         module.bind.events();
         return module.apply.hash();
       },

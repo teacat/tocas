@@ -12,31 +12,31 @@ MODULE_NAMESPACE = "module-#{NAME}"
 # 模組設定。
 Settings =
     # 消音所有提示，甚至是錯誤訊息。
-    silent        : true
+    silent        : false
     # 顯示除錯訊息。
     debug         : true
     # 監聽 DOM 結構異動並自動重整快取。
     observeChanges: true
     # 當分頁第一次開啟時所會呼叫的回呼函式。
-    onFirstLoad   : (tabName, groupName) =>
+    onFirstLoad   : (tabName) =>
     # 當分頁被開啟時所會呼叫的回呼函式。
-    onLoad        : (tabName, groupName) =>
-    # 當分頁被切換時所會呼叫的回呼函式
-    onSwitch      : (tabName, groupName) =>
-    # HTML5 的 state 基礎路徑。
-    path          : false
-    # 是否紀錄 HTML5 的 state 分頁籤異動至瀏覽器瀏覽紀錄供上下頁返回與切換。
-    history       : false
+    onLoad        : (tabName) =>
+    # 是否要紀錄分頁籤的開關歷程至瀏覽器的上下頁歷程中。
+    history       : true
     # 欲採用何種分頁籤手法？可用：`hash` 或 `state`。
     historyType   : 'hash'
+
+# 中繼資料名稱。
+Metadata =
+    LOADED : 'loaded'
 
 # 事件名稱。
 Event =
     FIRSTLOAD : "firstload#{EVENT_NAMESPACE}"
     LOAD      : "load#{EVENT_NAMESPACE}"
-    SWITCH    : "switch#{EVENT_NAMESPACE}"
     CLICK     : "click#{EVENT_NAMESPACE}"
     HASHCHANGE: "hashchange#{EVENT_NAMESPACE}"
+    POPSTATE  : "popstate#{EVENT_NAMESPACE}"
 
 # 標籤名稱。
 Attribute =
@@ -46,16 +46,15 @@ Attribute =
 # 樣式名稱。
 ClassName =
     ACTIVE: 'active'
+    TAB   : 'tab'
 
 # 選擇器名稱。
 Selector =
-    GROUP_TABS      : (group)       => ".tab[#{Attribute.GROUP}='#{group}']"
-    GROUP_TAB       : (name, group) => ".tab[#{Attribute.TAB}='#{name}'][#{Attribute.GROUP}='#{group}']"
-    TAB             : (name)        => ".tab[#{Attribute.TAB}='#{name}']"
-    ANY_TAB         : '.tab'
-    MENU_GROUP_ITEMS: (group)       => ".menu .item[#{Attribute.GROUP}='#{group}']"
-    MENU_GROUP_ITEM : (name, group) => ".menu .item[#{Attribute.TAB}='#{name}'][#{Attribute.GROUP}='#{group}']"
-    MENU_ITEM       : (name)        => ".menu .item[#{Attribute.TAB}='#{name}']"
+    TAB             : (name) => ".tab[#{Attribute.TAB}='#{name}']"
+    ANY_TAB         : '.tab[data-tab]'
+    ACTIVE_TAB      : '.active.tab[data-tab]'
+    MENU            : '.menu'
+    MENU_ITEM       : (name) => ".menu .item[#{Attribute.TAB}='#{name}']"
     ITEM            : '.item'
 
 # 錯誤訊息。
@@ -65,7 +64,7 @@ Error = {}
 # 模組註冊
 # ------------------------------------------------------------------------
 
-ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, element, debug, settings}) =>
+ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, element, debug, settings, index}) =>
 
     # ------------------------------------------------------------------------
     # 區域變數
@@ -77,106 +76,153 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
     # ------------------------------------------------------------------------
 
     module =
-        hideOthers: (name, group) =>
-            if group is undefined
-                module.get.menuItems.except(name).each ->
-                    ts @
-                        .removeClass ClassName.ACTIVE
-                    ts Selector.TAB module.get.name @
-                        .removeClass ClassName.ACTIVE
-            else
-                ts Selector.MENU_GROUP_ITEMS group
-                    .not         Selector.MENU_GROUP_ITEM name, group
-                    .removeClass ClassName.ACTIVE
-                ts Selector.GROUP_TABS group
-                    .not         Selector.GROUP_TAB name, group
-                    .removeClass ClassName.ACTIVE
-
-        show: (name, group) =>
-            if group is undefined
-                ts Selector.MENU_ITEM name
-                    .addClass ClassName.ACTIVE
-                ts Selector.TAB name
-                    .addClass ClassName.ACTIVE
-            else
-                ts Selector.MENU_GROUP_ITEM name, group
-                    .addClass ClassName.ACTIVE
-                ts Selector.GROUP_TAB name, group
-                    .addClass ClassName.ACTIVE
 
         change:
-            tab: (name, group) =>
-                module.show       name, group
-                module.hideOthers name, group
-                module.store.path name, group
+            tab: (name, recursive=true) =>
+                name = module.decode name
 
-        is:
-            tab: =>
+                openAndCloseOthers = (value) =>
+                    ts Selector.MENU_ITEM value
+                        .addClass ClassName.ACTIVE
+                        .closest  Selector.MENU
+                        .find     Selector.ITEM
+                        .not      Selector.MENU_ITEM value
+                        .each ->
+                            ts Selector.TAB ts(@).attr Attribute.TAB
+                                .removeClass ClassName.ACTIVE
+                        .removeClass ClassName.ACTIVE
 
-        store:
-            path: (name, group) =>
-                hash = module.parse.hash (hashName, hashGroup) =>
-                    return hashGroup isnt group
-                hash.push "#{group}/#{name}"
-                module.set.hash hash.join ','
+                    $tab = ts Selector.TAB value
+                    $tab
+                        .addClass ClassName.ACTIVE
+
+                    $item = ts Selector.MENU_ITEM value
+
+                    if not $item.tab 'is loaded'
+                        $item.trigger Event.FIRSTLOAD, $tab.get(), value
+                        $item.tab 'set loaded', true
+                    $item.trigger Event.LOAD, $tab.get(), value
 
 
-        has:
-            group: (element) =>
-                module.get.group(element) isnt null
+                if recursive
+                    ts Selector.TAB name
+                        .tab     'get paths'
+                        .forEach openAndCloseOthers
+                else
+                    openAndCloseOthers name
+
+                module.update.hash()
+
+
+
+                return $allModules
+
+        decode: (uri) =>
+            decodeURIComponent uri
 
         get:
-            name: (element) =>
-                ts(element).attr Attribute.TAB
-            group: (element) =>
-                ts(element).attr Attribute.GROUP
-            hash: =>
-                if window.location.hash
-                    decodeURIComponent window.location.hash[1..]
-                else
-                    ''
-            menuItems:
-                except: (name) =>
-                    ts Selector.MENU_ITEM name
+            name: =>
+                $this.attr Attribute.TAB
+            paths: =>
+                paths = []
+                getParent = ($element) =>
+                    paths.push $element.attr Attribute.TAB
+                    $parentTab = $element
                         .parent()
-                        .find Selector.ITEM
-                        .not  Selector.MENU_ITEM name
+                        .closest Selector.ANY_TAB
+                    if $parentTab.length isnt 0
+                        getParent $parentTab
+                    return paths
+                getParent $this
+            tab: =>
+                ts(Selector.TAB(module.get.name())).get()
+            $tab: =>
+                ts(Selector.TAB(module.get.name()))
+            path: =>
+                module.get.paths().join ','
+            hash: =>
+                hash = window.location.hash
+                return if hash then module.decode(hash[1..]) else ''
+
+        has:
+            hash: =>
+                not not window.location.hash
+
+        set:
+            loaded: (bool) =>
+                $this.data Metadata.LOADED, bool
+
+        is:
+            active: =>
+                $this.hasClass ClassName.ACTIVE
+            tab: =>
+                $this.hasClass ClassName.TAB
+            loaded: =>
+                $this.data(Metadata.LOADED) is true
 
         apply:
             hash: =>
-                module.parse.hash (name, group) =>
-                    module.change.tab name, group
-                    return true
+                setTimeout ->
+                    if not module.has.hash()
+                        return
+                    hash = module.get.hash()
+                    if module.same.hash(hash)
+                        return
+                    hash
+                        .split ','
+                        .forEach (value) =>
+                            module.change.tab value
+                , 0
 
-        parse:
-            hash: (callback) =>
-                module.get.hash().split(',').filter (value) =>
-                    parsed    = value.split('/')
-                    hashGroup = parsed[0]
-                    hashName  = parsed[1]
-                    return false if value is ''
-                    return callback.call value, hashName, hashGroup
+        update:
+            hash: =>
+                hash = []
+                ts(Selector.ACTIVE_TAB).each ->
+                    $tab       = ts @
+                    $parentTab = $tab
+                        .parent()
+                        .closest Selector.ANY_TAB
+                    if $parentTab.length isnt 0 and not $parentTab.hasClass ClassName.ACTIVE
+                        return
+                    if $tab.find(Selector.ACTIVE_TAB).length isnt 0
+                        return
 
-        set:
-            state: =>
+                    hash.push $tab.tab 'get name'
+
+                hash = "##{hash.join(',')}"
+
+                if settings.history
+                    history.pushState null, null, hash
+                else
+                    history.replaceState null, null, hash
+        same:
             hash: (hash) =>
-                history.pushState null, null, "##{decodeURIComponent(hash)}"
+                same = true
+                hash
+                    .split ','
+                    .forEach (value) =>
+                        if not ts(Selector.TAB(value)).hasClass ClassName.ACTIVE
+                            same = false
+                return same
 
         bind:
             events: =>
+                $this.on Event.CLICK, =>
+                    if module.is.active()
+                        return
+                    module.change.tab module.get.name(), false
+                $this.on Event.FIRSTLOAD, (event, context, name) =>
+                    debug '發生 FIRSTLOAD 事件', context, name
+                    settings.onFirstLoad.call context, event, name
+                $this.on Event.LOAD, (event, context, name) =>
+                    debug '發生 LOAD 事件', context, name
+                    settings.onLoad.call context, event, name
+
+                if settings.history
+                    ts(window).on Event.POPSTATE, =>
+                        module.apply.hash()
+
                 $this.attr 'href', 'javascript:void(0)'
-                $this.on Event.CLICK, ->
-                    name = module.get.name @
-                    if module.has.group @
-                        group = module.get.group @
-                        module.change.tab name, group
-                    else
-                        module.change.tab name
-
-                #ts(window).on 'popstate', =>
-                #    module.parse.hash (name, group) =>
-                #        module.change.tab name, group
-
 
         # ------------------------------------------------------------------------
         # 基礎方法
@@ -184,6 +230,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
         initialize: =>
             debug '初始化分頁籤', element
+            if module.is.tab()
+                return
             module.bind.events()
             module.apply.hash()
 
