@@ -61,6 +61,7 @@
 
 .ts.transfer .list .header
     color        : $transfer_headerTextColor
+    background   : $transfer_headerBackgroundColor
     padding      : $transfer_padding
     font-weight  : $transfer_headerFontWeight
     border-bottom: $transfer_headerDividerBorderBottom
@@ -86,11 +87,12 @@
 
 .ts.transfer .list .search
     padding      : $transfer_padding
+    background   : $transfer_searchBackgroundColor
     border-bottom: $transfer_headerDividerBorderBottom
 
 .ts.transfer .list .search input
     width        : 100%
-    background   : transparent
+    background   : $transfer_searchInputBackgroundColor
     border       : $transfer_searchBorder
     border-radius: $transfer_searchBorderRadius
     font-size    : $transfer_searchFontSize
@@ -115,7 +117,7 @@
 .ts.transfer .list .header + .search
     margin-top : -#{$transfer_headerDividerWidth * 2}
     padding-top: 0
-    background : $transfer_backgroundColor
+    background : $transfer_searchBackgroundColor
 
 .ts.transfer .list .header + .search:after
     top: $transfer_searchIconOffset
@@ -133,6 +135,8 @@
 //*******************************//
 
 .ts.transfer .list .items .item
+    +extend(no-select)
+
     cursor     : pointer
     padding    : $transfer_itemPadding
 
