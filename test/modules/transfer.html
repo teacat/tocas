@@ -1,0 +1,105 @@
+<html>
+<head>
+<script src="../../dist/tocas.js"></script>
+<script src="../../dist/transfer.js"></script>
+<link rel="stylesheet" href="../../dist/tocas.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="./tool.js"></script>
+</head>
+<body>
+    <div class="ts stackable transfer">
+        <div class="source list">
+            <div class="header">來源</div>
+            <div class="borderless items">
+                <div data-value="A" class="item">項目 A</div>
+                <div data-value="B" class="item">項目 B</div>
+                <div data-value="C" class="item">項目 C</div>
+                <div data-value="D" class="item">項目 D</div>
+                <div data-value="E" class="item">項目 E</div>
+            </div>
+        </div>
+        <div class="actions">
+            <button class="ts add button"></button>
+            <button class="ts remove button"></button>
+        </div>
+        <div class="destination list">
+            <div class="header">目的地</div>
+            <div class="borderless items">
+                <div data-value="F" class="item">項目 F</div>
+                <div data-value="G" class="item">項目 G</div>
+                <div data-value="H" class="item">項目 H</div>
+                <div data-value="I" class="item">項目 I</div>
+                <div data-value="J" class="item">項目 J</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- -->
+    <script>
+        testUnit({
+            Core: {
+                'Transfer': () => {
+                    ts('.transfer').transfer()
+                },
+            },
+            Method: {
+                'Destroy': () => {
+                    ts('.accordion').accordion('destroy')
+                },
+            },
+            Add: {
+                'Source Value': () => {
+                    ts('.transfer').transfer('add source value', 'Y', '項目 Y')
+                },
+                'Destination Value': () => {
+                    ts('.transfer').transfer('add destination value', 'Z', '項目 Z')
+                },
+            },
+            Reset: {
+                'Source Value': () => {
+                    ts('.transfer').transfer('reset source value')
+                },
+                'Destination Value': () => {
+                    ts('.transfer').transfer('reset destination value')
+                },
+            },
+            Set: {
+                'Source Value': () => {
+                    ts('.transfer').transfer('set source value', [
+                        {
+                            text : '新項目 A',
+                            value: 'NewA'
+                        },
+                        {
+                            text : '新項目 B',
+                            value: 'NewB'
+                        },
+                    ])
+                },
+                'Destination Value': () => {
+                    ts('.transfer').transfer('set destination value', [
+                        {
+                            text : '新項目 C',
+                            value: 'NewC'
+                        },
+                        {
+                            text : '新項目 D',
+                            value: 'NewD'
+                        },
+                    ])
+                },
+            },
+            Get: {
+                'Source Value': () => {
+                    alert(ts('.transfer').transfer('get source value'))
+                },
+                'Destination Value': () => {
+                    alert(ts('.transfer').transfer('get destination value'))
+                },
+            },
+        })
+    </script>
+    <!-- -->
+</body>
+</html>
+</body>
