@@ -1,0 +1,195 @@
+<html>
+<head>
+<script src="../../dist/tocas.js"></script>
+<script src="../../dist/sortable.js"></script>
+<link rel="stylesheet" href="../../dist/tocas.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="./tool.js"></script>
+<style>
+[data-draggable-ghost] {
+    pointer-events: none;
+    user-select: none;
+    box-shadow: 0 0 10px 0px #0000002e !important;
+}
+[data-draggable] {
+    user-select: none;
+}
+</style>
+</head>
+<body>
+    <div class="ts segments">
+        <div class="ts segment" data-draggable="true" data-value="A">
+            片段 A
+        </div>
+        <div class="ts segment" data-draggable="true" data-value="B">
+            片段 B
+        </div>
+        <div class="ts segment" data-draggable="true" data-value="C">
+            片段 C
+        </div>
+        <div class="ts segment" data-draggable="true" data-value="D">
+            片段 D
+        </div>
+        <div class="ts segment" data-draggable="true" data-value="E">
+            片段 E
+        </div>
+    </div>
+
+    <br><br>
+
+    <div class="ts two cards">
+        <div class="ts card" data-draggable="true">
+            <div class="content">
+                卡片 A
+            </div>
+        </div>
+        <div class="ts card" data-draggable="true">
+            <div class="content">
+                卡片 B
+            </div>
+        </div>
+        <div class="ts card" data-draggable="true">
+            <div class="content">
+                卡片 C
+            </div>
+        </div>
+        <div class="ts card" data-draggable="true">
+            <div class="content">
+                卡片 D
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+    <div class="ts four cards">
+        <div class="ts card" data-draggable="true">
+            <div class="content">
+                卡片 A
+            </div>
+        </div>
+        <div class="ts card" data-draggable="true">
+            <div class="content">
+                卡片 B
+            </div>
+        </div>
+        <div class="ts card" data-draggable="true">
+            <div class="content">
+                卡片 C
+            </div>
+        </div>
+        <div class="ts card" data-draggable="true">
+            <div class="content">
+                卡片 D
+            </div>
+        </div>
+        <div class="ts card" data-draggable="true">
+            <div class="content">
+                卡片 E
+            </div>
+        </div>
+        <div class="ts card" data-draggable="true">
+            <div class="content">
+                卡片 F
+            </div>
+        </div>
+    </div>
+
+    <br><br>
+
+    <table class="ts table">
+        <thead>
+            <tr>
+                <th>標題</th>
+                <th>標題2</th>
+                <th>標題3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-draggable="true">
+                <td>內容 A</td>
+                <td>內容 A</td>
+                <td>內容 A</td>
+            </tr>
+            <tr data-draggable="true">
+                <td>內容 B</td>
+                <td>內容 B</td>
+                <td>內容 B</td>
+            </tr>
+            <tr data-draggable="true">
+                <td>內容 C</td>
+                <td>內容 C</td>
+                <td>內容 C</td>
+            </tr>
+            <tr data-draggable="true">
+                <td>內容 D</td>
+                <td>內容 D</td>
+                <td>內容 D</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br><br>
+
+    <div class="ts bulleted list">
+        <div class="item" data-draggable="true">項目 A</div>
+        <div class="item" data-draggable="true">項目 B</div>
+        <div class="item" data-draggable="true">項目 C</div>
+        <div class="item" data-draggable="true">項目 D</div>
+    </div>
+
+    <br><br>
+
+    <div class="ts two column grid">
+        <div class="column" data-draggable="true">
+            欄位 A
+        </div>
+        <div class="column" data-draggable="true">
+            欄位 B
+        </div>
+        <div class="column" data-draggable="true">
+            欄位 C
+        </div>
+        <div class="column" data-draggable="true">
+            欄位 D
+        </div>
+    </div>
+
+    <!-- -->
+    <script>
+        testUnit({
+            Core: {
+                'Sortable': () => {
+                    ts('.segments').sortable({
+                        group: 'test',
+                    })
+                    ts('.cards').sortable({
+                        group: 'test',
+                    })
+                },
+            },
+            Get: {
+                'Value': () => {
+                    alert(ts('.segments').sortable('get value'))
+                },
+            },
+            Method: {
+                'Disable': () => {
+                    ts('.segments').sortable('disable')
+                },
+                'Enable': () => {
+                    ts('.segments').sortable('enable')
+                },
+                'Destroy': () => {
+                    ts('.segments').sortable('destroy')
+                },
+                'Sort': () => {
+                    ts('.segments').sortable('sort', ['A', 'B', 'C', 'D', 'E'])
+                },
+            }
+        })
+    </script>
+    <!-- -->
+</body>
+</html>
+</body>
