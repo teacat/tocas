@@ -44,7 +44,7 @@ Settings =
     # 當有變動（新增、移除、重新排序）時所會呼叫的回呼函式。
     onChange      : (valueElement, value) =>
     # 當項目新增時所會呼叫的回呼函式，回傳 `false` 表示不接受此新增。
-    onAdd         : (valueElement, value) => true
+    onAdd         : (valueElement, value) => console.log(@, valueElement, value)
     # 當項目被移出時所會呼叫的回呼函式。
     onRemove      : (valueElement, value) =>
 
@@ -130,7 +130,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             value: =>
                 values = []
                 $this
-                    .find Selector.DRAGGABLE
+                    .find '[data-draggable]:not([recoverable])'
                     .each ->
                         value = ts(@).attr Attribute.VALUE
                         values.push value if value
@@ -143,7 +143,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $this.find Selector.HIDDEN_DRAGGABLE
             draggable:
                 amount: =>
-                    $this.find(Selector.DRAGGABLE).length
+                    $this.find(Selector.DRAGGABLE).not('[recoverable]').length
             dragging:
                 element: =>
                     module.get.$dragging().get()
@@ -255,7 +255,9 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             change: (valueElement, value) =>
                 $this.trigger Event.CHANGE, element, valueElement, value
             add: (valueElement, value) =>
-                $this.trigger Event.ADD, element, valueElement, value
+                debug '發生 ADD 事件', element, valueElement, value
+                settings.onAdd.call element, valueElement, value
+                #$this.trigger Event.ADD, element, valueElement, value
             remove: (valueElement, value) =>
                 $this.trigger Event.REMOVE, element, valueElement, value
 
@@ -279,9 +281,9 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $this.on Event.CHANGE, (event, context, valueElement, value) =>
                     debug '發生 CHANGE 事件', context, valueElement, value
                     settings.onChange.call context, event, valueElement, value
-                $this.on Event.ADD, (event, context, valueElement, value) =>
-                    debug '發生 ADD 事件', context, valueElement, value
-                    settings.onAdd.call context, event, valueElement, value
+                #$this.on Event.ADD, (event, context, valueElement, value) =>
+                #    debug '發生 ADD 事件', context, valueElement, value
+                #    settings.onAdd.call context, event, valueElement, value
                 $this.on Event.REMOVE, (event, context, valueElement, value) =>
                     debug '發生 REMOVE 事件', context, valueElement, value
                     settings.onRemove.call context, event, valueElement, value
@@ -295,6 +297,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     if not module.is.moving event.clientX, event.clientY
                         return
 
+
                     module.set.$pointing    event.clientX, event.clientY
                     module.move.ghost       event.clientX, event.clientY
 
@@ -305,13 +308,27 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     if module.has.group() and not group
                         return
 
-                    module.move.placeholder event.clientX, event.clientY
+                    if settings.mode is 'clone'
+                        if module.get.pointing.$container().get() isnt element
+                            module.move.placeholder event.clientX, event.clientY
+                    else
+                        module.move.placeholder event.clientX, event.clientY
+
+
+
 
 
 
                 ts(Selector.BODY).on 'mousedown', (event) =>
                     module.set.$pointing event.clientX, event.clientY
 
+
+                    if settings.handle isnt false
+                        if not ts(event.target).is(settings.handle)
+                            return
+
+                    if settings.mode is 'put'
+                        return
 
 
                     $draggable = module.get.$draggable()
@@ -331,8 +348,16 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     module.create.placeholder $draggable
 
 
+                    #if settings.mode is 'clone'
+                    #    if module.get.pointing.$container().get() isnt element
+                    #        module.create.placeholder $draggable
+                    #else
+                    #    module.create.placeholder $draggable
 
 
+
+
+                    #if settings.mode isnt 'clone'
 
                     $draggable.attr 'hidden', 'hidden'
 
@@ -360,8 +385,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
                     clearInterval id
 
-                    module.trigger.drop()
-
 
 
                     module.set.$pointing event.clientX, event.clientY
@@ -379,9 +402,11 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
 
                     module.remove.ghost()
-                    ts(Selector.HIDDEN_DRAGGABLE).insertAfter(ts(Selector.PLACEHOLDER)).removeAttr('hidden')
+                    ts(Selector.HIDDEN_DRAGGABLE).clone().insertAfter(ts(Selector.HIDDEN_DRAGGABLE)).attr('recoverable', 'true')
+                    ts(Selector.HIDDEN_DRAGGABLE).not('[recoverable]').insertAfter(ts(Selector.PLACEHOLDER)).attr('confirmed', 'true').removeAttr('hidden')
                     module.remove.placeholder()
 
+                    module.trigger.drop()
 
 
                     if not point
@@ -391,21 +416,30 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
                     currentDraggable = module.get.draggable.amount()
 
-
-                    if originalDraggable isnt currentDraggable
-                        module.trigger.change()
-
-                        if originalDraggable > currentDraggable
-                            module.trigger.remove()
-
-
-                    con.sortable('calculate', v, x)
+                    module.set.$pointing      event.clientX, event.clientY
 
 
 
-        calculate: (originalValue, amount) =>
+
+                    ok = con.sortable('calculate', v, x, module.trigger.deny)
+
+                    if ok
+                        if originalDraggable isnt currentDraggable
+                            if originalDraggable > currentDraggable
+                                module.trigger.remove()
+
+                            module.trigger.change()
+
+
+
+
+
+
+        calculate: (originalValue, amount, deny) =>
             currentValue = module.get.value()
-            currentAmount = module.get.draggable.amount()
+            currentAmount = module.get.draggable.amount() # - 1
+
+
 
 
 
@@ -414,11 +448,38 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     return
                 module.trigger.cancel()
 
-            if currentAmount isnt amount or originalValue.toString() isnt currentValue.toString()
-                module.trigger.change()
+
+
+
+
 
             if currentAmount isnt amount and (currentValue.length > originalValue.length or currentAmount > amount)
-                module.trigger.add()
+                if module.trigger.add() is false
+
+                    deny()
+                    ts('[recoverable]').removeAttr('hidden').removeAttr('recoverable')
+                    ts('[confirmed]').remove()
+                    ok = false
+                else
+                    ts('[recoverable]').remove()
+                    ts('[confirmed]').removeAttr('confirmed')
+                    ok = true
+            else
+                ts('[recoverable]').remove()
+                ts('[confirmed]').removeAttr('confirmed')
+                ok = true
+
+            if ok
+                if currentAmount isnt amount or originalValue.toString() isnt currentValue.toString()
+                    module.trigger.change()
+
+            return ok
+
+
+
+
+
+
 
         # ------------------------------------------------------------------------
         # 基礎方法
