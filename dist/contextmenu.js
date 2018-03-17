@@ -232,6 +232,7 @@
       },
       bind: {
         events: () => {
+          // FIX: 重複的 Event Listner。
           $body.on(Event.CLICK, () => {
             debug('發生 CLICK 事件', element);
             if (module.is.closable()) {

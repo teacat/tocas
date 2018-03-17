@@ -213,6 +213,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
         bind:
             events: =>
+                # FIX: 重複的 Event Listner。
                 $body.on Event.CLICK, =>
                     debug '發生 CLICK 事件', element
                     module.hide() if module.is.closable()
