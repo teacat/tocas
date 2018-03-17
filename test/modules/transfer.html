@@ -44,7 +44,7 @@
             },
             Method: {
                 'Destroy': () => {
-                    ts('.accordion').accordion('destroy')
+                    ts('.transfer').transfer('destroy')
                 },
             },
             Add: {
@@ -55,46 +55,80 @@
                     ts('.transfer').transfer('add destination value', 'Z', '項目 Z')
                 },
             },
-            Reset: {
-                'Source Value': () => {
-                    ts('.transfer').transfer('reset source value')
+            Has: {
+                'Value': () => {
+                    alert(ts('.transfer').transfer('has value', 'Y'))
+                }
+            },
+            Remove: {
+                'Value': () => {
+                    ts('.transfer').transfer('remove value', 'Y')
                 },
-                'Destination Value': () => {
-                    ts('.transfer').transfer('reset destination value')
+                'Value [Array]': () => {
+                    ts('.transfer').transfer('remove value', ['A', 'B', 'C'])
                 },
             },
             Set: {
                 'Source Value': () => {
                     ts('.transfer').transfer('set source value', [
-                        {
-                            text : '新項目 A',
-                            value: 'NewA'
-                        },
-                        {
-                            text : '新項目 B',
-                            value: 'NewB'
-                        },
+                        {text: 'A', value: 'A1'},
+                        {text: 'B', value: 'B1'}
                     ])
                 },
                 'Destination Value': () => {
                     ts('.transfer').transfer('set destination value', [
-                        {
-                            text : '新項目 C',
-                            value: 'NewC'
-                        },
-                        {
-                            text : '新項目 D',
-                            value: 'NewD'
-                        },
+                        {text: 'C', value: 'C1'},
+                        {text: 'D', value: 'D1'}
                     ])
                 },
             },
-            Get: {
-                'Source Value': () => {
-                    alert(ts('.transfer').transfer('get source value'))
+            Select: {
+                'Value': () => {
+                    ts('.transfer').transfer('select value', 'A')
                 },
-                'Destination Value': () => {
-                    alert(ts('.transfer').transfer('get destination value'))
+                'Source All': () => {
+                    ts('.transfer').transfer('select source all')
+                },
+                'Destination All': () => {
+                    ts('.transfer').transfer('select destination all')
+                }
+            },
+            Unselect: {
+                'Value': () => {
+                    ts('.transfer').transfer('unselect value', 'A')
+                },
+                'Source All': () => {
+                    ts('.transfer').transfer('unselect source all')
+                },
+                'Destination All': () => {
+                    ts('.transfer').transfer('unselect destination all')
+                }
+            },
+            Is: {
+                'Selected': () => {
+                    alert(ts('.transfer').transfer('is selected', 'A'))
+                }
+            },
+            Move: {
+                'To Destination': () => {
+                    ts('.transfer').transfer('move to destination', ['A', 'B', 'C'])
+                },
+                'To Source': () => {
+                    ts('.transfer').transfer('move to source', ['A', 'B', 'C'])
+                },
+            },
+            Get: {
+                'Source Values': () => {
+                    alert(ts('.transfer').transfer('get source values'))
+                },
+                'Source Selected': () => {
+                    alert(ts('.transfer').transfer('get source selected'))
+                },
+                'Destination Values': () => {
+                    alert(ts('.transfer').transfer('get destination values'))
+                },
+                'Destination Selected': () => {
+                    alert(ts('.transfer').transfer('get destination selected'))
                 },
             },
         })
