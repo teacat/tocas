@@ -182,9 +182,11 @@
           return $this.trigger(Event.ENABLE, inputElement);
         },
         beforeChecked: () => {
+          debug('發生 BEFORE_CHECKED 事件', element, inputElement);
           return settings.beforeChecked.call(inputElement);
         },
         beforeUnchecked: () => {
+          debug('發生 BEFORE_UNCHECKED 事件', element, inputElement);
           return settings.beforeUnchecked.call(inputElement);
         }
       },

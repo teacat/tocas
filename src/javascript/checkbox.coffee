@@ -160,8 +160,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $this
                     .trigger Event.ENABLE, inputElement
             beforeChecked: =>
+                debug '發生 BEFORE_CHECKED 事件', element, inputElement
                 settings.beforeChecked.call inputElement
             beforeUnchecked: =>
+                debug '發生 BEFORE_UNCHECKED 事件', element, inputElement
                 settings.beforeUnchecked.call inputElement
 
         bind:
