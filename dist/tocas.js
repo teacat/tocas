@@ -130,9 +130,11 @@
         methodInvoked = typeof query === 'string';
         returnedValue = void 0;
         consoleText = (args) => {
-          return `%c${NAME}%c ${args[0]}${(args.length > 1 ? '\n' : void 0)}`;
+          //currentdate = new Date();
+          //datetime = "#{currentdate.getFullYear()}/#{(currentdate.getMonth()+1)}/#{currentdate.getDate()}/@#{currentdate.getHours()}:#{currentdate.getMinutes()}:#{currentdate.getSeconds()}"
+          return `%c${NAME}%c ${args[0]}`;
         };
-        headerCSS = "background   : #EEE;\ncolor        : #5A5A5A;\nfont-size    : 1em;\npadding      : 5px 8px;\nline-height  : 30px;\nborder-radius: 1000em;";
+        headerCSS = "background   : #EEE;\ncolor        : #5A5A5A;\nfont-size    : 1em;\npadding      : 8px 8px;\nline-height  : 5px;\nmargin       : 5px 0 5px 0;\nborder-radius: 1000em;";
         errorHeaderCSS = `${headerCSS}\nbackground: #CE5F58;\ncolor: #FFF;`;
         messageCSS = "font-weight: bold;";
         $allModules.each(function(_, index) {
@@ -145,8 +147,7 @@
             if (!settings.debug || settings.silent) {
               return;
             }
-            debug = Function.prototype.bind.call(console.info, console, consoleText(arguments), headerCSS, messageCSS);
-            return debug.apply(console, Array.prototype.slice.call(arguments, 1));
+            return console.info.call(console, consoleText(arguments), headerCSS, messageCSS, "\n", ...Array.prototype.slice.call(arguments).slice(1));
           };
           error = function() {
             if (settings.silent) {
@@ -174,15 +175,15 @@
               return;
             }
             observer = new MutationObserver((mutations) => {
-              debug('DOM 樹狀結構已變更，更新快取資料');
+              //debug 'DOM 樹狀結構已變更，更新快取資料'
               return module.refresh();
             });
-            observer.observe(element, {
+            return observer.observe(element, {
               childList: true,
               subtree: true
             });
-            return debug('已設置 DOM 樹狀結構異動觀察者', observer);
           };
+          //debug '已設置 DOM 樹狀結構異動觀察者', observer
           invoke = (query, passedArguments, context) => {
             var camelCaseValue, depth, found, j, len, maxDepth, object, response, value;
             object = instance;
@@ -528,6 +529,16 @@
     }
   };
 
+  // Contains
+
+  // 是否擁有指定子元素。
+  ts.fn.contains = {
+    value: function(selector) {
+      var ref;
+      return (ref = this.get(0)) != null ? ref.contains(ts(selector).get()) : void 0;
+    }
+  };
+
   // Not
 
   // 將指定元素從選擇器中剔除。
@@ -802,6 +813,16 @@
         }
         return this;
       }
+    }
+  };
+
+  // Rect
+
+  // 回傳選擇器元素的渲染形狀。
+  ts.fn.rect = {
+    value: function() {
+      var ref;
+      return (ref = this.get(0)) != null ? ref.getBoundingClientRect() : void 0;
     }
   };
 
