@@ -33,7 +33,7 @@
     a.item.item:active:not(.disabled),
     .item.item.dropdown:active:not(.disabled),
     .item.item.active:not(.disabled),
-    &:not(.link) .item.dropdown.visible
+    .item.dropdown.visible
         background: $backgroundActiveColor
 
     .item.unread:after
@@ -97,6 +97,7 @@
     border-radius: $menu_borderRadius
     border       : $menu_border
     box-shadow   : $menu_boxShadow
+    min-height   : $menu_minHeight
 
     &:first-child
         margin-top: 0
@@ -166,23 +167,30 @@
     cursor: pointer
     color : $menu_itemHoverTextColor
 
-.ts.menu:not(.fitted) a.item:hover,
-.ts.menu:not(.fitted) .item.dropdown.item:hover
+.ts.menu a.item:hover,
+.ts.menu .item.dropdown.item:hover
     background: $menu_itemHoverBackgroundColor
 
 //-------------------//
 //      Relaxed
 //-------------------//
 
-.ts.relaxed.menu .item
+.ts.relaxed.menu .item,
+.ts.relaxed.menu.tabbed.tabbed .item
     padding: $menu_relaxedItemVerticalPadding $menu_relaxedItemHorizontalPadding
-.ts.menu[class*="very relaxed"] .item
+.ts.menu[class*="very relaxed"] .item,
+.ts.menu.tabbed.tabbed[class*="very relaxed"] .item
     padding: $menu_veryRelaxedItemVerticalPadding $menu_veryRelaxedItemHorizontalPadding
 
 .ts.relaxed.menu.secondary .item
     padding: $menu_relaxedSecondaryItemVerticalPadding $menu_relaxedSecondaryItemHorizontalPadding
 .ts.menu.secondary[class*="very relaxed"] .item
     padding: $menu_veryRelaxedSecondaryItemVerticalPadding $menu_veryRelaxedSecondaryItemHorizontalPadding
+
+.ts.relaxed.relaxed.relaxed.menu.text .item:not(:last-child)
+    margin-right: $menu_relaxedTextItemHorizontalPadding
+.ts.menu.text[class*="very relaxed"][class*="very relaxed"][class*="very relaxed"] .item:not(:last-child)
+    margin-right: $menu_veryRelaxedTextItemHorizontalPadding
 
 //-------------------//
 //       Items
@@ -211,14 +219,14 @@
 //       Active
 //-------------------//
 
-.ts.menu:not(.link):not(.fitted) a.item:active,
-.ts.menu:not(.link):not(.fitted) .item.active,
-.ts.menu:not(.link):not(.fitted) .item.dropdown:active,
-.ts.menu:not(.link):not(.fitted) .item.dropdown.visible
+.ts.menu:not(.fitted) a.item:active,
+.ts.menu:not(.fitted) .item.active,
+.ts.menu:not(.fitted) .item.dropdown:active,
+.ts.menu:not(.fitted) .item.dropdown.visible
     background: $menu_itemActiveBackgroundColor
 
-.ts.menu:not(.link) a.item:active,
-.ts.menu:not(.link) .item.active,
+.ts.menu a.item:active,
+.ts.menu .item.active,
     color: $menu_itemActiveTextColor
 
 //-------------------//
@@ -272,10 +280,7 @@
 //      Emphasis
 //-------------------//
 
-.ts.menu.basic
-    +menu-inverted-variant($menu_defaultColors)
-    border: 0
-.ts.menu.inverted
+.ts.menu.inverted:not(.text)
     +menu-inverted-variant($menu_invertedColors)
     border: 0
 .ts.menu.inverted.primary
@@ -291,29 +296,11 @@
 .ts.menu.inverted .item.disabled
     color: $menu_invertedDisabledTextColor
 
-.ts.menu.basic
-    +menu-pure-variant($menu_defaultColors)
-.ts.menu.inverted.link
-    +menu-pure-variant($menu_invertedColors)
-.ts.menu.inverted.primary.link
-    +menu-pure-variant($menu_primaryColors)
-.ts.menu.inverted.info.link
-    +menu-pure-variant($menu_infoColors)
-.ts.menu.inverted.warning.link
-    +menu-pure-variant($menu_warningColors)
-.ts.menu.inverted.positive.link
-    +menu-pure-variant($menu_positiveColors)
-.ts.menu.inverted.negative.link
-    +menu-pure-variant($menu_negativeColors)
-.ts.menu.inverted.link .item.disabled
-    color: $menu_invertedDisabledTextColor
-
 //-------------------//
 //     Borderless
 //-------------------//
 
-.ts.menu.borderless .item,
-.ts.menu.link .item
+.ts.menu.borderless .item
     border: none
 
 // Secondary Pointing
@@ -430,6 +417,9 @@
 .ts.menu.fitted:not(.vertically):not(.horizontally) .item,
 .ts.menu .item.fitted:not(.vertically):not(.horizontally)
     padding: 0
+.ts.menu.fitted.secondary a.item:hover,
+.ts.menu.fitted.secondary .item.dropdown.item:hover
+    background: transparent
 
 //-------------------//
 //      Compact
@@ -454,12 +444,16 @@
     border-radius   : 0
     border          : none
     box-shadow      : none
+    min-height      : $menu_secondaryMinHeight
 
 .ts.menu.secondary .item
     padding      : $menu_secondaryItemPadding
     margin       : $menu_secondaryItemMargin
     border-radius: $menu_secondaryBorderRadius
     border-right : 0
+
+.ts.menu.secondary .item.fitted
+    background: transparent !important
 
 .ts.menu.secondary:not(.vertical) .item:first-child
     margin-left: 0
@@ -469,6 +463,10 @@
 
 .ts.menu.vertical.secondary .item
     margin: $menu_secondaryVerticalItemMargin
+
+.ts.menu.secondary:not(.vertical) .item,
+.ts.menu.secondary:not(.vertical) .menu
+    align-self: center
 
 //-------------------//
 // Secondary Pointing
@@ -540,17 +538,16 @@
     width : $menu_secondaryPointingBorderWidth
     height: auto
 
-
 //-------------------//
 //       Tabbed
 //-------------------//
 
 .ts.menu.tabbed
-    box-shadow      : none
-    border          : none
-    border-radius   : 0
-    background: $menu_tabbedMenuBackgroundColor
-    border-bottom   : $menu_tabbedMenuBorderWidth solid $menu_tabbedMenuBorderColor
+    box-shadow   : none
+    border       : none
+    border-radius: 0
+    background   : $menu_tabbedMenuBackgroundColor
+    border-bottom: $menu_tabbedMenuBorderWidth solid $menu_tabbedMenuBorderColor
 
 .ts.menu.tabbed .item
     border       : $menu_tabbedMenuBorderWidth solid transparent
@@ -563,20 +560,20 @@
     display: none
 
 .ts.menu.tabbed .item.active.active.active.active
-    background: $menu_tabbedMenuActiveBackgroundColor
-    border-color    : $menu_tabbedMenuActiveBorderColor
-    margin-bottom   : -$menu_tabbedMenuBorderWidth
-    font-weight     : $menu_tabbedMenuActiveFontWeight
-    color           : $menu_tabbedMenuActiveTextColor
+    background   : $menu_tabbedMenuActiveBackgroundColor
+    border-color : $menu_tabbedMenuActiveBorderColor
+    margin-bottom: -$menu_tabbedMenuBorderWidth
+    font-weight  : $menu_tabbedMenuActiveFontWeight
+    color        : $menu_tabbedMenuActiveTextColor
 
 .ts.menu.tabbed a.item:not(.active):hover
-    cursor          : pointer
+    cursor    : pointer
     background: $menu_tabbedItemHoverBackgroundColor
-    color           : $menu_tabbedItemHoverTextColor
+    color     : $menu_tabbedItemHoverTextColor
 
 .ts.menu.tabbed a.item:not(.active):active
     background: $menu_tabbedItemActiveBackgroundColor
-    color           : $menu_tabbedItemActiveTextColor
+    color     : $menu_tabbedItemActiveTextColor
 
 //-------------------//
 //   Pointing Tabbed
@@ -646,36 +643,6 @@
     display      : block
     font-size    : $menu_labeledIconSize
     margin-bottom: $menu_labeledIconTextMargin
-
-//-------------------//
-//        Pure
-//-------------------//
-
-.ts.menu.link .item
-    padding-left : 0
-    padding-right: 0
-    margin-right : $menu_itemVerticalPadding * 2
-    border       : 0
-
-.ts.menu.link .menu .item
-    margin-left : $menu_itemVerticalPadding * 2
-    margin-right: 0
-
-.ts.menu.link .menu .item:only-child,
-.ts.menu.link .menu .item:first-child
-    margin-left: 0
-
-.ts.menu.link .item:not(.header):hover,
-.ts.menu.link a.item.header:hover,
-.ts.menu.link .item:not(.header):active,
-.ts.menu.link a.item.header:active,
-.ts.menu.link .item:not(.header).active,
-.ts.menu.link a.item.header.active
-    background: initial !important
-
-.ts.menu.link .item.active,
-.ts.menu.link .item.dropdown.visible
-    font-weight: $menu_pureActiveFontWeight
 
 //-------------------//
 //       Label
@@ -749,6 +716,7 @@
 .ts.menu:not(.tabbed) .right.menu > .item:last-child
     border-right             : none
     border-radius            : $menu_borderRadius
+.ts.menu:not(.tabbed):not(.secondary) .right.menu > .item:last-child
     border-top-left-radius   : 0
     border-bottom-left-radius: 0
 
@@ -821,23 +789,45 @@
     border-radius: 0
     box-shadow   : none
     border       : 0
-    background   : none
+    background   : transparent
+    color        : $menu_textItemColor
 
 .ts.menu.text .item
     padding      : 0
     border       : 0
+    background   : transparent !important
 
-.ts.menu.text a.item:not(.active)
-    opacity: $menu_textItemOpacity
+.ts.menu.text a.item:hover:not(:active):not(.active),
+.ts.menu.text .item.item.dropdown:hover:not(.active):not(.visible):not(:active):not(.disabled)
+    color: $menu_textItemHoverColor
+.ts.menu.text a.item:active:not(.active)
+    color: $menu_textItemDownColor
+.ts.menu.text .item.active,
+.ts.menu.text .item.item.dropdown:active:not(.disabled),
+.ts.menu.text .item.item.dropdown.visible
+    color: $menu_textItemActiveColor
+.ts.menu.text .item.disabled,
+.ts.menu.text .item.disabled *:not(.label),
+.ts.menu.text .item.disabled .list .item,
+.ts.menu.text .item .menu .item.disabled
+    color: $menu_textItemDisabledColor
 
-.ts.menu.text .item:hover:not(.active)
-    background: transparent
-    opacity   : 1
-
-.ts.menu.text .item:active:active:active,
-.ts.menu.text .item.active.active.active,
-.ts.menu.text .item.active:active
-    background: transparent
+.ts.menu.text.inverted .item
+    color: $menu_invertedTextItemColor
+.ts.menu.text.inverted a.item:hover:not(:active):not(.active),
+.ts.menu.text.inverted .item.item.dropdown:hover:not(.active):not(.visible):not(:active):not(.disabled)
+    color: $menu_invertedTextItemHoverColor
+.ts.menu.text.inverted a.item:active:not(.active)
+    color: $menu_invertedTextItemDownColor
+.ts.menu.text.inverted .item.active,
+.ts.menu.text.inverted .item.item.dropdown:active:not(.disabled),
+.ts.menu.text.inverted .item.item.dropdown.visible
+    color: $menu_invertedTextItemActiveColor
+.ts.menu.text.inverted .item.disabled,
+.ts.menu.text.inverted .item.disabled *:not(.label),
+.ts.menu.text.inverted .item.disabled .list .item,
+.ts.menu.text.inverted .item .menu .item.disabled
+    color: $menu_invertedTextItemDisabledColor
 
 .ts.menu.text .header.item
 
@@ -931,7 +921,7 @@
         margin-right: $container_mobileGutter !important
 
 +rwd-serious(tablet)
-    .ts.menu:not(.secondary):not(.text):not(.tabbed):not(.borderless):not(.link):not(.inverted) > .container > .item:not(.right):not(.borderless):first-child
+    .ts.menu:not(.secondary):not(.text):not(.tabbed):not(.borderless):not(.inverted) > .container > .item:not(.right):not(.borderless):first-child
         border-left: $menu_dividerSize solid $menu_dividerBackgroundColor
 
 //-------------------//
