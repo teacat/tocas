@@ -60,11 +60,11 @@
 //       Action
 //-------------------//
 
-.ts.slate .action
+.ts.slate .action:not(.ts)
     text-align: center
     margin-top: $slate_actionMargin
 
-.ts.slate.heading .action
+.ts.slate.heading .action:not(.ts)
     text-align: left
 
 //-------------------//
@@ -378,6 +378,38 @@
 //     Slate Menu
 //-------------------//
 
+.ts.slate .ts.menu[class*="top attached"]
+    margin: -#{$slate_verticalPadding} -#{$slate_horizontalPadding} $slate_verticalPadding -#{$slate_horizontalPadding}
+    width: calc(100% + #{$slate_horizontalPadding} * 2)
+.ts.padded.padded.slate:not(.horizontally) .ts.menu[class*="top attached"]
+    margin: -#{$slate_paddedPadding} -#{$slate_paddedPadding} $slate_paddedPadding -#{$slate_paddedPadding}
+    width: calc(100% + #{$slate_paddedPadding} * 2)
+.ts.very.padded.slate:not(.horizontally) .ts.menu[class*="top attached"]
+    margin: -#{$slate_veryPaddedPadding} -#{$slate_veryPaddedPadding} $slate_veryPaddedPadding -#{$slate_veryPaddedPadding}
+    width: calc(100% + #{$slate_veryPaddedPadding} * 2)
+.ts.extra.padded.slate:not(.horizontally) .ts.menu[class*="top attached"]
+    margin: -#{$slate_extraPaddedPadding} -#{$slate_extraPaddedPadding} $slate_extraPaddedPadding -#{$slate_extraPaddedPadding}
+    width: calc(100% + #{$slate_extraPaddedPadding} * 2)
+
+.ts.horizontally.padded.padded.slate .ts.menu[class*="top attached"]
+    margin-left: -#{$slate_paddedPadding}
+    margin-right: -#{$slate_paddedPadding}
+    width: calc(100% + #{$slate_paddedPadding} * 2)
+.ts.horizontally.very.padded.slate .ts.menu[class*="top attached"]
+    margin-left: -#{$slate_veryPaddedPadding}
+    margin-right: -#{$slate_veryPaddedPadding}
+    width: calc(100% + #{$slate_veryPaddedPadding} * 2)
+.ts.horizontally.extra.padded.slate .ts.menu[class*="top attached"]
+    margin-left: -#{$slate_extraPaddedPadding}
+    margin-right: -#{$slate_extraPaddedPadding}
+    width: calc(100% + #{$slate_extraPaddedPadding} * 2)
+
+.ts.slate .ts.container > .ts.menu.menu[class*="top attached"],
+.ts.slate .ts.container > .ts.menu.menu[class*="bottom attached"]
+    margin-left : 0
+    margin-right: 0
+    width       : 100%
+
 .ts.slate .ts.menu[class*="bottom attached"]
     margin: $slate_verticalPadding -#{$slate_horizontalPadding} -#{$slate_verticalPadding} -#{$slate_horizontalPadding}
     width: calc(100% + #{$slate_horizontalPadding} * 2)
@@ -412,7 +444,7 @@
 //     Coupling
 //-------------------//
 
-.ts.slate:not(.heading) > .ts.container
+.ts.slate:not(.heading) > .ts.container:not(.grid)
     align-items: center
 
 .ts.slate ~ .ts.segment[class*="bottom attached"]
