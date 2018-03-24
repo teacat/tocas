@@ -52,12 +52,23 @@
     margin-right: -#{$columnRelaxedPadding}
 
 .ts.grid.relaxed > .column:not(.row),
-.ts.grid.relaxed > .row > .column:not(.row)
+.ts.grid.relaxed > .row > .column:not(.row),
+.ts.grid > .relaxed.row > .column:not(.row)
     padding-left : $columnRelaxedPadding
     padding-right: $columnRelaxedPadding
 
+.ts.grid[class*="very relaxed"]
+    margin-left : -#{$columnVeryRelaxedPadding}
+    margin-right: -#{$columnVeryRelaxedPadding}
+
+.ts.grid[class*="very relaxed"] > .column:not(.row),
+.ts.grid[class*="very relaxed"] > .row > .column:not(.row),
+.ts.grid > .row[class*="very relaxed"] > .column:not(.row)
+    padding-left : $columnVeryRelaxedPadding
+    padding-right: $columnVeryRelaxedPadding
+
 //-------------------//
-//       Aligns
+//    Text Aligns
 //-------------------//
 
 .ts.grid[class*="left aligned"] .column,
@@ -84,37 +95,106 @@
     .ts.header:not(.aligned)
         justify-content: center
 
+//-------------------//
+//  Vertical Aligns
+//-------------------//
+
+.ts.grid[class*="top aligned"]
+    align-items: flex-start
+.ts.grid .row[class*="top aligned"] .column
+    align-self: flex-start
+
+.ts.grid[class*="middle aligned"]
+    align-items: center
+.ts.grid .row[class*="middle aligned"] .column
+    align-self: center
+
+.ts.grid[class*="bottom aligned"]
+    align-items: flex-end
+.ts.grid .row[class*="bottom aligned"] .column
+    align-self: flex-end
+
+//-------------------//
+//      Celled
+//-------------------//
+
+.ts.celled.grid
+    margin: 1em 0
+    border: $grid_celledBorder
+
+.ts.celled.grid .row:first-child
+    border-bottom: $grid_celledBorder
+
+.ts.celled.grid .row:not(:first-child):not(:last-child)
+    border-bottom: $grid_celledBorder
+
+.ts.celled.grid .row > .column:first-child
+    border-right: $grid_celledBorder
+
+.ts.celled.grid .row > .column:not(:first-child):not(:last-child)
+    border-right: $grid_celledBorder
+
+.ts.grid[class*="internally celled"]
+    margin: 0
+    border: 0
+
+//-------------------//
+//      Divided
+//-------------------//
+
+.ts.grid.divided:not([class*="vertically divided"]) > .row > .column:not(:last-child)
+    border-right: $grid_dividedBorder
+
+.ts.grid[class*="vertically divided"] > .row:not(:last-child):before
+    position: absolute
+    content : ''
+    bottom  : 0
+    left    : 0
+    width   : calc(100% - #{$columnPadding * 2})
+    height  : 1px
+    margin  : 0 $columnPadding
+
+    border-bottom: $grid_dividedBorder
+
+.ts.grid.relaxed[class*="vertically divided"] > .row:not(:last-child):before
+    margin-left : $columnRelaxedPadding
+    margin-right: $columnRelaxedPadding
+    width       : calc(100% - #{$columnRelaxedPadding * 2})
+
+.ts.grid[class*="very relaxed"][class*="vertically divided"] > .row:not(:last-child):before
+    margin-left : $columnVeryRelaxedPadding
+    margin-right: $columnVeryRelaxedPadding
+    width       : calc(100% - #{$columnVeryRelaxedPadding * 2})
+
+//-------------------//
+//      Centered
+//-------------------//
+
 .ts.grid.centered,
 .ts.grid .row.centered
     justify-content: center
 
 //-------------------//
-//        RWD
+//     Equal Width
 //-------------------//
 
-//.ts.grid .row[class*="only"],
-//.ts.grid .column[class*="only"]
-//    display: none
-//
-//.ts.grid .row[class*="large screen only"],
-//.ts.grid .column[class*="large screen only"]
-//    +rwd(large)
-//        display: flex !important
-//
-//.ts.grid .row[class*="computer only"],
-//.ts.grid .column[class*="computer only"]
-//    +rwd(computer)
-//        display: flex !important
-//
-//.ts.grid .row[class*="tablet only"],
-//.ts.grid .column[class*="tablet only"]
-//    +rwd(tablet)
-//        display: flex !important
-//
-//.ts.grid .row[class*="mobile only"],
-//.ts.grid .column[class*="mobile only"]
-//    +rwd-serious(mobile)
-//        display: flex !important
+.ts.grid > .row[class*="equal width"] > .column,
+.ts.grid[class*="equal width"] > .column:not(.row),
+.ts.grid[class*="equal width"] > .row > .column
+    flex-grow: 1
+
+//-------------------//
+//       Padded
+//-------------------//
+
+.ts.grid.padded:not([class*="vertically padded"]):not([class*="horizontally padded"])
+    margin: 0 !important
+.ts.grid[class*="vertically padded"]
+    margin-top   : 0 !important
+    margin-bottom: 0 !important
+.ts.grid[class*="horizontally padded"]
+    margin-left : 0 !important
+    margin-right: 0 !important
 
 //-------------------//
 //      Floated
@@ -383,51 +463,67 @@
 //-------------------//
 
 .ts.grid[class*="one column"] > .column:not(.row),
+.ts.grid[class*="one column"] > .row > .column:not(.row),
 .ts.grid .row[class*="one column"] > .column:not(.row)
     width: $oneColumn !important
 .ts.grid[class*="two column"] > .column:not(.row),
+.ts.grid[class*="two column"] > .row > .column:not(.row),
 .ts.grid .row[class*="two column"] > .column:not(.row)
     width: $twoColumn !important
 .ts.grid[class*="three column"] > .column:not(.row),
+.ts.grid[class*="three column"] > .row > .column:not(.row),
 .ts.grid .row[class*="three column"] > .column:not(.row)
     width: $threeColumn !important
 .ts.grid[class*="four column"] > .column:not(.row),
+.ts.grid[class*="four column"] > .row > .column:not(.row),
 .ts.grid .row[class*="four column"] > .column:not(.row)
     width: $fourColumn !important
 .ts.grid[class*="five column"] > .column:not(.row),
+.ts.grid[class*="five column"] > .row > .column:not(.row),
 .ts.grid .row[class*="five column"] > .column:not(.row)
     width: $fiveColumn !important
 .ts.grid[class*="six column"] > .column:not(.row),
+.ts.grid[class*="six column"] > .row > .column:not(.row),
 .ts.grid .row[class*="six column"] > .column:not(.row)
     width: $sixColumn !important
 .ts.grid[class*="seven column"] > .column:not(.row),
+.ts.grid[class*="seven column"] > .row > .column:not(.row),
 .ts.grid .row[class*="seven column"] > .column:not(.row)
     width: $sevenColumn !important
 .ts.grid[class*="eight column"] > .column:not(.row),
+.ts.grid[class*="eight column"] > .row > .column:not(.row),
 .ts.grid .row[class*="eight column"] > .column:not(.row)
     width: $eightColumn !important
 .ts.grid[class*="nine column"] > .column:not(.row),
+.ts.grid[class*="nine column"] > .row > .column:not(.row),
 .ts.grid .row[class*="nine column"] > .column:not(.row)
     width: $nineColumn !important
 .ts.grid[class*="ten column"] > .column:not(.row),
+.ts.grid[class*="ten column"] > .row > .column:not(.row),
 .ts.grid .row[class*="ten column"] > .column:not(.row)
     width: $tenColumn !important
 .ts.grid[class*="eleven column"] > .column:not(.row),
+.ts.grid[class*="eleven column"] > .row > .column:not(.row),
 .ts.grid .row[class*="eleven column"] > .column:not(.row)
     width: $elevenColumn !important
 .ts.grid[class*="twelve column"] > .column:not(.row),
+.ts.grid[class*="twelve column"] > .row > .column:not(.row),
 .ts.grid .row[class*="twelve column"] > .column:not(.row)
     width: $twelveColumn !important
 .ts.grid[class*="thirteen column"] > .column:not(.row),
+.ts.grid[class*="thirteen column"] > .row > .column:not(.row),
 .ts.grid .row[class*="thirteen column"] > .column:not(.row)
     width: $thirteenColumn !important
 .ts.grid[class*="fourteen column"] > .column:not(.row),
+.ts.grid[class*="fourteen column"] > .row > .column:not(.row),
 .ts.grid .row[class*="fourteen column"] > .column:not(.row)
     width: $fourteenColumn !important
 .ts.grid[class*="fifteen column"] > .column:not(.row),
+.ts.grid[class*="fifteen column"] > .row > .column:not(.row),
 .ts.grid .row[class*="fifteen column"] > .column:not(.row)
     width: $fifteenColumn !important
 .ts.grid[class*="sixteen column"] > .column:not(.row),
+.ts.grid[class*="sixteen column"] > .row > .column:not(.row),
 .ts.grid .row[class*="sixteen column"] > .column:not(.row)
     width: $sixteenColumn !important
 
