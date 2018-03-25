@@ -13,9 +13,13 @@
 .ts.grid + .ts.grid
     margin-top: $columnPadding
 
+.ts.grid > .column:not(.row)
+    padding-top   : $columnPadding
+    padding-bottom: $columnPadding
 .ts.grid > .column:not(.row),
-.ts.grid > .row .column:not(.row)
-    padding: $columnPadding
+.ts.grid > .row .column
+    padding-left : $columnPadding
+    padding-right: $columnPadding
 
 //-------------------//
 //       Column
@@ -24,11 +28,31 @@
 .ts.grid .column
 
 //-------------------//
+//    Shrinked
+//-------------------//
+
+//-------------------//
 //  Stretched Column
 //-------------------//
 
-.ts.grid .stretched.column
+.ts.grid .stretched.column:not([class*="vertically stretched"])
     flex: 1
+
+.ts.grid > .row > .column[class*="vertically stretched"],
+.ts.grid > .column[class*="vertically stretched"]:not(.row),
+.ts.grid > .row[class*="vertically stretched"] > .column,
+.ts.grid[class*="vertically stretched"] > .column,
+.ts.grid[class*="vertically stretched"] > .row > .column
+    display       : inline-flex !important
+    flex-direction: column
+    align-self    : stretch
+
+.ts.grid > .row > .column[class*="vertically stretched"] > *,
+.ts.grid > .column[class*="vertically stretched"]:not(.row) > *,
+.ts.grid > .row[class*="vertically stretched"] > .column > *,
+.ts.grid[class*="vertically stretched"] > .column > *,
+.ts.grid[class*="vertically stretched"] > .row > .column > *
+    flex-grow: 1
 
 //-------------------//
 //        Row
@@ -37,8 +61,10 @@
 .ts.grid > .row
     display       : flex
     flex-direction: row
-    flex-wrap     : nowrap
-    width         :  100%
+    flex-wrap     : wrap
+    width         : 100%
+    padding-top   : $columnPadding
+    padding-bottom: $columnPadding
 
     &.doubling
         flex-wrap: wrap
@@ -119,20 +145,41 @@
 //-------------------//
 
 .ts.celled.grid
-    margin: 1em 0
+    margin: $columnPadding 0
     border: $grid_celledBorder
 
-.ts.celled.grid .row:first-child
+.ts.celled.grid > .row
+    width  : 100% !important
+    margin : 0
+    padding: 0
+
+.ts.celled.grid > .row:first-child
+    border-bottom: $grid_celledBorder
+.ts.celled.grid > .row:not(:first-child):not(:last-child)
     border-bottom: $grid_celledBorder
 
-.ts.celled.grid .row:not(:first-child):not(:last-child)
-    border-bottom: $grid_celledBorder
-
-.ts.celled.grid .row > .column:first-child
+.ts.celled.grid > .row > .column:first-child
+    border-right: $grid_celledBorder
+.ts.celled.grid > .row > .column:not(:first-child):not(:last-child)
     border-right: $grid_celledBorder
 
-.ts.celled.grid .row > .column:not(:first-child):not(:last-child)
-    border-right: $grid_celledBorder
+.ts.celled.grid.stackable > .row > .column:first-child,
+.ts.celled.grid > .row.stackable > .column:first-child,
+.ts.celled.grid.stackable > .row > .column:not(:first-child):not(:last-child),
+.ts.celled.grid > .row.stackable > .column:not(:first-child):not(:last-child)
+    +rwd-serious(mobile)
+        border-right : 0
+        border-bottom: $grid_celledBorder
+
+.ts.celled.grid > .column:not(.row),
+.ts.celled.grid > .row > .column
+    padding: $columnPadding
+.ts.relaxed.celled.grid > .column:not(.row),
+.ts.relaxed.celled.grid > .row > .column
+    padding: $columnRelaxedPadding
+.ts.celled.grid[class*="very relaxed"] > .column:not(.row),
+.ts.celled.grid[class*="very relaxed"] > .row > .column
+    padding: $columnVeryRelaxedPadding
 
 .ts.grid[class*="internally celled"]
     margin: 0
@@ -646,7 +693,9 @@
 //     Stackable
 //-------------------//
 
-.ts.grid.stackable  > .column:not(.row)
+.ts.grid.stackable > .column:not(.row),
+.ts.grid.stackable > .row > .column,
+.ts.grid > .row.stackable > .column
     +rwd-serious(mobile)
         width: 100% !important
 
