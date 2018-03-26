@@ -67,6 +67,7 @@
     flex-wrap   : wrap
     padding-left: $form_horizontalFieldLeftOffset
 
+.ts.horizontal.form .field
     +rwd-serious(mobile)
         padding-left  : 0
         flex-direction: column
@@ -83,6 +84,7 @@
     word-wrap  : break-word
     white-space: normal
 
+.ts.horizontal.form .field.field > label
     +rwd-serious(mobile)
         position  : relative
         top       : 0
@@ -100,6 +102,7 @@
 .ts.horizontal.form .field > label + *:not(.input):not(input):not(select):not(textarea):not(.dropdowns)
     margin-top: $form_horizontalFieldTopOffset
 
+.ts.horizontal.form .field > label + *:not(.input):not(input):not(select):not(textarea):not(.dropdowns)
     +rwd-serious(mobile)
         margin-top: 0
 
@@ -236,8 +239,9 @@
     clear : both
     margin: $form_fieldMargin
 
-+rwd-serious(mobile)
-    .ts.form .fields + .field
+.ts.form:not(.unstackable) .fields:not(.unstackable) + .field,
+.ts.form:not(.unstackable) .fields:not(.unstackable) + .fields
+    +rwd-serious(mobile)
         margin-top: $form_rowDistance
 
 .ts.form .fields > .field
@@ -252,8 +256,8 @@
 .ts.form .fields:last-child .field
     margin-bottom: 0em
 
-+rwd-serious(mobile)
-    .ts.form .fields:last-child .field
+.ts.form:not(.unstackable) .fields:last-child .field
+    +rwd-serious(mobile)
         margin: $form_fieldMargin
 
         &:last-child
@@ -411,7 +415,7 @@
     border-radius: $form_fieldsetBorderRadius
     padding      : $form_fieldsetPadding
 
-.ts.form .fields + fieldset:not(:first-child)
+.ts.form:not(.unstackable) .fields + fieldset:not(:first-child)
     +rwd-serious(mobile)
         margin-top: $form_rowDistance
 
@@ -507,14 +511,15 @@
 //               RWD
 //*******************************//
 
-.ts.form
+.ts.form:not(.unstackable)
     +rwd-serious(mobile)
-        .fields, .relaxed.fields
+        .fields:not(.unstackable),
+        .relaxed.fields:not(.unstackable)
             margin-left   : 0 !important
             margin-right  : 0 !important
             flex-direction: column
-        .fields,
-        .fields .field
+        .fields:not(.unstackable),
+        .fields:not(.unstackable) .field
             padding-left : 0    !important
             padding-right: 0    !important
             width        : 100% !important
