@@ -121,6 +121,14 @@
     .ts.header:not(.aligned)
         justify-content: center
 
+.ts.grid > .column.justified.justified,
+.ts.grid > .row.justified > .column,
+.ts.grid > .row.justified > .column.justified.justified,
+.ts.grid.justified > .column,
+.ts.grid.justified > .row > .column
+    text-align: justify
+    hyphens   : auto
+
 //-------------------//
 //  Vertical Aligns
 //-------------------//
@@ -153,18 +161,18 @@
     margin : 0
     padding: 0
 
-.ts.celled.grid > .row:first-child
+.ts.celled.grid > .row:first-child:not(:last-child)
     border-bottom: $grid_celledBorder
 .ts.celled.grid > .row:not(:first-child):not(:last-child)
     border-bottom: $grid_celledBorder
 
-.ts.celled.grid > .row > .column:first-child
+.ts.celled.grid > .row > .column:first-child:not(:last-child)
     border-right: $grid_celledBorder
 .ts.celled.grid > .row > .column:not(:first-child):not(:last-child)
     border-right: $grid_celledBorder
 
-.ts.celled.grid.stackable > .row > .column:first-child,
-.ts.celled.grid > .row.stackable > .column:first-child,
+.ts.celled.grid.stackable > .row > .column:first-child:not(:last-child),
+.ts.celled.grid > .row.stackable > .column:first-child:not(:last-child),
 .ts.celled.grid.stackable > .row > .column:not(:first-child):not(:last-child),
 .ts.celled.grid > .row.stackable > .column:not(:first-child):not(:last-child)
     +rwd-serious(mobile)
@@ -231,6 +239,20 @@
     flex-grow: 1
 
 //-------------------//
+//      Emphasis
+//-------------------//
+
+.ts.grid > .secondary.column,
+.ts.grid > .secondary.row,
+.ts.grid > .row > .secondary.column
+    background: $grid_secondaryBackgroundColor
+
+.ts.grid > .tertiary.column,
+.ts.grid > .tertiary.row,
+.ts.grid > .row > .tertiary.column
+    background: $grid_tertiaryBackgroundColor
+
+//-------------------//
 //       Padded
 //-------------------//
 
@@ -257,322 +279,123 @@
 //*******************************//
 
 //-------------------//
+// Grid Based Columns
+//-------------------//
+
+$columns: one $oneColumn, two $twoColumn, three $threeColumn, four $fourColumn, five $fiveColumn, six $sixColumn, seven $sevenColumn, eight $eightColumn, nine $nineColumn, ten $tenColumn, eleven $elevenColumn, twelve $twelveColumn, thirteen $thirteenColumn, fourteen $fourteenColumn, fifteen $fifteenColumn, sixteen $sixteenColumn
+
+@each $column in $columns
+    $name : nth($column, 1)
+    $width: nth($column, 2)
+
+    .ts.grid[class*="#{$name} column"] > .column:not(.row),
+    .ts.grid[class*="#{$name} column"] > .row > .column,
+        width: $width !important
+
+// For the priority.
+@each $column in $columns
+    $name : nth($column, 1)
+    $width: nth($column, 2)
+
+    .ts.grid > .row[class*="#{$name} column"] > .column
+        width: $width !important
+
+//-------------------//
 //      Columns
 //-------------------//
 
-.ts.grid .column[class*="one wide"]
-    width: $oneWide
-.ts.grid .column[class*="two wide"]
-    width: $twoWide
-.ts.grid .column[class*="three wide"]
-    width: $threeWide
-.ts.grid .column[class*="four wide"]
-    width: $fourWide
-.ts.grid .column[class*="five wide"]
-    width: $fiveWide
-.ts.grid .column[class*="six wide"]
-    width: $sixWide
-.ts.grid .column[class*="seven wide"]
-    width: $sevenWide
-.ts.grid .column[class*="eight wide"]
-    width: $eightWide
-.ts.grid .column[class*="nine wide"]
-    width: $nineWide
-.ts.grid .column[class*="ten wide"]
-    width: $tenWide
-.ts.grid .column[class*="eleven wide"]
-    width: $elevenWide
-.ts.grid .column[class*="twelve wide"]
-    width: $twelveWide
-.ts.grid .column[class*="thirteen wide"]
-    width: $thirteenWide
-.ts.grid .column[class*="fourteen wide"]
-    width: $fourteenWide
-.ts.grid .column[class*="fifteen wide"]
-    width: $fifteenWide
-.ts.grid .column[class*="sixteen wide"]
-    width: $sixteenWide
+$wides: one $oneWide, two $twoWide, three $threeWide, four $fourWide, five $fiveWide, six $sixWide, seven $sevenWide, eight $eightWide, nine $nineWide, ten $tenWide, eleven $elevenWide, twelve $twelveWide, thirteen $thirteenWide, fourteen $fourteenWide, fifteen $fifteenWide, sixteen $sixteenWide
+
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
+
+    .ts.column.grid > .column[class*="#{$name} wide"],
+    .ts.grid > .column.row > .column[class*="#{$name} wide"],
+    .ts.grid > .row > .column[class*="#{$name} wide"],
+    .ts.grid > .column[class*="#{$name} wide"]
+        width: $width !important
 
 //-------------------//
 //   Mobile Columns
 //-------------------//
 
-.ts.grid [class*="one wide mobile"]
-    +rwd-serious(mobile)
-        width: $oneWide !important
-.ts.grid [class*="two wide mobile"]
-    +rwd-serious(mobile)
-        width: $twoWide !important
-.ts.grid [class*="three wide mobile"]
-    +rwd-serious(mobile)
-        width: $threeWide !important
-.ts.grid [class*="four wide mobile"]
-    +rwd-serious(mobile)
-        width: $fourWide !important
-.ts.grid [class*="five wide mobile"]
-    +rwd-serious(mobile)
-        width: $fiveWide !important
-.ts.grid [class*="six wide mobile"]
-    +rwd-serious(mobile)
-        width: $sixWide !important
-.ts.grid [class*="seven wide mobile"]
-    +rwd-serious(mobile)
-        width: $sevenWide !important
-.ts.grid [class*="eight wide mobile"]
-    +rwd-serious(mobile)
-        width: $eightWide !important
-.ts.grid [class*="nine wide mobile"]
-    +rwd-serious(mobile)
-        width: $nineWide !important
-.ts.grid [class*="ten wide mobile"]
-    +rwd-serious(mobile)
-        width: $tenWide !important
-.ts.grid [class*="eleven wide mobile"]
-    +rwd-serious(mobile)
-        width: $elevenWide !important
-.ts.grid [class*="twelve wide mobile"]
-    +rwd-serious(mobile)
-        width: $twelveWide !important
-.ts.grid [class*="thirteen wide mobile"]
-    +rwd-serious(mobile)
-        width: $thirteenWide !important
-.ts.grid [class*="fourteen wide mobile"]
-    +rwd-serious(mobile)
-        width: $fourteenWide !important
-.ts.grid [class*="fifteen wide mobile"]
-    +rwd-serious(mobile)
-        width: $fifteenWide !important
-.ts.grid [class*="sixteen wide mobile"]
-    +rwd-serious(mobile)
-        width: $sixteenWide !important
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
+
+    .ts.column.grid > .column[class*="#{$name} wide mobile"],
+    .ts.grid > .column.row > .column[class*="#{$name} wide mobile"],
+    .ts.grid > .row > .column[class*="#{$name} wide mobile"],
+    .ts.grid > .column[class*="#{$name} wide mobile"]
+        +rwd-serious(mobile)
+            width: $width !important
+
+        &:not([class*="wide tablet"])
+            +rwd-serious(tablet)
+                width: $width !important
+        &:not([class*="wide computer"])
+            +rwd-serious(computer)
+                width: $width !important
+        &:not([class*="wide large screen"])
+            +rwd-serious(large)
+                width: $width !important
 
 //-------------------//
 //   Tablet Columns
 //-------------------//
 
-.ts.grid [class*="one wide tablet"]
-    +rwd-serious(tablet)
-        width: $oneWide !important
-.ts.grid [class*="two wide tablet"]
-    +rwd-serious(tablet)
-        width: $twoWide !important
-.ts.grid [class*="three wide tablet"]
-    +rwd-serious(tablet)
-        width: $threeWide !important
-.ts.grid [class*="four wide tablet"]
-    +rwd-serious(tablet)
-        width: $fourWide !important
-.ts.grid [class*="five wide tablet"]
-    +rwd-serious(tablet)
-        width: $fiveWide !important
-.ts.grid [class*="six wide tablet"]
-    +rwd-serious(tablet)
-        width: $sixWide !important
-.ts.grid [class*="seven wide tablet"]
-    +rwd-serious(tablet)
-        width: $sevenWide !important
-.ts.grid [class*="eight wide tablet"]
-    +rwd-serious(tablet)
-        width: $eightWide !important
-.ts.grid [class*="nine wide tablet"]
-    +rwd-serious(tablet)
-        width: $nineWide !important
-.ts.grid [class*="ten wide tablet"]
-    +rwd-serious(tablet)
-        width: $tenWide !important
-.ts.grid [class*="eleven wide tablet"]
-    +rwd-serious(tablet)
-        width: $elevenWide !important
-.ts.grid [class*="twelve wide tablet"]
-    +rwd-serious(tablet)
-        width: $twelveWide !important
-.ts.grid [class*="thirteen wide tablet"]
-    +rwd-serious(tablet)
-        width: $thirteenWide !important
-.ts.grid [class*="fourteen wide tablet"]
-    +rwd-serious(tablet)
-        width: $fourteenWide !important
-.ts.grid [class*="fifteen wide tablet"]
-    +rwd-serious(tablet)
-        width: $fifteenWide !important
-.ts.grid [class*="sixteen wide tablet"]
-    +rwd-serious(tablet)
-        width: $sixteenWide !important
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
+
+    .ts.column.grid > .column[class*="#{$name} wide tablet"],
+    .ts.grid > .column.row > .column[class*="#{$name} wide tablet"],
+    .ts.grid > .row > .column[class*="#{$name} wide tablet"],
+    .ts.grid > .column[class*="#{$name} wide tablet"]
+        +rwd-serious(tablet)
+            width: $width !important
+
+        &:not([class*="wide computer"])
+            +rwd-serious(computer)
+                width: $width !important
+        &:not([class*="wide large screen"])
+            +rwd-serious(large)
+                width: $width !important
 
 //-------------------//
 //  Computer Columns
 //-------------------//
 
-.ts.grid [class*="one wide computer"]
-    +rwd(computer)
-        width: $oneWide !important
-.ts.grid [class*="two wide computer"]
-    +rwd(computer)
-        width: $twoWide !important
-.ts.grid [class*="three wide computer"]
-    +rwd(computer)
-        width: $threeWide !important
-.ts.grid [class*="four wide computer"]
-    +rwd(computer)
-        width: $fourWide !important
-.ts.grid [class*="five wide computer"]
-    +rwd(computer)
-        width: $fiveWide !important
-.ts.grid [class*="six wide computer"]
-    +rwd(computer)
-        width: $sixWide !important
-.ts.grid [class*="seven wide computer"]
-    +rwd(computer)
-        width: $sevenWide !important
-.ts.grid [class*="eight wide computer"]
-    +rwd(computer)
-        width: $eightWide !important
-.ts.grid [class*="nine wide computer"]
-    +rwd(computer)
-        width: $nineWide !important
-.ts.grid [class*="ten wide computer"]
-    +rwd(computer)
-        width: $tenWide !important
-.ts.grid [class*="eleven wide computer"]
-    +rwd(computer)
-        width: $elevenWide !important
-.ts.grid [class*="twelve wide computer"]
-    +rwd(computer)
-        width: $twelveWide !important
-.ts.grid [class*="thirteen wide computer"]
-    +rwd(computer)
-        width: $thirteenWide !important
-.ts.grid [class*="fourteen wide computer"]
-    +rwd(computer)
-        width: $fourteenWide !important
-.ts.grid [class*="fifteen wide computer"]
-    +rwd(computer)
-        width: $fifteenWide !important
-.ts.grid [class*="sixteen wide computer"]
-    +rwd(computer)
-        width: $sixteenWide !important
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
+
+    .ts.column.grid > .column[class*="#{$name} wide computer"],
+    .ts.grid > .column.row > .column[class*="#{$name} wide computer"],
+    .ts.grid > .row > .column[class*="#{$name} wide computer"],
+    .ts.grid > .column[class*="#{$name} wide computer"]
+        +rwd-serious(computer)
+            width: $width !important
+
+        &:not([class*="wide large screen"])
+            +rwd-serious(large)
+                width: $width !important
 
 //-------------------//
 //   Large Columns
 //-------------------//
 
-.ts.grid [class*="one wide large screen"]
-    +rwd(large)
-        width: $oneWide !important
-.ts.grid [class*="two wide large screen"]
-    +rwd(large)
-        width: $twoWide !important
-.ts.grid [class*="three wide large screen"]
-    +rwd(large)
-        width: $threeWide !important
-.ts.grid [class*="four wide large screen"]
-    +rwd(large)
-        width: $fourWide !important
-.ts.grid [class*="five wide large screen"]
-    +rwd(large)
-        width: $fiveWide !important
-.ts.grid [class*="six wide large screen"]
-    +rwd(large)
-        width: $sixWide !important
-.ts.grid [class*="seven wide large screen"]
-    +rwd(large)
-        width: $sevenWide !important
-.ts.grid [class*="eight wide large screen"]
-    +rwd(large)
-        width: $eightWide !important
-.ts.grid [class*="nine wide large screen"]
-    +rwd(large)
-        width: $nineWide !important
-.ts.grid [class*="ten wide large screen"]
-    +rwd(large)
-        width: $tenWide !important
-.ts.grid [class*="eleven wide large screen"]
-    +rwd(large)
-        width: $elevenWide !important
-.ts.grid [class*="twelve wide large screen"]
-    +rwd(large)
-        width: $twelveWide !important
-.ts.grid [class*="thirteen wide large screen"]
-    +rwd(large)
-        width: $thirteenWide !important
-.ts.grid [class*="fourteen wide large screen"]
-    +rwd(large)
-        width: $fourteenWide !important
-.ts.grid [class*="fifteen wide large screen"]
-    +rwd(large)
-        width: $fifteenWide !important
-.ts.grid [class*="sixteen wide large screen"]
-    +rwd(large)
-        width: $sixteenWide !important
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
 
-//-------------------//
-// Grid Based Columns
-//-------------------//
-
-.ts.grid[class*="one column"] > .column:not(.row),
-.ts.grid[class*="one column"] > .row > .column:not(.row),
-.ts.grid .row[class*="one column"] > .column:not(.row)
-    width: $oneColumn !important
-.ts.grid[class*="two column"] > .column:not(.row),
-.ts.grid[class*="two column"] > .row > .column:not(.row),
-.ts.grid .row[class*="two column"] > .column:not(.row)
-    width: $twoColumn !important
-.ts.grid[class*="three column"] > .column:not(.row),
-.ts.grid[class*="three column"] > .row > .column:not(.row),
-.ts.grid .row[class*="three column"] > .column:not(.row)
-    width: $threeColumn !important
-.ts.grid[class*="four column"] > .column:not(.row),
-.ts.grid[class*="four column"] > .row > .column:not(.row),
-.ts.grid .row[class*="four column"] > .column:not(.row)
-    width: $fourColumn !important
-.ts.grid[class*="five column"] > .column:not(.row),
-.ts.grid[class*="five column"] > .row > .column:not(.row),
-.ts.grid .row[class*="five column"] > .column:not(.row)
-    width: $fiveColumn !important
-.ts.grid[class*="six column"] > .column:not(.row),
-.ts.grid[class*="six column"] > .row > .column:not(.row),
-.ts.grid .row[class*="six column"] > .column:not(.row)
-    width: $sixColumn !important
-.ts.grid[class*="seven column"] > .column:not(.row),
-.ts.grid[class*="seven column"] > .row > .column:not(.row),
-.ts.grid .row[class*="seven column"] > .column:not(.row)
-    width: $sevenColumn !important
-.ts.grid[class*="eight column"] > .column:not(.row),
-.ts.grid[class*="eight column"] > .row > .column:not(.row),
-.ts.grid .row[class*="eight column"] > .column:not(.row)
-    width: $eightColumn !important
-.ts.grid[class*="nine column"] > .column:not(.row),
-.ts.grid[class*="nine column"] > .row > .column:not(.row),
-.ts.grid .row[class*="nine column"] > .column:not(.row)
-    width: $nineColumn !important
-.ts.grid[class*="ten column"] > .column:not(.row),
-.ts.grid[class*="ten column"] > .row > .column:not(.row),
-.ts.grid .row[class*="ten column"] > .column:not(.row)
-    width: $tenColumn !important
-.ts.grid[class*="eleven column"] > .column:not(.row),
-.ts.grid[class*="eleven column"] > .row > .column:not(.row),
-.ts.grid .row[class*="eleven column"] > .column:not(.row)
-    width: $elevenColumn !important
-.ts.grid[class*="twelve column"] > .column:not(.row),
-.ts.grid[class*="twelve column"] > .row > .column:not(.row),
-.ts.grid .row[class*="twelve column"] > .column:not(.row)
-    width: $twelveColumn !important
-.ts.grid[class*="thirteen column"] > .column:not(.row),
-.ts.grid[class*="thirteen column"] > .row > .column:not(.row),
-.ts.grid .row[class*="thirteen column"] > .column:not(.row)
-    width: $thirteenColumn !important
-.ts.grid[class*="fourteen column"] > .column:not(.row),
-.ts.grid[class*="fourteen column"] > .row > .column:not(.row),
-.ts.grid .row[class*="fourteen column"] > .column:not(.row)
-    width: $fourteenColumn !important
-.ts.grid[class*="fifteen column"] > .column:not(.row),
-.ts.grid[class*="fifteen column"] > .row > .column:not(.row),
-.ts.grid .row[class*="fifteen column"] > .column:not(.row)
-    width: $fifteenColumn !important
-.ts.grid[class*="sixteen column"] > .column:not(.row),
-.ts.grid[class*="sixteen column"] > .row > .column:not(.row),
-.ts.grid .row[class*="sixteen column"] > .column:not(.row)
-    width: $sixteenColumn !important
+    .ts.column.grid > .column[class*="#{$name} wide large screen"],
+    .ts.grid > .column.row > .column[class*="#{$name} large screen"],
+    .ts.grid > .row > .column[class*="#{$name} large screen"],
+    .ts.grid > .column[class*="#{$name} large screen"]
+        +rwd-serious(large)
+            width: $width !important
 
 //-------------------//
 //     Doubling
