@@ -8,28 +8,24 @@
     display       : flex
     flex-direction: row
     flex-wrap     : wrap
-    margin        : -#{$columnPadding}
+    margin        : calc(-1 * var(--columnPadding))
 
 .ts.grid + .ts.grid
-    margin-top: $columnPadding
+    margin-top: var(--columnPadding)
 
 .ts.grid > .column:not(.row)
-    padding-top   : $columnPadding
-    padding-bottom: $columnPadding
+    padding-top   : var(--columnPadding)
+    padding-bottom: var(--columnPadding)
 .ts.grid > .column:not(.row),
 .ts.grid > .row .column
-    padding-left : $columnPadding
-    padding-right: $columnPadding
+    padding-left : var(--columnPadding)
+    padding-right: var(--columnPadding)
 
 //-------------------//
 //       Column
 //-------------------//
 
 .ts.grid .column
-
-//-------------------//
-//    Shrinked
-//-------------------//
 
 //-------------------//
 //  Stretched Column
@@ -63,35 +59,55 @@
     flex-direction: row
     flex-wrap     : wrap
     width         : 100%
-    padding-top   : $columnPadding
-    padding-bottom: $columnPadding
+    padding-top   : var(--columnPadding)
+    padding-bottom: var(--columnPadding)
 
     &.doubling
         flex-wrap: wrap
+
+//-------------------//
+//     Collapsed
+//-------------------//
+
+.ts.grid > .row.collapsed > .column:not(:last-child)
+    padding-right: 0
+
+//-------------------//
+//      Compact
+//-------------------//
+
+.ts.grid.compact
+    margin: 0
+
+.ts.grid.compact > .column:not(.row),
+.ts.grid.compact > .row,
+.ts.grid.compact > .row > .column,
+.ts.grid > .row.compact > .column
+    padding: 0
 
 //-------------------//
 //      Relaxed
 //-------------------//
 
 .ts.grid.relaxed
-    margin-left : -#{$columnRelaxedPadding}
-    margin-right: -#{$columnRelaxedPadding}
+    margin-left : calc(-1 * var(--columnRelaxedPadding))
+    margin-right: calc(-1 * var(--columnRelaxedPadding))
 
 .ts.grid.relaxed > .column:not(.row),
 .ts.grid.relaxed > .row > .column:not(.row),
 .ts.grid > .relaxed.row > .column:not(.row)
-    padding-left : $columnRelaxedPadding
-    padding-right: $columnRelaxedPadding
+    padding-left : var(--columnRelaxedPadding)
+    padding-right: var(--columnRelaxedPadding)
 
 .ts.grid[class*="very relaxed"]
-    margin-left : -#{$columnVeryRelaxedPadding}
-    margin-right: -#{$columnVeryRelaxedPadding}
+    margin-left : calc(-1 * var(--columnVeryRelaxedPadding))
+    margin-right: calc(-1 * var(--columnVeryRelaxedPadding))
 
 .ts.grid[class*="very relaxed"] > .column:not(.row),
 .ts.grid[class*="very relaxed"] > .row > .column:not(.row),
 .ts.grid > .row[class*="very relaxed"] > .column:not(.row)
-    padding-left : $columnVeryRelaxedPadding
-    padding-right: $columnVeryRelaxedPadding
+    padding-left : var(--columnVeryRelaxedPadding)
+    padding-right: var(--columnVeryRelaxedPadding)
 
 //-------------------//
 //    Text Aligns
@@ -153,7 +169,7 @@
 //-------------------//
 
 .ts.celled.grid
-    margin: $columnPadding 0
+    margin: var(--columnPadding) 0
     border: $grid_celledBorder
 
 .ts.celled.grid > .row
@@ -181,13 +197,13 @@
 
 .ts.celled.grid > .column:not(.row),
 .ts.celled.grid > .row > .column
-    padding: $columnPadding
+    padding: var(--columnPadding)
 .ts.relaxed.celled.grid > .column:not(.row),
 .ts.relaxed.celled.grid > .row > .column
-    padding: $columnRelaxedPadding
+    padding: var(--columnRelaxedPadding)
 .ts.celled.grid[class*="very relaxed"] > .column:not(.row),
 .ts.celled.grid[class*="very relaxed"] > .row > .column
-    padding: $columnVeryRelaxedPadding
+    padding: var(--columnVeryRelaxedPadding)
 
 .ts.grid[class*="internally celled"]
     margin: 0
@@ -205,21 +221,21 @@
     content : ''
     bottom  : 0
     left    : 0
-    width   : calc(100% - #{$columnPadding * 2})
+    width   : calc(100% - (var(--columnPadding) * 2))
     height  : 1px
-    margin  : 0 $columnPadding
+    margin  : 0 var(--columnPadding)
 
     border-bottom: $grid_dividedBorder
 
 .ts.grid.relaxed[class*="vertically divided"] > .row:not(:last-child):before
-    margin-left : $columnRelaxedPadding
-    margin-right: $columnRelaxedPadding
-    width       : calc(100% - #{$columnRelaxedPadding * 2})
+    margin-left : var(--columnRelaxedPadding)
+    margin-right: var(--columnRelaxedPadding)
+    width       : calc(100% - var(--columnRelaxedPadding) * 2)
 
 .ts.grid[class*="very relaxed"][class*="vertically divided"] > .row:not(:last-child):before
-    margin-left : $columnVeryRelaxedPadding
-    margin-right: $columnVeryRelaxedPadding
-    width       : calc(100% - #{$columnVeryRelaxedPadding * 2})
+    margin-left : var(--columnVeryRelaxedPadding)
+    margin-right: var(--columnVeryRelaxedPadding)
+    width       : calc(100% - var(--columnVeryRelaxedPadding) * 2)
 
 //-------------------//
 //      Centered
@@ -256,12 +272,12 @@
 //       Padded
 //-------------------//
 
-.ts.grid.padded:not([class*="vertically padded"]):not([class*="horizontally padded"])
+.ts.grid.padded:not([class*="vertically padded"]):not([class*="horizontally padded"]):not(.container)
     margin: 0 !important
-.ts.grid[class*="vertically padded"]
+.ts.grid[class*="vertically padded"]:not(.container)
     margin-top   : 0 !important
     margin-bottom: 0 !important
-.ts.grid[class*="horizontally padded"]
+.ts.grid[class*="horizontally padded"]:not(.container)
     margin-left : 0 !important
     margin-right: 0 !important
 
@@ -396,6 +412,14 @@ $wides: one $oneWide, two $twoWide, three $threeWide, four $fourWide, five $five
     .ts.grid > .column[class*="#{$name} large screen"]
         +rwd-serious(large)
             width: $width !important
+
+//-------------------//
+//      Sticky
+//-------------------//
+
+.ts.grid > .sticky.column
+    position: sticky
+    top     : 0
 
 //-------------------//
 //     Doubling

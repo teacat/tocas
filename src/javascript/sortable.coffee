@@ -24,7 +24,7 @@ Settings =
     # 到拖曳開始之前必須按住的指定毫秒數，避免點擊成為不必要的拖曳。
     delay         : 0
     # 是否能在相同拖放排序內重新排序。
-    #sort          : true
+    sort          : true
     # 群組名稱，相同的名稱拖放排序清單可以交替其項目。
     group         : false
     # 此拖放排序的支援模式。（`all` 表示可拖放、`put` 表示僅可放入、`pull` 表示僅可移出、`clone` 表示僅可移出複製）
@@ -204,6 +204,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
                 if $under.prev().length isnt 0 and $under.prev().attr(Attribute.HIDDEN) is undefined and ($under.next().length is 0 or $under.next().attr(Attribute.HIDDEN) isnt undefined)
                     ts(Selector.PLACEHOLDER).insertAfter $under
+                else if settings.vertical is false and xoffset < rect.width / 2
+                    ts(Selector.PLACEHOLDER).insertBefore $under
+                else if settings.vertical is false and xoffset > rect.width / 2
+                    ts(Selector.PLACEHOLDER).insertAfter $under
                 else if yoffset < rect.height / 3
                     ts(Selector.PLACEHOLDER).insertBefore $under
                 else
@@ -281,9 +285,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $this.on Event.CHANGE, (event, context, valueElement, value) =>
                     debug '發生 CHANGE 事件', context, valueElement, value
                     settings.onChange.call context, event, valueElement, value
-                #$this.on Event.ADD, (event, context, valueElement, value) =>
-                #    debug '發生 ADD 事件', context, valueElement, value
-                #    settings.onAdd.call context, event, valueElement, value
                 $this.on Event.REMOVE, (event, context, valueElement, value) =>
                     debug '發生 REMOVE 事件', context, valueElement, value
                     settings.onRemove.call context, event, valueElement, value
@@ -305,6 +306,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     if group
                         if group isnt module.get.group()
                             return
+
                     if module.has.group() and not group
                         return
 
@@ -312,7 +314,13 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                         if module.get.pointing.$container().get() isnt element
                             module.move.placeholder event.clientX, event.clientY
                     else
-                        module.move.placeholder event.clientX, event.clientY
+                        if module.get.pointing.$container().sortable('get mode') is 'clone'
+
+                        else if module.get.pointing.$container().sortable('get mode') is 'pull'
+                            if module.get.pointing.$container().get() is element
+                                module.move.placeholder event.clientX, event.clientY
+                        else
+                            module.move.placeholder event.clientX, event.clientY
 
 
 
@@ -348,16 +356,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     module.create.placeholder $draggable
 
 
-                    #if settings.mode is 'clone'
-                    #    if module.get.pointing.$container().get() isnt element
-                    #        module.create.placeholder $draggable
-                    #else
-                    #    module.create.placeholder $draggable
 
-
-
-
-                    #if settings.mode isnt 'clone'
 
                     $draggable.attr 'hidden', 'hidden'
 
@@ -397,16 +396,29 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                         v = con.sortable 'get value'
                         x = con.sortable 'get draggable amount'
 
+
+
                     originalValue = module.get.value()
                     originalDraggable = module.get.draggable.amount()
 
 
                     module.remove.ghost()
+
+
+
                     ts(Selector.HIDDEN_DRAGGABLE).clone().insertAfter(ts(Selector.HIDDEN_DRAGGABLE)).attr('recoverable', 'true')
                     ts(Selector.HIDDEN_DRAGGABLE).not('[recoverable]').insertAfter(ts(Selector.PLACEHOLDER)).attr('confirmed', 'true').removeAttr('hidden')
                     module.remove.placeholder()
 
+
+
+
                     module.trigger.drop()
+
+                    if point and con.sortable('get mode') is 'pull' and not con.contains('[confirmed]')
+                        ts('[recoverable]').removeAttr('hidden').removeAttr('recoverable')
+                        ts('[confirmed]').remove()
+                        return
 
 
                     if not point
