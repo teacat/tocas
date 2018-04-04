@@ -147,6 +147,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         set:
             dragging: (element) =>
                 ts(element).attr Attribute.DRAGGING, 'true'
+            group: (name) =>
+                $this.attr Attribute.GROUP, settings.group
 
         get:
             $dragging: =>
@@ -533,19 +535,13 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         initialize: =>
             debug '初始化拖放排序', element
             module.bind.events()
-
             $this
                 .find       Selector.NATIVE_DRAGGABLE
                 .removeAttr Attribute.NATIVE_DRAGGABLE
                 .attr       Attribute.DRAGGABLE, 'true'
-
-            $this
-                .attr Attribute.CONTAINER, true
-
-
-
+                .attr       Attribute.CONTAINER, true
             if settings.group isnt false
-                $this.attr Attribute.GROUP, settings.group
+                module.set.group settings.group
 
         instantiate: =>
             debug '實例化拖放排序', element

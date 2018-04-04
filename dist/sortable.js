@@ -154,6 +154,9 @@
       set: {
         dragging: (element) => {
           return ts(element).attr(Attribute.DRAGGING, 'true');
+        },
+        group: (name) => {
+          return $this.attr(Attribute.GROUP, settings.group);
         }
       },
       get: {
@@ -519,10 +522,9 @@
       initialize: () => {
         debug('初始化拖放排序', element);
         module.bind.events();
-        $this.find(Selector.NATIVE_DRAGGABLE).removeAttr(Attribute.NATIVE_DRAGGABLE).attr(Attribute.DRAGGABLE, 'true');
-        $this.attr(Attribute.CONTAINER, true);
+        $this.find(Selector.NATIVE_DRAGGABLE).removeAttr(Attribute.NATIVE_DRAGGABLE).attr(Attribute.DRAGGABLE, 'true').attr(Attribute.CONTAINER, true);
         if (settings.group !== false) {
-          return $this.attr(Attribute.GROUP, settings.group);
+          return module.set.group(settings.group);
         }
       },
       instantiate: () => {
