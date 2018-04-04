@@ -5,7 +5,7 @@
   // ------------------------------------------------------------------------
 
   // 模組名稱。
-  var Attribute, ClassName, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, NAME, Selector, Settings;
+  var Attribute, ClassName, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, Metadata, NAME, Selector, Settings;
 
   NAME = 'sortable';
 
@@ -74,6 +74,12 @@
     MOUSEDOWN: `mousedown${EVENT_NAMESPACE}`
   };
 
+  // 中繼資料名稱。
+  Metadata = {
+    X_OFFSET: 'xOffset',
+    Y_OFFSET: 'yOffset'
+  };
+
   // 元素標籤。
   Attribute = {
     GROUP: 'data-draggable-group',
@@ -81,12 +87,8 @@
     DRAGGABLE: 'data-draggable',
     DRAGGING: 'data-draggable-dragging',
     VALUE: 'data-value',
-    MODE: 'data-draggable-mode',
-    SORT: 'data-draggable-sort',
     GHOST: 'data-draggable-ghost',
     PLACEHOLDER: 'data-draggable-placeholder',
-    X_OFFSET: 'data-draggable-x-offset',
-    Y_OFFSET: 'data-draggable-y-offset',
     NATIVE_DRAGGABLE: 'draggable',
     HIDDEN: 'hidden'
   };
@@ -149,11 +151,6 @@
           return $(Selector.HIDDEN_DRAGGABLE).removeAttr(Attribute.HIDDEN);
         }
       },
-      prepare: {
-        draggable: () => {
-          return $this.find(Selector.NATIVE_DRAGGABLE).removeAttr(Attribute.NATIVE_DRAGGABLE).attr(Attribute.DRAGGABLE, 'true');
-        }
-      },
       set: {
         dragging: (element) => {
           return ts(element).attr(Attribute.DRAGGING, 'true');
@@ -185,6 +182,9 @@
         mode: () => {
           return settings.mode;
         },
+        sort: () => {
+          return settings.sort;
+        },
         value: () => {
           var values;
           values = [];
@@ -209,24 +209,20 @@
         },
         child: (element) => {
           return $this.contains(element);
-        },
-        initialized: (element) => {
-          return ts(element).attr(Attribute.CONTAINER) === 'true';
         }
       },
       same: {
         group: (x, y) => {
-          var $container, group;
-          $container = ts(document.elementFromPoint(x, y)).closest(Selector.CONTAINER);
-          if ($container.get() === element) {
+          var $container, groupName;
+          $container = ts.fromPoint(x, y).closest(Selector.CONTAINER);
+          if ($container.is(element)) {
             return true;
           }
-          group = $container.attr(Attribute.GROUP);
-          if (!group) {
+          groupName = $container.sortable('get group name');
+          if (groupName === null) {
             return false;
-          } else {
-            return group === module.get.group.name();
           }
+          return groupName === module.get.group.name();
         }
       },
       has: {
@@ -239,18 +235,19 @@
       },
       create: {
         ghost: (original, x, y) => {
-          var $ghost, $original, rect;
+          var $original, rect;
           $original = ts(original);
           rect = $original.rect();
-          return $ghost = $original.clone().attr(Attribute.GHOST, 'true').attr(Attribute.X_OFFSET, x - rect.x).attr(Attribute.Y_OFFSET, y - rect.y).css({
+          return $original.clone().attr(Attribute.GHOST, 'true').data({
+            [`${Metadata.X_OFFSET}`]: x - rect.x,
+            [`${Metadata.Y_OFFSET}`]: y - rect.y
+          }).css({
             width: rect.width,
             height: rect.height
           }).appendTo(Selector.BODY);
         },
         placeholder: (original) => {
-          var $original, $placeholder;
-          $original = ts(original);
-          return $placeholder = $original.clone().attr(Attribute.PLACEHOLDER, 'true').appendTo(Selector.BODY);
+          return ts(original).clone().attr(Attribute.PLACEHOLDER, 'true').appendTo(Selector.BODY);
         }
       },
       remove: {
@@ -266,16 +263,16 @@
           var $ghost;
           $ghost = ts(Selector.GHOST);
           return $ghost.css({
-            top: y - parseInt($ghost.attr(Attribute.Y_OFFSET)),
-            left: x - parseInt($ghost.attr(Attribute.X_OFFSET))
+            top: y - $ghost.data(Metadata.Y_OFFSET),
+            left: x - $ghost.data(Metadata.X_OFFSET)
           });
         },
         placeholder: (x, y) => {
-          var $container, $element, $last, $point, isDraggingFirstChild, isFirstChild, isLefter, isUpper, rect;
-          $point = ts(document.elementFromPoint(x, y));
-          $element = $point.closest(Selector.DRAGGABLE);
-          if ($element.length === 0) {
-            $container = $point.closest(Selector.CONTAINER);
+          var $container, $draggable, $last, $pointing, isDraggingFirstChild, isFirstChild, isLefter, isUpper, rect;
+          $pointing = ts.fromPoint(x, y);
+          $draggable = $pointing.closest(Selector.DRAGGABLE);
+          if ($draggable.length === 0) {
+            $container = $pointing.closest(Selector.CONTAINER);
             if ($container.length !== 0) {
               if ($container.find(Selector.TRUE_DRAGGABLE).length === 0) {
                 module.insert.placeholder($container);
@@ -294,10 +291,10 @@
             }
             return;
           }
-          rect = $element.rect();
+          rect = $draggable.rect();
           isUpper = y - rect.y < rect.height / 2;
           isLefter = x - rect.x < rect.width / 2;
-          isFirstChild = $element.prev().length === 0;
+          isFirstChild = $draggable.prev().length === 0;
           isDraggingFirstChild = ts(Selector.DRAGGING).prev().length === 0;
           if (isUpper) {
             if (isFirstChild || isDraggingFirstChild) {
@@ -375,21 +372,21 @@
             if (!module.same.group(event.clientX, event.clientY)) {
               return;
             }
-            $element = ts(document.elementFromPoint(event.clientX, event.clientY));
+            $element = ts.fromPoint(event.clientX, event.clientY);
             $container = $element.closest(Selector.CONTAINER);
-            isSameNode = $container.get().isSameNode(element);
+            isSameNode = $container.is(element);
             hasPlaceholder = module.has.placeholder();
-            if ($container.attr(Attribute.MODE) === 'pull') {
+            if ($container.sortable('get mode') === 'pull') {
               return;
             }
             if (!settings.sort && isSameNode && hasPlaceholder) {
               return;
             }
             $placeholderContainer = ts(Selector.PLACEHOLDER).closest(Selector.CONTAINER);
-            if (!isSameNode && $placeholderContainer.attr(Attribute.MODE) === 'put' && $placeholderContainer.attr(Attribute.SORT) === 'true') {
+            if (!isSameNode && $placeholderContainer.sortable('get mode') === 'put' && $placeholderContainer.sortable('get sort') === 'true') {
               return;
             }
-            if (!isSameNode && $container.attr(Attribute.SORT) === 'false') {
+            if (!isSameNode && $container.sortable('get sort') === 'false') {
               if ($container.find(Selector.DRAGGABLE).length === 0) {
                 module.insert.placeholder($container);
               } else {
@@ -483,7 +480,7 @@
             module.trigger.drop();
             $container = ts(event.target).closest(Selector.CONTAINER);
             if ($container.length !== 0) {
-              isSameNode = $container.get().isSameNode(element);
+              isSameNode = $container.is(element);
             } else {
               isSameNode = false;
             }
@@ -522,8 +519,8 @@
       initialize: () => {
         debug('初始化拖放排序', element);
         module.bind.events();
-        module.prepare.draggable();
-        $this.attr(Attribute.CONTAINER, true).attr(Attribute.MODE, settings.mode).attr(Attribute.SORT, settings.sort);
+        $this.find(Selector.NATIVE_DRAGGABLE).removeAttr(Attribute.NATIVE_DRAGGABLE).attr(Attribute.DRAGGABLE, 'true');
+        $this.attr(Attribute.CONTAINER, true);
         if (settings.group !== false) {
           return $this.attr(Attribute.GROUP, settings.group);
         }

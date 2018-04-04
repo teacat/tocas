@@ -70,6 +70,11 @@ Event =
     MOUSEUP  : "mouseup#{EVENT_NAMESPACE}"
     MOUSEDOWN: "mousedown#{EVENT_NAMESPACE}"
 
+# 中繼資料名稱。
+Metadata =
+    X_OFFSET: 'xOffset'
+    Y_OFFSET: 'yOffset'
+
 # 元素標籤。
 Attribute =
     GROUP           : 'data-draggable-group'
@@ -77,12 +82,8 @@ Attribute =
     DRAGGABLE       : 'data-draggable'
     DRAGGING        : 'data-draggable-dragging'
     VALUE           : 'data-value'
-    MODE            : 'data-draggable-mode'
-    SORT            : 'data-draggable-sort'
     GHOST           : 'data-draggable-ghost'
     PLACEHOLDER     : 'data-draggable-placeholder'
-    X_OFFSET        : 'data-draggable-x-offset'
-    Y_OFFSET        : 'data-draggable-y-offset'
     NATIVE_DRAGGABLE: 'draggable'
     HIDDEN          : 'hidden'
 
@@ -143,13 +144,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             original: =>
                 $(Selector.HIDDEN_DRAGGABLE).removeAttr Attribute.HIDDEN
 
-        prepare:
-            draggable: =>
-                $this
-                    .find       Selector.NATIVE_DRAGGABLE
-                    .removeAttr Attribute.NATIVE_DRAGGABLE
-                    .attr       Attribute.DRAGGABLE, 'true'
-
         set:
             dragging: (element) =>
                 ts(element).attr Attribute.DRAGGING, 'true'
@@ -171,6 +165,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     $this.attr Attribute.GROUP
             mode: =>
                 settings.mode
+            sort: =>
+                settings.sort
             value: =>
                 values = []
                 $this
@@ -189,20 +185,18 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 ts(element).attr(Attribute.DRAGGABLE) is 'true'
             child: (element) =>
                 $this.contains element
-            initialized: (element) =>
-                ts(element).attr(Attribute.CONTAINER) is 'true'
 
         same:
             group: (x, y) =>
-                $container = ts(document.elementFromPoint(x, y)).closest Selector.CONTAINER
-                if $container.get() is element
+                $container = ts
+                    .fromPoint x, y
+                    .closest   Selector.CONTAINER
+                if $container.is element
                     return true
-
-                group = $container.attr Attribute.GROUP
-                if not group
+                groupName = $container.sortable 'get group name'
+                if groupName is null
                     return false
-                else
-                    return group is module.get.group.name()
+                return groupName is module.get.group.name()
 
         has:
             dragging: =>
@@ -214,22 +208,21 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             ghost: (original, x, y) =>
                 $original = ts original
                 rect      = $original.rect()
-                $ghost    = $original
+                $original
                     .clone()
-                    .attr Attribute.GHOST   , 'true'
-                    .attr Attribute.X_OFFSET, x - rect.x
-                    .attr Attribute.Y_OFFSET, y - rect.y
+                    .attr Attribute.GHOST, 'true'
+                    .data
+                        "#{Metadata.X_OFFSET}": x - rect.x
+                        "#{Metadata.Y_OFFSET}": y - rect.y
                     .css
                         width : rect.width
                         height: rect.height
                     .appendTo Selector.BODY
             placeholder: (original) =>
-                $original    = ts original
-                $placeholder = $original
+                ts original
                     .clone()
                     .attr     Attribute.PLACEHOLDER, 'true'
                     .appendTo Selector.BODY
-
 
         remove:
             ghost: =>
@@ -241,26 +234,21 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             ghost: (x, y) =>
                 $ghost = ts Selector.GHOST
                 $ghost.css
-                    top : y - parseInt($ghost.attr(Attribute.Y_OFFSET))
-                    left: x - parseInt($ghost.attr(Attribute.X_OFFSET))
+                    top : y - $ghost.data Metadata.Y_OFFSET
+                    left: x - $ghost.data Metadata.X_OFFSET
             placeholder: (x, y) =>
-                $point = ts document.elementFromPoint x, y
-                $element = $point.closest(Selector.DRAGGABLE)
+                $pointing  = ts.fromPoint x, y
+                $draggable = $pointing.closest Selector.DRAGGABLE
 
-                if $element.length is 0
-
-                    $container = $point.closest(Selector.CONTAINER)
-
+                if $draggable.length is 0
+                    $container = $pointing.closest Selector.CONTAINER
                     if $container.length isnt 0
-
                         if $container.find(Selector.TRUE_DRAGGABLE).length is 0
                             module.insert.placeholder($container)
                             return
-
                         else
-
-                            rect = $container.rect()
-                            isUpper  = y - rect.y < rect.height / 2
+                            rect    = $container.rect()
+                            isUpper = y - rect.y < rect.height / 2
 
                             if not isUpper
                                 $last = $container.find(Selector.TRUE_DRAGGABLE).last()
@@ -268,16 +256,12 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                     module.append.placeholder 'after', $last
                                     return
 
-
-
-
-
                     return
 
-                rect         = $element.rect()
+                rect         = $draggable.rect()
                 isUpper      = y - rect.y < rect.height / 2
                 isLefter     = x - rect.x < rect.width  / 2
-                isFirstChild = $element.prev().length is 0
+                isFirstChild = $draggable.prev().length is 0
                 isDraggingFirstChild = ts(Selector.DRAGGING).prev().length is 0
 
                 if isUpper
@@ -349,7 +333,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                         return
 
 
-                    $element = ts document.elementFromPoint event.clientX, event.clientY
+                    $element = ts.fromPoint event.clientX, event.clientY
 
 
 
@@ -357,10 +341,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
 
 
-                    isSameNode = $container.get().isSameNode(element)
+                    isSameNode = $container.is(element)
                     hasPlaceholder = module.has.placeholder()
 
-                    if $container.attr(Attribute.MODE) is 'pull'
+                    if $container.sortable('get mode') is 'pull'
                         return
 
                     if not settings.sort and isSameNode and hasPlaceholder
@@ -370,11 +354,11 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     $placeholderContainer = ts(Selector.PLACEHOLDER).closest(Selector.CONTAINER)
 
 
-                    if not isSameNode and $placeholderContainer.attr(Attribute.MODE) is 'put' and  $placeholderContainer.attr(Attribute.SORT) is 'true'
+                    if not isSameNode and $placeholderContainer.sortable('get mode') is 'put' and  $placeholderContainer.sortable('get sort') is 'true'
                         return
 
 
-                    if not isSameNode and $container.attr(Attribute.SORT) is 'false'
+                    if not isSameNode and $container.sortable('get sort') is 'false'
                         if $container.find(Selector.DRAGGABLE).length is 0
                             module.insert.placeholder $container
                         else
@@ -495,7 +479,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     $container = ts(event.target).closest(Selector.CONTAINER)
 
                     if $container.length isnt 0
-                        isSameNode = $container.get().isSameNode(element)
+                        isSameNode = $container.is(element)
                     else
                         isSameNode = false
 
@@ -549,12 +533,16 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         initialize: =>
             debug '初始化拖放排序', element
             module.bind.events()
-            module.prepare.draggable()
+
+            $this
+                .find       Selector.NATIVE_DRAGGABLE
+                .removeAttr Attribute.NATIVE_DRAGGABLE
+                .attr       Attribute.DRAGGABLE, 'true'
 
             $this
                 .attr Attribute.CONTAINER, true
-                .attr Attribute.MODE     , settings.mode
-                .attr Attribute.SORT     , settings.sort
+
+
 
             if settings.group isnt false
                 $this.attr Attribute.GROUP, settings.group
