@@ -66,6 +66,10 @@ ts.isPlainObject = (object) ->
 ts.isTouchDevice = ->
     'ontouchstart' of window or navigator.maxTouchPoints
 
+# 從指定坐標取得元素。
+ts.fromPoint = (x, y) =>
+    ts(document.elementFromPoint(x, y))
+
 # 延展物件的函式，與 ES 的 `...` 不同之處在於 extend 並不會替換掉整個子物件，而會以補插的方式執行。
 # https://gomakethings.com/vanilla-javascript-version-of-jquery-extend/
 ts.extend =->
@@ -105,14 +109,21 @@ ts.register = ({NAME, MODULE_NAMESPACE, Settings}, starter) =>
         methodInvoked  = typeof query is 'string'
         returnedValue  = undefined
 
+
+
+
         consoleText = (args) =>
-            "%c#{NAME}%c #{args[0]}#{'\n' if args.length > 1}"
+            #currentdate = new Date();
+            #datetime = "#{currentdate.getFullYear()}/#{(currentdate.getMonth()+1)}/#{currentdate.getDate()}/@#{currentdate.getHours()}:#{currentdate.getMinutes()}:#{currentdate.getSeconds()}"
+
+            "%c#{NAME}%c #{args[0]}"
         headerCSS = """
             background   : #EEE;
             color        : #5A5A5A;
             font-size    : 1em;
-            padding      : 5px 8px;
-            line-height  : 30px;
+            padding      : 8px 8px;
+            line-height  : 5px;
+            margin       : 5px 0 5px 0;
             border-radius: 1000em;
         """
         errorHeaderCSS = """
@@ -124,6 +135,7 @@ ts.register = ({NAME, MODULE_NAMESPACE, Settings}, starter) =>
             font-weight: bold;
         """
 
+
         $allModules.each (_, index) ->
             $this    = ts @
             element  = @
@@ -132,8 +144,7 @@ ts.register = ({NAME, MODULE_NAMESPACE, Settings}, starter) =>
 
             debug = ->
                 return if not settings.debug or settings.silent
-                debug = Function.prototype.bind.call console.info, console, consoleText(arguments), headerCSS, messageCSS
-                debug.apply console, Array.prototype.slice.call(arguments, 1)
+                console.info.call console, consoleText(arguments), headerCSS, messageCSS, "\n", Array.prototype.slice.call(arguments).slice(1)...
 
             error = ->
                 return if settings.silent
@@ -156,12 +167,12 @@ ts.register = ({NAME, MODULE_NAMESPACE, Settings}, starter) =>
                     debug '找不到樹狀結構變更觀測者，略過結構監聽動作', element
                     return
                 observer = new MutationObserver (mutations) =>
-                    debug 'DOM 樹狀結構已變更，更新快取資料'
+                    #debug 'DOM 樹狀結構已變更，更新快取資料'
                     module.refresh()
                 observer.observe element,
                     childList : true
                     subtree   : true
-                debug '已設置 DOM 樹狀結構異動觀察者', observer
+                #debug '已設置 DOM 樹狀結構異動觀察者', observer
 
             invoke = (query, passedArguments, context) =>
                 object          = instance
@@ -405,15 +416,20 @@ ts.fn.remove =
 # 選擇一些元素，然後用來比對目前的選擇器元素是否在這群當中。
 ts.fn.is =
     value: (selector) ->
-        compareElements = document.querySelectorAll(selector)
-        isInElements    = false
-
+        isInElements = false
+        if selector instanceof HTMLElement
+            return @get(0)?.isSameNode(selector)
         @each ->
-            compareElements.forEach (compareElement) ->
+            ts(selector).each (compareElement) =>
                 isInElements = true if @ is compareElement
-            , @
-
         return isInElements
+
+# Contains
+#
+# 是否擁有指定子元素。
+ts.fn.contains =
+    value: (selector) ->
+        @get(0)?.contains(ts(selector).get())
 
 # Not
 #
@@ -608,6 +624,13 @@ ts.fn.css =
             for key of name
                 @each -> @style[key] = name[key]
             @
+
+# Rect
+#
+# 回傳選擇器元素的渲染形狀。
+ts.fn.rect =
+    value: ->
+        @get(0)?.getBoundingClientRect()
 
 # On
 #

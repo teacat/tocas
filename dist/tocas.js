@@ -79,6 +79,11 @@
     return 'ontouchstart' in window || navigator.maxTouchPoints;
   };
 
+  // 從指定坐標取得元素。
+  ts.fromPoint = (x, y) => {
+    return ts(document.elementFromPoint(x, y));
+  };
+
   // 延展物件的函式，與 ES 的 `...` 不同之處在於 extend 並不會替換掉整個子物件，而會以補插的方式執行。
   // https://gomakethings.com/vanilla-javascript-version-of-jquery-extend/
   ts.extend = function() {
@@ -515,15 +520,17 @@
   // 選擇一些元素，然後用來比對目前的選擇器元素是否在這群當中。
   ts.fn.is = {
     value: function(selector) {
-      var compareElements, isInElements;
-      compareElements = document.querySelectorAll(selector);
+      var isInElements, ref;
       isInElements = false;
+      if (selector instanceof HTMLElement) {
+        return (ref = this.get(0)) != null ? ref.isSameNode(selector) : void 0;
+      }
       this.each(function() {
-        return compareElements.forEach(function(compareElement) {
+        return ts(selector).each((compareElement) => {
           if (this === compareElement) {
             return isInElements = true;
           }
-        }, this);
+        });
       });
       return isInElements;
     }
