@@ -431,6 +431,13 @@ ts.fn.contains =
     value: (selector) ->
         @get(0)?.contains(ts(selector).get())
 
+# Exists
+#
+# 是否存在。
+ts.fn.exists =
+    value: ->
+        @length isnt 0
+
 # Not
 #
 # 將指定元素從選擇器中剔除。

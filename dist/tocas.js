@@ -546,6 +546,15 @@
     }
   };
 
+  // Exists
+
+  // 是否存在。
+  ts.fn.exists = {
+    value: function() {
+      return this.length !== 0;
+    }
+  };
+
   // Not
 
   // 將指定元素從選擇器中剔除。
