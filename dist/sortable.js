@@ -5,7 +5,7 @@
   // ------------------------------------------------------------------------
 
   // 模組名稱。
-  var Attribute, ClassName, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, Metadata, NAME, Selector, Settings;
+  var Attribute, ClassName, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, Metadata, Mode, NAME, Order, Selector, Settings;
 
   NAME = 'sortable';
 
@@ -47,8 +47,6 @@
     onDeny: () => {},
     // 當放下時跟一開始沒有差異時所會呼叫的回呼函式。
     onCancel: () => {},
-    // 當項目在相同清單進行重新排序時所會呼叫的回呼函式。
-    // onSort        : =>
     // 當有變動（新增、移除、重新排序）時所會呼叫的回呼函式。
     onChange: (valueElement, value) => {},
     // 當項目新增時所會呼叫的回呼函式，回傳 `false` 表示不接受此新增。
@@ -77,7 +75,21 @@
   // 中繼資料名稱。
   Metadata = {
     X_OFFSET: 'xOffset',
-    Y_OFFSET: 'yOffset'
+    Y_OFFSET: 'yOffset',
+    ENABLE: 'enable'
+  };
+
+  // 模式 =
+  Mode = {
+    PULL: 'pull',
+    PUT: 'put',
+    ALL: 'all'
+  };
+
+  // 順序。
+  Order = {
+    AFTER: 'after',
+    BEFORE: 'before'
   };
 
   // 元素標籤。
@@ -121,29 +133,55 @@
   // 模組註冊
   // ------------------------------------------------------------------------
   ts.register({NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, element, debug, settings}) => {
-    var module;
+    var $original, $placeholder, draggingInterval, draggingTimer, module;
     // ------------------------------------------------------------------------
     // 區域變數
     // ------------------------------------------------------------------------
-
+    $original = ts();
+    $placeholder = ts();
+    draggingTimer = null;
+    draggingInterval = 350;
     // ------------------------------------------------------------------------
     // 模組定義
     // ------------------------------------------------------------------------
     return module = {
       sort: (values) => {
-        var i, len, results, value;
-        results = [];
+        var i, len, value;
         for (i = 0, len = values.length; i < len; i++) {
           value = values[i];
-          results.push($this.find(Selector.DRAGGABLE_VALUE(value)).appendTo(element));
+          $this.find(Selector.DRAGGABLE_VALUE(value)).appendTo(element);
         }
-        return results;
+        return $allModules;
       },
-      enable: () => {},
-      disable: () => {},
+      enable: () => {
+        $this.data(Metadata.ENABLE, true);
+        return $allModules;
+      },
+      disable: () => {
+        $this.data(Metadata.ENABLE, false);
+        return $allModules;
+      },
+      start: {
+        dragging: () => {
+          draggingTimer = setInterval(() => {
+            return module.trigger.drag();
+          }, draggingInterval);
+          return $original.attr(Attribute.DRAGGING, 'true');
+        }
+      },
+      stop: {
+        dragging: () => {
+          return clearInterval(draggingTimer);
+        }
+      },
+      reset: {
+        dragging: () => {
+          return ts(Selector.DRAGGING).removeAttr(Attribute.DRAGGING);
+        }
+      },
       hide: {
-        original: (original) => {
-          return $(original).attr(Attribute.HIDDEN, 'hidden');
+        original: () => {
+          return $original.attr(Attribute.HIDDEN, 'hidden');
         }
       },
       unhide: {
@@ -152,9 +190,6 @@
         }
       },
       set: {
-        dragging: (element) => {
-          return ts(element).attr(Attribute.DRAGGING, 'true');
-        },
         group: (name) => {
           return $this.attr(Attribute.GROUP, settings.group);
         }
@@ -163,11 +198,13 @@
         $dragging: () => {
           return ts(Selector.DRAGGING);
         },
-        $placeholder: () => {
-          return ts(Selector.PLACEHOLDER);
+        $draggable: (element) => {
+          return ts(element).closest(Selector.DRAGGABLE);
         },
-        $original: () => {
-          return ts(Selector.HIDDEN_DRAGGABLE);
+        last: {
+          $item: () => {
+            return $this.find(Selector.DRAGGABLE).last();
+          }
         },
         dragging: {
           element: () => {
@@ -176,6 +213,9 @@
           value: () => {
             return ts(Selector.HIDDEN_DRAGGABLE).attr(Attribute.VALUE);
           }
+        },
+        container: (element) => {
+          return ts(element).closest(Selector.CONTAINER);
         },
         group: {
           name: () => {
@@ -201,56 +241,69 @@
           return values;
         }
       },
-      reset: {
-        dragging: () => {
-          return ts(Selector.DRAGGING).removeAttr(Attribute.DRAGGING);
-        }
-      },
       is: {
         draggable: (element) => {
           return ts(element).attr(Attribute.DRAGGABLE) === 'true';
         },
         child: (element) => {
           return $this.contains(element);
-        }
-      },
-      same: {
-        group: (x, y) => {
-          var $container, groupName;
-          $container = ts.fromPoint(x, y).closest(Selector.CONTAINER);
-          if ($container.is(element)) {
-            return true;
+        },
+        sortable: () => {
+          return settings.sort === true;
+        },
+        vertical: () => {
+          return settings.vertical === true;
+        },
+        enable: () => {
+          return $this.data(Metadata.ENABLE);
+        },
+        disable: () => {
+          return !$this.data(Metadata.ENABLE);
+        },
+        same: {
+          group: ($target) => {
+            var $container, name;
+            $container = module.get.container($target);
+            if ($container.is(element)) {
+              return true;
+            }
+            name = $container.sortable('get group name');
+            return name !== null && name === module.get.group.name();
+          },
+          container: ($container) => {
+            return $container.is(element);
           }
-          groupName = $container.sortable('get group name');
-          if (groupName === null) {
-            return false;
-          }
-          return groupName === module.get.group.name();
+        },
+        handle: (element) => {
+          return ts(element).is(settings.handle);
         }
       },
       has: {
         dragging: () => {
-          return $this.find(Selector.DRAGGING).length !== 0;
+          return $this.find(Selector.DRAGGING).exists();
         },
         placeholder: () => {
-          return $this.find(Selector.PLACEHOLDER).length !== 0;
+          return $this.find(Selector.PLACEHOLDER).exists();
+        },
+        item: () => {
+          return $this.find(Selector.DRAGGABLE).exists();
+        },
+        handle: () => {
+          return settings.handle !== false;
         }
       },
       create: {
-        ghost: (original, x, y) => {
-          var $original, rect;
-          $original = ts(original);
-          rect = $original.rect();
+        ghost: (x, y) => {
           return $original.clone().attr(Attribute.GHOST, 'true').data({
-            [`${Metadata.X_OFFSET}`]: x - rect.x,
-            [`${Metadata.Y_OFFSET}`]: y - rect.y
+            [`${Metadata.X_OFFSET}`]: x - $original.rect().x,
+            [`${Metadata.Y_OFFSET}`]: y - $original.rect().y
           }).css({
-            width: rect.width,
-            height: rect.height
+            width: $original.rect().width,
+            height: $original.rect().height
           }).appendTo(Selector.BODY);
         },
-        placeholder: (original) => {
-          return ts(original).clone().attr(Attribute.PLACEHOLDER, 'true').appendTo(Selector.BODY);
+        placeholder: () => {
+          return $placeholder = $original.clone().attr(Attribute.PLACEHOLDER, 'true').appendTo(Selector.BODY);
         }
       },
       remove: {
@@ -271,67 +324,51 @@
           });
         },
         placeholder: (x, y) => {
-          var $container, $draggable, $last, $pointing, isDraggingFirstChild, isFirstChild, isLefter, isUpper, rect;
+          var $container, $draggable, $last, $pointing, isAllOrSin, isTanOrCos, isVertical;
           $pointing = ts.fromPoint(x, y);
           $draggable = $pointing.closest(Selector.DRAGGABLE);
-          if ($draggable.length === 0) {
-            $container = $pointing.closest(Selector.CONTAINER);
-            if ($container.length !== 0) {
-              if ($container.find(Selector.TRUE_DRAGGABLE).length === 0) {
-                module.insert.placeholder($container);
-                return;
-              } else {
-                rect = $container.rect();
-                isUpper = y - rect.y < rect.height / 2;
-                if (!isUpper) {
-                  $last = $container.find(Selector.TRUE_DRAGGABLE).last();
-                  if ($last.length !== 0) {
-                    module.append.placeholder('after', $last);
-                    return;
-                  }
-                }
-              }
+          $container = module.get.container($draggable);
+          if ($draggable.exists()) {
+            isAllOrSin = y - $draggable.rect().y < $draggable.rect().height / 2;
+            isTanOrCos = x - $draggable.rect().x < $draggable.rect().width / 2;
+            isVertical = $container.sortable('is vertical');
+            if ((isAllOrSin && isVertical) || (isTanOrCos && !isVertical)) {
+              $placeholder.insertBefore($draggable);
+            } else {
+              $placeholder.insertAfter($draggable);
             }
             return;
           }
-          rect = $draggable.rect();
-          isUpper = y - rect.y < rect.height / 2;
-          isLefter = x - rect.x < rect.width / 2;
-          isFirstChild = $draggable.prev().length === 0;
-          isDraggingFirstChild = ts(Selector.DRAGGING).prev().length === 0;
-          if (isUpper) {
-            if (isFirstChild || isDraggingFirstChild) {
-              return ts(Selector.PLACEHOLDER).insertBefore($element);
-            } else {
-              return ts(Selector.PLACEHOLDER).insertBefore($element);
-            }
-          } else {
-            return ts(Selector.PLACEHOLDER).insertAfter($element);
+          $container = module.get.container($pointing);
+          $draggable = $container.find(Selector.TRUE_DRAGGABLE);
+          if (!$container.exists()) {
+            return;
+          }
+          if (!$draggable.exists()) {
+            module.insert.placeholder($container);
+            return;
+          }
+          $last = $draggable.last();
+          if ($last.exists()) {
+            return module.append.placeholder(Order.AFTER, $last);
           }
         },
-        original: (x, y) => {
-          var $dragging, $placeholder;
-          $dragging = module.get.$dragging();
-          $placeholder = module.get.$placeholder();
-          return $dragging.insertAfter($placeholder);
+        original: () => {
+          return module.get.$dragging().insertAfter(ts(Selector.PLACEHOLDER));
         }
       },
       append: {
         placeholder: (order, to) => {
-          var $placeholder;
-          $placeholder = module.get.$placeholder();
           switch (order) {
-            case 'before':
+            case Order.BEFORE:
               return $placeholder.insertBefore(to);
-            case 'after':
+            case Order.AFTER:
               return $placeholder.insertAfter(to);
           }
         }
       },
       insert: {
         placeholder: (to) => {
-          var $placeholder;
-          $placeholder = module.get.$placeholder();
           return $placeholder.appendTo(to);
         }
       },
@@ -358,61 +395,74 @@
           debug('發生 ADD 事件', element, valueElement, value);
           return settings.onAdd.call(element, valueElement, value);
         },
-        //$this.trigger Event.ADD, element, valueElement, value
         remove: (valueElement, value) => {
           return $this.trigger(Event.REMOVE, element, valueElement, value);
+        }
+      },
+      unbind: {
+        mousemove: () => {
+          return ts(Selector.BODY).off(Event.MOUSEMOVE);
         }
       },
       bind: {
         mousemove: () => {
           return ts(Selector.BODY).on(Event.MOUSEMOVE, (event) => {
-            var $container, $element, $lastDraggable, $placeholderContainer, hasPlaceholder, isSameNode;
-            //debug '發生 MOUSEMOVE 事件', element, @
+            var $container, $element, $placeholderContainer, hasContainerItem, hasPlaceholder, isContainerSortable, isPullContainer, isPutContainer, isSameContainer, isSortable;
+            debug('發生 MOUSEMOVE 事件', element, this);
+            if (module.is.disable()) {
+              return;
+            }
             module.move.ghost(event.clientX, event.clientY);
             if (!module.has.dragging()) {
               return;
             }
-            if (!module.same.group(event.clientX, event.clientY)) {
-              return;
-            }
             $element = ts.fromPoint(event.clientX, event.clientY);
-            $container = $element.closest(Selector.CONTAINER);
-            isSameNode = $container.is(element);
+            $container = module.get.container($element);
+            if (!module.is.same.group($element)) {
+              return;
+            }
+            if ($container.sortable('is disable')) {
+              return;
+            }
             hasPlaceholder = module.has.placeholder();
-            if ($container.sortable('get mode') === 'pull') {
-              return;
+            isSortable = module.is.sortable();
+            isPullContainer = $container.sortable('get mode') === Mode.PULL;
+            isSameContainer = module.is.same.container($container);
+            switch (false) {
+              case !isPullContainer:
+                return;
+              case !(!isSortable && isSameContainer && hasPlaceholder):
+                return;
             }
-            if (!settings.sort && isSameNode && hasPlaceholder) {
-              return;
-            }
-            $placeholderContainer = ts(Selector.PLACEHOLDER).closest(Selector.CONTAINER);
-            if (!isSameNode && $placeholderContainer.sortable('get mode') === 'put' && $placeholderContainer.sortable('get sort') === 'true') {
-              return;
-            }
-            if (!isSameNode && $container.sortable('get sort') === 'false') {
-              if ($container.find(Selector.DRAGGABLE).length === 0) {
-                module.insert.placeholder($container);
-              } else {
-                $lastDraggable = $container.find(Selector.DRAGGABLE).last();
-                module.append.placeholder('after', $lastDraggable);
-              }
-              return;
-            }
-            if (!settings.sort && isSameNode && !hasPlaceholder) {
-              module.append.placeholder('after', module.get.$original());
-              return;
+            $placeholderContainer = module.get.container($placeholder);
+            hasContainerItem = $container.sortable('has item');
+            isContainerSortable = $container.sortable('is sortable');
+            isPutContainer = $placeholderContainer.sortable('get mode') === Mode.PUT;
+            isSortable = $placeholderContainer.sortable('is sortable');
+            switch (false) {
+              case !(!isSameContainer && isPutContainer && isSortable):
+                return;
+              case !(!isSameContainer && !isContainerSortable):
+                if (!hasContainerItem) {
+                  module.insert.placeholder($container);
+                } else {
+                  module.append.placeholder(Order.AFTER, $container.sortable('get last $item'));
+                }
+                return;
+              case !(!isSortable && isSameContainer && !hasPlaceholder):
+                module.append.placeholder(Order.AFTER, $original);
+                return;
             }
             return module.move.placeholder(event.clientX, event.clientY);
           });
         },
         events: () => {
-          var id;
           $this.on(Event.DRAGSTART, (event, context) => {
             debug('發生 DRAGSTART 事件', context);
             return settings.onDragStart.call(context, event);
           });
           $this.on(Event.DRAG, (event, context) => {
-            //debug '發生 DRAG 事件', context
+            debug('發生 DRAG 事件', context);
             return settings.onDrag.call(context, event);
           });
           $this.on(Event.DROP, (event, context) => {
@@ -435,72 +485,64 @@
             debug('發生 REMOVE 事件', context, valueElement, value);
             return settings.onRemove.call(context, event, valueElement, value);
           });
-          id = null;
           ts(Selector.BODY).on(Event.MOUSEDOWN, (event) => {
-            var draggable, target;
-            //debug '發生 MOUSEDOWN 事件', element, @
-            target = event.target;
-            if (settings.handle !== false) {
-              if (!ts(target).is(settings.handle)) {
-                return;
-              }
-            }
-            draggable = ts(target).closest(Selector.DRAGGABLE);
-            if (!module.is.draggable(target)) {
-              if (draggable.length === 0) {
-                return;
-              } else {
-                target = draggable;
-              }
-            }
-            if (!module.is.child(target)) {
+            var $target;
+            debug('發生 MOUSEDOWN 事件', element, this);
+            if (module.is.disable()) {
               return;
             }
-            if (settings.mode === 'put' && !settings.sort) {
+            $target = ts(event.target);
+            if (module.has.handle() && !module.is.handle($target)) {
               return;
             }
+            if (!module.is.draggable($target)) {
+              $target = module.get.$draggable($target);
+            }
+            switch (false) {
+              case !!$target.exists():
+                return;
+              case !!module.is.child($target):
+                return;
+              case !(module.get.mode() === Mode.PUT && !module.is.sortable()):
+                return;
+            }
+            $original = $target;
             module.trigger.dragStart();
-            id = setInterval(() => {
-              return module.trigger.drag();
-            }, 350);
-            module.create.ghost(target, event.clientX, event.clientY);
-            module.create.placeholder(target);
+            module.start.dragging();
+            module.create.ghost(event.clientX, event.clientY);
             module.move.ghost(event.clientX, event.clientY);
+            module.create.placeholder();
             module.move.placeholder(event.clientX, event.clientY);
-            module.set.dragging(target);
-            module.hide.original(target);
+            module.hide.original();
             return module.bind.mousemove();
           });
           return ts(Selector.BODY).on(Event.MOUSEUP, (event) => {
-            var $container, allowed, isSameNode, newValue, oldValue;
+            var $container, newValue, oldValue;
             debug('發生 MOUSEUP 事件', element, this);
-            clearInterval(id);
+            if (module.is.disable()) {
+              return;
+            }
+            module.stop.dragging();
             module.remove.ghost();
-            ts(Selector.BODY).off(Event.MOUSEMOVE);
+            module.unbind.mousemove();
             if (!module.has.dragging()) {
               return;
             }
             module.trigger.drop();
-            $container = ts(event.target).closest(Selector.CONTAINER);
-            if ($container.length !== 0) {
-              isSameNode = $container.is(element);
-            } else {
-              isSameNode = false;
-            }
-            if (isSameNode) {
-              oldValue = module.get.value();
+            $container = module.get.container(event.target);
+            if ($container.exists() && module.is.same.container($container)) {
+              oldValue = module.get.value().toString();
               module.move.original();
-              newValue = module.get.value();
-              if (oldValue.toString() !== '' || newValue.toString() !== '') {
-                if (oldValue.toString() === newValue.toString()) {
+              newValue = module.get.value().toString();
+              if (oldValue !== '' || newValue !== '') {
+                if (oldValue === newValue) {
                   module.trigger.cancel();
                 } else {
                   module.trigger.change();
                 }
               }
             } else {
-              allowed = $container.sortable('trigger add');
-              if (allowed) {
+              if ($container.sortable('trigger add')) {
                 module.move.original();
                 $container.sortable('trigger change');
                 module.trigger.remove();
@@ -522,7 +564,8 @@
       initialize: () => {
         debug('初始化拖放排序', element);
         module.bind.events();
-        $this.find(Selector.NATIVE_DRAGGABLE).removeAttr(Attribute.NATIVE_DRAGGABLE).attr(Attribute.DRAGGABLE, 'true').attr(Attribute.CONTAINER, true);
+        module.enable();
+        $this.attr(Attribute.CONTAINER, true).find(Selector.NATIVE_DRAGGABLE).removeAttr(Attribute.NATIVE_DRAGGABLE).attr(Attribute.DRAGGABLE, 'true');
         if (settings.group !== false) {
           return module.set.group(settings.group);
         }

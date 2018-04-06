@@ -47,8 +47,6 @@ Settings =
     onDeny        : =>
     # 當放下時跟一開始沒有差異時所會呼叫的回呼函式。
     onCancel      : =>
-    # 當項目在相同清單進行重新排序時所會呼叫的回呼函式。
-    # onSort        : =>
     # 當有變動（新增、移除、重新排序）時所會呼叫的回呼函式。
     onChange      : (valueElement, value) =>
     # 當項目新增時所會呼叫的回呼函式，回傳 `false` 表示不接受此新增。
@@ -74,6 +72,18 @@ Event =
 Metadata =
     X_OFFSET: 'xOffset'
     Y_OFFSET: 'yOffset'
+    ENABLE  : 'enable'
+
+# 模式 =
+Mode =
+    PULL: 'pull'
+    PUT : 'put'
+    ALL : 'all'
+
+# 順序。
+Order =
+    AFTER : 'after'
+    BEFORE: 'before'
 
 # 元素標籤。
 Attribute =
@@ -119,7 +129,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
     # 區域變數
     # ------------------------------------------------------------------------
 
-
+    $original        = ts()
+    $placeholder     = ts()
+    draggingTimer    = null
+    draggingInterval = 350
 
     # ------------------------------------------------------------------------
     # 模組定義
@@ -131,37 +144,58 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $this
                     .find     Selector.DRAGGABLE_VALUE value
                     .appendTo element
+            return $allModules
 
         enable: =>
+            $this.data Metadata.ENABLE, true
+            return $allModules
 
         disable: =>
+            $this.data Metadata.ENABLE, false
+            return $allModules
+
+        start:
+            dragging: =>
+                draggingTimer = setInterval =>
+                    module.trigger.drag()
+                , draggingInterval
+                $original.attr Attribute.DRAGGING, 'true'
+
+        stop:
+            dragging: =>
+                clearInterval draggingTimer
+
+        reset:
+            dragging: =>
+                ts(Selector.DRAGGING).removeAttr Attribute.DRAGGING
 
         hide:
-            original: (original) =>
-                $(original).attr Attribute.HIDDEN, 'hidden'
+            original: =>
+                $original.attr Attribute.HIDDEN, 'hidden'
 
         unhide:
             original: =>
                 $(Selector.HIDDEN_DRAGGABLE).removeAttr Attribute.HIDDEN
 
         set:
-            dragging: (element) =>
-                ts(element).attr Attribute.DRAGGING, 'true'
             group: (name) =>
                 $this.attr Attribute.GROUP, settings.group
 
         get:
             $dragging: =>
                 ts Selector.DRAGGING
-            $placeholder: =>
-                ts Selector.PLACEHOLDER
-            $original: =>
-                ts Selector.HIDDEN_DRAGGABLE
+            $draggable: (element) =>
+                ts(element).closest Selector.DRAGGABLE
+            last:
+                $item: =>
+                    $this.find(Selector.DRAGGABLE).last()
             dragging:
                 element: =>
                     ts(Selector.HIDDEN_DRAGGABLE).get()
                 value: =>
                     ts(Selector.HIDDEN_DRAGGABLE).attr Attribute.VALUE
+            container: (element) =>
+                ts(element).closest Selector.CONTAINER
             group:
                 name: =>
                     $this.attr Attribute.GROUP
@@ -178,50 +212,55 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                         values.push value if value
                 return values
 
-        reset:
-            dragging: =>
-                ts(Selector.DRAGGING).removeAttr Attribute.DRAGGING
-
         is:
             draggable: (element) =>
                 ts(element).attr(Attribute.DRAGGABLE) is 'true'
             child: (element) =>
                 $this.contains element
-
-        same:
-            group: (x, y) =>
-                $container = ts
-                    .fromPoint x, y
-                    .closest   Selector.CONTAINER
-                if $container.is element
-                    return true
-                groupName = $container.sortable 'get group name'
-                if groupName is null
-                    return false
-                return groupName is module.get.group.name()
+            sortable: =>
+                settings.sort is true
+            vertical: =>
+                settings.vertical is true
+            enable: =>
+                $this.data(Metadata.ENABLE)
+            disable: =>
+                not $this.data(Metadata.ENABLE)
+            same:
+                group: ($target) =>
+                    $container = module.get.container $target
+                    if $container.is element
+                        return true
+                    name = $container.sortable 'get group name'
+                    return name isnt null and name is module.get.group.name()
+                container: ($container) =>
+                    $container.is element
+            handle: (element) =>
+                ts(element).is settings.handle
 
         has:
             dragging: =>
-                $this.find(Selector.DRAGGING).length isnt 0
+                $this.find(Selector.DRAGGING).exists()
             placeholder: =>
-                $this.find(Selector.PLACEHOLDER).length isnt 0
+                $this.find(Selector.PLACEHOLDER).exists()
+            item: =>
+                $this.find(Selector.DRAGGABLE).exists()
+            handle: =>
+                settings.handle isnt false
 
         create:
-            ghost: (original, x, y) =>
-                $original = ts original
-                rect      = $original.rect()
+            ghost: (x, y) =>
                 $original
                     .clone()
                     .attr Attribute.GHOST, 'true'
                     .data
-                        "#{Metadata.X_OFFSET}": x - rect.x
-                        "#{Metadata.Y_OFFSET}": y - rect.y
+                        "#{Metadata.X_OFFSET}": x - $original.rect().x
+                        "#{Metadata.Y_OFFSET}": y - $original.rect().y
                     .css
-                        width : rect.width
-                        height: rect.height
+                        width : $original.rect().width
+                        height: $original.rect().height
                     .appendTo Selector.BODY
-            placeholder: (original) =>
-                ts original
+            placeholder: =>
+                $placeholder = $original
                     .clone()
                     .attr     Attribute.PLACEHOLDER, 'true'
                     .appendTo Selector.BODY
@@ -241,57 +280,42 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             placeholder: (x, y) =>
                 $pointing  = ts.fromPoint x, y
                 $draggable = $pointing.closest Selector.DRAGGABLE
+                $container = module.get.container $draggable
 
-                if $draggable.length is 0
-                    $container = $pointing.closest Selector.CONTAINER
-                    if $container.length isnt 0
-                        if $container.find(Selector.TRUE_DRAGGABLE).length is 0
-                            module.insert.placeholder($container)
-                            return
-                        else
-                            rect    = $container.rect()
-                            isUpper = y - rect.y < rect.height / 2
-
-                            if not isUpper
-                                $last = $container.find(Selector.TRUE_DRAGGABLE).last()
-                                if $last.length isnt 0
-                                    module.append.placeholder 'after', $last
-                                    return
-
+                if $draggable.exists()
+                    isAllOrSin = y - $draggable.rect().y < $draggable.rect().height / 2
+                    isTanOrCos = x - $draggable.rect().x < $draggable.rect().width  / 2
+                    isVertical = $container.sortable 'is vertical'
+                    if (isAllOrSin and isVertical) or (isTanOrCos and not isVertical)
+                        $placeholder.insertBefore $draggable
+                    else
+                        $placeholder.insertAfter $draggable
                     return
 
-                rect         = $draggable.rect()
-                isUpper      = y - rect.y < rect.height / 2
-                isLefter     = x - rect.x < rect.width  / 2
-                isFirstChild = $draggable.prev().length is 0
-                isDraggingFirstChild = ts(Selector.DRAGGING).prev().length is 0
+                $container = module.get.container $pointing
+                $draggable = $container.find Selector.TRUE_DRAGGABLE
 
-                if isUpper
-                    if isFirstChild or isDraggingFirstChild
-                        ts(Selector.PLACEHOLDER).insertBefore $element
-                    else
-                        ts(Selector.PLACEHOLDER).insertBefore $element
-                else
-                    ts(Selector.PLACEHOLDER).insertAfter $element
-
-
-
-            original: (x, y) =>
-                $dragging    = module.get.$dragging()
-                $placeholder = module.get.$placeholder()
-                $dragging.insertAfter $placeholder
+                if not $container.exists()
+                    return
+                if not $draggable.exists()
+                    module.insert.placeholder $container
+                    return
+                $last = $draggable.last()
+                if $last.exists()
+                    module.append.placeholder Order.AFTER, $last
+            original: =>
+                module.get.$dragging().insertAfter ts Selector.PLACEHOLDER
 
         append:
             placeholder: (order, to) =>
-                $placeholder = module.get.$placeholder()
                 switch order
-                    when 'before'
+                    when Order.BEFORE
                         $placeholder.insertBefore to
-                    when 'after'
+                    when Order.AFTER
                         $placeholder.insertAfter to
+
         insert:
             placeholder: (to) =>
-                $placeholder = module.get.$placeholder()
                 $placeholder.appendTo to
 
         trigger:
@@ -310,79 +334,71 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             add: (valueElement, value) =>
                 debug '發生 ADD 事件', element, valueElement, value
                 settings.onAdd.call element, valueElement, value
-                #$this.trigger Event.ADD, element, valueElement, value
             remove: (valueElement, value) =>
                 $this.trigger Event.REMOVE, element, valueElement, value
 
-
+        unbind:
+            mousemove: =>
+                ts(Selector.BODY).off Event.MOUSEMOVE
 
         bind:
             mousemove: =>
                 ts(Selector.BODY).on Event.MOUSEMOVE, (event) =>
-                    #debug '發生 MOUSEMOVE 事件', element, @
+                    debug '發生 MOUSEMOVE 事件', element, @
 
+                    if module.is.disable()
+                        return
                     module.move.ghost event.clientX, event.clientY
-
 
                     if not module.has.dragging()
                         return
 
+                    $element   = ts.fromPoint event.clientX, event.clientY
+                    $container = module.get.container $element
 
-
-
-
-                    if not module.same.group event.clientX, event.clientY
+                    if not module.is.same.group $element
+                        return
+                    if $container.sortable 'is disable'
                         return
 
+                    hasPlaceholder  = module.has.placeholder()
+                    isSortable      = module.is.sortable()
+                    isPullContainer = $container.sortable('get mode') is Mode.PULL
+                    isSameContainer = module.is.same.container $container
 
-                    $element = ts.fromPoint event.clientX, event.clientY
+                    switch
+                        when isPullContainer
+                            return
+                        when not isSortable and isSameContainer and hasPlaceholder
+                            return
 
+                    $placeholderContainer = module.get.container $placeholder
+                    hasContainerItem      = $container.sortable 'has item'
+                    isContainerSortable   = $container.sortable 'is sortable'
+                    isPutContainer        = $placeholderContainer.sortable('get mode') is Mode.PUT
+                    isSortable            = $placeholderContainer.sortable 'is sortable'
 
-
-                    $container = $element.closest(Selector.CONTAINER)
-
-
-
-                    isSameNode = $container.is(element)
-                    hasPlaceholder = module.has.placeholder()
-
-                    if $container.sortable('get mode') is 'pull'
-                        return
-
-                    if not settings.sort and isSameNode and hasPlaceholder
-                        return
-
-
-                    $placeholderContainer = ts(Selector.PLACEHOLDER).closest(Selector.CONTAINER)
-
-
-                    if not isSameNode and $placeholderContainer.sortable('get mode') is 'put' and  $placeholderContainer.sortable('get sort') is 'true'
-                        return
-
-
-                    if not isSameNode and $container.sortable('get sort') is 'false'
-                        if $container.find(Selector.DRAGGABLE).length is 0
-                            module.insert.placeholder $container
-                        else
-                            $lastDraggable = $container.find(Selector.DRAGGABLE).last()
-                            module.append.placeholder 'after', $lastDraggable
-                        return
-
-                    if not settings.sort and isSameNode and not hasPlaceholder
-                        module.append.placeholder 'after', module.get.$original()
-                        return
-
+                    switch
+                        when not isSameContainer and isPutContainer and isSortable
+                            return
+                        when not isSameContainer and not isContainerSortable
+                            if not hasContainerItem
+                                module.insert.placeholder $container
+                            else
+                                module.append.placeholder Order.AFTER, $container.sortable 'get last $item'
+                            return
+                        when not isSortable and isSameContainer and not hasPlaceholder
+                            module.append.placeholder Order.AFTER, $original
+                            return
 
                     module.move.placeholder event.clientX, event.clientY
-
-
 
             events: =>
                 $this.on Event.DRAGSTART, (event, context) =>
                     debug '發生 DRAGSTART 事件', context
                     settings.onDragStart.call context, event
                 $this.on Event.DRAG, (event, context) =>
-                    #debug '發生 DRAG 事件', context
+                    debug '發生 DRAG 事件', context
                     settings.onDrag.call context, event
                 $this.on Event.DROP, (event, context) =>
                     debug '發生 DROP 事件', context
@@ -400,133 +416,74 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     debug '發生 REMOVE 事件', context, valueElement, value
                     settings.onRemove.call context, event, valueElement, value
 
-                id = null
-
-
-
                 ts(Selector.BODY).on Event.MOUSEDOWN, (event) =>
-                    #debug '發生 MOUSEDOWN 事件', element, @
-
-                    target = event.target
-
-
-                    if settings.handle isnt false
-                        if not ts(target).is(settings.handle)
-                            return
-
-
-                    draggable = ts(target).closest(Selector.DRAGGABLE)
-
-
-
-                    if not module.is.draggable(target)
-                        if draggable.length is 0
-                            return
-                        else
-                            target = draggable
-
-
-                    if not module.is.child target
-                       return
-
-
-
-                    if settings.mode is 'put' and not settings.sort
+                    debug '發生 MOUSEDOWN 事件', element, @
+                    if module.is.disable()
                         return
 
+                    $target = ts event.target
+
+                    if module.has.handle() and not module.is.handle $target
+                        return
+                    if not module.is.draggable $target
+                        $target = module.get.$draggable $target
+                    switch
+                        when not $target.exists()
+                            return
+                        when not module.is.child $target
+                            return
+                        when module.get.mode() is Mode.PUT and not module.is.sortable()
+                            return
+                    $original = $target
 
                     module.trigger.dragStart()
-
-                    id = setInterval =>
-                        module.trigger.drag()
-                    , 350
-
-
-
-
-                    module.create.ghost  target , event.clientX, event.clientY
-                    module.create.placeholder target
-                    module.move.ghost event.clientX, event.clientY
+                    module.start.dragging()
+                    module.create.ghost event.clientX, event.clientY
+                    module.move.ghost   event.clientX, event.clientY
+                    module.create.placeholder()
                     module.move.placeholder event.clientX, event.clientY
-                    module.set.dragging  target
-                    module.hide.original target
+                    module.hide.original()
                     module.bind.mousemove()
-
-
-
-
-
 
                 ts(Selector.BODY).on Event.MOUSEUP, (event) =>
                     debug '發生 MOUSEUP 事件', element, @
+                    if module.is.disable()
+                        return
 
-                    clearInterval id
-
+                    module.stop.dragging()
                     module.remove.ghost()
-
-
-
-
-
-                    ts(Selector.BODY).off Event.MOUSEMOVE
+                    module.unbind.mousemove()
 
                     if not module.has.dragging()
                         return
-
                     module.trigger.drop()
 
+                    $container = module.get.container event.target
 
-
-
-                    $container = ts(event.target).closest(Selector.CONTAINER)
-
-                    if $container.length isnt 0
-                        isSameNode = $container.is(element)
-                    else
-                        isSameNode = false
-
-                    if isSameNode
-                        oldValue = module.get.value()
-
+                    if $container.exists() and module.is.same.container $container
+                        oldValue = module.get.value().toString()
                         module.move.original()
+                        newValue = module.get.value().toString()
 
-
-                        newValue = module.get.value()
-
-                        if oldValue.toString() isnt '' or newValue.toString() isnt ''
-                            if oldValue.toString() is newValue.toString()
+                        if oldValue isnt '' or newValue isnt ''
+                            if oldValue is newValue
                                 module.trigger.cancel()
                             else
                                 module.trigger.change()
-
                     else
-                        allowed = $container.sortable('trigger add')
+                        if $container.sortable 'trigger add'
 
-
-                        if allowed
                             module.move.original()
-
-                            $container.sortable('trigger change')
-
+                            $container.sortable 'trigger change'
                             module.trigger.remove()
                             module.trigger.change()
-
                         else
                             module.trigger.cancel()
                             module.trigger.deny()
 
-
                     module.remove.placeholder()
                     module.unhide.original()
-
                     module.reset.dragging()
-
-
-
-
-
-
-
 
         # ------------------------------------------------------------------------
         # 基礎方法
@@ -535,11 +492,12 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         initialize: =>
             debug '初始化拖放排序', element
             module.bind.events()
+            module.enable()
             $this
+                .attr       Attribute.CONTAINER, true
                 .find       Selector.NATIVE_DRAGGABLE
                 .removeAttr Attribute.NATIVE_DRAGGABLE
                 .attr       Attribute.DRAGGABLE, 'true'
-                .attr       Attribute.CONTAINER, true
             if settings.group isnt false
                 module.set.group settings.group
 
