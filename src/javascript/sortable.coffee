@@ -38,21 +38,21 @@ Settings =
     # 這個拖放排序是否已垂直清單為主，改為 `false` 會有利於水平清單。
     vertical      : true
     # 當拖拉開始時所會呼叫的回呼函式。
-    onDragStart   : =>
+    onDragStart   : (value) =>
     # 當拖拉途中所會呼叫的回呼函式，間隔是 350 毫秒。
-    onDrag        : =>
+    onDrag        : (value) =>
     # 當拖拉結束並丟下元素時所會呼叫的回呼函式。
-    onDrop        : =>
+    onDrop        : (value) =>
     # 當放下被禁止（如：範圍外、被回呼函式拒絕）時所會呼叫的函式。
-    onDeny        : =>
+    onDeny        : (value) =>
     # 當放下時跟一開始沒有差異時所會呼叫的回呼函式。
-    onCancel      : =>
+    onCancel      : (value) =>
     # 當有變動（新增、移除、重新排序）時所會呼叫的回呼函式。
-    onChange      : (valueElement, value) =>
+    onChange      : (value) =>
     # 當項目新增時所會呼叫的回呼函式，回傳 `false` 表示不接受此新增。
-    onAdd         : (valueElement, value) => console.log(@, valueElement, value)
+    onAdd         : (value) =>
     # 當項目被移出時所會呼叫的回呼函式。
-    onRemove      : (valueElement, value) =>
+    onRemove      : (value) =>
 
 # 事件名稱。
 Event =
@@ -262,8 +262,9 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             placeholder: =>
                 $placeholder = $original
                     .clone()
-                    .attr     Attribute.PLACEHOLDER, 'true'
-                    .appendTo Selector.BODY
+                    .attr       Attribute.PLACEHOLDER, 'true'
+                    .removeAttr Attribute.DRAGGING
+                    .appendTo   Selector.BODY
 
         remove:
             ghost: =>
@@ -329,13 +330,13 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $this.trigger Event.DENY, module.get.dragging.element(), module.get.dragging.value()
             cancel: =>
                 $this.trigger Event.CANCEL, module.get.dragging.element(), module.get.dragging.value()
-            change: (valueElement, value) =>
-                $this.trigger Event.CHANGE, element, valueElement, value
-            add: (valueElement, value) =>
-                debug '發生 ADD 事件', element, valueElement, value
-                settings.onAdd.call element, valueElement, value
-            remove: (valueElement, value) =>
-                $this.trigger Event.REMOVE, element, valueElement, value
+            change: =>
+                $this.trigger Event.CHANGE, module.get.dragging.element(), module.get.dragging.value()
+            add: (valueElement, value)=>
+                debug '發生 ADD 事件', valueElement, value
+                settings.onAdd.call valueElement, value
+            remove: =>
+                $this.trigger Event.REMOVE, module.get.dragging.element(), module.get.dragging.value()
 
         unbind:
             mousemove: =>
@@ -394,27 +395,27 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     module.move.placeholder event.clientX, event.clientY
 
             events: =>
-                $this.on Event.DRAGSTART, (event, context) =>
-                    debug '發生 DRAGSTART 事件', context
-                    settings.onDragStart.call context, event
-                $this.on Event.DRAG, (event, context) =>
-                    debug '發生 DRAG 事件', context
-                    settings.onDrag.call context, event
-                $this.on Event.DROP, (event, context) =>
-                    debug '發生 DROP 事件', context
-                    settings.onDrop.call context, event
-                $this.on Event.DENY, (event, context) =>
-                    debug '發生 DENY 事件', context
-                    settings.onDeny.call context, event
-                $this.on Event.CANCEL, (event, context) =>
-                    debug '發生 CANCEL 事件', context
-                    settings.onCancel.call context, event
-                $this.on Event.CHANGE, (event, context, valueElement, value) =>
-                    debug '發生 CHANGE 事件', context, valueElement, value
-                    settings.onChange.call context, event, valueElement, value
-                $this.on Event.REMOVE, (event, context, valueElement, value) =>
-                    debug '發生 REMOVE 事件', context, valueElement, value
-                    settings.onRemove.call context, event, valueElement, value
+                $this.on Event.DRAGSTART, (event, context, value) =>
+                    debug '發生 DRAGSTART 事件', context, value
+                    settings.onDragStart.call context, event, value
+                $this.on Event.DRAG, (event, context, value) =>
+                    debug '發生 DRAG 事件', context, value
+                    settings.onDrag.call context, event, value
+                $this.on Event.DROP, (event, context, value) =>
+                    debug '發生 DROP 事件', context, value
+                    settings.onDrop.call context, event, value
+                $this.on Event.DENY, (event, context, value) =>
+                    debug '發生 DENY 事件', context, value
+                    settings.onDeny.call context, event, value
+                $this.on Event.CANCEL, (event, context, value) =>
+                    debug '發生 CANCEL 事件', context, value
+                    settings.onCancel.call context, event, value
+                $this.on Event.CHANGE, (event, context, value) =>
+                    debug '發生 CHANGE 事件', context, value
+                    settings.onChange.call context, event, value
+                $this.on Event.REMOVE, (event, context, value) =>
+                    debug '發生 REMOVE 事件', context, value
+                    settings.onRemove.call context, event, value
 
                 ts(Selector.BODY).on Event.MOUSEDOWN, (event) =>
                     debug '發生 MOUSEDOWN 事件', element, @
@@ -471,8 +472,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                             else
                                 module.trigger.change()
                     else
-                        if $container.sortable 'trigger add'
-
+                        if $container.sortable 'trigger add', module.get.dragging.element(), module.get.dragging.value()
                             module.move.original()
                             $container.sortable 'trigger change'
                             module.trigger.remove()
