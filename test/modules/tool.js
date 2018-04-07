@@ -7,7 +7,7 @@ function testUnit(unit) {
             top: 0;
             left: 0;
             bottom: 0;
-            z-index: 100;
+            z-index: 3;
             width: 240px;
             overflow: scroll;
         ">
