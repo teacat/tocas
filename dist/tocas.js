@@ -1313,59 +1313,61 @@
   // 設置一個新的計時器。
   ts.fn.setTimer = {
     value: function(options) {
-      options = Object.assign({}, {
-        name: '',
-        callback: function() {},
-        interval: 0,
-        looping: false,
-        visible: false
-      }, options);
-      return this.each(function() {
-        var timer;
-        if (this.$timers === void 0) {
-          this.$timers = {};
-        }
-        if (this.$timers[options.name] !== void 0) {
-          clearInterval(this.$timers[options.name].timer);
-        }
-        timer = () => {
-          var ref;
-          // 當設置有說明，頁面不可見的時候就不要繼續計時。
-          if (options.visible && document.hidden) {
-            return;
+      return setTimeout(() => {
+        options = Object.assign({}, {
+          name: '',
+          callback: function() {},
+          interval: 0,
+          looping: false,
+          visible: false
+        }, options);
+        return this.each(function() {
+          var timer;
+          if (this.$timers === void 0) {
+            this.$timers = {};
           }
-          // 替計時器加上 10 毫秒。
-          this.$timers[options.name].passed += 10;
-          // 如果計時器的經過時間還不到使用者設定的時間
-          // 就返回而不要繼續執行。
-          if (this.$timers[options.name].passed < options.interval) {
-            return;
+          if (this.$timers[options.name] !== void 0) {
+            clearInterval(this.$timers[options.name].timer);
           }
-          // 呼叫回呼函式。
-          options.callback();
-          // 如果要循環的話，就在計時器執行後重設時間即可。
-          if (options.looping) {
-            return this.$timers[options.name].passed = 0;
-          } else {
-            // 不然就移除計時器資訊。
-            return clearInterval((ref = this.$timers[options.name]) != null ? ref.timer : void 0);
-          }
-        };
-        // 移除在 DOM 元素內的這個計時器物件。
-        //delete @$timers[options.name]
+          timer = () => {
+            var ref;
+            // 當設置有說明，頁面不可見的時候就不要繼續計時。
+            if (options.visible && document.hidden) {
+              return;
+            }
+            // 替計時器加上 10 毫秒。
+            this.$timers[options.name].passed += 10;
+            // 如果計時器的經過時間還不到使用者設定的時間
+            // 就返回而不要繼續執行。
+            if (this.$timers[options.name].passed < options.interval) {
+              return;
+            }
+            // 呼叫回呼函式。
+            options.callback();
+            // 如果要循環的話，就在計時器執行後重設時間即可。
+            if (options.looping) {
+              return this.$timers[options.name].passed = 0;
+            } else {
+              // 不然就移除計時器資訊。
+              return clearInterval((ref = this.$timers[options.name]) != null ? ref.timer : void 0);
+            }
+          };
+          // 移除在 DOM 元素內的這個計時器物件。
+          //delete @$timers[options.name]
 
-        // 在此元素內初始化計時器物件。
-        return this.$timers[options.name] = {
-          timer: setInterval(timer, 10),
-          passed: 0,
-          callback: options.callback,
-          interval: options.interval,
-          looping: options.looping,
-          visible: options.visible,
-          initializer: timer,
-          paused: false
-        };
-      });
+          // 在此元素內初始化計時器物件。
+          return this.$timers[options.name] = {
+            timer: setInterval(timer, 10),
+            passed: 0,
+            callback: options.callback,
+            interval: options.interval,
+            looping: options.looping,
+            visible: options.visible,
+            initializer: timer,
+            paused: false
+          };
+        });
+      }, 0);
     }
   };
 
