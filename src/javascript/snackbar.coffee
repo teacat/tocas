@@ -294,6 +294,8 @@ ts.snackbar = (options) =>
         when 'is visible'
             return false if not $snackbar.exists()
             return $snackbar.snackbar 'is visible'
+        when 'destroy'
+            return $snackbar.snackbar 'destroy'
 
     create = =>
         $snackbar = ts '<div>'

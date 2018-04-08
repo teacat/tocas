@@ -346,6 +346,8 @@
           return false;
         }
         return $snackbar.snackbar('is visible');
+      case 'destroy':
+        return $snackbar.snackbar('destroy');
     }
     create = () => {
       return $snackbar = ts('<div>').attr(Attribute.TEMPORARY, 'true').addClass(ClassName.SNACKBAR).html(Template.SNACKBAR).appendTo(Selector.BODY).snackbar(Object.assign({}, options, {
