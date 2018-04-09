@@ -66,6 +66,21 @@ ts.isPlainObject = (object) ->
 ts.isTouchDevice = ->
     'ontouchstart' of window or navigator.maxTouchPoints
 
+# 取得裝置資料。
+ts.device = =>
+    switch
+        when window.innerWidth < 767
+            device = 'mobile'
+        when window.innerWidth > 767 and window.innerWidth < 991
+            device = 'tablet'
+        when window.innerWidth > 991 and window.innerWidth < 1199
+            device = 'computer'
+        when window.innerWidth > 1199 and window.innerWidth < 1919
+            device = 'large'
+    return {
+        device: device
+    }
+
 # 從指定坐標取得元素。
 ts.fromPoint = (x, y) =>
     ts(document.elementFromPoint(x, y))
@@ -706,6 +721,20 @@ ts.fn.on =
         # }
 
         @each ->
+            if events[0] is '(' and events[events.length-1] is ')'
+                return if @ isnt window
+                if window.$media is undefined
+                    window.$media = {}
+                if window.$media[events] is undefined
+                    window.$media[events] = []
+                    window.matchMedia(events).addListener (mq) ->
+                        for single in window.$media[events]
+                            single.func.call @, mq
+                window.$media[events].push
+                    data: {}
+                    func: handler
+                return
+
             return        if @addEventListener is undefined
             @$events = {} if @$events          is undefined
 
@@ -806,6 +835,21 @@ ts.fn.off =
     value: (events, handler) ->
         events = ts.helper.eventAlias(events)
         @each ->
+            if events[0] is '(' and events[events.length-1] is ')'
+                return if @ isnt window
+                if window.$media is undefined
+                    return
+                if window.$media[events] is undefined
+                    return
+                switch
+                    when handler isnt undefined
+                        window.$media[events].forEach (item, index) =>
+                            if handler is item.func
+                                window.$media[events].splice(index, 1)
+                    when handler is undefined
+                        window.$media[events] = []
+                return
+
             return if @$events is undefined
 
             events.split(' ').forEach (eventName) =>

@@ -79,6 +79,27 @@
     return 'ontouchstart' in window || navigator.maxTouchPoints;
   };
 
+  // 取得裝置資料。
+  ts.device = () => {
+    var device;
+    switch (false) {
+      case !(window.innerWidth < 767):
+        device = 'mobile';
+        break;
+      case !(window.innerWidth > 767 && window.innerWidth < 991):
+        device = 'tablet';
+        break;
+      case !(window.innerWidth > 991 && window.innerWidth < 1199):
+        device = 'computer';
+        break;
+      case !(window.innerWidth > 1199 && window.innerWidth < 1919):
+        device = 'large';
+    }
+    return {
+      device: device
+    };
+  };
+
   // 從指定坐標取得元素。
   ts.fromPoint = (x, y) => {
     return ts(document.elementFromPoint(x, y));
@@ -916,6 +937,32 @@
       //    ]
       // }
       return this.each(function() {
+        if (events[0] === '(' && events[events.length - 1] === ')') {
+          if (this !== window) {
+            return;
+          }
+          if (window.$media === void 0) {
+            window.$media = {};
+          }
+          if (window.$media[events] === void 0) {
+            window.$media[events] = [];
+            window.matchMedia(events).addListener(function(mq) {
+              var j, len, ref, results, single;
+              ref = window.$media[events];
+              results = [];
+              for (j = 0, len = ref.length; j < len; j++) {
+                single = ref[j];
+                results.push(single.func.call(this, mq));
+              }
+              return results;
+            });
+          }
+          window.$media[events].push({
+            data: {},
+            func: handler
+          });
+          return;
+        }
         if (this.addEventListener === void 0) {
           return;
         }
@@ -1044,6 +1091,29 @@
     value: function(events, handler) {
       events = ts.helper.eventAlias(events);
       return this.each(function() {
+        if (events[0] === '(' && events[events.length - 1] === ')') {
+          if (this !== window) {
+            return;
+          }
+          if (window.$media === void 0) {
+            return;
+          }
+          if (window.$media[events] === void 0) {
+            return;
+          }
+          switch (false) {
+            case handler === void 0:
+              window.$media[events].forEach((item, index) => {
+                if (handler === item.func) {
+                  return window.$media[events].splice(index, 1);
+                }
+              });
+              break;
+            case handler !== void 0:
+              window.$media[events] = [];
+          }
+          return;
+        }
         if (this.$events === void 0) {
           return;
         }
