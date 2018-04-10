@@ -18,13 +18,15 @@ Settings =
     # 監聽 DOM 結構異動並自動重整快取。
     observeChanges: true
     # 是否要在側邊欄出現的時候淡化頁面。
-    dimPage       : false
+    dimPage       : true
     # 是否允許使用者點擊頁面關閉側邊欄。
     closable      : true
     # 是否要在側邊欄出現的時候所動頁面捲軸滾動。
     scrollLock    : false
-    # 預設的顯示模式。（`auto` 為電腦常駐、行動裝置隱藏、`true` 為常駐、`false` 為預設隱藏）
-    visible       : false
+    # 側邊欄的出場效果。（`overlay` 為覆蓋、`push` 為推出、`squeeze` 為擠壓）
+    transition    : 'overlay'
+    # 預設的顯示模式，設為 `auto` 的時候出場效果會被覆蓋。（`auto` 為電腦常駐、行動裝置隱藏、`static` 為常駐、`hidden` 為預設隱藏）
+    visibility    : 'hidden'
     # 當側邊欄剛出現時所會呼叫的回呼函式。
     onVisible     : =>
     # 當側邊欄出現動畫結束時所會呼叫的回呼函式。
@@ -39,6 +41,18 @@ Settings =
 # 標籤。
 Attribute =
     SCROLL_LOCK: 'data-scroll-lock'
+
+# 過場動畫。
+Transition =
+    OVERLAY: 'overlay'
+    PUSH   : 'push'
+    SQUEEZE: 'squeeze'
+
+# 可見度。
+Visibility =
+    AUTO  : 'auto'
+    HIDDEN: 'hidden'
+    STATIC: 'static'
 
 # 事件名稱。
 Event =
@@ -58,12 +72,17 @@ ClassName =
     ACTIVE      : 'active'
     DIMMED      : 'dimmed'
     ANIMATING   : 'animating'
-    RESPONSIVELY: 'responsively'
     OVERLAPPED  : 'overlapped'
+    SQUEEZABLE  : 'squeezable'
+
+# 裝置。
+Device =
+    MOBILE: 'mobile'
 
 # 選擇器名稱。
 Selector =
     PUSHER: '.ts.pusher'
+    BODY  : 'body'
 
 # 錯誤訊息。
 Error = {}
@@ -78,14 +97,20 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
     # 區域變數
     # ------------------------------------------------------------------------
 
-    $pusher        = ts()
-    duration       = 450
+    $pusher          = ts()
+    device           = ''
+    duration         = 450
+    elementNamespace = ''
 
     # ------------------------------------------------------------------------
     # 模組定義
     # ------------------------------------------------------------------------
 
     module =
+        setting: (key, value) =>
+            settings[key] = value
+            return $allModules
+
         set:
             lock: (value) =>
                 if value
@@ -102,11 +127,22 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     $this.addClass ClassName.VISIBLE
                 else
                     $this.removeClass ClassName.VISIBLE
-            overlapped: (value) =>
-                if value
-                    $this.addClass ClassName.OVERLAPPED
-                else
-                    $this.removeClass ClassName.OVERLAPPED
+
+        update:
+            device: =>
+                device = ts.device().device
+
+        get:
+            transition: =>
+                settings.transition
+            visibility: =>
+                settings.visibility
+
+        reset:
+            pusher: =>
+                $pusher.removeClass ClassName.SQUEEZABLE
+            sidebar: =>
+                $this.removeClass ClassName.OVERLAPPED
 
         dim:
             page: (value) =>
@@ -119,34 +155,38 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             if module.is.visible()
                 return
             module.trigger.visible()
+            module.reset.pusher()
+            module.reset.sidebar()
+            if module.get.transition() is Transition.SQUEEZE
+                $pusher.addClass ClassName.SQUEEZABLE
+            if module.get.transition() is Transition.OVERLAY
+                $this.addClass ClassName.OVERLAPPED
+            if module.get.visibility() is Visibility.AUTO
+                if device is Device.MOBILE
+                    module.dim.page true
+                else
+                    module.dim.page false
             if settings.scrollLock
                 module.set.lock true
-            if settings.dimPage
+            if settings.dimPage and module.get.visibility() isnt Visibility.AUTO
                 module.dim.page true
-            if module.is.responsiveDevice()
-                if settings.responsive.dimPage
-                    module.dim.page true
-                if settings.responsive.overlapped
-                    module.set.overlapped true
             module.animate.show =>
                 module.trigger.show()
                 module.trigger.change()
+            return $allModules
 
         hide: =>
             if module.is.hidden()
                 return
-            defaultVisible = false
             module.trigger.hide()
             if settings.dimPage
                 module.dim.page false
-            if module.is.responsiveDevice()
-                if settings.responsive.dimPage
-                    module.dim.page false
-                if settings.responsive.overlapped
-                    module.set.overlapped false
             module.animate.hide =>
                 module.trigger.hidden()
+                module.reset.pusher()
+                module.reset.sidebar()
                 module.trigger.change()
+            return $allModules
 
         toggle: =>
             if module.is.hidden()
@@ -185,24 +225,20 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $this.hasClass ClassName.VISIBLE
             hidden: =>
                 not module.is.visible()
-            responsiveDevice: =>
-                device = ts.device().device
-                if not settings.responsive
-                    return false
-                for value in settings.responsive.hidden
-                    return true if value is device
-                return false
-            responsive: =>
-                settings.responsive isnt false
             animating: =>
                 $this.hasClass ClassName.ANIMATING
             closable: =>
                 settings.closable is true
+            child: (target) =>
+                $this.contains target
 
         repaint: =>
-            if module.is.responsiveDevice()
+            module.update.device()
+            if device is Device.MOBILE
+                settings.transition = Transition.OVERLAY
                 module.hide()
             else
+                settings.transition = Transition.SQUEEZE
                 module.show()
 
         trigger:
@@ -217,19 +253,25 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             hidden: =>
                 $this.trigger Event.HIDDEN, element
 
+        create:
+            id: =>
+                id = (Math.random().toString(16) + '000000000').substr 2, 8
+                elementNamespace = ".#{id}"
+                debug '已產生臨時編號', id
+
         bind:
-            responsive: =>
+            repaint: =>
                 ts(window).on Event.RESIZE, =>
                     module.repaint()
-
             events: =>
-                $pusher.on "#{Event.CLICK} #{Event.TOUCHSTART}", (event, context) =>
-                    debug '發生 CLICK 或 TOUCHSTART 事件', context
-                    if module.is.responsive() and not module.is.responsiveDevice()
+                ts(Selector.BODY).on "click.#{elementNamespace}", (event, context) =>
+                    debug '發生 CLICK 事件', context
+                    if module.is.child event.target
+                        return
+                    if device isnt Device.MOBILE and module.get.visibility() is Visibility.AUTO
                         return
                     if not module.is.animating() and module.is.closable()
                         module.hide()
-
                 $this.on Event.VISIBLE, (event, context) =>
                     debug '發生 VISIBLE 事件', context
                     settings.onVisible.call context, event
@@ -253,12 +295,14 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         initialize: =>
             debug '初始化側邊欄', element
             $pusher = ts Selector.PUSHER
+            module.create.id()
+            module.update.device()
             module.bind.events()
-            if module.is.responsive()
-                module.bind.responsive()
-                module.repaint()
-            if module.is.visible()
-                settings.closable = false
+            if module.get.visibility() isnt Visibility.AUTO
+                return
+            module.bind.repaint()
+            module.repaint()
+
         instantiate: =>
             debug '實例化側邊欄', element
 
@@ -269,4 +313,5 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             debug '摧毀側邊欄', element
             $this.removeData MODULE_NAMESPACE
                  .off        EVENT_NAMESPACE
+            ts(Selector.BODY).off "click.#{elementNamespace}"
             return $allModules

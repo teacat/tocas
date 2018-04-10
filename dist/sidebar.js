@@ -5,7 +5,7 @@
   // ------------------------------------------------------------------------
 
   // 模組名稱。
-  var Attribute, ClassName, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, NAME, Selector, Settings;
+  var Attribute, ClassName, Device, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, NAME, Selector, Settings, Transition, Visibility;
 
   NAME = 'sidebar';
 
@@ -24,13 +24,15 @@
     // 監聽 DOM 結構異動並自動重整快取。
     observeChanges: true,
     // 是否要在側邊欄出現的時候淡化頁面。
-    dimPage: false,
+    dimPage: true,
     // 是否允許使用者點擊頁面關閉側邊欄。
     closable: true,
     // 是否要在側邊欄出現的時候所動頁面捲軸滾動。
     scrollLock: false,
-    // 預設的顯示模式。（`auto` 為電腦常駐、行動裝置隱藏、`true` 為常駐、`false` 為預設隱藏）
-    visible: false,
+    // 側邊欄的出場效果。（`overlay` 為覆蓋、`push` 為推出、`squeeze` 為擠壓）
+    transition: 'overlay',
+    // 預設的顯示模式，設為 `auto` 的時候出場效果會被覆蓋。（`auto` 為電腦常駐、行動裝置隱藏、`static` 為常駐、`hidden` 為預設隱藏）
+    visibility: 'hidden',
     // 當側邊欄剛出現時所會呼叫的回呼函式。
     onVisible: () => {},
     // 當側邊欄出現動畫結束時所會呼叫的回呼函式。
@@ -46,6 +48,20 @@
   // 標籤。
   Attribute = {
     SCROLL_LOCK: 'data-scroll-lock'
+  };
+
+  // 過場動畫。
+  Transition = {
+    OVERLAY: 'overlay',
+    PUSH: 'push',
+    SQUEEZE: 'squeeze'
+  };
+
+  // 可見度。
+  Visibility = {
+    AUTO: 'auto',
+    HIDDEN: 'hidden',
+    STATIC: 'static'
   };
 
   // 事件名稱。
@@ -67,13 +83,19 @@
     ACTIVE: 'active',
     DIMMED: 'dimmed',
     ANIMATING: 'animating',
-    RESPONSIVELY: 'responsively',
-    OVERLAPPED: 'overlapped'
+    OVERLAPPED: 'overlapped',
+    SQUEEZABLE: 'squeezable'
+  };
+
+  // 裝置。
+  Device = {
+    MOBILE: 'mobile'
   };
 
   // 選擇器名稱。
   Selector = {
-    PUSHER: '.ts.pusher'
+    PUSHER: '.ts.pusher',
+    BODY: 'body'
   };
 
   // 錯誤訊息。
@@ -83,16 +105,22 @@
   // 模組註冊
   // ------------------------------------------------------------------------
   ts.register({NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, element, debug, settings}) => {
-    var $pusher, duration, module;
+    var $pusher, device, duration, elementNamespace, module;
     // ------------------------------------------------------------------------
     // 區域變數
     // ------------------------------------------------------------------------
     $pusher = ts();
+    device = '';
     duration = 450;
+    elementNamespace = '';
     // ------------------------------------------------------------------------
     // 模組定義
     // ------------------------------------------------------------------------
     return module = {
+      setting: (key, value) => {
+        settings[key] = value;
+        return $allModules;
+      },
       set: {
         lock: (value) => {
           if (value) {
@@ -114,13 +142,27 @@
           } else {
             return $this.removeClass(ClassName.VISIBLE);
           }
+        }
+      },
+      update: {
+        device: () => {
+          return device = ts.device().device;
+        }
+      },
+      get: {
+        transition: () => {
+          return settings.transition;
         },
-        overlapped: (value) => {
-          if (value) {
-            return $this.addClass(ClassName.OVERLAPPED);
-          } else {
-            return $this.removeClass(ClassName.OVERLAPPED);
-          }
+        visibility: () => {
+          return settings.visibility;
+        }
+      },
+      reset: {
+        pusher: () => {
+          return $pusher.removeClass(ClassName.SQUEEZABLE);
+        },
+        sidebar: () => {
+          return $this.removeClass(ClassName.OVERLAPPED);
         }
       },
       dim: {
@@ -137,47 +179,48 @@
           return;
         }
         module.trigger.visible();
+        module.reset.pusher();
+        module.reset.sidebar();
+        if (module.get.transition() === Transition.SQUEEZE) {
+          $pusher.addClass(ClassName.SQUEEZABLE);
+        }
+        if (module.get.transition() === Transition.OVERLAY) {
+          $this.addClass(ClassName.OVERLAPPED);
+        }
+        if (module.get.visibility() === Visibility.AUTO) {
+          if (device === Device.MOBILE) {
+            module.dim.page(true);
+          } else {
+            module.dim.page(false);
+          }
+        }
         if (settings.scrollLock) {
           module.set.lock(true);
         }
-        if (settings.dimPage) {
+        if (settings.dimPage && module.get.visibility() !== Visibility.AUTO) {
           module.dim.page(true);
         }
-        if (module.is.responsiveDevice()) {
-          if (settings.responsive.dimPage) {
-            module.dim.page(true);
-          }
-          if (settings.responsive.overlapped) {
-            module.set.overlapped(true);
-          }
-        }
-        return module.animate.show(() => {
+        module.animate.show(() => {
           module.trigger.show();
           return module.trigger.change();
         });
+        return $allModules;
       },
       hide: () => {
-        var defaultVisible;
         if (module.is.hidden()) {
           return;
         }
-        defaultVisible = false;
         module.trigger.hide();
         if (settings.dimPage) {
           module.dim.page(false);
         }
-        if (module.is.responsiveDevice()) {
-          if (settings.responsive.dimPage) {
-            module.dim.page(false);
-          }
-          if (settings.responsive.overlapped) {
-            module.set.overlapped(false);
-          }
-        }
-        return module.animate.hide(() => {
+        module.animate.hide(() => {
           module.trigger.hidden();
+          module.reset.pusher();
+          module.reset.sidebar();
           return module.trigger.change();
         });
+        return $allModules;
       },
       toggle: () => {
         if (module.is.hidden()) {
@@ -223,35 +266,23 @@
         hidden: () => {
           return !module.is.visible();
         },
-        responsiveDevice: () => {
-          var device, i, len, ref, value;
-          device = ts.device().device;
-          if (!settings.responsive) {
-            return false;
-          }
-          ref = settings.responsive.hidden;
-          for (i = 0, len = ref.length; i < len; i++) {
-            value = ref[i];
-            if (value === device) {
-              return true;
-            }
-          }
-          return false;
-        },
-        responsive: () => {
-          return settings.responsive !== false;
-        },
         animating: () => {
           return $this.hasClass(ClassName.ANIMATING);
         },
         closable: () => {
           return settings.closable === true;
+        },
+        child: (target) => {
+          return $this.contains(target);
         }
       },
       repaint: () => {
-        if (module.is.responsiveDevice()) {
+        module.update.device();
+        if (device === Device.MOBILE) {
+          settings.transition = Transition.OVERLAY;
           return module.hide();
         } else {
+          settings.transition = Transition.SQUEEZE;
           return module.show();
         }
       },
@@ -272,16 +303,27 @@
           return $this.trigger(Event.HIDDEN, element);
         }
       },
+      create: {
+        id: () => {
+          var id;
+          id = (Math.random().toString(16) + '000000000').substr(2, 8);
+          elementNamespace = `.${id}`;
+          return debug('已產生臨時編號', id);
+        }
+      },
       bind: {
-        responsive: () => {
+        repaint: () => {
           return ts(window).on(Event.RESIZE, () => {
             return module.repaint();
           });
         },
         events: () => {
-          $pusher.on(`${Event.CLICK} ${Event.TOUCHSTART}`, (event, context) => {
-            debug('發生 CLICK 或 TOUCHSTART 事件', context);
-            if (module.is.responsive() && !module.is.responsiveDevice()) {
+          ts(Selector.BODY).on(`click.${elementNamespace}`, (event, context) => {
+            debug('發生 CLICK 事件', context);
+            if (module.is.child(event.target)) {
+              return;
+            }
+            if (device !== Device.MOBILE && module.get.visibility() === Visibility.AUTO) {
               return;
             }
             if (!module.is.animating() && module.is.closable()) {
@@ -316,14 +358,14 @@
       initialize: () => {
         debug('初始化側邊欄', element);
         $pusher = ts(Selector.PUSHER);
+        module.create.id();
+        module.update.device();
         module.bind.events();
-        if (module.is.responsive()) {
-          module.bind.responsive();
-          module.repaint();
+        if (module.get.visibility() !== Visibility.AUTO) {
+          return;
         }
-        if (module.is.visible()) {
-          return settings.closable = false;
-        }
+        module.bind.repaint();
+        return module.repaint();
       },
       instantiate: () => {
         return debug('實例化側邊欄', element);
@@ -334,6 +376,7 @@
       destroy: () => {
         debug('摧毀側邊欄', element);
         $this.removeData(MODULE_NAMESPACE).off(EVENT_NAMESPACE);
+        ts(Selector.BODY).off(`click.${elementNamespace}`);
         return $allModules;
       }
     };
