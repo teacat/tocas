@@ -5,7 +5,7 @@
   // ------------------------------------------------------------------------
 
   // 模組名稱。
-  var Attribute, ClassName, Device, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, Media, NAME, Selector, Settings;
+  var Attribute, ClassName, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, NAME, Selector, Settings;
 
   NAME = 'sidebar';
 
@@ -29,15 +29,8 @@
     closable: true,
     // 是否要在側邊欄出現的時候所動頁面捲軸滾動。
     scrollLock: false,
-    // 是否要使用響應式側邊欄，能在指定裝置上常駐、隱藏。
-    responsive: {
-      // 非常駐的裝置。
-      hidden: ['mobile', 'tablet'],
-      
-      dimPage: true,
-      // 是否要在非常駐裝置上顯示時，以覆蓋的方式呈現。
-      overlapped: true
-    },
+    // 預設的顯示模式。（`auto` 為電腦常駐、行動裝置隱藏、`true` 為常駐、`false` 為預設隱藏）
+    visible: false,
     // 當側邊欄剛出現時所會呼叫的回呼函式。
     onVisible: () => {},
     // 當側邊欄出現動畫結束時所會呼叫的回呼函式。
@@ -78,20 +71,6 @@
     OVERLAPPED: 'overlapped'
   };
 
-  Media = {
-    MOBILE: '(max-width: 767px)',
-    TABLET: '(min-width: 768px) and (max-width: 991px)',
-    COMPUTER: '(min-width: 992px) and (max-width: 1199px)',
-    LARGE_SCREEN: '(min-width: 1200px)'
-  };
-
-  Device = {
-    MOBILE: 'mobile',
-    TABLET: 'tablet',
-    COMPUTER: 'computer',
-    LARGE_SCREEN: 'large screen'
-  };
-
   // 選擇器名稱。
   Selector = {
     PUSHER: '.ts.pusher'
@@ -104,12 +83,11 @@
   // 模組註冊
   // ------------------------------------------------------------------------
   ts.register({NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, element, debug, settings}) => {
-    var $pusher, defaultVisible, duration, module;
+    var $pusher, duration, module;
     // ------------------------------------------------------------------------
     // 區域變數
     // ------------------------------------------------------------------------
     $pusher = ts();
-    defaultVisible = false;
     duration = 450;
     // ------------------------------------------------------------------------
     // 模組定義
@@ -158,6 +136,7 @@
         if (module.is.visible()) {
           return;
         }
+        module.trigger.visible();
         if (settings.scrollLock) {
           module.set.lock(true);
         }
@@ -172,12 +151,18 @@
             module.set.overlapped(true);
           }
         }
-        return module.animate.show();
+        return module.animate.show(() => {
+          module.trigger.show();
+          return module.trigger.change();
+        });
       },
       hide: () => {
+        var defaultVisible;
         if (module.is.hidden()) {
           return;
         }
+        defaultVisible = false;
+        module.trigger.hide();
         if (settings.dimPage) {
           module.dim.page(false);
         }
@@ -189,7 +174,10 @@
             module.set.overlapped(false);
           }
         }
-        return module.animate.hide();
+        return module.animate.hide(() => {
+          module.trigger.hidden();
+          return module.trigger.change();
+        });
       },
       toggle: () => {
         if (module.is.hidden()) {
@@ -236,8 +224,7 @@
           return !module.is.visible();
         },
         responsiveDevice: () => {
-          var device, i, len, matched, ref, value;
-          matched = false;
+          var device, i, len, ref, value;
           device = ts.device().device;
           if (!settings.responsive) {
             return false;
@@ -246,77 +233,83 @@
           for (i = 0, len = ref.length; i < len; i++) {
             value = ref[i];
             if (value === device) {
-              matched = true;
+              return true;
             }
           }
-          return matched;
+          return false;
         },
         responsive: () => {
           return settings.responsive !== false;
         },
         animating: () => {
           return $this.hasClass(ClassName.ANIMATING);
+        },
+        closable: () => {
+          return settings.closable === true;
         }
       },
-      check: {
-        responsive: () => {
-          if (module.is.responsiveDevice()) {
-            return module.hide();
-          } else {
-            return module.show();
-          }
+      repaint: () => {
+        if (module.is.responsiveDevice()) {
+          return module.hide();
+        } else {
+          return module.show();
         }
       },
-      //if module.is.responsiveDevice()
-      //    module.hide()
-      //else
-      //    module.show()
+      trigger: {
+        visible: () => {
+          return $this.trigger(Event.VISIBLE, element);
+        },
+        show: () => {
+          return $this.trigger(Event.SHOW, element);
+        },
+        change: () => {
+          return $this.trigger(Event.CHANGE, element);
+        },
+        hide: () => {
+          return $this.trigger(Event.HIDE, element);
+        },
+        hidden: () => {
+          return $this.trigger(Event.HIDDEN, element);
+        }
+      },
       bind: {
         responsive: () => {
           return ts(window).on(Event.RESIZE, () => {
-            return module.check.responsive();
+            return module.repaint();
           });
         },
-        //ts(window).on Media.MOBILE, (mq) =>
-        //    return if not mq.matches
-        //    module.check.responsive()
-        //ts(window).on Media.TABLET, (mq) =>
-        //    return if not mq.matches
-        //    module.check.responsive()
-        //ts(window).on Media.COMPUTER, (mq) =>
-        //    return if not mq.matches
-        //    module.check.responsive()
-        //ts(window).on Media.LARGE_SCREEN, (mq) =>
-        //    return if not mq.matches
-        //    module.check.responsive()
         events: () => {
-          return $pusher.on(`${Event.CLICK} ${Event.TOUCHSTART}`, (event, context) => {
+          $pusher.on(`${Event.CLICK} ${Event.TOUCHSTART}`, (event, context) => {
             debug('發生 CLICK 或 TOUCHSTART 事件', context);
             if (module.is.responsive() && !module.is.responsiveDevice()) {
               return;
             }
-            if (!module.is.animating()) {
+            if (!module.is.animating() && module.is.closable()) {
               return module.hide();
             }
           });
+          $this.on(Event.VISIBLE, (event, context) => {
+            debug('發生 VISIBLE 事件', context);
+            return settings.onVisible.call(context, event);
+          });
+          $this.on(Event.SHOW, (event, context) => {
+            debug('發生 SHOW 事件', context);
+            return settings.onShow.call(context, event);
+          });
+          $this.on(Event.CHANGE, (event, context) => {
+            debug('發生 CHANGE 事件', context);
+            return settings.onChange.call(context, event);
+          });
+          $this.on(Event.HIDE, (event, context) => {
+            debug('發生 HIDE 事件', context);
+            return settings.onHide.call(context, event);
+          });
+          return $this.on(Event.HIDDEN, (event, context) => {
+            debug('發生 HIDDEN 事件', context);
+            return settings.onHidden.call(context, event);
+          });
         }
       },
-      //$this.on Event.OPENING, (event, context) =>
-      //    debug '發生 OPENING 事件', context
-      //    settings.onOpening.call context, event
-      //$this.on Event.OPEN, (event, context) =>
-      //    debug '發生 OPEN 事件', context
-      //    settings.onOpen.call context, event
-      //$this.on Event.CLOSING, (event, context) =>
-      //    debug "發生 CLOSING 事件", context
-      //    settings.onClosing.call context, event
-      //$this.on Event.CLOSE, (event, context) =>
-      //    debug "發生 CLOSE 事件", context
-      //    settings.onClose.call context, event
-      //$this.on Event.CHANGE, (event, context) =>
-      //    debug "發生 CHANGE 事件", context
-      //    settings.onChange.call context, event
-
       // ------------------------------------------------------------------------
       // 基礎方法
       // ------------------------------------------------------------------------
@@ -326,10 +319,10 @@
         module.bind.events();
         if (module.is.responsive()) {
           module.bind.responsive();
-          module.check.responsive();
+          module.repaint();
         }
         if (module.is.visible()) {
-          return defaultVisible = true;
+          return settings.closable = false;
         }
       },
       instantiate: () => {

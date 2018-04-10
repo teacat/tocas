@@ -23,14 +23,8 @@ Settings =
     closable      : true
     # 是否要在側邊欄出現的時候所動頁面捲軸滾動。
     scrollLock    : false
-    # 是否要使用響應式側邊欄，能在指定裝置上常駐、隱藏。
-    responsive    : #false
-        # 非常駐的裝置。
-        hidden: ['mobile', 'tablet']
-        #
-        dimPage   : true
-        # 是否要在非常駐裝置上顯示時，以覆蓋的方式呈現。
-        overlapped: true
+    # 預設的顯示模式。（`auto` 為電腦常駐、行動裝置隱藏、`true` 為常駐、`false` 為預設隱藏）
+    visible       : false
     # 當側邊欄剛出現時所會呼叫的回呼函式。
     onVisible     : =>
     # 當側邊欄出現動畫結束時所會呼叫的回呼函式。
@@ -67,18 +61,6 @@ ClassName =
     RESPONSIVELY: 'responsively'
     OVERLAPPED  : 'overlapped'
 
-Media =
-    MOBILE      : '(max-width: 767px)'
-    TABLET      : '(min-width: 768px) and (max-width: 991px)'
-    COMPUTER    : '(min-width: 992px) and (max-width: 1199px)'
-    LARGE_SCREEN: '(min-width: 1200px)'
-
-Device =
-    MOBILE      : 'mobile'
-    TABLET      : 'tablet'
-    COMPUTER    : 'computer'
-    LARGE_SCREEN: 'large screen'
-
 # 選擇器名稱。
 Selector =
     PUSHER: '.ts.pusher'
@@ -97,7 +79,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
     # ------------------------------------------------------------------------
 
     $pusher        = ts()
-    defaultVisible = false
     duration       = 450
 
     # ------------------------------------------------------------------------
@@ -127,7 +108,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 else
                     $this.removeClass ClassName.OVERLAPPED
 
-
         dim:
             page: (value) =>
                 if value
@@ -138,6 +118,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         show: =>
             if module.is.visible()
                 return
+            module.trigger.visible()
             if settings.scrollLock
                 module.set.lock true
             if settings.dimPage
@@ -147,12 +128,15 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     module.dim.page true
                 if settings.responsive.overlapped
                     module.set.overlapped true
-            module.animate.show()
-
+            module.animate.show =>
+                module.trigger.show()
+                module.trigger.change()
 
         hide: =>
             if module.is.hidden()
                 return
+            defaultVisible = false
+            module.trigger.hide()
             if settings.dimPage
                 module.dim.page false
             if module.is.responsiveDevice()
@@ -160,7 +144,9 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     module.dim.page false
                 if settings.responsive.overlapped
                     module.set.overlapped false
-            module.animate.hide()
+            module.animate.hide =>
+                module.trigger.hidden()
+                module.trigger.change()
 
         toggle: =>
             if module.is.hidden()
@@ -200,70 +186,65 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             hidden: =>
                 not module.is.visible()
             responsiveDevice: =>
-                    matched = false
-                    device  = ts.device().device
-                    if not settings.responsive
-                        return false
-                    for value in settings.responsive.hidden
-                        matched = true if value is device
-                    return matched
+                device = ts.device().device
+                if not settings.responsive
+                    return false
+                for value in settings.responsive.hidden
+                    return true if value is device
+                return false
             responsive: =>
                 settings.responsive isnt false
             animating: =>
                 $this.hasClass ClassName.ANIMATING
+            closable: =>
+                settings.closable is true
 
-        check:
-            responsive: =>
-                if module.is.responsiveDevice()
-                    module.hide()
-                else
-                    module.show()
+        repaint: =>
+            if module.is.responsiveDevice()
+                module.hide()
+            else
+                module.show()
 
-                #if module.is.responsiveDevice()
-                #    module.hide()
-                #else
-                #    module.show()
+        trigger:
+            visible: =>
+                $this.trigger Event.VISIBLE, element
+            show: =>
+                $this.trigger Event.SHOW, element
+            change: =>
+                $this.trigger Event.CHANGE, element
+            hide: =>
+                $this.trigger Event.HIDE, element
+            hidden: =>
+                $this.trigger Event.HIDDEN, element
 
         bind:
             responsive: =>
                 ts(window).on Event.RESIZE, =>
-                    module.check.responsive()
-                #ts(window).on Media.MOBILE, (mq) =>
-                #    return if not mq.matches
-                #    module.check.responsive()
-                #ts(window).on Media.TABLET, (mq) =>
-                #    return if not mq.matches
-                #    module.check.responsive()
-                #ts(window).on Media.COMPUTER, (mq) =>
-                #    return if not mq.matches
-                #    module.check.responsive()
-                #ts(window).on Media.LARGE_SCREEN, (mq) =>
-                #    return if not mq.matches
-                #    module.check.responsive()
+                    module.repaint()
 
             events: =>
                 $pusher.on "#{Event.CLICK} #{Event.TOUCHSTART}", (event, context) =>
                     debug '發生 CLICK 或 TOUCHSTART 事件', context
                     if module.is.responsive() and not module.is.responsiveDevice()
                         return
-                    if not module.is.animating()
+                    if not module.is.animating() and module.is.closable()
                         module.hide()
 
-                #$this.on Event.OPENING, (event, context) =>
-                #    debug '發生 OPENING 事件', context
-                #    settings.onOpening.call context, event
-                #$this.on Event.OPEN, (event, context) =>
-                #    debug '發生 OPEN 事件', context
-                #    settings.onOpen.call context, event
-                #$this.on Event.CLOSING, (event, context) =>
-                #    debug "發生 CLOSING 事件", context
-                #    settings.onClosing.call context, event
-                #$this.on Event.CLOSE, (event, context) =>
-                #    debug "發生 CLOSE 事件", context
-                #    settings.onClose.call context, event
-                #$this.on Event.CHANGE, (event, context) =>
-                #    debug "發生 CHANGE 事件", context
-                #    settings.onChange.call context, event
+                $this.on Event.VISIBLE, (event, context) =>
+                    debug '發生 VISIBLE 事件', context
+                    settings.onVisible.call context, event
+                $this.on Event.SHOW, (event, context) =>
+                    debug '發生 SHOW 事件', context
+                    settings.onShow.call context, event
+                $this.on Event.CHANGE, (event, context) =>
+                    debug '發生 CHANGE 事件', context
+                    settings.onChange.call context, event
+                $this.on Event.HIDE, (event, context) =>
+                    debug '發生 HIDE 事件', context
+                    settings.onHide.call context, event
+                $this.on Event.HIDDEN, (event, context) =>
+                    debug '發生 HIDDEN 事件', context
+                    settings.onHidden.call context, event
 
         # ------------------------------------------------------------------------
         # 基礎方法
@@ -275,9 +256,9 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             module.bind.events()
             if module.is.responsive()
                 module.bind.responsive()
-                module.check.responsive()
+                module.repaint()
             if module.is.visible()
-                defaultVisible = true
+                settings.closable = false
         instantiate: =>
             debug '實例化側邊欄', element
 
