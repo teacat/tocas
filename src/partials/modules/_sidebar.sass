@@ -43,10 +43,14 @@
 //-------------------//
 
 .ts[class*="left sidebar"]
+    top        : 0
+    bottom     : 0
     left       : 0
     transform  : translate3d(-100%, 0, 0)
     border-left: 0
 .ts[class*="right sidebar"]
+    top         : 0
+    bottom      : 0
     right       : 0
     transform   : translate3d(100%, 0%, 0)
     border-right: 0
@@ -74,15 +78,15 @@
     padding: 0
 
 //-------------------//
-//     Overlapped
+//      Overlay
 //-------------------//
 
-.ts.overlapped.sidebar
-    z-index   : $z_sidebar_overlapped
-.ts.right.overlapped.sidebar.visible
-    box-shadow: $sidebar_rightOverlappedBoxShadow
-.ts.left.overlapped.sidebar.visible
-    box-shadow: $sidebar_leftOverlappedBoxShadow
+.ts.overlay.sidebar
+    z-index   : $z_sidebar_overlay
+.ts.right.overlay.sidebar.visible
+    box-shadow: $sidebar_rightOverlayBoxShadow
+.ts.left.overlay.sidebar.visible
+    box-shadow: $sidebar_leftOverlayBoxShadow
 
 //-------------------//
 //     Animating
@@ -118,48 +122,48 @@
 .pusher.squeezable
     transition: left $sidebar_easingDuration $sidebar_timeingFunction, right $sidebar_easingDuration $sidebar_timeingFunction, width $sidebar_easingDuration $sidebar_timeingFunction
 
-.pusher[data-pusher-lock='true']
+.pusher[data-scroll-lock='true']
     overflow: hidden
 
 //-------------------//
 //     Squeezable
 //-------------------//
 
-.ts.visible.sidebar:not(.overlapped)[class*="very thin"] ~ .pusher.squeezable
+.ts.visible.sidebar:not(.overlay)[class*="very thin"] ~ .pusher.squeezable
     width: calc(100vw - #{$sidebar_veryThinWidth})
-.ts.visible.thin.sidebar:not(.overlapped):not([class*="very thin"]) ~ .pusher.squeezable
+.ts.visible.thin.sidebar:not(.overlay):not([class*="very thin"]) ~ .pusher.squeezable
     width: calc(100vw - #{$sidebar_thinWidth})
-.ts.visible.sidebar:not(.overlapped) ~ .pusher.squeezable
+.ts.visible.sidebar:not(.overlay) ~ .pusher.squeezable
     width: calc(100vw - #{$sidebar_width})
-.ts.visible.wide.sidebar:not(.overlapped):not([class*="very wide"]) ~ .pusher.squeezable
+.ts.visible.wide.sidebar:not(.overlay):not([class*="very wide"]) ~ .pusher.squeezable
     width: calc(100vw - #{$sidebar_wideWidth})
-.ts.visible.sidebar:not(.overlapped)[class*="very wide"] ~ .pusher.squeezable
+.ts.visible.sidebar:not(.overlay)[class*="very wide"] ~ .pusher.squeezable
     width: calc(100vw - #{$sidebar_veryWideWidth})
 
 //-------------------//
 //      Offsets
 //-------------------//
 
-.ts.left.visible.sidebar:not(.overlapped)[class*="very thin"] ~ .pusher
+.ts.left.visible.sidebar:not(.overlay)[class*="very thin"] ~ .pusher
     left: $sidebar_veryThinWidth
-.ts.left.visible.thin.sidebar:not(.overlapped):not([class*="very thin"]) ~ .pusher
+.ts.left.visible.thin.sidebar:not(.overlay):not([class*="very thin"]) ~ .pusher
     left: $sidebar_thinWidth
-.ts.left.visible.sidebar:not(.overlapped) ~ .pusher
+.ts.left.visible.sidebar:not(.overlay) ~ .pusher
     left: $sidebar_width
-.ts.left.visible.wide.sidebar:not(.overlapped):not([class*="very wide"]) ~ .pusher
+.ts.left.visible.wide.sidebar:not(.overlay):not([class*="very wide"]) ~ .pusher
     left: $sidebar_wideWidth
-.ts.left.visible.sidebar:not(.overlapped)[class*="very wide"] ~ .pusher
+.ts.left.visible.sidebar:not(.overlay)[class*="very wide"] ~ .pusher
     left: $sidebar_veryWideWidth
 
-.ts.right.visible.sidebar:not(.overlapped)[class*="very thin"] ~ .pusher:not(.squeezable)
+.ts.right.visible.sidebar:not(.overlay)[class*="very thin"] ~ .pusher:not(.squeezable)
     left: -$sidebar_veryThinWidth
-.ts.right.visible.thin.sidebar:not(.overlapped):not([class*="very thin"]) ~ .pusher:not(.squeezable)
+.ts.right.visible.thin.sidebar:not(.overlay):not([class*="very thin"]) ~ .pusher:not(.squeezable)
     left: -$sidebar_thinWidth
-.ts.right.visible.sidebar:not(.overlapped) ~ .pusher:not(.squeezable)
+.ts.right.visible.sidebar:not(.overlay) ~ .pusher:not(.squeezable)
     left: -$sidebar_width
-.ts.right.visible.wide.sidebar:not(.overlapped):not([class*="very wide"]) ~ .pusher:not(.squeezable)
+.ts.right.visible.wide.sidebar:not(.overlay):not([class*="very wide"]) ~ .pusher:not(.squeezable)
     left: -$sidebar_wideWidth
-.ts.right.visible.sidebar:not(.overlapped)[class*="very wide"] ~ .pusher:not(.squeezable)
+.ts.right.visible.sidebar:not(.overlay)[class*="very wide"] ~ .pusher:not(.squeezable)
     left: -$sidebar_veryWideWidth
 
 //-------------------//

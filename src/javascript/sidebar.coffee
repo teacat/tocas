@@ -22,10 +22,10 @@ Settings =
     # 是否允許使用者點擊頁面關閉側邊欄。
     closable      : true
     # 是否要在側邊欄出現的時候所動頁面捲軸滾動。
-    scrollLock    : false
+    scrollLock    : true
     # 側邊欄的出場效果。（`overlay` 為覆蓋、`push` 為推出、`squeeze` 為擠壓）
     transition    : 'overlay'
-    # 預設的顯示模式，設為 `auto` 的時候出場效果會被覆蓋。（`auto` 為電腦常駐、行動裝置隱藏、`static` 為常駐、`hidden` 為預設隱藏）
+    # 預設的顯示模式，設為 `auto` 的時候出場效果會被覆蓋。（`auto` 為電腦常駐、行動裝置隱藏、`hidden` 為預設隱藏）
     visibility    : 'hidden'
     # 當側邊欄剛出現時所會呼叫的回呼函式。
     onVisible     : =>
@@ -68,12 +68,12 @@ Event =
 
 # 樣式名稱。
 ClassName =
-    VISIBLE     : 'visible'
-    ACTIVE      : 'active'
-    DIMMED      : 'dimmed'
-    ANIMATING   : 'animating'
-    OVERLAPPED  : 'overlapped'
-    SQUEEZABLE  : 'squeezable'
+    VISIBLE   : 'visible'
+    ACTIVE    : 'active'
+    DIMMED    : 'dimmed'
+    ANIMATING : 'animating'
+    OVERLAY   : 'overlay'
+    SQUEEZABLE: 'squeezable'
 
 # 裝置。
 Device =
@@ -142,7 +142,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             pusher: =>
                 $pusher.removeClass ClassName.SQUEEZABLE
             sidebar: =>
-                $this.removeClass ClassName.OVERLAPPED
+                $this.removeClass ClassName.OVERLAY
 
         dim:
             page: (value) =>
@@ -160,12 +160,14 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             if module.get.transition() is Transition.SQUEEZE
                 $pusher.addClass ClassName.SQUEEZABLE
             if module.get.transition() is Transition.OVERLAY
-                $this.addClass ClassName.OVERLAPPED
+                $this.addClass ClassName.OVERLAY
             if module.get.visibility() is Visibility.AUTO
                 if device is Device.MOBILE
                     module.dim.page true
+                    module.set.lock true
                 else
                     module.dim.page false
+                    module.set.lock false
             if settings.scrollLock
                 module.set.lock true
             if settings.dimPage and module.get.visibility() isnt Visibility.AUTO
@@ -179,6 +181,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             if module.is.hidden()
                 return
             module.trigger.hide()
+            module.set.lock false
             if settings.dimPage
                 module.dim.page false
             module.animate.hide =>
