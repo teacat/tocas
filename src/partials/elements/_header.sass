@@ -29,10 +29,9 @@ h1, h2, h3, h4, h5, h6
         margin-bottom: $header_lastMargin
 
 .ts.header
-    display    : flex
-    flex-wrap  : wrap
-    align-items: center
-    color      : $header_color
+    display: table
+    width  : 100%
+    color  : $header_color
 
 .ts.header .sub.header
     width      : 100%
@@ -40,14 +39,17 @@ h1, h2, h3, h4, h5, h6
     line-height: $header_subHeaderLineHeight
     color      : $header_subHeaderColor
 
+.ts.header .sub.header:not(.inline)
+    margin-top: $header_subHeaderDistance
+
 //-------------------//
 //  Inline Sub Header
 //-------------------//
 
 .ts.header .inline.sub.header
-    width      : auto
-    flex       : 1
-    margin-left: 1em
+    display       : inline
+    margin-left   : 1em
+    vertical-align: middle
 
 //-------------------//
 //       Icon
@@ -56,6 +58,9 @@ h1, h2, h3, h4, h5, h6
 .ts.header > .icon:not(.button)
     opacity       : $header_iconOpacity
     font-size     : $header_iconSize
+    vertical-align: middle
+    padding-right : $header_iconMargin
+    display       : table-cell
 
 /* With Text Node */
 .ts.header:not(.icon) > .icon:not(.button):only-child,
@@ -89,15 +94,12 @@ h1, h2, h3, h4, h5, h6
 
 .ts.header[class*="center aligned"][class*="center aligned"],
 .ts.header[class*="center aligned"][class*="center aligned"] .content
-    justify-content: center
     text-align     : center
 .ts.header[class*="left aligned"][class*="left aligned"],
 .ts.header[class*="left aligned"][class*="left aligned"] .content
-    justify-content: flex-start
     text-align     : left
 .ts.header[class*="right aligned"][class*="right aligned"],
 .ts.header[class*="right aligned"][class*="right aligned"] .content
-    justify-content: flex-end
     text-align     : right
 
 //-------------------//
@@ -136,16 +138,11 @@ h1, h2, h3, h4, h5, h6
 //-------------------//
 
 .ts.header .icon[class*="top aligned"]
-    align-self: flex-start
-    margin-top: $header_topAlignedIconOffset
-
+    vertical-align: top
 .ts.header .icon[class*="middle aligned"]
-    align-self: center
-    margin-top: $header_middleAlignedIconOffset
-
+    vertical-align: middle
 .ts.header .icon[class*="bottom aligned"]
-    align-self: flex-end
-    margin-top: $header_bottomAlignedIconOffset
+    vertical-align: bottom
 
 //-------------------//
 //        Page
