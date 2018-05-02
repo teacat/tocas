@@ -69,8 +69,17 @@
 //     Collapsed
 //-------------------//
 
-.ts.grid > .row.collapsed > .column:not(:last-child)
-    padding-right: 0
+.ts.grid.collapsed,
+.ts.grid > .row.collapsed
+    &.stackable > .column:not(:last-child)
+        +rwd-serious(tablet)
+            padding-right: 0 !important
+        +rwd-serious(computer)
+            padding-right: 0 !important
+        +rwd-serious(large)
+            padding-right: 0 !important
+    &:not(.stackable) > .column:not(:last-child)
+        padding-right: 0 !important
 
 //-------------------//
 //      Compact
@@ -213,7 +222,8 @@
 //      Divided
 //-------------------//
 
-.ts.grid.divided:not([class*="vertically divided"]) > .row > .column:not(:last-child)
+.ts.grid.divided:not([class*="vertically divided"]) > .row > .column:not(:last-child),
+.ts.grid.divided > .column:not(:last-child)
     border-right: $grid_dividedBorder
 
 .ts.grid[class*="vertically divided"] > .row:not(:last-child):before
