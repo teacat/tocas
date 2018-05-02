@@ -30,7 +30,7 @@
     // 複合式選單是否可以因為在觸控裝置上長按而顯示。
     touch: true,
     // 當複合式選單出現時所會呼叫的回呼函式。
-    onShow: (target, x, y) => {
+    onShow: (event, target, x, y) => {
       return true;
     },
     // 當複合式選單隱藏時所會呼叫的回呼函式。
@@ -42,7 +42,7 @@
     // 當複合式選單被啟用時所會呼叫的回呼函式。
     onEnable: () => {},
     // 當複合式選單被點擊項目時所會呼叫的回呼函式。
-    onSelect: (value, element) => {}
+    onSelect: (event, value, element) => {}
   };
 
   // 中繼資料名稱。
