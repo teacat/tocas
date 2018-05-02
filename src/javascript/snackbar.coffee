@@ -25,6 +25,14 @@ Settings =
         text    : ''
         # 動作按鈕的語意。
         emphasis: ''
+    #
+    onVisible: =>
+    #
+    onShow: =>
+    #
+    onHide: =>
+    #
+    onHidden: =>
     # 當點心條關閉時所會呼叫的回呼函式。
     onClose  : =>
     # 當點心條因為放置而自動關閉時所會呼叫的回呼函式。
