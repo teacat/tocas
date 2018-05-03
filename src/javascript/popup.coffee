@@ -187,64 +187,81 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $popup.get()
             status: =>
                 $this.data Metadata.STATUS
+            coordinate: =>
+                rect           = $this.rect()
+                boundaryRect   = $boundary.rect()
+                boundaryTop    = boundaryRect.top
+                boundaryLeft   = boundaryRect.left
+                boundaryBottom = boundaryRect.bottom
+                boundaryHeight   = boundaryRect.height
+                boundaryWidth = boundaryRect.width
+                boundaryRight  = boundaryRect.right
+
+                popupRect    = $popup.rect()
+                height       = popupRect.height
+                width        = popupRect.width
+
+                if $boundary.is('body')
+                    boundaryTop = 0
+                    boundaryLeft = 0
+                    boundaryBottom = 0
+                    boundaryWidth = boundary.clientWidth
+                    boundaryHeight = boundary.clientHeight
+                    boundaryRight = 0
+
+                top    = rect.top - boundaryTop
+                left   = rect.left - boundaryLeft
+                right  = (boundaryLeft + boundaryWidth) - (rect.left + rect.width)
+                bottom = (boundaryTop + boundaryHeight) - (rect.top + rect.height)
+
+                if $boundary.is('body')
+                    right  = boundaryWidth - (rect.left + rect.width)
+                    bottom = boundaryHeight - (rect.top + rect.height)
+
+                return {
+                    top: top
+                    left: left
+                    right: right
+                    bottom: bottom
+                }
+
+
             position: =>
-                if settings.position isnt Position.AUTO
-                    return settings.position
-
-                rect = $this.rect()
-
-                boundaryRect = $boundary.rect()
-                t = rect.top - boundaryRect.top
-                l = rect.left - boundaryRect.left
+                left   = $popup.hasClass Position.LEFT
+                right  = $popup.hasClass Position.RIGHT
+                bottom = $popup.hasClass Position.BOTTOM
+                top    = $popup.hasClass Position.TOP
+                center = $popup.hasClass Position.CENTER
 
                 switch
-                    when top < boundaryRect.height / 2 and left < boundaryRect.width / 2
+                    when top and left
                         return Position.TOP_LEFT
-                    when top < boundaryRect.height / 2 and left > boundaryRect.width / 2
+                    when top and right
                         return Position.TOP_RIGHT
-                    when top > boundaryRect.height / 2 and left < boundaryRect.width / 2
+                    when top and center
+                        return Position.TOP_CENTER
+                    when bottom and left
                         return Position.BOTTOM_LEFT
-                    when top > boundaryRect.height / 2 and left > boundaryRect.width / 2
+                    when bottom and right
                         return Position.BOTTOM_RIGHT
+                    when bottom and center
+                        return Position.BOTTOM_CENTER
+                    when right
+                        return Position.RIGHT
+                    when left
+                        return Position.LEFT
+
 
         calculate:
             popup:
                 position: =>
-                    rect           = $this.rect()
-                    boundaryRect   = $boundary.rect()
-                    boundaryTop    = boundaryRect.top
-                    boundaryLeft   = boundaryRect.left
-                    boundaryBottom = boundaryRect.bottom
-                    boundaryHeight   = boundaryRect.height
-                    boundaryWidth = boundaryRect.width
-                    boundaryRight  = boundaryRect.right
 
-                    popupRect    = $popup.rect()
-                    height       = popupRect.height
-                    width        = popupRect.width
+                    {top, left, right, bottom} = module.get.coordinate()
 
-
-
-                    if $boundary.is('body')
-                        boundaryTop = 0
-                        boundaryLeft = 0
-                        boundaryBottom = 0
-                        boundaryWidth = boundary.clientWidth
-                        boundaryHeight = boundary.clientHeight
-                        boundaryRight = 0
-
-                    top    = rect.top - boundaryTop
-                    left   = rect.left - boundaryLeft
-                    right  = (boundaryLeft + boundaryWidth) - (rect.left + rect.width)
-                    bottom = (boundaryTop + boundaryHeight) - (rect.top + rect.height)
-
-                    if $boundary.is('body')
-                        right  = boundaryWidth - (rect.left + rect.width)
-                        bottom = boundaryHeight - (rect.top + rect.height)
-
-
-
-                    console.log top, left, right, bottom
+                    popupRect = $popup.rect()
+                    height = popupRect.height
+                    width = popupRect.width
+                    #console.log top, left, right, bottom
 
                     topOK    = top > height
                     bottomOK = bottom > height
@@ -252,7 +269,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     centerOK = left > width / 2 and right > width / 2
                     rightOK  = right > width
 
-                    console.log topOK, leftOK, rightOK, bottomOK
+                    #console.log topOK, leftOK, rightOK, bottomOK
 
                     if settings.position isnt Position.AUTO
                         switch settings.position
@@ -403,19 +420,25 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                         module.show()
                         module.calculate.popup.position()
 
+                        {top, left, right, bottom} = module.get.coordinate()
+
                         switch module.get.position()
-                            when 'top center'
-                                module.set.coordinate element.offsetTop - $popup.rect().height, rect.left
-                            when 'top left'
-                                module.set.coordinate element.offsetTop - $popup.rect().height, rect.left
-                            when 'top right'
-                                module.set.coordinate element.offsetTop - $popup.rect().height, rect.right - $popup.rect().width
-                            when 'bottom center'
-                                module.set.coordinate element.offsetTop + rect.height, rect.left
-                            when 'bottom left'
-                                module.set.coordinate element.offsetTop + rect.height, rect.left
-                            when 'bottom right'
-                                module.set.coordinate element.offsetTop + rect.height, rect.right
+                            when Position.TOP_CENTER
+                                module.set.coordinate rect.top - $popup.rect().height, left
+                            when Position.TOP_LEFT
+                                module.set.coordinate rect.top - $popup.rect().height, left
+                            when Position.TOP_RIGHT
+                                module.set.coordinate rect.top - $popup.rect().height, right - $popup.rect().width
+                            when Position.BOTTOM_CENTER
+                                module.set.coordinate rect.top + rect.height, left
+                            when Position.BOTTOM_LEFT
+                                module.set.coordinate rect.top + rect.height, left
+                            when Position.BOTTOM_RIGHT
+                                module.set.coordinate rect.top + rect.height, left
+                            when Position.LEFT
+                                module.set.coordinate rect.top + rect.height, left + rect.width + 14
+                            when Position.RIGHT
+                                module.set.coordinate rect.top + rect.height, left
                         return
 
                     if $this.is(popupElement)

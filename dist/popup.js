@@ -212,65 +212,84 @@
         status: () => {
           return $this.data(Metadata.STATUS);
         },
-        position: () => {
-          var boundaryRect, l, rect, t;
-          if (settings.position !== Position.AUTO) {
-            return settings.position;
-          }
+        coordinate: () => {
+          var bottom, boundaryBottom, boundaryHeight, boundaryLeft, boundaryRect, boundaryRight, boundaryTop, boundaryWidth, height, left, popupRect, rect, right, top, width;
           rect = $this.rect();
           boundaryRect = $boundary.rect();
-          t = rect.top - boundaryRect.top;
-          l = rect.left - boundaryRect.left;
+          boundaryTop = boundaryRect.top;
+          boundaryLeft = boundaryRect.left;
+          boundaryBottom = boundaryRect.bottom;
+          boundaryHeight = boundaryRect.height;
+          boundaryWidth = boundaryRect.width;
+          boundaryRight = boundaryRect.right;
+          popupRect = $popup.rect();
+          height = popupRect.height;
+          width = popupRect.width;
+          if ($boundary.is('body')) {
+            boundaryTop = 0;
+            boundaryLeft = 0;
+            boundaryBottom = 0;
+            boundaryWidth = boundary.clientWidth;
+            boundaryHeight = boundary.clientHeight;
+            boundaryRight = 0;
+          }
+          top = rect.top - boundaryTop;
+          left = rect.left - boundaryLeft;
+          right = (boundaryLeft + boundaryWidth) - (rect.left + rect.width);
+          bottom = (boundaryTop + boundaryHeight) - (rect.top + rect.height);
+          if ($boundary.is('body')) {
+            right = boundaryWidth - (rect.left + rect.width);
+            bottom = boundaryHeight - (rect.top + rect.height);
+          }
+          return {
+            top: top,
+            left: left,
+            right: right,
+            bottom: bottom
+          };
+        },
+        position: () => {
+          var bottom, center, left, right, top;
+          left = $popup.hasClass(Position.LEFT);
+          right = $popup.hasClass(Position.RIGHT);
+          bottom = $popup.hasClass(Position.BOTTOM);
+          top = $popup.hasClass(Position.TOP);
+          center = $popup.hasClass(Position.CENTER);
           switch (false) {
-            case !(top < boundaryRect.height / 2 && left < boundaryRect.width / 2):
+            case !(top && left):
               return Position.TOP_LEFT;
-            case !(top < boundaryRect.height / 2 && left > boundaryRect.width / 2):
+            case !(top && right):
               return Position.TOP_RIGHT;
-            case !(top > boundaryRect.height / 2 && left < boundaryRect.width / 2):
+            case !(top && center):
+              return Position.TOP_CENTER;
+            case !(bottom && left):
               return Position.BOTTOM_LEFT;
-            case !(top > boundaryRect.height / 2 && left > boundaryRect.width / 2):
+            case !(bottom && right):
               return Position.BOTTOM_RIGHT;
+            case !(bottom && center):
+              return Position.BOTTOM_CENTER;
+            case !right:
+              return Position.RIGHT;
+            case !left:
+              return Position.LEFT;
           }
         }
       },
       calculate: {
         popup: {
           position: () => {
-            var bottom, bottomOK, boundaryBottom, boundaryHeight, boundaryLeft, boundaryRect, boundaryRight, boundaryTop, boundaryWidth, centerOK, height, left, leftOK, popupRect, rect, right, rightOK, top, topOK, width;
-            rect = $this.rect();
-            boundaryRect = $boundary.rect();
-            boundaryTop = boundaryRect.top;
-            boundaryLeft = boundaryRect.left;
-            boundaryBottom = boundaryRect.bottom;
-            boundaryHeight = boundaryRect.height;
-            boundaryWidth = boundaryRect.width;
-            boundaryRight = boundaryRect.right;
+            var bottom, bottomOK, centerOK, height, left, leftOK, popupRect, right, rightOK, top, topOK, width;
+            ({top, left, right, bottom} = module.get.coordinate());
             popupRect = $popup.rect();
             height = popupRect.height;
             width = popupRect.width;
-            if ($boundary.is('body')) {
-              boundaryTop = 0;
-              boundaryLeft = 0;
-              boundaryBottom = 0;
-              boundaryWidth = boundary.clientWidth;
-              boundaryHeight = boundary.clientHeight;
-              boundaryRight = 0;
-            }
-            top = rect.top - boundaryTop;
-            left = rect.left - boundaryLeft;
-            right = (boundaryLeft + boundaryWidth) - (rect.left + rect.width);
-            bottom = (boundaryTop + boundaryHeight) - (rect.top + rect.height);
-            if ($boundary.is('body')) {
-              right = boundaryWidth - (rect.left + rect.width);
-              bottom = boundaryHeight - (rect.top + rect.height);
-            }
-            console.log(top, left, right, bottom);
+            //console.log top, left, right, bottom
             topOK = top > height;
             bottomOK = bottom > height;
             leftOK = left > width;
             centerOK = left > width / 2 && right > width / 2;
             rightOK = right > width;
-            console.log(topOK, leftOK, rightOK, bottomOK);
+            //console.log topOK, leftOK, rightOK, bottomOK
             if (settings.position !== Position.AUTO) {
               switch (settings.position) {
                 case Position.TOP_LEFT:
@@ -423,7 +442,7 @@
       bind: {
         events: () => {
           return $body.on(Event.MOUSEMOVE, (event) => {
-            var $pointElement, pointElement, popupElement, popupRect, rect;
+            var $pointElement, bottom, left, pointElement, popupElement, popupRect, rect, right, top;
             if (!$popup.exists()) {
               return;
             }
@@ -441,24 +460,31 @@
               }
               module.show();
               module.calculate.popup.position();
+              ({top, left, right, bottom} = module.get.coordinate());
               switch (module.get.position()) {
-                case 'top center':
-                  module.set.coordinate(element.offsetTop - $popup.rect().height, rect.left);
+                case Position.TOP_CENTER:
+                  module.set.coordinate(rect.top - $popup.rect().height, left);
                   break;
-                case 'top left':
-                  module.set.coordinate(element.offsetTop - $popup.rect().height, rect.left);
+                case Position.TOP_LEFT:
+                  module.set.coordinate(rect.top - $popup.rect().height, left);
                   break;
-                case 'top right':
-                  module.set.coordinate(element.offsetTop - $popup.rect().height, rect.right - $popup.rect().width);
+                case Position.TOP_RIGHT:
+                  module.set.coordinate(rect.top - $popup.rect().height, right - $popup.rect().width);
                   break;
-                case 'bottom center':
-                  module.set.coordinate(element.offsetTop + rect.height, rect.left);
+                case Position.BOTTOM_CENTER:
+                  module.set.coordinate(rect.top + rect.height, left);
                   break;
-                case 'bottom left':
-                  module.set.coordinate(element.offsetTop + rect.height, rect.left);
+                case Position.BOTTOM_LEFT:
+                  module.set.coordinate(rect.top + rect.height, left);
                   break;
-                case 'bottom right':
-                  module.set.coordinate(element.offsetTop + rect.height, rect.right);
+                case Position.BOTTOM_RIGHT:
+                  module.set.coordinate(rect.top + rect.height, left);
+                  break;
+                case Position.LEFT:
+                  module.set.coordinate(rect.top + rect.height, left + rect.width + 14);
+                  break;
+                case Position.RIGHT:
+                  module.set.coordinate(rect.top + rect.height, left);
               }
               return;
             }
