@@ -5,7 +5,7 @@
   // ------------------------------------------------------------------------
 
   // 模組名稱。
-  var ClassName, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, NAME, Selector, Settings;
+  var ClassName, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, Metadata, NAME, Position, Selector, Settings, Status, duration;
 
   NAME = 'popup';
 
@@ -28,13 +28,13 @@
     // 同時是否僅能有一個彈出式訊息出現在螢幕上。
     exclusive: false,
     // 彈出式訊息的邊界元素，彈出式訊息會試圖不要超過這個元素。
-    boundary: 'window',
+    boundary: 'body',
     // 即時產生的彈出式訊息應該要被擺置在哪個元素內。
     context: 'body',
     // 此彈出式訊息偵測畫面是否有捲動的元素選擇器，如果指定元素有捲動事件則會自動隱藏此彈出式訊息。
-    scrollContext: 'window',
+    scrollContext: 'body',
     // 彈出式訊息出現的位置，分別是 `垂直 水平`（如：`top left`、`bottom right`）。
-    position: 'top left',
+    position: 'auto',
     // 是否要將彈出式訊息產生在目標元素的節點後，這讓使用者能在 CSS 選擇器中以 `.elem + .popup` 方便樣式更改。
     inline: false,
     // 欲觸發彈出式訊息的事件，如：`click`、`hover`、`focus`。
@@ -97,7 +97,9 @@
     UNPLACEABLE: `unplaceable${EVENT_NAMESPACE}`,
     CLICK: `click${EVENT_NAMESPACE}`,
     FOCUS: `focus${EVENT_NAMESPACE}`,
+    MOUSEMOVE: `mousemove${EVENT_NAMESPACE}`,
     MOUSEENTER: `mouseenter${EVENT_NAMESPACE}`,
+    MOUSELEAVE: `mouseleave${EVENT_NAMESPACE}`,
     MOUSEOUT: `mouseout${EVENT_NAMESPACE}`,
     ANIMATIONEND: 'animationend'
   };
@@ -110,69 +112,252 @@
     BOTTOM: 'bottom',
     CENTER: 'center',
     VISIBLE: 'visible',
+    ANIMATING: 'animating',
     HIDDEN: 'hidden',
     CUSTOM: 'custom'
   };
 
+  
+  Position = {
+    AUTO: 'auto',
+    TOP: 'top',
+    BOTTOM: 'bottom',
+    LEFT: 'left',
+    RIGHT: 'right',
+    TOP_LEFT: 'top left',
+    TOP_CENTER: 'top center',
+    TOP_RIGHT: 'top right',
+    LEFT: 'left',
+    CENTER: 'center',
+    RIGHT: 'right',
+    BOTTOM_LEFT: 'bottom left',
+    BOTTOM_CENTER: 'bottom center',
+    BOTTOM_RIGHT: 'bottom right'
+  };
+
+  
+  Status = {
+    VISIBLE: 'visible',
+    HIDDEN: 'hidden'
+  };
+
+  
+  Metadata = {
+    STATUS: 'status'
+  };
+
   // 選擇器名稱。
-  Selector = {};
+  Selector = {
+    BODY: 'body'
+  };
 
   // 錯誤訊息。
   Error = {};
+
+  // 過場動畫毫秒。
+  duration = 200;
 
   // ------------------------------------------------------------------------
   // 模組註冊
   // ------------------------------------------------------------------------
   ts.register({NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, element, debug, settings}) => {
-    var $popup, module, offset;
+    var $body, $boundary, $popup, boundary, module, offset;
     // ------------------------------------------------------------------------
     // 區域變數
     // ------------------------------------------------------------------------
+    $body = ts(Selector.BODY);
     $popup = ts();
+    $boundary = ts();
+    boundary = null;
     offset = 20;
     // ------------------------------------------------------------------------
     // 模組定義
     // ------------------------------------------------------------------------
     return module = {
-      show: () => {
-        return $popup.addClass(ClassName.VISIBLE);
+      show: (callback) => {
+        if (module.is.animating()) {
+          return;
+        }
+        if (module.is.visible()) {
+          return;
+        }
+        module.animate.show(() => {
+          module.set.animating(false);
+          if (callback != null) {
+            return callback.call();
+          }
+        });
+        return $allModules;
       },
-      hide: () => {
-        return $popup.removeClass(ClassName.VISIBLE);
+      hide: (callback) => {
+        if (module.is.animating()) {
+          return;
+        }
+        if (module.is.hidden()) {
+          return;
+        }
+        module.animate.hide(() => {
+          module.set.animating(false);
+          if (callback != null) {
+            return callback.call();
+          }
+        });
+        return $allModules;
       },
       hideAll: () => {},
       get: {
         popup: () => {
           return $popup.get();
         },
+        status: () => {
+          return $this.data(Metadata.STATUS);
+        },
         position: () => {
-          return settings.position;
+          var boundaryRect, l, rect, t;
+          if (settings.position !== Position.AUTO) {
+            return settings.position;
+          }
+          rect = $this.rect();
+          boundaryRect = $boundary.rect();
+          t = rect.top - boundaryRect.top;
+          l = rect.left - boundaryRect.left;
+          switch (false) {
+            case !(top < boundaryRect.height / 2 && left < boundaryRect.width / 2):
+              return Position.TOP_LEFT;
+            case !(top < boundaryRect.height / 2 && left > boundaryRect.width / 2):
+              return Position.TOP_RIGHT;
+            case !(top > boundaryRect.height / 2 && left < boundaryRect.width / 2):
+              return Position.BOTTOM_LEFT;
+            case !(top > boundaryRect.height / 2 && left > boundaryRect.width / 2):
+              return Position.BOTTOM_RIGHT;
+          }
         }
       },
-      //top    = $popup.hasClass ClassName.TOP
-      //left   = $popup.hasClass ClassName.LEFT
-      //right  = $popup.hasClass ClassName.RIGHT
-      //bottom = $popup.hasClass ClassName.BOTTOM
-      //center = $popup.hasClass ClassName.CENTER
-      //switch
-      //    when top and center
-      //        return 'top center'
-      //    when top and left
-      //        return 'top left'
-      //    when top and right
-      //        return 'top right'
-      //    when bottom and center
-      //        return 'bottom center'
-      //    when bottom and left
-      //        return 'bottom left'
-      //    when bottom and right
-      //        return 'bottom right'
+      calculate: {
+        popup: {
+          position: () => {
+            var bottom, bottomOK, boundaryBottom, boundaryHeight, boundaryLeft, boundaryRect, boundaryRight, boundaryTop, boundaryWidth, centerOK, height, left, leftOK, popupRect, rect, right, rightOK, top, topOK, width;
+            rect = $this.rect();
+            boundaryRect = $boundary.rect();
+            boundaryTop = boundaryRect.top;
+            boundaryLeft = boundaryRect.left;
+            boundaryBottom = boundaryRect.bottom;
+            boundaryHeight = boundaryRect.height;
+            boundaryWidth = boundaryRect.width;
+            boundaryRight = boundaryRect.right;
+            popupRect = $popup.rect();
+            height = popupRect.height;
+            width = popupRect.width;
+            if ($boundary.is('body')) {
+              boundaryTop = 0;
+              boundaryLeft = 0;
+              boundaryBottom = 0;
+              boundaryWidth = boundary.clientWidth;
+              boundaryHeight = boundary.clientHeight;
+              boundaryRight = 0;
+            }
+            top = rect.top - boundaryTop;
+            left = rect.left - boundaryLeft;
+            right = (boundaryLeft + boundaryWidth) - (rect.left + rect.width);
+            bottom = (boundaryTop + boundaryHeight) - (rect.top + rect.height);
+            if ($boundary.is('body')) {
+              right = boundaryWidth - (rect.left + rect.width);
+              bottom = boundaryHeight - (rect.top + rect.height);
+            }
+            console.log(top, left, right, bottom);
+            topOK = top > height;
+            bottomOK = bottom > height;
+            leftOK = left > width;
+            centerOK = left > width / 2 && right > width / 2;
+            rightOK = right > width;
+            console.log(topOK, leftOK, rightOK, bottomOK);
+            if (settings.position !== Position.AUTO) {
+              switch (settings.position) {
+                case Position.TOP_LEFT:
+                  if (topOK && leftOK) {
+                    module.set.position(settings.position);
+                  }
+                  break;
+                case Position.TOP_CENTER:
+                  if (topOK) {
+                    module.set.position(settings.position);
+                    return;
+                  }
+                  break;
+                case Position.TOP_RIGHT:
+                  if (topOK && rightOK) {
+                    module.set.position(settings.position);
+                    return;
+                  }
+                  break;
+                case Position.BOTTOM_LEFT:
+                  if (bottomOK && leftOK) {
+                    module.set.position(settings.position);
+                    return;
+                  }
+                  break;
+                case Position.BOTTOM_CENTER:
+                  if (bottomOK) {
+                    module.set.position(settings.position);
+                    return;
+                  }
+                  break;
+                case Position.BOTTOM_RIGHT:
+                  if (bottomOK && rightOK) {
+                    module.set.position(settings.position);
+                    return;
+                  }
+                  break;
+                case Position.LEFT:
+                  if (leftOK) {
+                    module.set.position(settings.position);
+                    return;
+                  }
+                  break;
+                case Position.RIGHT:
+                  if (rightOK) {
+                    module.set.position(settings.position);
+                    return;
+                  }
+              }
+            }
+            if (topOK) {
+              module.set.vertical.position(Position.TOP);
+            } else if (bottomOK) {
+              module.set.vertical.position(Position.BOTTOM);
+            }
+            if (centerOK) {
+              return module.set.horizontal.position(Position.CENTER);
+            } else if (leftOK) {
+              return module.set.horizontal.position(Position.RIGHT);
+            } else if (rightOK) {
+              return module.set.horizontal.position(Position.LEFT);
+            }
+          }
+        }
+      },
       toggle: () => {},
       change: {
         title: (title) => {},
         content: (content) => {},
         html: (html) => {
           return $popup.html(html);
+        }
+      },
+      animate: {
+        show: (callback) => {
+          return $popup.addClass(`${ClassName.VISIBLE} ${ClassName.ANIMATING}`).off(Event.ANIMATIONEND).one(Event.ANIMATIONEND, () => {
+            if (callback != null) {
+              return callback.call();
+            }
+          }).emulate(Event.ANIMATIONEND, duration);
+        },
+        hide: (callback) => {
+          return $popup.removeClass(ClassName.VISIBLE).addClass(ClassName.ANIMATING).one(Event.ANIMATIONEND, () => {
+            if (callback != null) {
+              return callback.call();
+            }
+          }).emulate(Event.ANIMATIONEND, duration);
         }
       },
       is: {
@@ -182,16 +367,32 @@
         hidden: () => {
           return !module.is.visible();
         },
+        animating: () => {
+          return $popup.hasClass(ClassName.ANIMATING);
+        },
         hoverable: () => {
           return settings.hoverable === true;
         }
       },
       exists: () => {},
+      repaint: () => {
+        return $popup.repaint();
+      },
       reposition: () => {},
       set: {
         position: (position) => {
           settings.position = position;
           return $popup.removeClass(`${ClassName.TOP} ${ClassName.RIGHT} ${ClassName.BOTTOM} ${ClassName.LEFT}`).addClass(position);
+        },
+        vertical: {
+          position: (position) => {
+            return $popup.removeClass(`${ClassName.TOP} ${ClassName.BOTTOM}`).addClass(position);
+          }
+        },
+        horizontal: {
+          position: (position) => {
+            return $popup.removeClass(`${ClassName.LEFT} ${ClassName.RIGHT}`).addClass(position);
+          }
         },
         coordinate: (x, y) => {
           return $popup.css({
@@ -203,6 +404,16 @@
           return $popup.css({
             width: width
           });
+        },
+        status: (value) => {
+          return $this.data(Metadata.STATUS, value);
+        },
+        animating: (value) => {
+          if (value) {
+            return $popup.addClass(ClassName.ANIMATING);
+          } else {
+            return $popup.removeClass(ClassName.ANIMATING);
+          }
         }
       },
       remove: {
@@ -211,60 +422,116 @@
       trigger: () => {},
       bind: {
         events: () => {
-          $this.on(Event.MOUSEENTER, () => {
-            var rect;
-            module.show();
+          return $body.on(Event.MOUSEMOVE, (event) => {
+            var $pointElement, pointElement, popupElement, popupRect, rect;
+            if (!$popup.exists()) {
+              return;
+            }
             rect = $this.rect();
-            $popup.removeClass('hidden');
-            $popup.addClass('animating');
-            $popup.one(Event.ANIMATIONEND, () => {
-              return $popup.removeClass('animating');
-            });
-            switch (module.get.position()) {
-              case 'top center':
-                return module.set.coordinate(rect.top - $popup.rect().height, rect.left);
-              case 'top left':
-                return module.set.coordinate(rect.top - $popup.rect().height, rect.left);
-              case 'top right':
-                return module.set.coordinate(rect.top - $popup.rect().height, rect.right - $popup.rect().width);
-              case 'bottom center':
-                return module.set.coordinate(rect.top + rect.height, rect.left);
-              case 'bottom left':
-                return module.set.coordinate(rect.top + rect.height, rect.left);
-              case 'bottom right':
-                return module.set.coordinate(rect.top + rect.height, rect.right);
-            }
-          });
-          return $this.on(Event.MOUSEOUT, (event) => {
-            if ($this.contains(event.relatedTarget)) {
+            $pointElement = ts.fromPoint(event.clientX, event.clientY);
+            pointElement = $pointElement.get();
+            popupElement = $popup.get();
+            popupRect = $popup.rect();
+            if ($this.is(pointElement)) {
+              if (module.is.animating()) {
+                return;
+              }
+              if (module.is.visible()) {
+                return;
+              }
+              module.show();
+              module.calculate.popup.position();
+              switch (module.get.position()) {
+                case 'top center':
+                  module.set.coordinate(element.offsetTop - $popup.rect().height, rect.left);
+                  break;
+                case 'top left':
+                  module.set.coordinate(element.offsetTop - $popup.rect().height, rect.left);
+                  break;
+                case 'top right':
+                  module.set.coordinate(element.offsetTop - $popup.rect().height, rect.right - $popup.rect().width);
+                  break;
+                case 'bottom center':
+                  module.set.coordinate(element.offsetTop + rect.height, rect.left);
+                  break;
+                case 'bottom left':
+                  module.set.coordinate(element.offsetTop + rect.height, rect.left);
+                  break;
+                case 'bottom right':
+                  module.set.coordinate(element.offsetTop + rect.height, rect.right);
+              }
               return;
             }
-            if ($popup.is(event.relatedTarget)) {
+            if ($this.is(popupElement)) {
               return;
             }
-            console.log(event);
-            $popup.addClass('hidden');
-            $popup.addClass('animating');
-            return $popup.one(Event.ANIMATIONEND, () => {
-              $popup.removeClass('animating');
-              return module.hide();
-            });
+            if ($popup.contains(pointElement)) {
+              return;
+            }
+            if (event.clientY > rect.top - 14 && event.clientY < popupRect.bottom + 14 && event.clientX < popupRect.right && event.clientX > popupRect.left) {
+              return;
+            }
+            return module.hide();
           });
         }
       },
+      /*
+      $body.on Event.MOUSEENTER, =>
+      module.show()
+
+      rect = $this.rect()
+
+      $popup.removeClass 'hidden'
+      $popup.addClass 'animating'
+
+      $popup.one Event.ANIMATIONEND, =>
+          $popup.removeClass 'animating'
+
+      switch module.get.position()
+          when 'top center'
+              module.set.coordinate rect.top - $popup.rect().height, rect.left
+          when 'top left'
+              module.set.coordinate rect.top - $popup.rect().height, rect.left
+          when 'top right'
+              module.set.coordinate rect.top - $popup.rect().height, rect.right - $popup.rect().width
+          when 'bottom center'
+              module.set.coordinate rect.top + rect.height, rect.left
+          when 'bottom left'
+              module.set.coordinate rect.top + rect.height, rect.left
+          when 'bottom right'
+              module.set.coordinate rect.top + rect.height, rect.right
+
+      $this.on Event.MOUSELEAVE, (event) =>
+      #if $this.contains event.relatedTarget
+       *    return
+      #if $popup.is(event.relatedTarget)
+       *    return
+      console.log $popup.rect().bottom, event.clientY
+
+      #console.log event
+
+      $popup.addClass 'hidden'
+      $popup.addClass 'animating'
+      $popup.one Event.ANIMATIONEND, =>
+          $popup.removeClass 'animating'
+          module.hide()
+       */
       // ------------------------------------------------------------------------
       // 基礎方法
       // ------------------------------------------------------------------------
       initialize: () => {
         var $next;
         debug('初始化彈出式訊息', element);
-        module.bind.events();
         $next = $this.next();
         if ($next.is('.ts.popup')) {
           $popup = $next;
         }
-        return module.set.position(settings.position);
+        $boundary = $this.closest(settings.boundary);
+        boundary = $boundary.get();
+        module.set.status(Status.HIDDEN);
+        return module.bind.events();
       },
+      //module.set.position settings.position
       instantiate: () => {
         return debug('實例化彈出式訊息', element);
       },

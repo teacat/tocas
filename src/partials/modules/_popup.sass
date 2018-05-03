@@ -1,260 +1,6 @@
 @import ../../variables/modules/popup.variables
 
 //*******************************//
-//              Main
-//*******************************//
-
-[data-tooltip]:before
-    position : absolute
-    right    : auto
-    top      : $popup_arrowVerticalOffsetCalc
-    left     : $popup_arrowHorizontalOffsetCalc
-    z-index  : $z_popup_arrow
-    content  : ''
-    font-size: 1rem
-
-    width : $popup_arrowSize
-    height: $popup_arrowSize
-
-    background: $popup_backgroundColor
-
-    opacity       : 0
-    visibility    : hidden
-    pointer-events: none
-
-    transform : rotate(45deg) scale(1) !important
-
-[data-tooltip]:after
-    position: absolute
-    left    : 50%
-    top     : $popup_messageVerticalOffset
-    z-index : $z_popup
-
-    transform: translateX(-50%) scale(1) !important
-
-    visibility    : hidden
-    pointer-events: none
-
-    padding: $popup_padding
-
-    text-transform: none
-    text-align    : left
-    white-space   : nowrap
-    font-size     : $popup_fontSize
-    font-weight   : 400
-    font-style    : normal
-    line-height   : $popup_lineHeight
-    max-width     : none
-    content       : attr(data-tooltip)
-
-    background: $popup_backgroundColor
-    color     : $popup_textColor
-
-    border-radius: $popup_borderRadius
-    opacity      : 0
-
-[data-tooltip]:hover:before,
-[data-tooltip]:hover:after
-    visibility         : visible
-    animation          : tooltip-appear $popup_animationDuration $popup_timingFunction $popup_defaultDelay
-    animation-fill-mode: forwards
-
-//-------------------//
-//     Animation
-//-------------------//
-
-@-webkit-keyframes tooltip-appear
-    from
-        opacity: 0
-    to
-        opacity: 1
-
-@keyframes tooltip-appear
-    from
-        opacity: 0
-    to
-        opacity: 1
-
-//-------------------//
-//      Position
-//-------------------//
-
-[data-tooltip][data-position="top left"]:before
-    top   : auto
-    right : auto
-    bottom: $popup_arrowVerticalOffsetCalc
-    left  : 1em
-[data-tooltip][data-position="top left"]:after
-    transform: scale(1) !important
-    top      : auto
-    right    : auto
-    bottom   : $popup_messageVerticalOffset
-    left     : 0
-
-[data-tooltip][data-position="top center"]:before
-    top   : auto
-    right : auto
-    bottom: $popup_arrowVerticalOffsetCalc
-    left  : 50%
-[data-tooltip][data-position="top center"]:after
-    top   : auto
-    right : auto
-    bottom: $popup_messageVerticalOffset
-    left  : 50%
-
-[data-tooltip][data-position="top right"]:before
-    top   : auto
-    left  : auto
-    bottom: $popup_arrowVerticalOffsetCalc
-    right : 1em
-[data-tooltip][data-position="top right"]:after
-    transform: scale(1) !important
-    top      : auto
-    left     : auto
-    bottom   : $popup_messageVerticalOffset
-    right    : 0
-
-/* Bottom */
-[data-tooltip][data-position="bottom left"]:before
-    bottom: auto
-    right : auto
-    top   : $popup_arrowVerticalOffsetCalc
-    left  : 1em
-[data-tooltip][data-position="bottom left"]:after
-    transform: scale(1) !important
-    bottom   : auto
-    right    : auto
-    top      : $popup_messageVerticalOffset
-    left     : 0
-
-[data-tooltip][data-position="bottom center"]:before
-    bottom: auto
-    right : auto
-    top   : $popup_arrowVerticalOffsetCalc
-    left  : $popup_arrowHorizontalOffsetCalc
-[data-tooltip][data-position="bottom center"]:after
-    bottom: auto
-    right : auto
-    top   : $popup_messageVerticalOffset
-    left  : 50%
-
-[data-tooltip][data-position="bottom right"]:before
-    bottom: auto
-    left  : auto
-    top   : $popup_arrowVerticalOffsetCalc
-    right : 1em
-[data-tooltip][data-position="bottom right"]:after
-    transform: scale(1) !important
-    bottom   : auto
-    left     : auto
-    top      : $popup_messageVerticalOffset
-    right    : 0
-
-/* Side */
-[data-tooltip][data-position="left"]:before
-    bottom: auto
-    right : $popup_arrowVerticalOffsetCalc
-    top   : $popup_arrowHorizontalOffsetCalc
-    left  : auto
-[data-tooltip][data-position="left"]:after
-    transform: translateY(-50%) scale(1) !important
-    bottom   : auto
-    right    : $popup_messageVerticalOffset
-    top      : 50%
-    left     : auto
-
-[data-tooltip][data-position="right"]:before
-    bottom: auto
-    left  : $popup_arrowVerticalOffsetCalc
-    top   : $popup_arrowHorizontalOffsetCalc
-    right : auto
-[data-tooltip][data-position="right"]:after
-    transform: translateY(-50%) scale(1) !important
-    bottom   : auto
-    left     : $popup_messageVerticalOffset
-    top      : 50%
-    right    : auto
-
-//-------------------//
-//    Untooltipped
-//-------------------//
-
-[data-tooltip].untooltipped:hover:before,
-[data-tooltip].untooltipped:hover:after
-    visibility: hidden !important
-
-//-------------------//
-//       Type
-//-------------------//
-
-[data-tooltip][data-type="label"]:before
-    display: none
-
-//-------------------//
-//       Delay
-//-------------------//
-
-[data-tooltip][data-delay]:before,
-[data-tooltip][data-delay]:after
-    animation-delay: .2s
-
-[data-tooltip][data-delay="0.1"]:before,
-[data-tooltip][data-delay="0.1"]:after
-    animation-delay: .1s
-[data-tooltip][data-delay="0.2"]:before,
-[data-tooltip][data-delay="0.2"]:after
-    animation-delay: .2s
-[data-tooltip][data-delay="0.3"]:before,
-[data-tooltip][data-delay="0.3"]:after
-    animation-delay: .3s
-[data-tooltip][data-delay="0.4"]:before,
-[data-tooltip][data-delay="0.4"]:after
-    animation-delay: .3s
-[data-tooltip][data-delay="0.5"]:before,
-[data-tooltip][data-delay="0.5"]:after
-    animation-delay: .5s
-[data-tooltip][data-delay="1"]:before,
-[data-tooltip][data-delay="1"]:after
-    animation-delay: 1s
-[data-tooltip][data-delay="2"]:before,
-[data-tooltip][data-delay="2"]:after
-    animation-delay: 2s
-[data-tooltip][data-delay="3"]:before,
-[data-tooltip][data-delay="3"]:after
-    animation-delay: 3s
-[data-tooltip][data-delay="4"]:before,
-[data-tooltip][data-delay="4"]:after
-    animation-delay: 4s
-[data-tooltip][data-delay="5"]:before,
-[data-tooltip][data-delay="5"]:after
-    animation-delay: 5s
-
-/* Disabled */
-[data-tooltip][data-delay="0"]:before,
-[data-tooltip][data-delay="0"]:after
-    animation: none
-[data-tooltip][data-delay="0"]:hover:before,
-[data-tooltip][data-delay="0"]:hover:after
-    opacity: 1
-
-//-------------------//
-//       Width
-//-------------------//
-
-[data-tooltip][data-width]:after
-    white-space: initial !important
-    text-align : center
-
-[data-tooltip][data-width="very wide"]:after
-    width: 20em
-[data-tooltip][data-width="wide"]:after
-    width: 15em
-[data-tooltip][data-width="narrow"]:after
-    width: 10em
-[data-tooltip][data-width="very narrow"]:after
-    width: 7.5em
-
-//*******************************//
 //            Animation
 //*******************************//
 
@@ -267,9 +13,10 @@
 
 @keyframes popup-hidden
     0%
+        transform: translate3d(0,-10px,0)
         opacity: 1
     100%
-        transform: translate3d(0,-10px,0)
+        transform: translate3d(0,-5px,0)
         opacity: 0
 
 //*******************************//
@@ -277,61 +24,78 @@
 //*******************************//
 
 .ts.popup
-    position: fixed
-    display: inline-block
-    visibility: hidden
-    background: #fff
-    box-shadow: $popup_boxShadow
-    border: $popup_elementBorder
+    position     : absolute
+    display      : inline-block
+    visibility   : hidden
+    background   : #fff
+    box-shadow   : $popup_boxShadow
+    border       : $popup_elementBorder
     border-radius: $popup_elementBorderRadius
-    z-index: $z_popup
+    z-index      : $z_popup
 
     margin-bottom: 14px
 
+//-------------------//
+//     Visibility
+//-------------------//
+
 .ts.popup.visible
     visibility: visible
-    opacity: 1
+    opacity   : 1
+
+.ts.popup.animating:not(.visible)
+    visibility: visible
+    animation: popup-hidden 200ms cubic-bezier(0.22, 0.61, 0.36, 1) both
 
 .ts.popup.animating.visible
     animation: popup-visible 250ms cubic-bezier(0.22, 0.61, 0.36, 1) both
 
-.ts.popup.animating.hidden
-    animation: popup-hidden 150ms cubic-bezier(0.22, 0.61, 0.36, 1) both
-
-.ts.popup.animating.hidden
-    visibility: visible
-
-
+//-------------------//
+//       Header
+//-------------------//
 
 .ts.popup > .header
-    overflow: hidden
-    color: $popup_elementHeaderColor
+    overflow     : hidden
+    color        : $popup_elementHeaderColor
     border-bottom: $popup_elementHeaderBorder
-    padding: $popup_elementPadding
-    background: $popup_elementHeaderBackgroundColor
+    padding      : $popup_elementPadding
+    background   : $popup_elementHeaderBackgroundColor
+
+//-------------------//
+//      Content
+//-------------------//
 
 .ts.popup > .content
     padding: $popup_elementPadding
 
+//-------------------//
+//       Arrow
+//-------------------//
+
 .ts.popup:before,
 .ts.popup:after
-    bottom: 100%
-    border: solid transparent
-    content: ""
-    height: 0
-    width: 0
+    bottom  : 100%
+    border  : solid transparent
+    content : ""
+    height  : 0
+    width   : 0
     position: absolute
+
     pointer-events: none
 
 .ts.popup:before
     border-color: transparent
     border-width: 10px
-    z-index: 100
+    z-index     : 100
 
 .ts.popup:after
     border-color: transparent
     border-width: 8px
-    z-index: 200
+    z-index     : 200
+
+//-------------------//
+//     Direction
+//-------------------//
 
 .ts.popup.top.visible
     transform: translateY(-14px)

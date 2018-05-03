@@ -22,13 +22,13 @@ Settings =
     # 同時是否僅能有一個彈出式訊息出現在螢幕上。
     exclusive     : false
     # 彈出式訊息的邊界元素，彈出式訊息會試圖不要超過這個元素。
-    boundary      : 'window'
+    boundary      : 'body'
     # 即時產生的彈出式訊息應該要被擺置在哪個元素內。
     context       : 'body'
     # 此彈出式訊息偵測畫面是否有捲動的元素選擇器，如果指定元素有捲動事件則會自動隱藏此彈出式訊息。
-    scrollContext : 'window'
+    scrollContext : 'body'
     # 彈出式訊息出現的位置，分別是 `垂直 水平`（如：`top left`、`bottom right`）。
-    position      : 'top left'
+    position      : 'auto'
     # 是否要將彈出式訊息產生在目標元素的節點後，這讓使用者能在 CSS 選擇器中以 `.elem + .popup` 方便樣式更改。
     inline        : false
     # 欲觸發彈出式訊息的事件，如：`click`、`hover`、`focus`。
@@ -85,7 +85,9 @@ Event =
     UNPLACEABLE : "unplaceable#{EVENT_NAMESPACE}"
     CLICK       : "click#{EVENT_NAMESPACE}"
     FOCUS       : "focus#{EVENT_NAMESPACE}"
+    MOUSEMOVE   : "mousemove#{EVENT_NAMESPACE}"
     MOUSEENTER  : "mouseenter#{EVENT_NAMESPACE}"
+    MOUSELEAVE  : "mouseleave#{EVENT_NAMESPACE}"
     MOUSEOUT    : "mouseout#{EVENT_NAMESPACE}"
     ANIMATIONEND: 'animationend'
 
@@ -97,15 +99,45 @@ ClassName =
     BOTTOM : 'bottom'
     CENTER : 'center'
     VISIBLE: 'visible'
+    ANIMATING: 'animating'
     HIDDEN : 'hidden'
     CUSTOM : 'custom'
 
+#
+Position =
+    AUTO         : 'auto'
+    TOP: 'top'
+    BOTTOM: 'bottom'
+    LEFT: 'left'
+    RIGHT: 'right'
+    TOP_LEFT     : 'top left'
+    TOP_CENTER   : 'top center'
+    TOP_RIGHT    : 'top right'
+    LEFT  : 'left'
+    CENTER: 'center'
+    RIGHT : 'right'
+    BOTTOM_LEFT  : 'bottom left'
+    BOTTOM_CENTER: 'bottom center'
+    BOTTOM_RIGHT : 'bottom right'
+
+#
+Status =
+    VISIBLE: 'visible'
+    HIDDEN : 'hidden'
+
+#
+Metadata =
+    STATUS: 'status'
+
 # 選擇器名稱。
 Selector =
-    {}
+    BODY: 'body'
 
 # 錯誤訊息。
 Error = {}
+
+# 過場動畫毫秒。
+duration = 200
 
 # ------------------------------------------------------------------------
 # 模組註冊
@@ -117,45 +149,159 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
     # 區域變數
     # ------------------------------------------------------------------------
 
-    $popup = ts()
-    offset = 20
+    $body     = ts(Selector.BODY)
+    $popup    = ts()
+    $boundary = ts()
+    boundary  = null
+    offset    = 20
 
     # ------------------------------------------------------------------------
     # 模組定義
     # ------------------------------------------------------------------------
 
     module =
-        show: =>
-            $popup.addClass ClassName.VISIBLE
+        show: (callback) =>
+            if module.is.animating()
+                return
+            if module.is.visible()
+                return
+            module.animate.show =>
+                module.set.animating false
+                callback.call() if callback?
+            return $allModules
 
-        hide: =>
-            $popup.removeClass ClassName.VISIBLE
+        hide: (callback) =>
+            if module.is.animating()
+                return
+            if module.is.hidden()
+                return
+            module.animate.hide =>
+                module.set.animating false
+                callback.call() if callback?
+            return $allModules
 
         hideAll: =>
 
         get:
             popup: =>
                 $popup.get()
+            status: =>
+                $this.data Metadata.STATUS
             position: =>
-                return settings.position
-                #top    = $popup.hasClass ClassName.TOP
-                #left   = $popup.hasClass ClassName.LEFT
-                #right  = $popup.hasClass ClassName.RIGHT
-                #bottom = $popup.hasClass ClassName.BOTTOM
-                #center = $popup.hasClass ClassName.CENTER
-                #switch
-                #    when top and center
-                #        return 'top center'
-                #    when top and left
-                #        return 'top left'
-                #    when top and right
-                #        return 'top right'
-                #    when bottom and center
-                #        return 'bottom center'
-                #    when bottom and left
-                #        return 'bottom left'
-                #    when bottom and right
-                #        return 'bottom right'
+                if settings.position isnt Position.AUTO
+                    return settings.position
+
+                rect = $this.rect()
+
+                boundaryRect = $boundary.rect()
+                t = rect.top - boundaryRect.top
+                l = rect.left - boundaryRect.left
+
+                switch
+                    when top < boundaryRect.height / 2 and left < boundaryRect.width / 2
+                        return Position.TOP_LEFT
+                    when top < boundaryRect.height / 2 and left > boundaryRect.width / 2
+                        return Position.TOP_RIGHT
+                    when top > boundaryRect.height / 2 and left < boundaryRect.width / 2
+                        return Position.BOTTOM_LEFT
+                    when top > boundaryRect.height / 2 and left > boundaryRect.width / 2
+                        return Position.BOTTOM_RIGHT
+
+        calculate:
+            popup:
+                position: =>
+                    rect           = $this.rect()
+                    boundaryRect   = $boundary.rect()
+                    boundaryTop    = boundaryRect.top
+                    boundaryLeft   = boundaryRect.left
+                    boundaryBottom = boundaryRect.bottom
+                    boundaryHeight   = boundaryRect.height
+                    boundaryWidth = boundaryRect.width
+                    boundaryRight  = boundaryRect.right
+
+                    popupRect    = $popup.rect()
+                    height       = popupRect.height
+                    width        = popupRect.width
+
+
+
+                    if $boundary.is('body')
+                        boundaryTop = 0
+                        boundaryLeft = 0
+                        boundaryBottom = 0
+                        boundaryWidth = boundary.clientWidth
+                        boundaryHeight = boundary.clientHeight
+                        boundaryRight = 0
+
+                    top    = rect.top - boundaryTop
+                    left   = rect.left - boundaryLeft
+                    right  = (boundaryLeft + boundaryWidth) - (rect.left + rect.width)
+                    bottom = (boundaryTop + boundaryHeight) - (rect.top + rect.height)
+
+                    if $boundary.is('body')
+                        right  = boundaryWidth - (rect.left + rect.width)
+                        bottom = boundaryHeight - (rect.top + rect.height)
+
+
+
+                    console.log top, left, right, bottom
+
+                    topOK    = top > height
+                    bottomOK = bottom > height
+                    leftOK   = left > width
+                    centerOK = left > width / 2 and right > width / 2
+                    rightOK  = right > width
+
+                    console.log topOK, leftOK, rightOK, bottomOK
+
+                    if settings.position isnt Position.AUTO
+                        switch settings.position
+                            when Position.TOP_LEFT
+                                if topOK and leftOK
+                                    module.set.position settings.position
+
+                            when Position.TOP_CENTER
+                                if topOK
+                                    module.set.position settings.position
+                                    return
+                            when Position.TOP_RIGHT
+                                if topOK and rightOK
+                                    module.set.position settings.position
+                                    return
+                            when Position.BOTTOM_LEFT
+                                if bottomOK and leftOK
+                                    module.set.position settings.position
+                                    return
+                            when Position.BOTTOM_CENTER
+                                if bottomOK
+                                    module.set.position settings.position
+                                    return
+                            when Position.BOTTOM_RIGHT
+                                if bottomOK and rightOK
+                                    module.set.position settings.position
+                                    return
+                            when Position.LEFT
+                                if leftOK
+                                    module.set.position settings.position
+                                    return
+                            when Position.RIGHT
+                                if rightOK
+                                    module.set.position settings.position
+                                    return
+
+
+                    if topOK
+                        module.set.vertical.position Position.TOP
+                    else if bottomOK
+                        module.set.vertical.position Position.BOTTOM
+
+                    if centerOK
+                        module.set.horizontal.position Position.CENTER
+                    else if leftOK
+                        module.set.horizontal.position Position.RIGHT
+                    else if rightOK
+                        module.set.horizontal.position Position.LEFT
+
 
         toggle: =>
 
@@ -165,15 +311,36 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             html: (html) =>
                 $popup.html html
 
+        animate:
+            show: (callback) =>
+                $popup
+                    .addClass "#{ClassName.VISIBLE} #{ClassName.ANIMATING}"
+                    .off      Event.ANIMATIONEND
+                    .one      Event.ANIMATIONEND, =>
+                        callback.call() if callback?
+                    .emulate Event.ANIMATIONEND, duration
+            hide: (callback) =>
+                $popup
+                    .removeClass ClassName.VISIBLE
+                    .addClass    ClassName.ANIMATING
+                    .one         Event.ANIMATIONEND, =>
+                        callback.call() if callback?
+                    .emulate Event.ANIMATIONEND, duration
+
         is:
             visible: =>
                 $popup.hasClass ClassName.VISIBLE
             hidden: =>
                 not module.is.visible()
+            animating: =>
+                $popup.hasClass ClassName.ANIMATING
             hoverable: =>
                 settings.hoverable is true
 
         exists: =>
+
+        repaint: =>
+            $popup.repaint()
 
         reposition: =>
 
@@ -183,6 +350,16 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $popup
                     .removeClass "#{ClassName.TOP} #{ClassName.RIGHT} #{ClassName.BOTTOM} #{ClassName.LEFT}"
                     .addClass position
+            vertical:
+                position: (position) =>
+                    $popup
+                        .removeClass "#{ClassName.TOP} #{ClassName.BOTTOM}"
+                        .addClass position
+            horizontal:
+                position: (position) =>
+                    $popup
+                        .removeClass "#{ClassName.LEFT} #{ClassName.RIGHT}"
+                        .addClass position
             coordinate: (x, y) =>
                 $popup.css
                     top : x
@@ -190,6 +367,13 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             width: (width) =>
                 $popup.css
                     width: width
+            status: (value) =>
+                $this.data Metadata.STATUS, value
+            animating: (value) =>
+                if value
+                    $popup.addClass ClassName.ANIMATING
+                else
+                    $popup.removeClass ClassName.ANIMATING
 
 
         remove:
@@ -200,7 +384,57 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         bind:
             events: =>
 
-                $this.on Event.MOUSEENTER, =>
+                $body.on Event.MOUSEMOVE, (event) =>
+                    if not $popup.exists()
+                        return
+
+                    rect          = $this.rect()
+                    $pointElement = ts.fromPoint(event.clientX, event.clientY)
+                    pointElement  = $pointElement.get()
+                    popupElement  = $popup.get()
+                    popupRect     = $popup.rect()
+
+                    if $this.is(pointElement)
+                        if module.is.animating()
+                            return
+                        if module.is.visible()
+                            return
+
+                        module.show()
+                        module.calculate.popup.position()
+
+                        switch module.get.position()
+                            when 'top center'
+                                module.set.coordinate element.offsetTop - $popup.rect().height, rect.left
+                            when 'top left'
+                                module.set.coordinate element.offsetTop - $popup.rect().height, rect.left
+                            when 'top right'
+                                module.set.coordinate element.offsetTop - $popup.rect().height, rect.right - $popup.rect().width
+                            when 'bottom center'
+                                module.set.coordinate element.offsetTop + rect.height, rect.left
+                            when 'bottom left'
+                                module.set.coordinate element.offsetTop + rect.height, rect.left
+                            when 'bottom right'
+                                module.set.coordinate element.offsetTop + rect.height, rect.right
+                        return
+
+                    if $this.is(popupElement)
+                        return
+
+                    if $popup.contains(pointElement)
+                        return
+
+
+
+                    if event.clientY > rect.top - 14 and event.clientY < popupRect.bottom + 14 and event.clientX < popupRect.right and event.clientX > popupRect.left
+                        return
+
+
+                    module.hide()
+
+
+                ###
+                $body.on Event.MOUSEENTER, =>
                     module.show()
 
                     rect = $this.rect()
@@ -227,12 +461,15 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                             module.set.coordinate rect.top + rect.height, rect.right
 
 
-                $this.on Event.MOUSEOUT, (event) =>
-                    if $this.contains event.relatedTarget
-                        return
-                    if $popup.is(event.relatedTarget)
-                        return
-                    console.log event
+                $this.on Event.MOUSELEAVE, (event) =>
+                    #if $this.contains event.relatedTarget
+                    #    return
+                    #if $popup.is(event.relatedTarget)
+                    #    return
+                    console.log $popup.rect().bottom, event.clientY
+
+
+                    #console.log event
 
 
 
@@ -241,6 +478,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     $popup.one Event.ANIMATIONEND, =>
                         $popup.removeClass 'animating'
                         module.hide()
+                ###
 
 
         # ------------------------------------------------------------------------
@@ -249,7 +487,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
         initialize: =>
             debug '初始化彈出式訊息', element
-            module.bind.events()
+
 
 
 
@@ -257,7 +495,13 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             if $next.is('.ts.popup')
                 $popup = $next
 
-            module.set.position settings.position
+
+            $boundary = $this.closest(settings.boundary)
+            boundary = $boundary.get()
+            module.set.status Status.HIDDEN
+            module.bind.events()
+
+            #module.set.position settings.position
 
         instantiate: =>
             debug '實例化彈出式訊息', element
