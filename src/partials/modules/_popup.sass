@@ -4,20 +4,30 @@
 //            Animation
 //*******************************//
 
-@keyframes popup-visible
+@keyframes popup-upward
     0%
-        transform: translate3d(0,-10px,0)
-        opacity: 0
+        opacity  : 0
     100%
+        transform: translateY(-14px)
         opacity: 1
-
-@keyframes popup-hidden
+@keyframes popup-downward
     0%
-        transform: translate3d(0,-10px,0)
-        opacity: 1
+        opacity  : 0
     100%
-        transform: translate3d(0,-5px,0)
-        opacity: 0
+        transform: translateY(14px)
+        opacity: 1
+@keyframes popup-leftward
+    0%
+        opacity  : 0
+    100%
+        transform: translateX(-14px)
+        opacity: 1
+@keyframes popup-rightward
+    0%
+        opacity  : 0
+    100%
+        transform: translateX(14px)
+        opacity: 1
 
 //*******************************//
 //         Element Main
@@ -43,12 +53,27 @@
     visibility: visible
     opacity   : 1
 
-.ts.popup.animating:not(.visible)
-    visibility: visible
-    animation: popup-hidden 200ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+.ts.popup.animating[data-popup-position="top left"],
+.ts.popup.animating[data-popup-position="top center"],
+.ts.popup.animating[data-popup-position="top right"]
+    animation: popup-upward 180ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+.ts.popup.animating[data-popup-position="bottom left"],
+.ts.popup.animating[data-popup-position="bottom center"],
+.ts.popup.animating[data-popup-position="bottom right"]
+    animation: popup-downward 180ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+.ts.popup.animating[data-popup-position="left top"],
+.ts.popup.animating[data-popup-position="left center"],
+.ts.popup.animating[data-popup-position="left bottom"]
+    animation: popup-leftward 180ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+.ts.popup.animating[data-popup-position="right top"],
+.ts.popup.animating[data-popup-position="right center"],
+.ts.popup.animating[data-popup-position="right bottom"]
+    animation: popup-rightward 180ms cubic-bezier(0.22, 0.61, 0.36, 1) both
 
-.ts.popup.animating.visible
-    animation: popup-visible 250ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+.ts.popup.animating:not(.visible)
+    visibility         : visible
+    animation-direction: reverse
+    animation-duration: 200ms
 
 //-------------------//
 //       Header
@@ -97,92 +122,136 @@
 //     Direction
 //-------------------//
 
-.ts.popup.top.visible
+.ts.popup.visible[data-popup-position="top left"]:not(.animating),
+.ts.popup.visible[data-popup-position="top center"]:not(.animating),
+.ts.popup.visible[data-popup-position="top right"]:not(.animating)
     transform: translateY(-14px)
-.ts.popup.bottom.visible
+.ts.popup.visible[data-popup-position="bottom left"]:not(.animating),
+.ts.popup.visible[data-popup-position="bottom center"]:not(.animating),
+.ts.popup.visible[data-popup-position="bottom right"]:not(.animating)
     transform: translateY(14px)
-.ts.popup.left:not(.top):not(.bottom).visible
-    transform: translateX(14px)
-.ts.popup.right:not(.top):not(.bottom).visible
+.ts.popup.visible[data-popup-position="left top"]:not(.animating),
+.ts.popup.visible[data-popup-position="left center"]:not(.animating),
+.ts.popup.visible[data-popup-position="left bottom"]:not(.animating)
     transform: translateX(-14px)
+.ts.popup.visible[data-popup-position="right top"]:not(.animating),
+.ts.popup.visible[data-popup-position="right center"]:not(.animating),
+.ts.popup.visible[data-popup-position="right bottom"]:not(.animating)
+    transform: translateX(14px)
 
-.ts.popup[class*="top right"]:before
+.ts.popup[data-popup-position="top right"]:before
     border-bottom-color: $popup_elementBorderColor
     bottom             : -20px
     right              : $popup_elementHorizontalPadding
     transform          : rotate(180deg)
-.ts.popup[class*="top right"]:after
+.ts.popup[data-popup-position="top right"]:after
     border-bottom-color: #FFF
     bottom             : -16px
     right              : calc(#{$popup_elementHorizontalPadding} - -2px)
     transform          : rotate(180deg)
-
-.ts.popup[class*="top left"]:before
+.ts.popup[data-popup-position="top left"]:before
     border-bottom-color: $popup_elementBorderColor
     bottom             : -20px
     left               : $popup_elementHorizontalPadding
     transform          : rotate(180deg)
-.ts.popup[class*="top left"]:after
+.ts.popup[data-popup-position="top left"]:after
     border-bottom-color: #FFF
     bottom             : -16px
     left               : calc(#{$popup_elementHorizontalPadding} - -2px)
     transform          : rotate(180deg)
-
-.ts.popup[class*="top center"]:before
-    border-bottom-color: $popup_elementBorderColor
-    left               : 50%
-    transform          : translateX(-50%)
-.ts.popup[class*="top center"]:after
-    border-bottom-color: #FFF
-    left               : 50%
-    transform          : translateX(-50%)
-
-.ts.popup[class*="bottom right"]:before
-    border-bottom-color: $popup_elementBorderColor
-    right              : $popup_elementHorizontalPadding
-.ts.popup[class*="bottom right"]:after
-    border-bottom-color: #FFF
-    right              : calc(#{$popup_elementHorizontalPadding} - -2px)
-
-.ts.popup[class*="bottom left"]:before
-    border-bottom-color: $popup_elementBorderColor
-    left               : $popup_elementHorizontalPadding
-.ts.popup[class*="bottom left"]:after
-    border-bottom-color: #FFF
-    left               : calc(#{$popup_elementHorizontalPadding} - -2px)
-
-.ts.popup[class*="bottom center"]:before
+.ts.popup[data-popup-position="top center"]:before
     border-bottom-color: $popup_elementBorderColor
     bottom             : -20px
     left               : 50%
     transform          : translateX(-50%) rotate(180deg)
-.ts.popup[class*="bottom center"]:after
+.ts.popup[data-popup-position="top center"]:after
     border-bottom-color: #FFF
     bottom             : -16px
     left               : 50%
     transform          : translateX(-50%) rotate(180deg)
 
-.ts.popup.right:not(.bottom):not(.top):before
+.ts.popup[data-popup-position="bottom right"]:before
+    border-bottom-color: $popup_elementBorderColor
+    right              : $popup_elementHorizontalPadding
+.ts.popup[data-popup-position="bottom right"]:after
+    border-bottom-color: #FFF
+    right              : calc(#{$popup_elementHorizontalPadding} - -2px)
+.ts.popup[data-popup-position="bottom left"]:before
+    border-bottom-color: $popup_elementBorderColor
+    left               : $popup_elementHorizontalPadding
+.ts.popup[data-popup-position="bottom left"]:after
+    border-bottom-color: #FFF
+    left               : calc(#{$popup_elementHorizontalPadding} - -2px)
+.ts.popup[data-popup-position="bottom center"]:before
+    border-bottom-color: $popup_elementBorderColor
+    left               : 50%
+    transform          : translateX(-50%)
+.ts.popup[data-popup-position="bottom center"]:after
+    border-bottom-color: #FFF
+    left               : 50%
+    transform          : translateX(-50%)
+
+.ts.popup[data-popup-position="right top"]:before
+    border-bottom-color: $popup_elementBorderColor
+    top             : $popup_elementVerticalPadding
+    left               : -20px
+    transform          : rotate(-90deg)
+.ts.popup[data-popup-position="right top"]:after
+    border-bottom-color: #FFF
+    top                : calc(#{$popup_elementVerticalPadding} - -2px)
+    left               : -16px
+    transform          : rotate(-90deg)
+.ts.popup[data-popup-position="right bottom"]:before
+    border-bottom-color: $popup_elementBorderColor
+    bottom             : $popup_elementVerticalPadding
+    left               : -20px
+    transform          : rotate(-90deg)
+.ts.popup[data-popup-position="right bottom"]:after
+    border-bottom-color: #FFF
+    bottom             : calc(#{$popup_elementVerticalPadding} - -2px)
+    left               : -16px
+    transform          : rotate(-90deg)
+.ts.popup[data-popup-position="right center"]:before
+    border-bottom-color: $popup_elementBorderColor
+    top                : 50%
+    left               : -20px
+    transform          : translateY(-50%) rotate(-90deg)
+.ts.popup[data-popup-position="right center"]:after
+    border-bottom-color: #FFF
+    top                : 50%
+    left               : -16px
+    transform          : translateY(-50%) rotate(-90deg)
+
+.ts.popup[data-popup-position="left top"]:before
+    border-bottom-color: $popup_elementBorderColor
+    top                : $popup_elementVerticalPadding
+    right              : -20px
+    transform          : rotate(90deg)
+.ts.popup[data-popup-position="left top"]:after
+    border-bottom-color: #FFF
+    top                : calc(#{$popup_elementVerticalPadding} - -2px)
+    right              : -16px
+    transform          : rotate(90deg)
+.ts.popup[data-popup-position="left bottom"]:before
+    border-bottom-color: $popup_elementBorderColor
+    bottom             : $popup_elementVerticalPadding
+    right              : -20px
+    transform          : rotate(90deg)
+.ts.popup[data-popup-position="left bottom"]:after
+    border-bottom-color: #FFF
+    bottom             : calc(#{$popup_elementVerticalPadding} - -2px)
+    right              : -16px
+    transform          : rotate(90deg)
+.ts.popup[data-popup-position="left center"]:before
     border-bottom-color: $popup_elementBorderColor
     top                : 50%
     right              : -20px
     transform          : translateY(-50%) rotate(90deg)
-.ts.popup.right:not(.bottom):not(.top):after
+.ts.popup[data-popup-position="left center"]:after
     border-bottom-color: #FFF
     top                : 50%
     right              : -16px
     transform          : translateY(-50%) rotate(90deg)
-
-.ts.popup.left:not(.bottom):not(.top):before
-    border-bottom-color: $popup_elementBorderColor
-    top                : 50%
-    left               : -20px
-    transform          : translateY(-50%) rotate(270deg)
-.ts.popup.left:not(.bottom):not(.top):after
-    border-bottom-color: #FFF
-    top                : 50%
-    left               : -16px
-    transform          : translateY(-50%) rotate(270deg)
 
 //-------------------//
 //     Coupling

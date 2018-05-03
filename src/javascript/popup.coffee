@@ -106,19 +106,23 @@ ClassName =
 #
 Position =
     AUTO         : 'auto'
-    TOP: 'top'
-    BOTTOM: 'bottom'
-    LEFT: 'left'
-    RIGHT: 'right'
+    TOP          : 'top'
+    BOTTOM       : 'bottom'
+    LEFT         : 'left'
+    RIGHT        : 'right'
+    CENTER       : 'center'
     TOP_LEFT     : 'top left'
     TOP_CENTER   : 'top center'
     TOP_RIGHT    : 'top right'
-    LEFT  : 'left'
-    CENTER: 'center'
-    RIGHT : 'right'
     BOTTOM_LEFT  : 'bottom left'
     BOTTOM_CENTER: 'bottom center'
     BOTTOM_RIGHT : 'bottom right'
+    RIGHT_TOP    : 'right top'
+    RIGHT_CENTER : 'right center'
+    RIGHT_BOTTOM : 'right bottom'
+    LEFT_TOP     : 'left top'
+    LEFT_CENTER  : 'left center'
+    LEFT_BOTTOM  : 'left bottom'
 
 #
 Status =
@@ -127,11 +131,15 @@ Status =
 
 #
 Metadata =
-    STATUS: 'status'
+    POSITION: 'position'
 
 # 選擇器名稱。
 Selector =
     BODY: 'body'
+
+#
+Attribute =
+    POSITION: 'data-popup-position'
 
 # 錯誤訊息。
 Error = {}
@@ -187,137 +195,125 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $popup.get()
             status: =>
                 $this.data Metadata.STATUS
-            coordinate: =>
+            distance: =>
                 rect           = $this.rect()
                 boundaryRect   = $boundary.rect()
                 boundaryTop    = boundaryRect.top
                 boundaryLeft   = boundaryRect.left
                 boundaryBottom = boundaryRect.bottom
-                boundaryHeight   = boundaryRect.height
-                boundaryWidth = boundaryRect.width
+                boundaryHeight = boundaryRect.height
+                boundaryWidth  = boundaryRect.width
                 boundaryRight  = boundaryRect.right
 
-                popupRect    = $popup.rect()
-                height       = popupRect.height
-                width        = popupRect.width
-
-                if $boundary.is('body')
-                    boundaryTop = 0
-                    boundaryLeft = 0
+                if $boundary.is 'body'
+                    boundaryTop    = 0
+                    boundaryLeft   = 0
                     boundaryBottom = 0
-                    boundaryWidth = boundary.clientWidth
+                    boundaryWidth  = boundary.clientWidth
                     boundaryHeight = boundary.clientHeight
-                    boundaryRight = 0
+                    boundaryRight   = 0
 
                 top    = rect.top - boundaryTop
                 left   = rect.left - boundaryLeft
                 right  = (boundaryLeft + boundaryWidth) - (rect.left + rect.width)
                 bottom = (boundaryTop + boundaryHeight) - (rect.top + rect.height)
 
-                if $boundary.is('body')
+                if $boundary.is 'body'
                     right  = boundaryWidth - (rect.left + rect.width)
                     bottom = boundaryHeight - (rect.top + rect.height)
 
-                return {
-                    top: top
-                    left: left
-                    right: right
+                return
+                    top   : top
+                    left  : left
+                    right : right
                     bottom: bottom
-                }
-
 
             position: =>
-                left   = $popup.hasClass Position.LEFT
-                right  = $popup.hasClass Position.RIGHT
-                bottom = $popup.hasClass Position.BOTTOM
-                top    = $popup.hasClass Position.TOP
-                center = $popup.hasClass Position.CENTER
-
-                switch
-                    when top and left
-                        return Position.TOP_LEFT
-                    when top and right
-                        return Position.TOP_RIGHT
-                    when top and center
-                        return Position.TOP_CENTER
-                    when bottom and left
-                        return Position.BOTTOM_LEFT
-                    when bottom and right
-                        return Position.BOTTOM_RIGHT
-                    when bottom and center
-                        return Position.BOTTOM_CENTER
-                    when right
-                        return Position.RIGHT
-                    when left
-                        return Position.LEFT
-
+                return $popup.attr Attribute.POSITION
 
         calculate:
             popup:
                 position: =>
+                    {top, left, right, bottom} = module.get.distance()
+                    rect        = $this.rect()
+                    popupRect   = $popup.rect()
+                    popupWidth  = popupRect.width
+                    popupHeight = popupRect.height
+                    position    = ''
 
-                    {top, left, right, bottom} = module.get.coordinate()
+                    topCenterOK    = top > popupHeight and right > popupWidth / 2 and left > popupWidth / 2
+                    topLeftOK      = top > popupHeight and left < popupWidth
+                    topRightOK     = top > popupHeight and right < popupWidth
+                    bottomCenterOK = bottom > popupHeight and right > popupWidth / 2 and left > popupWidth / 2
+                    bottomLeftOK   = bottom > popupHeight and left < popupWidth
+                    bottomRightOK  = bottom > popupHeight and right < popupWidth
+                    leftCenterOK   = (top < popupHeight or bottom < popupHeight) and left > popupWidth
+                    rightCenterOK  = (top < popupHeight or bottom < popupHeight) and right > popupWidth
 
-                    popupRect = $popup.rect()
-                    height = popupRect.height
-                    width = popupRect.width
-                    #console.log top, left, right, bottom
+                    # OVERWRITE IF SETTING
 
-                    topOK    = top > height
-                    bottomOK = bottom > height
-                    leftOK   = left > width
-                    centerOK = left > width / 2 and right > width / 2
-                    rightOK  = right > width
+                    switch
+                        when topCenterOK
+                            position = Position.TOP_CENTER
+                        when topLeftOK
+                            position = Position.TOP_LEFT
+                        when topRightOK
+                            position = Position.TOP_RIGHT
+                        when bottomCenterOK
+                            position = Position.BOTTOM_CENTER
+                        when bottomLeftOK
+                            position = Position.BOTTOM_LEFT
+                        when bottomRightOK
+                            position = Position.BOTTOM_RIGHT
+                        when leftCenterOK
+                            position = Position.LEFT_CENTER
+                        when rightCenterOK
+                            position = Position.RIGHT_CENTER
 
-                    #console.log topOK, leftOK, rightOK, bottomOK
-
-                    if settings.position isnt Position.AUTO
-                        switch settings.position
-                            when Position.TOP_LEFT
-                                if topOK and leftOK
-                                    module.set.position settings.position
-
-                            when Position.TOP_CENTER
-                                if topOK
-                                    module.set.position settings.position
-                                    return
-                            when Position.TOP_RIGHT
-                                if topOK and rightOK
-                                    module.set.position settings.position
-                                    return
-                            when Position.BOTTOM_LEFT
-                                if bottomOK and leftOK
-                                    module.set.position settings.position
-                                    return
-                            when Position.BOTTOM_CENTER
-                                if bottomOK
-                                    module.set.position settings.position
-                                    return
-                            when Position.BOTTOM_RIGHT
-                                if bottomOK and rightOK
-                                    module.set.position settings.position
-                                    return
-                            when Position.LEFT
-                                if leftOK
-                                    module.set.position settings.position
-                                    return
-                            when Position.RIGHT
-                                if rightOK
-                                    module.set.position settings.position
-                                    return
+                    $popup.removeAttr 'style'
 
 
-                    if topOK
-                        module.set.vertical.position Position.TOP
-                    else if bottomOK
-                        module.set.vertical.position Position.BOTTOM
 
-                    if centerOK
-                        module.set.horizontal.position Position.CENTER
-                    else if leftOK
-                        module.set.horizontal.position Position.RIGHT
-                    else if rightOK
-                        module.set.horizontal.position Position.LEFT
+                    top = element.offsetTop
+                    left = element.offsetLeft
+
+                    console.log position, top, left
+
+                    switch position
+                        when Position.TOP_CENTER
+                            $popup.css
+                                left: left + rect.width / 2
+                                top : top - popupRect.height# - offset
+                        when Position.TOP_LEFT
+                            $popup.css
+                                left: left
+                                top : top - popupRect.height# - offset
+                        when Position.TOP_RIGHT
+                            $popup.css
+                                left: left + rect.width
+                                top : top - popupRect.height# - offset
+                        when Position.BOTTOM_CENTER
+                            $popup.css
+                                left: left + rect.width / 2
+                                top : top  + rect.height# + offset
+                        when Position.BOTTOM_LEFT
+                            $popup.css
+                                left: left
+                                top : top  + rect.height# + offset
+                        when Position.BOTTOM_RIGHT
+                            $popup.css
+                                right: left + rect.width
+                                top  : top  + rect.height# + offset
+                        when Position.LEFT_CENTER
+                            $popup.css
+                                left: left - popupRect.width
+                                top : top  + rect.height / 2 - popupRect.height / 2
+                        when Position.RIGHT_CENTER
+                            $popup.css
+                                left: left + rect.width# + offset
+                                top : top  + rect.height / 2 - popupRect.height / 2
+
+                    module.set.position position
 
 
         toggle: =>
@@ -363,20 +359,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
         set:
             position: (position) =>
-                settings.position = position
-                $popup
-                    .removeClass "#{ClassName.TOP} #{ClassName.RIGHT} #{ClassName.BOTTOM} #{ClassName.LEFT}"
-                    .addClass position
-            vertical:
-                position: (position) =>
-                    $popup
-                        .removeClass "#{ClassName.TOP} #{ClassName.BOTTOM}"
-                        .addClass position
-            horizontal:
-                position: (position) =>
-                    $popup
-                        .removeClass "#{ClassName.LEFT} #{ClassName.RIGHT}"
-                        .addClass position
+                $this.data Metadata.POSITION, position
+                $popup.attr Attribute.POSITION, position
             coordinate: (x, y) =>
                 $popup.css
                     top : x
@@ -400,7 +384,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
         bind:
             events: =>
-
                 $body.on Event.MOUSEMOVE, (event) =>
                     if not $popup.exists()
                         return
@@ -411,6 +394,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     popupElement  = $popup.get()
                     popupRect     = $popup.rect()
 
+
                     if $this.is(pointElement)
                         if module.is.animating()
                             return
@@ -420,25 +404,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                         module.show()
                         module.calculate.popup.position()
 
-                        {top, left, right, bottom} = module.get.coordinate()
 
-                        switch module.get.position()
-                            when Position.TOP_CENTER
-                                module.set.coordinate rect.top - $popup.rect().height, left
-                            when Position.TOP_LEFT
-                                module.set.coordinate rect.top - $popup.rect().height, left
-                            when Position.TOP_RIGHT
-                                module.set.coordinate rect.top - $popup.rect().height, right - $popup.rect().width
-                            when Position.BOTTOM_CENTER
-                                module.set.coordinate rect.top + rect.height, left
-                            when Position.BOTTOM_LEFT
-                                module.set.coordinate rect.top + rect.height, left
-                            when Position.BOTTOM_RIGHT
-                                module.set.coordinate rect.top + rect.height, left
-                            when Position.LEFT
-                                module.set.coordinate rect.top + rect.height, left + rect.width + 14
-                            when Position.RIGHT
-                                module.set.coordinate rect.top + rect.height, left
+
                         return
 
                     if $this.is(popupElement)
@@ -447,61 +414,11 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     if $popup.contains(pointElement)
                         return
 
-
-
-                    if event.clientY > rect.top - 14 and event.clientY < popupRect.bottom + 14 and event.clientX < popupRect.right and event.clientX > popupRect.left
-                        return
+                    #if event.clientY > rect.top - 14 and event.clientY < popupRect.bottom + 14 and event.clientX < popupRect.right and #event.clientX > popupRect.left
+                    #    return
 
 
                     module.hide()
-
-
-                ###
-                $body.on Event.MOUSEENTER, =>
-                    module.show()
-
-                    rect = $this.rect()
-
-                    $popup.removeClass 'hidden'
-                    $popup.addClass 'animating'
-
-                    $popup.one Event.ANIMATIONEND, =>
-                        $popup.removeClass 'animating'
-
-
-                    switch module.get.position()
-                        when 'top center'
-                            module.set.coordinate rect.top - $popup.rect().height, rect.left
-                        when 'top left'
-                            module.set.coordinate rect.top - $popup.rect().height, rect.left
-                        when 'top right'
-                            module.set.coordinate rect.top - $popup.rect().height, rect.right - $popup.rect().width
-                        when 'bottom center'
-                            module.set.coordinate rect.top + rect.height, rect.left
-                        when 'bottom left'
-                            module.set.coordinate rect.top + rect.height, rect.left
-                        when 'bottom right'
-                            module.set.coordinate rect.top + rect.height, rect.right
-
-
-                $this.on Event.MOUSELEAVE, (event) =>
-                    #if $this.contains event.relatedTarget
-                    #    return
-                    #if $popup.is(event.relatedTarget)
-                    #    return
-                    console.log $popup.rect().bottom, event.clientY
-
-
-                    #console.log event
-
-
-
-                    $popup.addClass 'hidden'
-                    $popup.addClass 'animating'
-                    $popup.one Event.ANIMATIONEND, =>
-                        $popup.removeClass 'animating'
-                        module.hide()
-                ###
 
 
         # ------------------------------------------------------------------------

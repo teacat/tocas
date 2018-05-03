@@ -5,7 +5,7 @@
   // ------------------------------------------------------------------------
 
   // 模組名稱。
-  var ClassName, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, Metadata, NAME, Position, Selector, Settings, Status, duration;
+  var Attribute, ClassName, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, Metadata, NAME, Position, Selector, Settings, Status, duration;
 
   NAME = 'popup';
 
@@ -124,15 +124,19 @@
     BOTTOM: 'bottom',
     LEFT: 'left',
     RIGHT: 'right',
+    CENTER: 'center',
     TOP_LEFT: 'top left',
     TOP_CENTER: 'top center',
     TOP_RIGHT: 'top right',
-    LEFT: 'left',
-    CENTER: 'center',
-    RIGHT: 'right',
     BOTTOM_LEFT: 'bottom left',
     BOTTOM_CENTER: 'bottom center',
-    BOTTOM_RIGHT: 'bottom right'
+    BOTTOM_RIGHT: 'bottom right',
+    RIGHT_TOP: 'right top',
+    RIGHT_CENTER: 'right center',
+    RIGHT_BOTTOM: 'right bottom',
+    LEFT_TOP: 'left top',
+    LEFT_CENTER: 'left center',
+    LEFT_BOTTOM: 'left bottom'
   };
 
   
@@ -143,12 +147,17 @@
 
   
   Metadata = {
-    STATUS: 'status'
+    POSITION: 'position'
   };
 
   // 選擇器名稱。
   Selector = {
     BODY: 'body'
+  };
+
+  
+  Attribute = {
+    POSITION: 'data-popup-position'
   };
 
   // 錯誤訊息。
@@ -212,8 +221,8 @@
         status: () => {
           return $this.data(Metadata.STATUS);
         },
-        coordinate: () => {
-          var bottom, boundaryBottom, boundaryHeight, boundaryLeft, boundaryRect, boundaryRight, boundaryTop, boundaryWidth, height, left, popupRect, rect, right, top, width;
+        distance: () => {
+          var bottom, boundaryBottom, boundaryHeight, boundaryLeft, boundaryRect, boundaryRight, boundaryTop, boundaryWidth, left, rect, right, top;
           rect = $this.rect();
           boundaryRect = $boundary.rect();
           boundaryTop = boundaryRect.top;
@@ -222,9 +231,6 @@
           boundaryHeight = boundaryRect.height;
           boundaryWidth = boundaryRect.width;
           boundaryRight = boundaryRect.right;
-          popupRect = $popup.rect();
-          height = popupRect.height;
-          width = popupRect.width;
           if ($boundary.is('body')) {
             boundaryTop = 0;
             boundaryLeft = 0;
@@ -249,109 +255,107 @@
           };
         },
         position: () => {
-          var bottom, center, left, right, top;
-          left = $popup.hasClass(Position.LEFT);
-          right = $popup.hasClass(Position.RIGHT);
-          bottom = $popup.hasClass(Position.BOTTOM);
-          top = $popup.hasClass(Position.TOP);
-          center = $popup.hasClass(Position.CENTER);
-          switch (false) {
-            case !(top && left):
-              return Position.TOP_LEFT;
-            case !(top && right):
-              return Position.TOP_RIGHT;
-            case !(top && center):
-              return Position.TOP_CENTER;
-            case !(bottom && left):
-              return Position.BOTTOM_LEFT;
-            case !(bottom && right):
-              return Position.BOTTOM_RIGHT;
-            case !(bottom && center):
-              return Position.BOTTOM_CENTER;
-            case !right:
-              return Position.RIGHT;
-            case !left:
-              return Position.LEFT;
-          }
+          return $popup.attr(Attribute.POSITION);
         }
       },
       calculate: {
         popup: {
           position: () => {
-            var bottom, bottomOK, centerOK, height, left, leftOK, popupRect, right, rightOK, top, topOK, width;
-            ({top, left, right, bottom} = module.get.coordinate());
+            var bottom, bottomCenterOK, bottomLeftOK, bottomRightOK, left, leftCenterOK, popupHeight, popupRect, popupWidth, position, rect, right, rightCenterOK, top, topCenterOK, topLeftOK, topRightOK;
+            ({top, left, right, bottom} = module.get.distance());
+            rect = $this.rect();
             popupRect = $popup.rect();
-            height = popupRect.height;
-            width = popupRect.width;
-            //console.log top, left, right, bottom
-            topOK = top > height;
-            bottomOK = bottom > height;
-            leftOK = left > width;
-            centerOK = left > width / 2 && right > width / 2;
-            rightOK = right > width;
-            //console.log topOK, leftOK, rightOK, bottomOK
-            if (settings.position !== Position.AUTO) {
-              switch (settings.position) {
-                case Position.TOP_LEFT:
-                  if (topOK && leftOK) {
-                    module.set.position(settings.position);
-                  }
-                  break;
-                case Position.TOP_CENTER:
-                  if (topOK) {
-                    module.set.position(settings.position);
-                    return;
-                  }
-                  break;
-                case Position.TOP_RIGHT:
-                  if (topOK && rightOK) {
-                    module.set.position(settings.position);
-                    return;
-                  }
-                  break;
-                case Position.BOTTOM_LEFT:
-                  if (bottomOK && leftOK) {
-                    module.set.position(settings.position);
-                    return;
-                  }
-                  break;
-                case Position.BOTTOM_CENTER:
-                  if (bottomOK) {
-                    module.set.position(settings.position);
-                    return;
-                  }
-                  break;
-                case Position.BOTTOM_RIGHT:
-                  if (bottomOK && rightOK) {
-                    module.set.position(settings.position);
-                    return;
-                  }
-                  break;
-                case Position.LEFT:
-                  if (leftOK) {
-                    module.set.position(settings.position);
-                    return;
-                  }
-                  break;
-                case Position.RIGHT:
-                  if (rightOK) {
-                    module.set.position(settings.position);
-                    return;
-                  }
-              }
+            popupWidth = popupRect.width;
+            popupHeight = popupRect.height;
+            position = '';
+            topCenterOK = top > popupHeight && right > popupWidth / 2 && left > popupWidth / 2;
+            topLeftOK = top > popupHeight && left < popupWidth;
+            topRightOK = top > popupHeight && right < popupWidth;
+            bottomCenterOK = bottom > popupHeight && right > popupWidth / 2 && left > popupWidth / 2;
+            bottomLeftOK = bottom > popupHeight && left < popupWidth;
+            bottomRightOK = bottom > popupHeight && right < popupWidth;
+            leftCenterOK = (top < popupHeight || bottom < popupHeight) && left > popupWidth;
+            rightCenterOK = (top < popupHeight || bottom < popupHeight) && right > popupWidth;
+            switch (false) {
+              // OVERWRITE IF SETTING
+              case !topCenterOK:
+                position = Position.TOP_CENTER;
+                break;
+              case !topLeftOK:
+                position = Position.TOP_LEFT;
+                break;
+              case !topRightOK:
+                position = Position.TOP_RIGHT;
+                break;
+              case !bottomCenterOK:
+                position = Position.BOTTOM_CENTER;
+                break;
+              case !bottomLeftOK:
+                position = Position.BOTTOM_LEFT;
+                break;
+              case !bottomRightOK:
+                position = Position.BOTTOM_RIGHT;
+                break;
+              case !leftCenterOK:
+                position = Position.LEFT_CENTER;
+                break;
+              case !rightCenterOK:
+                position = Position.RIGHT_CENTER;
             }
-            if (topOK) {
-              module.set.vertical.position(Position.TOP);
-            } else if (bottomOK) {
-              module.set.vertical.position(Position.BOTTOM);
+            $popup.removeAttr('style');
+            top = element.offsetTop;
+            left = element.offsetLeft;
+            console.log(position, top, left);
+            switch (position) {
+              case Position.TOP_CENTER:
+                $popup.css({
+                  left: left + rect.width / 2,
+                  top: top - popupRect.height // - offset
+                });
+                break;
+              case Position.TOP_LEFT:
+                $popup.css({
+                  left: left,
+                  top: top - popupRect.height // - offset
+                });
+                break;
+              case Position.TOP_RIGHT:
+                $popup.css({
+                  left: left + rect.width,
+                  top: top - popupRect.height // - offset
+                });
+                break;
+              case Position.BOTTOM_CENTER:
+                $popup.css({
+                  left: left + rect.width / 2,
+                  top: top + rect.height // + offset
+                });
+                break;
+              case Position.BOTTOM_LEFT:
+                $popup.css({
+                  left: left,
+                  top: top + rect.height // + offset
+                });
+                break;
+              case Position.BOTTOM_RIGHT:
+                $popup.css({
+                  right: left + rect.width,
+                  top: top + rect.height // + offset
+                });
+                break;
+              case Position.LEFT_CENTER:
+                $popup.css({
+                  left: left - popupRect.width,
+                  top: top + rect.height / 2 - popupRect.height / 2
+                });
+                break;
+              case Position.RIGHT_CENTER:
+                $popup.css({
+                  left: left + rect.width, // + offset
+                  top: top + rect.height / 2 - popupRect.height / 2
+                });
             }
-            if (centerOK) {
-              return module.set.horizontal.position(Position.CENTER);
-            } else if (leftOK) {
-              return module.set.horizontal.position(Position.RIGHT);
-            } else if (rightOK) {
-              return module.set.horizontal.position(Position.LEFT);
-            }
+            return module.set.position(position);
           }
         }
       },
@@ -400,18 +404,8 @@
       reposition: () => {},
       set: {
         position: (position) => {
-          settings.position = position;
-          return $popup.removeClass(`${ClassName.TOP} ${ClassName.RIGHT} ${ClassName.BOTTOM} ${ClassName.LEFT}`).addClass(position);
-        },
-        vertical: {
-          position: (position) => {
-            return $popup.removeClass(`${ClassName.TOP} ${ClassName.BOTTOM}`).addClass(position);
-          }
-        },
-        horizontal: {
-          position: (position) => {
-            return $popup.removeClass(`${ClassName.LEFT} ${ClassName.RIGHT}`).addClass(position);
-          }
+          $this.data(Metadata.POSITION, position);
+          return $popup.attr(Attribute.POSITION, position);
         },
         coordinate: (x, y) => {
           return $popup.css({
@@ -442,7 +436,7 @@
       bind: {
         events: () => {
           return $body.on(Event.MOUSEMOVE, (event) => {
-            var $pointElement, bottom, left, pointElement, popupElement, popupRect, rect, right, top;
+            var $pointElement, pointElement, popupElement, popupRect, rect;
             if (!$popup.exists()) {
               return;
             }
@@ -460,32 +454,6 @@
               }
               module.show();
               module.calculate.popup.position();
-              ({top, left, right, bottom} = module.get.coordinate());
-              switch (module.get.position()) {
-                case Position.TOP_CENTER:
-                  module.set.coordinate(rect.top - $popup.rect().height, left);
-                  break;
-                case Position.TOP_LEFT:
-                  module.set.coordinate(rect.top - $popup.rect().height, left);
-                  break;
-                case Position.TOP_RIGHT:
-                  module.set.coordinate(rect.top - $popup.rect().height, right - $popup.rect().width);
-                  break;
-                case Position.BOTTOM_CENTER:
-                  module.set.coordinate(rect.top + rect.height, left);
-                  break;
-                case Position.BOTTOM_LEFT:
-                  module.set.coordinate(rect.top + rect.height, left);
-                  break;
-                case Position.BOTTOM_RIGHT:
-                  module.set.coordinate(rect.top + rect.height, left);
-                  break;
-                case Position.LEFT:
-                  module.set.coordinate(rect.top + rect.height, left + rect.width + 14);
-                  break;
-                case Position.RIGHT:
-                  module.set.coordinate(rect.top + rect.height, left);
-              }
               return;
             }
             if ($this.is(popupElement)) {
@@ -494,54 +462,12 @@
             if ($popup.contains(pointElement)) {
               return;
             }
-            if (event.clientY > rect.top - 14 && event.clientY < popupRect.bottom + 14 && event.clientX < popupRect.right && event.clientX > popupRect.left) {
-              return;
-            }
+            //if event.clientY > rect.top - 14 and event.clientY < popupRect.bottom + 14 and event.clientX < popupRect.right and #event.clientX > popupRect.left
+            //    return
             return module.hide();
           });
         }
       },
-      /*
-      $body.on Event.MOUSEENTER, =>
-      module.show()
-
-      rect = $this.rect()
-
-      $popup.removeClass 'hidden'
-      $popup.addClass 'animating'
-
-      $popup.one Event.ANIMATIONEND, =>
-          $popup.removeClass 'animating'
-
-      switch module.get.position()
-          when 'top center'
-              module.set.coordinate rect.top - $popup.rect().height, rect.left
-          when 'top left'
-              module.set.coordinate rect.top - $popup.rect().height, rect.left
-          when 'top right'
-              module.set.coordinate rect.top - $popup.rect().height, rect.right - $popup.rect().width
-          when 'bottom center'
-              module.set.coordinate rect.top + rect.height, rect.left
-          when 'bottom left'
-              module.set.coordinate rect.top + rect.height, rect.left
-          when 'bottom right'
-              module.set.coordinate rect.top + rect.height, rect.right
-
-      $this.on Event.MOUSELEAVE, (event) =>
-      #if $this.contains event.relatedTarget
-       *    return
-      #if $popup.is(event.relatedTarget)
-       *    return
-      console.log $popup.rect().bottom, event.clientY
-
-      #console.log event
-
-      $popup.addClass 'hidden'
-      $popup.addClass 'animating'
-      $popup.one Event.ANIMATIONEND, =>
-          $popup.removeClass 'animating'
-          module.hide()
-       */
       // ------------------------------------------------------------------------
       // 基礎方法
       // ------------------------------------------------------------------------
