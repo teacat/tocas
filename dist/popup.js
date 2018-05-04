@@ -5,7 +5,7 @@
   // ------------------------------------------------------------------------
 
   // 模組名稱。
-  var Attribute, ClassName, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, Metadata, NAME, Position, Selector, Settings, Status, duration;
+  var Attribute, ClassName, EVENT_NAMESPACE, Error, Event, MODULE_NAMESPACE, Metadata, NAME, Position, Selector, Settings, duration;
 
   NAME = 'popup';
 
@@ -32,7 +32,9 @@
     // 即時產生的彈出式訊息應該要被擺置在哪個元素內。
     context: 'body',
     // 此彈出式訊息偵測畫面是否有捲動的元素選擇器，如果指定元素有捲動事件則會自動隱藏此彈出式訊息。
-    scrollContext: 'body',
+    scrollContext: window,
+    // 如果有指定邊緣選擇器，彈出訊息則會試著依靠這個父元素的邊緣，適合用於表格的標頭等。
+    edgeContext: false,
     // 彈出式訊息出現的位置，分別是 `垂直 水平`（如：`top left`、`bottom right`）。
     position: 'auto',
     // 是否要將彈出式訊息產生在目標元素的節點後，這讓使用者能在 CSS 選擇器中以 `.elem + .popup` 方便樣式更改。
@@ -49,13 +51,19 @@
     // 過場動畫。
     transition: 'fade',
     // 過場動畫的演繹毫秒時間。
-    duration: 200,
+    duration: 'auto',
     // 游標是否能在彈出式訊息遊走，如：導覽式彈出選單。
     hoverable: false,
     // 是否能在點擊彈出式訊息以外的地方自動關閉。
     closable: true,
     // 是否要在指定捲動時自動隱藏此彈出式訊息。
     hideOnScroll: 'auto',
+    // 是否帶有指標外觀。
+    pointing: false,
+    // 是否為反色外觀。
+    inverted: true,
+    // 大小尺寸。
+    // size          : 'medium'
     // 目標元素選擇器，彈出式訊息會以這個元素為主。
     target: false,
     // 欲套用的樣式名稱，以空白分隔。
@@ -97,6 +105,7 @@
     UNPLACEABLE: `unplaceable${EVENT_NAMESPACE}`,
     CLICK: `click${EVENT_NAMESPACE}`,
     FOCUS: `focus${EVENT_NAMESPACE}`,
+    SCROLL: `scroll${EVENT_NAMESPACE}`,
     MOUSEMOVE: `mousemove${EVENT_NAMESPACE}`,
     MOUSEENTER: `mouseenter${EVENT_NAMESPACE}`,
     MOUSELEAVE: `mouseleave${EVENT_NAMESPACE}`,
@@ -117,7 +126,7 @@
     CUSTOM: 'custom'
   };
 
-  
+  // 位置。
   Position = {
     AUTO: 'auto',
     TOP: 'top',
@@ -139,15 +148,11 @@
     LEFT_BOTTOM: 'left bottom'
   };
 
-  
-  Status = {
-    VISIBLE: 'visible',
-    HIDDEN: 'hidden'
-  };
-
-  
+  // 中繼資料。
   Metadata = {
-    POSITION: 'position'
+    POSITION: 'position',
+    SHOW_TIMER: 'showTimer',
+    HIDE_TIMER: 'hideTimer'
   };
 
   // 選擇器名稱。
@@ -155,8 +160,12 @@
     BODY: 'body'
   };
 
-  
+  // 元素標籤。
   Attribute = {
+    CONTENT: 'data-content',
+    HTML: 'data-html',
+    TITLE: 'data-title',
+    VARIATION: 'data-variation',
     POSITION: 'data-popup-position'
   };
 
@@ -170,7 +179,7 @@
   // 模組註冊
   // ------------------------------------------------------------------------
   ts.register({NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, element, debug, settings}) => {
-    var $body, $boundary, $popup, boundary, module, offset;
+    var $body, $boundary, $popup, $scrollContext, boundary, module, offset, scrollContext;
     // ------------------------------------------------------------------------
     // 區域變數
     // ------------------------------------------------------------------------
@@ -178,18 +187,23 @@
     $popup = ts();
     $boundary = ts();
     boundary = null;
+    $scrollContext = ts();
+    scrollContext = null;
     offset = 20;
     // ------------------------------------------------------------------------
     // 模組定義
     // ------------------------------------------------------------------------
     return module = {
       show: (callback) => {
+        $this.removeTimer(Metadata.SHOW_TIMER);
+        $this.removeTimer(Metadata.HIDE_TIMER);
         if (module.is.animating()) {
           return;
         }
         if (module.is.visible()) {
           return;
         }
+        module.calculate.popup.position();
         module.animate.show(() => {
           module.set.animating(false);
           if (callback != null) {
@@ -199,6 +213,8 @@
         return $allModules;
       },
       hide: (callback) => {
+        $this.removeTimer(Metadata.SHOW_TIMER);
+        $this.removeTimer(Metadata.HIDE_TIMER);
         if (module.is.animating()) {
           return;
         }
@@ -217,9 +233,6 @@
       get: {
         popup: () => {
           return $popup.get();
-        },
-        status: () => {
-          return $this.data(Metadata.STATUS);
         },
         distance: () => {
           var bottom, boundaryBottom, boundaryHeight, boundaryLeft, boundaryRect, boundaryRight, boundaryTop, boundaryWidth, left, rect, right, top;
@@ -302,14 +315,12 @@
               case !rightCenterOK:
                 position = Position.RIGHT_CENTER;
             }
-            $popup.removeAttr('style');
             top = element.offsetTop;
             left = element.offsetLeft;
-            console.log(position, top, left);
             switch (position) {
               case Position.TOP_CENTER:
                 $popup.css({
-                  left: left + rect.width / 2,
+                  left: (left + rect.width / 2) - popupRect.width / 2,
                   top: top - popupRect.height // - offset
                 });
                 break;
@@ -327,7 +338,7 @@
                 break;
               case Position.BOTTOM_CENTER:
                 $popup.css({
-                  left: left + rect.width / 2,
+                  left: (left + rect.width / 2) - popupRect.width / 2,
                   top: top + rect.height // + offset
                 });
                 break;
@@ -346,13 +357,13 @@
               case Position.LEFT_CENTER:
                 $popup.css({
                   left: left - popupRect.width,
-                  top: top + rect.height / 2 - popupRect.height / 2
+                  top: (top + rect.height / 2) - popupRect.height / 2
                 });
                 break;
               case Position.RIGHT_CENTER:
                 $popup.css({
                   left: left + rect.width, // + offset
-                  top: top + rect.height / 2 - popupRect.height / 2
+                  top: (top + rect.height / 2) - popupRect.height / 2
                 });
             }
             return module.set.position(position);
@@ -397,6 +408,45 @@
           return settings.hoverable === true;
         }
       },
+      create: {
+        popup: () => {
+          var $content, $title, attributeContent, attributeHTML, attributeTitle, attributeVariation, content, html, title, variation;
+          variation = settings.variation || '';
+          content = settings.content || '';
+          html = settings.html || '';
+          title = settings.title || '';
+          attributeVariation = $this.attr(Attribute.VARIATION);
+          attributeContent = $this.attr(Attribute.CONTENT);
+          attributeTitle = $this.attr(Attribute.TITLE);
+          attributeHTML = $this.attr(Attribute.HTML);
+          if (attributeVariation !== null) {
+            variation = attributeVariation;
+          }
+          if (attributeContent !== null) {
+            content = attributeContent;
+          }
+          if (attributeTitle !== null) {
+            title = attributeTitle;
+          }
+          if (attributeHTML !== null) {
+            html = attributeHTML;
+          }
+          $popup = ts('<div>').addClass('ts popup').addClass(variation);
+          if (html !== '') {
+            $popup.html(html);
+          }
+          if (content !== '') {
+            $content = ts('<div>').addClass('content').html(content);
+            $title = ts('<div>').addClass('title').html(title);
+            if (title !== '') {
+              $popup.append($title).append($content);
+            } else {
+              $popup.append($content);
+            }
+          }
+          return $popup.insertAfter($this);
+        }
+      },
       exists: () => {},
       repaint: () => {
         return $popup.repaint();
@@ -418,9 +468,6 @@
             width: width
           });
         },
-        status: (value) => {
-          return $this.data(Metadata.STATUS, value);
-        },
         animating: (value) => {
           if (value) {
             return $popup.addClass(ClassName.ANIMATING);
@@ -434,7 +481,7 @@
       },
       trigger: () => {},
       bind: {
-        events: () => {
+        hover: () => {
           return $body.on(Event.MOUSEMOVE, (event) => {
             var $pointElement, pointElement, popupElement, popupRect, rect;
             if (!$popup.exists()) {
@@ -446,14 +493,29 @@
             popupElement = $popup.get();
             popupRect = $popup.rect();
             if ($this.is(pointElement)) {
-              if (module.is.animating()) {
-                return;
+              $this.removeTimer(Metadata.HIDE_TIMER);
+              if (!$this.hasTimer(Metadata.SHOW_TIMER)) {
+                $this.setTimer({
+                  name: Metadata.SHOW_TIMER,
+                  callback: module.show,
+                  interval: settings.delay.show,
+                  looping: false,
+                  visible: true
+                });
               }
-              if (module.is.visible()) {
-                return;
+              return;
+            }
+            if (!settings.hoverable) {
+              $this.removeTimer(Metadata.SHOW_TIMER);
+              if (!$this.hasTimer(Metadata.HIDE_TIMER)) {
+                $this.setTimer({
+                  name: Metadata.HIDE_TIMER,
+                  callback: module.hide,
+                  interval: settings.delay.hide,
+                  looping: false,
+                  visible: true
+                });
               }
-              module.show();
-              module.calculate.popup.position();
               return;
             }
             if ($this.is(popupElement)) {
@@ -462,11 +524,73 @@
             if ($popup.contains(pointElement)) {
               return;
             }
-            //if event.clientY > rect.top - 14 and event.clientY < popupRect.bottom + 14 and event.clientX < popupRect.right and #event.clientX > popupRect.left
-            //    return
+            switch (module.get.position()) {
+              case Position.TOP_LEFT:
+              case Position.TOP_CENTER:
+              case Position.TOP_RIGHT:
+                if (event.clientY > popupRect.bottom && event.clientY < rect.top && event.clientX < popupRect.right && event.clientX > popupRect.left) {
+                  return;
+                }
+                break;
+              case Position.LEFT_TOP:
+              case Position.LEFT_CENTER:
+              case Position.LEFT_BOTTOM:
+                if (event.clientY < popupRect.bottom && event.clientY > popupRect.top && event.clientX < rect.left && event.clientX > popupRect.right) {
+                  return;
+                }
+                break;
+              case Position.RIGHT_TOP:
+              case Position.RIGHT_CENTER:
+              case Position.RIGHT_BOTTOM:
+                if (event.clientY < popupRect.bottom && event.clientY > popupRect.top && event.clientX < popupRect.left && event.clientX > rect.right) {
+                  return;
+                }
+                break;
+              case Position.BOTTOM_LEFT:
+              case Position.BOTTOM_CENTER:
+              case Position.BOTTOM_RIGHT:
+                if (event.clientY > rect.bottom && event.clientY < popupRect.top && event.clientX < popupRect.right && event.clientX > popupRect.left) {
+                  return;
+                }
+            }
+            $this.removeTimer(Metadata.SHOW_TIMER);
+            if (!$this.hasTimer(Metadata.HIDE_TIMER)) {
+              return $this.setTimer({
+                name: Metadata.HIDE_TIMER,
+                callback: module.hide,
+                interval: settings.delay.hide,
+                looping: false,
+                visible: true
+              });
+            }
+          });
+        },
+        click: () => {
+          return $body.on(Event.CLICK, (event) => {
+            var $pointElement, pointElement;
+            $pointElement = ts.fromPoint(event.clientX, event.clientY);
+            pointElement = $pointElement.get();
+            if (!$this.is(pointElement) && !$popup.contains(pointElement) && settings.closable) {
+              module.hide();
+              return;
+            }
+            if (!$this.is(pointElement)) {
+              return;
+            }
+            if (module.is.hidden()) {
+              return module.show();
+            } else {
+              return module.hide();
+            }
+          });
+        },
+        focus: () => {},
+        scroll: () => {
+          return $scrollContext.on(Event.SCROLL, () => {
             return module.hide();
           });
-        }
+        },
+        events: () => {}
       },
       // ------------------------------------------------------------------------
       // 基礎方法
@@ -478,12 +602,43 @@
         if ($next.is('.ts.popup')) {
           $popup = $next;
         }
+        if (!$popup.exists()) {
+          module.create.popup();
+        }
+        if (settings.duration !== 'auto') {
+          duration = settings.duration;
+          $popup.css('animation-duration', `${duration}ms`);
+        }
+        if (settings.inverted === true) {
+          $popup.addClass('inverted');
+        }
+        if (settings.pointing === true) {
+          $popup.addClass('pointing');
+        }
         $boundary = $this.closest(settings.boundary);
         boundary = $boundary.get();
-        module.set.status(Status.HIDDEN);
-        return module.bind.events();
+        $scrollContext = ts(settings.scrollContext);
+        scrollContext = $scrollContext.get();
+        module.bind.events();
+        switch (settings.on) {
+          case 'hover':
+            module.bind.hover();
+            break;
+          case 'click':
+            module.bind.click();
+            break;
+          case 'focus':
+            module.bind.focus();
+        }
+        if (settings.hideOnScroll === 'auto') {
+          if (settings.on === 'hover') {
+            module.bind.scroll();
+          }
+        }
+        if (settings.hideOnScroll === true) {
+          return module.bind.scroll();
+        }
       },
-      //module.set.position settings.position
       instantiate: () => {
         return debug('實例化彈出式訊息', element);
       },
