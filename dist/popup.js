@@ -49,7 +49,7 @@
       hide: 0
     },
     // 過場動畫。
-    transition: 'fade',
+    transition: 'auto',
     // 過場動畫的演繹毫秒時間。
     duration: 'auto',
     // 游標是否能在彈出式訊息遊走，如：導覽式彈出選單。
@@ -59,11 +59,11 @@
     // 是否要在指定捲動時自動隱藏此彈出式訊息。
     hideOnScroll: 'auto',
     // 是否帶有指標外觀。
-    pointing: false,
+    pointing: true,
     // 是否為反色外觀。
-    inverted: true,
+    inverted: false,
     // 大小尺寸。
-    // size          : 'medium'
+    size: 'medium',
     // 目標元素選擇器，彈出式訊息會以這個元素為主。
     target: false,
     // 欲套用的樣式名稱，以空白分隔。
@@ -150,7 +150,6 @@
 
   // 中繼資料。
   Metadata = {
-    POSITION: 'position',
     SHOW_TIMER: 'showTimer',
     HIDE_TIMER: 'hideTimer'
   };
@@ -166,7 +165,8 @@
     HTML: 'data-html',
     TITLE: 'data-title',
     VARIATION: 'data-variation',
-    POSITION: 'data-popup-position'
+    TRANSITION: 'data-popup-transition',
+    POSITION: 'data-position'
   };
 
   // 錯誤訊息。
@@ -282,39 +282,88 @@
             popupHeight = popupRect.height;
             position = '';
             topCenterOK = top > popupHeight && right > popupWidth / 2 && left > popupWidth / 2;
-            topLeftOK = top > popupHeight && left < popupWidth;
-            topRightOK = top > popupHeight && right < popupWidth;
+            topLeftOK = top > popupHeight && right > popupWidth;
+            topRightOK = top > popupHeight && left > popupWidth;
             bottomCenterOK = bottom > popupHeight && right > popupWidth / 2 && left > popupWidth / 2;
-            bottomLeftOK = bottom > popupHeight && left < popupWidth;
-            bottomRightOK = bottom > popupHeight && right < popupWidth;
-            leftCenterOK = (top < popupHeight || bottom < popupHeight) && left > popupWidth;
-            rightCenterOK = (top < popupHeight || bottom < popupHeight) && right > popupWidth;
-            switch (false) {
-              // OVERWRITE IF SETTING
-              case !topCenterOK:
-                position = Position.TOP_CENTER;
-                break;
-              case !topLeftOK:
-                position = Position.TOP_LEFT;
-                break;
-              case !topRightOK:
-                position = Position.TOP_RIGHT;
-                break;
-              case !bottomCenterOK:
-                position = Position.BOTTOM_CENTER;
-                break;
-              case !bottomLeftOK:
-                position = Position.BOTTOM_LEFT;
-                break;
-              case !bottomRightOK:
-                position = Position.BOTTOM_RIGHT;
-                break;
-              case !leftCenterOK:
-                position = Position.LEFT_CENTER;
-                break;
-              case !rightCenterOK:
-                position = Position.RIGHT_CENTER;
+            bottomLeftOK = bottom > popupHeight && right > popupWidth;
+            bottomRightOK = bottom > popupHeight && left > popupWidth;
+            //leftCenterOK   = (top < popupHeight or bottom < popupHeight) and left > popupWidth
+            //rightCenterOK  = (top < popupHeight or bottom < popupHeight) and right > popupWidth
+            leftCenterOK = (top > popupHeight || bottom > popupHeight) && left > popupWidth;
+            rightCenterOK = (top > popupHeight || bottom > popupHeight) && right > popupWidth;
+            // OVERWRITE IF SETTING
+            if (settings.position !== 'auto') {
+              switch (settings.position) {
+                case Position.TOP_CENTER:
+                  if (topCenterOK) {
+                    position = Position.TOP_CENTER;
+                  }
+                  break;
+                case Position.TOP_LEFT:
+                  if (topLeftOK) {
+                    position = Position.TOP_LEFT;
+                  }
+                  break;
+                case Position.TOP_RIGHT:
+                  if (topRightOK) {
+                    position = Position.TOP_RIGHT;
+                  }
+                  break;
+                case Position.BOTTOM_CENTER:
+                  if (bottomCenterOK) {
+                    position = Position.BOTTOM_CENTER;
+                  }
+                  break;
+                case Position.BOTTOM_LEFT:
+                  if (bottomLeftOK) {
+                    position = Position.BOTTOM_LEFT;
+                  }
+                  break;
+                case Position.BOTTOM_RIGHT:
+                  if (bottomRightOK) {
+                    position = Position.BOTTOM_RIGHT;
+                  }
+                  break;
+                case Position.LEFT_CENTER:
+                  if (leftCenterOK) {
+                    position = Position.LEFT_CENTER;
+                  }
+                  break;
+                case Position.RIGHT_CENTER:
+                  if (rightCenterOK) {
+                    position = Position.RIGHT_CENTER;
+                  }
+              }
             }
+            console.log({top, left, right, bottom, popupWidth, popupHeight, topCenterOK, topLeftOK, topRightOK, bottomCenterOK, bottomLeftOK, bottomRightOK, leftCenterOK, rightCenterOK});
+            if (position === '') {
+              switch (false) {
+                case !topCenterOK:
+                  position = Position.TOP_CENTER;
+                  break;
+                case !topLeftOK:
+                  position = Position.TOP_LEFT;
+                  break;
+                case !topRightOK:
+                  position = Position.TOP_RIGHT;
+                  break;
+                case !bottomCenterOK:
+                  position = Position.BOTTOM_CENTER;
+                  break;
+                case !bottomLeftOK:
+                  position = Position.BOTTOM_LEFT;
+                  break;
+                case !bottomRightOK:
+                  position = Position.BOTTOM_RIGHT;
+                  break;
+                case !leftCenterOK:
+                  position = Position.LEFT_CENTER;
+                  break;
+                case !rightCenterOK:
+                  position = Position.RIGHT_CENTER;
+              }
+            }
+            $popup.attr(Attribute.POSITION, position);
             top = element.offsetTop;
             left = element.offsetLeft;
             switch (position) {
@@ -332,7 +381,7 @@
                 break;
               case Position.TOP_RIGHT:
                 $popup.css({
-                  left: left + rect.width,
+                  left: left - popupRect.width + rect.width,
                   top: top - popupRect.height // - offset
                 });
                 break;
@@ -350,7 +399,7 @@
                 break;
               case Position.BOTTOM_RIGHT:
                 $popup.css({
-                  right: left + rect.width,
+                  left: left - popupRect.width + rect.width,
                   top: top + rect.height // + offset
                 });
                 break;
@@ -366,7 +415,9 @@
                   top: (top + rect.height / 2) - popupRect.height / 2
                 });
             }
-            return module.set.position(position);
+            if (settings.position === 'auto') {
+              return module.set.position(position);
+            }
           }
         }
       },
@@ -454,7 +505,6 @@
       reposition: () => {},
       set: {
         position: (position) => {
-          $this.data(Metadata.POSITION, position);
           return $popup.attr(Attribute.POSITION, position);
         },
         coordinate: (x, y) => {
@@ -492,7 +542,7 @@
             pointElement = $pointElement.get();
             popupElement = $popup.get();
             popupRect = $popup.rect();
-            if ($this.is(pointElement)) {
+            if ($this.is(pointElement) || $this.contains(pointElement)) {
               $this.removeTimer(Metadata.HIDE_TIMER);
               if (!$this.hasTimer(Metadata.SHOW_TIMER)) {
                 $this.setTimer({
@@ -519,9 +569,15 @@
               return;
             }
             if ($this.is(popupElement)) {
+              $this.removeTimer(Metadata.HIDE_TIMER);
+              return;
+            }
+            if ($this.contains(popupElement)) {
+              $this.removeTimer(Metadata.HIDE_TIMER);
               return;
             }
             if ($popup.contains(pointElement)) {
+              $this.removeTimer(Metadata.HIDE_TIMER);
               return;
             }
             switch (module.get.position()) {
@@ -605,9 +661,29 @@
         if (!$popup.exists()) {
           module.create.popup();
         }
-        if (settings.duration !== 'auto') {
-          duration = settings.duration;
-          $popup.css('animation-duration', `${duration}ms`);
+        if (settings.size !== 'medium') {
+          $popup.removeClass('mini tiny small medium large big huge massive');
+          $popup.addClass(settings.size);
+        }
+        if (settings.size !== 'medium') {
+          $popup.removeClass('mini tiny small medium large big huge massive');
+          $popup.addClass(settings.size);
+        }
+        if (settings.hoverable) {
+          $popup.addClass('hoverable');
+        }
+        if ($this.attr(Attribute.POSITION) !== null) {
+          settings.position = $this.attr(Attribute.POSITION);
+          $popup.attr(Attribute.POSITION, settings.position);
+        }
+        if (settings.transition !== 'auto') {
+          $popup.attr(Attribute.TRANSITION, settings.transition);
+          if (settings.duration === 'auto') {
+            switch (settings.transition) {
+              case 'fade':
+                duration = 300;
+            }
+          }
         }
         if (settings.inverted === true) {
           $popup.addClass('inverted');

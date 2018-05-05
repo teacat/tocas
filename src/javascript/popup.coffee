@@ -42,7 +42,7 @@ Settings =
         # 隱藏彈出式訊息前所等待的毫秒數。
         hide: 0
     # 過場動畫。
-    transition    : 'fade'
+    transition    : 'auto'
     # 過場動畫的演繹毫秒時間。
     duration      : 'auto'
     # 游標是否能在彈出式訊息遊走，如：導覽式彈出選單。
@@ -52,11 +52,11 @@ Settings =
     # 是否要在指定捲動時自動隱藏此彈出式訊息。
     hideOnScroll  : 'auto'
     # 是否帶有指標外觀。
-    pointing      : false
+    pointing      : true
     # 是否為反色外觀。
-    inverted      : true
+    inverted      : false
     # 大小尺寸。
-    # size          : 'medium'
+    size          : 'medium'
     # 目標元素選擇器，彈出式訊息會以這個元素為主。
     target        : false
     # 欲套用的樣式名稱，以空白分隔。
@@ -135,7 +135,6 @@ Position =
 
 # 中繼資料。
 Metadata =
-    POSITION  : 'position'
     SHOW_TIMER: 'showTimer'
     HIDE_TIMER: 'hideTimer'
 
@@ -149,7 +148,8 @@ Attribute =
     HTML     : 'data-html'
     TITLE    : 'data-title'
     VARIATION: 'data-variation'
-    POSITION : 'data-popup-position'
+    TRANSITION: 'data-popup-transition'
+    POSITION : 'data-position'
 
 # 錯誤訊息。
 Error = {}
@@ -257,40 +257,79 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     position    = ''
 
                     topCenterOK    = top > popupHeight and right > popupWidth / 2 and left > popupWidth / 2
-                    topLeftOK      = top > popupHeight and left < popupWidth
-                    topRightOK     = top > popupHeight and right < popupWidth
+                    topLeftOK      = top > popupHeight and right > popupWidth
+                    topRightOK     = top > popupHeight and left > popupWidth
                     bottomCenterOK = bottom > popupHeight and right > popupWidth / 2 and left > popupWidth / 2
-                    bottomLeftOK   = bottom > popupHeight and left < popupWidth
-                    bottomRightOK  = bottom > popupHeight and right < popupWidth
-                    leftCenterOK   = (top < popupHeight or bottom < popupHeight) and left > popupWidth
-                    rightCenterOK  = (top < popupHeight or bottom < popupHeight) and right > popupWidth
+                    bottomLeftOK   = bottom > popupHeight and right > popupWidth
+                    bottomRightOK  = bottom > popupHeight and left > popupWidth
+                    #leftCenterOK   = (top < popupHeight or bottom < popupHeight) and left > popupWidth
+                    #rightCenterOK  = (top < popupHeight or bottom < popupHeight) and right > popupWidth
+                    leftCenterOK   = (top > popupHeight or bottom > popupHeight) and left > popupWidth
+                    rightCenterOK  = (top > popupHeight or bottom > popupHeight) and right > popupWidth
 
                     # OVERWRITE IF SETTING
 
-                    switch
-                        when topCenterOK
-                            position = Position.TOP_CENTER
-                        when topLeftOK
-                            position = Position.TOP_LEFT
-                        when topRightOK
-                            position = Position.TOP_RIGHT
-                        when bottomCenterOK
-                            position = Position.BOTTOM_CENTER
-                        when bottomLeftOK
-                            position = Position.BOTTOM_LEFT
-                        when bottomRightOK
-                            position = Position.BOTTOM_RIGHT
-                        when leftCenterOK
-                            position = Position.LEFT_CENTER
-                        when rightCenterOK
-                            position = Position.RIGHT_CENTER
+                    if settings.position isnt 'auto'
+                        switch settings.position
+                            when Position.TOP_CENTER
+                                position = Position.TOP_CENTER if topCenterOK
+                            when Position.TOP_LEFT
+                                position = Position.TOP_LEFT if topLeftOK
+                            when Position.TOP_RIGHT
+                                position = Position.TOP_RIGHT if topRightOK
+                            when Position.BOTTOM_CENTER
+                                position = Position.BOTTOM_CENTER if bottomCenterOK
+                            when Position.BOTTOM_LEFT
+                                position = Position.BOTTOM_LEFT if bottomLeftOK
+                            when Position.BOTTOM_RIGHT
+                                position = Position.BOTTOM_RIGHT if bottomRightOK
+                            when Position.LEFT_CENTER
+                                position = Position.LEFT_CENTER if leftCenterOK
+                            when Position.RIGHT_CENTER
+                                position = Position.RIGHT_CENTER if rightCenterOK
 
+                    console.log {
+                        top,
+                        left,
+                        right,
+                        bottom,
+                        popupWidth,
+                        popupHeight,
+                        topCenterOK,
+                        topLeftOK     ,
+                        topRightOK    ,
+                        bottomCenterOK,
+                        bottomLeftOK  ,
+                        bottomRightOK ,
+                        leftCenterOK  ,
+                        rightCenterOK ,
+                    }
 
+                    if position is ''
+                        switch
+                            when topCenterOK
+                                position = Position.TOP_CENTER
+                            when topLeftOK
+                                position = Position.TOP_LEFT
+                            when topRightOK
+                                position = Position.TOP_RIGHT
+                            when bottomCenterOK
+                                position = Position.BOTTOM_CENTER
+                            when bottomLeftOK
+                                position = Position.BOTTOM_LEFT
+                            when bottomRightOK
+                                position = Position.BOTTOM_RIGHT
+                            when leftCenterOK
+                                position = Position.LEFT_CENTER
+                            when rightCenterOK
+                                position = Position.RIGHT_CENTER
 
-
+                    $popup.attr Attribute.POSITION, position
 
                     top  = element.offsetTop
                     left = element.offsetLeft
+
+
 
                     switch position
                         when Position.TOP_CENTER
@@ -303,7 +342,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                 top : top - popupRect.height# - offset
                         when Position.TOP_RIGHT
                             $popup.css
-                                left: left + rect.width
+                                left: left - popupRect.width + rect.width
                                 top : top - popupRect.height# - offset
                         when Position.BOTTOM_CENTER
                             $popup.css
@@ -315,8 +354,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                 top : top  + rect.height# + offset
                         when Position.BOTTOM_RIGHT
                             $popup.css
-                                right: left + rect.width
-                                top  : top  + rect.height# + offset
+                                left: left - popupRect.width + rect.width
+                                top : top  + rect.height# + offset
                         when Position.LEFT_CENTER
                             $popup.css
                                 left: left - popupRect.width
@@ -326,7 +365,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                 left: left + rect.width# + offset
                                 top : (top  + rect.height / 2) - popupRect.height / 2
 
-                    module.set.position position
+                    if settings.position is 'auto'
+                        module.set.position position
 
         toggle: =>
 
@@ -417,7 +457,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
         set:
             position: (position) =>
-                $this.data Metadata.POSITION, position
                 $popup.attr Attribute.POSITION, position
             coordinate: (x, y) =>
                 $popup.css
@@ -449,7 +488,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     popupElement  = $popup.get()
                     popupRect     = $popup.rect()
 
-                    if $this.is(pointElement)
+                    if $this.is(pointElement) or $this.contains(pointElement)
                         $this.removeTimer Metadata.HIDE_TIMER
                         if not $this.hasTimer Metadata.SHOW_TIMER
                             $this.setTimer
@@ -473,8 +512,13 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                         return
 
                     if $this.is(popupElement)
+                        $this.removeTimer Metadata.HIDE_TIMER
+                        return
+                    if $this.contains(popupElement)
+                        $this.removeTimer Metadata.HIDE_TIMER
                         return
                     if $popup.contains(pointElement)
+                        $this.removeTimer Metadata.HIDE_TIMER
                         return
 
                     switch module.get.position()
@@ -492,6 +536,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                 return
 
                     $this.removeTimer Metadata.SHOW_TIMER
+
                     if not $this.hasTimer Metadata.HIDE_TIMER
                         $this.setTimer
                             name    : Metadata.HIDE_TIMER
@@ -537,9 +582,27 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             if not $popup.exists()
                 module.create.popup()
 
-            if settings.duration isnt 'auto'
-                duration = settings.duration
-                $popup.css 'animation-duration', "#{duration}ms"
+            if settings.size isnt 'medium'
+                $popup.removeClass 'mini tiny small medium large big huge massive'
+                $popup.addClass settings.size
+
+            if settings.size isnt 'medium'
+                $popup.removeClass 'mini tiny small medium large big huge massive'
+                $popup.addClass settings.size
+
+            if settings.hoverable
+                $popup.addClass 'hoverable'
+
+            if $this.attr(Attribute.POSITION) isnt null
+                settings.position = $this.attr Attribute.POSITION
+                $popup.attr Attribute.POSITION, settings.position
+
+            if settings.transition isnt 'auto'
+                $popup.attr Attribute.TRANSITION, settings.transition
+                if settings.duration is 'auto'
+                    switch settings.transition
+                        when 'fade'
+                            duration = 300
 
 
             if settings.inverted is true
