@@ -262,10 +262,12 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     bottomCenterOK = bottom > popupHeight and right > popupWidth / 2 and left > popupWidth / 2
                     bottomLeftOK   = bottom > popupHeight and right > popupWidth
                     bottomRightOK  = bottom > popupHeight and left > popupWidth
-                    #leftCenterOK   = (top < popupHeight or bottom < popupHeight) and left > popupWidth
-                    #rightCenterOK  = (top < popupHeight or bottom < popupHeight) and right > popupWidth
+                    topOK      = top > popupHeight
+                    bottomOK  = bottom > popupHeight
                     leftCenterOK   = (top > popupHeight or bottom > popupHeight) and left > popupWidth
                     rightCenterOK  = (top > popupHeight or bottom > popupHeight) and right > popupWidth
+                    leftOK   = left > popupWidth
+                    rightOK  = right > popupWidth
 
                     # OVERWRITE IF SETTING
 
@@ -295,6 +297,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                         bottom,
                         popupWidth,
                         popupHeight,
+                        topOK,
+                        leftOK
+                        rightOK,
+                        bottomOK,
                         topCenterOK,
                         topLeftOK     ,
                         topRightOK    ,
@@ -304,6 +310,9 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                         leftCenterOK  ,
                         rightCenterOK ,
                     }
+
+
+
 
                     if position is ''
                         switch
@@ -323,6 +332,14 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                 position = Position.LEFT_CENTER
                             when rightCenterOK
                                 position = Position.RIGHT_CENTER
+                            when bottomOK
+                                $popup.css
+                                    top: rect.height
+                                $popup.find('.arrow').css
+                                    left: (rect.left + rect.width / 2) - popupRect.left - 8
+                                    top: -20
+                                position = Position.BOTTOM
+
 
                     $popup.attr Attribute.POSITION, position
 
@@ -367,6 +384,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
                     if settings.position is 'auto'
                         module.set.position position
+
+
 
         toggle: =>
 
@@ -426,6 +445,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $popup = ts '<div>'
                     .addClass 'ts popup'
                     .addClass variation
+
+
 
                 if html isnt ''
                     $popup.html html
@@ -581,6 +602,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
             if not $popup.exists()
                 module.create.popup()
+
+            $arrow = ts '<div>'
+                .addClass 'arrow'
+                .appendTo $popup
 
             if settings.size isnt 'medium'
                 $popup.removeClass 'mini tiny small medium large big huge massive'

@@ -274,7 +274,7 @@
       calculate: {
         popup: {
           position: () => {
-            var bottom, bottomCenterOK, bottomLeftOK, bottomRightOK, left, leftCenterOK, popupHeight, popupRect, popupWidth, position, rect, right, rightCenterOK, top, topCenterOK, topLeftOK, topRightOK;
+            var bottom, bottomCenterOK, bottomLeftOK, bottomOK, bottomRightOK, left, leftCenterOK, leftOK, popupHeight, popupRect, popupWidth, position, rect, right, rightCenterOK, rightOK, top, topCenterOK, topLeftOK, topOK, topRightOK;
             ({top, left, right, bottom} = module.get.distance());
             rect = $this.rect();
             popupRect = $popup.rect();
@@ -287,10 +287,12 @@
             bottomCenterOK = bottom > popupHeight && right > popupWidth / 2 && left > popupWidth / 2;
             bottomLeftOK = bottom > popupHeight && right > popupWidth;
             bottomRightOK = bottom > popupHeight && left > popupWidth;
-            //leftCenterOK   = (top < popupHeight or bottom < popupHeight) and left > popupWidth
-            //rightCenterOK  = (top < popupHeight or bottom < popupHeight) and right > popupWidth
+            topOK = top > popupHeight;
+            bottomOK = bottom > popupHeight;
             leftCenterOK = (top > popupHeight || bottom > popupHeight) && left > popupWidth;
             rightCenterOK = (top > popupHeight || bottom > popupHeight) && right > popupWidth;
+            leftOK = left > popupWidth;
+            rightOK = right > popupWidth;
             // OVERWRITE IF SETTING
             if (settings.position !== 'auto') {
               switch (settings.position) {
@@ -335,7 +337,7 @@
                   }
               }
             }
-            console.log({top, left, right, bottom, popupWidth, popupHeight, topCenterOK, topLeftOK, topRightOK, bottomCenterOK, bottomLeftOK, bottomRightOK, leftCenterOK, rightCenterOK});
+            console.log({top, left, right, bottom, popupWidth, popupHeight, topOK, leftOK, rightOK, bottomOK, topCenterOK, topLeftOK, topRightOK, bottomCenterOK, bottomLeftOK, bottomRightOK, leftCenterOK, rightCenterOK});
             if (position === '') {
               switch (false) {
                 case !topCenterOK:
@@ -361,6 +363,16 @@
                   break;
                 case !rightCenterOK:
                   position = Position.RIGHT_CENTER;
+                  break;
+                case !bottomOK:
+                  $popup.css({
+                    top: rect.height
+                  });
+                  $popup.find('.arrow').css({
+                    left: (rect.left + rect.width / 2) - popupRect.left - 8,
+                    top: -20
+                  });
+                  position = Position.BOTTOM;
               }
             }
             $popup.attr(Attribute.POSITION, position);
@@ -652,7 +664,7 @@
       // 基礎方法
       // ------------------------------------------------------------------------
       initialize: () => {
-        var $next;
+        var $arrow, $next;
         debug('初始化彈出式訊息', element);
         $next = $this.next();
         if ($next.is('.ts.popup')) {
@@ -661,6 +673,7 @@
         if (!$popup.exists()) {
           module.create.popup();
         }
+        $arrow = ts('<div>').addClass('arrow').appendTo($popup);
         if (settings.size !== 'medium') {
           $popup.removeClass('mini tiny small medium large big huge massive');
           $popup.addClass(settings.size);
