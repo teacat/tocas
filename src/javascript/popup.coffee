@@ -29,10 +29,8 @@ Settings =
     scrollContext : window
     # 如果有指定邊緣選擇器，彈出訊息則會試著依靠這個父元素的邊緣，適合用於表格的標頭等。
     edgeContext   : false
-    # 彈出式訊息出現的位置，分別是 `垂直 水平`（如：`top left`、`bottom right`）。
-    position      : 'auto'
-    # 是否要將彈出式訊息產生在目標元素的節點後，這讓使用者能在 CSS 選擇器中以 `.elem + .popup` 方便樣式更改。
-    inline        : false
+    # 偏好的彈出式訊息出現位置。
+    position      : 'top'
     # 欲觸發彈出式訊息的事件，如：`click`、`hover`、`focus`。
     on            : 'hover'
     # 觸發的延遲毫秒數。
@@ -102,36 +100,22 @@ Event =
 
 # 樣式名稱。
 ClassName =
-    TOP    : 'top'
-    LEFT   : 'left'
-    RIGHT  : 'right'
-    BOTTOM : 'bottom'
-    CENTER : 'center'
-    VISIBLE: 'visible'
+    TOP      : 'top'
+    LEFT     : 'left'
+    RIGHT    : 'right'
+    BOTTOM   : 'bottom'
+    CENTER   : 'center'
+    VISIBLE  : 'visible'
     ANIMATING: 'animating'
-    HIDDEN : 'hidden'
-    CUSTOM : 'custom'
+    HIDDEN   : 'hidden'
+    CUSTOM   : 'custom'
 
 # 位置。
 Position =
-    AUTO         : 'auto'
-    TOP          : 'top'
-    BOTTOM       : 'bottom'
-    LEFT         : 'left'
-    RIGHT        : 'right'
-    CENTER       : 'center'
-    TOP_LEFT     : 'top left'
-    TOP_CENTER   : 'top center'
-    TOP_RIGHT    : 'top right'
-    BOTTOM_LEFT  : 'bottom left'
-    BOTTOM_CENTER: 'bottom center'
-    BOTTOM_RIGHT : 'bottom right'
-    RIGHT_TOP    : 'right top'
-    RIGHT_CENTER : 'right center'
-    RIGHT_BOTTOM : 'right bottom'
-    LEFT_TOP     : 'left top'
-    LEFT_CENTER  : 'left center'
-    LEFT_BOTTOM  : 'left bottom'
+    TOP   : 'top'
+    BOTTOM: 'bottom'
+    LEFT  : 'left'
+    RIGHT : 'right'
 
 # 中繼資料。
 Metadata =
@@ -144,12 +128,12 @@ Selector =
 
 # 元素標籤。
 Attribute =
-    CONTENT  : 'data-content'
-    HTML     : 'data-html'
-    TITLE    : 'data-title'
-    VARIATION: 'data-variation'
+    CONTENT   : 'data-content'
+    HTML      : 'data-html'
+    TITLE     : 'data-title'
+    VARIATION : 'data-variation'
     TRANSITION: 'data-popup-transition'
-    POSITION : 'data-position'
+    POSITION  : 'data-position'
 
 # 錯誤訊息。
 Error = {}
@@ -170,10 +154,14 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
     $body          = ts Selector.BODY
     $popup         = ts()
     $boundary      = ts()
+    popupRect      = {}
+    rect           = {}
+    boundaryRect   = {}
     boundary       = null
     $scrollContext = ts()
     scrollContext  = null
     offset         = 20
+    padding = 10
 
     # ------------------------------------------------------------------------
     # 模組定義
@@ -211,37 +199,40 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             popup: =>
                 $popup.get()
             distance: =>
-                rect           = $this.rect()
-                boundaryRect   = $boundary.rect()
-                boundaryTop    = boundaryRect.top
-                boundaryLeft   = boundaryRect.left
-                boundaryBottom = boundaryRect.bottom
-                boundaryHeight = boundaryRect.height
-                boundaryWidth  = boundaryRect.width
-                boundaryRight  = boundaryRect.right
+                bRect = {...boundaryRect.toJSON()}
 
                 if $boundary.is 'body'
-                    boundaryTop    = 0
-                    boundaryLeft   = 0
-                    boundaryBottom = 0
-                    boundaryWidth  = boundary.clientWidth
-                    boundaryHeight = boundary.clientHeight
-                    boundaryRight   = 0
+                    bRect.top    = 0
+                    bRect.left   = 0
+                    bRect.bottom = 0
+                    bRect.width  = boundary.clientWidth
+                    bRect.height = boundary.clientHeight
+                    bRect.right  = 0
 
-                top    = rect.top - boundaryTop
-                left   = rect.left - boundaryLeft
-                right  = (boundaryLeft + boundaryWidth) - (rect.left + rect.width)
-                bottom = (boundaryTop + boundaryHeight) - (rect.top + rect.height)
+                top    = rect.top - bRect.top
+                left   = rect.left - bRect.left
+                right  = (bRect.left + bRect.width)  - (rect.left + rect.width)
+                bottom = (bRect.top  + bRect.height) - (rect.top  + rect.height)
 
                 if $boundary.is 'body'
-                    right  = boundaryWidth - (rect.left + rect.width)
-                    bottom = boundaryHeight - (rect.top + rect.height)
+                    right  = bRect.width  - (rect.left + rect.width)
+                    bottom = bRect.height - (rect.top  + rect.height)
 
+                return {
+                    top
+                    left
+                    right
+                    bottom
+                    boundary: bRect
+                }
+
+            directions: =>
+                {top, left, right, bottom} = module.get.distance()
                 return
-                    top   : top
-                    left  : left
-                    right : right
-                    bottom: bottom
+                    top   : top    > popupRect.height
+                    right : right  > popupRect.width
+                    bottom: bottom > popupRect.height
+                    left  : left   > popupRect.width
 
             position: =>
                 return $popup.attr Attribute.POSITION
@@ -249,141 +240,176 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         calculate:
             popup:
                 position: =>
+                    module.refresh()
                     {top, left, right, bottom} = module.get.distance()
-                    rect        = $this.rect()
-                    popupRect   = $popup.rect()
-                    popupWidth  = popupRect.width
-                    popupHeight = popupRect.height
-                    position    = ''
+                    directions = module.get.directions()
+                    position   = ''
 
-                    topCenterOK    = top > popupHeight and right > popupWidth / 2 and left > popupWidth / 2
-                    topLeftOK      = top > popupHeight and right > popupWidth
-                    topRightOK     = top > popupHeight and left > popupWidth
-                    bottomCenterOK = bottom > popupHeight and right > popupWidth / 2 and left > popupWidth / 2
-                    bottomLeftOK   = bottom > popupHeight and right > popupWidth
-                    bottomRightOK  = bottom > popupHeight and left > popupWidth
-                    topOK      = top > popupHeight
-                    bottomOK  = bottom > popupHeight
-                    leftCenterOK   = (top > popupHeight or bottom > popupHeight) and left > popupWidth
-                    rightCenterOK  = (top > popupHeight or bottom > popupHeight) and right > popupWidth
-                    leftOK   = left > popupWidth
-                    rightOK  = right > popupWidth
+                    switch settings.position
+                        when Position.TOP
+                            position = Position.TOP if directions.top
+                        when Position.RIGHT
+                            position = Position.RIGHT if directions.right
+                        when Position.BOTTOM
+                            position = Position.BOTTOM if directions.bottom
+                        when Position.LEFT
+                            position = Position.LEFT if directions.left
 
-                    # OVERWRITE IF SETTING
-
-                    if settings.position isnt 'auto'
-                        switch settings.position
-                            when Position.TOP_CENTER
-                                position = Position.TOP_CENTER if topCenterOK
-                            when Position.TOP_LEFT
-                                position = Position.TOP_LEFT if topLeftOK
-                            when Position.TOP_RIGHT
-                                position = Position.TOP_RIGHT if topRightOK
-                            when Position.BOTTOM_CENTER
-                                position = Position.BOTTOM_CENTER if bottomCenterOK
-                            when Position.BOTTOM_LEFT
-                                position = Position.BOTTOM_LEFT if bottomLeftOK
-                            when Position.BOTTOM_RIGHT
-                                position = Position.BOTTOM_RIGHT if bottomRightOK
-                            when Position.LEFT_CENTER
-                                position = Position.LEFT_CENTER if leftCenterOK
-                            when Position.RIGHT_CENTER
-                                position = Position.RIGHT_CENTER if rightCenterOK
-
-                    console.log {
-                        top,
-                        left,
-                        right,
-                        bottom,
-                        popupWidth,
-                        popupHeight,
-                        topOK,
-                        leftOK
-                        rightOK,
-                        bottomOK,
-                        topCenterOK,
-                        topLeftOK     ,
-                        topRightOK    ,
-                        bottomCenterOK,
-                        bottomLeftOK  ,
-                        bottomRightOK ,
-                        leftCenterOK  ,
-                        rightCenterOK ,
-                    }
-
-
-
-
-                    if position is ''
+                    if position isnt settings.position
                         switch
-                            when topCenterOK
-                                position = Position.TOP_CENTER
-                            when topLeftOK
-                                position = Position.TOP_LEFT
-                            when topRightOK
-                                position = Position.TOP_RIGHT
-                            when bottomCenterOK
-                                position = Position.BOTTOM_CENTER
-                            when bottomLeftOK
-                                position = Position.BOTTOM_LEFT
-                            when bottomRightOK
-                                position = Position.BOTTOM_RIGHT
-                            when leftCenterOK
-                                position = Position.LEFT_CENTER
-                            when rightCenterOK
-                                position = Position.RIGHT_CENTER
-                            when bottomOK
-                                $popup.css
-                                    top: rect.height
-                                $popup.find('.arrow').css
-                                    left: (rect.left + rect.width / 2) - popupRect.left - 8
-                                    top: -20
+                            when directions.top
+                                position = Position.TOP
+                            when directions.bottom
                                 position = Position.BOTTOM
+                            when directions.right
+                                position = Position.RIGHT
+                            when directions.left
+                                position = Position.LEFT
 
+                    position = Position.BOTTOM
 
-                    $popup.attr Attribute.POSITION, position
+                    module.set.position position
 
                     top  = element.offsetTop
                     left = element.offsetLeft
 
+                    $popup.find('.arrow').removeAttr 'style'
+
 
 
                     switch position
-                        when Position.TOP_CENTER
+                        when Position.TOP
                             $popup.css
                                 left: (left + rect.width / 2) - popupRect.width / 2
-                                top : top - popupRect.height# - offset
-                        when Position.TOP_LEFT
-                            $popup.css
-                                left: left
-                                top : top - popupRect.height# - offset
-                        when Position.TOP_RIGHT
-                            $popup.css
-                                left: left - popupRect.width + rect.width
-                                top : top - popupRect.height# - offset
-                        when Position.BOTTOM_CENTER
-                            $popup.css
-                                left: (left + rect.width / 2) - popupRect.width / 2
-                                top : top  + rect.height# + offset
-                        when Position.BOTTOM_LEFT
-                            $popup.css
-                                left: left
-                                top : top  + rect.height# + offset
-                        when Position.BOTTOM_RIGHT
-                            $popup.css
-                                left: left - popupRect.width + rect.width
-                                top : top  + rect.height# + offset
-                        when Position.LEFT_CENTER
-                            $popup.css
-                                left: left - popupRect.width
-                                top : (top  + rect.height / 2) - popupRect.height / 2
-                        when Position.RIGHT_CENTER
+                                top : top - popupRect.height
+
+
+
+                            setTimeout =>
+                                module.refresh()
+                                $popup.find('.arrow').css
+                                    left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2
+                                    bottom: -20
+                            , 0
+
+                            if popupRect.width / 2 > left
+                                $popup.css
+                                    left: 0
+
+
+                            if rect.left < popupRect.width / 2
+                                if rect.left > padding + 20
+                                    $popup.css
+                                        left: left - (left - Math.abs(boundaryRect.left)) #+ padding
+                                else
+                                    $popup.css
+                                        left: left
+
+                            else if right < popupRect.width / 2
+                                if right > padding + 20
+                                    $popup.css
+                                        left: left - popupRect.width + right# + padding
+                                else
+                                    $popup.css
+                                        left: left + rect.width - popupRect.width
+
+
+                        when Position.RIGHT
                             $popup.css
                                 left: left + rect.width# + offset
                                 top : (top  + rect.height / 2) - popupRect.height / 2
 
-                    if settings.position is 'auto'
-                        module.set.position position
+                            setTimeout =>
+                                module.refresh()
+                                $popup.find('.arrow').css
+                                    top: (rect.top + rect.height / 2) - popupRect.top - 8 - 2
+                                    left: -20
+                            , 0
+
+
+                            if rect.top < popupRect.height / 2
+                                if rect.top > padding + 20
+                                    $popup.css
+                                        top: top - (top - Math.abs(boundaryRect.top)) + padding
+                                else
+                                    $popup.css
+                                        top: top
+
+                            else if bottom < popupRect.height / 2
+                                if bottom > padding + 20
+                                    $popup.css
+                                        top: top - popupRect.height + bottom + padding
+                                else
+                                    $popup.css
+                                        top: top + rect.height - popupRect.height
+
+                        when Position.BOTTOM
+                            $popup.css
+                                left: (left + rect.width / 2) - popupRect.width / 2
+                                top : top  + rect.height# + offset
+
+
+
+
+                            setTimeout =>
+                                module.refresh()
+                                $popup.find('.arrow').css
+                                    left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2
+                                    top: -20
+                            , 0
+
+                            if popupRect.width / 2 > left
+                                $popup.css
+                                    left: 0
+
+                            if rect.left < popupRect.width / 2
+                                if rect.left > padding + 20
+                                    $popup.css
+                                        left: left - (left - Math.abs(boundaryRect.left)) #+ padding
+                                else
+                                    $popup.css
+                                        left: left
+
+                            else if right < popupRect.width / 2
+                                if right > padding + 20
+                                    $popup.css
+                                        left: left - popupRect.width + right# + padding
+                                else
+                                    $popup.css
+                                        left: left + rect.width - popupRect.width
+
+                        when Position.LEFT
+                            $popup.css
+                                left: left - popupRect.width
+                                top : (top  + rect.height / 2) - popupRect.height / 2
+
+
+                            setTimeout =>
+                                module.refresh()
+                                $popup.find('.arrow').css
+                                    top : (rect.top + rect.height / 2) - popupRect.top - 8 - 2
+                                    left: popupRect.width - 2
+                            , 0
+
+                            if rect.top < popupRect.height / 2
+                                if rect.top > padding + 20
+                                    $popup.css
+                                        top: top - (top - Math.abs(boundaryRect.top)) + padding
+                                else
+                                    $popup.css
+                                        top: top
+
+                            else if bottom < popupRect.height / 2
+                                if bottom > padding + 20
+                                    $popup.css
+                                        top: top - popupRect.height + bottom + padding
+                                else
+                                    $popup.css
+                                        top: top + rect.height - popupRect.height
+
+
+
+
 
 
 
@@ -611,10 +637,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $popup.removeClass 'mini tiny small medium large big huge massive'
                 $popup.addClass settings.size
 
-            if settings.size isnt 'medium'
-                $popup.removeClass 'mini tiny small medium large big huge massive'
-                $popup.addClass settings.size
-
             if settings.hoverable
                 $popup.addClass 'hoverable'
 
@@ -661,6 +683,9 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             debug '實例化彈出式訊息', element
 
         refresh: =>
+            rect         = $this.rect()
+            popupRect    = $popup.rect()
+            boundaryRect = $boundary.rect()
             return $allModules
 
         destroy: =>

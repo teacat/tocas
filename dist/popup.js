@@ -35,10 +35,8 @@
     scrollContext: window,
     // 如果有指定邊緣選擇器，彈出訊息則會試著依靠這個父元素的邊緣，適合用於表格的標頭等。
     edgeContext: false,
-    // 彈出式訊息出現的位置，分別是 `垂直 水平`（如：`top left`、`bottom right`）。
-    position: 'auto',
-    // 是否要將彈出式訊息產生在目標元素的節點後，這讓使用者能在 CSS 選擇器中以 `.elem + .popup` 方便樣式更改。
-    inline: false,
+    // 偏好的彈出式訊息出現位置。
+    position: 'top',
     // 欲觸發彈出式訊息的事件，如：`click`、`hover`、`focus`。
     on: 'hover',
     // 觸發的延遲毫秒數。
@@ -128,24 +126,10 @@
 
   // 位置。
   Position = {
-    AUTO: 'auto',
     TOP: 'top',
     BOTTOM: 'bottom',
     LEFT: 'left',
-    RIGHT: 'right',
-    CENTER: 'center',
-    TOP_LEFT: 'top left',
-    TOP_CENTER: 'top center',
-    TOP_RIGHT: 'top right',
-    BOTTOM_LEFT: 'bottom left',
-    BOTTOM_CENTER: 'bottom center',
-    BOTTOM_RIGHT: 'bottom right',
-    RIGHT_TOP: 'right top',
-    RIGHT_CENTER: 'right center',
-    RIGHT_BOTTOM: 'right bottom',
-    LEFT_TOP: 'left top',
-    LEFT_CENTER: 'left center',
-    LEFT_BOTTOM: 'left bottom'
+    RIGHT: 'right'
   };
 
   // 中繼資料。
@@ -179,17 +163,21 @@
   // 模組註冊
   // ------------------------------------------------------------------------
   ts.register({NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, element, debug, settings}) => {
-    var $body, $boundary, $popup, $scrollContext, boundary, module, offset, scrollContext;
+    var $body, $boundary, $popup, $scrollContext, boundary, boundaryRect, module, offset, padding, popupRect, rect, scrollContext;
     // ------------------------------------------------------------------------
     // 區域變數
     // ------------------------------------------------------------------------
     $body = ts(Selector.BODY);
     $popup = ts();
     $boundary = ts();
+    popupRect = {};
+    rect = {};
+    boundaryRect = {};
     boundary = null;
     $scrollContext = ts();
     scrollContext = null;
     offset = 20;
+    padding = 10;
     // ------------------------------------------------------------------------
     // 模組定義
     // ------------------------------------------------------------------------
@@ -235,36 +223,40 @@
           return $popup.get();
         },
         distance: () => {
-          var bottom, boundaryBottom, boundaryHeight, boundaryLeft, boundaryRect, boundaryRight, boundaryTop, boundaryWidth, left, rect, right, top;
-          rect = $this.rect();
-          boundaryRect = $boundary.rect();
-          boundaryTop = boundaryRect.top;
-          boundaryLeft = boundaryRect.left;
-          boundaryBottom = boundaryRect.bottom;
-          boundaryHeight = boundaryRect.height;
-          boundaryWidth = boundaryRect.width;
-          boundaryRight = boundaryRect.right;
+          var bRect, bottom, left, right, top;
+          bRect = Object.assign({}, boundaryRect.toJSON());
           if ($boundary.is('body')) {
-            boundaryTop = 0;
-            boundaryLeft = 0;
-            boundaryBottom = 0;
-            boundaryWidth = boundary.clientWidth;
-            boundaryHeight = boundary.clientHeight;
-            boundaryRight = 0;
+            bRect.top = 0;
+            bRect.left = 0;
+            bRect.bottom = 0;
+            bRect.width = boundary.clientWidth;
+            bRect.height = boundary.clientHeight;
+            bRect.right = 0;
           }
-          top = rect.top - boundaryTop;
-          left = rect.left - boundaryLeft;
-          right = (boundaryLeft + boundaryWidth) - (rect.left + rect.width);
-          bottom = (boundaryTop + boundaryHeight) - (rect.top + rect.height);
+          top = rect.top - bRect.top;
+          left = rect.left - bRect.left;
+          right = (bRect.left + bRect.width) - (rect.left + rect.width);
+          bottom = (bRect.top + bRect.height) - (rect.top + rect.height);
           if ($boundary.is('body')) {
-            right = boundaryWidth - (rect.left + rect.width);
-            bottom = boundaryHeight - (rect.top + rect.height);
+            right = bRect.width - (rect.left + rect.width);
+            bottom = bRect.height - (rect.top + rect.height);
           }
           return {
-            top: top,
-            left: left,
-            right: right,
-            bottom: bottom
+            top,
+            left,
+            right,
+            bottom,
+            boundary: bRect
+          };
+        },
+        directions: () => {
+          var bottom, left, right, top;
+          ({top, left, right, bottom} = module.get.distance());
+          return {
+            top: top > popupRect.height,
+            right: right > popupRect.width,
+            bottom: bottom > popupRect.height,
+            left: left > popupRect.width
           };
         },
         position: () => {
@@ -274,161 +266,198 @@
       calculate: {
         popup: {
           position: () => {
-            var bottom, bottomCenterOK, bottomLeftOK, bottomOK, bottomRightOK, left, leftCenterOK, leftOK, popupHeight, popupRect, popupWidth, position, rect, right, rightCenterOK, rightOK, top, topCenterOK, topLeftOK, topOK, topRightOK;
+            var bottom, directions, left, position, right, top;
+            module.refresh();
             ({top, left, right, bottom} = module.get.distance());
-            rect = $this.rect();
-            popupRect = $popup.rect();
-            popupWidth = popupRect.width;
-            popupHeight = popupRect.height;
+            directions = module.get.directions();
             position = '';
-            topCenterOK = top > popupHeight && right > popupWidth / 2 && left > popupWidth / 2;
-            topLeftOK = top > popupHeight && right > popupWidth;
-            topRightOK = top > popupHeight && left > popupWidth;
-            bottomCenterOK = bottom > popupHeight && right > popupWidth / 2 && left > popupWidth / 2;
-            bottomLeftOK = bottom > popupHeight && right > popupWidth;
-            bottomRightOK = bottom > popupHeight && left > popupWidth;
-            topOK = top > popupHeight;
-            bottomOK = bottom > popupHeight;
-            leftCenterOK = (top > popupHeight || bottom > popupHeight) && left > popupWidth;
-            rightCenterOK = (top > popupHeight || bottom > popupHeight) && right > popupWidth;
-            leftOK = left > popupWidth;
-            rightOK = right > popupWidth;
-            // OVERWRITE IF SETTING
-            if (settings.position !== 'auto') {
-              switch (settings.position) {
-                case Position.TOP_CENTER:
-                  if (topCenterOK) {
-                    position = Position.TOP_CENTER;
-                  }
-                  break;
-                case Position.TOP_LEFT:
-                  if (topLeftOK) {
-                    position = Position.TOP_LEFT;
-                  }
-                  break;
-                case Position.TOP_RIGHT:
-                  if (topRightOK) {
-                    position = Position.TOP_RIGHT;
-                  }
-                  break;
-                case Position.BOTTOM_CENTER:
-                  if (bottomCenterOK) {
-                    position = Position.BOTTOM_CENTER;
-                  }
-                  break;
-                case Position.BOTTOM_LEFT:
-                  if (bottomLeftOK) {
-                    position = Position.BOTTOM_LEFT;
-                  }
-                  break;
-                case Position.BOTTOM_RIGHT:
-                  if (bottomRightOK) {
-                    position = Position.BOTTOM_RIGHT;
-                  }
-                  break;
-                case Position.LEFT_CENTER:
-                  if (leftCenterOK) {
-                    position = Position.LEFT_CENTER;
-                  }
-                  break;
-                case Position.RIGHT_CENTER:
-                  if (rightCenterOK) {
-                    position = Position.RIGHT_CENTER;
-                  }
-              }
-            }
-            console.log({top, left, right, bottom, popupWidth, popupHeight, topOK, leftOK, rightOK, bottomOK, topCenterOK, topLeftOK, topRightOK, bottomCenterOK, bottomLeftOK, bottomRightOK, leftCenterOK, rightCenterOK});
-            if (position === '') {
-              switch (false) {
-                case !topCenterOK:
-                  position = Position.TOP_CENTER;
-                  break;
-                case !topLeftOK:
-                  position = Position.TOP_LEFT;
-                  break;
-                case !topRightOK:
-                  position = Position.TOP_RIGHT;
-                  break;
-                case !bottomCenterOK:
-                  position = Position.BOTTOM_CENTER;
-                  break;
-                case !bottomLeftOK:
-                  position = Position.BOTTOM_LEFT;
-                  break;
-                case !bottomRightOK:
-                  position = Position.BOTTOM_RIGHT;
-                  break;
-                case !leftCenterOK:
-                  position = Position.LEFT_CENTER;
-                  break;
-                case !rightCenterOK:
-                  position = Position.RIGHT_CENTER;
-                  break;
-                case !bottomOK:
-                  $popup.css({
-                    top: rect.height
-                  });
-                  $popup.find('.arrow').css({
-                    left: (rect.left + rect.width / 2) - popupRect.left - 8,
-                    top: -20
-                  });
+            switch (settings.position) {
+              case Position.TOP:
+                if (directions.top) {
+                  position = Position.TOP;
+                }
+                break;
+              case Position.RIGHT:
+                if (directions.right) {
+                  position = Position.RIGHT;
+                }
+                break;
+              case Position.BOTTOM:
+                if (directions.bottom) {
                   position = Position.BOTTOM;
+                }
+                break;
+              case Position.LEFT:
+                if (directions.left) {
+                  position = Position.LEFT;
+                }
+            }
+            if (position !== settings.position) {
+              switch (false) {
+                case !directions.top:
+                  position = Position.TOP;
+                  break;
+                case !directions.bottom:
+                  position = Position.BOTTOM;
+                  break;
+                case !directions.right:
+                  position = Position.RIGHT;
+                  break;
+                case !directions.left:
+                  position = Position.LEFT;
               }
             }
-            $popup.attr(Attribute.POSITION, position);
+            position = Position.BOTTOM;
+            module.set.position(position);
             top = element.offsetTop;
             left = element.offsetLeft;
+            $popup.find('.arrow').removeAttr('style');
             switch (position) {
-              case Position.TOP_CENTER:
+              case Position.TOP:
                 $popup.css({
                   left: (left + rect.width / 2) - popupRect.width / 2,
-                  top: top - popupRect.height // - offset
+                  top: top - popupRect.height
                 });
+                setTimeout(() => {
+                  module.refresh();
+                  return $popup.find('.arrow').css({
+                    left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2,
+                    bottom: -20
+                  });
+                }, 0);
+                if (popupRect.width / 2 > left) {
+                  $popup.css({
+                    left: 0
+                  });
+                }
+                if (rect.left < popupRect.width / 2) {
+                  if (rect.left > padding + 20) {
+                    return $popup.css({
+                      left: left - (left - Math.abs(boundaryRect.left)) //+ padding
+                    });
+                  } else {
+                    return $popup.css({
+                      left: left
+                    });
+                  }
+                } else if (right < popupRect.width / 2) {
+                  if (right > padding + 20) {
+                    return $popup.css({
+                      left: left - popupRect.width + right // + padding
+                    });
+                  } else {
+                    return $popup.css({
+                      left: left + rect.width - popupRect.width
+                    });
+                  }
+                }
                 break;
-              case Position.TOP_LEFT:
-                $popup.css({
-                  left: left,
-                  top: top - popupRect.height // - offset
-                });
-                break;
-              case Position.TOP_RIGHT:
-                $popup.css({
-                  left: left - popupRect.width + rect.width,
-                  top: top - popupRect.height // - offset
-                });
-                break;
-              case Position.BOTTOM_CENTER:
-                $popup.css({
-                  left: (left + rect.width / 2) - popupRect.width / 2,
-                  top: top + rect.height // + offset
-                });
-                break;
-              case Position.BOTTOM_LEFT:
-                $popup.css({
-                  left: left,
-                  top: top + rect.height // + offset
-                });
-                break;
-              case Position.BOTTOM_RIGHT:
-                $popup.css({
-                  left: left - popupRect.width + rect.width,
-                  top: top + rect.height // + offset
-                });
-                break;
-              case Position.LEFT_CENTER:
-                $popup.css({
-                  left: left - popupRect.width,
-                  top: (top + rect.height / 2) - popupRect.height / 2
-                });
-                break;
-              case Position.RIGHT_CENTER:
+              case Position.RIGHT:
                 $popup.css({
                   left: left + rect.width, // + offset
                   top: (top + rect.height / 2) - popupRect.height / 2
                 });
-            }
-            if (settings.position === 'auto') {
-              return module.set.position(position);
+                setTimeout(() => {
+                  module.refresh();
+                  return $popup.find('.arrow').css({
+                    top: (rect.top + rect.height / 2) - popupRect.top - 8 - 2,
+                    left: -20
+                  });
+                }, 0);
+                if (rect.top < popupRect.height / 2) {
+                  if (rect.top > padding + 20) {
+                    return $popup.css({
+                      top: top - (top - Math.abs(boundaryRect.top)) + padding
+                    });
+                  } else {
+                    return $popup.css({
+                      top: top
+                    });
+                  }
+                } else if (bottom < popupRect.height / 2) {
+                  if (bottom > padding + 20) {
+                    return $popup.css({
+                      top: top - popupRect.height + bottom + padding
+                    });
+                  } else {
+                    return $popup.css({
+                      top: top + rect.height - popupRect.height
+                    });
+                  }
+                }
+                break;
+              case Position.BOTTOM:
+                $popup.css({
+                  left: (left + rect.width / 2) - popupRect.width / 2,
+                  top: top + rect.height // + offset
+                });
+                setTimeout(() => {
+                  module.refresh();
+                  return $popup.find('.arrow').css({
+                    left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2,
+                    top: -20
+                  });
+                }, 0);
+                if (popupRect.width / 2 > left) {
+                  $popup.css({
+                    left: 0
+                  });
+                }
+                if (rect.left < popupRect.width / 2) {
+                  if (rect.left > padding + 20) {
+                    return $popup.css({
+                      left: left - (left - Math.abs(boundaryRect.left)) //+ padding
+                    });
+                  } else {
+                    return $popup.css({
+                      left: left
+                    });
+                  }
+                } else if (right < popupRect.width / 2) {
+                  if (right > padding + 20) {
+                    return $popup.css({
+                      left: left - popupRect.width + right // + padding
+                    });
+                  } else {
+                    return $popup.css({
+                      left: left + rect.width - popupRect.width
+                    });
+                  }
+                }
+                break;
+              case Position.LEFT:
+                $popup.css({
+                  left: left - popupRect.width,
+                  top: (top + rect.height / 2) - popupRect.height / 2
+                });
+                setTimeout(() => {
+                  module.refresh();
+                  return $popup.find('.arrow').css({
+                    top: (rect.top + rect.height / 2) - popupRect.top - 8 - 2,
+                    left: popupRect.width - 2
+                  });
+                }, 0);
+                if (rect.top < popupRect.height / 2) {
+                  if (rect.top > padding + 20) {
+                    return $popup.css({
+                      top: top - (top - Math.abs(boundaryRect.top)) + padding
+                    });
+                  } else {
+                    return $popup.css({
+                      top: top
+                    });
+                  }
+                } else if (bottom < popupRect.height / 2) {
+                  if (bottom > padding + 20) {
+                    return $popup.css({
+                      top: top - popupRect.height + bottom + padding
+                    });
+                  } else {
+                    return $popup.css({
+                      top: top + rect.height - popupRect.height
+                    });
+                  }
+                }
             }
           }
         }
@@ -545,7 +574,7 @@
       bind: {
         hover: () => {
           return $body.on(Event.MOUSEMOVE, (event) => {
-            var $pointElement, pointElement, popupElement, popupRect, rect;
+            var $pointElement, pointElement, popupElement;
             if (!$popup.exists()) {
               return;
             }
@@ -678,10 +707,6 @@
           $popup.removeClass('mini tiny small medium large big huge massive');
           $popup.addClass(settings.size);
         }
-        if (settings.size !== 'medium') {
-          $popup.removeClass('mini tiny small medium large big huge massive');
-          $popup.addClass(settings.size);
-        }
         if (settings.hoverable) {
           $popup.addClass('hoverable');
         }
@@ -732,6 +757,9 @@
         return debug('實例化彈出式訊息', element);
       },
       refresh: () => {
+        rect = $this.rect();
+        popupRect = $popup.rect();
+        boundaryRect = $boundary.rect();
         return $allModules;
       },
       destroy: () => {
