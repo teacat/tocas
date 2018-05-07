@@ -652,7 +652,17 @@ ts.fn.css =
 # 回傳選擇器元素的渲染形狀。
 ts.fn.rect =
     value: ->
-        @get(0)?.getBoundingClientRect()
+        r = @get(0)?.getBoundingClientRect()
+        return {
+            top: r.top,
+            right: r.right,
+            bottom: r.bottom,
+            left: r.left,
+            width: r.width,
+            height: r.height,
+            x: r.x,
+            y: r.y
+        }
 
 # On
 #

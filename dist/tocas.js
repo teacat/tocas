@@ -858,8 +858,18 @@
   // 回傳選擇器元素的渲染形狀。
   ts.fn.rect = {
     value: function() {
-      var ref;
-      return (ref = this.get(0)) != null ? ref.getBoundingClientRect() : void 0;
+      var r, ref;
+      r = (ref = this.get(0)) != null ? ref.getBoundingClientRect() : void 0;
+      return {
+        top: r.top,
+        right: r.right,
+        bottom: r.bottom,
+        left: r.left,
+        width: r.width,
+        height: r.height,
+        x: r.x,
+        y: r.y
+      };
     }
   };
 

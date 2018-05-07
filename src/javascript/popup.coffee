@@ -174,7 +174,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
     $scrollContext = ts()
     scrollContext  = null
     offset         = 20
-    padding = 10
+    padding        = 10
+    arrowSize      = 14
 
     # ------------------------------------------------------------------------
     # 模組定義
@@ -219,12 +220,15 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     $this.removeTimer Metadata.HIDE_TIMER
 
         set:
-            position: (position) =>
+            position: (position, modify=false) =>
                 $popup.attr Attribute.POSITION, position
+                settings.position = position if modify
             transition: (transition) =>
                 settings.transition = transition
                 $popup.attr Attribute.TRANSITION, transition
-                if settings.duration is 'auto'
+                if settings.duration isnt 'auto'
+                    # IF SET
+                    # IF SET
                     switch settings.transition
                         when 'fade'
                             duration = 300
@@ -286,8 +290,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                         looping : false
                         visible : true
 
-        get:
-            $popup: =>
+        init:
+            popup: =>
                 if $popup.exists()
                     return $popup
                 $next = $this.next()
@@ -299,8 +303,9 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     .addClass ClassName.ARROW
                     .appendTo $popup
                 return $popup
+        get:
             distance: =>
-                bRect  = {...boundaryRect.toJSON()}
+                bRect  = boundaryRect
                 isBody = $boundary.is Selector.BODY
                 if isBody
                     bRect.top    = 0
@@ -323,13 +328,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     bottom
                     boundary: bRect
                 }
-            directions: =>
-                {top, left, right, bottom} = module.get.distance()
-                return
-                    top   : top    > popupRect.height
-                    right : right  > popupRect.width
-                    bottom: bottom > popupRect.height
-                    left  : left   > popupRect.width
             position: =>
                 return $popup.attr Attribute.POSITION
 
@@ -360,44 +358,47 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 , 0
 
         calculate:
-            arrow: =>
-
-
-
-
+            direction: =>
+                {top, left, right, bottom} = module.get.distance()
+                topOK     = top    > popupRect.height + arrowSize
+                rightOK   = right  > popupRect.width  + arrowSize
+                bottomOK  = bottom > popupRect.height + arrowSize
+                leftOK    = left   > popupRect.width  + arrowSize
+                direction = ''
+                switch settings.position
+                    when Position.TOP
+                        direction = Position.TOP if topOK
+                    when Position.RIGHT
+                        direction = Position.RIGHT if rightOK
+                    when Position.BOTTOM
+                        direction = Position.BOTTOM if bottomOK
+                    when Position.LEFT
+                        direction = Position.LEFT if leftOK
+                if direction is settings.position
+                    return direction
+                switch
+                    when topOK
+                        direction = Position.TOP
+                    when bottomOK
+                        direction = Position.BOTTOM
+                    when rightOK
+                        direction = Position.RIGHT
+                    when leftOK
+                        direction = Position.LEFT
+                return direction
             popup:
                 position: =>
                     module.refresh()
                     {right, bottom} = module.get.distance()
-                    directions      = module.get.directions()
+                    direction       = module.calculate.direction()
                     top             = element.offsetTop
                     left            = element.offsetLeft
                     position        = ''
 
-                    switch settings.position
-                        when Position.TOP
-                            position = Position.TOP if directions.top
-                        when Position.RIGHT
-                            position = Position.RIGHT if directions.right
-                        when Position.BOTTOM
-                            position = Position.BOTTOM if directions.bottom
-                        when Position.LEFT
-                            position = Position.LEFT if directions.left
+                    if direction is ''
+                        console.log 'NOPE'
 
-                    if position isnt settings.position
-                        switch
-                            when directions.top
-                                position = Position.TOP
-                            when directions.bottom
-                                position = Position.BOTTOM
-                            when directions.right
-                                position = Position.RIGHT
-                            when directions.left
-                                position = Position.LEFT
-
-                    position = Position.BOTTOM
-
-                    switch position
+                    switch direction
                         when Position.TOP
                             $popup.css
                                 left: (left + rect.width / 2) - popupRect.width / 2
@@ -415,7 +416,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                 left: left - popupRect.width
                                 top : (top  + rect.height / 2) - popupRect.height / 2
 
-                    switch position
+                    switch direction
                         when Position.TOP, Position.BOTTOM
                             if popupRect.width / 2 > left
                                 $popup.css
@@ -435,6 +436,11 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                     $popup.css
                                         left: left + rect.width - popupRect.width
                         when Position.LEFT, Position.RIGHT
+
+
+
+
+
                             if rect.top < popupRect.height / 2
                                 if rect.top > padding + 20
                                     $popup.css
@@ -450,7 +456,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                     $popup.css
                                         top: top + rect.height - popupRect.height
 
-                    module.set.position position
+                    module.set.position direction
                     module.reposition.arrow()
 
         toggle: =>
@@ -504,6 +510,21 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $popup.hasClass ClassName.ANIMATING
             hoverable: =>
                 settings.hoverable is true
+            arrow:
+                bounding: (x, y) =>
+                    switch module.get.position()
+                        when Position.TOP
+                            if y > popupRect.bottom and y < rect.top and x < popupRect.right and x > popupRect.left
+                                return
+                        when Position.RIGHT
+                            if y < popupRect.bottom and y > popupRect.top and x < popupRect.left and x > rect.right
+                                return
+                        when Position.BOTTOM
+                            if y > rect.bottom and y < popupRect.top and x < popupRect.right and x > popupRect.left
+                                return
+                        when Position.LEFT
+                            if y < popupRect.bottom and y > popupRect.top and x < rect.left and x > popupRect.right
+                                return
 
         create:
             popup: =>
@@ -516,18 +537,17 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     content  : $this.attr Attribute.CONTENT
                     title    : $this.attr Attribute.TITLE
                     html     : $this.attr Attribute.HTML
-
                 if attr.variation isnt null
                     variation = attr.variation
                 if attr.content isnt null
-                    content = attr.content
+                    content   = attr.content
                 if attr.title isnt null
-                    title = attr.title
+                    title     = attr.title
                 if attr.html isnt null
-                    html = attr.html
-
+                    html      = attr.html
                 $popup = ts Selector.DIV
                     .addClass "#{ClassName.POPUP} #{variation}"
+
                 if html isnt ''
                     $popup.html html
                 if content isnt ''
@@ -554,69 +574,65 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
         trigger: =>
 
-        bind:
-            hover: =>
-                $body.on Event.MOUSEMOVE, (event) =>
-                    if not $popup.exists()
-                        return
+        hover:
+            handler: (event) =>
+                if not $popup.exists()
+                    return
+                pointElement    = ts.fromPoint(event.clientX, event.clientY).get()
+                isPointingSelf  = $this.is        pointElement
+                isPointingChild = $this.contains  pointElement
+                isPointingPopup = $popup.contains pointElement
+                isHoverable     = module.is.hoverable()
 
-                    pointElement = ts.fromPoint(event.clientX, event.clientY).get()
-                    popupElement = $popup.get()
-
-                    isPointingSelf  = $this.is       pointElement
-                    isPointingChild = $this.contains pointElement
-
-                    if isPointingSelf or isPointingChild
-                        module.remove.hide.timer()
-                        if not module.is.showing()
-                            module.set.show.timer()
-                        return
-
-                    if not module.is.hoverable()
-                        module.remove.show.timer()
-                        if not module.is.hiding()
-                            module.set.hide.timer()
-                        return
-
-                    if $popup.contains pointElement
-                        $this.removeTimer Metadata.HIDE_TIMER
-                        return
-
-                    module.refresh()
-
-                    switch module.get.position()
-                        when Position.TOP
-                            if event.clientY > popupRect.bottom and event.clientY < rect.top and event.clientX < popupRect.right and event.clientX > popupRect.left
-                                return
-                        when Position.RIGHT
-                            if event.clientY < popupRect.bottom and event.clientY > popupRect.top and event.clientX < popupRect.left and event.clientX > rect.right
-                                return
-                        when Position.BOTTOM
-                            if event.clientY > rect.bottom and event.clientY < popupRect.top and event.clientX < popupRect.right and event.clientX > popupRect.left
-                                return
-                        when Position.LEFT
-                            if event.clientY < popupRect.bottom and event.clientY > popupRect.top and event.clientX < rect.left and event.clientX > popupRect.right
-                                return
-
+                if isPointingSelf or isPointingChild
+                    module.remove.hide.timer()
+                    if not module.is.showing()
+                        module.set.show.timer()
+                    return
+                if not isHoverable
                     module.remove.show.timer()
-
                     if not module.is.hiding()
                         module.set.hide.timer()
-            click: =>
-                $body.on Event.CLICK, (event) =>
-                    pointElement    = ts.fromPoint(event.clientX, event.clientY).get()
-                    isPointingSelf  = $this.is        pointElement
-                    isPointingPopup = $popup.contains pointElement
-                    if isPointingSelf
-                        module.toggle()
-                        return
-                    if not isPointingPopup and settings.closable
-                        module.hide()
+                    return
+                if isPointingPopup
+                    module.remove.hide.timer()
+                    return
+                module.refresh()
 
-            focus: =>
-            scroll: =>
-                $scrollContext.on Event.SCROLL, =>
+                if module.is.arrow.bounding event.clientY, event.clientX
+                    return
+                module.remove.show.timer()
+
+                if not module.is.hiding()
+                    module.set.hide.timer()
+
+        click:
+            handler: (event) =>
+                pointElement    = ts.fromPoint(event.clientX, event.clientY).get()
+                isPointingSelf  = $this.is        pointElement
+                isPointingPopup = $popup.contains pointElement
+                if isPointingSelf
+                    module.toggle()
+                    return
+                if not isPointingPopup and settings.closable
                     module.hide()
+
+        focus:
+            handler: (event) =>
+
+        scroll:
+            handler: =>
+                module.hide()
+
+        bind:
+            hover: =>
+                $body.on Event.MOUSEMOVE, module.hover.handler
+            click: =>
+                $body.on Event.CLICK, module.click.handler
+            focus: =>
+                $this.on Event.FOCUS, module.focus.handler
+            scroll: =>
+                $scrollContext.on Event.SCROLL, module.scroll.handler
             events: =>
                 switch settings.on
                     when 'hover'
@@ -639,12 +655,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         initialize: =>
             debug '初始化彈出式訊息', element
 
-            $popup = module.get.$popup()
-
-            if $this.attr(Attribute.POSITION) isnt null
-                settings.position = $this.attr Attribute.POSITION
-                module.set.position settings.position
-
+            position = $this.attr Attribute.POSITION
+            if position isnt null
+                module.set.position position, true
+            module.init.popup()
             module.set.hoverable     settings.hoverable
             module.set.size          settings.size
             module.set.transition    settings.transition

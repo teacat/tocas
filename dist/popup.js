@@ -176,7 +176,7 @@
   // 模組註冊
   // ------------------------------------------------------------------------
   ts.register({NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, element, debug, settings}) => {
-    var $body, $boundary, $popup, $scrollContext, boundary, boundaryRect, module, offset, padding, popupRect, rect, scrollContext;
+    var $body, $boundary, $popup, $scrollContext, arrowSize, boundary, boundaryRect, module, offset, padding, popupRect, rect, scrollContext;
     // ------------------------------------------------------------------------
     // 區域變數
     // ------------------------------------------------------------------------
@@ -191,6 +191,7 @@
     scrollContext = null;
     offset = 20;
     padding = 10;
+    arrowSize = 14;
     // ------------------------------------------------------------------------
     // 模組定義
     // ------------------------------------------------------------------------
@@ -248,13 +249,18 @@
         }
       },
       set: {
-        position: (position) => {
-          return $popup.attr(Attribute.POSITION, position);
+        position: (position, modify = false) => {
+          $popup.attr(Attribute.POSITION, position);
+          if (modify) {
+            return settings.position = position;
+          }
         },
         transition: (transition) => {
           settings.transition = transition;
           $popup.attr(Attribute.TRANSITION, transition);
-          if (settings.duration === 'auto') {
+          if (settings.duration !== 'auto') {
+            // IF SET
+            // IF SET
             switch (settings.transition) {
               case 'fade':
                 return duration = 300;
@@ -338,8 +344,8 @@
           }
         }
       },
-      get: {
-        $popup: () => {
+      init: {
+        popup: () => {
           var $arrow, $next;
           if ($popup.exists()) {
             return $popup;
@@ -352,10 +358,12 @@
           }
           $arrow = ts(Selector.DIV).addClass(ClassName.ARROW).appendTo($popup);
           return $popup;
-        },
+        }
+      },
+      get: {
         distance: () => {
           var bRect, bottom, isBody, left, right, top;
-          bRect = Object.assign({}, boundaryRect.toJSON());
+          bRect = boundaryRect;
           isBody = $boundary.is(Selector.BODY);
           if (isBody) {
             bRect.top = 0;
@@ -379,16 +387,6 @@
             right,
             bottom,
             boundary: bRect
-          };
-        },
-        directions: () => {
-          var bottom, left, right, top;
-          ({top, left, right, bottom} = module.get.distance());
-          return {
-            top: top > popupRect.height,
-            right: right > popupRect.width,
-            bottom: bottom > popupRect.height,
-            left: left > popupRect.width
           };
         },
         position: () => {
@@ -427,54 +425,66 @@
         }
       },
       calculate: {
-        arrow: () => {},
+        direction: () => {
+          var bottom, bottomOK, direction, left, leftOK, right, rightOK, top, topOK;
+          ({top, left, right, bottom} = module.get.distance());
+          topOK = top > popupRect.height + arrowSize;
+          rightOK = right > popupRect.width + arrowSize;
+          bottomOK = bottom > popupRect.height + arrowSize;
+          leftOK = left > popupRect.width + arrowSize;
+          direction = '';
+          switch (settings.position) {
+            case Position.TOP:
+              if (topOK) {
+                direction = Position.TOP;
+              }
+              break;
+            case Position.RIGHT:
+              if (rightOK) {
+                direction = Position.RIGHT;
+              }
+              break;
+            case Position.BOTTOM:
+              if (bottomOK) {
+                direction = Position.BOTTOM;
+              }
+              break;
+            case Position.LEFT:
+              if (leftOK) {
+                direction = Position.LEFT;
+              }
+          }
+          if (direction === settings.position) {
+            return direction;
+          }
+          switch (false) {
+            case !topOK:
+              direction = Position.TOP;
+              break;
+            case !bottomOK:
+              direction = Position.BOTTOM;
+              break;
+            case !rightOK:
+              direction = Position.RIGHT;
+              break;
+            case !leftOK:
+              direction = Position.LEFT;
+          }
+          return direction;
+        },
         popup: {
           position: () => {
-            var bottom, directions, left, position, right, top;
+            var bottom, direction, left, position, right, top;
             module.refresh();
             ({right, bottom} = module.get.distance());
-            directions = module.get.directions();
+            direction = module.calculate.direction();
             top = element.offsetTop;
             left = element.offsetLeft;
             position = '';
-            switch (settings.position) {
-              case Position.TOP:
-                if (directions.top) {
-                  position = Position.TOP;
-                }
-                break;
-              case Position.RIGHT:
-                if (directions.right) {
-                  position = Position.RIGHT;
-                }
-                break;
-              case Position.BOTTOM:
-                if (directions.bottom) {
-                  position = Position.BOTTOM;
-                }
-                break;
-              case Position.LEFT:
-                if (directions.left) {
-                  position = Position.LEFT;
-                }
+            if (direction === '') {
+              console.log('NOPE');
             }
-            if (position !== settings.position) {
-              switch (false) {
-                case !directions.top:
-                  position = Position.TOP;
-                  break;
-                case !directions.bottom:
-                  position = Position.BOTTOM;
-                  break;
-                case !directions.right:
-                  position = Position.RIGHT;
-                  break;
-                case !directions.left:
-                  position = Position.LEFT;
-              }
-            }
-            position = Position.BOTTOM;
-            switch (position) {
+            switch (direction) {
               case Position.TOP:
                 $popup.css({
                   left: (left + rect.width / 2) - popupRect.width / 2,
@@ -499,7 +509,7 @@
                   top: (top + rect.height / 2) - popupRect.height / 2
                 });
             }
-            switch (position) {
+            switch (direction) {
               case Position.TOP:
               case Position.BOTTOM:
                 if (popupRect.width / 2 > left) {
@@ -553,7 +563,7 @@
                   }
                 }
             }
-            module.set.position(position);
+            module.set.position(direction);
             return module.reposition.arrow();
           }
         }
@@ -614,6 +624,31 @@
         },
         hoverable: () => {
           return settings.hoverable === true;
+        },
+        arrow: {
+          bounding: (x, y) => {
+            switch (module.get.position()) {
+              case Position.TOP:
+                if (y > popupRect.bottom && y < rect.top && x < popupRect.right && x > popupRect.left) {
+
+                }
+                break;
+              case Position.RIGHT:
+                if (y < popupRect.bottom && y > popupRect.top && x < popupRect.left && x > rect.right) {
+
+                }
+                break;
+              case Position.BOTTOM:
+                if (y > rect.bottom && y < popupRect.top && x < popupRect.right && x > popupRect.left) {
+
+                }
+                break;
+              case Position.LEFT:
+                if (y < popupRect.bottom && y > popupRect.top && x < rect.left && x > popupRect.right) {
+
+                }
+            }
+          }
         }
       },
       create: {
@@ -665,83 +700,80 @@
       //remove:
       //    popup: =>
       trigger: () => {},
-      bind: {
-        hover: () => {
-          return $body.on(Event.MOUSEMOVE, (event) => {
-            var isPointingChild, isPointingSelf, pointElement, popupElement;
-            if (!$popup.exists()) {
-              return;
+      hover: {
+        handler: (event) => {
+          var isHoverable, isPointingChild, isPointingPopup, isPointingSelf, pointElement;
+          if (!$popup.exists()) {
+            return;
+          }
+          pointElement = ts.fromPoint(event.clientX, event.clientY).get();
+          isPointingSelf = $this.is(pointElement);
+          isPointingChild = $this.contains(pointElement);
+          isPointingPopup = $popup.contains(pointElement);
+          isHoverable = module.is.hoverable();
+          if (isPointingSelf || isPointingChild) {
+            module.remove.hide.timer();
+            if (!module.is.showing()) {
+              module.set.show.timer();
             }
-            pointElement = ts.fromPoint(event.clientX, event.clientY).get();
-            popupElement = $popup.get();
-            isPointingSelf = $this.is(pointElement);
-            isPointingChild = $this.contains(pointElement);
-            if (isPointingSelf || isPointingChild) {
-              module.remove.hide.timer();
-              if (!module.is.showing()) {
-                module.set.show.timer();
-              }
-              return;
-            }
-            if (!module.is.hoverable()) {
-              module.remove.show.timer();
-              if (!module.is.hiding()) {
-                module.set.hide.timer();
-              }
-              return;
-            }
-            if ($popup.contains(pointElement)) {
-              $this.removeTimer(Metadata.HIDE_TIMER);
-              return;
-            }
-            module.refresh();
-            switch (module.get.position()) {
-              case Position.TOP:
-                if (event.clientY > popupRect.bottom && event.clientY < rect.top && event.clientX < popupRect.right && event.clientX > popupRect.left) {
-                  return;
-                }
-                break;
-              case Position.RIGHT:
-                if (event.clientY < popupRect.bottom && event.clientY > popupRect.top && event.clientX < popupRect.left && event.clientX > rect.right) {
-                  return;
-                }
-                break;
-              case Position.BOTTOM:
-                if (event.clientY > rect.bottom && event.clientY < popupRect.top && event.clientX < popupRect.right && event.clientX > popupRect.left) {
-                  return;
-                }
-                break;
-              case Position.LEFT:
-                if (event.clientY < popupRect.bottom && event.clientY > popupRect.top && event.clientX < rect.left && event.clientX > popupRect.right) {
-                  return;
-                }
-            }
+            return;
+          }
+          if (!isHoverable) {
             module.remove.show.timer();
             if (!module.is.hiding()) {
-              return module.set.hide.timer();
+              module.set.hide.timer();
             }
-          });
+            return;
+          }
+          if (isPointingPopup) {
+            module.remove.hide.timer();
+            return;
+          }
+          module.refresh();
+          if (module.is.arrow.bounding(event.clientY, event.clientX)) {
+            return;
+          }
+          module.remove.show.timer();
+          if (!module.is.hiding()) {
+            return module.set.hide.timer();
+          }
+        }
+      },
+      click: {
+        handler: (event) => {
+          var isPointingPopup, isPointingSelf, pointElement;
+          pointElement = ts.fromPoint(event.clientX, event.clientY).get();
+          isPointingSelf = $this.is(pointElement);
+          isPointingPopup = $popup.contains(pointElement);
+          if (isPointingSelf) {
+            module.toggle();
+            return;
+          }
+          if (!isPointingPopup && settings.closable) {
+            return module.hide();
+          }
+        }
+      },
+      focus: {
+        handler: (event) => {}
+      },
+      scroll: {
+        handler: () => {
+          return module.hide();
+        }
+      },
+      bind: {
+        hover: () => {
+          return $body.on(Event.MOUSEMOVE, module.hover.handler);
         },
         click: () => {
-          return $body.on(Event.CLICK, (event) => {
-            var isPointingPopup, isPointingSelf, pointElement;
-            pointElement = ts.fromPoint(event.clientX, event.clientY).get();
-            isPointingSelf = $this.is(pointElement);
-            isPointingPopup = $popup.contains(pointElement);
-            if (isPointingSelf) {
-              module.toggle();
-              return;
-            }
-            if (!isPointingPopup && settings.closable) {
-              return module.hide();
-            }
-          });
+          return $body.on(Event.CLICK, module.click.handler);
         },
-        focus: () => {},
+        focus: () => {
+          return $this.on(Event.FOCUS, module.focus.handler);
+        },
         scroll: () => {
-          return $scrollContext.on(Event.SCROLL, () => {
-            return module.hide();
-          });
+          return $scrollContext.on(Event.SCROLL, module.scroll.handler);
         },
         events: () => {
           switch (settings.on) {
@@ -768,12 +800,13 @@
       // 基礎方法
       // ------------------------------------------------------------------------
       initialize: () => {
+        var position;
         debug('初始化彈出式訊息', element);
-        $popup = module.get.$popup();
-        if ($this.attr(Attribute.POSITION) !== null) {
-          settings.position = $this.attr(Attribute.POSITION);
-          module.set.position(settings.position);
+        position = $this.attr(Attribute.POSITION);
+        if (position !== null) {
+          module.set.position(position, true);
         }
+        module.init.popup();
         module.set.hoverable(settings.hoverable);
         module.set.size(settings.size);
         module.set.transition(settings.transition);
