@@ -109,6 +109,15 @@ ClassName =
     ANIMATING: 'animating'
     HIDDEN   : 'hidden'
     CUSTOM   : 'custom'
+    POPUP    : 'ts popup'
+    TITLE    : 'title'
+    CONTENT  : 'content'
+    ARROW    : 'arrow'
+    HOVERABLE: 'hoverable'
+    MEDIUM   : 'medium'
+    INVERTED : 'inverted'
+    POINTING : 'pointing'
+    SIZES    : 'mini tiny small medium large big huge massive'
 
 # 位置。
 Position =
@@ -124,7 +133,10 @@ Metadata =
 
 # 選擇器名稱。
 Selector =
-    BODY: 'body'
+    BODY : 'body'
+    DIV  : '<div>'
+    ARROW: '.arrow'
+    POPUP: '.ts.popup'
 
 # 元素標籤。
 Attribute =
@@ -134,6 +146,7 @@ Attribute =
     VARIATION : 'data-variation'
     TRANSITION: 'data-popup-transition'
     POSITION  : 'data-position'
+    STYLE     : 'style'
 
 # 錯誤訊息。
 Error = {}
@@ -169,8 +182,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
     module =
         show: (callback) =>
-            $this.removeTimer Metadata.SHOW_TIMER
-            $this.removeTimer Metadata.HIDE_TIMER
+            module.remove.timers()
             if module.is.animating()
                 return
             if module.is.visible()
@@ -182,8 +194,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             return $allModules
 
         hide: (callback) =>
-            $this.removeTimer Metadata.SHOW_TIMER
-            $this.removeTimer Metadata.HIDE_TIMER
+            module.remove.timers()
             if module.is.animating()
                 return
             if module.is.hidden()
@@ -194,30 +205,117 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             return $allModules
 
         hideAll: =>
+            return $allModules
+
+        remove:
+            timers: =>
+                module.remove.show.timer()
+                module.remove.hide.timer()
+            show:
+                timer: =>
+                    $this.removeTimer Metadata.SHOW_TIMER
+            hide:
+                timer: =>
+                    $this.removeTimer Metadata.HIDE_TIMER
+
+        set:
+            position: (position) =>
+                $popup.attr Attribute.POSITION, position
+            transition: (transition) =>
+                settings.transition = transition
+                $popup.attr Attribute.TRANSITION, transition
+                if settings.duration is 'auto'
+                    switch settings.transition
+                        when 'fade'
+                            duration = 300
+            pointing: (value) =>
+                settings.pointing = value
+                if value
+                    $popup.addClass ClassName.POINTING
+                else
+                    $popup.removeClass ClassName.POINTING
+            inverted: (value) =>
+                settings.inverted = value
+                if value
+                    $popup.addClass ClassName.INVERTED
+                else
+                    $popup.removeClass ClassName.INVERTED
+            hoverable: (value) =>
+                settings.hoverable = value
+                if value
+                    $popup.addClass ClassName.HOVERABLE
+                else
+                    $popup.removeClass ClassName.HOVERABLE
+            boundary: (selector) =>
+                $boundary = $this.closest selector
+                boundary  = $boundary.get()
+            scrollContext: (selector) =>
+                $scrollContext = ts selector
+                scrollContext  = $scrollContext.get()
+            coordinate: (x, y) =>
+                $popup.css
+                    top : x
+                    left: y
+            width: (width) =>
+                $popup.css
+                    width: width
+            animating: (value) =>
+                if value
+                    $popup.addClass ClassName.ANIMATING
+                else
+                    $popup.removeClass ClassName.ANIMATING
+            size: (size) =>
+                $popup
+                    .removeClass ClassName.SIZES
+                    .addClass    size
+                return $allModules
+            show:
+                timer: =>
+                    $this.setTimer
+                        name    : Metadata.SHOW_TIMER
+                        callback: module.show
+                        interval: settings.delay.show
+                        looping : false
+                        visible : true
+            hide:
+                timer: =>
+                    $this.setTimer
+                        name    : Metadata.HIDE_TIMER
+                        callback: module.hide
+                        interval: settings.delay.hide
+                        looping : false
+                        visible : true
 
         get:
-            popup: =>
-                $popup.get()
+            $popup: =>
+                if $popup.exists()
+                    return $popup
+                $next = $this.next()
+                if $next.is Selector.POPUP
+                    $popup = $next
+                else
+                    module.create.popup()
+                $arrow = ts Selector.DIV
+                    .addClass ClassName.ARROW
+                    .appendTo $popup
+                return $popup
             distance: =>
-                bRect = {...boundaryRect.toJSON()}
-
-                if $boundary.is 'body'
+                bRect  = {...boundaryRect.toJSON()}
+                isBody = $boundary.is Selector.BODY
+                if isBody
                     bRect.top    = 0
                     bRect.left   = 0
                     bRect.bottom = 0
                     bRect.width  = boundary.clientWidth
                     bRect.height = boundary.clientHeight
                     bRect.right  = 0
-
                 top    = rect.top - bRect.top
                 left   = rect.left - bRect.left
-                right  = (bRect.left + bRect.width)  - (rect.left + rect.width)
-                bottom = (bRect.top  + bRect.height) - (rect.top  + rect.height)
-
-                if $boundary.is 'body'
-                    right  = bRect.width  - (rect.left + rect.width)
-                    bottom = bRect.height - (rect.top  + rect.height)
-
+                right  = (bRect.left + bRect.width) - (rect.left + rect.width)
+                bottom = (bRect.top + bRect.height) - (rect.top + rect.height)
+                if isBody
+                    right  = bRect.width - (rect.left + rect.width)
+                    bottom = bRect.height - (rect.top + rect.height)
                 return {
                     top
                     left
@@ -225,7 +323,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     bottom
                     boundary: bRect
                 }
-
             directions: =>
                 {top, left, right, bottom} = module.get.distance()
                 return
@@ -233,17 +330,49 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     right : right  > popupRect.width
                     bottom: bottom > popupRect.height
                     left  : left   > popupRect.width
-
             position: =>
                 return $popup.attr Attribute.POSITION
 
+        reposition:
+            arrow: =>
+                $arrow = $popup
+                    .find       Selector.ARROW
+                    .removeAttr Attribute.STYLE
+                setTimeout =>
+                    module.refresh()
+                    switch module.get.position()
+                        when Position.TOP
+                            $arrow.css
+                                left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2
+                                top : popupRect.height - 2
+                        when Position.RIGHT
+                            $arrow.css
+                                left: -20
+                                top : (rect.top + rect.height / 2) - popupRect.top - 8 - 2
+                        when Position.BOTTOM
+                            $arrow.css
+                                left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2
+                                top : -20
+                        when Position.LEFT
+                            $arrow.css
+                                left: popupRect.width - 2
+                                top : (rect.top + rect.height / 2) - popupRect.top - 8 - 2
+                , 0
+
         calculate:
+            arrow: =>
+
+
+
+
             popup:
                 position: =>
                     module.refresh()
-                    {top, left, right, bottom} = module.get.distance()
-                    directions = module.get.directions()
-                    position   = ''
+                    {right, bottom} = module.get.distance()
+                    directions      = module.get.directions()
+                    top             = element.offsetTop
+                    left            = element.offsetLeft
+                    position        = ''
 
                     switch settings.position
                         when Position.TOP
@@ -268,129 +397,44 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
                     position = Position.BOTTOM
 
-                    module.set.position position
-
-                    top  = element.offsetTop
-                    left = element.offsetLeft
-
-                    $popup.find('.arrow').removeAttr 'style'
-
-
-
                     switch position
                         when Position.TOP
                             $popup.css
                                 left: (left + rect.width / 2) - popupRect.width / 2
                                 top : top - popupRect.height
-
-
-
-                            setTimeout =>
-                                module.refresh()
-                                $popup.find('.arrow').css
-                                    left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2
-                                    bottom: -20
-                            , 0
-
-                            if popupRect.width / 2 > left
-                                $popup.css
-                                    left: 0
-
-
-                            if rect.left < popupRect.width / 2
-                                if rect.left > padding + 20
-                                    $popup.css
-                                        left: left - (left - Math.abs(boundaryRect.left)) #+ padding
-                                else
-                                    $popup.css
-                                        left: left
-
-                            else if right < popupRect.width / 2
-                                if right > padding + 20
-                                    $popup.css
-                                        left: left - popupRect.width + right# + padding
-                                else
-                                    $popup.css
-                                        left: left + rect.width - popupRect.width
-
-
                         when Position.RIGHT
                             $popup.css
-                                left: left + rect.width# + offset
+                                left: left + rect.width
                                 top : (top  + rect.height / 2) - popupRect.height / 2
-
-                            setTimeout =>
-                                module.refresh()
-                                $popup.find('.arrow').css
-                                    top: (rect.top + rect.height / 2) - popupRect.top - 8 - 2
-                                    left: -20
-                            , 0
-
-
-                            if rect.top < popupRect.height / 2
-                                if rect.top > padding + 20
-                                    $popup.css
-                                        top: top - (top - Math.abs(boundaryRect.top)) + padding
-                                else
-                                    $popup.css
-                                        top: top
-
-                            else if bottom < popupRect.height / 2
-                                if bottom > padding + 20
-                                    $popup.css
-                                        top: top - popupRect.height + bottom + padding
-                                else
-                                    $popup.css
-                                        top: top + rect.height - popupRect.height
-
                         when Position.BOTTOM
                             $popup.css
                                 left: (left + rect.width / 2) - popupRect.width / 2
-                                top : top  + rect.height# + offset
-
-
-
-
-                            setTimeout =>
-                                module.refresh()
-                                $popup.find('.arrow').css
-                                    left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2
-                                    top: -20
-                            , 0
-
-                            if popupRect.width / 2 > left
-                                $popup.css
-                                    left: 0
-
-                            if rect.left < popupRect.width / 2
-                                if rect.left > padding + 20
-                                    $popup.css
-                                        left: left - (left - Math.abs(boundaryRect.left)) #+ padding
-                                else
-                                    $popup.css
-                                        left: left
-
-                            else if right < popupRect.width / 2
-                                if right > padding + 20
-                                    $popup.css
-                                        left: left - popupRect.width + right# + padding
-                                else
-                                    $popup.css
-                                        left: left + rect.width - popupRect.width
-
+                                top : top  + rect.height
                         when Position.LEFT
                             $popup.css
                                 left: left - popupRect.width
                                 top : (top  + rect.height / 2) - popupRect.height / 2
 
-
-                            setTimeout =>
-                                module.refresh()
-                                $popup.find('.arrow').css
-                                    top : (rect.top + rect.height / 2) - popupRect.top - 8 - 2
-                                    left: popupRect.width - 2
-                            , 0
-
+                    switch position
+                        when Position.TOP, Position.BOTTOM
+                            if popupRect.width / 2 > left
+                                $popup.css
+                                    left: 0
+                            if rect.left < popupRect.width / 2
+                                if rect.left > padding + 20
+                                    $popup.css
+                                        left: left - (left - Math.abs(boundaryRect.left))
+                                else
+                                    $popup.css
+                                        left: left
+                            else if right < popupRect.width / 2
+                                if right > padding + 20
+                                    $popup.css
+                                        left: left - popupRect.width + right
+                                else
+                                    $popup.css
+                                        left: left + rect.width - popupRect.width
+                        when Position.LEFT, Position.RIGHT
                             if rect.top < popupRect.height / 2
                                 if rect.top > padding + 20
                                     $popup.css
@@ -398,7 +442,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                 else
                                     $popup.css
                                         top: top
-
                             else if bottom < popupRect.height / 2
                                 if bottom > padding + 20
                                     $popup.css
@@ -407,19 +450,30 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                     $popup.css
                                         top: top + rect.height - popupRect.height
 
-
-
-
-
-
+                    module.set.position position
+                    module.reposition.arrow()
 
         toggle: =>
+            if module.is.hidden()
+                module.show()
+            else
+                module.hide()
+            return $allModules
 
         change:
             title: (title) =>
+                $popup
+                    .find Selector.TITLE
+                    .html title
+                return $allModules
             content: (content) =>
+                $popup
+                    .find Selector.CONTENT
+                    .html content
+                return $allModules
             html: (html) =>
                 $popup.html html
+                return $allModules
 
         animate:
             show: (callback) =>
@@ -442,6 +496,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $popup.hasClass ClassName.VISIBLE
             hidden: =>
                 not module.is.visible()
+            showing: =>
+                $this.hasTimer Metadata.SHOW_TIMER
+            hiding: =>
+                $this.hasTimer Metadata.HIDE_TIMER
             animating: =>
                 $popup.hasClass ClassName.ANIMATING
             hoverable: =>
@@ -453,46 +511,35 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 content   = settings.content   or ''
                 html      = settings.html      or ''
                 title     = settings.title     or ''
+                attr      =
+                    variation: $this.attr Attribute.VARIATION
+                    content  : $this.attr Attribute.CONTENT
+                    title    : $this.attr Attribute.TITLE
+                    html     : $this.attr Attribute.HTML
 
-                attributeVariation = $this.attr(Attribute.VARIATION)
-                attributeContent   = $this.attr(Attribute.CONTENT)
-                attributeTitle     = $this.attr(Attribute.TITLE)
-                attributeHTML      = $this.attr(Attribute.HTML)
+                if attr.variation isnt null
+                    variation = attr.variation
+                if attr.content isnt null
+                    content = attr.content
+                if attr.title isnt null
+                    title = attr.title
+                if attr.html isnt null
+                    html = attr.html
 
-                if attributeVariation isnt null
-                    variation = attributeVariation
-                if attributeContent isnt null
-                    content = attributeContent
-                if attributeTitle isnt null
-                    title = attributeTitle
-                if attributeHTML isnt null
-                    html = attributeHTML
-
-                $popup = ts '<div>'
-                    .addClass 'ts popup'
-                    .addClass variation
-
-
-
+                $popup = ts Selector.DIV
+                    .addClass "#{ClassName.POPUP} #{variation}"
                 if html isnt ''
                     $popup.html html
-
                 if content isnt ''
-                    $content = ts '<div>'
-                        .addClass 'content'
+                    $content = ts Selector.DIV
+                        .addClass ClassName.CONTENT
                         .html     content
-                    $title = ts '<div>'
-                        .addClass 'title'
+                    $title = ts Selector.DIV
+                        .addClass ClassName.TITLE
                         .html     title
-
                     if title isnt ''
-                        $popup
-                            .append $title
-                            .append $content
-                    else
-                        $popup
-                            .append $content
-
+                        $popup.append $title
+                    $popup.append $content
                 $popup.insertAfter $this
 
         exists: =>
@@ -500,27 +547,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         repaint: =>
             $popup.repaint()
 
-        reposition: =>
+        #reposition: =>
 
-        set:
-            position: (position) =>
-                $popup.attr Attribute.POSITION, position
-            coordinate: (x, y) =>
-                $popup.css
-                    top : x
-                    left: y
-            width: (width) =>
-                $popup.css
-                    width: width
-            animating: (value) =>
-                if value
-                    $popup.addClass ClassName.ANIMATING
-                else
-                    $popup.removeClass ClassName.ANIMATING
-
-
-        remove:
-            popup: =>
+        #remove:
+        #    popup: =>
 
         trigger: =>
 
@@ -529,83 +559,58 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $body.on Event.MOUSEMOVE, (event) =>
                     if not $popup.exists()
                         return
-                    rect          = $this.rect()
-                    $pointElement = ts.fromPoint(event.clientX, event.clientY)
-                    pointElement  = $pointElement.get()
-                    popupElement  = $popup.get()
-                    popupRect     = $popup.rect()
 
-                    if $this.is(pointElement) or $this.contains(pointElement)
-                        $this.removeTimer Metadata.HIDE_TIMER
-                        if not $this.hasTimer Metadata.SHOW_TIMER
-                            $this.setTimer
-                                name    : Metadata.SHOW_TIMER
-                                callback: module.show
-                                interval: settings.delay.show
-                                looping : false
-                                visible : true
+                    pointElement = ts.fromPoint(event.clientX, event.clientY).get()
+                    popupElement = $popup.get()
 
+                    isPointingSelf  = $this.is       pointElement
+                    isPointingChild = $this.contains pointElement
+
+                    if isPointingSelf or isPointingChild
+                        module.remove.hide.timer()
+                        if not module.is.showing()
+                            module.set.show.timer()
                         return
 
-                    if not settings.hoverable
-                        $this.removeTimer Metadata.SHOW_TIMER
-                        if not $this.hasTimer Metadata.HIDE_TIMER
-                            $this.setTimer
-                                name    : Metadata.HIDE_TIMER
-                                callback: module.hide
-                                interval: settings.delay.hide
-                                looping : false
-                                visible : true
+                    if not module.is.hoverable()
+                        module.remove.show.timer()
+                        if not module.is.hiding()
+                            module.set.hide.timer()
                         return
 
-                    if $this.is(popupElement)
+                    if $popup.contains pointElement
                         $this.removeTimer Metadata.HIDE_TIMER
                         return
-                    if $this.contains(popupElement)
-                        $this.removeTimer Metadata.HIDE_TIMER
-                        return
-                    if $popup.contains(pointElement)
-                        $this.removeTimer Metadata.HIDE_TIMER
-                        return
+
+                    module.refresh()
 
                     switch module.get.position()
-                        when Position.TOP_LEFT, Position.TOP_CENTER, Position.TOP_RIGHT
+                        when Position.TOP
                             if event.clientY > popupRect.bottom and event.clientY < rect.top and event.clientX < popupRect.right and event.clientX > popupRect.left
                                 return
-                        when Position.LEFT_TOP, Position.LEFT_CENTER, Position.LEFT_BOTTOM
-                            if event.clientY < popupRect.bottom and event.clientY > popupRect.top and event.clientX < rect.left and event.clientX > popupRect.right
-                                return
-                        when Position.RIGHT_TOP, Position.RIGHT_CENTER, Position.RIGHT_BOTTOM
+                        when Position.RIGHT
                             if event.clientY < popupRect.bottom and event.clientY > popupRect.top and event.clientX < popupRect.left and event.clientX > rect.right
                                 return
-                        when Position.BOTTOM_LEFT, Position.BOTTOM_CENTER, Position.BOTTOM_RIGHT
+                        when Position.BOTTOM
                             if event.clientY > rect.bottom and event.clientY < popupRect.top and event.clientX < popupRect.right and event.clientX > popupRect.left
                                 return
+                        when Position.LEFT
+                            if event.clientY < popupRect.bottom and event.clientY > popupRect.top and event.clientX < rect.left and event.clientX > popupRect.right
+                                return
 
-                    $this.removeTimer Metadata.SHOW_TIMER
+                    module.remove.show.timer()
 
-                    if not $this.hasTimer Metadata.HIDE_TIMER
-                        $this.setTimer
-                            name    : Metadata.HIDE_TIMER
-                            callback: module.hide
-                            interval: settings.delay.hide
-                            looping : false
-                            visible : true
+                    if not module.is.hiding()
+                        module.set.hide.timer()
             click: =>
                 $body.on Event.CLICK, (event) =>
-                    $pointElement = ts.fromPoint(event.clientX, event.clientY)
-                    pointElement  = $pointElement.get()
-
-                    if not $this.is(pointElement) and not $popup.contains(pointElement) and settings.closable
-                        module.hide()
+                    pointElement    = ts.fromPoint(event.clientX, event.clientY).get()
+                    isPointingSelf  = $this.is        pointElement
+                    isPointingPopup = $popup.contains pointElement
+                    if isPointingSelf
+                        module.toggle()
                         return
-
-                    if not $this.is pointElement
-                        return
-
-                    if module.is.hidden()
-                        module.show()
-                    else
+                    if not isPointingPopup and settings.closable
                         module.hide()
 
             focus: =>
@@ -613,6 +618,18 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $scrollContext.on Event.SCROLL, =>
                     module.hide()
             events: =>
+                switch settings.on
+                    when 'hover'
+                        module.bind.hover()
+                    when 'click'
+                        module.bind.click()
+                    when 'focus'
+                        module.bind.focus()
+                if settings.hideOnScroll is 'auto'
+                    if settings.on is 'hover'
+                        module.bind.scroll()
+                if settings.hideOnScroll is true
+                    module.bind.scroll()
 
 
         # ------------------------------------------------------------------------
@@ -622,62 +639,20 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         initialize: =>
             debug '初始化彈出式訊息', element
 
-            $next = $this.next()
-            if $next.is '.ts.popup'
-                $popup = $next
-
-            if not $popup.exists()
-                module.create.popup()
-
-            $arrow = ts '<div>'
-                .addClass 'arrow'
-                .appendTo $popup
-
-            if settings.size isnt 'medium'
-                $popup.removeClass 'mini tiny small medium large big huge massive'
-                $popup.addClass settings.size
-
-            if settings.hoverable
-                $popup.addClass 'hoverable'
+            $popup = module.get.$popup()
 
             if $this.attr(Attribute.POSITION) isnt null
                 settings.position = $this.attr Attribute.POSITION
-                $popup.attr Attribute.POSITION, settings.position
+                module.set.position settings.position
 
-            if settings.transition isnt 'auto'
-                $popup.attr Attribute.TRANSITION, settings.transition
-                if settings.duration is 'auto'
-                    switch settings.transition
-                        when 'fade'
-                            duration = 300
-
-
-            if settings.inverted is true
-                $popup.addClass 'inverted'
-
-            if settings.pointing is true
-                $popup.addClass 'pointing'
-
-
-            $boundary = $this.closest(settings.boundary)
-            boundary = $boundary.get()
-            $scrollContext = ts settings.scrollContext
-            scrollContext = $scrollContext.get()
+            module.set.hoverable     settings.hoverable
+            module.set.size          settings.size
+            module.set.transition    settings.transition
+            module.set.inverted      settings.inverted
+            module.set.pointing      settings.pointing
+            module.set.boundary      settings.boundary
+            module.set.scrollContext settings.scrollContext
             module.bind.events()
-
-            switch settings.on
-                when 'hover'
-                    module.bind.hover()
-                when 'click'
-                    module.bind.click()
-                when 'focus'
-                    module.bind.focus()
-
-            if settings.hideOnScroll is 'auto'
-                if settings.on is 'hover'
-                    module.bind.scroll()
-            if settings.hideOnScroll is true
-                module.bind.scroll()
 
         instantiate: =>
             debug '實例化彈出式訊息', element

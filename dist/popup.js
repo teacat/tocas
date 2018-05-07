@@ -121,7 +121,16 @@
     VISIBLE: 'visible',
     ANIMATING: 'animating',
     HIDDEN: 'hidden',
-    CUSTOM: 'custom'
+    CUSTOM: 'custom',
+    POPUP: 'ts popup',
+    TITLE: 'title',
+    CONTENT: 'content',
+    ARROW: 'arrow',
+    HOVERABLE: 'hoverable',
+    MEDIUM: 'medium',
+    INVERTED: 'inverted',
+    POINTING: 'pointing',
+    SIZES: 'mini tiny small medium large big huge massive'
   };
 
   // 位置。
@@ -140,7 +149,10 @@
 
   // 選擇器名稱。
   Selector = {
-    BODY: 'body'
+    BODY: 'body',
+    DIV: '<div>',
+    ARROW: '.arrow',
+    POPUP: '.ts.popup'
   };
 
   // 元素標籤。
@@ -150,7 +162,8 @@
     TITLE: 'data-title',
     VARIATION: 'data-variation',
     TRANSITION: 'data-popup-transition',
-    POSITION: 'data-position'
+    POSITION: 'data-position',
+    STYLE: 'style'
   };
 
   // 錯誤訊息。
@@ -183,8 +196,7 @@
     // ------------------------------------------------------------------------
     return module = {
       show: (callback) => {
-        $this.removeTimer(Metadata.SHOW_TIMER);
-        $this.removeTimer(Metadata.HIDE_TIMER);
+        module.remove.timers();
         if (module.is.animating()) {
           return;
         }
@@ -201,8 +213,7 @@
         return $allModules;
       },
       hide: (callback) => {
-        $this.removeTimer(Metadata.SHOW_TIMER);
-        $this.removeTimer(Metadata.HIDE_TIMER);
+        module.remove.timers();
         if (module.is.animating()) {
           return;
         }
@@ -217,15 +228,136 @@
         });
         return $allModules;
       },
-      hideAll: () => {},
+      hideAll: () => {
+        return $allModules;
+      },
+      remove: {
+        timers: () => {
+          module.remove.show.timer();
+          return module.remove.hide.timer();
+        },
+        show: {
+          timer: () => {
+            return $this.removeTimer(Metadata.SHOW_TIMER);
+          }
+        },
+        hide: {
+          timer: () => {
+            return $this.removeTimer(Metadata.HIDE_TIMER);
+          }
+        }
+      },
+      set: {
+        position: (position) => {
+          return $popup.attr(Attribute.POSITION, position);
+        },
+        transition: (transition) => {
+          settings.transition = transition;
+          $popup.attr(Attribute.TRANSITION, transition);
+          if (settings.duration === 'auto') {
+            switch (settings.transition) {
+              case 'fade':
+                return duration = 300;
+            }
+          }
+        },
+        pointing: (value) => {
+          settings.pointing = value;
+          if (value) {
+            return $popup.addClass(ClassName.POINTING);
+          } else {
+            return $popup.removeClass(ClassName.POINTING);
+          }
+        },
+        inverted: (value) => {
+          settings.inverted = value;
+          if (value) {
+            return $popup.addClass(ClassName.INVERTED);
+          } else {
+            return $popup.removeClass(ClassName.INVERTED);
+          }
+        },
+        hoverable: (value) => {
+          settings.hoverable = value;
+          if (value) {
+            return $popup.addClass(ClassName.HOVERABLE);
+          } else {
+            return $popup.removeClass(ClassName.HOVERABLE);
+          }
+        },
+        boundary: (selector) => {
+          $boundary = $this.closest(selector);
+          return boundary = $boundary.get();
+        },
+        scrollContext: (selector) => {
+          $scrollContext = ts(selector);
+          return scrollContext = $scrollContext.get();
+        },
+        coordinate: (x, y) => {
+          return $popup.css({
+            top: x,
+            left: y
+          });
+        },
+        width: (width) => {
+          return $popup.css({
+            width: width
+          });
+        },
+        animating: (value) => {
+          if (value) {
+            return $popup.addClass(ClassName.ANIMATING);
+          } else {
+            return $popup.removeClass(ClassName.ANIMATING);
+          }
+        },
+        size: (size) => {
+          $popup.removeClass(ClassName.SIZES).addClass(size);
+          return $allModules;
+        },
+        show: {
+          timer: () => {
+            return $this.setTimer({
+              name: Metadata.SHOW_TIMER,
+              callback: module.show,
+              interval: settings.delay.show,
+              looping: false,
+              visible: true
+            });
+          }
+        },
+        hide: {
+          timer: () => {
+            return $this.setTimer({
+              name: Metadata.HIDE_TIMER,
+              callback: module.hide,
+              interval: settings.delay.hide,
+              looping: false,
+              visible: true
+            });
+          }
+        }
+      },
       get: {
-        popup: () => {
-          return $popup.get();
+        $popup: () => {
+          var $arrow, $next;
+          if ($popup.exists()) {
+            return $popup;
+          }
+          $next = $this.next();
+          if ($next.is(Selector.POPUP)) {
+            $popup = $next;
+          } else {
+            module.create.popup();
+          }
+          $arrow = ts(Selector.DIV).addClass(ClassName.ARROW).appendTo($popup);
+          return $popup;
         },
         distance: () => {
-          var bRect, bottom, left, right, top;
+          var bRect, bottom, isBody, left, right, top;
           bRect = Object.assign({}, boundaryRect.toJSON());
-          if ($boundary.is('body')) {
+          isBody = $boundary.is(Selector.BODY);
+          if (isBody) {
             bRect.top = 0;
             bRect.left = 0;
             bRect.bottom = 0;
@@ -237,7 +369,7 @@
           left = rect.left - bRect.left;
           right = (bRect.left + bRect.width) - (rect.left + rect.width);
           bottom = (bRect.top + bRect.height) - (rect.top + rect.height);
-          if ($boundary.is('body')) {
+          if (isBody) {
             right = bRect.width - (rect.left + rect.width);
             bottom = bRect.height - (rect.top + rect.height);
           }
@@ -263,13 +395,47 @@
           return $popup.attr(Attribute.POSITION);
         }
       },
+      reposition: {
+        arrow: () => {
+          var $arrow;
+          $arrow = $popup.find(Selector.ARROW).removeAttr(Attribute.STYLE);
+          return setTimeout(() => {
+            module.refresh();
+            switch (module.get.position()) {
+              case Position.TOP:
+                return $arrow.css({
+                  left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2,
+                  top: popupRect.height - 2
+                });
+              case Position.RIGHT:
+                return $arrow.css({
+                  left: -20,
+                  top: (rect.top + rect.height / 2) - popupRect.top - 8 - 2
+                });
+              case Position.BOTTOM:
+                return $arrow.css({
+                  left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2,
+                  top: -20
+                });
+              case Position.LEFT:
+                return $arrow.css({
+                  left: popupRect.width - 2,
+                  top: (rect.top + rect.height / 2) - popupRect.top - 8 - 2
+                });
+            }
+          }, 0);
+        }
+      },
       calculate: {
+        arrow: () => {},
         popup: {
           position: () => {
             var bottom, directions, left, position, right, top;
             module.refresh();
-            ({top, left, right, bottom} = module.get.distance());
+            ({right, bottom} = module.get.distance());
             directions = module.get.directions();
+            top = element.offsetTop;
+            left = element.offsetLeft;
             position = '';
             switch (settings.position) {
               case Position.TOP:
@@ -308,166 +474,110 @@
               }
             }
             position = Position.BOTTOM;
-            module.set.position(position);
-            top = element.offsetTop;
-            left = element.offsetLeft;
-            $popup.find('.arrow').removeAttr('style');
             switch (position) {
               case Position.TOP:
                 $popup.css({
                   left: (left + rect.width / 2) - popupRect.width / 2,
                   top: top - popupRect.height
                 });
-                setTimeout(() => {
-                  module.refresh();
-                  return $popup.find('.arrow').css({
-                    left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2,
-                    bottom: -20
-                  });
-                }, 0);
-                if (popupRect.width / 2 > left) {
-                  $popup.css({
-                    left: 0
-                  });
-                }
-                if (rect.left < popupRect.width / 2) {
-                  if (rect.left > padding + 20) {
-                    return $popup.css({
-                      left: left - (left - Math.abs(boundaryRect.left)) //+ padding
-                    });
-                  } else {
-                    return $popup.css({
-                      left: left
-                    });
-                  }
-                } else if (right < popupRect.width / 2) {
-                  if (right > padding + 20) {
-                    return $popup.css({
-                      left: left - popupRect.width + right // + padding
-                    });
-                  } else {
-                    return $popup.css({
-                      left: left + rect.width - popupRect.width
-                    });
-                  }
-                }
                 break;
               case Position.RIGHT:
                 $popup.css({
-                  left: left + rect.width, // + offset
+                  left: left + rect.width,
                   top: (top + rect.height / 2) - popupRect.height / 2
                 });
-                setTimeout(() => {
-                  module.refresh();
-                  return $popup.find('.arrow').css({
-                    top: (rect.top + rect.height / 2) - popupRect.top - 8 - 2,
-                    left: -20
-                  });
-                }, 0);
-                if (rect.top < popupRect.height / 2) {
-                  if (rect.top > padding + 20) {
-                    return $popup.css({
-                      top: top - (top - Math.abs(boundaryRect.top)) + padding
-                    });
-                  } else {
-                    return $popup.css({
-                      top: top
-                    });
-                  }
-                } else if (bottom < popupRect.height / 2) {
-                  if (bottom > padding + 20) {
-                    return $popup.css({
-                      top: top - popupRect.height + bottom + padding
-                    });
-                  } else {
-                    return $popup.css({
-                      top: top + rect.height - popupRect.height
-                    });
-                  }
-                }
                 break;
               case Position.BOTTOM:
                 $popup.css({
                   left: (left + rect.width / 2) - popupRect.width / 2,
-                  top: top + rect.height // + offset
+                  top: top + rect.height
                 });
-                setTimeout(() => {
-                  module.refresh();
-                  return $popup.find('.arrow').css({
-                    left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2,
-                    top: -20
-                  });
-                }, 0);
-                if (popupRect.width / 2 > left) {
-                  $popup.css({
-                    left: 0
-                  });
-                }
-                if (rect.left < popupRect.width / 2) {
-                  if (rect.left > padding + 20) {
-                    return $popup.css({
-                      left: left - (left - Math.abs(boundaryRect.left)) //+ padding
-                    });
-                  } else {
-                    return $popup.css({
-                      left: left
-                    });
-                  }
-                } else if (right < popupRect.width / 2) {
-                  if (right > padding + 20) {
-                    return $popup.css({
-                      left: left - popupRect.width + right // + padding
-                    });
-                  } else {
-                    return $popup.css({
-                      left: left + rect.width - popupRect.width
-                    });
-                  }
-                }
                 break;
               case Position.LEFT:
                 $popup.css({
                   left: left - popupRect.width,
                   top: (top + rect.height / 2) - popupRect.height / 2
                 });
-                setTimeout(() => {
-                  module.refresh();
-                  return $popup.find('.arrow').css({
-                    top: (rect.top + rect.height / 2) - popupRect.top - 8 - 2,
-                    left: popupRect.width - 2
+            }
+            switch (position) {
+              case Position.TOP:
+              case Position.BOTTOM:
+                if (popupRect.width / 2 > left) {
+                  $popup.css({
+                    left: 0
                   });
-                }, 0);
+                }
+                if (rect.left < popupRect.width / 2) {
+                  if (rect.left > padding + 20) {
+                    $popup.css({
+                      left: left - (left - Math.abs(boundaryRect.left))
+                    });
+                  } else {
+                    $popup.css({
+                      left: left
+                    });
+                  }
+                } else if (right < popupRect.width / 2) {
+                  if (right > padding + 20) {
+                    $popup.css({
+                      left: left - popupRect.width + right
+                    });
+                  } else {
+                    $popup.css({
+                      left: left + rect.width - popupRect.width
+                    });
+                  }
+                }
+                break;
+              case Position.LEFT:
+              case Position.RIGHT:
                 if (rect.top < popupRect.height / 2) {
                   if (rect.top > padding + 20) {
-                    return $popup.css({
+                    $popup.css({
                       top: top - (top - Math.abs(boundaryRect.top)) + padding
                     });
                   } else {
-                    return $popup.css({
+                    $popup.css({
                       top: top
                     });
                   }
                 } else if (bottom < popupRect.height / 2) {
                   if (bottom > padding + 20) {
-                    return $popup.css({
+                    $popup.css({
                       top: top - popupRect.height + bottom + padding
                     });
                   } else {
-                    return $popup.css({
+                    $popup.css({
                       top: top + rect.height - popupRect.height
                     });
                   }
                 }
             }
+            module.set.position(position);
+            return module.reposition.arrow();
           }
         }
       },
-      toggle: () => {},
+      toggle: () => {
+        if (module.is.hidden()) {
+          module.show();
+        } else {
+          module.hide();
+        }
+        return $allModules;
+      },
       change: {
-        title: (title) => {},
-        content: (content) => {},
+        title: (title) => {
+          $popup.find(Selector.TITLE).html(title);
+          return $allModules;
+        },
+        content: (content) => {
+          $popup.find(Selector.CONTENT).html(content);
+          return $allModules;
+        },
         html: (html) => {
-          return $popup.html(html);
+          $popup.html(html);
+          return $allModules;
         }
       },
       animate: {
@@ -493,6 +603,12 @@
         hidden: () => {
           return !module.is.visible();
         },
+        showing: () => {
+          return $this.hasTimer(Metadata.SHOW_TIMER);
+        },
+        hiding: () => {
+          return $this.hasTimer(Metadata.HIDE_TIMER);
+        },
         animating: () => {
           return $popup.hasClass(ClassName.ANIMATING);
         },
@@ -502,39 +618,40 @@
       },
       create: {
         popup: () => {
-          var $content, $title, attributeContent, attributeHTML, attributeTitle, attributeVariation, content, html, title, variation;
+          var $content, $title, attr, content, html, title, variation;
           variation = settings.variation || '';
           content = settings.content || '';
           html = settings.html || '';
           title = settings.title || '';
-          attributeVariation = $this.attr(Attribute.VARIATION);
-          attributeContent = $this.attr(Attribute.CONTENT);
-          attributeTitle = $this.attr(Attribute.TITLE);
-          attributeHTML = $this.attr(Attribute.HTML);
-          if (attributeVariation !== null) {
-            variation = attributeVariation;
+          attr = {
+            variation: $this.attr(Attribute.VARIATION),
+            content: $this.attr(Attribute.CONTENT),
+            title: $this.attr(Attribute.TITLE),
+            html: $this.attr(Attribute.HTML)
+          };
+          if (attr.variation !== null) {
+            variation = attr.variation;
           }
-          if (attributeContent !== null) {
-            content = attributeContent;
+          if (attr.content !== null) {
+            content = attr.content;
           }
-          if (attributeTitle !== null) {
-            title = attributeTitle;
+          if (attr.title !== null) {
+            title = attr.title;
           }
-          if (attributeHTML !== null) {
-            html = attributeHTML;
+          if (attr.html !== null) {
+            html = attr.html;
           }
-          $popup = ts('<div>').addClass('ts popup').addClass(variation);
+          $popup = ts(Selector.DIV).addClass(`${ClassName.POPUP} ${variation}`);
           if (html !== '') {
             $popup.html(html);
           }
           if (content !== '') {
-            $content = ts('<div>').addClass('content').html(content);
-            $title = ts('<div>').addClass('title').html(title);
+            $content = ts(Selector.DIV).addClass(ClassName.CONTENT).html(content);
+            $title = ts(Selector.DIV).addClass(ClassName.TITLE).html(title);
             if (title !== '') {
-              $popup.append($title).append($content);
-            } else {
-              $popup.append($content);
+              $popup.append($title);
             }
+            $popup.append($content);
           }
           return $popup.insertAfter($this);
         }
@@ -543,140 +660,79 @@
       repaint: () => {
         return $popup.repaint();
       },
-      reposition: () => {},
-      set: {
-        position: (position) => {
-          return $popup.attr(Attribute.POSITION, position);
-        },
-        coordinate: (x, y) => {
-          return $popup.css({
-            top: x,
-            left: y
-          });
-        },
-        width: (width) => {
-          return $popup.css({
-            width: width
-          });
-        },
-        animating: (value) => {
-          if (value) {
-            return $popup.addClass(ClassName.ANIMATING);
-          } else {
-            return $popup.removeClass(ClassName.ANIMATING);
-          }
-        }
-      },
-      remove: {
-        popup: () => {}
-      },
+      //reposition: =>
+
+      //remove:
+      //    popup: =>
       trigger: () => {},
       bind: {
         hover: () => {
           return $body.on(Event.MOUSEMOVE, (event) => {
-            var $pointElement, pointElement, popupElement;
+            var isPointingChild, isPointingSelf, pointElement, popupElement;
             if (!$popup.exists()) {
               return;
             }
-            rect = $this.rect();
-            $pointElement = ts.fromPoint(event.clientX, event.clientY);
-            pointElement = $pointElement.get();
+            pointElement = ts.fromPoint(event.clientX, event.clientY).get();
             popupElement = $popup.get();
-            popupRect = $popup.rect();
-            if ($this.is(pointElement) || $this.contains(pointElement)) {
-              $this.removeTimer(Metadata.HIDE_TIMER);
-              if (!$this.hasTimer(Metadata.SHOW_TIMER)) {
-                $this.setTimer({
-                  name: Metadata.SHOW_TIMER,
-                  callback: module.show,
-                  interval: settings.delay.show,
-                  looping: false,
-                  visible: true
-                });
+            isPointingSelf = $this.is(pointElement);
+            isPointingChild = $this.contains(pointElement);
+            if (isPointingSelf || isPointingChild) {
+              module.remove.hide.timer();
+              if (!module.is.showing()) {
+                module.set.show.timer();
               }
               return;
             }
-            if (!settings.hoverable) {
-              $this.removeTimer(Metadata.SHOW_TIMER);
-              if (!$this.hasTimer(Metadata.HIDE_TIMER)) {
-                $this.setTimer({
-                  name: Metadata.HIDE_TIMER,
-                  callback: module.hide,
-                  interval: settings.delay.hide,
-                  looping: false,
-                  visible: true
-                });
+            if (!module.is.hoverable()) {
+              module.remove.show.timer();
+              if (!module.is.hiding()) {
+                module.set.hide.timer();
               }
-              return;
-            }
-            if ($this.is(popupElement)) {
-              $this.removeTimer(Metadata.HIDE_TIMER);
-              return;
-            }
-            if ($this.contains(popupElement)) {
-              $this.removeTimer(Metadata.HIDE_TIMER);
               return;
             }
             if ($popup.contains(pointElement)) {
               $this.removeTimer(Metadata.HIDE_TIMER);
               return;
             }
+            module.refresh();
             switch (module.get.position()) {
-              case Position.TOP_LEFT:
-              case Position.TOP_CENTER:
-              case Position.TOP_RIGHT:
+              case Position.TOP:
                 if (event.clientY > popupRect.bottom && event.clientY < rect.top && event.clientX < popupRect.right && event.clientX > popupRect.left) {
                   return;
                 }
                 break;
-              case Position.LEFT_TOP:
-              case Position.LEFT_CENTER:
-              case Position.LEFT_BOTTOM:
-                if (event.clientY < popupRect.bottom && event.clientY > popupRect.top && event.clientX < rect.left && event.clientX > popupRect.right) {
-                  return;
-                }
-                break;
-              case Position.RIGHT_TOP:
-              case Position.RIGHT_CENTER:
-              case Position.RIGHT_BOTTOM:
+              case Position.RIGHT:
                 if (event.clientY < popupRect.bottom && event.clientY > popupRect.top && event.clientX < popupRect.left && event.clientX > rect.right) {
                   return;
                 }
                 break;
-              case Position.BOTTOM_LEFT:
-              case Position.BOTTOM_CENTER:
-              case Position.BOTTOM_RIGHT:
+              case Position.BOTTOM:
                 if (event.clientY > rect.bottom && event.clientY < popupRect.top && event.clientX < popupRect.right && event.clientX > popupRect.left) {
                   return;
                 }
+                break;
+              case Position.LEFT:
+                if (event.clientY < popupRect.bottom && event.clientY > popupRect.top && event.clientX < rect.left && event.clientX > popupRect.right) {
+                  return;
+                }
             }
-            $this.removeTimer(Metadata.SHOW_TIMER);
-            if (!$this.hasTimer(Metadata.HIDE_TIMER)) {
-              return $this.setTimer({
-                name: Metadata.HIDE_TIMER,
-                callback: module.hide,
-                interval: settings.delay.hide,
-                looping: false,
-                visible: true
-              });
+            module.remove.show.timer();
+            if (!module.is.hiding()) {
+              return module.set.hide.timer();
             }
           });
         },
         click: () => {
           return $body.on(Event.CLICK, (event) => {
-            var $pointElement, pointElement;
-            $pointElement = ts.fromPoint(event.clientX, event.clientY);
-            pointElement = $pointElement.get();
-            if (!$this.is(pointElement) && !$popup.contains(pointElement) && settings.closable) {
-              module.hide();
+            var isPointingPopup, isPointingSelf, pointElement;
+            pointElement = ts.fromPoint(event.clientX, event.clientY).get();
+            isPointingSelf = $this.is(pointElement);
+            isPointingPopup = $popup.contains(pointElement);
+            if (isPointingSelf) {
+              module.toggle();
               return;
             }
-            if (!$this.is(pointElement)) {
-              return;
-            }
-            if (module.is.hidden()) {
-              return module.show();
-            } else {
+            if (!isPointingPopup && settings.closable) {
               return module.hide();
             }
           });
@@ -687,71 +743,45 @@
             return module.hide();
           });
         },
-        events: () => {}
+        events: () => {
+          switch (settings.on) {
+            case 'hover':
+              module.bind.hover();
+              break;
+            case 'click':
+              module.bind.click();
+              break;
+            case 'focus':
+              module.bind.focus();
+          }
+          if (settings.hideOnScroll === 'auto') {
+            if (settings.on === 'hover') {
+              module.bind.scroll();
+            }
+          }
+          if (settings.hideOnScroll === true) {
+            return module.bind.scroll();
+          }
+        }
       },
       // ------------------------------------------------------------------------
       // 基礎方法
       // ------------------------------------------------------------------------
       initialize: () => {
-        var $arrow, $next;
         debug('初始化彈出式訊息', element);
-        $next = $this.next();
-        if ($next.is('.ts.popup')) {
-          $popup = $next;
-        }
-        if (!$popup.exists()) {
-          module.create.popup();
-        }
-        $arrow = ts('<div>').addClass('arrow').appendTo($popup);
-        if (settings.size !== 'medium') {
-          $popup.removeClass('mini tiny small medium large big huge massive');
-          $popup.addClass(settings.size);
-        }
-        if (settings.hoverable) {
-          $popup.addClass('hoverable');
-        }
+        $popup = module.get.$popup();
         if ($this.attr(Attribute.POSITION) !== null) {
           settings.position = $this.attr(Attribute.POSITION);
-          $popup.attr(Attribute.POSITION, settings.position);
+          module.set.position(settings.position);
         }
-        if (settings.transition !== 'auto') {
-          $popup.attr(Attribute.TRANSITION, settings.transition);
-          if (settings.duration === 'auto') {
-            switch (settings.transition) {
-              case 'fade':
-                duration = 300;
-            }
-          }
-        }
-        if (settings.inverted === true) {
-          $popup.addClass('inverted');
-        }
-        if (settings.pointing === true) {
-          $popup.addClass('pointing');
-        }
-        $boundary = $this.closest(settings.boundary);
-        boundary = $boundary.get();
-        $scrollContext = ts(settings.scrollContext);
-        scrollContext = $scrollContext.get();
-        module.bind.events();
-        switch (settings.on) {
-          case 'hover':
-            module.bind.hover();
-            break;
-          case 'click':
-            module.bind.click();
-            break;
-          case 'focus':
-            module.bind.focus();
-        }
-        if (settings.hideOnScroll === 'auto') {
-          if (settings.on === 'hover') {
-            module.bind.scroll();
-          }
-        }
-        if (settings.hideOnScroll === true) {
-          return module.bind.scroll();
-        }
+        module.set.hoverable(settings.hoverable);
+        module.set.size(settings.size);
+        module.set.transition(settings.transition);
+        module.set.inverted(settings.inverted);
+        module.set.pointing(settings.pointing);
+        module.set.boundary(settings.boundary);
+        module.set.scrollContext(settings.scrollContext);
+        return module.bind.events();
       },
       instantiate: () => {
         return debug('實例化彈出式訊息', element);
