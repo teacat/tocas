@@ -457,6 +457,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
                                 console.log (distance.inBoundary.left + popupRect.width) - distance.boundary.width
                                 if (distance.inBoundary.left + popupRect.width) - distance.boundary.width < 0
+
                                     if distance.inBoundary.left < distance.boundary.width / 2
                                         $popup.css
                                             left: distance.inBoundary.left
@@ -464,9 +465,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                         $popup.css
                                             left: distance.inBoundary.left + rect.width - popupRect.width
                                 else
-
                                     $popup.css
                                         left: distance.boundary.width - popupRect.width
+
+
 
 
                                     #if distance.viewport.left > distance.viewport.right
