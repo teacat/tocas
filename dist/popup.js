@@ -535,17 +535,41 @@
                     left: (distance.inBoundary.left + rect.width / 2) - popupRect.width / 2
                   });
                 } else {
-                  if (distance.viewport.left > distance.viewport.right) {
-                    $popup.css({
-                      left: distance.inBoundary.left + rect.width - popupRect.width + distance.viewport.right
-                    });
+                  /*
+                         >-----------<
+                  >--------------<
+                  >------<
+                         >-------<
+                                 >---<
+                  |              |
+                  |     [        |  ]
+                  |              |
+                  |              |
+                   */
+                  console.log((distance.inBoundary.left + popupRect.width) - distance.boundary.width);
+                  if ((distance.inBoundary.left + popupRect.width) - distance.boundary.width < 0) {
+                    if (distance.inBoundary.left < distance.boundary.width / 2) {
+                      $popup.css({
+                        left: distance.inBoundary.left
+                      });
+                    } else {
+                      $popup.css({
+                        left: distance.inBoundary.left + rect.width - popupRect.width
+                      });
+                    }
                   } else {
                     $popup.css({
-                      left: distance.inBoundary.left - distance.viewport.left
+                      left: distance.boundary.width - popupRect.width
                     });
                   }
                 }
                 break;
+              //if distance.viewport.left > distance.viewport.right
+              //    $popup.css
+              //        left: distance.inBoundary.left + rect.width - popupRect.width + distance.viewport.right
+              //else
+              //    $popup.css
+              //        left: distance.inBoundary.left - distance.viewport.left
               case Position.LEFT:
               case Position.RIGHT:
                 if (distance.viewport.top > popupRect.height / 2 && distance.viewport.bottom > popupRect.height / 2) {
