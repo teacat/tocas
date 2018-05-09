@@ -545,31 +545,38 @@
                     // 如果按鈕在左半邊。
                     if (distance.inBoundary.left < distance.boundary.width / 2) {
                       console.log("D");
+                      // 如果讓彈出式訊息靠齊按鈕左側就沒問題的話。
+                      //if
                       // 就讓彈出式訊息靠齊左側。
-
-                      //$popup.css
-                      //    left: 0
-                      //    #left: distance.inBoundary.left
                       $popup.css({
-                        left: distance.inBoundary.left
+                        left: distance.inBoundary.left - distance.viewport.left + padding
                       });
                     } else {
-                      //console.log distance.inBoundary.left + popupRect.width, distance.boundary.width
-
-                      //if distance.inBoundary.left + popupRect.width > distance.boundary.width
-                      //    $popup.css
-                      //        left: 0
+                      //left: distance.inBoundary.left
+                      // 不然就自動調校位置。
                       //else
                       //    $popup.css
-                      //        left: distance.inBoundary.left
+                      //        left: distance.boundary.width / 2 - popupRect.width / 2
+
                       // 如果在右半邊。
                       console.log("E");
-                      // 就讓彈出式訊息靠右側。
-                      $popup.css({
-                        left: distance.inBoundary.left + rect.width - popupRect.width
-                      });
+                      // 如果讓彈出式訊息靠齊按鈕右側就沒問題的話。
+                      if ((distance.inBoundary.left + rect.width - popupRect.width) > 2) {
+                        // 就讓彈出式訊息靠右側。
+                        $popup.css({
+                          left: distance.inBoundary.left + rect.width - popupRect.width + distance.inBoundary.right - padding
+                        });
+                      } else {
+                        //left: distance.inBoundary.left + rect.width - popupRect.width
+                        // 不然就自動調校位置。
+                        $popup.css({
+                          left: distance.boundary.width / 2 - popupRect.width / 2
+                        });
+                      }
                     }
                   } else {
+                    //$popup.css
+                    //    left: distance.inBoundary.left + rect.width - popupRect.width + distance.viewport.right
                     console.log("F");
                     $popup.css({
                       left: distance.boundary.width - popupRect.width - 2
