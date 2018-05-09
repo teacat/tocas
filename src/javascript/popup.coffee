@@ -444,24 +444,52 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                             # 否則。
                             else
                                 console.log "B"
+
+                                # 如果按鈕在左半邊。
+                                if distance.inBoundary.left < distance.boundary.width / 2
+                                    # 如果讓彈出式訊息靠齊按鈕左側就沒問題的話。
+                                    if distance.inBoundary.left > 2
+                                        # 就讓彈出式訊息靠齊左側。
+                                        $popup.css
+                                            left: 0 + padding
+                                    # 不然就自動調校位置。
+                                    else
+                                        $popup.css
+                                            left: distance.boundary.width / 2 - popupRect.width / 2
+
+                                else
+                                    # 如果讓彈出式訊息靠齊按鈕右側就沒問題的話。
+                                    if (distance.inBoundary.left + rect.width - popupRect.width) > 2
+                                        # 就讓彈出式訊息靠右側。
+                                        $popup.css
+                                            left: distance.inBoundary.left + rect.width - popupRect.width + distance.inBoundary.right - padding
+                                    # 不然就自動調校位置。
+                                    else
+                                        $popup.css
+                                            left: distance.boundary.width / 2 - popupRect.width / 2
+
+
+
+
                                 # 如果彈出式訊息突出限界。
-                                if ((distance.inBoundary.left + popupRect.width) - distance.boundary.width < 0 and distance.inBoundary.left < distance.boundary.width / 2) or ((distance.inBoundary.left + rect.width) - popupRect.width - distance.boundary.width < 0 and distance.inBoundary.left > distance.boundary.width / 2)
+                                if ((distance.inBoundary.left + popupRect.width) - distance.boundary.width + 2 < 0 and distance.inBoundary.left < distance.boundary.width / 2) or ((distance.inBoundary.left + rect.width) - popupRect.width - distance.boundary.width + 2 < 0 and distance.inBoundary.left > distance.boundary.width / 2)
                                     console.log "C"
 
                                     # 如果按鈕在左半邊。
                                     if distance.inBoundary.left < distance.boundary.width / 2
                                         console.log "D"
 
+                                        console.log distance.inBoundary.left, distance.viewport.left
+
                                         # 如果讓彈出式訊息靠齊按鈕左側就沒問題的話。
-                                        #if
-                                        # 就讓彈出式訊息靠齊左側。
-                                        $popup.css
-                                            left: distance.inBoundary.left - distance.viewport.left + padding
-                                            #left: distance.inBoundary.left
+                                        if distance.inBoundary.left > 2
+                                            # 就讓彈出式訊息靠齊左側。
+                                            $popup.css
+                                                left: 0 + padding
                                         # 不然就自動調校位置。
-                                        #else
-                                        #    $popup.css
-                                        #        left: distance.boundary.width / 2 - popupRect.width / 2
+                                        else
+                                            $popup.css
+                                                left: distance.boundary.width / 2 - popupRect.width / 2
 
                                     # 如果在右半邊。
                                     else
