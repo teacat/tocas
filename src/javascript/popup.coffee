@@ -172,6 +172,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
     boundaryRect   = {}
     boundary       = null
     $scrollContext = ts()
+    $arrow         = ts()
     scrollContext  = null
     offset         = 20
     padding        = 10
@@ -294,17 +295,22 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
         init:
             popup: =>
+                if settings.popup
+                    $popup = ts settings.popup
+
                 if $popup.exists()
+                    module.create.arrow()
                     return $popup
                 $next = $this.next()
                 if $next.is Selector.POPUP
                     $popup = $next
                 else
                     module.create.popup()
-                $arrow = ts Selector.DIV
-                    .addClass ClassName.ARROW
-                    .appendTo $popup
+                module.create.arrow()
                 return $popup
+
+        calc: =>
+
         get:
             distance: =>
                 bRect  = boundaryRect
@@ -323,6 +329,16 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     right  = bRect.width - (rect.left + rect.width)
                     bottom = bRect.height - (rect.top + rect.height)
 
+                offsetTop  = element.offsetTop
+                offsetLeft = element.offsetLeft
+
+                p = $this.parents(settings.boundary)
+                p.each (el, i) =>
+                    return if i == p.length - 1
+                    offsetTop  += el.offsetTop
+                    offsetLeft += el.offsetLeft
+
+
                 return {
                     viewport:
                         top   : rect.top  - bRect.top
@@ -332,10 +348,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                         width : rect.width
                         height: rect.height
                     inBoundary:
-                        top   : element.offsetTop
-                        left  : element.offsetLeft
-                        right : boundary.clientWidth  - (element.offsetLeft + rect.width)
-                        bottom: boundary.scrollHeight - (element.offsetTop  + rect.height)
+                        top   : offsetTop
+                        left  : offsetLeft #element.offsetLeft
+                        right : boundary.clientWidth  - (offsetLeft + rect.width)
+                        bottom: boundary.scrollHeight - (offsetTop + rect.height)
                         width : rect.width
                         height: rect.height
                     boundary:
@@ -353,9 +369,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
         reposition:
             arrow: =>
-                $arrow = $popup
-                    .find       Selector.ARROW
-                    .removeAttr Attribute.STYLE
                 setTimeout =>
                     module.refresh()
                     switch module.get.position()
@@ -437,6 +450,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     switch direction
                         when Position.TOP, Position.BOTTOM
                             # 如果左右各有空間，那麼就置中彈出式訊息。
+
                             if distance.inBoundary.left > popupRect.width / 2 and distance.inBoundary.right > popupRect.width / 2
                                 console.log "A"
                                 $popup.css
@@ -445,28 +459,23 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                             else
                                 console.log "B"
 
-                                # 如果按鈕在左半邊。
-                                if distance.inBoundary.left < distance.boundary.width / 2
-                                    # 如果讓彈出式訊息靠齊按鈕左側就沒問題的話。
-                                    if distance.inBoundary.left > 2 + padding
+                                if distance.boundary.width is popupRect.width + 2
+                                    $popup.css
+                                        left: 0
+                                else
+
+
+                                    # 如果按鈕在左半邊。
+                                    if distance.inBoundary.left < distance.boundary.width / 2
                                         # 就讓彈出式訊息靠齊左側。
                                         $popup.css
                                             left: 0 + padding
-                                    # 不然就自動調校位置。
+                                    # 否則。
                                     else
-                                        $popup.css
-                                            left: distance.boundary.width / 2 - popupRect.width / 2
-                                # 否則。
-                                else
-                                    # 如果讓彈出式訊息靠齊按鈕右側就沒問題的話。
-                                    if (distance.inBoundary.left + rect.width - popupRect.width) > 2 + padding
                                         # 就讓彈出式訊息靠右側。
                                         $popup.css
                                             left: distance.inBoundary.left + rect.width - popupRect.width + distance.inBoundary.right - padding
-                                    # 不然就自動調校位置。
-                                    else
-                                        $popup.css
-                                            left: distance.boundary.width / 2 - popupRect.width / 2
+
 
 
                         when Position.LEFT, Position.RIGHT
@@ -553,6 +562,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                 return
 
         create:
+            arrow: =>
+                $arrow = ts Selector.DIV
+                    .addClass ClassName.ARROW
+                    .appendTo $popup
             popup: =>
                 variation = settings.variation or ''
                 content   = settings.content   or ''
@@ -679,7 +692,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         # ------------------------------------------------------------------------
 
         initialize: =>
-            debug '初始化彈出式訊息', element
+            #debug '初始化彈出式訊息', element
 
             position = $this.attr Attribute.POSITION
             if position isnt null
@@ -698,7 +711,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             module.bind.events()
 
         instantiate: =>
-            debug '實例化彈出式訊息', element
+            #debug '實例化彈出式訊息', element
 
         refresh: =>
             rect         = $this.rect()

@@ -316,6 +316,20 @@ ts.fn.parent =
         @collectSwap ->
             @parentNode
 
+# Parents
+#
+# 回傳元素的所有父元素直至指定父元素。
+ts.fn.parents =
+    value: (selector) ->
+        @collectSwap (self) ->
+            parents = []
+            while self
+                self = self.parentNode
+                break if self.nodeType is 9
+                parents.push(self)
+                break if ts(self).is(selector)
+            return parents
+
 # Closest
 #
 # 回傳最接近指定的父元素選擇器。

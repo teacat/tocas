@@ -176,7 +176,7 @@
   // 模組註冊
   // ------------------------------------------------------------------------
   ts.register({NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, element, debug, settings}) => {
-    var $body, $boundary, $popup, $scrollContext, arrowSize, boundary, boundaryRect, module, offset, padding, popupRect, rect, scrollContext;
+    var $arrow, $body, $boundary, $popup, $scrollContext, arrowSize, boundary, boundaryRect, module, offset, padding, popupRect, rect, scrollContext;
     // ------------------------------------------------------------------------
     // 區域變數
     // ------------------------------------------------------------------------
@@ -188,6 +188,7 @@
     boundaryRect = {};
     boundary = null;
     $scrollContext = ts();
+    $arrow = ts();
     scrollContext = null;
     offset = 20;
     padding = 10;
@@ -349,8 +350,12 @@
       },
       init: {
         popup: () => {
-          var $arrow, $next;
+          var $next;
+          if (settings.popup) {
+            $popup = ts(settings.popup);
+          }
           if ($popup.exists()) {
+            module.create.arrow();
             return $popup;
           }
           $next = $this.next();
@@ -359,13 +364,14 @@
           } else {
             module.create.popup();
           }
-          $arrow = ts(Selector.DIV).addClass(ClassName.ARROW).appendTo($popup);
+          module.create.arrow();
           return $popup;
         }
       },
+      calc: () => {},
       get: {
         distance: () => {
-          var bRect, bottom, isBody, right;
+          var bRect, bottom, isBody, offsetLeft, offsetTop, p, right;
           bRect = boundaryRect;
           isBody = $boundary.is(Selector.BODY);
           if (isBody) {
@@ -382,6 +388,16 @@
             right = bRect.width - (rect.left + rect.width);
             bottom = bRect.height - (rect.top + rect.height);
           }
+          offsetTop = element.offsetTop;
+          offsetLeft = element.offsetLeft;
+          p = $this.parents(settings.boundary);
+          p.each((el, i) => {
+            if (i === p.length - 1) {
+              return;
+            }
+            offsetTop += el.offsetTop;
+            return offsetLeft += el.offsetLeft;
+          });
           return {
             viewport: {
               top: rect.top - bRect.top,
@@ -392,10 +408,10 @@
               height: rect.height
             },
             inBoundary: {
-              top: element.offsetTop,
-              left: element.offsetLeft,
-              right: boundary.clientWidth - (element.offsetLeft + rect.width),
-              bottom: boundary.scrollHeight - (element.offsetTop + rect.height),
+              top: offsetTop,
+              left: offsetLeft, //element.offsetLeft
+              right: boundary.clientWidth - (offsetLeft + rect.width),
+              bottom: boundary.scrollHeight - (offsetTop + rect.height),
               width: rect.width,
               height: rect.height
             },
@@ -417,8 +433,6 @@
       },
       reposition: {
         arrow: () => {
-          var $arrow;
-          $arrow = $popup.find(Selector.ARROW).removeAttr(Attribute.STYLE);
           return setTimeout(() => {
             module.refresh();
             switch (module.get.position()) {
@@ -539,32 +553,22 @@
                 } else {
                   // 否則。
                   console.log("B");
-                  // 如果按鈕在左半邊。
-                  if (distance.inBoundary.left < distance.boundary.width / 2) {
-                    // 如果讓彈出式訊息靠齊按鈕左側就沒問題的話。
-                    if (distance.inBoundary.left > 2 + padding) {
+                  if (distance.boundary.width === popupRect.width + 2) {
+                    $popup.css({
+                      left: 0
+                    });
+                  } else {
+                    // 如果按鈕在左半邊。
+                    if (distance.inBoundary.left < distance.boundary.width / 2) {
                       // 就讓彈出式訊息靠齊左側。
                       $popup.css({
                         left: 0 + padding
                       });
                     } else {
-                      // 不然就自動調校位置。
-                      $popup.css({
-                        left: distance.boundary.width / 2 - popupRect.width / 2
-                      });
-                    }
-                  } else {
-                    // 如果讓彈出式訊息靠齊按鈕右側就沒問題的話。
-                    // 否則。
-                    if ((distance.inBoundary.left + rect.width - popupRect.width) > 2 + padding) {
                       // 就讓彈出式訊息靠右側。
+                      // 否則。
                       $popup.css({
                         left: distance.inBoundary.left + rect.width - popupRect.width + distance.inBoundary.right - padding
-                      });
-                    } else {
-                      // 不然就自動調校位置。
-                      $popup.css({
-                        left: distance.boundary.width / 2 - popupRect.width / 2
                       });
                     }
                   }
@@ -677,6 +681,9 @@
         }
       },
       create: {
+        arrow: () => {
+          return $arrow = ts(Selector.DIV).addClass(ClassName.ARROW).appendTo($popup);
+        },
         popup: () => {
           var $content, $title, attr, content, html, title, variation;
           variation = settings.variation || '';
@@ -826,7 +833,7 @@
       // ------------------------------------------------------------------------
       initialize: () => {
         var position, variation;
-        debug('初始化彈出式訊息', element);
+        //debug '初始化彈出式訊息', element
         position = $this.attr(Attribute.POSITION);
         if (position !== null) {
           module.set.position(position, true);
@@ -845,9 +852,8 @@
         module.set.scrollContext(settings.scrollContext);
         return module.bind.events();
       },
-      instantiate: () => {
-        return debug('實例化彈出式訊息', element);
-      },
+      instantiate: () => {},
+      //debug '實例化彈出式訊息', element
       refresh: () => {
         rect = $this.rect();
         popupRect = $popup.rect();

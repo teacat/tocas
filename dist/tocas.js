@@ -377,6 +377,29 @@
     }
   };
 
+  // Parents
+
+  // 回傳元素的所有父元素直至指定父元素。
+  ts.fn.parents = {
+    value: function(selector) {
+      return this.collectSwap(function(self) {
+        var parents;
+        parents = [];
+        while (self) {
+          self = self.parentNode;
+          if (self.nodeType === 9) {
+            break;
+          }
+          parents.push(self);
+          if (ts(self).is(selector)) {
+            break;
+          }
+        }
+        return parents;
+      });
+    }
+  };
+
   // Closest
 
   // 回傳最接近指定的父元素選擇器。
