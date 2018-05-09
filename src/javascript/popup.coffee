@@ -334,7 +334,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     inBoundary:
                         top   : element.offsetTop
                         left  : element.offsetLeft
-                        right : boundary.scrollWidth  - (element.offsetLeft + rect.width)
+                        right : boundary.clientWidth  - (element.offsetLeft + rect.width)
                         bottom: boundary.scrollHeight - (element.offsetTop  + rect.height)
                         width : rect.width
                         height: rect.height
@@ -436,37 +436,47 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
                     switch direction
                         when Position.TOP, Position.BOTTOM
-
-                            if distance.viewport.left > popupRect.width / 2 and distance.viewport.right > popupRect.width / 2
+                            # 如果左右各有空間，那麼就置中彈出式訊息。
+                            if distance.inBoundary.left > popupRect.width / 2 and distance.inBoundary.right > popupRect.width / 2
+                                console.log "A"
                                 $popup.css
                                     left: (distance.inBoundary.left + rect.width / 2) - popupRect.width / 2
+                            # 否則。
                             else
-
-                                ###
-                                       >-----------<
-                                >--------------<
-                                >------<
-                                       >-------<
-                                               >---<
-                                |              |
-                                |     [        |  ]
-                                |              |
-                                |              |
-                                ###
-
-
-                                console.log (distance.inBoundary.left + popupRect.width) - distance.boundary.width
-                                if (distance.inBoundary.left + popupRect.width) - distance.boundary.width < 0
-
+                                console.log "B"
+                                # 如果彈出式訊息突出限界。
+                                if ((distance.inBoundary.left + popupRect.width) - distance.boundary.width < 0 and distance.inBoundary.left < distance.boundary.width / 2) or ((distance.inBoundary.left + rect.width) - popupRect.width - distance.boundary.width < 0 and distance.inBoundary.left > distance.boundary.width / 2)
+                                    console.log "C"
+                                    # 如果按鈕在左半邊。
                                     if distance.inBoundary.left < distance.boundary.width / 2
+                                        console.log "D"
+                                        # 就讓彈出式訊息靠齊左側。
+
+                                        #$popup.css
+                                        #    left: 0
+                                        #    #left: distance.inBoundary.left
+
                                         $popup.css
                                             left: distance.inBoundary.left
+
+                                        #console.log distance.inBoundary.left + popupRect.width, distance.boundary.width
+#
+                                        #if distance.inBoundary.left + popupRect.width > distance.boundary.width
+                                        #    $popup.css
+                                        #        left: 0
+                                        #else
+                                        #    $popup.css
+                                        #        left: distance.inBoundary.left
+                                    # 如果在右半邊。
                                     else
+                                        console.log "E"
+                                        # 就讓彈出式訊息靠右側。
                                         $popup.css
                                             left: distance.inBoundary.left + rect.width - popupRect.width
                                 else
+                                    console.log "F"
                                     $popup.css
-                                        left: distance.boundary.width - popupRect.width
+                                        left: distance.boundary.width - popupRect.width - 2
 
 
 
