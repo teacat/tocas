@@ -542,7 +542,7 @@
                   // 如果按鈕在左半邊。
                   if (distance.inBoundary.left < distance.boundary.width / 2) {
                     // 如果讓彈出式訊息靠齊按鈕左側就沒問題的話。
-                    if (distance.inBoundary.left > 2) {
+                    if (distance.inBoundary.left > 2 + padding) {
                       // 就讓彈出式訊息靠齊左側。
                       $popup.css({
                         left: 0 + padding
@@ -555,7 +555,8 @@
                     }
                   } else {
                     // 如果讓彈出式訊息靠齊按鈕右側就沒問題的話。
-                    if ((distance.inBoundary.left + rect.width - popupRect.width) > 2) {
+                    // 否則。
+                    if ((distance.inBoundary.left + rect.width - popupRect.width) > 2 + padding) {
                       // 就讓彈出式訊息靠右側。
                       $popup.css({
                         left: distance.inBoundary.left + rect.width - popupRect.width + distance.inBoundary.right - padding
@@ -567,58 +568,8 @@
                       });
                     }
                   }
-                  // 如果彈出式訊息突出限界。
-                  if (((distance.inBoundary.left + popupRect.width) - distance.boundary.width + 2 < 0 && distance.inBoundary.left < distance.boundary.width / 2) || ((distance.inBoundary.left + rect.width) - popupRect.width - distance.boundary.width + 2 < 0 && distance.inBoundary.left > distance.boundary.width / 2)) {
-                    console.log("C");
-                    // 如果按鈕在左半邊。
-                    if (distance.inBoundary.left < distance.boundary.width / 2) {
-                      console.log("D");
-                      console.log(distance.inBoundary.left, distance.viewport.left);
-                      // 如果讓彈出式訊息靠齊按鈕左側就沒問題的話。
-                      if (distance.inBoundary.left > 2) {
-                        // 就讓彈出式訊息靠齊左側。
-                        $popup.css({
-                          left: 0 + padding
-                        });
-                      } else {
-                        // 不然就自動調校位置。
-                        $popup.css({
-                          left: distance.boundary.width / 2 - popupRect.width / 2
-                        });
-                      }
-                    } else {
-                      // 如果在右半邊。
-                      console.log("E");
-                      // 如果讓彈出式訊息靠齊按鈕右側就沒問題的話。
-                      if ((distance.inBoundary.left + rect.width - popupRect.width) > 2) {
-                        // 就讓彈出式訊息靠右側。
-                        $popup.css({
-                          left: distance.inBoundary.left + rect.width - popupRect.width + distance.inBoundary.right - padding
-                        });
-                      } else {
-                        //left: distance.inBoundary.left + rect.width - popupRect.width
-                        // 不然就自動調校位置。
-                        $popup.css({
-                          left: distance.boundary.width / 2 - popupRect.width / 2
-                        });
-                      }
-                    }
-                  } else {
-                    //$popup.css
-                    //    left: distance.inBoundary.left + rect.width - popupRect.width + distance.viewport.right
-                    console.log("F");
-                    $popup.css({
-                      left: distance.boundary.width - popupRect.width - 2
-                    });
-                  }
                 }
                 break;
-              //if distance.viewport.left > distance.viewport.right
-              //    $popup.css
-              //        left: distance.inBoundary.left + rect.width - popupRect.width + distance.viewport.right
-              //else
-              //    $popup.css
-              //        left: distance.inBoundary.left - distance.viewport.left
               case Position.LEFT:
               case Position.RIGHT:
                 if (distance.viewport.top > popupRect.height / 2 && distance.viewport.bottom > popupRect.height / 2) {
