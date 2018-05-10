@@ -35,6 +35,8 @@
     scrollContext: window,
     // 如果有指定邊緣選擇器，彈出訊息則會試著依靠這個父元素的邊緣，適合用於表格的標頭等。
     edgeContext: false,
+    // 當彈出式訊息無法符合邊界所會往上找的最大層數，設為 `0` 即表示當不符合邊界時直接失敗。
+    maxSearchDepth: 10,
     // 偏好的彈出式訊息出現位置。
     position: 'top',
     // 欲觸發彈出式訊息的事件，如：`click`、`hover`、`focus`、`manul`。
@@ -373,7 +375,7 @@
       calc: () => {},
       get: {
         distance: () => {
-          var bRect, bottom, isBody, offsetLeft, offsetTop, p, right;
+          var bRect, bottom, isBody, offsetLeft, offsetTop, right;
           bRect = boundaryRect;
           isBody = $boundary.is(Selector.BODY);
           if (isBody) {
@@ -392,40 +394,21 @@
           }
           offsetTop = element.offsetTop;
           offsetLeft = element.offsetLeft;
-          p = $this.parents(settings.boundary);
-          p.each((el, i) => {
-            if (i === p.length - 1) {
-              return;
-            }
-            offsetTop += el.offsetTop;
-            return offsetLeft += el.offsetLeft;
-          });
           return {
+            //p = $this.parents(settings.boundary)
+            //p.each (el, i) =>
+            //    return if i == p.length - 1
+            //    offsetTop  += el.offsetTop
+            //    offsetLeft += el.offsetLeft
+            top: offsetTop,
+            left: offsetLeft,
+            right: boundary.clientWidth - (offsetLeft + rect.width),
+            bottom: boundary.scrollHeight - (offsetTop + rect.height),
             viewport: {
               top: rect.top - bRect.top,
               left: rect.left - bRect.left,
-              right: bRect.width - rect.left - bRect.left - rect.width,
-              bottom: bRect.height - rect.top - bRect.top - rect.height,
-              width: rect.width,
-              height: rect.height
-            },
-            inBoundary: {
-              top: offsetTop,
-              left: offsetLeft, //element.offsetLeft
-              right: boundary.clientWidth - (offsetLeft + rect.width),
-              bottom: boundary.scrollHeight - (offsetTop + rect.height),
-              width: rect.width,
-              height: rect.height
-            },
-            boundary: {
-              top: bRect.top,
-              left: bRect.left,
-              right: bRect.right,
-              bottom: bRect.bottom,
-              width: bRect.width,
-              height: bRect.height,
-              scrollHeight: boundary.scrollHeight,
-              scrollWidth: boundary.scrollWidth
+              right: bRect.width - ((rect.left - bRect.left) + rect.width),
+              bottom: bRect.height - ((rect.top - bRect.top) + rect.height)
             }
           };
         },
@@ -463,62 +446,68 @@
         }
       },
       calculate: {
-        direction: () => {
-          var bottomOK, direction, distance, leftOK, rightOK, topOK;
-          distance = module.get.distance();
-          topOK = distance.inBoundary.top > popupRect.height + arrowSize;
-          rightOK = distance.inBoundary.right > popupRect.width + arrowSize;
-          bottomOK = distance.inBoundary.bottom > popupRect.height + arrowSize;
-          leftOK = distance.inBoundary.left > popupRect.width + arrowSize;
-          direction = '';
+        direction: (viewport, level, $parent) => {
+          var bottomOK, direction, leftOK, parent, r, rightOK, topOK;
+          topOK = viewport.top > popupRect.height + arrowSize;
+          rightOK = viewport.right > popupRect.width + arrowSize;
+          bottomOK = viewport.bottom > popupRect.height + arrowSize;
+          leftOK = viewport.left > popupRect.width + arrowSize;
+          direction = null;
           switch (settings.position) {
             case Position.TOP:
               if (topOK) {
-                direction = Position.TOP;
+                return Position.TOP;
               }
               break;
             case Position.RIGHT:
               if (rightOK) {
-                direction = Position.RIGHT;
+                return Position.RIGHT;
               }
               break;
             case Position.BOTTOM:
               if (bottomOK) {
-                direction = Position.BOTTOM;
+                return Position.BOTTOM;
               }
               break;
             case Position.LEFT:
               if (leftOK) {
-                direction = Position.LEFT;
+                return Position.LEFT;
               }
-          }
-          if (direction === settings.position) {
-            return direction;
           }
           switch (false) {
             case !topOK:
-              direction = Position.TOP;
-              break;
+              return Position.TOP;
             case !bottomOK:
-              direction = Position.BOTTOM;
-              break;
+              return Position.BOTTOM;
             case !rightOK:
-              direction = Position.RIGHT;
-              break;
+              return Position.RIGHT;
             case !leftOK:
-              direction = Position.LEFT;
+              return Position.LEFT;
           }
-          return direction;
+          $parent = $parent.parent();
+          console.log(level, $parent);
+          if (level >= settings.maxSearchDepth || !$parent.exists()) {
+            return null;
+          }
+          parent = $parent.get();
+          r = $parent.rect();
+          viewport = {
+            top: rect.top - r.top,
+            right: parent.clientWidth - rect.left + rect.width,
+            bottom: parent.clientHeight - rect.top + rect.height,
+            left: rect.left - r.left
+          };
+          return module.calculate.direction(viewport, level + 1, $parent);
         },
         popup: {
           position: () => {
             var direction, distance, position;
             module.refresh();
             distance = module.get.distance();
-            direction = module.calculate.direction();
+            direction = module.calculate.direction(distance.viewport, 0, $boundary);
             position = '';
             console.log(direction);
-            if (direction === '') {
+            if (direction === null) {
               console.log('NOPE');
             }
             //direction = Position.RIGHT
@@ -526,44 +515,44 @@
               case Position.TOP:
                 if (!module.is.pointing()) {
                   $popup.css({
-                    top: distance.inBoundary.top - popupRect.height + 8
+                    top: distance.top - popupRect.height + 8
                   });
                 } else {
                   $popup.css({
-                    top: distance.inBoundary.top - popupRect.height
+                    top: distance.top - popupRect.height
                   });
                 }
                 break;
               case Position.RIGHT:
                 if (!module.is.pointing()) {
                   $popup.css({
-                    left: distance.inBoundary.left + rect.width - 8
+                    left: distance.left + rect.width - 8
                   });
                 } else {
                   $popup.css({
-                    left: distance.inBoundary.left + rect.width
+                    left: distance.left + rect.width
                   });
                 }
                 break;
               case Position.BOTTOM:
                 if (!module.is.pointing()) {
                   $popup.css({
-                    top: distance.inBoundary.top + rect.height - 8
+                    top: distance.top + rect.height - 8
                   });
                 } else {
                   $popup.css({
-                    top: distance.inBoundary.top + rect.height
+                    top: distance.top + rect.height
                   });
                 }
                 break;
               case Position.LEFT:
                 if (!module.is.pointing()) {
                   $popup.css({
-                    left: distance.inBoundary.left - popupRect.width + 8
+                    left: distance.left - popupRect.width + 8
                   });
                 } else {
                   $popup.css({
-                    left: distance.inBoundary.left - popupRect.width
+                    left: distance.left - popupRect.width
                   });
                 }
             }
@@ -572,40 +561,40 @@
               case Position.BOTTOM:
                 console.log('A');
                 // 如果彈出式訊息寬度剛好全滿，那麼就直接置左。
-                if (popupRect.width + 2 >= distance.boundary.width) {
+                if (popupRect.width + 2 >= boundaryRect.width) {
                   console.log('B');
                   $popup.css({
                     left: 0
                   });
                 // 如果左右各有空間，那麼就置中彈出式訊息。
-                } else if (distance.inBoundary.left > popupRect.width / 2 && distance.inBoundary.right > popupRect.width / 2) {
+                } else if (distance.left > popupRect.width / 2 && distance.right > popupRect.width / 2) {
                   console.log('C');
                   $popup.css({
-                    left: (distance.inBoundary.left + rect.width / 2) - popupRect.width / 2
+                    left: (distance.left + rect.width / 2) - popupRect.width / 2
                   });
-                
-                } else if ((distance.inBoundary.left + popupRect.width) - distance.boundary.width > 0 || (distance.inBoundary.right + popupRect.width) - distance.boundary.width > 0) {
+                // 如果預計會超出邊界的話。
+                } else if ((distance.left + popupRect.width) - boundaryRect.width > 0 || (distance.right + popupRect.width) - boundaryRect.width > 0) {
                   console.log('D');
-                  // 如果按鈕在左半邊。
-                  if (distance.inBoundary.left < distance.boundary.width / 2) {
+                  // 要是觸發元素在左半邊。
+                  if (distance.left < boundaryRect.width / 2) {
                     console.log('E');
                     // 就讓彈出式訊息靠齊左側。
                     $popup.css({
                       left: 0 + padding
                     });
                   } else {
-                    // 不然在右半邊的話。
+                    // 不然觸發元素在右半邊的話。
                     console.log('F');
                     // 就讓彈出式訊息靠右側。
                     $popup.css({
-                      left: distance.inBoundary.left + rect.width - popupRect.width + distance.inBoundary.right - padding
+                      left: distance.left + rect.width - popupRect.width + distance.right - padding
                     });
                   }
                 } else {
                   
                   console.log('G');
                   $popup.css({
-                    left: (distance.inBoundary.left + rect.width / 2) - popupRect.width / 2
+                    left: (distance.left + rect.width / 2) - popupRect.width / 2
                   });
                 }
                 break;
@@ -613,16 +602,16 @@
               case Position.RIGHT:
                 if (distance.viewport.top > popupRect.height / 2 && distance.viewport.bottom > popupRect.height / 2) {
                   $popup.css({
-                    top: (distance.inBoundary.top + rect.height / 2) - popupRect.height / 2
+                    top: (distance.top + rect.height / 2) - popupRect.height / 2
                   });
                 } else {
                   if (distance.viewport.top > distance.viewport.bottom) {
                     $popup.css({
-                      top: distance.inBoundary.top + rect.height - popupRect.height + distance.viewport.bottom - padding
+                      top: distance.top + rect.height - popupRect.height + distance.viewport.bottom - padding
                     });
                   } else {
                     $popup.css({
-                      top: distance.inBoundary.top - distance.viewport.top + padding
+                      top: distance.top - distance.viewport.top + padding
                     });
                   }
                 }
