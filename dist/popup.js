@@ -37,7 +37,7 @@
     edgeContext: false,
     // 偏好的彈出式訊息出現位置。
     position: 'top',
-    // 欲觸發彈出式訊息的事件，如：`click`、`hover`、`focus`。
+    // 欲觸發彈出式訊息的事件，如：`click`、`hover`、`focus`、`manul`。
     on: 'hover',
     // 觸發的延遲毫秒數。
     delay: {
@@ -103,6 +103,8 @@
     UNPLACEABLE: `unplaceable${EVENT_NAMESPACE}`,
     CLICK: `click${EVENT_NAMESPACE}`,
     FOCUS: `focus${EVENT_NAMESPACE}`,
+    FOCUSOUT: `focusout${EVENT_NAMESPACE}`,
+    BULR: `bulr${EVENT_NAMESPACE}`,
     SCROLL: `scroll${EVENT_NAMESPACE}`,
     MOUSEMOVE: `mousemove${EVENT_NAMESPACE}`,
     MOUSEENTER: `mouseenter${EVENT_NAMESPACE}`,
@@ -192,7 +194,7 @@
     scrollContext = null;
     offset = 20;
     padding = 10;
-    arrowSize = 14;
+    arrowSize = 8;
     // ------------------------------------------------------------------------
     // 模組定義
     // ------------------------------------------------------------------------
@@ -443,13 +445,13 @@
                 });
               case Position.RIGHT:
                 return $arrow.css({
-                  left: -20,
+                  left: -16,
                   top: (rect.top + rect.height / 2) - popupRect.top - 8 - 2
                 });
               case Position.BOTTOM:
                 return $arrow.css({
                   left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2,
-                  top: -20
+                  top: -16
                 });
               case Position.LEFT:
                 return $arrow.css({
@@ -464,10 +466,10 @@
         direction: () => {
           var bottomOK, direction, distance, leftOK, rightOK, topOK;
           distance = module.get.distance();
-          topOK = distance.viewport.top > popupRect.height + arrowSize;
-          rightOK = distance.viewport.right > popupRect.width + arrowSize;
-          bottomOK = distance.viewport.bottom > popupRect.height + arrowSize;
-          leftOK = distance.viewport.left > popupRect.width + arrowSize;
+          topOK = distance.inBoundary.top > popupRect.height + arrowSize;
+          rightOK = distance.inBoundary.right > popupRect.width + arrowSize;
+          bottomOK = distance.inBoundary.bottom > popupRect.height + arrowSize;
+          leftOK = distance.inBoundary.left > popupRect.width + arrowSize;
           direction = '';
           switch (settings.position) {
             case Position.TOP:
@@ -515,63 +517,96 @@
             distance = module.get.distance();
             direction = module.calculate.direction();
             position = '';
-            console.log(distance);
+            console.log(direction);
             if (direction === '') {
               console.log('NOPE');
             }
-            direction = Position.BOTTOM;
+            //direction = Position.RIGHT
             switch (direction) {
               case Position.TOP:
-                $popup.css({
-                  top: distance.inBoundary.top - popupRect.height
-                });
+                if (!module.is.pointing()) {
+                  $popup.css({
+                    top: distance.inBoundary.top - popupRect.height + 8
+                  });
+                } else {
+                  $popup.css({
+                    top: distance.inBoundary.top - popupRect.height
+                  });
+                }
                 break;
               case Position.RIGHT:
-                $popup.css({
-                  left: distance.inBoundary.left + rect.width
-                });
+                if (!module.is.pointing()) {
+                  $popup.css({
+                    left: distance.inBoundary.left + rect.width - 8
+                  });
+                } else {
+                  $popup.css({
+                    left: distance.inBoundary.left + rect.width
+                  });
+                }
                 break;
               case Position.BOTTOM:
-                $popup.css({
-                  top: distance.inBoundary.top + rect.height
-                });
+                if (!module.is.pointing()) {
+                  $popup.css({
+                    top: distance.inBoundary.top + rect.height - 8
+                  });
+                } else {
+                  $popup.css({
+                    top: distance.inBoundary.top + rect.height
+                  });
+                }
                 break;
               case Position.LEFT:
-                $popup.css({
-                  left: distance.inBoundary.left - popupRect.width
-                });
+                if (!module.is.pointing()) {
+                  $popup.css({
+                    left: distance.inBoundary.left - popupRect.width + 8
+                  });
+                } else {
+                  $popup.css({
+                    left: distance.inBoundary.left - popupRect.width
+                  });
+                }
             }
             switch (direction) {
               case Position.TOP:
               case Position.BOTTOM:
+                console.log('A');
+                // 如果彈出式訊息寬度剛好全滿，那麼就直接置左。
+                if (popupRect.width + 2 >= distance.boundary.width) {
+                  console.log('B');
+                  $popup.css({
+                    left: 0
+                  });
                 // 如果左右各有空間，那麼就置中彈出式訊息。
-                if (distance.inBoundary.left > popupRect.width / 2 && distance.inBoundary.right > popupRect.width / 2) {
-                  console.log("A");
+                } else if (distance.inBoundary.left > popupRect.width / 2 && distance.inBoundary.right > popupRect.width / 2) {
+                  console.log('C');
                   $popup.css({
                     left: (distance.inBoundary.left + rect.width / 2) - popupRect.width / 2
                   });
-                } else {
-                  // 否則。
-                  console.log("B");
-                  if (distance.boundary.width === popupRect.width + 2) {
+                
+                } else if ((distance.inBoundary.left + popupRect.width) - distance.boundary.width > 0 || (distance.inBoundary.right + popupRect.width) - distance.boundary.width > 0) {
+                  console.log('D');
+                  // 如果按鈕在左半邊。
+                  if (distance.inBoundary.left < distance.boundary.width / 2) {
+                    console.log('E');
+                    // 就讓彈出式訊息靠齊左側。
                     $popup.css({
-                      left: 0
+                      left: 0 + padding
                     });
                   } else {
-                    // 如果按鈕在左半邊。
-                    if (distance.inBoundary.left < distance.boundary.width / 2) {
-                      // 就讓彈出式訊息靠齊左側。
-                      $popup.css({
-                        left: 0 + padding
-                      });
-                    } else {
-                      // 就讓彈出式訊息靠右側。
-                      // 否則。
-                      $popup.css({
-                        left: distance.inBoundary.left + rect.width - popupRect.width + distance.inBoundary.right - padding
-                      });
-                    }
+                    // 不然在右半邊的話。
+                    console.log('F');
+                    // 就讓彈出式訊息靠右側。
+                    $popup.css({
+                      left: distance.inBoundary.left + rect.width - popupRect.width + distance.inBoundary.right - padding
+                    });
                   }
+                } else {
+                  
+                  console.log('G');
+                  $popup.css({
+                    left: (distance.inBoundary.left + rect.width / 2) - popupRect.width / 2
+                  });
                 }
                 break;
               case Position.LEFT:
@@ -653,6 +688,9 @@
         },
         hoverable: () => {
           return settings.hoverable === true;
+        },
+        pointing: () => {
+          return settings.pointing === true;
         },
         arrow: {
           bounding: (x, y) => {
@@ -787,7 +825,14 @@
         }
       },
       focus: {
-        handler: (event) => {}
+        handler: (event) => {
+          return module.show();
+        }
+      },
+      bulr: {
+        handler: (event) => {
+          return module.hide();
+        }
       },
       scroll: {
         handler: () => {
@@ -802,7 +847,8 @@
           return $body.on(Event.CLICK, module.click.handler);
         },
         focus: () => {
-          return $this.on(Event.FOCUS, module.focus.handler);
+          $this.on(Event.FOCUS, module.focus.handler);
+          return $this.on(Event.FOCUSOUT, module.bulr.handler);
         },
         scroll: () => {
           return $scrollContext.on(Event.SCROLL, module.scroll.handler);

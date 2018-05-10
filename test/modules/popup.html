@@ -574,6 +574,43 @@
 
     <br><br>
     <br><br>
+    <strong>Table</strong>
+    <br><br>
+
+    <table class="ts table">
+        <thead>
+            <tr>
+                <th>Header</th>
+                <th>Header</th>
+                <th>Header</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Cell</td>
+                <td>Cell</td>
+                <td>Cell</td>
+            </tr>
+            <tr>
+                <td>Cell</td>
+                <td class="empty"></td>
+                <td class="empty"></td>
+            </tr>
+            <tr>
+                <td>Cell</td>
+                <td>Cell</td>
+                <td>Cell</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="ts table-test popup">
+        <div class="content">
+            這是一個可愛的輸入欄位。
+        </div>
+    </div>
+
+    <br><br>
+    <br><br>
     <strong>Segment Bondary</strong>
     <br><br>
 
@@ -750,9 +787,19 @@
                     //    boundary: '.segment',
                     //    on: 'click'
                     //})
+                    ts('table th:first-child').popup({
+                        popup: ts('.table-test.popup'),
+                        inverted: true,
+                        pointing: false,
+                        size: 'tiny',
+                        boundary: 'body',
+                    })
                     ts('.ts.input input').popup({
                         popup: ts('.input-test.popup'),
+                        on: 'focus',
                         boundary: 'body',
+                        inverted: true,
+                        size: 'tiny',
                     })
                     ts('i.circular.heart.icon.link').popup({
                         content: "Wow, hello, world!",

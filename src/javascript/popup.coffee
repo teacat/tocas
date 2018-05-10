@@ -31,7 +31,7 @@ Settings =
     edgeContext   : false
     # 偏好的彈出式訊息出現位置。
     position      : 'top'
-    # 欲觸發彈出式訊息的事件，如：`click`、`hover`、`focus`。
+    # 欲觸發彈出式訊息的事件，如：`click`、`hover`、`focus`、`manul`。
     on            : 'hover'
     # 觸發的延遲毫秒數。
     delay         :
@@ -91,6 +91,8 @@ Event =
     UNPLACEABLE : "unplaceable#{EVENT_NAMESPACE}"
     CLICK       : "click#{EVENT_NAMESPACE}"
     FOCUS       : "focus#{EVENT_NAMESPACE}"
+    FOCUSOUT    : "focusout#{EVENT_NAMESPACE}"
+    BULR        : "bulr#{EVENT_NAMESPACE}"
     SCROLL      : "scroll#{EVENT_NAMESPACE}"
     MOUSEMOVE   : "mousemove#{EVENT_NAMESPACE}"
     MOUSEENTER  : "mouseenter#{EVENT_NAMESPACE}"
@@ -176,7 +178,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
     scrollContext  = null
     offset         = 20
     padding        = 10
-    arrowSize      = 14
+    arrowSize      = 8
 
     # ------------------------------------------------------------------------
     # 模組定義
@@ -378,12 +380,12 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                 top : popupRect.height - 2
                         when Position.RIGHT
                             $arrow.css
-                                left: -20
+                                left: -16
                                 top : (rect.top + rect.height / 2) - popupRect.top - 8 - 2
                         when Position.BOTTOM
                             $arrow.css
                                 left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2
-                                top : -20
+                                top : -16
                         when Position.LEFT
                             $arrow.css
                                 left: popupRect.width - 2
@@ -393,10 +395,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         calculate:
             direction: =>
                 distance  = module.get.distance()
-                topOK     = distance.viewport.top    > popupRect.height + arrowSize
-                rightOK   = distance.viewport.right  > popupRect.width  + arrowSize
-                bottomOK  = distance.viewport.bottom > popupRect.height + arrowSize
-                leftOK    = distance.viewport.left   > popupRect.width  + arrowSize
+                topOK     = distance.inBoundary.top    > popupRect.height + arrowSize
+                rightOK   = distance.inBoundary.right  > popupRect.width  + arrowSize
+                bottomOK  = distance.inBoundary.bottom > popupRect.height + arrowSize
+                leftOK    = distance.inBoundary.left   > popupRect.width  + arrowSize
                 direction = ''
                 switch settings.position
                     when Position.TOP
@@ -426,57 +428,77 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     direction = module.calculate.direction()
                     position  = ''
 
-                    console.log distance
+                    console.log direction
 
                     if direction is ''
                         console.log 'NOPE'
 
-                    direction = Position.BOTTOM
+                    #direction = Position.RIGHT
 
                     switch direction
                         when Position.TOP
-                            $popup.css
-                                top : distance.inBoundary.top - popupRect.height
+                            if not module.is.pointing()
+                                $popup.css
+                                    top : distance.inBoundary.top - popupRect.height + 8
+                            else
+                                $popup.css
+                                    top : distance.inBoundary.top - popupRect.height
                         when Position.RIGHT
-                            $popup.css
-                                left: distance.inBoundary.left + rect.width
+                            if not module.is.pointing()
+                                $popup.css
+                                    left: distance.inBoundary.left + rect.width - 8
+                            else
+                                $popup.css
+                                    left: distance.inBoundary.left + rect.width
                         when Position.BOTTOM
-                            $popup.css
-                                top : distance.inBoundary.top  + rect.height
+                            if not module.is.pointing()
+                                $popup.css
+                                    top : distance.inBoundary.top + rect.height - 8
+                            else
+                                $popup.css
+                                    top : distance.inBoundary.top + rect.height
                         when Position.LEFT
-                            $popup.css
-                                left: distance.inBoundary.left - popupRect.width
+                            if not module.is.pointing()
+                                $popup.css
+                                    left: distance.inBoundary.left - popupRect.width + 8
+                            else
+                                $popup.css
+                                    left: distance.inBoundary.left - popupRect.width
 
                     switch direction
                         when Position.TOP, Position.BOTTOM
+                            console.log 'A'
+                            # 如果彈出式訊息寬度剛好全滿，那麼就直接置左。
+                            if popupRect.width + 2 >= distance.boundary.width
+                                console.log 'B'
+                                $popup.css
+                                    left: 0
                             # 如果左右各有空間，那麼就置中彈出式訊息。
-
-                            if distance.inBoundary.left > popupRect.width / 2 and distance.inBoundary.right > popupRect.width / 2
-                                console.log "A"
+                            else if distance.inBoundary.left > popupRect.width / 2 and distance.inBoundary.right > popupRect.width / 2
+                                console.log 'C'
                                 $popup.css
                                     left: (distance.inBoundary.left + rect.width / 2) - popupRect.width / 2
-                            # 否則。
-                            else
-                                console.log "B"
-
-                                if distance.boundary.width is popupRect.width + 2
+                            #
+                            else if (distance.inBoundary.left  + popupRect.width) - distance.boundary.width > 0 or
+                                    (distance.inBoundary.right + popupRect.width) - distance.boundary.width > 0
+                                console.log 'D'
+                                # 如果按鈕在左半邊。
+                                if distance.inBoundary.left < distance.boundary.width / 2
+                                    console.log 'E'
+                                    # 就讓彈出式訊息靠齊左側。
                                     $popup.css
-                                        left: 0
+                                        left: 0 + padding
+                                # 不然在右半邊的話。
                                 else
-
-
-                                    # 如果按鈕在左半邊。
-                                    if distance.inBoundary.left < distance.boundary.width / 2
-                                        # 就讓彈出式訊息靠齊左側。
-                                        $popup.css
-                                            left: 0 + padding
-                                    # 否則。
-                                    else
-                                        # 就讓彈出式訊息靠右側。
-                                        $popup.css
-                                            left: distance.inBoundary.left + rect.width - popupRect.width + distance.inBoundary.right - padding
-
-
+                                    console.log 'F'
+                                    # 就讓彈出式訊息靠右側。
+                                    $popup.css
+                                        left: distance.inBoundary.left + rect.width - popupRect.width + distance.inBoundary.right - padding
+                            #
+                            else
+                                console.log 'G'
+                                $popup.css
+                                    left: (distance.inBoundary.left + rect.width / 2) - popupRect.width / 2
 
                         when Position.LEFT, Position.RIGHT
                             if distance.viewport.top > popupRect.height / 2 and distance.viewport.bottom > popupRect.height / 2
@@ -545,6 +567,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $popup.hasClass ClassName.ANIMATING
             hoverable: =>
                 settings.hoverable is true
+            pointing: =>
+                settings.pointing is true
             arrow:
                 bounding: (x, y) =>
                     switch module.get.position()
@@ -658,6 +682,11 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
         focus:
             handler: (event) =>
+                module.show()
+
+        bulr:
+            handler: (event) =>
+                module.hide()
 
         scroll:
             handler: =>
@@ -670,6 +699,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 $body.on Event.CLICK, module.click.handler
             focus: =>
                 $this.on Event.FOCUS, module.focus.handler
+                $this.on Event.FOCUSOUT , module.bulr.handler
             scroll: =>
                 $scrollContext.on Event.SCROLL, module.scroll.handler
             events: =>
