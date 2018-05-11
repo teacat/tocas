@@ -62,8 +62,6 @@
     pointing: true,
     // 是否為反色外觀。
     inverted: false,
-    // 大小尺寸。
-    size: 'medium',
     // 目標元素選擇器，彈出式訊息會以這個元素為主。
     target: false,
     // 欲套用的樣式名稱，以空白分隔。
@@ -284,10 +282,10 @@
           settings.inverted = value;
           if (value) {
             return $popup.addClass(ClassName.INVERTED);
-          } else {
-            return $popup.removeClass(ClassName.INVERTED);
           }
         },
+        //else
+        //    $popup.removeClass ClassName.INVERTED
         hoverable: (value) => {
           settings.hoverable = value;
           if (value) {
@@ -324,10 +322,6 @@
         },
         variation: (value) => {
           return $popup.addClass(value);
-        },
-        size: (size) => {
-          $popup.removeClass(ClassName.SIZES).addClass(size);
-          return $allModules;
         },
         show: {
           timer: () => {
@@ -375,7 +369,7 @@
       calc: () => {},
       get: {
         distance: () => {
-          var bRect, bottom, isBody, offsetLeft, offsetTop, right;
+          var bRect, bottom, isBody, offsetLeft, offsetTop, p, right;
           bRect = boundaryRect;
           isBody = $boundary.is(Selector.BODY);
           if (isBody) {
@@ -394,12 +388,14 @@
           }
           offsetTop = element.offsetTop;
           offsetLeft = element.offsetLeft;
+          if ($this.parents().length !== $popup.parents().length) {
+            p = $this.parents(settings.boundary);
+            p.each((el, i) => {
+              offsetTop += el.offsetTop;
+              return offsetLeft += el.offsetLeft;
+            });
+          }
           return {
-            //p = $this.parents(settings.boundary)
-            //p.each (el, i) =>
-            //    return if i == p.length - 1
-            //    offsetTop  += el.offsetTop
-            //    offsetLeft += el.offsetLeft
             top: offsetTop,
             left: offsetLeft,
             right: boundary.clientWidth - (offsetLeft + rect.width),
@@ -485,8 +481,7 @@
               return Position.LEFT;
           }
           $parent = $parent.parent();
-          console.log(level, $parent);
-          if (level >= settings.maxSearchDepth || !$parent.exists()) {
+          if (level >= settings.maxSearchDepth || !$parent.exists() || $parent.is('html')) {
             return null;
           }
           parent = $parent.get();
@@ -497,6 +492,12 @@
             bottom: parent.clientHeight - rect.top + rect.height,
             left: rect.left - r.left
           };
+          if ($parent.is('body')) {
+            viewport.top = rect.top;
+            viewport.left = rect.left;
+            viewport.bottom = parent.clientHeight - rect.bottom;
+            viewport.right = parent.clientWidth - rect.right;
+          }
           return module.calculate.direction(viewport, level + 1, $parent);
         },
         popup: {
@@ -506,11 +507,9 @@
             distance = module.get.distance();
             direction = module.calculate.direction(distance.viewport, 0, $boundary);
             position = '';
-            console.log(direction);
             if (direction === null) {
               console.log('NOPE');
             }
-            //direction = Position.RIGHT
             switch (direction) {
               case Position.TOP:
                 if (!module.is.pointing()) {
@@ -686,24 +685,26 @@
             switch (module.get.position()) {
               case Position.TOP:
                 if (y > popupRect.bottom && y < rect.top && x < popupRect.right && x > popupRect.left) {
-
+                  return true;
                 }
                 break;
               case Position.RIGHT:
                 if (y < popupRect.bottom && y > popupRect.top && x < popupRect.left && x > rect.right) {
-
+                  return true;
                 }
                 break;
               case Position.BOTTOM:
+                console.log(y > rect.bottom, y < popupRect.top, x < popupRect.right, x > popupRect.left);
                 if (y > rect.bottom && y < popupRect.top && x < popupRect.right && x > popupRect.left) {
-
+                  return true;
                 }
                 break;
               case Position.LEFT:
                 if (y < popupRect.bottom && y > popupRect.top && x < rect.left && x > popupRect.right) {
-
+                  return true;
                 }
             }
+            return false;
           }
         }
       },
@@ -789,7 +790,7 @@
             return;
           }
           module.refresh();
-          if (module.is.arrow.bounding(event.clientY, event.clientX)) {
+          if (module.is.arrow.bounding(event.clientX, event.clientY)) {
             return;
           }
           module.remove.show.timer();
@@ -879,7 +880,6 @@
         }
         module.init.popup();
         module.set.hoverable(settings.hoverable);
-        module.set.size(settings.size);
         module.set.transition(settings.transition);
         module.set.inverted(settings.inverted);
         module.set.pointing(settings.pointing);

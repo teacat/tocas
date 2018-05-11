@@ -6,32 +6,32 @@
 
 @keyframes popup-upward
     0%
-        opacity  : 0
+        opacity: 0
     100%
-        transform: translateY(-#{$popup_elementDistance})
-        opacity: 1
+        transform: translateY(-#{$popup_distance})
+        opacity  : 1
 @keyframes popup-downward
     0%
-        opacity  : 0
+        opacity: 0
     100%
-        transform: translateY($popup_elementDistance)
-        opacity: 1
+        transform: translateY($popup_distance)
+        opacity  : 1
 @keyframes popup-leftward
     0%
-        opacity  : 0
+        opacity: 0
     100%
-        transform: translateX(-#{$popup_elementDistance})
-        opacity: 1
+        transform: translateX(-#{$popup_distance})
+        opacity  : 1
 @keyframes popup-rightward
     0%
-        opacity  : 0
+        opacity: 0
     100%
-        transform: translateX($popup_elementDistance)
-        opacity: 1
+        transform: translateX($popup_distance)
+        opacity  : 1
 
 @keyframes popup-fade
     0%
-        opacity  : 0
+        opacity: 0
     100%
         opacity: 1
 
@@ -43,17 +43,19 @@
     position     : absolute
     display      : inline-block
     visibility   : hidden
-    background   : #fff
+    background   : $popup_backgroundColor
+    color        : $popup_textColor
     box-shadow   : $popup_boxShadow
-    border       : $popup_elementBorder
-    border-radius: $popup_elementBorderRadius
-    max-width    : $popup_elementWidth
+    border       : $popup_border
+    border-radius: $popup_borderRadius
+    padding      : $popup_padding
+    max-width    : $popup_width
     z-index      : $z_popup
 
 .ts.popup:not(.hoverable)
     +extend(no-select)
-    pointer-events: none
 
+    pointer-events: none
 
 //-------------------//
 //     Visibility
@@ -64,21 +66,20 @@
     opacity   : 1
 
 .ts.popup.animating[data-position="top"]
-    animation: popup-upward 180ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+    animation: popup-upward $popup_animationDuration $popup_timingFunction both
 .ts.popup.animating[data-position="bottom"]
-    animation: popup-downward 180ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+    animation: popup-downward $popup_animationDuration $popup_timingFunction both
 .ts.popup.animating[data-position="left"]
-    animation: popup-leftward 180ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+    animation: popup-leftward $popup_animationDuration $popup_timingFunction both
 .ts.popup.animating[data-position="right"]
-    animation: popup-rightward 180ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+    animation: popup-rightward $popup_animationDuration $popup_timingFunction both
 
 .ts.popup.animating[data-popup-transition="fade"]
-    animation: popup-fade 300ms cubic-bezier(0.22, 0.61, 0.36, 1) both
+    animation: popup-fade $popup_animationFadeDuration $popup_timingFunction both
 
 .ts.popup.animating:not(.visible)
     visibility         : visible
     animation-direction: reverse
-
 
 //-------------------//
 //       Header
@@ -86,10 +87,9 @@
 
 .ts.popup > .header
     overflow     : hidden
-    color        : $popup_elementHeaderColor
-    border-bottom: $popup_elementHeaderBorder
-    padding      : $popup_elementPadding
-    background   : $popup_elementHeaderBackgroundColor
+    color        : $popup_headerColor
+    border-bottom: $popup_headerBorder
+    background   : $popup_headerBackgroundColor
 
 //-------------------//
 //       Title
@@ -99,52 +99,51 @@
     font-size    : $popup_titleFontSize
     font-weight  : $popup_titleFontWeight
     color        : $popup_titleTextColor
-    padding      : $popup_elementPadding
 
 //-------------------//
 //      Content
 //-------------------//
 
-.ts.popup > .content
-    padding: $popup_elementPadding
-
 .ts.popup > .title + .content
-    padding-top: 0
+    padding-top: $popup_titleDistance
 
 //-------------------//
 //       Arrow
 //-------------------//
 
 .ts.popup > .arrow
-    display: none
+    position: absolute
+    display : none
+
     border-color       : transparent
     border-style       : solid
-    position           : absolute
-    border-bottom-color: $popup_elementBorderColor
     border-width       : $popup_arrowOuterSize
-    z-index            : 100
+    border-bottom-color: $popup_borderColor
+
+    z-index: $z_popup_arrow
 
 .ts.popup > .arrow:after
-    border        : solid transparent
-    content       : ""
-    height        : 0
-    width         : 0
-    pointer-events: none
-    border-color  : transparent
-    border-width  : $popup_arrowSize
+    position      : absolute
     bottom        : -8px
     left          : 50%
+    height        : 0
+    width         : 0
+    content       : ''
+    border        : solid transparent
     transform     : translateX(-50%)
-    position      : absolute
-    border-bottom-color: #FFF
-    z-index     : 200
+    pointer-events: none
+
+    border-color       : transparent
+    border-width       : $popup_arrowSize
+    border-bottom-color: $popup_backgroundColor
+
+    z-index: $z_popup_arrow_mask
 
 .ts.popup.pointing[data-position="top"] > .arrow,
 .ts.popup.pointing[data-position="left"] > .arrow,
 .ts.popup.pointing[data-position="right"] > .arrow,
 .ts.popup.pointing[data-position="bottom"] > .arrow
     display: block
-
 
 .ts.popup[data-position="top"] > .arrow
     transform: rotate(180deg)
@@ -154,27 +153,17 @@
     transform: rotate(-90deg)
 .ts.popup[data-position="bottom"] > .arrow
 
-
-
-
-//-------------------//
-//      Compact
-//-------------------//
-
-.ts.compact.popup > .content
-    padding: $popup_compactPadding
-
 //-------------------//
 //      Inverted
 //-------------------//
 
 .ts.inverted.popup
-    background: $popup_backgroundColor
-    color     : $popup_textColor
+    background: $popup_invertedBackgroundColor
+    color     : $popup_invertedTextColor
     border    : none
 
 .ts.inverted.popup > .arrow
-    border-bottom-color: $popup_backgroundColor !important
+    border-bottom-color: $popup_invertedBackgroundColor !important
 
 .ts.inverted.popup > .arrow:after
     border-bottom-color: transparent !important
@@ -184,22 +173,22 @@
 //-------------------//
 
 .ts.popup.visible[data-position="top"]:not(.animating)
-    transform: translateY(-#{$popup_elementDistance})
+    transform: translateY(-#{$popup_distance})
 .ts.popup.visible[data-position="bottom"]:not(.animating)
-    transform: translateY($popup_elementDistance)
+    transform: translateY($popup_distance)
 .ts.popup.visible[data-position="left"]:not(.animating)
-    transform: translateX(-#{$popup_elementDistance})
+    transform: translateX(-#{$popup_distance})
 .ts.popup.visible[data-position="right"]:not(.animating)
-    transform: translateX($popup_elementDistance)
+    transform: translateX($popup_distance)
 
 .ts.popup[data-position="top"][data-popup-transition="fade"]
-    transform: translateY(-#{$popup_elementDistance})
+    transform: translateY(-#{$popup_distance})
 .ts.popup[data-position="bottom"][data-popup-transition="fade"]
-    transform: translateY($popup_elementDistance)
+    transform: translateY($popup_distance)
 .ts.popup[data-position="left"][data-popup-transition="fade"]
-    transform: translateX(-#{$popup_elementDistance})
+    transform: translateX(-#{$popup_distance})
 .ts.popup[data-position="right"][data-popup-transition="fade"]
-    transform: translateX($popup_elementDistance)
+    transform: translateX($popup_distance)
 
 //-------------------//
 //       Sizes
@@ -249,9 +238,72 @@
     max-width: none
 
 //-------------------//
+//       Padded
+//-------------------//
+
+.ts.popup.padded
+    padding: $popup_paddedPadding
+
+//-------------------//
+//       Loading
+//-------------------//
+
+.ts.loading.loading.loading.loading.loading.loading.popup
+    text-shadow   : none !important
+    color         : transparent !important
+    opacity       : 1
+    pointer-events: auto
+    transition    : $popup_loadingTransition
+    min-height    : $popup_loadingHeight
+
+.ts.loading.popup:before
+    position     : absolute
+    content      : ''
+    top          : 50%
+    left         : 50%
+    margin       : $loaderMargin
+    width        : $loaderSize
+    height       : $loaderSize
+    border-radius: $circularRadius
+    border       : $loaderLineWidth solid $popup_loaderFillColor
+
+.ts.loading.popup.inverted:before
+    border-color: $popup_invertedLoaderFillColor
+
+.ts.loading.popup:after
+    position: absolute
+    content : ''
+    top     : 50%
+    left    : 50%
+    margin  : $loaderMargin
+    width   : $loaderSize
+    height  : $loaderSize
+
+    animation                : popup-spin $loaderSpeed linear
+    animation-iteration-count: infinite
+
+    border-radius: $circularRadius
+    border-color : $popup_loaderLineColor transparent transparent
+    border-style : solid
+    border-width : $loaderLineWidth
+    box-shadow   : 0 0 0 1px transparent
+
+.ts.loading.popup.inverted:after
+    border-color: $popup_invertedLoaderLineColor transparent transparent
+
+@keyframes popup-spin
+    from
+        transform: rotate(0deg)
+    to
+        transform: rotate(360deg)
+
+//-------------------//
 //      Coupling
 //-------------------//
 
-.ts.popup > .ts.grid:not(.padded)
+.ts.popup > .ts.grid
     width : auto
-    margin: 0
+    margin: -#{$popup_verticalPadding} -#{$popup_horizontalPadding}
+
+.ts.popup.padded > .ts.grid
+    margin: -#{$popup_paddedVerticalPadding} -#{$popup_paddedHorizontalPadding}

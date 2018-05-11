@@ -383,8 +383,9 @@
   ts.fn.parents = {
     value: function(selector) {
       return this.collectSwap(function(self) {
-        var parents;
+        var matchedSelector, parents;
         parents = [];
+        matchedSelector = false;
         while (self) {
           self = self.parentNode;
           if (self.nodeType === 9) {
@@ -392,8 +393,12 @@
           }
           parents.push(self);
           if (ts(self).is(selector)) {
+            matchedSelector = true;
             break;
           }
+        }
+        if (selector && !matchedSelector) {
+          return [];
         }
         return parents;
       });

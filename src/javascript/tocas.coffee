@@ -322,12 +322,16 @@ ts.fn.parent =
 ts.fn.parents =
     value: (selector) ->
         @collectSwap (self) ->
-            parents = []
+            parents         = []
+            matchedSelector = false
             while self
                 self = self.parentNode
                 break if self.nodeType is 9
                 parents.push(self)
-                break if ts(self).is(selector)
+                if ts(self).is(selector)
+                    matchedSelector = true
+                    break
+            return [] if selector and not matchedSelector
             return parents
 
 # Closest

@@ -55,8 +55,6 @@ Settings =
     pointing      : true
     # 是否為反色外觀。
     inverted      : false
-    # 大小尺寸。
-    size          : 'medium'
     # 目標元素選擇器，彈出式訊息會以這個元素為主。
     target        : false
     # 欲套用的樣式名稱，以空白分隔。
@@ -247,8 +245,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 settings.inverted = value
                 if value
                     $popup.addClass ClassName.INVERTED
-                else
-                    $popup.removeClass ClassName.INVERTED
+                #else
+                #    $popup.removeClass ClassName.INVERTED
             hoverable: (value) =>
                 settings.hoverable = value
                 if value
@@ -275,11 +273,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     $popup.removeClass ClassName.ANIMATING
             variation: (value) =>
                 $popup.addClass value
-            size: (size) =>
-                $popup
-                    .removeClass ClassName.SIZES
-                    .addClass    size
-                return $allModules
+
             show:
                 timer: =>
                     $this.setTimer
@@ -336,12 +330,13 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 offsetTop  = element.offsetTop
                 offsetLeft = element.offsetLeft
 
-                #p = $this.parents(settings.boundary)
-                #p.each (el, i) =>
-                #    return if i == p.length - 1
-                #    offsetTop  += el.offsetTop
-                #    offsetLeft += el.offsetLeft
 
+
+                if $this.parents().length isnt $popup.parents().length
+                    p = $this.parents(settings.boundary)
+                    p.each (el, i) =>
+                        offsetTop  += el.offsetTop
+                        offsetLeft += el.offsetLeft
 
                 return {
                     top   : offsetTop
@@ -406,8 +401,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     when leftOK
                         return Position.LEFT
                 $parent = $parent.parent()
-                console.log level, $parent
-                if level >= settings.maxSearchDepth or not $parent.exists()
+
+                if level >= settings.maxSearchDepth or not $parent.exists() or $parent.is('html')
                     return null
                 parent = $parent.get()
                 r      = $parent.rect()
@@ -416,6 +411,13 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     right : parent.clientWidth  - rect.left + rect.width
                     bottom: parent.clientHeight - rect.top  + rect.height
                     left  : rect.left - r.left
+
+                if $parent.is('body')
+                    viewport.top  = rect.top
+                    viewport.left = rect.left
+                    viewport.bottom = parent.clientHeight - rect.bottom
+                    viewport.right = parent.clientWidth - rect.right
+
                 return module.calculate.direction viewport, level + 1, $parent
             popup:
                 position: =>
@@ -424,13 +426,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     direction = module.calculate.direction distance.viewport, 0, $boundary
                     position  = ''
 
-
-                    console.log direction
-
                     if direction is null
                         console.log 'NOPE'
-
-                    #direction = Position.RIGHT
 
                     switch direction
                         when Position.TOP
@@ -572,16 +569,18 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     switch module.get.position()
                         when Position.TOP
                             if y > popupRect.bottom and y < rect.top and x < popupRect.right and x > popupRect.left
-                                return
+                                return true
                         when Position.RIGHT
                             if y < popupRect.bottom and y > popupRect.top and x < popupRect.left and x > rect.right
-                                return
+                                return true
                         when Position.BOTTOM
+                            console.log y > rect.bottom , y < popupRect.top , x < popupRect.right ,  x > popupRect.left
                             if y > rect.bottom and y < popupRect.top and x < popupRect.right and x > popupRect.left
-                                return
+                                return true
                         when Position.LEFT
                             if y < popupRect.bottom and y > popupRect.top and x < rect.left and x > popupRect.right
-                                return
+                                return true
+                    return false
 
         create:
             arrow: =>
@@ -660,8 +659,9 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     return
                 module.refresh()
 
-                if module.is.arrow.bounding event.clientY, event.clientX
+                if module.is.arrow.bounding event.clientX, event.clientY
                     return
+
                 module.remove.show.timer()
 
                 if not module.is.hiding()
@@ -730,7 +730,6 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                 module.set.variation variation
             module.init.popup()
             module.set.hoverable     settings.hoverable
-            module.set.size          settings.size
             module.set.transition    settings.transition
             module.set.inverted      settings.inverted
             module.set.pointing      settings.pointing
