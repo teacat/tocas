@@ -411,26 +411,30 @@
 //      Stacked
 //-------------------//
 
-.ts.stacked.segment,
-.ts.stacked.segments
+.ts.stacked.segment
     padding-bottom: $segment_stackedPaddingBottom
 
-    &::before,
-    &::after
-        content      : ''
-        position     : absolute
-        bottom       : $segment_stackedBottom
-        left         : 0
-        width        : 100%
-        height       : $segment_stackedHeight
-        border-radius: $segment_borderRadius
-        border-top   : $segment_border
+.ts.stacked.segment:before,
+.ts.stacked.segment:after,
+.ts.stacked.segments:before,
+.ts.stacked.segments:after
+    content      : ''
+    position     : absolute
+    bottom       : $segment_stackedBottom
+    left         : 0
+    border-top   : 1px solid $segment_stackedBorderColor
+    box-shadow   : 0px $segment_stackedBottom 0px $segment_stackedShadowColor
+    border-radius: $segment_borderRadius
+    transform    : rotate(180deg) translateY($segment_stackedOffset)
+    width        : 100%
+    height       : $segment_stackedHeight
+    visibility   : visible
 
-    &::before
-        display: none
+.ts.stacked.segment:before,
+.ts.stacked.segments:before
+    display: none
 
-.ts.tall.stacked.segment,
-.ts.tall.stacked.segments
-    &::before
-        display: block
-        bottom : 0
+.ts.tall.stacked.segment:before,
+.ts.tall.stacked.segments:before
+    display: block
+    bottom : 0
