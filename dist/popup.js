@@ -29,12 +29,8 @@
     exclusive: false,
     // 彈出式訊息的邊界元素，彈出式訊息會試圖不要超過這個元素。
     boundary: 'body',
-    // 即時產生的彈出式訊息應該要被擺置在哪個元素內。
-    context: 'body',
     // 此彈出式訊息偵測畫面是否有捲動的元素選擇器，如果指定元素有捲動事件則會自動隱藏此彈出式訊息。
     scrollContext: window,
-    // 如果有指定邊緣選擇器，彈出訊息則會試著依靠這個父元素的邊緣，適合用於表格的標頭等。
-    edgeContext: false,
     // 當彈出式訊息無法符合邊界所會往上找的最大層數，設為 `0` 即表示當不符合邊界時直接失敗。
     maxSearchDepth: 10,
     // 偏好的彈出式訊息出現位置。
@@ -46,7 +42,7 @@
       // 欲顯示彈出式訊息前所需的毫秒數。
       show: 50,
       // 隱藏彈出式訊息前所等待的毫秒數。
-      hide: 0
+      hide: 50
     },
     // 過場動畫。
     transition: 'auto',
@@ -73,23 +69,23 @@
     // 彈出式訊息的 HTML 內容，如果採用此屬性則會忽略 `content` 與 `title`。
     html: false,
     // 當彈出式訊息被建立時所會呼叫的回呼函式。
-    onCreate: () => {},
+    onCreate: (element) => {},
     // 當彈出式訊息不再被需要且從頁面上移除時所會呼叫的回呼函式。
-    onRemove: () => {},
+    onRemove: (element) => {},
     // 當彈出式訊息開始顯示時所會呼叫的回呼函式，回傳 `false` 將會停止顯示。
-    onShow: () => {
+    onShow: (element) => {
       return true;
     },
     // 當彈出式訊息動畫結束並顯示在畫面上時所會呼叫的回呼函式。
-    onVisible: () => {},
+    onVisible: (element) => {},
     // 當彈出式訊息開始消失時所會呼叫的回呼函式，回傳 `false` 將會避免消失。
-    onHide: () => {
+    onHide: (element) => {
       return true;
     },
     // 當彈出式訊息已經完全消失時所會呼叫的回呼函式。
-    onHidden: () => {},
+    onHidden: (element) => {},
     // 當彈出式訊息無法在畫面上產生或放置（不合適尺寸）時所會呼叫的回呼函式。
-    onUnplaceable: () => {}
+    onUnplaceable: (element) => {}
   };
 
   // 事件名稱。
@@ -127,6 +123,7 @@
     POPUP: 'ts popup',
     TITLE: 'title',
     CONTENT: 'content',
+    LOADING: 'loading',
     ARROW: 'arrow',
     HOVERABLE: 'hoverable',
     MEDIUM: 'medium',
@@ -146,7 +143,8 @@
   // 中繼資料。
   Metadata = {
     SHOW_TIMER: 'showTimer',
-    HIDE_TIMER: 'hideTimer'
+    HIDE_TIMER: 'hideTimer',
+    ACTIVATOR: 'activator'
   };
 
   // 選擇器名稱。
@@ -154,7 +152,9 @@
     BODY: 'body',
     DIV: '<div>',
     ARROW: '.arrow',
-    POPUP: '.ts.popup'
+    VISIBLE: '.visible',
+    POPUP: '.ts.popup',
+    HTML: 'html'
   };
 
   // 元素標籤。
@@ -178,7 +178,7 @@
   // 模組註冊
   // ------------------------------------------------------------------------
   ts.register({NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, element, debug, settings}) => {
-    var $arrow, $body, $boundary, $popup, $scrollContext, arrowSize, boundary, boundaryRect, module, offset, padding, popupRect, rect, scrollContext;
+    var $arrow, $body, $boundary, $popup, $scrollContext, arrowBorderSize, arrowSize, boundary, boundaryRect, module, offset, padding, popupRect, rect, scrollContext;
     // ------------------------------------------------------------------------
     // 區域變數
     // ------------------------------------------------------------------------
@@ -194,6 +194,7 @@
     scrollContext = null;
     offset = 20;
     padding = 10;
+    arrowBorderSize = 2;
     arrowSize = 8;
     // ------------------------------------------------------------------------
     // 模組定義
@@ -208,11 +209,15 @@
           return;
         }
         module.calculate.popup.position();
+        if (module.trigger.show() === false) {
+          return;
+        }
         module.animate.show(() => {
           module.set.animating(false);
           if (callback != null) {
-            return callback.call();
+            callback.call();
           }
+          return module.trigger.visible();
         });
         return $allModules;
       },
@@ -224,16 +229,39 @@
         if (module.is.hidden()) {
           return;
         }
+        if (module.trigger.hide() === false) {
+          return;
+        }
         module.animate.hide(() => {
           module.set.animating(false);
           if (callback != null) {
-            return callback.call();
+            callback.call();
           }
+          return module.trigger.hidden();
         });
         return $allModules;
       },
       hideAll: () => {
+        ts(Selector.POPUP).filter(Selector.VISIBLE).each((el) => {
+          return ts(el).data(Metadata.ACTIVATOR).popup('hide');
+        });
         return $allModules;
+      },
+      animate: {
+        show: (callback) => {
+          return $popup.addClass(`${ClassName.VISIBLE} ${ClassName.ANIMATING}`).off(Event.ANIMATIONEND).one(Event.ANIMATIONEND, () => {
+            if (callback != null) {
+              return callback.call();
+            }
+          }).emulate(Event.ANIMATIONEND, duration);
+        },
+        hide: (callback) => {
+          return $popup.removeClass(ClassName.VISIBLE).addClass(ClassName.ANIMATING).one(Event.ANIMATIONEND, () => {
+            if (callback != null) {
+              return callback.call();
+            }
+          }).emulate(Event.ANIMATIONEND, duration);
+        }
       },
       remove: {
         timers: () => {
@@ -249,9 +277,20 @@
           timer: () => {
             return $this.removeTimer(Metadata.HIDE_TIMER);
           }
+        },
+        popup: () => {
+          $popup.remove();
+          return $allModules;
         }
       },
       set: {
+        loading: (value) => {
+          if (value) {
+            return $popup.addClass(ClassName.LOADING);
+          } else {
+            return $popup.removeClass(ClassName.LOADING);
+          }
+        },
         position: (position, modify = false) => {
           $popup.attr(Attribute.POSITION, position);
           if (modify) {
@@ -261,14 +300,15 @@
         transition: (transition) => {
           settings.transition = transition;
           $popup.attr(Attribute.TRANSITION, transition);
-          if (settings.duration !== 'auto') {
-            // IF SET
-            // IF SET
+          if (settings.duration === 'auto') {
             switch (settings.transition) {
               case 'fade':
-                return duration = 300;
+                duration = 300;
             }
+            return;
           }
+          duration = settings.duration;
+          return $popup.css('animation-duration', settings.duration);
         },
         pointing: (value) => {
           settings.pointing = value;
@@ -282,10 +322,10 @@
           settings.inverted = value;
           if (value) {
             return $popup.addClass(ClassName.INVERTED);
+          } else {
+            return $popup.removeClass(ClassName.INVERTED);
           }
         },
-        //else
-        //    $popup.removeClass ClassName.INVERTED
         hoverable: (value) => {
           settings.hoverable = value;
           if (value) {
@@ -322,6 +362,9 @@
         },
         variation: (value) => {
           return $popup.addClass(value);
+        },
+        activator: () => {
+          return $popup.data(Metadata.ACTIVATOR, module);
         },
         show: {
           timer: () => {
@@ -362,17 +405,16 @@
           } else {
             module.create.popup();
           }
+          module.set.activator();
           module.create.arrow();
           return $popup;
         }
       },
-      calc: () => {},
       get: {
         distance: () => {
-          var bRect, bottom, isBody, offsetLeft, offsetTop, p, right;
+          var bRect, offsetLeft, offsetTop;
           bRect = boundaryRect;
-          isBody = $boundary.is(Selector.BODY);
-          if (isBody) {
+          if ($boundary.is(Selector.BODY)) {
             bRect.top = 0;
             bRect.left = 0;
             bRect.bottom = 0;
@@ -380,17 +422,10 @@
             bRect.width = document.body.clientWidth;
             bRect.height = document.body.clientHeight;
           }
-          right = (bRect.left + bRect.width) - (rect.left + rect.width);
-          bottom = (bRect.top + bRect.height) - (rect.top + rect.height);
-          if (isBody) {
-            right = bRect.width - (rect.left + rect.width);
-            bottom = bRect.height - (rect.top + rect.height);
-          }
           offsetTop = element.offsetTop;
           offsetLeft = element.offsetLeft;
           if ($this.parents().length !== $popup.parents().length) {
-            p = $this.parents(settings.boundary);
-            p.each((el, i) => {
+            $this.parents(settings.boundary).each((el, i) => {
               offsetTop += el.offsetTop;
               return offsetLeft += el.offsetLeft;
             });
@@ -410,6 +445,9 @@
         },
         position: () => {
           return $popup.attr(Attribute.POSITION);
+        },
+        popup: () => {
+          return $popup.get();
         }
       },
       reposition: {
@@ -419,23 +457,23 @@
             switch (module.get.position()) {
               case Position.TOP:
                 return $arrow.css({
-                  left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2,
-                  top: popupRect.height - 2
+                  left: (rect.left + rect.width / 2) - popupRect.left - arrowSize - arrowBorderSize,
+                  top: popupRect.height - arrowBorderSize
                 });
               case Position.RIGHT:
                 return $arrow.css({
-                  left: -16,
-                  top: (rect.top + rect.height / 2) - popupRect.top - 8 - 2
+                  left: `-${arrowSize * 2}`,
+                  top: (rect.top + rect.height / 2) - popupRect.top - arrowSize - arrowBorderSize
                 });
               case Position.BOTTOM:
                 return $arrow.css({
-                  left: (rect.left + rect.width / 2) - popupRect.left - 8 - 2,
-                  top: -16
+                  left: (rect.left + rect.width / 2) - popupRect.left - arrowSize - arrowBorderSize,
+                  top: `-${arrowSize * 2}`
                 });
               case Position.LEFT:
                 return $arrow.css({
-                  left: popupRect.width - 2,
-                  top: (rect.top + rect.height / 2) - popupRect.top - 8 - 2
+                  left: popupRect.width - arrowBorderSize,
+                  top: (rect.top + rect.height / 2) - popupRect.top - arrowSize - arrowBorderSize
                 });
             }
           }, 0);
@@ -443,7 +481,7 @@
       },
       calculate: {
         direction: (viewport, level, $parent) => {
-          var bottomOK, direction, leftOK, parent, r, rightOK, topOK;
+          var bottomOK, direction, isParentHTML, isReachedDepth, leftOK, noParent, parent, parentRect, rightOK, topOK;
           topOK = viewport.top > popupRect.height + arrowSize;
           rightOK = viewport.right > popupRect.width + arrowSize;
           bottomOK = viewport.bottom > popupRect.height + arrowSize;
@@ -481,18 +519,21 @@
               return Position.LEFT;
           }
           $parent = $parent.parent();
-          if (level >= settings.maxSearchDepth || !$parent.exists() || $parent.is('html')) {
+          parent = $parent.get();
+          parentRect = $parent.rect();
+          isParentHTML = $parent.is(Selector.HTML);
+          noParent = !$parent.exists();
+          isReachedDepth = level >= settings.maxSearchDepth;
+          if (isReachedDepth || noParent || isParentHTML) {
             return null;
           }
-          parent = $parent.get();
-          r = $parent.rect();
           viewport = {
-            top: rect.top - r.top,
+            top: rect.top - parentRect.top,
             right: parent.clientWidth - rect.left + rect.width,
             bottom: parent.clientHeight - rect.top + rect.height,
-            left: rect.left - r.left
+            left: rect.left - parentRect.left
           };
-          if ($parent.is('body')) {
+          if ($parent.is(Selector.BODY)) {
             viewport.top = rect.top;
             viewport.left = rect.left;
             viewport.bottom = parent.clientHeight - rect.bottom;
@@ -508,13 +549,14 @@
             direction = module.calculate.direction(distance.viewport, 0, $boundary);
             position = '';
             if (direction === null) {
-              console.log('NOPE');
+              module.trigger.unplaceable();
+              return;
             }
             switch (direction) {
               case Position.TOP:
                 if (!module.is.pointing()) {
                   $popup.css({
-                    top: distance.top - popupRect.height + 8
+                    top: distance.top - popupRect.height + arrowSize
                   });
                 } else {
                   $popup.css({
@@ -525,7 +567,7 @@
               case Position.RIGHT:
                 if (!module.is.pointing()) {
                   $popup.css({
-                    left: distance.left + rect.width - 8
+                    left: distance.left + rect.width - arrowSize
                   });
                 } else {
                   $popup.css({
@@ -536,7 +578,7 @@
               case Position.BOTTOM:
                 if (!module.is.pointing()) {
                   $popup.css({
-                    top: distance.top + rect.height - 8
+                    top: distance.top + rect.height - arrowSize
                   });
                 } else {
                   $popup.css({
@@ -547,7 +589,7 @@
               case Position.LEFT:
                 if (!module.is.pointing()) {
                   $popup.css({
-                    left: distance.left - popupRect.width + 8
+                    left: distance.left - popupRect.width + arrowSize
                   });
                 } else {
                   $popup.css({
@@ -558,40 +600,32 @@
             switch (direction) {
               case Position.TOP:
               case Position.BOTTOM:
-                console.log('A');
                 // 如果彈出式訊息寬度剛好全滿，那麼就直接置左。
                 if (popupRect.width + 2 >= boundaryRect.width) {
-                  console.log('B');
                   $popup.css({
                     left: 0
                   });
                 // 如果左右各有空間，那麼就置中彈出式訊息。
                 } else if (distance.left > popupRect.width / 2 && distance.right > popupRect.width / 2) {
-                  console.log('C');
                   $popup.css({
                     left: (distance.left + rect.width / 2) - popupRect.width / 2
                   });
                 // 如果預計會超出邊界的話。
                 } else if ((distance.left + popupRect.width) - boundaryRect.width > 0 || (distance.right + popupRect.width) - boundaryRect.width > 0) {
-                  console.log('D');
                   // 要是觸發元素在左半邊。
                   if (distance.left < boundaryRect.width / 2) {
-                    console.log('E');
                     // 就讓彈出式訊息靠齊左側。
                     $popup.css({
                       left: 0 + padding
                     });
                   } else {
-                    // 不然觸發元素在右半邊的話。
-                    console.log('F');
                     // 就讓彈出式訊息靠右側。
+                    // 不然觸發元素在右半邊的話。
                     $popup.css({
                       left: distance.left + rect.width - popupRect.width + distance.right - padding
                     });
                   }
                 } else {
-                  
-                  console.log('G');
                   $popup.css({
                     left: (distance.left + rect.width / 2) - popupRect.width / 2
                   });
@@ -635,27 +669,14 @@
         },
         content: (content) => {
           $popup.find(Selector.CONTENT).html(content);
+          
+          // AUTO REPOSITION
+
           return $allModules;
         },
         html: (html) => {
           $popup.html(html);
           return $allModules;
-        }
-      },
-      animate: {
-        show: (callback) => {
-          return $popup.addClass(`${ClassName.VISIBLE} ${ClassName.ANIMATING}`).off(Event.ANIMATIONEND).one(Event.ANIMATIONEND, () => {
-            if (callback != null) {
-              return callback.call();
-            }
-          }).emulate(Event.ANIMATIONEND, duration);
-        },
-        hide: (callback) => {
-          return $popup.removeClass(ClassName.VISIBLE).addClass(ClassName.ANIMATING).one(Event.ANIMATIONEND, () => {
-            if (callback != null) {
-              return callback.call();
-            }
-          }).emulate(Event.ANIMATIONEND, duration);
         }
       },
       is: {
@@ -694,7 +715,6 @@
                 }
                 break;
               case Position.BOTTOM:
-                console.log(y > rect.bottom, y < popupRect.top, x < popupRect.right, x > popupRect.left);
                 if (y > rect.bottom && y < popupRect.top && x < popupRect.right && x > popupRect.left) {
                   return true;
                 }
@@ -751,15 +771,22 @@
           return $popup.insertAfter($this);
         }
       },
-      exists: () => {},
-      repaint: () => {
-        return $popup.repaint();
+      exists: () => {
+        return $popup.exists();
       },
       //reposition: =>
+      event: {
+        start: () => {
+          if (!$popup.exists()) {
 
-      //remove:
-      //    popup: =>
-      trigger: () => {},
+          }
+        },
+        end: () => {
+          if (!$popup.exists()) {
+
+          }
+        }
+      },
       hover: {
         handler: (event) => {
           var isHoverable, isPointingChild, isPointingPopup, isPointingSelf, pointElement;
@@ -829,9 +856,38 @@
           return module.hide();
         }
       },
+      trigger: {
+        create: () => {
+          return $this.trigger(Event.CREATE);
+        },
+        remove: () => {
+          return $this.trigger(Event.REMOVE);
+        },
+        show: () => {
+          debug('發生 SHOW 事件', element);
+          return settings.onShow.call(module.get.popup(), element);
+        },
+        visible: () => {
+          return $this.trigger(Event.VISIBLE);
+        },
+        hide: () => {
+          debug('發生 HIDE 事件', element);
+          return settings.onHide.call(module.get.popup(), element);
+        },
+        hidden: () => {
+          return $this.trigger(Event.HIDDEN);
+        },
+        unplaceable: () => {
+          return $this.trigger(Event.UNPLACEABLE);
+        }
+      },
       bind: {
         hover: () => {
-          return $body.on(Event.MOUSEMOVE, module.hover.handler);
+          //$body.on Event.MOUSEMOVE, module.hover.handler
+          $this.on(Event.MOUSEENTER, module.event.start());
+          $this.on(Event.MOUSELEAVE, module.event.end());
+          $popup.on(Event.MOUSEENTER, module.event.start());
+          return $popup.on(Event.MOUSELEAVE, module.event.end());
         },
         click: () => {
           return $body.on(Event.CLICK, module.click.handler);
@@ -860,8 +916,28 @@
             }
           }
           if (settings.hideOnScroll === true) {
-            return module.bind.scroll();
+            module.bind.scroll();
           }
+          $this.on(Event.CREATE, () => {
+            debug('發生 CREATE 事件', element);
+            return settings.onCreate.call(module.get.popup(), element);
+          });
+          $this.on(Event.REMOVE, () => {
+            debug('發生 REMOVE 事件', element);
+            return settings.onRemove.call(module.get.popup(), element);
+          });
+          $this.on(Event.VISIBLE, () => {
+            debug('發生 VISIBLE 事件', element);
+            return settings.onVisible.call(module.get.popup(), element);
+          });
+          $this.on(Event.HIDDEN, () => {
+            debug('發生 HIDDEN 事件', element);
+            return settings.onHidden.call(module.get.popup(), element);
+          });
+          return $this.on(Event.UNPLACEABLE, () => {
+            debug('發生 UNPLACEABLE 事件', element);
+            return settings.onUnplaceable.call(module.get.popup(), element);
+          });
         }
       },
       // ------------------------------------------------------------------------
@@ -874,18 +950,19 @@
         if (position !== null) {
           module.set.position(position, true);
         }
+        module.init.popup();
+        module.trigger.create();
+        module.bind.events();
+        module.set.inverted(settings.inverted);
+        module.set.pointing(settings.pointing);
         variation = $this.attr(Attribute.VARIATION);
         if (variation !== null) {
           module.set.variation(variation);
         }
-        module.init.popup();
         module.set.hoverable(settings.hoverable);
         module.set.transition(settings.transition);
-        module.set.inverted(settings.inverted);
-        module.set.pointing(settings.pointing);
         module.set.boundary(settings.boundary);
-        module.set.scrollContext(settings.scrollContext);
-        return module.bind.events();
+        return module.set.scrollContext(settings.scrollContext);
       },
       instantiate: () => {},
       //debug '實例化彈出式訊息', element

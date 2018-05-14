@@ -632,7 +632,7 @@
         <input type="text">
 
     </div>
-    <div class="ts input-test popup">
+    <div class="ts input-test small popup">
         <div class="content">
             這是一個可愛的輸入欄位。
         </div>
@@ -848,26 +848,21 @@
         testUnit({
             Core: {
                 'Popup': () => {
-                    //ts('.test.a.button').popup()
-                    //ts('.test.b.button').popup({
-                    //    boundary: '.segment',
-                    //    on: 'click'
-                    //})
                     ts('table th:first-child').popup({
-                        popup: ts('.table-test.popup'),
-                        inverted: true,
-                        pointing: false,
-                        size: 'tiny',
-                        position: 'bottom',
-                        boundary: 'body',
+                        popup    : ts('.table-test.popup'),
+                        inverted : true,
+                        pointing : false,
+                        variation: 'tiny',
+                        position : 'bottom',
+                        boundary : 'body',
                     })
                     ts('.ts.input input').popup({
-                        popup: ts('.input-test.popup'),
-                        on: 'focus',
-                        boundary: 'body',
-                        position: 'bottom',
-                        inverted: true,
-                        size: 'tiny',
+                        popup    : ts('.input-test.popup'),
+                        on       : 'focus',
+                        boundary : 'body',
+                        position : 'bottom',
+                        inverted : true,
+                        variation: 'tiny',
                     })
                     ts('i.circular.heart.icon.link').popup({
                         content: "Wow, hello, world!",
@@ -884,21 +879,21 @@
                     })
                     ts('.browse.item').popup({
                         hoverable: true,
-                        on: 'hover',
-                        position: 'bottom',
-                        boundary: '.ts.menu',
-                        delay: {
+                        on       : 'hover',
+                        position : 'bottom',
+                        boundary : '.ts.menu',
+                        delay    : {
                             show: 300,
                             hide: 800,
                         }
                     })
                     ts('.gridx.item').popup({
                         hoverable: true,
-                        on: 'hover',
-                        popup: '.gridx.item + .ts.popup',
-                        position: 'right',
-                        boundary: 'body',
-                        delay: {
+                        on       : 'hover',
+                        popup    : '.gridx.item + .ts.popup',
+                        position : 'right',
+                        boundary : 'body',
+                        delay    : {
                             show: 300,
                             hide: 800,
                         }
@@ -914,6 +909,9 @@
                 'Position': () => {
                     ts('.button').popup('set position', 'top right')
                 },
+                'Loading': () => {
+                    ts('.button').popup('set position', 'top right')
+                },
             },
             Is: {
                 'Visible': () => {
@@ -922,9 +920,17 @@
                 'Hidden': () => {
                     alert(ts('.accordion').popup('is hidden'))
                 },
+                'Loading': () => {
+                    alert(ts('.accordion').popup('is visible'))
+                },
             },
             Remove: {
                 'Popup': () => {
+                    ts('.accordion').popup('remove popup')
+                },
+            },
+            Change: {
+                'Content': () => {
                     ts('.accordion').popup('remove popup')
                 },
             },
