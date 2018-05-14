@@ -479,6 +479,13 @@ ts.fn.not =
         ts @toArray().filter (element) =>
             ts(selector).indexOf(element) is -1
 
+# Filter
+#
+# 將指定元素從選擇器中保留，簡單說就是 `Not` 的相反。
+ts.fn.filter =
+    value: (selector) ->
+        ts @toArray().filter (element) =>
+            ts(selector).indexOf(element) isnt -1
 
 # Slice
 #

@@ -615,6 +615,17 @@
     }
   };
 
+  // Filter
+
+  // 將指定元素從選擇器中保留，簡單說就是 `Not` 的相反。
+  ts.fn.filter = {
+    value: function(selector) {
+      return ts(this.toArray().filter((element) => {
+        return ts(selector).indexOf(element) !== -1;
+      }));
+    }
+  };
+
   // Slice
 
   // 替元素陣列進行切分。
