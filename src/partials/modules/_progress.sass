@@ -51,15 +51,15 @@
 //*******************************//
 
 .ts.progress
-    position        : relative
-    display         : flex
-    max-width       : 100%
-    border          : $progress_border
-    margin          : $progress_margin
-    background: $progress_background
-    padding         : $progress_padding
-    border-radius   : $progress_borderRadius
-    overflow        : hidden
+    position     : relative
+    display      : flex
+    max-width    : 100%
+    border       : $progress_border
+    margin       : $progress_margin
+    background   : $progress_background
+    padding      : $progress_padding
+    border-radius: $progress_borderRadius
+    overflow     : hidden
 
 .ts.progress:first-child
     margin: $progress_firstMargin
@@ -77,7 +77,8 @@
     position        : $progress_barPosition
     width           : $progress_barInitialWidth
     min-width       : $progress_barMinWidth
-    background: $progress_defaultBarColor
+    background      : $progress_defaultBarColor
+    transition      : width 300ms ease, background-color 300ms ease
     border-radius   : $progress_barBorderRadius
 
 .ts.progress:not(.buffering) .bar:not(:last-child)
@@ -160,11 +161,11 @@
 //       Active
 //-------------------//
 
-.ts.active.progress .bar
+.ts.active.progress .bar:not(.buffer)
     position : relative
     min-width: $progress_activeMinWidth
 
-.ts.progress.active .bar:after
+.ts.progress.active .bar:not(.buffer):after
     position        : absolute
     top             : 0
     bottom          : 0
