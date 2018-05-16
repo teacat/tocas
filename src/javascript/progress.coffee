@@ -49,10 +49,6 @@ Settings =
     onPreparing           : =>
     # 處於已請求但仍未知時所會呼叫的回呼函式。
     onQueriedIndeterminate: =>
-    # 當異動開始時所會呼叫的回呼函式。
-    onStart               : (value, total) =>
-    # 當異動結束、動畫演繹完畢時所會呼叫的回呼函式。
-    onEnd                 : (value, total) =>
     # 當進度達到全滿時所會呼叫的回呼函式。
     onComplete            : (total) =>
 
@@ -67,8 +63,6 @@ Event =
     INDETERMINATE        : "indeterminate#{EVENT_NAMESPACE}"
     PREPARING            : "preparing#{EVENT_NAMESPACE}"
     QUERIED_INDETERMINATE: "queriedindeterminate#{EVENT_NAMESPACE}"
-    START                : "start#{EVENT_NAMESPACE}"
-    END                  : "end#{EVENT_NAMESPACE}"
     COMPLETE             : "complete#{EVENT_NAMESPACE}"
 
 # 樣式名稱。
@@ -388,51 +382,41 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             queried:
                 indeterminate: =>
                     $this.trigger Event.QUERIED_INDETERMINATE
-            start: =>
-                $this.trigger Event.START
-            end: =>
-                $this.trigger Event.END
             complete: =>
                 $this.trigger Event.COMPLETE
 
         bind:
             events: =>
                 $this.on Event.CHANGE, =>
-                    debug '發生 CHANGE 事件', element
-                    settings.onChange.call context, event
+                    debug '發生 CHANGE 事件', element, module.get.percent(), module.get.value(), module.get.total()
+                    settings.onChange.call element, module.get.percent(), module.get.value(), module.get.total()
                 $this.on Event.SUCCESS, =>
                     debug '發生 SUCCESS 事件', element
-                    settings.onSucess.call context, event
+                    settings.onSuccess.call element, module.get.value(), module.get.total()
                 $this.on Event.ACTIVE, =>
                     debug '發生 ACTIVE 事件', element
-                    settings.onActive.call context, event
+                    settings.onActive.call element, module.get.value(), module.get.total()
                 $this.on Event.ERROR, =>
                     debug '發生 ERROR 事件', element
-                    settings.onError.call context, event
+                    settings.onError.call element, module.get.value(), module.get.total()
                 $this.on Event.WARNING, =>
                     debug '發生 WARNING 事件', element
-                    settings.onWarning.call context, event
+                    settings.onWarning.call element, module.get.value(), module.get.total()
                 $this.on Event.BUFFERING, =>
                     debug '發生 BUFFERING 事件', element
-                    settings.onBuffering.call context, event
+                    settings.onBuffering.call element, module.get.buffer.value(), module.get.value(), module.get.total()
                 $this.on Event.INDETERMINATE, =>
                     debug "發生 INDETERMINATE 事件", element
-                    settings.onIndeterminate.call context, event
+                    settings.onIndeterminate.call element
                 $this.on Event.PREPARING, =>
                     debug "發生 PREPARING 事件", element
-                    settings.onPreparing.call context, event
+                    settings.onPreparing.call element
                 $this.on Event.QUERIED_INDETERMINATE, =>
                     debug "發生 QUERIED_INDETERMINATE 事件", element
-                    settings.onQueriedIndeterminate.call context, event
-                $this.on Event.START, =>
-                    debug "發生 START 事件", element
-                    settings.onStart.call context, event
-                $this.on Event.END, =>
-                    debug "發生 END 事件", element
-                    settings.onEnd.call context, event
+                    settings.onQueriedIndeterminate.call element
                 $this.on Event.COMPLETE, =>
                     debug "發生 COMPLETE 事件", element
-                    settings.onComplete.call context, event
+                    settings.onComplete.call element, module.get.total()
 
         # ------------------------------------------------------------------------
         # 基礎方法

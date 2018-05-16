@@ -56,10 +56,6 @@
     onPreparing: () => {},
     // 處於已請求但仍未知時所會呼叫的回呼函式。
     onQueriedIndeterminate: () => {},
-    // 當異動開始時所會呼叫的回呼函式。
-    onStart: (value, total) => {},
-    // 當異動結束、動畫演繹完畢時所會呼叫的回呼函式。
-    onEnd: (value, total) => {},
     // 當進度達到全滿時所會呼叫的回呼函式。
     onComplete: (total) => {}
   };
@@ -75,8 +71,6 @@
     INDETERMINATE: `indeterminate${EVENT_NAMESPACE}`,
     PREPARING: `preparing${EVENT_NAMESPACE}`,
     QUERIED_INDETERMINATE: `queriedindeterminate${EVENT_NAMESPACE}`,
-    START: `start${EVENT_NAMESPACE}`,
-    END: `end${EVENT_NAMESPACE}`,
     COMPLETE: `complete${EVENT_NAMESPACE}`
   };
 
@@ -474,12 +468,6 @@
             return $this.trigger(Event.QUERIED_INDETERMINATE);
           }
         },
-        start: () => {
-          return $this.trigger(Event.START);
-        },
-        end: () => {
-          return $this.trigger(Event.END);
-        },
         complete: () => {
           return $this.trigger(Event.COMPLETE);
         }
@@ -487,52 +475,44 @@
       bind: {
         events: () => {
           $this.on(Event.CHANGE, () => {
-            debug('發生 CHANGE 事件', element);
-            return settings.onChange.call(context, event);
+            debug('發生 CHANGE 事件', element, module.get.percent(), module.get.value(), module.get.total());
+            return settings.onChange.call(element, module.get.percent(), module.get.value(), module.get.total());
           });
           $this.on(Event.SUCCESS, () => {
             debug('發生 SUCCESS 事件', element);
-            return settings.onSucess.call(context, event);
+            return settings.onSuccess.call(element, module.get.value(), module.get.total());
           });
           $this.on(Event.ACTIVE, () => {
             debug('發生 ACTIVE 事件', element);
-            return settings.onActive.call(context, event);
+            return settings.onActive.call(element, module.get.value(), module.get.total());
           });
           $this.on(Event.ERROR, () => {
             debug('發生 ERROR 事件', element);
-            return settings.onError.call(context, event);
+            return settings.onError.call(element, module.get.value(), module.get.total());
           });
           $this.on(Event.WARNING, () => {
             debug('發生 WARNING 事件', element);
-            return settings.onWarning.call(context, event);
+            return settings.onWarning.call(element, module.get.value(), module.get.total());
           });
           $this.on(Event.BUFFERING, () => {
             debug('發生 BUFFERING 事件', element);
-            return settings.onBuffering.call(context, event);
+            return settings.onBuffering.call(element, module.get.buffer.value(), module.get.value(), module.get.total());
           });
           $this.on(Event.INDETERMINATE, () => {
             debug("發生 INDETERMINATE 事件", element);
-            return settings.onIndeterminate.call(context, event);
+            return settings.onIndeterminate.call(element);
           });
           $this.on(Event.PREPARING, () => {
             debug("發生 PREPARING 事件", element);
-            return settings.onPreparing.call(context, event);
+            return settings.onPreparing.call(element);
           });
           $this.on(Event.QUERIED_INDETERMINATE, () => {
             debug("發生 QUERIED_INDETERMINATE 事件", element);
-            return settings.onQueriedIndeterminate.call(context, event);
-          });
-          $this.on(Event.START, () => {
-            debug("發生 START 事件", element);
-            return settings.onStart.call(context, event);
-          });
-          $this.on(Event.END, () => {
-            debug("發生 END 事件", element);
-            return settings.onEnd.call(context, event);
+            return settings.onQueriedIndeterminate.call(element);
           });
           return $this.on(Event.COMPLETE, () => {
             debug("發生 COMPLETE 事件", element);
-            return settings.onComplete.call(context, event);
+            return settings.onComplete.call(element, module.get.total());
           });
         }
       },
