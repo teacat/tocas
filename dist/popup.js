@@ -459,34 +459,32 @@
           return $popup.get();
         }
       },
-      reposition: {
-        arrow: () => {
-          return setTimeout(() => {
-            module.refresh();
-            switch (module.get.position()) {
-              case Position.TOP:
-                return $arrow.css({
-                  left: (rect.left + rect.width / 2) - popupRect.left - arrowSize - arrowBorderSize,
-                  top: popupRect.height - arrowBorderSize
-                });
-              case Position.RIGHT:
-                return $arrow.css({
-                  left: `-${arrowSize * 2}`,
-                  top: (rect.top + rect.height / 2) - popupRect.top - arrowSize - arrowBorderSize
-                });
-              case Position.BOTTOM:
-                return $arrow.css({
-                  left: (rect.left + rect.width / 2) - popupRect.left - arrowSize - arrowBorderSize,
-                  top: `-${arrowSize * 2}`
-                });
-              case Position.LEFT:
-                return $arrow.css({
-                  left: popupRect.width - arrowBorderSize,
-                  top: (rect.top + rect.height / 2) - popupRect.top - arrowSize - arrowBorderSize
-                });
-            }
-          }, 0);
-        }
+      repositionArrow: () => {
+        return setTimeout(() => {
+          module.refresh();
+          switch (module.get.position()) {
+            case Position.TOP:
+              return $arrow.css({
+                left: (rect.left + rect.width / 2) - popupRect.left - arrowSize - arrowBorderSize,
+                top: popupRect.height - arrowBorderSize
+              });
+            case Position.RIGHT:
+              return $arrow.css({
+                left: `-${arrowSize * 2}`,
+                top: (rect.top + rect.height / 2) - popupRect.top - arrowSize - arrowBorderSize
+              });
+            case Position.BOTTOM:
+              return $arrow.css({
+                left: (rect.left + rect.width / 2) - popupRect.left - arrowSize - arrowBorderSize,
+                top: `-${arrowSize * 2}`
+              });
+            case Position.LEFT:
+              return $arrow.css({
+                left: popupRect.width - arrowBorderSize,
+                top: (rect.top + rect.height / 2) - popupRect.top - arrowSize - arrowBorderSize
+              });
+          }
+        }, 0);
       },
       calculate: {
         direction: (viewport, level, $parent) => {
@@ -660,7 +658,7 @@
                 }
             }
             module.set.position(direction);
-            return module.reposition.arrow();
+            return module.repositionArrow();
           }
         }
       },

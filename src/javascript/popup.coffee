@@ -394,28 +394,27 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             popup: =>
                 return $popup.get()
 
-        reposition:
-            arrow: =>
-                setTimeout =>
-                    module.refresh()
-                    switch module.get.position()
-                        when Position.TOP
-                            $arrow.css
-                                left: (rect.left + rect.width / 2) - popupRect.left - arrowSize - arrowBorderSize
-                                top : popupRect.height - arrowBorderSize
-                        when Position.RIGHT
-                            $arrow.css
-                                left: "-#{arrowSize * 2}"
-                                top : (rect.top + rect.height / 2) - popupRect.top - arrowSize - arrowBorderSize
-                        when Position.BOTTOM
-                            $arrow.css
-                                left: (rect.left + rect.width / 2) - popupRect.left - arrowSize - arrowBorderSize
-                                top : "-#{arrowSize * 2}"
-                        when Position.LEFT
-                            $arrow.css
-                                left: popupRect.width - arrowBorderSize
-                                top : (rect.top + rect.height / 2) - popupRect.top - arrowSize - arrowBorderSize
-                , 0
+        repositionArrow: =>
+            setTimeout =>
+                module.refresh()
+                switch module.get.position()
+                    when Position.TOP
+                        $arrow.css
+                            left: (rect.left + rect.width / 2) - popupRect.left - arrowSize - arrowBorderSize
+                            top : popupRect.height - arrowBorderSize
+                    when Position.RIGHT
+                        $arrow.css
+                            left: "-#{arrowSize * 2}"
+                            top : (rect.top + rect.height / 2) - popupRect.top - arrowSize - arrowBorderSize
+                    when Position.BOTTOM
+                        $arrow.css
+                            left: (rect.left + rect.width / 2) - popupRect.left - arrowSize - arrowBorderSize
+                            top : "-#{arrowSize * 2}"
+                    when Position.LEFT
+                        $arrow.css
+                            left: popupRect.width - arrowBorderSize
+                            top : (rect.top + rect.height / 2) - popupRect.top - arrowSize - arrowBorderSize
+            , 0
 
         calculate:
             direction: (viewport, level, $parent) =>
@@ -544,7 +543,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                     $popup.css
                                         top: distance.top - distance.viewport.top + padding
                     module.set.position direction
-                    module.reposition.arrow()
+                    module.repositionArrow()
 
         toggle: =>
             if module.is.hidden()
