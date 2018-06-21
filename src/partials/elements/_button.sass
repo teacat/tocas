@@ -365,9 +365,9 @@
 .ts.labeled.icon.buttons .button > .icon
     border-radius: 0
 
-// .ts.labeled.icon.buttons .button:first-child > .icon
-//     border-top-left-radius   : $button_borderRadius
-//     border-bottom-left-radius: $button_borderRadius
+.ts.labeled.icon.buttons .button:first-child > .icon
+    border-top-left-radius   : $button_borderRadius
+    border-bottom-left-radius: $button_borderRadius
 //
 // .ts.labeled.icon.buttons .button:last-child > .icon
 //     border-top-right-radius   : $button_borderRadius
@@ -697,6 +697,9 @@
 //       Basic
 //-------------------//
 
+.ts.button.basic
+    border-width: $button_basicBorderWidth
+
 .ts.button.basic,
 .ts.button.basic:hover:not(.active):not(:active),
 .ts.buttons.basic .button,
@@ -839,7 +842,8 @@
 //*******************************///
 
 .ts.buttons
-    display: inline-flex
+    display       : inline-flex
+    vertical-align: middle
 
 .ts.buttons:not(.separated):not(.vertical)
     .ts.button
@@ -856,11 +860,11 @@
             border-right-width        : $button_borderWidth
 
         &:last-child
-            border-left-width         : 0
+            border-left-width: 0
 
     &.inverted.basic .ts.button
         &:not(:last-child)
-            border-right-width        : calc(#{$button_borderWidth} * 2)
+            border-right-width: $button_invertedBasicBorderWidth
 
 .ts.vertical.buttons:not(.separated)
     display: block
@@ -882,7 +886,7 @@
             border-bottom-width       : $button_borderWidth
 
 .ts.vertical.inverted.basic.buttons:not(.separated) .ts.button:last-child
-    border-bottom-width: calc(#{$button_borderWidth} * 2)
+    border-bottom-width: $button_invertedBasicBorderWidth
 
 //-------------------//
 //     Separated
