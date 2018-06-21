@@ -12,7 +12,7 @@ MODULE_NAMESPACE = "module-#{NAME}"
 # 模組設定。
 Settings =
     # 消音所有提示，甚至是錯誤訊息。
-    silent        : false
+    silent        : true
     # 顯示除錯訊息。
     debug         : true
     # 監聽 DOM 結構異動並自動重整快取。
@@ -20,7 +20,7 @@ Settings =
     # 欲使用的彈出式訊息元素選擇器（如果已經有先建立好的話），`false` 的話則是即時產生。
     popup         : false
     # 同時是否僅能有一個彈出式訊息出現在螢幕上。
-    exclusive     : false
+    exclusive     : true
     # 彈出式訊息的邊界元素，彈出式訊息會試圖不要超過這個元素。
     boundary      : 'body'
     # 此彈出式訊息偵測畫面是否有捲動的元素選擇器，如果指定元素有捲動事件則會自動隱藏此彈出式訊息。
@@ -88,7 +88,7 @@ Event =
     CLICK       : "click#{EVENT_NAMESPACE}"
     FOCUS       : "focus#{EVENT_NAMESPACE}"
     FOCUSOUT    : "focusout#{EVENT_NAMESPACE}"
-    BULR        : "bulr#{EVENT_NAMESPACE}"
+    BLUR        : "blur#{EVENT_NAMESPACE}"
     SCROLL      : "scroll#{EVENT_NAMESPACE}"
     MOUSEMOVE   : "mousemove#{EVENT_NAMESPACE}"
     MOUSEENTER  : "mouseenter#{EVENT_NAMESPACE}"
@@ -188,11 +188,11 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
     module =
         show: (callback) =>
             module.remove.timers()
-            if module.is.animating()
-                return
+            #if module.is.animating()
+            #    return
             if module.is.visible()
                 return
-            module.calculate.popup.position()
+            module.reposition()
             if module.trigger.show() is false
                 return
             module.animate.show =>
@@ -203,8 +203,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
         hide: (callback) =>
             module.remove.timers()
-            if module.is.animating()
-                return
+            #if module.is.animating()
+            #    return
             if module.is.hidden()
                 return
             if module.trigger.hide() is false
@@ -222,6 +222,16 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     ts el
                         .data  Metadata.ACTIVATOR
                         .popup 'hide'
+            return $allModules
+
+        hideOthers: =>
+            ts Selector.POPUP
+                .filter Selector.VISIBLE
+                .not    $popup.get()
+                .each   (el) =>
+                    $activator = ts(el).data Metadata.ACTIVATOR
+                    if $activator isnt undefined
+                        $activator.popup 'hide'
             return $allModules
 
         animate:
@@ -260,6 +270,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     $popup.addClass ClassName.LOADING
                 else
                     $popup.removeClass ClassName.LOADING
+                module.reposition()
             position: (position, modify=false) =>
                 $popup.attr Attribute.POSITION, position
                 settings.position = position if modify
@@ -312,7 +323,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             variation: (value) =>
                 $popup.addClass value
             activator: =>
-                $popup.data Metadata.ACTIVATOR, module
+                $popup.data Metadata.ACTIVATOR, $this
             show:
                 timer: =>
                     $this.setTimer
@@ -366,6 +377,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                         .each    (el, i) =>
                             offsetTop  += el.offsetTop
                             offsetLeft += el.offsetLeft
+
                 return {
                     top   : offsetTop
                     left  : offsetLeft
@@ -458,6 +470,8 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     direction = module.calculate.direction distance.viewport, 0, $boundary
                     position  = ''
 
+                    console.log distance
+
                     if direction is null
                         module.trigger.unplaceable()
                         return
@@ -499,7 +513,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                                 $popup.css
                                     left: 0
                             # 如果左右各有空間，那麼就置中彈出式訊息。
-                            else if distance.left > popupRect.width / 2 and distance.right > popupRect.width / 2
+                            else if distance.viewport.left > popupRect.width / 2 and distance.viewport.right > popupRect.width / 2
                                 $popup.css
                                     left: (distance.left + rect.width / 2) - popupRect.width / 2
                             # 如果預計會超出邊界的話。
@@ -546,16 +560,14 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     .html title
                 return $allModules
             content: (content) =>
-                $popup
-                    .find Selector.CONTENT
-                    .html content
-                #
-                #
-                #
-                # AUTO REPOSITION
-                #
-                #
-                #
+                $content = $popup.find Selector.CONTENT
+                if $content.exists()
+                    $content
+                        .html content
+                else
+                    $popup.html content
+                    module.create.arrow()
+                module.reposition()
                 return $allModules
             html: (html) =>
                 $popup.html html
@@ -632,55 +644,27 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
                     $popup.append $content
                 $popup.insertAfter $this
 
-
         exists: =>
             $popup.exists()
 
-        #reposition: =>
-
+        reposition: =>
+            module.calculate.popup.position()
+            return $allModules
 
         event:
             start: =>
                 if not $popup.exists()
                     return
+                if settings.exclusive is true
+                    module.hideOthers()
+                module.remove.timers()
+                module.set.show.timer()
 
             end: =>
                 if not $popup.exists()
                     return
-
-
-        hover:
-            handler: (event) =>
-                if not $popup.exists()
-                    return
-                pointElement    = ts.fromPoint(event.clientX, event.clientY).get()
-                isPointingSelf  = $this.is        pointElement
-                isPointingChild = $this.contains  pointElement
-                isPointingPopup = $popup.contains pointElement
-                isHoverable     = module.is.hoverable()
-
-                if isPointingSelf or isPointingChild
-                    module.remove.hide.timer()
-                    if not module.is.showing()
-                        module.set.show.timer()
-                    return
-                if not isHoverable
-                    module.remove.show.timer()
-                    if not module.is.hiding()
-                        module.set.hide.timer()
-                    return
-                if isPointingPopup
-                    module.remove.hide.timer()
-                    return
-                module.refresh()
-
-                if module.is.arrow.bounding event.clientX, event.clientY
-                    return
-
-                module.remove.show.timer()
-
-                if not module.is.hiding()
-                    module.set.hide.timer()
+                module.remove.timers()
+                module.set.hide.timer()
 
         click:
             handler: (event) =>
@@ -697,7 +681,7 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             handler: (event) =>
                 module.show()
 
-        bulr:
+        blur:
             handler: (event) =>
                 module.hide()
 
@@ -727,17 +711,16 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
 
         bind:
             hover: =>
-                #$body.on Event.MOUSEMOVE, module.hover.handler
-                $this.on Event.MOUSEENTER, module.event.start()
-                $this.on Event.MOUSELEAVE, module.event.end()
+                $this.on Event.MOUSEENTER, module.event.start
+                $this.on Event.MOUSELEAVE, module.event.end
 
-                $popup.on Event.MOUSEENTER, module.event.start()
-                $popup.on Event.MOUSELEAVE, module.event.end()
+                $popup.on Event.MOUSEENTER, module.event.start
+                $popup.on Event.MOUSELEAVE, module.event.end
             click: =>
                 $body.on Event.CLICK, module.click.handler
             focus: =>
                 $this.on Event.FOCUS   , module.focus.handler
-                $this.on Event.FOCUSOUT, module.bulr.handler
+                $this.on Event.FOCUSOUT, module.blur.handler
             scroll: =>
                 $scrollContext.on Event.SCROLL, module.scroll.handler
             events: =>
@@ -776,17 +759,13 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
         # ------------------------------------------------------------------------
 
         initialize: =>
-            #debug '初始化彈出式訊息', element
+            debug '初始化彈出式訊息', element
 
             position = $this.attr Attribute.POSITION
             if position isnt null
                 module.set.position position, true
-
             module.init.popup()
             module.trigger.create()
-            module.bind.events()
-
-
             module.set.inverted      settings.inverted
             module.set.pointing      settings.pointing
             variation = $this.attr Attribute.VARIATION
@@ -796,9 +775,10 @@ ts.register {NAME, MODULE_NAMESPACE, Error, Settings}, ({$allModules, $this, ele
             module.set.transition    settings.transition
             module.set.boundary      settings.boundary
             module.set.scrollContext settings.scrollContext
+            module.bind.events()
 
         instantiate: =>
-            #debug '實例化彈出式訊息', element
+            debug '實例化彈出式訊息', element
 
         refresh: =>
             rect         = $this.rect()

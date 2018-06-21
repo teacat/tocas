@@ -719,65 +719,49 @@
 
     <br><br>
     <br><br>
+    <strong>Auto Reposition</strong>
+    <br><br>
+
+    <div>
+        <button class="ts autoreposition button">
+            3 Seconds
+        </button>
+    </div>
+
+
+    <br><br>
+    <br><br>
     <strong>Positions</strong>
     <br><br>
 
-    <div class="ts button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="top left">
-        Top Left
+    <div class="ts button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="top">
+        Top
     </div>
-    <div class="ts button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="top center">
-        Top Center
+    <div class="ts button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="left">
+        Left
     </div>
-    <div class="ts button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="top right">
-        Top Right
+    <div class="ts button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="right">
+        Right
     </div>
-    <div class="ts divider"></div>
-    <div class="ts button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="bottom left">
-        Bottom Left
-    </div>
-    <div class="ts button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="bottom center">
-        Bottom Center
-    </div>
-    <div class="ts button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="bottom right">
-        Bottom Right
-    </div>
-    <div class="ts divider"></div>
-    <div class="ts button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="right center">
-        Right Center
-    </div>
-    <div class="ts button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="left center">
-        Left Center
+    <div class="ts button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="bottom">
+        Bottom
     </div>
 
     <br><br>
 
     <div class="ts divider"></div>
 
-    <div class="ts inverted button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="top left" data-variation="inverted">
-        Top Left
+    <div class="ts inverted button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="top" data-variation="inverted">
+        Top
     </div>
-    <div class="ts inverted button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="top center" data-variation="inverted">
-        Top Center
+    <div class="ts inverted button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="left" data-variation="inverted">
+        Left
     </div>
-    <div class="ts inverted button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="top right" data-variation="inverted">
-        Top Right
+    <div class="ts inverted button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="right" data-variation="inverted">
+        Right
     </div>
-    <div class="ts divider"></div>
-    <div class="ts inverted button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="bottom left" data-variation="inverted">
-        Bottom Left
-    </div>
-    <div class="ts inverted button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="bottom center" data-variation="inverted">
-        Bottom Center
-    </div>
-    <div class="ts inverted button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="bottom right" data-variation="inverted">
-        Bottom Right
-    </div>
-    <div class="ts divider"></div>
-    <div class="ts inverted button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="right center" data-variation="inverted">
-        Right Center
-    </div>
-    <div class="ts inverted button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="left center" data-variation="inverted">
-        Left Center
+    <div class="ts inverted button" data-content="蝴蝶，奶油飛。Butterfly！！" data-position="bottom" data-variation="inverted">
+        Bottom
     </div>
 
     <br><br>
@@ -876,6 +860,20 @@
                     })
                     ts('body > .ts.segment > .ts.button').popup({
                         boundary: '.ts.segment',
+                    })
+                    ts('.autoreposition').popup({
+                        html: 'Wow, so doge!',
+                        onVisible: (el) => {
+
+                            setTimeout(() => {
+                                ts(el).popup('set loading', true)
+                                setTimeout(() => {
+                                    ts(el).popup('set loading', false)
+                                    ts(el).popup('change content', 'Hello, world!<br><strong>This</strong> is IKEA. TextTextTextTextTextTextTextTextTextTextTextTextTextTextText.')
+                                }, 1000)
+
+                            }, 1000)
+                        }
                     })
                     ts('.browse.item').popup({
                         hoverable: true,
