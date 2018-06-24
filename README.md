@@ -186,6 +186,8 @@ Commits written in English are welcomed.
 
 [Office UI Fabric](http://dev.office.com/fabric#/components)
 
+[Photon](http://photonkit.com/)
+
 [Primer](http://primercss.io/)
 
 [Pure](http://purecss.io/)
