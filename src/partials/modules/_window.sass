@@ -1,0 +1,259 @@
+@import ../../variables/modules/window.variables
+
+//*******************************//
+//           Variations
+//*******************************//
+
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.window
+    border: $window_border
+    border-radius: $window_borderRadius
+    box-shadow: $window_boxShadow
+
+.ts.window > *:last-child
+    border-bottom-left-radius: $window_borderRadius
+    border-bottom-right-radius: $window_borderRadius
+
+//-------------------//
+//     Emphasis
+//-------------------//
+
+.ts.window.primary > .header,
+.ts.window.primary > .toolbar
+    background: $window_primaryBackgroundColor
+    color     : $window_primaryTextColor
+
+.ts.window.info > .header,
+.ts.window.info > .toolbar
+    background: $window_infoBackgroundColor
+    color     : $window_infoTextColor
+
+.ts.window.warning > .header,
+.ts.window.warning > .toolbar
+    background: $window_warningBackgroundColor
+    color     : $window_warningTextColor
+
+.ts.window.negative > .header,
+.ts.window.negative > .toolbar
+    background: $window_negativeBackgroundColor
+    color     : $window_negativeTextColor
+
+.ts.window.positive > .header,
+.ts.window.positive > .toolbar
+    background: $window_positiveBackgroundColor
+    color     : $window_positiveTextColor
+
+//-------------------//
+//     Inverted
+//-------------------//
+
+.ts.window.inverted > .header,
+.ts.window.inverted > .toolbar
+    background: $window_invertedBackgroundColor
+    color     : $window_invertedTextColor
+
+//-------------------//
+//     Minimized
+//-------------------//
+
+.ts.window.minimized .toolbar,
+.ts.window.minimized .content,
+.ts.window.minimized .panes,
+.ts.window.minimized .footer,
+    display: none
+
+//-------------------//
+//     Attached
+//-------------------//
+
+.ts.window[class*="top attached"]
+    +extend(top-attached)
+
+.ts.window.attached:not([class*="top attached"]):not([class*="bottom attached"])
+    +extend(attached)
+
+.ts.window[class*="bottom attached"]
+    +extend(bottom-attached)
+
+
+//*******************************//
+//              Header
+//*******************************//
+
+.ts.window > .header
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-top-left-radius: $window_borderRadius
+    border-top-right-radius: $window_borderRadius
+    font-weight: $window_headerFontWeight
+    color: $window_headerTextColor
+    background: $window_headerBackgroundColor
+
+
+
+
+//-------------------//
+//      Border
+//-------------------//
+
+.ts.window > .header + .message,
+.ts.window > .header + .content,
+.ts.window > .header + .panes,
+    border-top: $window_headerBorder
+
+//-------------------//
+//       Title
+//-------------------//
+
+.ts.window > .header > .title
+    padding: .7em 0
+    padding-left: .5em
+    flex: 1
+    white-space  : nowrap
+    text-overflow: ellipsis
+    overflow     : hidden
+    line-height: 1
+
+
+
+.ts.window > .header > .icon + .title
+    padding-left: 0
+
+//-------------------//
+//       Link Title
+//-------------------//
+
+.ts.window > .header > a.title
+    color: inherit
+
+.ts.window > .header > a.title:hover
+    background: rgba(0, 0, 0, 0.01)
+
+.ts.window > .header > a.title:active
+    background: rgba(0, 0, 0, 0.05)
+
+//-------------------//
+//   Center Aligned
+//-------------------//
+
+.ts.window > .header > .title[class*="center aligned"]
+    position: absolute
+    left: 0
+    right: 0
+    pointer-events: none
+    text-align: center
+
+//-------------------//
+//       Icon
+//-------------------//
+
+.ts.window > .header > .icon
+    margin-left: .5em
+    margin-right: .65em
+
+//-------------------//
+//      Actions
+//-------------------//
+
+.ts.window > .header > .actions
+    display: flex
+    margin-left: auto
+
+.ts.window > .header > .actions:first-child
+    display: flex
+    margin-left: 0
+
+.ts.window > .header > .actions:first-child > .item:first-child
+
+
+
+// Item
+.ts.window > .header > .actions > .item
+    padding: .7em .5em
+    color: inherit
+
+.ts.window > .header > .actions > .item > .icon
+    margin: 0
+
+//*******************************//
+//              Toolbat
+//*******************************//
+
+.ts.window > .toolbar
+    display: flex;
+    font-size: 12px
+    padding: 0em .75em .75em
+    flex-direction: row;
+    align-items: center;
+    color: $window_headerTextColor
+    background: $window_headerBackgroundColor
+    border-bottom: $window_headerBorder
+
+//*******************************//
+//              Message
+//*******************************//
+
+.ts.window > .message:not(.ts)
+    display: flex
+    padding: .25em .65em
+    background: $window_messageBackgroundColor
+
+.ts.window > .message:not(.ts) + .content
+    border-top: $window_messageBorder
+
+//*******************************//
+//            Content
+//*******************************//
+
+.ts.window > .content
+    padding: .65em
+    background: $window_backgroundColor
+    overflow-y: scroll
+
+.ts.window > .content + .content
+    border-top: $window_contentBorder
+
+
+
+
+//-------------------//
+//      Fitted
+//-------------------//
+
+.ts.window > .content.fitted
+    padding: 0
+
+//*******************************//
+//             Panes
+//*******************************//
+
+.ts.window > .panes
+    display: flex
+
+.ts.window > .panes > .pane
+    flex: 1
+
+.ts.window > .panes > .pane.sidebar
+    min-width: 150px
+    max-width: 220px
+    background: $window_sidebarBackgroundColor
+    border-right: $window_sidebarBorder
+
+//*******************************//
+//             Footer
+//*******************************//
+
+.ts.window > .footer
+    padding: .5em .65em
+    font-size: 12px
+
+    background: $window_footerSecondaryBackgroundColor
+
+.ts.window > .content + .footer,
+.ts.window > .panes + .footer,
+    border-top: $window_footerBorder
