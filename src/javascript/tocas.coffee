@@ -634,7 +634,6 @@ ts.fn.removeClass =
             names = newNames
         else
             names = Array.prototype.slice.call(arguments).join(' ')
-        #console.log @
         @each ->
             DOMTokenList.prototype.remove.apply(@classList, names.split(' ').filter(Boolean))
 
@@ -1155,3 +1154,15 @@ ts.fn.repaint =
     value: ->
         @each ->
             `void(this.offsetHeight)`
+
+# Unique ID
+#
+# 取得為此元素而產生的獨立編號，若無則建立。
+
+ts.fn.uniqueID =
+    value: ->
+        id = @$uniqueID
+        if id
+            return id
+        @$uniqueID = (Math.random().toString(16) + '000000000').substr(2, 8)
+        return @$uniqueID
