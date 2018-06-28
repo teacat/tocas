@@ -832,7 +832,6 @@
       } else {
         names = Array.prototype.slice.call(arguments).join(' ');
       }
-      //console.log @
       return this.each(function() {
         return DOMTokenList.prototype.remove.apply(this.classList, names.split(' ').filter(Boolean));
       });
@@ -1555,6 +1554,21 @@
       return this.each(function() {
         return void(this.offsetHeight);
       });
+    }
+  };
+
+  // Unique ID
+
+  // 取得為此元素而產生的獨立編號，若無則建立。
+  ts.fn.uniqueID = {
+    value: function() {
+      var id;
+      id = this.$uniqueID;
+      if (id) {
+        return id;
+      }
+      this.$uniqueID = (Math.random().toString(16) + '000000000').substr(2, 8);
+      return this.$uniqueID;
     }
   };
 
