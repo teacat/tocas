@@ -4,14 +4,96 @@
 
 格式基於[如何維護更新日誌](http://keepachangelog.com/)，而專案採用[語意化版本號碼](http://semver.org/)。
 
-## [2.4.0-alpha2] - 30 Oct 2017
-
-#### 破壞性問題
-
+## [3.0.0-alpha.1] - 5 Mar 2018
+### 破壞性問題
 1. 這個版本的所有 JavaScript 模塊正在開發，因此所有模塊皆不可用。
 
 #### 新功能
+1. 新增 Input Dropdown，可在下拉式選單搜尋內容值。（#332）
+2. 新增 Multiple Dropdown，可在下拉式選單選取多值。（#339、#500）
+3. 新增 Flag 能以 Svg 向量方式顯示各個國家的國旗。（#525）
+4. 新增 Placeholder 預置區塊供讀取或類 Lorem ipsum 用途。（#538）
+5. 新增 Transfer 穿梭框可交換左右兩方的項目。（#527）
+6. 從 Font Awesome 4.7.0 升級到 5.0.6。（#545）
+7. 新增 Image Comparison 圖片比較元件。（#530）
 
+#### Bug 修正
+1. 下拉式選單收起後會閃爍。（#435）
+2. Borderless 無邊框卡片無法用於卡片群組中。（#550）
+3. 在反色語意的結構化 Message 中，多個內容不會有分隔線。（#547）
+4. Basic Label 的連結顏色。（#559）
+5. List 的黑點不對齊、過粗。（#575）
+6. Speeches 在新的 Webkit 上不對齊與失效。（#531）
+7. iOS 上沒有慣性滾動。（#570）
+8. 置中 Menu 時的右側選單無法置右。（#566）
+9. Button 的條件會在窄螢幕被擠壓而不會自動換行。（#563）
+10. Container 在 Icon Message 中的寬度不正確。（@e0643f3523b40470cd7cee90b781ec9f7486bff1）
+11. Separated Buttons 在 Card 中的 Last Child 會無邊框。（#542）
+12. Slate 用上 Image 後的 Header 不是白色的。（#581）
+13. 反色 Basic Table 的框線顏色不正確。（@3bc716a455914cc42d4913240cf01b7b97990db9）
+14. 反色 Dropdown 選單。（#580）
+15. Tablesort 無法正確依照性質排列。（%572）
+
+#### 無法修正
+1. 以非 JavaScript 的方式將 Tooltip 用與 Speeches 的錯誤。（#454）
+
+#### 調整和新增
+1. 圖示有最小寬度。（@fc627137a4cb39443a8a59503e3026b28e199637）
+2. 能夠自訂 Snackbar 的隱藏時間與更多的回呼函式可供使用。（#435）
+3. 允許透過 JavaScript 產生臨時 Modal。（#504）
+4. 允許透過 JavaScript 產生臨時 Snackbar。（#505）
+5. Card 的內容支援 Horizontally Fitted 水平縮減。（#551）
+6. Card 的內容會在 Borderless 無邊框時一同採用縮減樣式。（@ 14cd1daf4985e4a053760d9d4d13b4bfc418548a）
+7. Header 可以有 Single Line 單行模式在標題過長時以「...」截斷。（#553）
+8. Progress 的文字可以浮空並置中於進度條。（#546）
+9. 標準化 List 的圖片樣式，並增加 Single Line 單行模式。（#552）
+10. 新增 Coupon Label，類似折價券般地在標籤左右兩側開孔。（#523）
+11. 有反色語意的 Link Button。（#535）
+12. 新增 Label 群組，類似 Cards 的用法。（#561）
+13. 新增 Corner Label，位於四個角落的三角形標籤。（#558）
+14. 新增 Tag Label，類似價格標籤。（#557）
+15. 新增 Ribbon、Banner、Empty Ribbon Label，彩帶標籤。（#556）
+16. Menu 的圖示現在預設會向右浮動。（#577）
+17. 因應新的 Sidebar 到來，移除 Menu 的水平捲動功能。（#576）
+18. Basic Button 現在也有脈動動畫。（#562）
+19. 移除多數的原生樣式覆蓋。（#528、#518）
+20. 新增基本線條的 Step 步驟樣式。（#540）
+21. 新增 Number Input 樣式可用於計數器輸入欄位。（#526）
+22. 新增 Secondary Divider 類似 Medium 的三點式分隔線。（#582）
+23. 新增 Vertical Divider 垂直分隔線且可帶文字。（#584）
+24. 新增 Offset Column 偏移用欄位能夠在 Stackable 時隱藏。（#585）
+25. 減短了 Timelined Feed 的上下空白間距。（@d4a7f48679f7ab77801709f6e219fdb3388251a3）
+26. 能在 Menu 中使用 Accordion 了。（#587）
+27. Form 的所有標籤文字粗度改為 500。（@75bec2b2a1787f9ee29a5cde0744e4a861826afb）
+28. 新增 Segmented、Field Accordion，片段與欄位手風琴。（#588）
+29. 新增 Segmented Checkbox。（#592）
+30. Button 中能有正常的 Label 了。（#136）
+31. 新增反色 Form。（#475）
+32. 新增 Description List 能將內容註釋稍微向右偏移，而標題繼續靠左。（#593）
+# 尚未完成、測試中
+33. 新增 Specification List 以內容為主，標題縮小的規格清單。（#596）
+34. 預設的 Dropdown 選單現在不會緊貼按鈕了，並移除 Floating 樣式。（#597）
+35. 讓 Relaxed List 更加地寬鬆。（#594）
+36. 加回項目上下皆有分隔線的 Celled List 清單。（#595）
+37. 新增 Horizontal Card 讓內容水平延展而不是垂直。（#601）
+38. 新增 Collapsed Cards 允許合併卡片並無間距。（#602）
+39. 更改 Basic Button 那難看的 Active 顏色。（@915d28d62eefb343796c912036ddf8a62359b749）
+40. 新增 Fluid Statistic 和 Unit 單位元素。（@4860b9639b2b10f46c11d364eebb7e0a5bbb6b08）
+41. 深化 Breadcrumb 的分隔線顏色。（@997f418d1e36051b5b16db17e6dfd6b9a11d07a6）
+42. 提高了 Header 的 Line Height 來對齊 Header 中的圖示。（@e8027e07266e40b762df6461de8fb97b8b41fd54）
+
+#### 文件頁面
+1. 新增商店、新聞範例。（@2ad4e10449fb02e6483ba235a72ba1920ca63f97）
+2. 更新範例的 Tocas 版本。（#573）
+3. 新增價格範例。（@3a8231ddedf564963407111cd7dc611d505550b6）
+4. 新增商品範例。（@1c46c463a42fe9cb012bd86e64fc7c1bca5f043a）
+5. 更新部落格範例，移除舊有 Slate 改用數張 Card。（@80e59b166f65a10840f459ded3c8d51eda19964e）
+
+## [2.4.0-alpha.2] - 30 Oct 2017
+#### 破壞性問題
+1. 這個版本的所有 JavaScript 模塊正在開發，因此所有模塊皆不可用。
+
+#### 新功能
 1. Feed 新增了 Timelined 樣式，類似 Twitter 的時間串連軸。（#451）
 2. Input 裡可以擺放 Attached Progress。（#417）
 3. Comment 新增 Right Floated Actions 可在留言右上擺放功能按鈕。（#449）
@@ -24,7 +106,6 @@
 10. Image 現在有 Overlay 可以在圖片上層擺放文字或圖示了。（#457, #483）
 
 #### Bug 修正
-
 1. Text Menu 的項目在 Active 時有背景顏色。（#477）
 2. Secondary Vertical Menu 的項目有分隔線。（#480）
 3. Menu 裡的 Link List 在 Active 時有背景顏色。（#479）
@@ -48,7 +129,6 @@
 21. Error Input 沒有下框線。（#130）
 
 #### 調整和新增
-
 1. Accordion 現在是基於 HTML5 跟 JavaScript。（#288）
 2. 移除 Comment 的 `max-width` 設定。（@6dcea5fb8e5130d78bd295a342fbed5897e17d44）
 3. Modal 有了 `onClose` 的監聽函式可在 Modal 關閉時被呼叫。（#429）
@@ -56,7 +136,6 @@
 5. Icon Input 的 Icon 現在有了 Hover 跟 Active 的狀態樣式，看起來更不死板了。（#506）
 
 #### 尚未完成、測試中
-
 1. 新增 Carousel，與 Bootstrap 的幻燈片相當但多了些功能。（@df20da38d499d782f33314ac886d969f54ff0130）
 2. 星星與愛心評分 Rating 系統。（#487）
 3. 新的動畫 Transition 系統，可以指定元素展現過場動畫，或者輪巡元件。（#485）
@@ -64,10 +143,9 @@
 5. 新的 Modal 系統，簡化了結構與使用方法。（#489）
 
 #### 文件頁面
-
 1. README 粗體擺錯地方。（@cb064eefb9204b8aff4e8e6bd2c61798c6d93c64）（感謝 @BirkhoffLee ）
 
-## [2.4.0-alpha1] - 07 Aug 2017
+## [2.4.0-alpha.1] - 07 Aug 2017
 
 #### 新功能
 
@@ -82,9 +160,7 @@
 3. Vertical Secondary Menu 不再有分隔線了。
 
 ## [2.3.3] - 30 Jul 2017
-
 #### Bug 修正
-
 1. Message 裡的 Container 在某個寬度下會往內縮。（#431）
 2. 將 Sidebar 的 Position 從 Absolute 改為 Fixed 避免在 Chrome 上有多餘水平空白。（#448）
 3. Pusher 裏的 Icon Labeled Button 中的 Icon 比 Dimmer 還要高層。（#461）
@@ -94,27 +170,22 @@
 7. Slate 裡面的 Icon 會被誤以為是 Symbol Icon 而夭壽大。（#426）
 
 #### 新功能
-
 1. 圖片支援 Selected 有藍色邊框看起來能夠是被選擇的。（#458）
 2. 新增無邊框 Card。（#459）
 3. 下拉式選單的內部選單可以是流動寬度的，和下拉式選單的主按鈕一樣寬度。（#405）
 
 #### 調整
-
 1. Slate 現在不再是 Flexbox 了，讓排版和 Container 使用上更方便。（#442）
 2. Calendar 是正方形的了。（#422）
 3. 統計數據異動可以被用在群組內簡化單個統計了。（#439）
 4. Message 現在不再是 Flexbox 了，讓排版和 Container 使用上更方便。（#445）
 
 #### 文件頁面
-
 1. Message 的 List 改為原生 `ul` 標籤。（#446）
 2. Grid 教學中的多重網格視圖不正確。（#447）
 
 ## [2.3.2] - 8 Jun 2017
-
 #### Bug 修正
-
 1. 圖示在按鈕裡不能變更大小。（#391）
 2. 避免頁面推動器在高度夠的時候出現捲動軸。（#389）
 3. 板岩的圖示會移位。（#399）
@@ -123,9 +194,7 @@
 6. 核取方塊的白點背景起衝突。（#395）
 
 ## [2.3.1] - 6 Jun 2017
-
 #### Bug 修正
-
 1. Firefox 上 Inderterminate 進度列會閃爍的問題。（#383）
 2. Fieldset 在 Stackable 上沒有外間距。（#385）
 3. Dropdown 的箭頭背景變成重複的了。（#384）
@@ -399,14 +468,14 @@
 2. 重設（Reset）了更多的基本 HTML5 元素。
 3. Segment 的陰影現在可以透過 Insetted 向內嵌。（#140）
 
-## [v2.0.2] - 18 Oct 2016
+## [2.0.2] - 18 Oct 2016
 ### 重大改變
 1. Body 現在有了 `overflow-x: hidden`。 （#118）
 
 ### Bug 修正
 1. 修正 Header 原本沒有 `floated` 樣式。
 
-## [v2.0.1] - 7 Oct 2016
+## [2.0.1] - 7 Oct 2016
 ### 重大改變
 1. 你現在可以將 Dropdown 放入 Menu 了。 （#114）
 
@@ -419,12 +488,12 @@
 3. Dropdown 的 Divider 現在有了 `.section` 樣式。
 4. Dropdown 裡文字右側的圖示現在得到了外距改善。
 
-## [v2.0.0] - 3 Oct 2016
+## [2.0.0] - 3 Oct 2016
 ### 重大改變
 1. 移除了動畫系統（現在你需要手動使用 [Animate.css](https://github.com/daneden/animate.css/)）。
 2. `<figure>` 不再有預設的外距了。
 
-## [v2.0.0-rc.8] - 26 Sep 2016
+## [2.0.0-rc.8] - 26 Sep 2016
 ### 重大修復，請儘早更新至此版本
 
 #### 重大改變
@@ -450,7 +519,7 @@
 1. 新增反色連結顏色。
 2. 移除 Checkbox 群組在 `.field` 內的內距。
 
-## [v2.0.0-rc.7] - 17 Sep 2016
+## [2.0.0-rc.7] - 17 Sep 2016
 ### 重大修復，請儘早更新至此版本
 
 #### 重大改變
@@ -471,7 +540,7 @@
 2. 調整 Segment 和 Button 反色時的框線顏色。
 
 
-## [v2.0.0-rc.6] - 12 Sep 2016
+## [2.0.0-rc.6] - 12 Sep 2016
 ### 重大修復，請儘早更新至此版本
 
 #### 重大改變
@@ -506,7 +575,7 @@
 9. Calendar 現在有背景顏色而不是透明了。
 10. Item 現在有帶點式中繼資料。
 
-## [v2.0.0-rc.5] - 29 Aug 2016
+## [2.0.0-rc.5] - 29 Aug 2016
 ### 重大修復，請儘早更新至此版本
 
 #### Bug 修正
@@ -524,14 +593,14 @@
 7. 清單現在有著跟頁面文字一樣的顏色。
 8. `.extra.content` 現在可以被擺在卡片的上面、中間。
 
-## [v2.0.0-rc.4] - 25 Aug 2016
+## [2.0.0-rc.4] - 25 Aug 2016
 ### 重大修復，請儘早更新至此版本
 1. 修正按鈕沒有 Active（按下）效果。
 2. 修正卡片中的 opinion 按鈕有背景顏色。
 3. 移除卡片中吸附按鈕的框線。
 4. 修正下拉式選單按鈕的 Hover 停滯問題。
 
-## [v2.0.0-rc.3] - 24 Aug 2016
+## [2.0.0-rc.3] - 24 Aug 2016
 ### 新功能和拋棄
 
 Tocas 2 拋棄了 SASS 方面的函式支援，現在幾乎都用原生寫法，意思是你將沒有辦法引用 `tocas.sass` 然後使用以往的輔助函式，如：`+block`、`+inline-block`、`+table`...等。
