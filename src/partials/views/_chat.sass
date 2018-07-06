@@ -100,11 +100,10 @@
 //*******************************//
 
 .ts.chat > .message
-    width         : min-content
-    display: flex;
-    flex-wrap: wrap;
-    margin-bottom: .4em;
-
+    width        : min-content
+    display      : flex
+    flex-wrap    : wrap
+    margin-bottom: $chat_messageDistance
 
 //-------------------//
 //       Avatar
@@ -112,34 +111,30 @@
 
 .ts.chat > .message > .avatar
     position: absolute
-    top: 0
-    left: 0
+    top     : 0
+    left    : 0
 
 .ts.chat > .message > .avatar > img
-    width: 2.5em
-    height: 2.5em
-    border-radius: 4px
-    margin-right: .5em
-    margin-bottom: .58em
-    position: sticky;
-    bottom: .5em;
+    width        : $chat_avatarWidth
+    height       : $chat_avatarHeight
+    border-radius: $chat_avatarBorderRadius
+    margin-right : $chat_avatarDistance
 
 //-------------------//
 //      Content
 //-------------------//
 
 .ts.chat > .message > .content
-    //border: 1px solid nth($grey, 4)
-    width: max-content
-    border-radius: 4px
-    margin-left: 43px;
-    padding: .58em .88em
-    max-width: 450px;
-    //flex: 1
-    margin-bottom: .5em
-    background: nth($grey, 2)
+    width     : max-content
+    max-width : $chat_messageMaxWidth
+    border    : $chat_messageBorder
+    background: $chat_messageBackgroundColor
+    padding   : $chat_messagePadding
 
-    //box-shadow: 0px 1px 2px 0 rgba(0,0,0,0.06)
+    margin-left  : $chat_distanceToAvatar
+    margin-bottom: $chat_messageDistance
+    border-radius: $chat_messageBorderRadius
+    box-shadow   : $chat_messageBoxShadow
 
 //-------------------//
 //       Text
@@ -153,8 +148,7 @@
 //-------------------//
 
 .ts.chat > .message > .content > .author
-    font-weight: bold;
-
+    font-weight: $chat_authorFontWeight
 
 //-------------------//
 //       Image
@@ -172,6 +166,12 @@
 .ts.chat > .message > .content > .icon
 
 //-------------------//
+//      Sticker
+//-------------------//
+
+.ts.chat > .message > .content > .sticker
+
+//-------------------//
 //     Description
 //-------------------//
 
@@ -182,9 +182,9 @@
 //-------------------//
 
 .ts.chat > .message > .content > .reply
-    border-left: 3px solid #d9d9d9;
-    margin: .5em 0
-    padding-left: .58em
+    margin      : $chat_replyDistance 0
+    border-left : $chat_replyBorder
+    padding-left: $chat_replyPaddingLeft
 
 .ts.chat > .message > .content > .reply > .author
     font-weight: bold
@@ -200,138 +200,165 @@
 //-------------------//
 
 .ts.chat > .message > .content > .preview
-    border-left: 3px solid nth($primary, 6);
-    margin: .5em 0
-    padding-left: .58em
-
-.ts.chat > .message > .content > .preview > .name
-    color: nth($primary, 6)
-    font-weight: bold
+    margin      : $chat_previewDistance 0
+    border-left : $chat_previewBorder
+    padding-left: $chat_previewPaddingLeft
 
 .ts.chat > .message > .content > .preview > .title
-    font-weight: bold
+    color      : $chat_previewTitleTextColor
+    font-weight: $chat_previewTitleTextWeight
+
+.ts.chat > .message > .content > .preview > .header
+    font-weight: $chat_previewHeaderTextWeight
 
 .ts.chat > .message > .content > .preview > .description
-    line-height: 1.3;
+    line-height: $chat_previewDescriptionLineHeight
 
 .ts.chat > .message > .content > .preview > .image
 
 .ts.chat > .message > .content > .preview > .image:first-child img
-    width: 50px;
-    height: 50px;
-    float: right;
-    border-radius: 4px;
-    margin: 0 0 10px 10px;
-    object-fit: cover;
+    width : $chat_previewImageSize
+    height: $chat_previewImageSize
+    float : right
+    margin: $chat_previewImageMargin
+
+    border-radius: $chat_previewImageBorderRadius
+    object-fit   : cover
 
 .ts.chat > .message > .content > .preview > .image:not(:first-child) img
-    width: 100%;
-    margin-top: .5em;
-    border-radius: 4px;
-    object-fit: cover;
+    width        : 100%
+    margin-top   : $chat_previewImageFullSizeDistance
+    border-radius: $chat_previewImageBorderRadius
+    object-fit   : cover
 
 //-------------------//
 //        Meta
 //-------------------//
 
-.ts.chat > .message > .content > .preview + .meta
-    margin-top: -.5em
-
 .ts.chat > .message > .content > .meta
-    font-size: .85714em;
-    opacity: .6;
-    display: flex;
-    margin-bottom: -.4em;
-    justify-content: flex-end;
+    display        : flex
+    margin-bottom  : $chat_metaMarginBottom
+    justify-content: flex-end
 
 .ts.chat > .message > .content > .meta > .item
-    margin-right: .65em
+    opacity     : $chat_metaItemOpacity
+    font-size   : $chat_metaItemFontSize
+    margin-right: $chat_metaItemSpacing
 
 .ts.chat > .message > .content > .meta > .item:last-child
     margin-right: 0
-
 
 //-------------------//
 //    Dotted Meta
 //-------------------//
 
-.ts.chat > .message > .content > .dotted.meta
+.ts.chat > .message > .content > .meta.middoted > *,
+.ts.chat > .message > .content > .meta.bulleted > *
+    margin-right: 0
+.ts.chat > .message > .content > .meta.middoted > *:not(:first-child):before
+    +extend(is-dot)
 
-.ts.chat > .message > .content > .dotted.meta > .item
+    margin-left : $chat_metaItemSpacing / 1.5
+    margin-right: $chat_metaItemSpacing / 1.5
+    content     : '·'
+.ts.chat > .message > .content > .meta.bulleted > *:not(:first-child):before
+    +extend(is-dot)
+
+    margin-left : $chat_metaItemSpacing / 1.5
+    margin-right: $chat_metaItemSpacing / 1.5
+    content     : '•'
 
 //-------------------//
 //      Indicator
 //-------------------//
 
 .ts.chat > .typing.message > .content:after
-    font-family: 'Icons';
-    content: '●●●';
-    font-size: .8em;
-    letter-spacing: 1px;
-    background: linear-gradient(to right, #dedede 20%, #e0e0e0 40%, #f1f1f1 60%, #e2e2e2 80%);
-    background-size: 200% auto;
+    +extend(is-dot)
 
-    background-clip: text;
-    text-fill-color: transparent;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shine 1s linear infinite;
+    content       : $chat_typingIndicatorSymbol
+    font-size     : $chat_typingIndicatorFontSize
+    line-height   : $chat_typingIndicatorLineHeight
+    letter-spacing: $chat_typingIndicatorLetterSpacing
+    background    : $chat_typingIndicatorBackground
 
-    animation: shine 1s linear infinite;
-    @keyframes shine
+    background-clip: text
+    background-size: 200% auto
+    text-fill-color: transparent
+    -webkit-background-clip: text
+    -webkit-text-fill-color: transparent
+
+    animation: typing-message-shine $chat_typingIndicatorDuration linear infinite
+
+    @keyframes typing-message-shine
         to
             background-position: 200% center;
 
-
+.ts.chat > .warning.message > .content > .meta > .item:last-child:after,
+.ts.chat > .error.message > .content > .meta > .item:last-child:after,
+.ts.chat > .sending.message > .content > .meta > .item:last-child:after,
+.ts.chat > .sent.message > .content > .meta > .item:last-child:after,
+.ts.chat > .read.message > .content > .meta > .item:last-child:after
+    font-family: $chat_indicatorFontFamily
+    margin-left: $chat_indicatorDistance
 
 .ts.chat > .warning.message > .content > .meta > .item:last-child:after
-    font-family: 'Icons'
-    content: '\f071'
-    margin-left: .6em
+    content: $chat_warningIndicatorSymbol
 
 .ts.chat > .error.message > .content > .meta > .item:last-child:after
-    font-family: 'Icons'
-    content: '\f057'
-    margin-left: .6em
+    content: $chat_errorIndicatorSymbol
 
 .ts.chat > .sending.message > .content > .meta > .item:last-child:after
-    font-family: 'Icons'
-    content: '\f017'
-    margin-left: .6em
+    content: $chat_sendingIndicatorSymbol
 
 .ts.chat > .sent.message > .content > .meta > .item:last-child:after
-    font-family: 'Icons'
-    content: '\f00c'
-    margin-left: .6em
+    content: $chat_sentIndicatorSymbol
 
 .ts.chat > .read.message > .content > .meta > .item:last-child:after
-    font-family: 'Icons'
-    content: '\f560'
-    margin-left: .6em
+    content: $chat_readIndicatorSymbol
 
 //-------------------//
 //      Reactions
 //-------------------//
 
 .ts.chat > .message > .reactions
-    width: 100%;
-    margin-bottom: .5em;
-    margin-left: 3em
-    max-width: 450px;
+    display      : flex
+    flex-wrap    : wrap
+    width        : 100%
+    max-width    : $chat_messageMaxWidth
+    margin-left  : $chat_distanceToAvatar
+    margin-bottom: $chat_reactionDistance
 
 .ts.chat > .message > .reactions > .item
-    display: inline-flex;
-    padding: .2em .5em;
-    font-size: .9em;
-    border: 1px solid #eee;
-    border-radius: 4px;
+    display      : inline-flex
+    color        : $chat_reactionItemTextColor
+    background   : $chat_reactionItemBackgroundColor
+    padding      : $chat_reactionItemPadding
+    font-size    : $chat_reactionItemFontSize
+    border       : $chat_reactionItemBorder
+    border-radius: $chat_reactionItemBorderRadius
+    margin-bottom: $chat_reactionItemDistance
+    margin-right : $chat_reactionItemDistance
+
+.ts.chat > .message > .reactions > .item:hover
+    color     : $chat_reactionItemHoverTextColor
+    background: $chat_reactionItemHoverBackgroundColor
+
+.ts.chat > .message > .reactions > .item:active
+    color     : $chat_reactionItemDownTextColor
+    background: $chat_reactionItemDownBackgroundColor
+
+.ts.chat > .message > .reactions > .item:last-child
+    margin-right: 0
 
 .ts.chat > .message > .reactions > .item > .reaction
 
 .ts.chat > .message > .reactions > .item > .count
-    margin-left: .5em;
+    margin-left: $chat_reactionItemCountDistance
 
 .ts.chat > .message > .reactions > .item.active
+    font-weight: $chat_reactionItemActiveFontWeight
+    color      : $chat_reactionItemActiveTextColor
+    background : $chat_reactionItemActiveBackgroundColor
 
 .ts.chat > .message > .reactions > .item.disabled
 
@@ -339,35 +366,90 @@
 //      Actions
 //-------------------//
 
+.ts.chat > .message > .actions
+    display        : flex
+    justify-content: flex-end
+    margin-bottom  : $chat_actionDistance
+    margin-left    : $chat_distanceToAvatar
+
+.ts.chat > .message > .actions > .item
+    color       : $chat_actionItemTextColor
+    font-size   : $chat_actionItemFontSize
+    margin-right: $chat_actionItemSpacing
+
+.ts.chat > .message > .actions > .item:hover
+    color: $chat_actionItemHoverTextColor
+
+.ts.chat > .message > .actions > .item:active
+    color: $chat_actionItemDownTextColor
+
+.ts.chat > .message > .actions > .item:last-child
+    margin-right: 0
+
+//-------------------//
+//  Dotted Actions
+//-------------------//
+
+.ts.chat > .message > .actions.middoted > *,
+.ts.chat > .message > .actions.bulleted > *
+    margin-right: 0
+.ts.chat > .message > .actions.middoted > *:not(:first-child):before
+    +extend(is-dot)
+
+    margin-left : $chat_actionItemSpacing / 1.5
+    margin-right: $chat_actionItemSpacing / 1.5
+    content     : '·'
+.ts.chat > .message > .actions.bulleted > *:not(:first-child):before
+    +extend(is-dot)
+
+    margin-left : $chat_actionItemSpacing / 1.5
+    margin-right: $chat_actionItemSpacing / 1.5
+    content     : '•'
+
 //-------------------//
 //     Callbacks
 //-------------------//
 
 .ts.chat > .message > .callbacks
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    font-size: .9em;
-    margin-left: 3em
-    max-width: 450px;
-
+    display    : flex
+    flex-wrap  : wrap
+    width      : 100%
+    max-width  : $chat_messageMaxWidth
+    margin-left: $chat_distanceToAvatar
 
 .ts.chat > .message > .callbacks > .row
-    width: 100%;
-    display: flex;
-
+    width  : 100%
+    display: flex
 
 .ts.chat > .message > .callbacks > .row > .item,
 .ts.chat > .message > .callbacks > .item
-    background: nth($grey, 2);
-    padding: .4em;
-    width: 100%;
+    flex     : 1
+    width    : 100%
+    color    : $chat_callbackItemTextColor
+    font-size: $chat_callbackItemFontSize
+    padding  : $chat_callbackItemPadding
 
-    flex: 1;
-    border-radius: 4px;
-    margin-right: .4em
-    text-align: center;
-    margin-bottom: .4em;
+    border-radius: $chat_callbackItemBorderRadius
+    background   : $chat_callbackItemBackgroundColor
+    text-align   : center
+    margin-right : $chat_callbackItemDistance
+    margin-bottom: $chat_callbackItemDistance
+
+.ts.chat > .message > .callbacks > .row > .item:hover,
+.ts.chat > .message > .callbacks > .item:hover
+    color     : $chat_callbackItemHoverTextColor
+    background: $chat_callbackItemHoverBackgroundColor
+
+.ts.chat > .message > .callbacks > .row > .item:active,
+.ts.chat > .message > .callbacks > .item:active
+    color     : $chat_callbackItemDownTextColor
+    background: $chat_callbackItemDownBackgroundColor
+
+.ts.chat > .message > .callbacks > .row > .item.loading,
+.ts.chat > .message > .callbacks > .item.loading
+
+.ts.chat > .message > .callbacks > .row > .item.disabled,
+.ts.chat > .message > .callbacks > .item.disabled
 
 .ts.chat > .message > .callbacks > .row > .item:last-child,
 .ts.chat > .message > .callbacks > .item:last-child
@@ -379,22 +461,40 @@
 
 
 //-------------------//
-//    Right Message
+//    Own Message
 //-------------------//
 
-.ts.chat > .right.message
+.ts.chat > .own.message
     margin-left: auto
 
-.ts.chat > .right.message > .content
-    background: nth($primary, 6)
-    color: $white
-    margin-left: 0
-    margin-right: 3.5em
+.ts.chat > .own.message > .content
+    background  : $chat_ownMessageBackgroundColor
+    color       : $chat_ownMessageTextColor
+    margin-left : 0
+    margin-right: $chat_distanceToAvatar
 
-.ts.chat > .right.message > .avatar
+.ts.chat > .own.message > .avatar
     right: 0
-    left: initial
+    left : initial
 
+.ts.chat > .own.message > .avatar > img
+    margin-right: 0
+
+.ts.chat > .own.message > .content > .reply
+    border-color: $chat_ownMessageReplyBorderColor
+
+.ts.chat > .own.message > .content > .preview
+    border-color: $chat_ownMessagePreviewBorderColor
+.ts.chat > .own.message > .content > .preview > .title
+    color: $chat_ownMessagePreviewTitleTextColor
+
+.ts.chat > .own.message > .callbacks
+   margin-left : 0
+   margin-right: $chat_distanceToAvatar
+
+.ts.chat > .own.message > .reactions
+   margin-left : 0
+   margin-right: $chat_distanceToAvatar
 
 //-------------------//
 //       Sizes
