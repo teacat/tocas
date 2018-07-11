@@ -5,13 +5,17 @@
 //            Variations
 //*******************************//
 
-
-
 //*******************************//
 //              Main
 //*******************************//
 
 .ts.chat
+
+//-------------------//
+//      Compact
+//-------------------//
+
+.ts.compact.chat
 
 //*******************************//
 //             Event
@@ -155,9 +159,16 @@
 //-------------------//
 
 .ts.chat > .message > .content > .image
+    margin: $chat_imageMargin
 
 .ts.chat > .message > .content > .image > img
+    width     : 100%
+    object-fit: cover
 
+.ts.chat > .message > .content > img
+    margin-left: -#{$chat_messageHorizontalPadding}
+    width      : $chat_imageWidth
+    object-fit : cover
 
 //-------------------//
 //        Icon
@@ -267,6 +278,46 @@
     margin-left : $chat_metaItemSpacing / 1.5
     margin-right: $chat_metaItemSpacing / 1.5
     content     : '•'
+
+//-------------------//
+//      Mention
+//-------------------//
+
+.ts.chat > .message > .content > .text > .mention
+    padding      : $chat_mentionPadding
+    margin       : 0 $chat_mentionDistance
+    color        : $chat_mentionTextColor
+    background   : $chat_mentionBackgroundColor
+    border-radius: $chat_mentionBorderRadius
+
+//-------------------//
+//     Code Block
+//-------------------//
+
+.ts.chat > .message > .content > .text > pre.code
+    margin    : $chat_codeDistance -#{$chat_messageHorizontalPadding}
+    border    : $chat_codeBorder
+    background: $chat_codeBackgroundColor
+
+.ts.chat > .message > .content > .text > pre.code > code
+    display     : block
+    white-space : pre-wrap
+    color       : $chat_codeTextColor
+    padding     : $chat_codePadding
+    font-size   : $chat_codeFontSize
+    line-height : $chat_codeLineHeight
+
+//-------------------//
+//        Video
+//-------------------//
+
+.ts.chat > .message > .content > video
+    width : $chat_videoWidth
+    margin: $chat_videoDistance -#{$chat_messageHorizontalPadding}
+
+//-------------------//
+//       Embed
+//-------------------//
 
 //-------------------//
 //      Indicator
