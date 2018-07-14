@@ -103,7 +103,7 @@
 //            Message
 //*******************************//
 
-.ts.chat > .message
+.ts.chat .message
     width        : min-content
     display      : flex
     flex-wrap    : wrap
@@ -113,12 +113,12 @@
 //       Avatar
 //-------------------//
 
-.ts.chat > .message > .avatar
+.ts.chat .message > .avatar
     position: absolute
     top     : 0
     left    : 0
 
-.ts.chat > .message > .avatar > img
+.ts.chat .message > .avatar > img
     width        : $chat_avatarWidth
     height       : $chat_avatarHeight
     border-radius: $chat_avatarBorderRadius
@@ -128,44 +128,46 @@
 //      Content
 //-------------------//
 
-.ts.chat > .message > .content
+.ts.chat .message > .content
     width     : max-content
     max-width : $chat_messageMaxWidth
     border    : $chat_messageBorder
     background: $chat_messageBackgroundColor
     padding   : $chat_messagePadding
 
-    margin-left  : $chat_distanceToAvatar
     margin-bottom: $chat_messageDistance
     border-radius: $chat_messageBorderRadius
     box-shadow   : $chat_messageBoxShadow
+
+.ts.chat .message > .avatar ~ .content
+    margin-left: $chat_distanceToAvatar
 
 //-------------------//
 //       Text
 //-------------------//
 
-.ts.chat > .message > .content > .text
+.ts.chat .message > .content > .text
     display: inline
 
 //-------------------//
 //       Author
 //-------------------//
 
-.ts.chat > .message > .content > .author
+.ts.chat .message > .content > .author
     font-weight: $chat_authorFontWeight
 
 //-------------------//
 //       Image
 //-------------------//
 
-.ts.chat > .message > .content > .image
+.ts.chat .message > .content > .image
     margin: $chat_imageMargin
 
-.ts.chat > .message > .content > .image > img
+.ts.chat .message > .content > .image > img
     width     : 100%
     object-fit: cover
 
-.ts.chat > .message > .content > img
+.ts.chat .message > .content > img
     margin-left: -#{$chat_messageHorizontalPadding}
     width      : $chat_imageWidth
     object-fit : cover
@@ -174,66 +176,66 @@
 //        Icon
 //-------------------//
 
-.ts.chat > .message > .content > .icon
+.ts.chat .message > .content > .icon
 
 //-------------------//
 //      Sticker
 //-------------------//
 
-.ts.chat > .message > .content > .sticker
+.ts.chat .message > .content > .sticker
 
 //-------------------//
 //     Description
 //-------------------//
 
-.ts.chat > .message > .content > .description
+.ts.chat .message > .content > .description
 
 //-------------------//
 //       File
 //-------------------//
 
-.ts.chat > .message > .content > .description
+.ts.chat .message > .content > .description
 
 //-------------------//
 //       Reply
 //-------------------//
 
-.ts.chat > .message > .content > .reply
+.ts.chat .message > .content > .reply
     margin      : $chat_replyDistance 0
     border-left : $chat_replyBorder
     padding-left: $chat_replyPaddingLeft
 
-.ts.chat > .message > .content > .reply > .author
+.ts.chat .message > .content > .reply > .author
     font-weight: bold
 
-.ts.chat > .message > .content > .reply > .text
+.ts.chat .message > .content > .reply > .text
 
-.ts.chat > .message > .content > .reply > .image
+.ts.chat .message > .content > .reply > .image
 
-.ts.chat > .message > .content > .reply > .image > img
+.ts.chat .message > .content > .reply > .image > img
 
 //-------------------//
 //      Preview
 //-------------------//
 
-.ts.chat > .message > .content > .preview
+.ts.chat .message > .content > .preview
     margin      : $chat_previewDistance 0
     border-left : $chat_previewBorder
     padding-left: $chat_previewPaddingLeft
 
-.ts.chat > .message > .content > .preview > .title
+.ts.chat .message > .content > .preview > .title
     color      : $chat_previewTitleTextColor
     font-weight: $chat_previewTitleTextWeight
 
-.ts.chat > .message > .content > .preview > .header
+.ts.chat .message > .content > .preview > .header
     font-weight: $chat_previewHeaderTextWeight
 
-.ts.chat > .message > .content > .preview > .description
+.ts.chat .message > .content > .preview > .description
     line-height: $chat_previewDescriptionLineHeight
 
-.ts.chat > .message > .content > .preview > .image
+.ts.chat .message > .content > .preview > .image
 
-.ts.chat > .message > .content > .preview > .image:first-child img
+.ts.chat .message > .content > .preview > .image:first-child img
     width : $chat_previewImageSize
     height: $chat_previewImageSize
     float : right
@@ -242,7 +244,7 @@
     border-radius: $chat_previewImageBorderRadius
     object-fit   : cover
 
-.ts.chat > .message > .content > .preview > .image:not(:first-child) img
+.ts.chat .message > .content > .preview > .image:not(:first-child) img
     width        : 100%
     margin-top   : $chat_previewImageFullSizeDistance
     border-radius: $chat_previewImageBorderRadius
@@ -252,33 +254,33 @@
 //        Meta
 //-------------------//
 
-.ts.chat > .message > .content > .meta
+.ts.chat .message > .content > .meta
     display        : flex
     margin-bottom  : $chat_metaMarginBottom
     justify-content: flex-end
 
-.ts.chat > .message > .content > .meta > .item
+.ts.chat .message > .content > .meta > .item
     opacity     : $chat_metaItemOpacity
     font-size   : $chat_metaItemFontSize
     margin-right: $chat_metaItemSpacing
 
-.ts.chat > .message > .content > .meta > .item:last-child
+.ts.chat .message > .content > .meta > .item:last-child
     margin-right: 0
 
 //-------------------//
 //    Dotted Meta
 //-------------------//
 
-.ts.chat > .message > .content > .meta.middoted > *,
-.ts.chat > .message > .content > .meta.bulleted > *
+.ts.chat .message > .content > .meta.middoted > *,
+.ts.chat .message > .content > .meta.bulleted > *
     margin-right: 0
-.ts.chat > .message > .content > .meta.middoted > *:not(:first-child):before
+.ts.chat .message > .content > .meta.middoted > *:not(:first-child):before
     +extend(is-dot)
 
     margin-left : $chat_metaItemSpacing / 1.5
     margin-right: $chat_metaItemSpacing / 1.5
     content     : '·'
-.ts.chat > .message > .content > .meta.bulleted > *:not(:first-child):before
+.ts.chat .message > .content > .meta.bulleted > *:not(:first-child):before
     +extend(is-dot)
 
     margin-left : $chat_metaItemSpacing / 1.5
@@ -289,7 +291,7 @@
 //      Mention
 //-------------------//
 
-.ts.chat > .message > .content > .text > .mention
+.ts.chat .message > .content > .text > .mention
     padding      : $chat_mentionPadding
     margin       : 0 $chat_mentionDistance
     color        : $chat_mentionTextColor
@@ -300,12 +302,12 @@
 //     Code Block
 //-------------------//
 
-.ts.chat > .message > .content > .text > pre.code
+.ts.chat .message > .content > .text > pre.code
     margin    : $chat_codeDistance -#{$chat_messageHorizontalPadding}
     border    : $chat_codeBorder
     background: $chat_codeBackgroundColor
 
-.ts.chat > .message > .content > .text > pre.code > code
+.ts.chat .message > .content > .text > pre.code > code
     display     : block
     white-space : pre-wrap
     color       : $chat_codeTextColor
@@ -317,7 +319,7 @@
 //        Video
 //-------------------//
 
-.ts.chat > .message > .content > video
+.ts.chat .message > .content > video
     width : $chat_videoWidth
     margin: $chat_videoDistance -#{$chat_messageHorizontalPadding}
 
@@ -377,15 +379,17 @@
 //      Reactions
 //-------------------//
 
-.ts.chat > .message > .reactions
+.ts.chat .message > .reactions
     display      : flex
     flex-wrap    : wrap
     width        : 100%
     max-width    : $chat_messageMaxWidth
-    margin-left  : $chat_distanceToAvatar
     margin-bottom: $chat_reactionDistance
 
-.ts.chat > .message > .reactions > .item
+.ts.chat .message > .avatar ~ .reactions
+    margin-left: $chat_distanceToAvatar
+
+.ts.chat .message > .reactions > .item
     display      : inline-flex
     color        : $chat_reactionItemTextColor
     background   : $chat_reactionItemBackgroundColor
@@ -396,67 +400,69 @@
     margin-bottom: $chat_reactionItemDistance
     margin-right : $chat_reactionItemDistance
 
-.ts.chat > .message > .reactions > .item:hover
+.ts.chat .message > .reactions > .item:hover
     color     : $chat_reactionItemHoverTextColor
     background: $chat_reactionItemHoverBackgroundColor
 
-.ts.chat > .message > .reactions > .item:active
+.ts.chat .message > .reactions > .item:active
     color     : $chat_reactionItemDownTextColor
     background: $chat_reactionItemDownBackgroundColor
 
-.ts.chat > .message > .reactions > .item:last-child
+.ts.chat .message > .reactions > .item:last-child
     margin-right: 0
 
-.ts.chat > .message > .reactions > .item > .reaction
+.ts.chat .message > .reactions > .item > .reaction
 
-.ts.chat > .message > .reactions > .item > .count
+.ts.chat .message > .reactions > .item > .count
     margin-left: $chat_reactionItemCountDistance
 
-.ts.chat > .message > .reactions > .item.active
+.ts.chat .message > .reactions > .item.active
     font-weight: $chat_reactionItemActiveFontWeight
     color      : $chat_reactionItemActiveTextColor
     background : $chat_reactionItemActiveBackgroundColor
 
-.ts.chat > .message > .reactions > .item.disabled
+.ts.chat .message > .reactions > .item.disabled
 
 //-------------------//
 //      Actions
 //-------------------//
 
-.ts.chat > .message > .actions
+.ts.chat .message > .actions
     display        : flex
     justify-content: flex-end
     margin-bottom  : $chat_actionDistance
-    margin-left    : $chat_distanceToAvatar
 
-.ts.chat > .message > .actions > .item
+.ts.chat .message > .avatar ~ .actions
+    margin-left: $chat_distanceToAvatar
+
+.ts.chat .message > .actions > .item
     color       : $chat_actionItemTextColor
     font-size   : $chat_actionItemFontSize
     margin-right: $chat_actionItemSpacing
 
-.ts.chat > .message > .actions > .item:hover
+.ts.chat .message > .actions > .item:hover
     color: $chat_actionItemHoverTextColor
 
-.ts.chat > .message > .actions > .item:active
+.ts.chat .message > .actions > .item:active
     color: $chat_actionItemDownTextColor
 
-.ts.chat > .message > .actions > .item:last-child
+.ts.chat .message > .actions > .item:last-child
     margin-right: 0
 
 //-------------------//
 //  Dotted Actions
 //-------------------//
 
-.ts.chat > .message > .actions.middoted > *,
-.ts.chat > .message > .actions.bulleted > *
+.ts.chat .message > .actions.middoted > *,
+.ts.chat .message > .actions.bulleted > *
     margin-right: 0
-.ts.chat > .message > .actions.middoted > *:not(:first-child):before
+.ts.chat .message > .actions.middoted > *:not(:first-child):before
     +extend(is-dot)
 
     margin-left : $chat_actionItemSpacing / 1.5
     margin-right: $chat_actionItemSpacing / 1.5
     content     : '·'
-.ts.chat > .message > .actions.bulleted > *:not(:first-child):before
+.ts.chat .message > .actions.bulleted > *:not(:first-child):before
     +extend(is-dot)
 
     margin-left : $chat_actionItemSpacing / 1.5
@@ -467,19 +473,21 @@
 //     Callbacks
 //-------------------//
 
-.ts.chat > .message > .callbacks
-    display    : flex
-    flex-wrap  : wrap
-    width      : 100%
-    max-width  : $chat_messageMaxWidth
+.ts.chat .message > .callbacks
+    display  : flex
+    flex-wrap: wrap
+    width    : 100%
+    max-width: $chat_messageMaxWidth
+
+.ts.chat .message > .avatar ~ .callbacks
     margin-left: $chat_distanceToAvatar
 
-.ts.chat > .message > .callbacks > .row
+.ts.chat .message > .callbacks > .row
     width  : 100%
     display: flex
 
-.ts.chat > .message > .callbacks > .row > .item,
-.ts.chat > .message > .callbacks > .item
+.ts.chat .message > .callbacks > .row > .item,
+.ts.chat .message > .callbacks > .item
     flex     : 1
     width    : 100%
     color    : $chat_callbackItemTextColor
@@ -492,24 +500,24 @@
     margin-right : $chat_callbackItemDistance
     margin-bottom: $chat_callbackItemDistance
 
-.ts.chat > .message > .callbacks > .row > .item:hover,
-.ts.chat > .message > .callbacks > .item:hover
+.ts.chat .message > .callbacks > .row > .item:hover,
+.ts.chat .message > .callbacks > .item:hover
     color     : $chat_callbackItemHoverTextColor
     background: $chat_callbackItemHoverBackgroundColor
 
-.ts.chat > .message > .callbacks > .row > .item:active,
-.ts.chat > .message > .callbacks > .item:active
+.ts.chat .message > .callbacks > .row > .item:active,
+.ts.chat .message > .callbacks > .item:active
     color     : $chat_callbackItemDownTextColor
     background: $chat_callbackItemDownBackgroundColor
 
-.ts.chat > .message > .callbacks > .row > .item.loading,
-.ts.chat > .message > .callbacks > .item.loading
+.ts.chat .message > .callbacks > .row > .item.loading,
+.ts.chat .message > .callbacks > .item.loading
 
-.ts.chat > .message > .callbacks > .row > .item.disabled,
-.ts.chat > .message > .callbacks > .item.disabled
+.ts.chat .message > .callbacks > .row > .item.disabled,
+.ts.chat .message > .callbacks > .item.disabled
 
-.ts.chat > .message > .callbacks > .row > .item:last-child,
-.ts.chat > .message > .callbacks > .item:last-child
+.ts.chat .message > .callbacks > .row > .item:last-child,
+.ts.chat .message > .callbacks > .item:last-child
     margin-right: 0
 
 //-------------------//
@@ -562,6 +570,10 @@
 //-------------------//
 //       Group
 //-------------------//
+
+.ts.chat .group .message:not(:first-child) > .avatar,
+.ts.chat .group .message:not(:first-child) > .content > .author
+    display: none
 
 //-------------------//
 //      Emphasis
