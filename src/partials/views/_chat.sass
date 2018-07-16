@@ -124,6 +124,11 @@
     border-radius: $chat_avatarBorderRadius
     margin-right : $chat_avatarDistance
 
+.ts.chat .own.group > .message > .avatar > img,
+.ts.chat .own.message > .avatar > img
+    margin-right: 0
+    margin-left : $chat_avatarDistance
+
 //-------------------//
 //      Content
 //-------------------//
@@ -141,6 +146,11 @@
 
 .ts.chat .message > .avatar ~ .content
     margin-left: $chat_distanceToAvatar
+
+.ts.chat .own.group > .message > .avatar ~ .content,
+.ts.chat .own.message > .avatar ~ .content
+    margin-left : 0
+    margin-right: $chat_distanceToAvatar
 
 //-------------------//
 //       Text
@@ -194,7 +204,13 @@
 //       File
 //-------------------//
 
-.ts.chat .message > .content > .description
+.ts.chat .message > .content > .file
+
+.ts.chat .message > .content > .file > .download
+
+.ts.chat .message > .content > .file > .name
+
+.ts.chat .message > .content > .file > .size
 
 //-------------------//
 //       Reply
@@ -263,6 +279,10 @@
     opacity     : $chat_metaItemOpacity
     font-size   : $chat_metaItemFontSize
     margin-right: $chat_metaItemSpacing
+
+.ts.chat .own.group > .message > .content > .meta > .item,
+.ts.chat .own.message > .content > .meta > .item
+    opacity: $chat_metaOwnMessageItemOpacity
 
 .ts.chat .message > .content > .meta > .item:last-child
     margin-right: 0
@@ -389,6 +409,11 @@
 .ts.chat .message > .avatar ~ .reactions
     margin-left: $chat_distanceToAvatar
 
+.ts.chat .own.group > .message > .avatar ~ .reactions,
+.ts.chat .own.message > .avatar ~ .reactions
+    margin-left : 0
+    margin-right: $chat_distanceToAvatar
+
 .ts.chat .message > .reactions > .item
     display      : inline-flex
     color        : $chat_reactionItemTextColor
@@ -434,6 +459,11 @@
 
 .ts.chat .message > .avatar ~ .actions
     margin-left: $chat_distanceToAvatar
+
+.ts.chat .own.group > .message > .avatar ~ .actions,
+.ts.chat .own.message > .avatar ~ .actions
+    margin-left : 0
+    margin-right: $chat_distanceToAvatar
 
 .ts.chat .message > .actions > .item
     color       : $chat_actionItemTextColor
@@ -482,6 +512,11 @@
 .ts.chat .message > .avatar ~ .callbacks
     margin-left: $chat_distanceToAvatar
 
+.ts.chat .own.group > .message > .avatar ~ .callbacks,
+.ts.chat .own.message > .avatar ~ .callbacks
+    margin-left : 0
+    margin-right: $chat_distanceToAvatar
+
 .ts.chat .message > .callbacks > .row
     width  : 100%
     display: flex
@@ -529,37 +564,30 @@
 //    Own Message
 //-------------------//
 
-.ts.chat > .own.message
+.ts.chat .own.message,
+.ts.chat > .own.group > .message
     margin-left: auto
 
-.ts.chat > .own.message > .content
+.ts.chat .own.message > .content,
+.ts.chat > .own.group > .message > .content
     background  : $chat_ownMessageBackgroundColor
     color       : $chat_ownMessageTextColor
-    margin-left : 0
-    margin-right: $chat_distanceToAvatar
 
-.ts.chat > .own.message > .avatar
+.ts.chat .own.message > .avatar,
+.ts.chat > .own.group > .message > .avatar
     right: 0
     left : initial
 
-.ts.chat > .own.message > .avatar > img
-    margin-right: 0
-
-.ts.chat > .own.message > .content > .reply
+.ts.chat .own.message > .content > .reply,
+.ts.chat > .own.group > .message > .content > .reply
     border-color: $chat_ownMessageReplyBorderColor
 
-.ts.chat > .own.message > .content > .preview
+.ts.chat .own.message > .content > .preview,
+.ts.chat > .own.group > .message > .content > .preview
     border-color: $chat_ownMessagePreviewBorderColor
-.ts.chat > .own.message > .content > .preview > .title
+.ts.chat .own.message > .content > .preview > .title,
+.ts.chat > .own.group > .message > .content > .preview > .title
     color: $chat_ownMessagePreviewTitleTextColor
-
-.ts.chat > .own.message > .callbacks
-   margin-left : 0
-   margin-right: $chat_distanceToAvatar
-
-.ts.chat > .own.message > .reactions
-   margin-left : 0
-   margin-right: $chat_distanceToAvatar
 
 //-------------------//
 //       Sizes
