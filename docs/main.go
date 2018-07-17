@@ -21,15 +21,16 @@ import (
 )
 
 type Single struct {
-	Title       string     `yaml:"Title"`
-	Description string     `yaml:"Description"`
-	Outline     string     `yaml:"Outline"`
-	Definitions []*Chapter `yaml:"Definitions"`
-	Examples    []*Chapter `yaml:"Examples"`
-	Modules     []*Chapter `yaml:"Modules"`
-	Settings    []*Chapter `yaml:"Settings"`
-	Category    string
-	Component   string
+	Title             string     `yaml:"Title"`
+	Description       string     `yaml:"Description"`
+	Outline           string     `yaml:"Outline"`
+	Definitions       []*Chapter `yaml:"Definitions"`
+	DefinitionIndexes []*Index
+	Examples          []*Chapter `yaml:"Examples"`
+	Modules           []*Chapter `yaml:"Modules"`
+	Settings          []*Chapter `yaml:"Settings"`
+	Category          string
+	Component         string
 }
 
 type Chapter struct {
@@ -37,6 +38,13 @@ type Chapter struct {
 	Description string     `yaml:"Description"`
 	Sections    []*Section `yaml:"Sections"`
 	Settings    []*Setting `yaml:"Settings"`
+}
+
+type Index struct {
+	Title       string
+	Name        string
+	HasSubIndex bool
+	SubIndexes  []*Index
 }
 
 type Section struct {
@@ -127,6 +135,53 @@ func PrepareDocs() {
 				}
 				s.Category = category.Name()
 				s.Component = strings.TrimSuffix(component.Name(), filepath.Ext(component.Name()))
+
+				for _, chapter := range s.Definitions {
+					var chapterSubIndexes []*Index
+					for _, section := range chapter.Sections {
+						var subIndexes []*Index
+						for _, subsection := range section.Subsections {
+							subIndexes = append(subIndexes, &Index{
+								Title: subsection.Title,
+								Name:  strings.ToLower(strings.Replace(subsection.Title, " ", "-", -1)),
+							})
+						}
+						chapterSubIndexes = append(chapterSubIndexes, &Index{
+							Title:       section.Title,
+							Name:        strings.ToLower(strings.Replace(section.Title, " ", "-", -1)),
+							HasSubIndex: len(subIndexes) > 0,
+							SubIndexes:  subIndexes,
+						})
+					}
+					s.DefinitionIndexes = append(s.DefinitionIndexes, &Index{
+						Title:       chapter.Title,
+						Name:        strings.ToLower(strings.Replace(chapter.Title, " ", "-", -1)),
+						HasSubIndex: len(chapterSubIndexes) > 0,
+						SubIndexes:  chapterSubIndexes,
+					})
+				}
+
+				/*
+					for _, chapter := range s.Definitions {
+						for _, section := range chapter.Sections {
+							var SubIndexes []*Index
+							for _, subsection := range section.Subsections {
+								SubIndexes = append(SubIndexes, &Index{
+									Title: subsection.Title,
+									Name:  strings.ToLower(strings.Replace(subsection.Title, " ", "-", -1)),
+								})
+							}
+							chapter.Indexes = append(chapter.Indexes, &Index{
+								Title:       section.Title,
+								Name:        strings.ToLower(strings.Replace(section.Title, " ", "-", -1)),
+								HasSubIndex: len(SubIndexes) > 0,
+								SubIndexes:  SubIndexes,
+							})
+						}
+
+					}
+				*/
+
 				Docs[language.Name()] = append(Docs[language.Name()], s)
 			}
 		}
@@ -189,7 +244,7 @@ func main() {
 											for _, section := range chapter.Sections {
 												go func(section *Section) {
 													section.Description = Markdown(section.Description)
-													section.Example = section.HTML
+													section.Example = Clean(section.HTML)
 													section.HTML = Tag(Highlight(Trim(section.HTML, section.Remove)))
 													wg.Done()
 												}(section)
@@ -255,6 +310,12 @@ func Trim(code string, remove []string) string {
 	for _, v := range remove {
 		code = strings.Replace(code, v, "", -1)
 	}
+	return code
+}
+
+func Clean(code string) string {
+	re := regexp.MustCompile(`\[\[(.*?)\]\]`)
+	code = re.ReplaceAllString(code, "$1")
 	return code
 }
 
