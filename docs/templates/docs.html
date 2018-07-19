@@ -53,6 +53,8 @@
         }
         [data-is="slate"] {
             margin-bottom: 40px;
+            border-bottom: 1px solid #e9e9e9;
+            border-radius: 0;
         }
         [data-is="chapterHeader"] {
             border-bottom : 2px solid #d9d9d9 !important;
@@ -73,7 +75,7 @@
         [data-is="sectionHeader"]:after {
             content: "";
             position: absolute;
-            left: -58px;
+            left: -97px;
             width: 2px;
             border: 3px solid #fff;
             background: #a2a2a2;
@@ -101,11 +103,19 @@
             content: "";
             position: absolute;
             top: 12px;
-            right: 34px;
+            right: 24px;
             bottom: 0;
             left: 0;
             border-right: 2px solid rgba(0,0,0,.1);
             pointer-events: none;
+        }
+        [data-is="footer"] {
+            margin-top: 40px !important;
+            margin-bottom: 0 !important;
+            padding-bottom: 90px !important;
+            box-shadow: none !important;
+            /*border-top: 1px solid #e9e9e9 !important;*/
+            border-radius: 0 !important;
         }
         .ts.segments {
             margin-top: 2.3em !important;
@@ -152,6 +162,24 @@
                 <div class="description">{{.Description}}</div>
                 <!-- / 文件類別名稱敘述 -->
             </div>
+
+            <div class="four wide column">
+
+            </div>
+
+            <div class="twelve wide column">
+                <div class="ts evenly divided tabbed menu" style="        position: absolute;
+    bottom: -44px;
+    left: 70px;
+    width: 750px;">
+                <div class="item">yee</div>
+                <div class="active item">yee</div>
+            </div>
+            </div>
+
+
+
+
         </div>
         <!-- / 網格容器 -->
     </div>
@@ -252,6 +280,24 @@
                 <a href="#!" class="item" data-tooltip=".ts.statistic" data-tooltip-position="left">統計數據</a>
             </div>
 
+            <div class="ts header">索引</div>
+
+
+            <div class="ts link list" data-is="links">
+                {{range .DefinitionIndexes}}
+                    <div class="item">
+                        <a href="#!">{{.Title}}</a>
+                        {{if .HasSubIndex}}
+                        <div class="ts list">
+                            {{range .SubIndexes}}
+                            <a href="#!" class="item">{{.Title}}</a>
+                            {{end}}
+                        </div>
+                        {{end}}
+                    </div>
+                {{end}}
+            </div>
+
             <!-- 元件選單 -->
         </div>
         <!-- / 左側選單欄位 -->
@@ -262,79 +308,92 @@
 
         <!-- 右側邊主要內容欄位 -->
         <div class="twelve wide column">
-            <!-- 分類標題 -->
-            <h2 data-is="chapterHeader" class="ts dividing header">索引</h2>
-            <!-- / 分類標題 -->
 
-            <ol class="ts ordered list" style="font-size: 16px">
-                {{range .DefinitionIndexes}}
-                    <li>
-                        <a href="#!">{{.Title}}</a>
-                        {{if .HasSubIndex}}
-                        <ol class="ts ordered list">
-                            {{range .SubIndexes}}
-                            <li>
-                                <a href="#!">{{.Title}}</a>
-                            </li>
-                            {{end}}
-                        </ol>
-                        {{end}}
-                    </li>
-                {{end}}
-            </ol>
+            <div style="max-width: 750px;margin:  0 auto;">
 
-            {{range .Definitions}}
-            <!-- 單個大分類 -->
+
+
+
 
                 <!-- 分類標題 -->
-                <h2 data-is="chapterHeader" class="ts dividing header">{{.Title}}</h2>
+                <h2 data-is="chapterHeader" class="ts dividing header">索引</h2>
                 <!-- / 分類標題 -->
 
-                <!-- 大分類解說 -->
-                <div style="font-size: 16px">{{.Description}}</div>
-                <!-- / 大分類解說 -->
+                <ol class="ts ordered list" style="font-size: 16px">
+                    {{range .DefinitionIndexes}}
+                        <li>
+                            <a href="#!">{{.Title}}</a>
+                            {{if .HasSubIndex}}
+                            <ol class="ts ordered list">
+                                {{range .SubIndexes}}
+                                <li>
+                                    <a href="#!">{{.Title}}</a>
+                                </li>
+                                {{end}}
+                            </ol>
+                            {{end}}
+                        </li>
+                    {{end}}
+                </ol>
 
-                {{range .Sections}}
-                <!-- 單個樣式說明 -->
+                {{range .Definitions}}
+                <!-- 單個大分類 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 data-is="sectionHeader" class="ts header">
-                        {{.Title}}
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                    <!-- 分類標題 -->
+                    <h2 data-is="chapterHeader" class="ts dividing header">{{.Title}}</h2>
+                    <!-- / 分類標題 -->
 
-                    <!-- 解說 -->
+                    <!-- 大分類解說 -->
                     <div style="font-size: 16px">{{.Description}}</div>
-                    <!-- / 解說 -->
+                    <!-- / 大分類解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            {{.Example}}
+                    {{range .Sections}}
+                    <!-- 單個樣式說明 -->
+
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            {{.Title}}
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
+
+                        <!-- 解說 -->
+                        <div style="font-size: 16px">{{.Description}}</div>
+                        <!-- / 解說 -->
+
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                {{.Example}}
+                            </div>
+                            <!-- / 展示區塊 -->
+
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                {{.HTML}}
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 展示區塊 -->
+                        <!-- / 示範區域 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            {{.HTML}}
-                        </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                    <!-- / 單個樣式說明 -->
+                    {{end}}
 
-                <!-- / 單個樣式說明 -->
+
+                <!-- / 單個大分類 -->
                 {{end}}
 
+                <!-- 分類標題 -->
+                <h2 data-is="chapterHeader" class="ts dividing header">本頁留言</h2>
+                <p>你現在可以在這裡留言啦！如果有功能建議或是發現錯誤，可以到這裡提出 Issue。</p>
+                <!-- / 分類標題 -->
 
-            <!-- / 單個大分類 -->
-            {{end}}
-
+            </div>
 
         </div>
         <!-- / 右側邊主要內容欄位 -->
@@ -346,7 +405,7 @@
     <!-- / 空白分隔線 -->
 
     <!-- 底部片段 -->
-    <div class="ts bottom attached secondary very padded segment">
+    <div class="ts bottom attached secondary very padded segment" data-is="footer">
         <!-- 置中容器 -->
         <div class="ts container">
             <!-- 底部連結選單 -->
@@ -357,11 +416,6 @@
                 <a href="#!" class="item">關於</a>
             </div>
             <!-- / 底部連結選單 -->
-
-            <!-- 空白分隔線 -->
-            <div class="ts hidden divider"></div>
-            <div class="ts hidden section divider"></div>
-            <!-- / 空白分隔線 -->
 
             <!-- 底部說明 -->
             <span>由 <a href="https://www.facebook.com/yamiodymel">Yami Odymel</a> 所設計，還有<a href="https://github.com/TeaMeow/TocasUI/graphs/contributors">貢獻者們</a>的愛心 ❤️。原始碼授權方式為 MIT，文件則為 <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW">CC0 1.0 公眾領域</a>，還請盡情地使用和分享，或者是一同改進 :)</span><span class="ubuntu preload"> </span>
