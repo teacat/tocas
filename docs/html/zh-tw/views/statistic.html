@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../../../../dist/tocas.css">
-    <link rel="stylesheet" href="../../assets/highlight.css">
-    <link rel="stylesheet" href="../../assets/images/style.css">
+    <link rel="stylesheet" href="../../dist/tocas.css">
+    <link rel="stylesheet" href="../html/assets/highlight.css">
+    <link rel="stylesheet" href="../html/assets/images/style.css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" defer></script>
@@ -17,44 +17,129 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-css.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-html.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./assets/highlight.js" defer></script>
     <title>Document</title>
     <style>
-        h1 ~ p,
-        h2 ~ p,
-        h3 ~ p {
+        @font-face{
+            font-family: 'icomoon';
+            src:  url('../html/assets/images/fonts/icomoon.eot?en3o5m');
+            src:  url('../html/assets/images/fonts/icomoon.eot?en3o5m#iefix') format('embedded-opentype'),
+                url('../html/assets/images/fonts/icomoon.ttf?en3o5m') format('truetype'),
+                url('../html/assets/images/fonts/icomoon.woff?en3o5m') format('woff'),
+                url('../html/assets/images/fonts/icomoon.svg?en3o5m#icomoon') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+        [data-is="logo"] {
+            font-size: 4em;
+            display: block;
+            margin-top: -32px;
+            margin-bottom: 50px;
+            margin-left: -11px;
+            color: #5a5a5a;
+
+            font-family: 'icomoon' !important;
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        [data-is="logo"]:before {
+            content: "\e900";
+        }
+        [data-is="slate"] {
+            margin-bottom: 40px;
+            border-bottom: 1px solid #e9e9e9;
+            border-radius: 0;
+        }
+        [data-is="chapterHeader"] {
+            border-bottom : 2px solid #d9d9d9 !important;
+            padding-bottom: 10px !important;
+        }
+        [data-is="chapterHeader"]:not(:first-child) {
+            margin-top: 4.5em !important;
+        }
+        [data-is="sectionHeader"] {
+            margin-top: 4em !important;
+        }
+        [data-is="chapterHeader"] ~ p,
+        [data-is="sectionHeader"] ~ p {
             margin: .8em 0 !important;
             font-size: 16px;
             line-height: 1.7;
         }
-        h2 {
-            border-bottom: 2px solid #d9d9d9 !important
+        [data-is="sectionHeader"]:after {
+            content: "";
+            position: absolute;
+            left: -92px;
+            width: 2px;
+            border: 3px solid #fff;
+            background: #a2a2a2;
+            top: -2px;
+            bottom: -2px;
         }
-        h2:not(:first-child) {
-            margin-top: 4.5em !important;
+        [data-is="links"] .item {
+            display: flex !important;
+            line-height: 22px !important;
+            align-items: center !important;
         }
-        .icon-logo {
-            font-size: 4em;
-            text-align: center;
-            display: block;
-            margin-bottom: 52px;
-            color: #5a5a5a;
+        [data-is="links"] .item .label {
+            padding: 9px;
+            height: 20px;
         }
-        h3 {
-            margin-top: 4em !important;
+        [data-is="links"] span:not(.label) {
+            /*position: absolute;
+            right: 0;*/
+            margin-left: 7px;
+            font-size: 13px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        [data-is="linksDivider"]:before {
+            content: "";
+            position: absolute;
+            top: 12px;
+            right: 24px;
+            bottom: 0;
+            left: 0;
+            border-right: 2px solid rgba(0,0,0,.1);
+            pointer-events: none;
+        }
+        [data-is="tab"] {
+            position: absolute;
+            bottom: -3.17em;
+            left: 70px;
+            width: 750px;
+        }
+        [data-is="footer"] {
+            margin-top: 40px !important;
+            margin-bottom: 0 !important;
+            padding-bottom: 90px !important;
+            box-shadow: none !important;
+            border-top: 1px solid #e9e9e9 !important;
+            border-radius: 0 !important;
         }
         .ts.segments {
             margin-top: 2.3em !important;
         }
+
     </style>
 </head>
 <body>
     <!-- 頂部板岩 -->
-    <div class="ts padded big heading slate">
+    <div data-is="slate" class="ts padded big heading slate">
         <!-- 網格容器 -->
         <div class="ts container grid">
             <!-- 側邊空白欄位 -->
-            <div class="four wide column"></div>
+            <div class="four wide column">
+                <!-- 主要 Logo -->
+                <i data-is="logo"></i>
+                <!-- / 主要 Logo -->
+            </div>
             <!-- / 側邊空白欄位 -->
 
             <!-- 右側主要內容欄位 -->
@@ -71,10 +156,10 @@
                     </div>
                 </div>
 
-                <!-- 空白分隔線 -->
-                <div class="ts hidden section divider"></div>
-                <!-- / 空白分隔線 -->
+            </div>
+            <!-- / 右側主要內容欄位 -->
 
+            <div class="sixteen wide column">
                 <!-- 文件標題 -->
                 <div class="header">統計數據</div>
                 <!-- / 文件標題 -->
@@ -83,7 +168,21 @@
                 <div class="description">平均可能不超過 8 —— 公分。</div>
                 <!-- / 文件類別名稱敘述 -->
             </div>
-            <!-- / 右側主要內容欄位 -->
+
+            <div class="four wide column">
+
+            </div>
+
+            <div class="twelve wide column">
+                <div class="ts evenly divided tabbed menu" data-is="tab">
+                <div class="item">yee</div>
+                <div class="active item">yee</div>
+            </div>
+            </div>
+
+
+
+
         </div>
         <!-- / 網格容器 -->
     </div>
@@ -96,10 +195,8 @@
     <!-- 主要網格系統 -->
     <div class="ts container relaxed grid">
         <!-- 左側選單欄位 -->
-        <div class="three wide column" style="margin-top: -275px">
-            <!-- 主要 Logo -->
-            <i class="icon-logo"></i>
-            <!-- / 主要 Logo -->
+        <div class="three wide column">
+
 
             <!-- 搜尋輸入欄位 -->
             <div class="ts fluid link icon input">
@@ -109,480 +206,657 @@
             </div>
             <!-- / 搜尋輸入欄位 -->
 
+            <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+
             <!-- 元件選單 -->
-            <div class="ts large vertical menu" >
-                <!-- 一般元素 -->
-                <div class="item">
-                    一般元素
-                    <div class="menu">
-                        <a href="#!" class="item" data-tooltip=".ts.button" data-tooltip-position="left">按鈕</a>
-                        <a href="#!" class="item" data-tooltip=".ts.container" data-tooltip-position="left">容器</a>
-                        <a href="#!" class="item" data-tooltip=".ts.divider" data-tooltip-position="left">分隔線</a>
-                        <a href="#!" class="item" data-tooltip=".ts.flag" data-tooltip-position="left">國旗 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.header" data-tooltip-position="left">標題</a>
-                        <a href="#!" class="item" data-tooltip="i.icon" data-tooltip-position="left">圖示</a>
-                        <a href="#!" class="item" data-tooltip=".ts.image" data-tooltip-position="left">圖片</a>
-                        <a href="#!" class="item" data-tooltip=".ts.input" data-tooltip-position="left">輸入欄位</a>
-                        <a href="#!" class="item" data-tooltip=".ts.label" data-tooltip-position="left">標籤</a>
-                        <a href="#!" class="item" data-tooltip=".ts.list" data-tooltip-position="left">清單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.loader" data-tooltip-position="left">讀取指示器</a>
-                        <a href="#!" class="item" data-tooltip=".ts.segment" data-tooltip-position="left">片段</a>
-                        <a href="#!" class="item" data-tooltip=".ts.slate" data-tooltip-position="left">板岩</a>
-                        <a href="#!" class="item" data-tooltip=".ts.steps" data-tooltip-position="left">步驟</a>
-                        <a href="#!" class="item" data-tooltip=".ts.placeholder" data-tooltip-position="left">預置區塊 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.quote" data-tooltip-position="left">引言</a>
-                    </div>
-                </div>
-                <!-- / 一般元素 -->
-
-                <!-- 聚合型 -->
-                <div class="item">
-                    聚合型
-                    <div class="menu">
-                        <a href="#!" class="item" data-tooltip=".ts.breadcrumb" data-tooltip-position="left">麵包屑</a>
-                        <a href="#!" class="item" data-tooltip=".ts.form" data-tooltip-position="left">表單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.grid" data-tooltip-position="left">網格系統</a>
-                        <a href="#!" class="item" data-tooltip=".ts.menu" data-tooltip-position="left">選單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.message" data-tooltip-position="left">訊息</a>
-                        <a href="#!" class="item" data-tooltip=".ts.table" data-tooltip-position="left">表格</a>
-                    </div>
-                </div>
-                <!-- / 聚合型 -->
-
-                <!-- 模塊 -->
-                <div class="item">
-                    模塊
-                    <div class="menu">
-                        <a href="#!" class="item" data-tooltip=".ts.accordion" data-tooltip-position="left">手風琴</a>
-                        <a href="#!" class="item" data-tooltip=".ts.calendar" data-tooltip-position="left">日曆</a>
-                        <a href="#!" class="item" data-tooltip=".ts.carousel" data-tooltip-position="left">幻燈片 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.checkbox" data-tooltip-position="left">核取方塊</a>
-                        <a href="#!" class="item" data-tooltip=".ts.comparison" data-tooltip-position="left">圖片比較 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.context.menu" data-tooltip-position="left">複合功能選單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.dimmer" data-tooltip-position="left">淡化幕</a>
-                        <a href="#!" class="item" data-tooltip=".ts.dropdown" data-tooltip-position="left">下拉式選單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.embed" data-tooltip-position="left">嵌入物件</a>
-                        <a href="#!" class="item" data-tooltip=".ts.modal" data-tooltip-position="left">對話視窗</a>
-                        <a href="#!" class="item" data-tooltip=".ts.popup" data-tooltip-position="left">彈出式訊息</a>
-                        <a href="#!" class="item" data-tooltip=".ts.progress" data-tooltip-position="left">進度列</a>
-                        <a href="#!" class="item" data-tooltip=".ts.rating" data-tooltip-position="left">評分 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.scrollspy" data-tooltip-position="left">捲動監聽</a>
-                        <a href="#!" class="item" data-tooltip=".ts.search" data-tooltip-position="left">搜尋 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.sidebar" data-tooltip-position="left">側邊欄</a>
-                        <a href="#!" class="item" data-tooltip=".ts.slider" data-tooltip-position="left">滑桿</a>
-                        <a href="#!" class="item" data-tooltip=".ts.snackbar" data-tooltip-position="left">點心條</a>
-                        <a href="#!" class="item" data-tooltip=".ts.tab" data-tooltip-position="left">分頁籤</a>
-                        <a href="#!" class="item" data-tooltip=".ts.transfer" data-tooltip-position="left">穿梭框 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.transition" data-tooltip-position="left">轉場效果 <span class="ts warning right floated label">新的</span></a>
-                    </div>
-                </div>
-                <!-- / 模塊 -->
-
-                <!-- 視圖型 -->
-                <div class="item">
-                    視圖型
-                    <div class="menu">
-                        <a href="#!" class="item" data-tooltip=".ts.card" data-tooltip-position="left">卡片</a>
-                        <a href="#!" class="item" data-tooltip=".ts.comments" data-tooltip-position="left">留言</a>
-                        <a href="#!" class="item" data-tooltip=".ts.feed" data-tooltip-position="left">動態消息</a>
-                        <a href="#!" class="item" data-tooltip=".ts.items" data-tooltip-position="left">項目</a>
-                        <a href="#!" class="item" data-tooltip=".ts.speeches" data-tooltip-position="left">對話氣泡</a>
-                        <a href="#!" class="item" data-tooltip=".ts.statistic" data-tooltip-position="left">統計數據</a>
-                    </div>
-                </div>
-                <!-- / 視圖型 -->
+            <div class="ts header">一般元素</div>
+            <div class="ts link list" data-is="links">
+                <a href="#!" class="item" data-tooltip=".ts.button">按鈕 <span>Button</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.container">容器 <span>Container</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.divider">分隔線 <span>Divider</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.flag">國旗 <span>Flag</span><span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.header">標題 <span>Header</span></a>
+                <a href="#!" class="item" data-tooltip="i.icon">圖示 <span>Icon</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.image">圖片 <span>Image</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.input">輸入欄位 <span>Input</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.label">標籤 <span>Label</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.list">清單 <span>List</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.loader">讀取指示器 <span>Loader</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.segment">片段 <span>Segmet</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.slate">板岩 <span>Slate</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.steps">步驟 <span>Steps</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.placeholder">預置區塊 <span>Placeholder</span><span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.quote">引言 <span>Quote</span></a>
             </div>
+
+            <div class="ts header">聚合型</div>
+            <div class="ts link list" data-is="links">
+                <a href="#!" class="item" data-tooltip=".ts.breadcrumb">麵包屑</a>
+                <a href="#!" class="item" data-tooltip=".ts.form">表單</a>
+                <a href="#!" class="item" data-tooltip=".ts.grid">網格系統</a>
+                <a href="#!" class="item" data-tooltip=".ts.menu">選單</a>
+                <a href="#!" class="item" data-tooltip=".ts.message">訊息</a>
+                <a href="#!" class="item" data-tooltip=".ts.table">表格</a>
+            </div>
+
+            <div class="ts header">模塊</div>
+            <div class="ts link list" data-is="links">
+                <a href="#!" class="item" data-tooltip=".ts.accordion">手風琴</a>
+                <a href="#!" class="item" data-tooltip=".ts.calendar">日曆</a>
+                <a href="#!" class="item" data-tooltip=".ts.carousel">幻燈片 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.checkbox">核取方塊</a>
+                <a href="#!" class="item" data-tooltip=".ts.comparison">圖片比較 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.context.menu">複合功能選單</a>
+                <a href="#!" class="item" data-tooltip=".ts.dimmer">淡化幕</a>
+                <a href="#!" class="item" data-tooltip=".ts.dropdown">下拉式選單</a>
+                <a href="#!" class="item" data-tooltip=".ts.embed">嵌入物件</a>
+                <a href="#!" class="item" data-tooltip=".ts.modal">對話視窗</a>
+                <a href="#!" class="item" data-tooltip=".ts.popup">彈出式訊息</a>
+                <a href="#!" class="item" data-tooltip=".ts.progress">進度列</a>
+                <a href="#!" class="item" data-tooltip=".ts.rating">評分 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.scrollspy">捲動監聽</a>
+                <a href="#!" class="item" data-tooltip=".ts.search">搜尋 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.sidebar">側邊欄</a>
+                <a href="#!" class="item" data-tooltip=".ts.slider">滑桿</a>
+                <a href="#!" class="item" data-tooltip=".ts.snackbar">點心條</a>
+                <a href="#!" class="item" data-tooltip=".ts.tab">分頁籤</a>
+                <a href="#!" class="item" data-tooltip=".ts.transfer">穿梭框 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.transition">轉場效果 <span class="ts warning right floated label">新的</span></a>
+            </div>
+
+            <div class="ts header">視圖型</div>
+            <div class="ts link list" data-is="links">
+                <a href="#!" class="item" data-tooltip=".ts.card">卡片</a>
+                <a href="#!" class="item" data-tooltip=".ts.comments">留言</a>
+                <a href="#!" class="item" data-tooltip=".ts.feed">動態消息</a>
+                <a href="#!" class="item" data-tooltip=".ts.items">項目</a>
+                <a href="#!" class="item" data-tooltip=".ts.speeches">對話氣泡</a>
+                <a href="#!" class="item" data-tooltip=".ts.statistic">統計數據</a>
+            </div>
+
+            <div class="ts header">索引</div>
+
+
+            <div class="ts link list" data-is="links">
+                
+                    <div class="item">
+                        <a href="#!">種類</a>
+                        
+                        <div class="ts list">
+                            
+                            <a href="#!" class="item">基本</a>
+                            
+                            <a href="#!" class="item">標籤於上</a>
+                            
+                            <a href="#!" class="item">語意</a>
+                            
+                            <a href="#!" class="item">肯定和否定</a>
+                            
+                            <a href="#!" class="item">反色</a>
+                            
+                        </div>
+                        
+                    </div>
+                
+                    <div class="item">
+                        <a href="#!">內容</a>
+                        
+                        <div class="ts list">
+                            
+                            <a href="#!" class="item">數值</a>
+                            
+                            <a href="#!" class="item">異動</a>
+                            
+                            <a href="#!" class="item">標籤</a>
+                            
+                        </div>
+                        
+                    </div>
+                
+                    <div class="item">
+                        <a href="#!">外觀</a>
+                        
+                        <div class="ts list">
+                            
+                            <a href="#!" class="item">水平統計數據</a>
+                            
+                            <a href="#!" class="item">分隔的</a>
+                            
+                            <a href="#!" class="item">均分寬度</a>
+                            
+                            <a href="#!" class="item">流動寬度</a>
+                            
+                            <a href="#!" class="item">垂直對齊</a>
+                            
+                            <a href="#!" class="item">水平對齊</a>
+                            
+                            <a href="#!" class="item">浮動</a>
+                            
+                            <a href="#!" class="item">尺寸</a>
+                            
+                        </div>
+                        
+                    </div>
+                
+                    <div class="item">
+                        <a href="#!">群組</a>
+                        
+                        <div class="ts list">
+                            
+                            <a href="#!" class="item">統計群組</a>
+                            
+                            <a href="#!" class="item">反色群組</a>
+                            
+                            <a href="#!" class="item">群組尺寸</a>
+                            
+                        </div>
+                        
+                    </div>
+                
+            </div>
+
             <!-- 元件選單 -->
         </div>
         <!-- / 左側選單欄位 -->
 
         <!-- 間隔欄位 -->
-        <div class="one wide column"></div>
+        <div class="one wide column" data-is="linksDivider"></div>
         <!-- / 間隔欄位 -->
 
         <!-- 右側邊主要內容欄位 -->
         <div class="twelve wide column">
-            <!-- 分類標題 -->
-            <h2 class="ts dividing header">索引</h2>
-            <!-- / 分類標題 -->
 
-            <ol class="ts ordered list" style="font-size: 16px">
-                <li>
-                    <a href="#!">你好</a>
-                    <ol class="ts ordered list">
-                        <li>
-                            <a href="#!">你好</a>
-                        </li>
-                        <li><a href="#!">你好</a></li>
-                        <li><a href="#!">你好</a></li>
-                        <li><a href="#!">你好</a></li>
-                        <li><a href="#!">你好</a></li>
-                        <li><a href="#!">你好</a></li>
-                    </ol>
-                </li>
-                <li><a href="#!">你好</a></li>
-                <li><a href="#!">你好</a></li>
-                <li><a href="#!">你好</a></li>
-                <li><a href="#!">你好</a></li>
-                <li><a href="#!">你好</a></li>
-            </ol>
+            <div style="max-width: 750px;margin:  0 auto;">
 
-            
-            <!-- 單個大分類 -->
+
+
+
 
                 <!-- 分類標題 -->
-                <h2 class="ts dividing header">種類</h2>
+                <h2 data-is="chapterHeader" class="ts dividing header">索引</h2>
                 <!-- / 分類標題 -->
 
-                <!-- 大分類解說 -->
-                <div style="font-size: 16px"><p>統計數據具有不同的種類。</p>
-</div>
-                <!-- / 大分類解說 -->
+                <ol class="ts ordered list" style="font-size: 16px">
+                    
+                        <li>
+                            <a href="#!">種類</a>
+                            
+                            <ol class="ts ordered list">
+                                
+                                <li>
+                                    <a href="#!">基本</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">標籤於上</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">語意</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">肯定和否定</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">反色</a>
+                                </li>
+                                
+                            </ol>
+                            
+                        </li>
+                    
+                        <li>
+                            <a href="#!">內容</a>
+                            
+                            <ol class="ts ordered list">
+                                
+                                <li>
+                                    <a href="#!">數值</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">異動</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">標籤</a>
+                                </li>
+                                
+                            </ol>
+                            
+                        </li>
+                    
+                        <li>
+                            <a href="#!">外觀</a>
+                            
+                            <ol class="ts ordered list">
+                                
+                                <li>
+                                    <a href="#!">水平統計數據</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">分隔的</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">均分寬度</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">流動寬度</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">垂直對齊</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">水平對齊</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">浮動</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">尺寸</a>
+                                </li>
+                                
+                            </ol>
+                            
+                        </li>
+                    
+                        <li>
+                            <a href="#!">群組</a>
+                            
+                            <ol class="ts ordered list">
+                                
+                                <li>
+                                    <a href="#!">統計群組</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">反色群組</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">群組尺寸</a>
+                                </li>
+                                
+                            </ol>
+                            
+                        </li>
+                    
+                </ol>
 
                 
-                <!-- 單個樣式說明 -->
+                <!-- 單個大分類 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        基本
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                    <!-- 分類標題 -->
+                    <h2 data-is="chapterHeader" class="ts dividing header">種類</h2>
+                    <!-- / 分類標題 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>一個最基本的統計數據。</p>
+                    <!-- 大分類解說 -->
+                    <div style="font-size: 16px"><p>統計數據具有不同的種類。</p>
 </div>
-                    <!-- / 解說 -->
+                    <!-- / 大分類解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[statistic]]">
+                    
+                    <!-- 單個樣式說明 -->
+
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            基本
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
+
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>一個最基本的統計數據。</p>
+</div>
+                        <!-- / 解說 -->
+
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts statistic">
     <div class="value">42,689</div>
     <div class="label">拜訪次數</div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[statistic]]"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>42,689<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>拜訪次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>statistic</mark>"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">42</span>,<span class="hljs-number">689</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;拜訪次數&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        標籤於上
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            標籤於上
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>標籤也可以在統計數據的上方，你只需要變更順序。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>標籤也可以在統計數據的上方，你只需要變更順序。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts statistic">
-    <div class="[[label]]">會員總數</div>
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts statistic">
+    <div class="label">會員總數</div>
     <div class="value">999</div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[label]]"</span>&gt;</span>會員總數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>999<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>label</mark>"</span>&gt;會員總數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">999</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        語意
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            語意
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>統計數據也可以帶有不同的語意。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>統計數據也可以帶有不同的語意。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[primary]] statistic">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts primary statistic">
     <div class="value">1,463</div>
     <div class="label">下載次數</div>
 </div>
-<div class="ts [[info]] statistic">
+<div class="ts info statistic">
     <div class="value">361</div>
     <div class="label">觀看次數</div>
 </div>
-<div class="ts [[warning]] statistic">
+<div class="ts warning statistic">
     <div class="value">72%</div>
     <div class="label">負載頻率</div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[primary]] statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>1,463<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>下載次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[info]] statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>361<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>觀看次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[warning]] statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>72%<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>負載頻率<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>primary</mark> statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">1</span>,<span class="hljs-number">463</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;下載次數&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>info</mark> statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">361</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;觀看次數&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>warning</mark> statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">72</span>%&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;負載頻率&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        肯定和否定
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            肯定和否定
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>統計數據可以是肯定或是否定的。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>統計數據可以是肯定或是否定的。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[positive]] statistic">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts positive statistic">
     <div class="value">301+</div>
     <div class="label">正面</div>
 </div>
-<div class="ts [[negative]] statistic">
+<div class="ts negative statistic">
     <div class="value">13</div>
     <div class="label">負面</div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[positive]] statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>301+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>正面<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[negative]] statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>13<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>負面<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>positive</mark> statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">301</span>+&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;正面&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>negative</mark> statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">13</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;負面&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        反色
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            反色
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>統計數據可以是反色的，用以呈現在不同的背景上。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>統計數據可以是反色的，用以呈現在不同的背景上。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts inverted {{segment}}">
-    <div class="ts [[inverted]] [[primary]] statistic">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts inverted {{segment}}">
+    <div class="ts inverted primary statistic">
         <div class="value">1,463</div>
         <div class="label">下載次數</div>
     </div>
-    <div class="ts [[inverted]] [[info]] statistic">
+    <div class="ts inverted info statistic">
         <div class="value">361</div>
         <div class="label">觀看次數</div>
     </div>
-    <div class="ts [[inverted]] [[warning]] statistic">
+    <div class="ts inverted warning statistic">
         <div class="value">72%</div>
         <div class="label">負載頻率</div>
     </div>
-    <div class="ts [[inverted]] [[positive]] statistic">
+    <div class="ts inverted positive statistic">
         <div class="value">301+</div>
         <div class="label">正面</div>
     </div>
-    <div class="ts [[inverted]] [[negative]] statistic">
+    <div class="ts inverted negative statistic">
         <div class="value">13</div>
         <div class="label">負面</div>
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts inverted {{segment}}"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[inverted]] [[primary]] statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>1,463<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>下載次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[inverted]] [[info]] statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>361<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>觀看次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[inverted]] [[warning]] statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>72%<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>負載頻率<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[inverted]] [[positive]] statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>301+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>正面<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[inverted]] [[negative]] statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>13<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>負面<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts inverted {{segment}}"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>inverted</mark> <mark>primary</mark> statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">1</span>,<span class="hljs-number">463</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;下載次數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>inverted</mark> <mark>info</mark> statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">361</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;觀看次數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>inverted</mark> <mark>warning</mark> statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">72</span>%&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;負載頻率&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>inverted</mark> <mark>positive</mark> statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">301</span>+&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;正面&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>inverted</mark> <mark>negative</mark> statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">13</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;負面&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+
+
+                <!-- / 單個大分類 -->
                 
+                <!-- 單個大分類 -->
 
+                    <!-- 分類標題 -->
+                    <h2 data-is="chapterHeader" class="ts dividing header">內容</h2>
+                    <!-- / 分類標題 -->
 
-            <!-- / 單個大分類 -->
-            
-            <!-- 單個大分類 -->
-
-                <!-- 分類標題 -->
-                <h2 class="ts dividing header">內容</h2>
-                <!-- / 分類標題 -->
-
-                <!-- 大分類解說 -->
-                <div style="font-size: 16px"><p>統計數據中包有不同性質的內容。</p>
+                    <!-- 大分類解說 -->
+                    <div style="font-size: 16px"><p>統計數據中包有不同性質的內容。</p>
 </div>
-                <!-- / 大分類解說 -->
+                    <!-- / 大分類解說 -->
 
-                
-                <!-- 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        數值
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            數值
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>包含主要統計數據的數字、數值，其中也可以帶有圖示、文字或圖片。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>包含主要統計數據的數字、數值，其中也可以帶有圖示、文字或圖片。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts statistics">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts statistics">
     <div class="statistic">
-        <div class="[[value]]">724</div>
+        <div class="value">724</div>
         <div class="label">下載次數</div>
     </div>
     <div class="statistic">
-        <div class="text [[value]]">
+        <div class="text value">
             三千六百<br>
             八十萬
         </div>
         <div class="label">檢視次數</div>
     </div>
     <div class="statistic">
-        <div class="[[value]]">
+        <div class="value">
             <i class="flag {{icon}}"></i> 32
         </div>
         <div class="label">已佔據</div>
     </div>
     <div class="statistic">
-        <div class="[[value]]">
+        <div class="value">
             <img class="ts right spaced circular {{image}}" src="!-user-!">
             Infinity-S
         </div>
@@ -590,213 +864,213 @@
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts statistics"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[value]]"</span>&gt;</span>724<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>下載次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text [[value]]"</span>&gt;</span>
-            三千六百<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts statistics"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>value</mark>"</span>&gt;<span class="hljs-number">724</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;下載次數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text <mark>value</mark>"</span>&gt;
+            三千六百&lt;br&gt;
             八十萬
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>檢視次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[value]]"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"flag {{icon}}"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span> 32
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>已佔據<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[value]]"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts right spaced circular {{image}}"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"!-user-!"</span>&gt;</span>
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;檢視次數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>value</mark>"</span>&gt;
+            &lt;i <span class="hljs-built_in">class</span>=<span class="hljs-string">"flag {{icon}}"</span>&gt;&lt;/i&gt; <span class="hljs-number">32</span>
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;已佔據&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>value</mark>"</span>&gt;
+            &lt;img <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts right spaced circular {{image}}"</span> src=<span class="hljs-string">""</span>&gt;
             Infinity-S
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>人氣最高<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;人氣最高&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        異動
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            異動
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>顯示與上次的差距、異動數值。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>顯示與上次的差距、異動數值。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts statistic">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts statistic">
     <div class="value">
         892
-        <div class="[[increment]]">32</div>
+        <div class="increment">32</div>
     </div>
     <div class="label">觀看次數</div>
 </div>
 <div class="ts statistic">
     <div class="value">
         18
-        <div class="[[decrement]]">32</div>
+        <div class="decrement">32</div>
     </div>
     <div class="label">收藏次數</div>
 </div>
 <div class="ts statistic">
     <div class="value">
         1,725
-        <div class="[[fluctuation]]">163+</div>
+        <div class="fluctuation">163+</div>
     </div>
     <div class="label">購買次數</div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>
-        892
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[increment]]"</span>&gt;</span>32<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>觀看次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>
-        18
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[decrement]]"</span>&gt;</span>32<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>收藏次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>
-        1,725
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[fluctuation]]"</span>&gt;</span>163+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>購買次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;
+        <span class="hljs-number">892</span>
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>increment</mark>"</span>&gt;<span class="hljs-number">32</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;觀看次數&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;
+        <span class="hljs-number">18</span>
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>decrement</mark>"</span>&gt;<span class="hljs-number">32</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;收藏次數&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;
+        <span class="hljs-number">1</span>,<span class="hljs-number">725</span>
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>fluctuation</mark>"</span>&gt;<span class="hljs-number">163</span>+&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;購買次數&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        標籤
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            標籤
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>用來告訴使用者這個數據的含義。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>用來告訴使用者這個數據的含義。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts statistic">
-    <div class="value">315</div>
-    <div class="[[label]]">點擊次數</div>
-</div>
-
-                        </div>
-                        <!-- / 展示區塊 -->
-
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>315<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[label]]"</span>&gt;</span>點擊次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</code></pre>
-
-                        </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
-
-                <!-- / 單個樣式說明 -->
-                
-
-
-            <!-- / 單個大分類 -->
-            
-            <!-- 單個大分類 -->
-
-                <!-- 分類標題 -->
-                <h2 class="ts dividing header">外觀</h2>
-                <!-- / 分類標題 -->
-
-                <!-- 大分類解說 -->
-                <div style="font-size: 16px"><p>你也可以更改統計數據的外觀。</p>
-</div>
-                <!-- / 大分類解說 -->
-
-                
-                <!-- 單個樣式說明 -->
-
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        水平統計數據
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
-
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>讓統計數據以水平的方式擺放。</p>
-</div>
-                    <!-- / 解說 -->
-
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[horizontal]] statistic">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts statistic">
     <div class="value">315</div>
     <div class="label">點擊次數</div>
 </div>
-<div class="ts [[horizontal]] statistics">
+
+                            </div>
+                            <!-- / 展示區塊 -->
+
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">315</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>label</mark>"</span>&gt;點擊次數&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+</code></pre>
+
+                            </div>
+                            <!-- / 原始碼區塊 -->
+                        </div>
+                        <!-- / 示範區域 -->
+
+                    <!-- / 單個樣式說明 -->
+                    
+
+
+                <!-- / 單個大分類 -->
+                
+                <!-- 單個大分類 -->
+
+                    <!-- 分類標題 -->
+                    <h2 data-is="chapterHeader" class="ts dividing header">外觀</h2>
+                    <!-- / 分類標題 -->
+
+                    <!-- 大分類解說 -->
+                    <div style="font-size: 16px"><p>你也可以更改統計數據的外觀。</p>
+</div>
+                    <!-- / 大分類解說 -->
+
+                    
+                    <!-- 單個樣式說明 -->
+
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            水平統計數據
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
+
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>讓統計數據以水平的方式擺放。</p>
+</div>
+                        <!-- / 解說 -->
+
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts horizontal statistic">
+    <div class="value">315</div>
+    <div class="label">點擊次數</div>
+</div>
+<div class="ts horizontal statistics">
     <div class="statistic">
         <div class="value">724</div>
         <div class="label">下載次數</div>
@@ -807,57 +1081,57 @@
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[horizontal]] statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>315<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>點擊次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[horizontal]] statistics"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>724<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>下載次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>916<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>檢視次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>horizontal</mark> statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">315</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;點擊次數&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>horizontal</mark> statistics"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">724</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;下載次數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">916</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;檢視次數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        分隔的
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            分隔的
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>統計數據群組可以有分隔線劃分開每個統計項目。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>統計數據群組可以有分隔線劃分開每個統計項目。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[divided]] statistics">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts divided statistics">
     <div class="statistic">
         <div class="value">163</div>
         <div class="label">點擊數</div>
@@ -872,57 +1146,57 @@
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[divided]] statistics"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>163<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>點擊數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>12<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>購買數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>2,847<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>評價數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>divided</mark> statistics"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">163</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;點擊數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">12</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;購買數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">2</span>,<span class="hljs-number">847</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;評價數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        均分寬度
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            均分寬度
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>統計數據的寬度可以平均劃分，從 <code>one</code> 到 <code>ten</code>。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>統計數據的寬度可以平均劃分，從 <code>one</code> 到 <code>ten</code>。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[three]] statistics">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts three statistics">
     <div class="statistic">
         <div class="value">1,463</div>
         <div class="label">下載次數</div>
@@ -937,57 +1211,57 @@
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[three]] statistics"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>1,463<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>下載次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>361<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>觀看次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>72%<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>負載頻率<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>three</mark> statistics"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">1</span>,<span class="hljs-number">463</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;下載次數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">361</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;觀看次數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">72</span>%&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;負載頻率&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        流動寬度
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            流動寬度
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>如果你不想手動指定統計數據的寬度，你可以讓統計數據群組變成流動寬度，這會直接貼滿父容器的寬度並自動均分。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>如果你不想手動指定統計數據的寬度，你可以讓統計數據群組變成流動寬度，這會直接貼滿父容器的寬度並自動均分。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[fluid]] divided statistics">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts fluid divided statistics">
     <div class="statistic">
         <div class="value">4,712</div>
         <div class="label">註冊人數</div>
@@ -998,114 +1272,114 @@
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[fluid]] divided statistics"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>4,712<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>註冊人數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>1,394<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>昨日登入<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>fluid</mark> divided statistics"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">4</span>,<span class="hljs-number">712</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;註冊人數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">1</span>,<span class="hljs-number">394</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;昨日登入&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        垂直對齊
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            垂直對齊
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>你可以變動統計數據中標籤的垂直對齊。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>你可以變動統計數據中標籤的垂直對齊。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts horizontal statistic">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts horizontal statistic">
     <div class="value">4,126</div>
-    <div class="[[top aligned]] label">置上對齊</div>
+    <div class="top aligned label">置上對齊</div>
 </div>
 <div class="ts horizontal statistic">
     <div class="value">8,973</div>
-    <div class="[[middle aligned]] label">置中對齊</div>
+    <div class="middle aligned label">置中對齊</div>
 </div>
 <div class="ts horizontal statistic">
     <div class="value">1,502</div>
-    <div class="[[bottom aligned]] label">置下對齊</div>
+    <div class="bottom aligned label">置下對齊</div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts horizontal statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>4,126<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[top aligned]] label"</span>&gt;</span>置上對齊<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts horizontal statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>8,973<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[middle aligned]] label"</span>&gt;</span>置中對齊<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts horizontal statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>1,502<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[bottom aligned]] label"</span>&gt;</span>置下對齊<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts horizontal statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">4</span>,<span class="hljs-number">126</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>top aligned</mark> label"</span>&gt;置上對齊&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts horizontal statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">8</span>,<span class="hljs-number">973</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>middle aligned</mark> label"</span>&gt;置中對齊&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts horizontal statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">1</span>,<span class="hljs-number">502</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>bottom aligned</mark> label"</span>&gt;置下對齊&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        水平對齊
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            水平對齊
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>統計數據的水平對齊是可以變更的，例如對齊左邊而不是中間。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>統計數據的水平對齊是可以變更的，例如對齊左邊而不是中間。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[left aligned]] divided fluid statistics">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts left aligned divided fluid statistics">
     <div class="statistic">
         <div class="value">8,651</div>
         <div class="label">下載次數</div>
@@ -1120,58 +1394,58 @@
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[left aligned]] divided fluid statistics"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>8,651<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>下載次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>958<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>觀看次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>16%<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>負載頻率<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>left aligned</mark> divided fluid statistics"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">8</span>,<span class="hljs-number">651</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;下載次數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">958</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;觀看次數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">16</span>%&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;負載頻率&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        浮動
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            浮動
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>統計數據可以是浮動靠左或靠右。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>統計數據可以是浮動靠左或靠右。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts segment">
-    <div class="ts [[right floated]] statistic">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts segment">
+    <div class="ts right floated statistic">
         <div class="value">
           2,204
         </div>
@@ -1180,7 +1454,7 @@
         </div>
     </div>
     <p>Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos choro alterum definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.</p>
-    <div class="ts [[left floated]] statistic">
+    <div class="ts left floated statistic">
         <div class="value">
           2,204
         </div>
@@ -1191,180 +1465,180 @@
     <p>Eu quo homero blandit intellegebat. Incorrupte consequuntur mei id. Mei ut facer dolores adolescens, no illum aperiri quo, usu odio brute at. Qui te porro electram, ea dico facete utroque quo. Populo quodsi te eam, wisi everti eos ex, eum elitr altera utamur at. Quodsi convenire mnesarchum eu per, quas minimum postulant per id.</p>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts segment"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[right floated]] statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>
-          2,204
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts segment"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>right floated</mark> statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;
+          <span class="hljs-number">2</span>,<span class="hljs-number">204</span>
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;
           觀看次數
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos choro alterum definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[left floated]] statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>
-          2,204
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;p&gt;Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit <span class="hljs-keyword">at</span>. Usu ocurreret referrentur <span class="hljs-keyword">at</span>, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos choro alterum definiebas <span class="hljs-keyword">in</span>. Vim dolorum definiebas an. Mei ex natum rebum iisque.&lt;/p&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>left floated</mark> statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;
+          <span class="hljs-number">2</span>,<span class="hljs-number">204</span>
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;
           觀看次數
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Eu quo homero blandit intellegebat. Incorrupte consequuntur mei id. Mei ut facer dolores adolescens, no illum aperiri quo, usu odio brute at. Qui te porro electram, ea dico facete utroque quo. Populo quodsi te eam, wisi everti eos ex, eum elitr altera utamur at. Quodsi convenire mnesarchum eu per, quas minimum postulant per id.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;p&gt;Eu quo homero blandit intellegebat. Incorrupte consequuntur mei <span class="hljs-built_in">id</span>. Mei ut facer dolores adolescens, no illum aperiri quo, usu odio brute <span class="hljs-keyword">at</span>. Qui te porro electram, ea dico facete utroque quo. Populo quodsi te eam, wisi everti eos ex, eum elitr altera utamur <span class="hljs-keyword">at</span>. Quodsi convenire mnesarchum eu per, quas minimum postulant per <span class="hljs-built_in">id</span>.&lt;/p&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        尺寸
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            尺寸
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>統計數據有不同的尺寸可供選擇。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>統計數據有不同的尺寸可供選擇。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[mini]] statistic">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts mini statistic">
     <div class="value">42,689</div>
     <div class="label">迷你尺寸</div>
 </div>
-<div class="ts [[tiny]] statistic">
+<div class="ts tiny statistic">
     <div class="value">42,689</div>
     <div class="label">微小尺寸</div>
 </div>
-<div class="ts [[small]] statistic">
+<div class="ts small statistic">
     <div class="value">42,689</div>
     <div class="label">小型尺寸</div>
 </div>
-<div class="ts [[medium]] statistic">
+<div class="ts medium statistic">
     <div class="value">42,689</div>
     <div class="label">一般尺寸</div>
 </div>
-<div class="ts [[large]] statistic">
+<div class="ts large statistic">
     <div class="value">42,689</div>
     <div class="label">稍大尺寸</div>
 </div>
-<div class="ts [[big]] statistic">
+<div class="ts big statistic">
     <div class="value">42,689</div>
     <div class="label">大型尺寸</div>
 </div>
-<div class="ts [[huge]] statistic">
+<div class="ts huge statistic">
     <div class="value">42,689</div>
     <div class="label">巨大尺寸</div>
 </div>
-<div class="ts [[massive]] statistic">
+<div class="ts massive statistic">
     <div class="value">42,689</div>
     <div class="label">重量級尺寸</div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[mini]] statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>42,689<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>迷你尺寸<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[tiny]] statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>42,689<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>微小尺寸<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[small]] statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>42,689<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>小型尺寸<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[medium]] statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>42,689<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>一般尺寸<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[large]] statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>42,689<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>稍大尺寸<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[big]] statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>42,689<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>大型尺寸<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[huge]] statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>42,689<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>巨大尺寸<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[massive]] statistic"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>42,689<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>重量級尺寸<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>mini</mark> statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">42</span>,<span class="hljs-number">689</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;迷你尺寸&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>tiny</mark> statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">42</span>,<span class="hljs-number">689</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;微小尺寸&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>small</mark> statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">42</span>,<span class="hljs-number">689</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;小型尺寸&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>medium</mark> statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">42</span>,<span class="hljs-number">689</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;一般尺寸&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>large</mark> statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">42</span>,<span class="hljs-number">689</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;稍大尺寸&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>big</mark> statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">42</span>,<span class="hljs-number">689</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;大型尺寸&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>huge</mark> statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">42</span>,<span class="hljs-number">689</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;巨大尺寸&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>massive</mark> statistic"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">42</span>,<span class="hljs-number">689</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;重量級尺寸&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+
+
+                <!-- / 單個大分類 -->
                 
+                <!-- 單個大分類 -->
 
+                    <!-- 分類標題 -->
+                    <h2 data-is="chapterHeader" class="ts dividing header">群組</h2>
+                    <!-- / 分類標題 -->
 
-            <!-- / 單個大分類 -->
-            
-            <!-- 單個大分類 -->
-
-                <!-- 分類標題 -->
-                <h2 class="ts dividing header">群組</h2>
-                <!-- / 分類標題 -->
-
-                <!-- 大分類解說 -->
-                <div style="font-size: 16px"><p>你能夠將多個統計數據放入單個容器成為一個群組。</p>
+                    <!-- 大分類解說 -->
+                    <div style="font-size: 16px"><p>你能夠將多個統計數據放入單個容器成為一個群組。</p>
 </div>
-                <!-- / 大分類解說 -->
+                    <!-- / 大分類解說 -->
 
-                
-                <!-- 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        統計群組
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            統計群組
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>一個最基本的統計數據群組。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>一個最基本的統計數據群組。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[statistics]]">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts statistics">
     <div class="statistic">
         <div class="value">724</div>
         <div class="label">下載次數</div>
@@ -1375,54 +1649,54 @@
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[statistics]]"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>724<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>下載次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>916<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>檢視次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>statistics</mark>"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">724</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;下載次數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">916</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;檢視次數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        反色群組
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            反色群組
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>你可以直接將統計群組設置為反色的，這樣就不需要替每個統計數據設置成反色。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>你可以直接將統計群組設置為反色的，這樣就不需要替每個統計數據設置成反色。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts inverted {{segment}}">
-    <div class="ts [[inverted]] statistics">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts inverted {{segment}}">
+    <div class="ts inverted statistics">
         <div class="statistic">
             <div class="value">1,948</div>
             <div class="label">已收藏</div>
@@ -1434,55 +1708,55 @@
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts inverted {{segment}}"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[inverted]] statistics"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>1,948<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>已收藏<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>625<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>已分享<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts inverted {{segment}}"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>inverted</mark> statistics"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">1</span>,<span class="hljs-number">948</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;已收藏&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">625</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;已分享&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        群組尺寸
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            群組尺寸
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>統計群組可以擁有一個尺寸，省去替每個統計數據設置尺寸的困擾。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>統計群組可以擁有一個尺寸，省去替每個統計數據設置尺寸的困擾。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[large]] statistics">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts large statistics">
     <div class="statistic">
         <div class="value">859</div>
         <div class="label">點擊次數</div>
@@ -1492,34 +1766,40 @@
         <div class="label">已觸及</div>
     </div>
 </div>
+                            </div>
+                            <!-- / 展示區塊 -->
+
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>large</mark> statistics"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">859</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;點擊次數&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"statistic"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">8</span>,<span class="hljs-number">182</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"label"</span>&gt;已觸及&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
+
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 展示區塊 -->
+                        <!-- / 示範區域 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[large]] statistics"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>859<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>點擊次數<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"statistic"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"value"</span>&gt;</span>8,182<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"label"</span>&gt;</span>已觸及<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+                    <!-- / 單個樣式說明 -->
+                    
 
-                        </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
+                <!-- / 單個大分類 -->
                 
 
+                <!-- 分類標題 -->
+                <h2 data-is="chapterHeader" class="ts dividing header">本頁留言</h2>
+                <p>你現在可以在這裡留言啦！如果有功能建議或是發現錯誤，可以到這裡提出 Issue。</p>
+                <!-- / 分類標題 -->
 
-            <!-- / 單個大分類 -->
-            
-
+            </div>
 
         </div>
         <!-- / 右側邊主要內容欄位 -->
@@ -1531,7 +1811,7 @@
     <!-- / 空白分隔線 -->
 
     <!-- 底部片段 -->
-    <div class="ts bottom attached secondary very padded segment">
+    <div class="ts bottom attached secondary very padded segment" data-is="footer">
         <!-- 置中容器 -->
         <div class="ts container">
             <!-- 底部連結選單 -->
@@ -1543,13 +1823,8 @@
             </div>
             <!-- / 底部連結選單 -->
 
-            <!-- 空白分隔線 -->
-            <div class="ts hidden divider"></div>
-            <div class="ts hidden section divider"></div>
-            <!-- / 空白分隔線 -->
-
             <!-- 底部說明 -->
-            <span>由 <a href="https://www.facebook.com/yamiodymel">Yami Odymel</a> 所設計，還有<a href="https://github.com/TeaMeow/TocasUI/graphs/contributors">貢獻者們</a>的愛心 ❤️。原始碼授權方式為 MIT，文件則為 <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW">CC0 1.0 公眾領域</a>，還請盡情地使用和分享，或者是一同改進 :)</span>
+            <span>由 <a href="https://www.facebook.com/yamiodymel">Yami Odymel</a> 所設計，還有<a href="https://github.com/TeaMeow/TocasUI/graphs/contributors">貢獻者們</a>的愛心 ❤️。原始碼授權方式為 MIT，文件則為 <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW">CC0 1.0 公眾領域</a>，還請盡情地使用和分享，或者是一同改進 :)</span><span class="ubuntu preload"> </span>
             <!-- 底部說明 -->
         </div>
         <!-- / 置中容器 -->

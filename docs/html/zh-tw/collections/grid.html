@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../../../../dist/tocas.css">
-    <link rel="stylesheet" href="../../assets/highlight.css">
-    <link rel="stylesheet" href="../../assets/images/style.css">
+    <link rel="stylesheet" href="../../dist/tocas.css">
+    <link rel="stylesheet" href="../html/assets/highlight.css">
+    <link rel="stylesheet" href="../html/assets/images/style.css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" defer></script>
@@ -17,44 +17,129 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-css.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-html.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./assets/highlight.js" defer></script>
     <title>Document</title>
     <style>
-        h1 ~ p,
-        h2 ~ p,
-        h3 ~ p {
+        @font-face{
+            font-family: 'icomoon';
+            src:  url('../html/assets/images/fonts/icomoon.eot?en3o5m');
+            src:  url('../html/assets/images/fonts/icomoon.eot?en3o5m#iefix') format('embedded-opentype'),
+                url('../html/assets/images/fonts/icomoon.ttf?en3o5m') format('truetype'),
+                url('../html/assets/images/fonts/icomoon.woff?en3o5m') format('woff'),
+                url('../html/assets/images/fonts/icomoon.svg?en3o5m#icomoon') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+        [data-is="logo"] {
+            font-size: 4em;
+            display: block;
+            margin-top: -32px;
+            margin-bottom: 50px;
+            margin-left: -11px;
+            color: #5a5a5a;
+
+            font-family: 'icomoon' !important;
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        [data-is="logo"]:before {
+            content: "\e900";
+        }
+        [data-is="slate"] {
+            margin-bottom: 40px;
+            border-bottom: 1px solid #e9e9e9;
+            border-radius: 0;
+        }
+        [data-is="chapterHeader"] {
+            border-bottom : 2px solid #d9d9d9 !important;
+            padding-bottom: 10px !important;
+        }
+        [data-is="chapterHeader"]:not(:first-child) {
+            margin-top: 4.5em !important;
+        }
+        [data-is="sectionHeader"] {
+            margin-top: 4em !important;
+        }
+        [data-is="chapterHeader"] ~ p,
+        [data-is="sectionHeader"] ~ p {
             margin: .8em 0 !important;
             font-size: 16px;
             line-height: 1.7;
         }
-        h2 {
-            border-bottom: 2px solid #d9d9d9 !important
+        [data-is="sectionHeader"]:after {
+            content: "";
+            position: absolute;
+            left: -92px;
+            width: 2px;
+            border: 3px solid #fff;
+            background: #a2a2a2;
+            top: -2px;
+            bottom: -2px;
         }
-        h2:not(:first-child) {
-            margin-top: 4.5em !important;
+        [data-is="links"] .item {
+            display: flex !important;
+            line-height: 22px !important;
+            align-items: center !important;
         }
-        .icon-logo {
-            font-size: 4em;
-            text-align: center;
-            display: block;
-            margin-bottom: 52px;
-            color: #5a5a5a;
+        [data-is="links"] .item .label {
+            padding: 9px;
+            height: 20px;
         }
-        h3 {
-            margin-top: 4em !important;
+        [data-is="links"] span:not(.label) {
+            /*position: absolute;
+            right: 0;*/
+            margin-left: 7px;
+            font-size: 13px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        [data-is="linksDivider"]:before {
+            content: "";
+            position: absolute;
+            top: 12px;
+            right: 24px;
+            bottom: 0;
+            left: 0;
+            border-right: 2px solid rgba(0,0,0,.1);
+            pointer-events: none;
+        }
+        [data-is="tab"] {
+            position: absolute;
+            bottom: -3.17em;
+            left: 70px;
+            width: 750px;
+        }
+        [data-is="footer"] {
+            margin-top: 40px !important;
+            margin-bottom: 0 !important;
+            padding-bottom: 90px !important;
+            box-shadow: none !important;
+            border-top: 1px solid #e9e9e9 !important;
+            border-radius: 0 !important;
         }
         .ts.segments {
             margin-top: 2.3em !important;
         }
+
     </style>
 </head>
 <body>
     <!-- 頂部板岩 -->
-    <div class="ts padded big heading slate">
+    <div data-is="slate" class="ts padded big heading slate">
         <!-- 網格容器 -->
         <div class="ts container grid">
             <!-- 側邊空白欄位 -->
-            <div class="four wide column"></div>
+            <div class="four wide column">
+                <!-- 主要 Logo -->
+                <i data-is="logo"></i>
+                <!-- / 主要 Logo -->
+            </div>
             <!-- / 側邊空白欄位 -->
 
             <!-- 右側主要內容欄位 -->
@@ -71,10 +156,10 @@
                     </div>
                 </div>
 
-                <!-- 空白分隔線 -->
-                <div class="ts hidden section divider"></div>
-                <!-- / 空白分隔線 -->
+            </div>
+            <!-- / 右側主要內容欄位 -->
 
+            <div class="sixteen wide column">
                 <!-- 文件標題 -->
                 <div class="header">網格系統</div>
                 <!-- / 文件標題 -->
@@ -83,7 +168,21 @@
                 <div class="description">用以設計網頁架構，比科技部的表格還要好太多了。</div>
                 <!-- / 文件類別名稱敘述 -->
             </div>
-            <!-- / 右側主要內容欄位 -->
+
+            <div class="four wide column">
+
+            </div>
+
+            <div class="twelve wide column">
+                <div class="ts evenly divided tabbed menu" data-is="tab">
+                <div class="item">yee</div>
+                <div class="active item">yee</div>
+            </div>
+            </div>
+
+
+
+
         </div>
         <!-- / 網格容器 -->
     </div>
@@ -96,10 +195,8 @@
     <!-- 主要網格系統 -->
     <div class="ts container relaxed grid">
         <!-- 左側選單欄位 -->
-        <div class="three wide column" style="margin-top: -275px">
-            <!-- 主要 Logo -->
-            <i class="icon-logo"></i>
-            <!-- / 主要 Logo -->
+        <div class="three wide column">
+
 
             <!-- 搜尋輸入欄位 -->
             <div class="ts fluid link icon input">
@@ -109,269 +206,464 @@
             </div>
             <!-- / 搜尋輸入欄位 -->
 
+            <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+
             <!-- 元件選單 -->
-            <div class="ts large vertical menu" >
-                <!-- 一般元素 -->
-                <div class="item">
-                    一般元素
-                    <div class="menu">
-                        <a href="#!" class="item" data-tooltip=".ts.button" data-tooltip-position="left">按鈕</a>
-                        <a href="#!" class="item" data-tooltip=".ts.container" data-tooltip-position="left">容器</a>
-                        <a href="#!" class="item" data-tooltip=".ts.divider" data-tooltip-position="left">分隔線</a>
-                        <a href="#!" class="item" data-tooltip=".ts.flag" data-tooltip-position="left">國旗 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.header" data-tooltip-position="left">標題</a>
-                        <a href="#!" class="item" data-tooltip="i.icon" data-tooltip-position="left">圖示</a>
-                        <a href="#!" class="item" data-tooltip=".ts.image" data-tooltip-position="left">圖片</a>
-                        <a href="#!" class="item" data-tooltip=".ts.input" data-tooltip-position="left">輸入欄位</a>
-                        <a href="#!" class="item" data-tooltip=".ts.label" data-tooltip-position="left">標籤</a>
-                        <a href="#!" class="item" data-tooltip=".ts.list" data-tooltip-position="left">清單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.loader" data-tooltip-position="left">讀取指示器</a>
-                        <a href="#!" class="item" data-tooltip=".ts.segment" data-tooltip-position="left">片段</a>
-                        <a href="#!" class="item" data-tooltip=".ts.slate" data-tooltip-position="left">板岩</a>
-                        <a href="#!" class="item" data-tooltip=".ts.steps" data-tooltip-position="left">步驟</a>
-                        <a href="#!" class="item" data-tooltip=".ts.placeholder" data-tooltip-position="left">預置區塊 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.quote" data-tooltip-position="left">引言</a>
-                    </div>
-                </div>
-                <!-- / 一般元素 -->
-
-                <!-- 聚合型 -->
-                <div class="item">
-                    聚合型
-                    <div class="menu">
-                        <a href="#!" class="item" data-tooltip=".ts.breadcrumb" data-tooltip-position="left">麵包屑</a>
-                        <a href="#!" class="item" data-tooltip=".ts.form" data-tooltip-position="left">表單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.grid" data-tooltip-position="left">網格系統</a>
-                        <a href="#!" class="item" data-tooltip=".ts.menu" data-tooltip-position="left">選單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.message" data-tooltip-position="left">訊息</a>
-                        <a href="#!" class="item" data-tooltip=".ts.table" data-tooltip-position="left">表格</a>
-                    </div>
-                </div>
-                <!-- / 聚合型 -->
-
-                <!-- 模塊 -->
-                <div class="item">
-                    模塊
-                    <div class="menu">
-                        <a href="#!" class="item" data-tooltip=".ts.accordion" data-tooltip-position="left">手風琴</a>
-                        <a href="#!" class="item" data-tooltip=".ts.calendar" data-tooltip-position="left">日曆</a>
-                        <a href="#!" class="item" data-tooltip=".ts.carousel" data-tooltip-position="left">幻燈片 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.checkbox" data-tooltip-position="left">核取方塊</a>
-                        <a href="#!" class="item" data-tooltip=".ts.comparison" data-tooltip-position="left">圖片比較 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.context.menu" data-tooltip-position="left">複合功能選單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.dimmer" data-tooltip-position="left">淡化幕</a>
-                        <a href="#!" class="item" data-tooltip=".ts.dropdown" data-tooltip-position="left">下拉式選單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.embed" data-tooltip-position="left">嵌入物件</a>
-                        <a href="#!" class="item" data-tooltip=".ts.modal" data-tooltip-position="left">對話視窗</a>
-                        <a href="#!" class="item" data-tooltip=".ts.popup" data-tooltip-position="left">彈出式訊息</a>
-                        <a href="#!" class="item" data-tooltip=".ts.progress" data-tooltip-position="left">進度列</a>
-                        <a href="#!" class="item" data-tooltip=".ts.rating" data-tooltip-position="left">評分 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.scrollspy" data-tooltip-position="left">捲動監聽</a>
-                        <a href="#!" class="item" data-tooltip=".ts.search" data-tooltip-position="left">搜尋 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.sidebar" data-tooltip-position="left">側邊欄</a>
-                        <a href="#!" class="item" data-tooltip=".ts.slider" data-tooltip-position="left">滑桿</a>
-                        <a href="#!" class="item" data-tooltip=".ts.snackbar" data-tooltip-position="left">點心條</a>
-                        <a href="#!" class="item" data-tooltip=".ts.tab" data-tooltip-position="left">分頁籤</a>
-                        <a href="#!" class="item" data-tooltip=".ts.transfer" data-tooltip-position="left">穿梭框 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.transition" data-tooltip-position="left">轉場效果 <span class="ts warning right floated label">新的</span></a>
-                    </div>
-                </div>
-                <!-- / 模塊 -->
-
-                <!-- 視圖型 -->
-                <div class="item">
-                    視圖型
-                    <div class="menu">
-                        <a href="#!" class="item" data-tooltip=".ts.card" data-tooltip-position="left">卡片</a>
-                        <a href="#!" class="item" data-tooltip=".ts.comments" data-tooltip-position="left">留言</a>
-                        <a href="#!" class="item" data-tooltip=".ts.feed" data-tooltip-position="left">動態消息</a>
-                        <a href="#!" class="item" data-tooltip=".ts.items" data-tooltip-position="left">項目</a>
-                        <a href="#!" class="item" data-tooltip=".ts.speeches" data-tooltip-position="left">對話氣泡</a>
-                        <a href="#!" class="item" data-tooltip=".ts.statistic" data-tooltip-position="left">統計數據</a>
-                    </div>
-                </div>
-                <!-- / 視圖型 -->
+            <div class="ts header">一般元素</div>
+            <div class="ts link list" data-is="links">
+                <a href="#!" class="item" data-tooltip=".ts.button">按鈕 <span>Button</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.container">容器 <span>Container</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.divider">分隔線 <span>Divider</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.flag">國旗 <span>Flag</span><span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.header">標題 <span>Header</span></a>
+                <a href="#!" class="item" data-tooltip="i.icon">圖示 <span>Icon</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.image">圖片 <span>Image</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.input">輸入欄位 <span>Input</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.label">標籤 <span>Label</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.list">清單 <span>List</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.loader">讀取指示器 <span>Loader</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.segment">片段 <span>Segmet</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.slate">板岩 <span>Slate</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.steps">步驟 <span>Steps</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.placeholder">預置區塊 <span>Placeholder</span><span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.quote">引言 <span>Quote</span></a>
             </div>
+
+            <div class="ts header">聚合型</div>
+            <div class="ts link list" data-is="links">
+                <a href="#!" class="item" data-tooltip=".ts.breadcrumb">麵包屑</a>
+                <a href="#!" class="item" data-tooltip=".ts.form">表單</a>
+                <a href="#!" class="item" data-tooltip=".ts.grid">網格系統</a>
+                <a href="#!" class="item" data-tooltip=".ts.menu">選單</a>
+                <a href="#!" class="item" data-tooltip=".ts.message">訊息</a>
+                <a href="#!" class="item" data-tooltip=".ts.table">表格</a>
+            </div>
+
+            <div class="ts header">模塊</div>
+            <div class="ts link list" data-is="links">
+                <a href="#!" class="item" data-tooltip=".ts.accordion">手風琴</a>
+                <a href="#!" class="item" data-tooltip=".ts.calendar">日曆</a>
+                <a href="#!" class="item" data-tooltip=".ts.carousel">幻燈片 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.checkbox">核取方塊</a>
+                <a href="#!" class="item" data-tooltip=".ts.comparison">圖片比較 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.context.menu">複合功能選單</a>
+                <a href="#!" class="item" data-tooltip=".ts.dimmer">淡化幕</a>
+                <a href="#!" class="item" data-tooltip=".ts.dropdown">下拉式選單</a>
+                <a href="#!" class="item" data-tooltip=".ts.embed">嵌入物件</a>
+                <a href="#!" class="item" data-tooltip=".ts.modal">對話視窗</a>
+                <a href="#!" class="item" data-tooltip=".ts.popup">彈出式訊息</a>
+                <a href="#!" class="item" data-tooltip=".ts.progress">進度列</a>
+                <a href="#!" class="item" data-tooltip=".ts.rating">評分 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.scrollspy">捲動監聽</a>
+                <a href="#!" class="item" data-tooltip=".ts.search">搜尋 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.sidebar">側邊欄</a>
+                <a href="#!" class="item" data-tooltip=".ts.slider">滑桿</a>
+                <a href="#!" class="item" data-tooltip=".ts.snackbar">點心條</a>
+                <a href="#!" class="item" data-tooltip=".ts.tab">分頁籤</a>
+                <a href="#!" class="item" data-tooltip=".ts.transfer">穿梭框 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.transition">轉場效果 <span class="ts warning right floated label">新的</span></a>
+            </div>
+
+            <div class="ts header">視圖型</div>
+            <div class="ts link list" data-is="links">
+                <a href="#!" class="item" data-tooltip=".ts.card">卡片</a>
+                <a href="#!" class="item" data-tooltip=".ts.comments">留言</a>
+                <a href="#!" class="item" data-tooltip=".ts.feed">動態消息</a>
+                <a href="#!" class="item" data-tooltip=".ts.items">項目</a>
+                <a href="#!" class="item" data-tooltip=".ts.speeches">對話氣泡</a>
+                <a href="#!" class="item" data-tooltip=".ts.statistic">統計數據</a>
+            </div>
+
+            <div class="ts header">索引</div>
+
+
+            <div class="ts link list" data-is="links">
+                
+                    <div class="item">
+                        <a href="#!">教學</a>
+                        
+                        <div class="ts list">
+                            
+                            <a href="#!" class="item">基本</a>
+                            
+                            <a href="#!" class="item">欄位</a>
+                            
+                            <a href="#!" class="item">列</a>
+                            
+                            <a href="#!" class="item">較寬鬆的網格</a>
+                            
+                        </div>
+                        
+                    </div>
+                
+                    <div class="item">
+                        <a href="#!">欄位</a>
+                        
+                        <div class="ts list">
+                            
+                            <a href="#!" class="item">自動換行</a>
+                            
+                            <a href="#!" class="item">內容</a>
+                            
+                            <a href="#!" class="item">寬度</a>
+                            
+                            <a href="#!" class="item">拉伸的</a>
+                            
+                        </div>
+                        
+                    </div>
+                
+                    <div class="item">
+                        <a href="#!">列</a>
+                        
+                        <div class="ts list">
+                            
+                            <a href="#!" class="item">寬度細分</a>
+                            
+                            <a href="#!" class="item">浮動欄位</a>
+                            
+                        </div>
+                        
+                    </div>
+                
+                    <div class="item">
+                        <a href="#!">網格</a>
+                        
+                        <div class="ts list">
+                            
+                            <a href="#!" class="item">多重網格</a>
+                            
+                            <a href="#!" class="item">寬度細分</a>
+                            
+                            <a href="#!" class="item">置中</a>
+                            
+                            <a href="#!" class="item">內容對齊</a>
+                            
+                        </div>
+                        
+                    </div>
+                
+                    <div class="item">
+                        <a href="#!">響應式網格</a>
+                        
+                        <div class="ts list">
+                            
+                            <a href="#!" class="item">自動層疊</a>
+                            
+                            <a href="#!" class="item">排序反轉</a>
+                            
+                            <a href="#!" class="item">雙倍層疊</a>
+                            
+                            <a href="#!" class="item">手動調整</a>
+                            
+                            <a href="#!" class="item">手動隱藏</a>
+                            
+                        </div>
+                        
+                    </div>
+                
+            </div>
+
             <!-- 元件選單 -->
         </div>
         <!-- / 左側選單欄位 -->
 
         <!-- 間隔欄位 -->
-        <div class="one wide column"></div>
+        <div class="one wide column" data-is="linksDivider"></div>
         <!-- / 間隔欄位 -->
 
         <!-- 右側邊主要內容欄位 -->
         <div class="twelve wide column">
-            <!-- 分類標題 -->
-            <h2 class="ts dividing header">索引</h2>
-            <!-- / 分類標題 -->
 
-            <ol class="ts ordered list" style="font-size: 16px">
-                <li>
-                    <a href="#!">你好</a>
-                    <ol class="ts ordered list">
-                        <li>
-                            <a href="#!">你好</a>
-                        </li>
-                        <li><a href="#!">你好</a></li>
-                        <li><a href="#!">你好</a></li>
-                        <li><a href="#!">你好</a></li>
-                        <li><a href="#!">你好</a></li>
-                        <li><a href="#!">你好</a></li>
-                    </ol>
-                </li>
-                <li><a href="#!">你好</a></li>
-                <li><a href="#!">你好</a></li>
-                <li><a href="#!">你好</a></li>
-                <li><a href="#!">你好</a></li>
-                <li><a href="#!">你好</a></li>
-            </ol>
+            <div style="max-width: 750px;margin:  0 auto;">
 
-            
-            <!-- 單個大分類 -->
+
+
+
 
                 <!-- 分類標題 -->
-                <h2 class="ts dividing header">教學</h2>
+                <h2 data-is="chapterHeader" class="ts dividing header">索引</h2>
                 <!-- / 分類標題 -->
 
-                <!-- 大分類解說 -->
-                <div style="font-size: 16px"><p>網格系統由多個欄位組成，而這些欄位可以有不同屬性。</p>
-</div>
-                <!-- / 大分類解說 -->
+                <ol class="ts ordered list" style="font-size: 16px">
+                    
+                        <li>
+                            <a href="#!">教學</a>
+                            
+                            <ol class="ts ordered list">
+                                
+                                <li>
+                                    <a href="#!">基本</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">欄位</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">列</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">較寬鬆的網格</a>
+                                </li>
+                                
+                            </ol>
+                            
+                        </li>
+                    
+                        <li>
+                            <a href="#!">欄位</a>
+                            
+                            <ol class="ts ordered list">
+                                
+                                <li>
+                                    <a href="#!">自動換行</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">內容</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">寬度</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">拉伸的</a>
+                                </li>
+                                
+                            </ol>
+                            
+                        </li>
+                    
+                        <li>
+                            <a href="#!">列</a>
+                            
+                            <ol class="ts ordered list">
+                                
+                                <li>
+                                    <a href="#!">寬度細分</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">浮動欄位</a>
+                                </li>
+                                
+                            </ol>
+                            
+                        </li>
+                    
+                        <li>
+                            <a href="#!">網格</a>
+                            
+                            <ol class="ts ordered list">
+                                
+                                <li>
+                                    <a href="#!">多重網格</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">寬度細分</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">置中</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">內容對齊</a>
+                                </li>
+                                
+                            </ol>
+                            
+                        </li>
+                    
+                        <li>
+                            <a href="#!">響應式網格</a>
+                            
+                            <ol class="ts ordered list">
+                                
+                                <li>
+                                    <a href="#!">自動層疊</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">排序反轉</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">雙倍層疊</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">手動調整</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">手動隱藏</a>
+                                </li>
+                                
+                            </ol>
+                            
+                        </li>
+                    
+                </ol>
 
                 
-                <!-- 單個樣式說明 -->
+                <!-- 單個大分類 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        基本
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                    <!-- 分類標題 -->
+                    <h2 data-is="chapterHeader" class="ts dividing header">教學</h2>
+                    <!-- / 分類標題 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>一個基本的網格系統，這可以用來規劃你網頁上的排版。</p>
+                    <!-- 大分類解說 -->
+                    <div style="font-size: 16px"><p>網格系統由多個欄位組成，而這些欄位可以有不同屬性。</p>
 </div>
-                    <!-- / 解說 -->
+                    <!-- / 大分類解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[grid]]">
+                    
+                    <!-- 單個樣式說明 -->
+
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            基本
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
+
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>一個基本的網格系統，這可以用來規劃你網頁上的排版。</p>
+</div>
+                        <!-- / 解說 -->
+
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts grid">
     <div class="four wide column"></div>
     <div class="four wide column"></div>
     <div class="four wide column"></div>
     <div class="four wide column"></div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[grid]]"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>grid</mark>"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        欄位
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            欄位
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>我們稱被劃分開來的區塊為「欄位」，而每個欄位的寬度都是可以自己決定的。一個網格系統被劃分為<strong>十六格</strong>，這將使的你的網格系統更加地具有彈性。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>我們稱被劃分開來的區塊為「欄位」，而每個欄位的寬度都是可以自己決定的。一個網格系統被劃分為<strong>十六格</strong>，這將使的你的網格系統更加地具有彈性。</p>
 
 <p>這個範例的第一行有<strong>四個欄位</strong>，這意味著每一個欄位都是<strong>四格寬</strong>，而四格寬的欄位共有<strong>四個</strong>，那就是 <code>4 * 4 = 16</code> 也就剛好符合了一行所能夠承受的<strong>最大格數（十六格）</strong>。</p>
 
 <p>另一行是則是由<strong>兩格寬</strong>、<strong>八格寬</strong>還有<strong>六格寬</strong>的欄位所組成，這意味著 <code>2 + 8 + 6 = 16</code>，也就剛好達到了一行的最大格數。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts grid">
-    <div class="four wide [[column]]"></div>
-    <div class="four wide [[column]]"></div>
-    <div class="four wide [[column]]"></div>
-    <div class="four wide [[column]]"></div>
-    <div class="two wide [[column]]"></div>
-    <div class="eight wide [[column]]"></div>
-    <div class="six wide [[column]]"></div>
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts grid">
+    <div class="four wide column"></div>
+    <div class="four wide column"></div>
+    <div class="four wide column"></div>
+    <div class="four wide column"></div>
+    <div class="two wide column"></div>
+    <div class="eight wide column"></div>
+    <div class="six wide column"></div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide [[column]]"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide [[column]]"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide [[column]]"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide [[column]]"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"two wide [[column]]"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"eight wide [[column]]"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"six wide [[column]]"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide <mark>column</mark>"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide <mark>column</mark>"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide <mark>column</mark>"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide <mark>column</mark>"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"two wide <mark>column</mark>"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"eight wide <mark>column</mark>"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"six wide <mark>column</mark>"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        列
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            列
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>「列」用來確保「欄位」<strong>不會因為超過十六格而自動換行</strong>。同時「列」也可以確保自己是獨立的一行。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>「列」用來確保「欄位」<strong>不會因為超過十六格而自動換行</strong>。同時「列」也可以確保自己是獨立的一行。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts grid">
-    <div class="[[row]]">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts grid">
+    <div class="row">
         <div class="three wide column"></div>
         <div class="three wide column"></div>
         <div class="three wide column"></div>
@@ -380,7 +672,7 @@
     <div class="two wide column"></div>
     <div class="five wide column"></div>
     <div class="nine wide column"></div>
-    <div class="[[row]]">
+    <div class="row">
         <div class="sixteen wide column"></div>
         <div class="sixteen wide column"></div>
         <div class="sixteen wide column"></div>
@@ -388,137 +680,137 @@
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[row]]"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"three wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"three wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"three wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"three wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"two wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"five wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"nine wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[row]]"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"sixteen wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"sixteen wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"sixteen wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"sixteen wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>row</mark>"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"three wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"three wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"three wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"three wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"two wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"five wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"nine wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>row</mark>"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"sixteen wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"sixteen wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"sixteen wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"sixteen wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        較寬鬆的網格
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            較寬鬆的網格
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>當你發現欄位和欄位之間太相近，你可以考慮透過 <code>relaxed grid</code> 來增加欄位之間的間距。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>當你發現欄位和欄位之間太相近，你可以考慮透過 <code>relaxed grid</code> 來增加欄位之間的間距。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts grid">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts grid">
     <div class="four wide column"></div>
     <div class="four wide column"></div>
     <div class="four wide column"></div>
     <div class="four wide column"></div>
 </div>
-<div class="ts [[relaxed]] grid">
+<div class="ts relaxed grid">
     <div class="four wide column"></div>
     <div class="four wide column"></div>
     <div class="four wide column"></div>
     <div class="four wide column"></div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[relaxed]] grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>relaxed</mark> grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+
+
+                <!-- / 單個大分類 -->
                 
+                <!-- 單個大分類 -->
 
+                    <!-- 分類標題 -->
+                    <h2 data-is="chapterHeader" class="ts dividing header">欄位</h2>
+                    <!-- / 分類標題 -->
 
-            <!-- / 單個大分類 -->
-            
-            <!-- 單個大分類 -->
-
-                <!-- 分類標題 -->
-                <h2 class="ts dividing header">欄位</h2>
-                <!-- / 分類標題 -->
-
-                <!-- 大分類解說 -->
-                <div style="font-size: 16px"><p>網格系統中最重要的部分。</p>
+                    <!-- 大分類解說 -->
+                    <div style="font-size: 16px"><p>網格系統中最重要的部分。</p>
 </div>
-                <!-- / 大分類解說 -->
+                    <!-- / 大分類解說 -->
 
-                
-                <!-- 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        自動換行
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            自動換行
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>一旦該行的欄位超過十六格（意指「寬度」，而<strong>是欄位數量</strong>），就會自動換到下一行。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>一旦該行的欄位超過十六格（意指「寬度」，而<strong>是欄位數量</strong>），就會自動換到下一行。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts grid">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts grid">
     <div class="four wide column"></div>
     <div class="four wide column"></div>
     <div class="four wide column"></div>
@@ -529,172 +821,172 @@
     <div class="four wide column"></div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        內容
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            內容
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>欄位<strong>不應該被套用任何自訂的樣式</strong>，欄位只是一個容器，你應該在裡面放入你要的元素和樣式，而<strong>不是直接在欄位上更改</strong>。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>欄位<strong>不應該被套用任何自訂的樣式</strong>，欄位只是一個容器，你應該在裡面放入你要的元素和樣式，而<strong>不是直接在欄位上更改</strong>。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts three column grid">
-    <div class="[[column]]">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts three column grid">
+    <div class="column">
         <div class="ts {{segment}}">試著在 Column 中擺放元素。</div>
     </div>
-    <div class="[[column]]">
+    <div class="column">
         <div class="ts secondary {{segment}}">而不是直接更改 Column 的樣式。</div>
     </div>
-    <div class="[[column]]">
+    <div class="column">
         <div class="ts tertiary {{segment}}">不然很有可能發生量子錯誤！</div>
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts three column grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[column]]"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts {{segment}}"</span>&gt;</span>試著在 Column 中擺放元素。<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[column]]"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts secondary {{segment}}"</span>&gt;</span>而不是直接更改 Column 的樣式。<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[column]]"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts tertiary {{segment}}"</span>&gt;</span>不然很有可能發生量子錯誤！<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts three column grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>column</mark>"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts {{segment}}"</span>&gt;試著在 Column 中擺放元素。&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>column</mark>"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts secondary {{segment}}"</span>&gt;而不是直接更改 Column 的樣式。&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>column</mark>"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts tertiary {{segment}}"</span>&gt;不然很有可能發生量子錯誤！&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        寬度
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            寬度
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>欄位的寬度由 <code>* wide</code> 決定，例如 <code>one wide</code> 就是一格，<code>sixteen wide</code> 則是十六格。十六格剛好會符合一行最大的寬度，八格則是填滿一行的一半。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>欄位的寬度由 <code>* wide</code> 決定，例如 <code>one wide</code> 就是一格，<code>sixteen wide</code> 則是十六格。十六格剛好會符合一行最大的寬度，八格則是填滿一行的一半。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts grid">
-    <div class="[[one wide]] column"></div>
-    <div class="[[fifteen wide]] column"></div>
-    <div class="[[three wide]] column"></div>
-    <div class="[[thirteen wide]] column"></div>
-    <div class="[[six wide]] column"></div>
-    <div class="[[ten wide]] column"></div>
-    <div class="[[four wide]] column"></div>
-    <div class="[[twelve wide]] column"></div>
-    <div class="[[sixteen wide]] column"></div>
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts grid">
+    <div class="one wide column"></div>
+    <div class="fifteen wide column"></div>
+    <div class="three wide column"></div>
+    <div class="thirteen wide column"></div>
+    <div class="six wide column"></div>
+    <div class="ten wide column"></div>
+    <div class="four wide column"></div>
+    <div class="twelve wide column"></div>
+    <div class="sixteen wide column"></div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[one wide]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[fifteen wide]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[three wide]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[thirteen wide]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[six wide]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[ten wide]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[four wide]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[twelve wide]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[sixteen wide]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>one wide</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>fifteen wide</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>three wide</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>thirteen wide</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>six wide</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>ten wide</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>four wide</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>twelve wide</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>sixteen wide</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        拉伸的
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            拉伸的
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>不指定欄位寬度的時候，單個、或多個欄位可以被拉伸到填滿整個網格系統，並將其他欄位縮短至它們的內容寬度。這很適合用在兩欄式的排版，或是輸入欄位與按鈕。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>不指定欄位寬度的時候，單個、或多個欄位可以被拉伸到填滿整個網格系統，並將其他欄位縮短至它們的內容寬度。這很適合用在兩欄式的排版，或是輸入欄位與按鈕。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts grid">
-    <div class="[[stretched]] column">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts grid">
+    <div class="stretched column">
         <div class="ts fluid input">
             <input type="text" placeholder="在此輸入您想找的資料⋯⋯">
         </div>
@@ -704,123 +996,123 @@
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[stretched]] column"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts fluid input"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"在此輸入您想找的資料⋯⋯"</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts button"</span>&gt;</span>搜尋<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>stretched</mark> column"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts fluid input"</span>&gt;
+            &lt;input type=<span class="hljs-string">"text"</span> placeholder=<span class="hljs-string">"在此輸入您想找的資料⋯⋯"</span>&gt;
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;
+        &lt;button <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts button"</span>&gt;搜尋&lt;/button&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+
+
+                <!-- / 單個大分類 -->
                 
+                <!-- 單個大分類 -->
 
+                    <!-- 分類標題 -->
+                    <h2 data-is="chapterHeader" class="ts dividing header">列</h2>
+                    <!-- / 分類標題 -->
 
-            <!-- / 單個大分類 -->
-            
-            <!-- 單個大分類 -->
-
-                <!-- 分類標題 -->
-                <h2 class="ts dividing header">列</h2>
-                <!-- / 分類標題 -->
-
-                <!-- 大分類解說 -->
-                <div style="font-size: 16px"><p>「列」用來整合、包覆欄位，甚至可以再細分寬度。</p>
+                    <!-- 大分類解說 -->
+                    <div style="font-size: 16px"><p>「列」用來整合、包覆欄位，甚至可以再細分寬度。</p>
 </div>
-                <!-- / 大分類解說 -->
+                    <!-- / 大分類解說 -->
 
-                
-                <!-- 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        寬度細分
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            寬度細分
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>你可以在「列」裡面規劃這一列應該要有幾個欄位，例如 <code>two column</code> 就能夠指列有<strong>兩個欄位</strong>，也就是一格欄位有<strong>八格寬</strong>。因為一列最多允許十六格，為了達成一列中有兩個欄位，即是 <code>16 / 2 = 8</code>。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>你可以在「列」裡面規劃這一列應該要有幾個欄位，例如 <code>two column</code> 就能夠指列有<strong>兩個欄位</strong>，也就是一格欄位有<strong>八格寬</strong>。因為一列最多允許十六格，為了達成一列中有兩個欄位，即是 <code>16 / 2 = 8</code>。</p>
 
 <p>當你了解如何善用寬度細分，你也能夠將一列切成三個欄位，甚至四個、五個，而不會因為欄位寬度無法除盡十六而作罷。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts grid">
-    <div class="[[two column]] row">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts grid">
+    <div class="two column row">
         <div class="column"></div>
         <div class="column"></div>
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[two column]] row"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>two column</mark> row"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        浮動欄位
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            浮動欄位
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>列裡面的欄位可以是浮動的。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>列裡面的欄位可以是浮動的。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts four column grid">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts four column grid">
     <div class="four column row">
-        <div class="[[left floated]] column"></div>
-        <div class="[[right floated]] column"></div>
+        <div class="left floated column"></div>
+        <div class="right floated column"></div>
     </div>
     <div class="column"></div>
     <div class="column"></div>
@@ -828,71 +1120,71 @@
     <div class="column"></div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts four column grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four column row"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[left floated]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[right floated]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts four column grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four column row"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>left floated</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>right floated</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+
+
+                <!-- / 單個大分類 -->
                 
+                <!-- 單個大分類 -->
 
+                    <!-- 分類標題 -->
+                    <h2 data-is="chapterHeader" class="ts dividing header">網格</h2>
+                    <!-- / 分類標題 -->
 
-            <!-- / 單個大分類 -->
-            
-            <!-- 單個大分類 -->
-
-                <!-- 分類標題 -->
-                <h2 class="ts dividing header">網格</h2>
-                <!-- / 分類標題 -->
-
-                <!-- 大分類解說 -->
-                <div style="font-size: 16px"><p>網格是最外層的容器。</p>
+                    <!-- 大分類解說 -->
+                    <div style="font-size: 16px"><p>網格是最外層的容器。</p>
 </div>
-                <!-- / 大分類解說 -->
+                    <!-- / 大分類解說 -->
 
-                
-                <!-- 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        多重網格
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            多重網格
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>網格系統內可以還可以再有另一個網格系統。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>網格系統內可以還可以再有另一個網格系統。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts two column grid">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts two column grid">
     <div class="column">
-        <div class="ts four column [[grid]]">
+        <div class="ts four column grid">
             <div class="column"></div>
             <div class="column"></div>
             <div class="column"></div>
@@ -902,57 +1194,57 @@
     <div class="column"></div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts two column grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts four column [[grid]]"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts two column grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts four column <mark>grid</mark>"</span>&gt;
+            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        寬度細分
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            寬度細分
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>這和「列」的寬度細分相同，但你可以<strong>直接在網格上進行細分</strong>，例如 <code>four column</code> 就能夠指定網格系統的一行會有<strong>四個欄位</strong>，也就是一格欄位有<strong>四格寬</strong>。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>這和「列」的寬度細分相同，但你可以<strong>直接在網格上進行細分</strong>，例如 <code>four column</code> 就能夠指定網格系統的一行會有<strong>四個欄位</strong>，也就是一格欄位有<strong>四格寬</strong>。</p>
 
 <p>因為一列最多允許十六格，為了達成一列中有四個欄位，即是 <code>16 / 4 = 4</code>。透過這種方法不需要手動設定每一個欄位要有幾格寬，十分地方便。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[four column]] grid">
-    <div class="[[two column]] row">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts four column grid">
+    <div class="two column row">
         <div class="column"></div>
     </div>
     <div class="column"></div>
@@ -961,213 +1253,213 @@
     <div class="column"></div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[four column]] grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[two column]] row"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>four column</mark> grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>two column</mark> row"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        置中
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            置中
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>網格系統內的欄位可以從中間開始。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>網格系統內的欄位可以從中間開始。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts four column [[centered]] grid">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts four column centered grid">
     <div class="column"></div>
     <div class="column"></div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts four column [[centered]] grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts four column <mark>centered</mark> grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        內容對齊
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            內容對齊
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>網格系統內的欄位內容可以對齊左、右、甚至中間，這個設定可以配置於整個網格系統、單列、甚至單個欄位。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>網格系統內的欄位內容可以對齊左、右、甚至中間，這個設定可以配置於整個網格系統、單列、甚至單個欄位。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[center aligned]] four column grid">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts center aligned four column grid">
     <div class="column">置中的文字</div>
-    <div class="[[left aligned]] two column row">
+    <div class="left aligned two column row">
         <div class="column">置左的文字</div>
-        <div class="[[right aligned]] column">置右的文字</div>
+        <div class="right aligned column">置右的文字</div>
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[center aligned]] four column grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span>置中的文字<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[left aligned]] two column row"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span>置左的文字<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[right aligned]] column"</span>&gt;</span>置右的文字<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>center aligned</mark> four column grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;置中的文字&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>left aligned</mark> two column row"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;置左的文字&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>right aligned</mark> column"</span>&gt;置右的文字&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+
+
+                <!-- / 單個大分類 -->
                 
+                <!-- 單個大分類 -->
 
+                    <!-- 分類標題 -->
+                    <h2 data-is="chapterHeader" class="ts dividing header">響應式網格</h2>
+                    <!-- / 分類標題 -->
 
-            <!-- / 單個大分類 -->
-            
-            <!-- 單個大分類 -->
-
-                <!-- 分類標題 -->
-                <h2 class="ts dividing header">響應式網格</h2>
-                <!-- / 分類標題 -->
-
-                <!-- 大分類解說 -->
-                <div style="font-size: 16px"><p>響應式網格可以在行動裝置或小型螢幕上自動縮放，你甚至只需要加一個樣式，其他讓我們來就好了。</p>
+                    <!-- 大分類解說 -->
+                    <div style="font-size: 16px"><p>響應式網格可以在行動裝置或小型螢幕上自動縮放，你甚至只需要加一個樣式，其他讓我們來就好了。</p>
 </div>
-                <!-- / 大分類解說 -->
+                    <!-- / 大分類解說 -->
 
-                
-                <!-- 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        自動層疊
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            自動層疊
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>自動層疊會在手機上時自動將所有欄位縮成一排。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>自動層疊會在手機上時自動將所有欄位縮成一排。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[stackable]] grid">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts stackable grid">
     <div class="four wide column"></div>
     <div class="four wide column"></div>
     <div class="four wide column"></div>
     <div class="four wide column"></div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[stackable]] grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>stackable</mark> grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        排序反轉
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            排序反轉
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>你可以在指定裝置上反轉網格系統的排序。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>你可以在指定裝置上反轉網格系統的排序。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts [[mobile reversed]] two column grid">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts mobile reversed two column grid">
     <div class="column">
         <div class="ts {{segment}}">第一個，手機第二個</div>
     </div>
@@ -1175,7 +1467,7 @@
         <div class="ts secondary {{segment}}">第二個，手機第ㄧ個</div>
     </div>
 </div>
-<div class="ts [[tablet reversed]] two column grid">
+<div class="ts tablet reversed two column grid">
     <div class="column">
         <div class="ts {{segment}}">第一個，平板第二個</div>
     </div>
@@ -1183,7 +1475,7 @@
         <div class="ts secondary {{segment}}">第二個，平板第ㄧ個</div>
     </div>
 </div>
-<div class="ts [[computer reversed]] two column grid">
+<div class="ts computer reversed two column grid">
     <div class="column">
         <div class="ts {{segment}}">第一個，電腦第二個</div>
     </div>
@@ -1192,68 +1484,68 @@
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[mobile reversed]] two column grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts {{segment}}"</span>&gt;</span>第一個，手機第二個<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts secondary {{segment}}"</span>&gt;</span>第二個，手機第ㄧ個<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[tablet reversed]] two column grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts {{segment}}"</span>&gt;</span>第一個，平板第二個<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts secondary {{segment}}"</span>&gt;</span>第二個，平板第ㄧ個<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts [[computer reversed]] two column grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts {{segment}}"</span>&gt;</span>第一個，電腦第二個<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts secondary {{segment}}"</span>&gt;</span>第二個，電腦第ㄧ個<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>mobile reversed</mark> two column grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts {{segment}}"</span>&gt;第一個，手機第二個&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts secondary {{segment}}"</span>&gt;第二個，手機第ㄧ個&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>tablet reversed</mark> two column grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts {{segment}}"</span>&gt;第一個，平板第二個&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts secondary {{segment}}"</span>&gt;第二個，平板第ㄧ個&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>computer reversed</mark> two column grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts {{segment}}"</span>&gt;第一個，電腦第二個&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts secondary {{segment}}"</span>&gt;第二個，電腦第ㄧ個&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        雙倍層疊
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            雙倍層疊
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>這會讓你的欄位在手機和平板上以雙倍的寬度增加，例如一個<strong>八個欄位</strong>的行會在平板上成為<strong>四個欄位</strong>然後手機上會是<strong>兩個欄位</strong>。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>這會讓你的欄位在手機和平板上以雙倍的寬度增加，例如一個<strong>八個欄位</strong>的行會在平板上成為<strong>四個欄位</strong>然後手機上會是<strong>兩個欄位</strong>。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts grid">
-    <div class="[[doubling]] eight column row">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts grid">
+    <div class="doubling eight column row">
         <div class="column"></div>
         <div class="column"></div>
         <div class="column"></div>
@@ -1263,7 +1555,7 @@
         <div class="column"></div>
         <div class="column"></div>
     </div>
-    <div class="[[doubling]] six column row">
+    <div class="doubling six column row">
         <div class="column"></div>
         <div class="column"></div>
         <div class="column"></div>
@@ -1271,7 +1563,7 @@
         <div class="column"></div>
         <div class="column"></div>
     </div>
-    <div class="[[doubling]] four column row">
+    <div class="doubling four column row">
         <div class="column"></div>
         <div class="column"></div>
         <div class="column"></div>
@@ -1279,61 +1571,61 @@
     </div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[doubling]] eight column row"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[doubling]] six column row"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[doubling]] four column row"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>doubling</mark> eight column row"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>doubling</mark> six column row"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>doubling</mark> four column row"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        手動調整
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            手動調整
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>你可以自訂在不同裝置上欄位所佔的格數，你總共有這些裝置可供選擇。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>你可以自訂在不同裝置上欄位所佔的格數，你總共有這些裝置可供選擇。</p>
 <table class="ts small stackable definition table">
     <thead>
         <tr>
@@ -1363,117 +1655,123 @@
 </table>
 <p>透過 `[格數] wide [裝置]` 使用這些裝置，就像 `one wide computer` 即是在電腦上成為一格寬。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts grid">
-    <div class="[[eight wide computer]] [[four wide mobile]] column"></div>
-    <div class="[[eight wide computer]] [[four wide mobile]] column"></div>
-    <div class="[[eight wide computer]] [[four wide mobile]] column"></div>
-    <div class="[[eight wide computer]] [[four wide mobile]] column"></div>
-    <div class="[[four wide computer]] [[eight wide mobile]] column"></div>
-    <div class="[[four wide computer]] [[eight wide mobile]] column"></div>
-    <div class="[[four wide computer]] [[eight wide mobile]] column"></div>
-    <div class="[[four wide computer]] [[eight wide mobile]] column"></div>
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts grid">
+    <div class="eight wide computer four wide mobile column"></div>
+    <div class="eight wide computer four wide mobile column"></div>
+    <div class="eight wide computer four wide mobile column"></div>
+    <div class="eight wide computer four wide mobile column"></div>
+    <div class="four wide computer eight wide mobile column"></div>
+    <div class="four wide computer eight wide mobile column"></div>
+    <div class="four wide computer eight wide mobile column"></div>
+    <div class="four wide computer eight wide mobile column"></div>
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[eight wide computer]] [[four wide mobile]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[eight wide computer]] [[four wide mobile]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[eight wide computer]] [[four wide mobile]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[eight wide computer]] [[four wide mobile]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[four wide computer]] [[eight wide mobile]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[four wide computer]] [[eight wide mobile]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[four wide computer]] [[eight wide mobile]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[four wide computer]] [[eight wide mobile]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>eight wide computer</mark> <mark>four wide mobile</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>eight wide computer</mark> <mark>four wide mobile</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>eight wide computer</mark> <mark>four wide mobile</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>eight wide computer</mark> <mark>four wide mobile</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>four wide computer</mark> <mark>eight wide mobile</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>four wide computer</mark> <mark>eight wide mobile</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>four wide computer</mark> <mark>eight wide mobile</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>four wide computer</mark> <mark>eight wide mobile</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        手動隱藏
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            手動隱藏
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>你可以透過 <code>[裝置] only</code> 在不同裝置上隱藏特定列、欄位。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>你可以透過 <code>[裝置] only</code> 在不同裝置上隱藏特定列、欄位。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <div class="ts grid">
-    <div class="eight wide [[computer only]] column"></div>
-    <div class="eight wide [[computer only]] column"></div>
-    <div class="four wide [[mobile only]] column"></div>
-    <div class="four wide [[mobile only]] column"></div>
-    <div class="four wide [[mobile only]] column"></div>
-    <div class="four wide [[mobile only]] column"></div>
-    <div class="[[large screen only]] row">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <div class="ts grid">
+    <div class="eight wide computer only column"></div>
+    <div class="eight wide computer only column"></div>
+    <div class="four wide mobile only column"></div>
+    <div class="four wide mobile only column"></div>
+    <div class="four wide mobile only column"></div>
+    <div class="four wide mobile only column"></div>
+    <div class="large screen only row">
         <div class="six wide column"></div>
         <div class="six wide column"></div>
         <div class="four wide column"></div>
     </div>
-    <div class="eight wide [[tablet only]] eight wide [[mobile only]] column"></div>
-    <div class="eight wide [[tablet only]] eight wide [[mobile only]] column"></div>
+    <div class="eight wide tablet only eight wide mobile only column"></div>
+    <div class="eight wide tablet only eight wide mobile only column"></div>
 </div>
+                            </div>
+                            <!-- / 展示區塊 -->
+
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts grid"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"eight wide <mark>computer only</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"eight wide <mark>computer only</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide <mark>mobile only</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide <mark>mobile only</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide <mark>mobile only</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide <mark>mobile only</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>large screen only</mark> row"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"six wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"six wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"four wide column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"eight wide <mark>tablet only</mark> eight wide <mark>mobile only</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"eight wide <mark>tablet only</mark> eight wide <mark>mobile only</mark> column"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
+
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 展示區塊 -->
+                        <!-- / 示範區域 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts grid"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"eight wide [[computer only]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"eight wide [[computer only]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide [[mobile only]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide [[mobile only]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide [[mobile only]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide [[mobile only]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"[[large screen only]] row"</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"six wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"six wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"four wide column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"eight wide [[tablet only]] eight wide [[mobile only]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"eight wide [[tablet only]] eight wide [[mobile only]] column"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+                    <!-- / 單個樣式說明 -->
+                    
 
-                        </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
+                <!-- / 單個大分類 -->
                 
 
+                <!-- 分類標題 -->
+                <h2 data-is="chapterHeader" class="ts dividing header">本頁留言</h2>
+                <p>你現在可以在這裡留言啦！如果有功能建議或是發現錯誤，可以到這裡提出 Issue。</p>
+                <!-- / 分類標題 -->
 
-            <!-- / 單個大分類 -->
-            
-
+            </div>
 
         </div>
         <!-- / 右側邊主要內容欄位 -->
@@ -1485,7 +1783,7 @@
     <!-- / 空白分隔線 -->
 
     <!-- 底部片段 -->
-    <div class="ts bottom attached secondary very padded segment">
+    <div class="ts bottom attached secondary very padded segment" data-is="footer">
         <!-- 置中容器 -->
         <div class="ts container">
             <!-- 底部連結選單 -->
@@ -1497,13 +1795,8 @@
             </div>
             <!-- / 底部連結選單 -->
 
-            <!-- 空白分隔線 -->
-            <div class="ts hidden divider"></div>
-            <div class="ts hidden section divider"></div>
-            <!-- / 空白分隔線 -->
-
             <!-- 底部說明 -->
-            <span>由 <a href="https://www.facebook.com/yamiodymel">Yami Odymel</a> 所設計，還有<a href="https://github.com/TeaMeow/TocasUI/graphs/contributors">貢獻者們</a>的愛心 ❤️。原始碼授權方式為 MIT，文件則為 <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW">CC0 1.0 公眾領域</a>，還請盡情地使用和分享，或者是一同改進 :)</span>
+            <span>由 <a href="https://www.facebook.com/yamiodymel">Yami Odymel</a> 所設計，還有<a href="https://github.com/TeaMeow/TocasUI/graphs/contributors">貢獻者們</a>的愛心 ❤️。原始碼授權方式為 MIT，文件則為 <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW">CC0 1.0 公眾領域</a>，還請盡情地使用和分享，或者是一同改進 :)</span><span class="ubuntu preload"> </span>
             <!-- 底部說明 -->
         </div>
         <!-- / 置中容器 -->

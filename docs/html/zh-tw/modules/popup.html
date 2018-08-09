@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../../../../dist/tocas.css">
-    <link rel="stylesheet" href="../../assets/highlight.css">
-    <link rel="stylesheet" href="../../assets/images/style.css">
+    <link rel="stylesheet" href="../../dist/tocas.css">
+    <link rel="stylesheet" href="../html/assets/highlight.css">
+    <link rel="stylesheet" href="../html/assets/images/style.css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" defer></script>
@@ -17,44 +17,129 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-css.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-html.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./assets/highlight.js" defer></script>
     <title>Document</title>
     <style>
-        h1 ~ p,
-        h2 ~ p,
-        h3 ~ p {
+        @font-face{
+            font-family: 'icomoon';
+            src:  url('../html/assets/images/fonts/icomoon.eot?en3o5m');
+            src:  url('../html/assets/images/fonts/icomoon.eot?en3o5m#iefix') format('embedded-opentype'),
+                url('../html/assets/images/fonts/icomoon.ttf?en3o5m') format('truetype'),
+                url('../html/assets/images/fonts/icomoon.woff?en3o5m') format('woff'),
+                url('../html/assets/images/fonts/icomoon.svg?en3o5m#icomoon') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+        [data-is="logo"] {
+            font-size: 4em;
+            display: block;
+            margin-top: -32px;
+            margin-bottom: 50px;
+            margin-left: -11px;
+            color: #5a5a5a;
+
+            font-family: 'icomoon' !important;
+            speak: none;
+            font-style: normal;
+            font-weight: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        [data-is="logo"]:before {
+            content: "\e900";
+        }
+        [data-is="slate"] {
+            margin-bottom: 40px;
+            border-bottom: 1px solid #e9e9e9;
+            border-radius: 0;
+        }
+        [data-is="chapterHeader"] {
+            border-bottom : 2px solid #d9d9d9 !important;
+            padding-bottom: 10px !important;
+        }
+        [data-is="chapterHeader"]:not(:first-child) {
+            margin-top: 4.5em !important;
+        }
+        [data-is="sectionHeader"] {
+            margin-top: 4em !important;
+        }
+        [data-is="chapterHeader"] ~ p,
+        [data-is="sectionHeader"] ~ p {
             margin: .8em 0 !important;
             font-size: 16px;
             line-height: 1.7;
         }
-        h2 {
-            border-bottom: 2px solid #d9d9d9 !important
+        [data-is="sectionHeader"]:after {
+            content: "";
+            position: absolute;
+            left: -92px;
+            width: 2px;
+            border: 3px solid #fff;
+            background: #a2a2a2;
+            top: -2px;
+            bottom: -2px;
         }
-        h2:not(:first-child) {
-            margin-top: 4.5em !important;
+        [data-is="links"] .item {
+            display: flex !important;
+            line-height: 22px !important;
+            align-items: center !important;
         }
-        .icon-logo {
-            font-size: 4em;
-            text-align: center;
-            display: block;
-            margin-bottom: 52px;
-            color: #5a5a5a;
+        [data-is="links"] .item .label {
+            padding: 9px;
+            height: 20px;
         }
-        h3 {
-            margin-top: 4em !important;
+        [data-is="links"] span:not(.label) {
+            /*position: absolute;
+            right: 0;*/
+            margin-left: 7px;
+            font-size: 13px;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        [data-is="linksDivider"]:before {
+            content: "";
+            position: absolute;
+            top: 12px;
+            right: 24px;
+            bottom: 0;
+            left: 0;
+            border-right: 2px solid rgba(0,0,0,.1);
+            pointer-events: none;
+        }
+        [data-is="tab"] {
+            position: absolute;
+            bottom: -3.17em;
+            left: 70px;
+            width: 750px;
+        }
+        [data-is="footer"] {
+            margin-top: 40px !important;
+            margin-bottom: 0 !important;
+            padding-bottom: 90px !important;
+            box-shadow: none !important;
+            border-top: 1px solid #e9e9e9 !important;
+            border-radius: 0 !important;
         }
         .ts.segments {
             margin-top: 2.3em !important;
         }
+
     </style>
 </head>
 <body>
     <!-- 頂部板岩 -->
-    <div class="ts padded big heading slate">
+    <div data-is="slate" class="ts padded big heading slate">
         <!-- 網格容器 -->
         <div class="ts container grid">
             <!-- 側邊空白欄位 -->
-            <div class="four wide column"></div>
+            <div class="four wide column">
+                <!-- 主要 Logo -->
+                <i data-is="logo"></i>
+                <!-- / 主要 Logo -->
+            </div>
             <!-- / 側邊空白欄位 -->
 
             <!-- 右側主要內容欄位 -->
@@ -71,10 +156,10 @@
                     </div>
                 </div>
 
-                <!-- 空白分隔線 -->
-                <div class="ts hidden section divider"></div>
-                <!-- / 空白分隔線 -->
+            </div>
+            <!-- / 右側主要內容欄位 -->
 
+            <div class="sixteen wide column">
                 <!-- 文件標題 -->
                 <div class="header">彈出式訊息</div>
                 <!-- / 文件標題 -->
@@ -83,7 +168,21 @@
                 <div class="description">砰！看看我！</div>
                 <!-- / 文件類別名稱敘述 -->
             </div>
-            <!-- / 右側主要內容欄位 -->
+
+            <div class="four wide column">
+
+            </div>
+
+            <div class="twelve wide column">
+                <div class="ts evenly divided tabbed menu" data-is="tab">
+                <div class="item">yee</div>
+                <div class="active item">yee</div>
+            </div>
+            </div>
+
+
+
+
         </div>
         <!-- / 網格容器 -->
     </div>
@@ -96,10 +195,8 @@
     <!-- 主要網格系統 -->
     <div class="ts container relaxed grid">
         <!-- 左側選單欄位 -->
-        <div class="three wide column" style="margin-top: -275px">
-            <!-- 主要 Logo -->
-            <i class="icon-logo"></i>
-            <!-- / 主要 Logo -->
+        <div class="three wide column">
+
 
             <!-- 搜尋輸入欄位 -->
             <div class="ts fluid link icon input">
@@ -109,486 +206,573 @@
             </div>
             <!-- / 搜尋輸入欄位 -->
 
+            <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+                    <!-- 追加 ACTIVE INDICATOR -->
+
             <!-- 元件選單 -->
-            <div class="ts large vertical menu" >
-                <!-- 一般元素 -->
-                <div class="item">
-                    一般元素
-                    <div class="menu">
-                        <a href="#!" class="item" data-tooltip=".ts.button" data-tooltip-position="left">按鈕</a>
-                        <a href="#!" class="item" data-tooltip=".ts.container" data-tooltip-position="left">容器</a>
-                        <a href="#!" class="item" data-tooltip=".ts.divider" data-tooltip-position="left">分隔線</a>
-                        <a href="#!" class="item" data-tooltip=".ts.flag" data-tooltip-position="left">國旗 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.header" data-tooltip-position="left">標題</a>
-                        <a href="#!" class="item" data-tooltip="i.icon" data-tooltip-position="left">圖示</a>
-                        <a href="#!" class="item" data-tooltip=".ts.image" data-tooltip-position="left">圖片</a>
-                        <a href="#!" class="item" data-tooltip=".ts.input" data-tooltip-position="left">輸入欄位</a>
-                        <a href="#!" class="item" data-tooltip=".ts.label" data-tooltip-position="left">標籤</a>
-                        <a href="#!" class="item" data-tooltip=".ts.list" data-tooltip-position="left">清單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.loader" data-tooltip-position="left">讀取指示器</a>
-                        <a href="#!" class="item" data-tooltip=".ts.segment" data-tooltip-position="left">片段</a>
-                        <a href="#!" class="item" data-tooltip=".ts.slate" data-tooltip-position="left">板岩</a>
-                        <a href="#!" class="item" data-tooltip=".ts.steps" data-tooltip-position="left">步驟</a>
-                        <a href="#!" class="item" data-tooltip=".ts.placeholder" data-tooltip-position="left">預置區塊 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.quote" data-tooltip-position="left">引言</a>
-                    </div>
-                </div>
-                <!-- / 一般元素 -->
-
-                <!-- 聚合型 -->
-                <div class="item">
-                    聚合型
-                    <div class="menu">
-                        <a href="#!" class="item" data-tooltip=".ts.breadcrumb" data-tooltip-position="left">麵包屑</a>
-                        <a href="#!" class="item" data-tooltip=".ts.form" data-tooltip-position="left">表單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.grid" data-tooltip-position="left">網格系統</a>
-                        <a href="#!" class="item" data-tooltip=".ts.menu" data-tooltip-position="left">選單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.message" data-tooltip-position="left">訊息</a>
-                        <a href="#!" class="item" data-tooltip=".ts.table" data-tooltip-position="left">表格</a>
-                    </div>
-                </div>
-                <!-- / 聚合型 -->
-
-                <!-- 模塊 -->
-                <div class="item">
-                    模塊
-                    <div class="menu">
-                        <a href="#!" class="item" data-tooltip=".ts.accordion" data-tooltip-position="left">手風琴</a>
-                        <a href="#!" class="item" data-tooltip=".ts.calendar" data-tooltip-position="left">日曆</a>
-                        <a href="#!" class="item" data-tooltip=".ts.carousel" data-tooltip-position="left">幻燈片 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.checkbox" data-tooltip-position="left">核取方塊</a>
-                        <a href="#!" class="item" data-tooltip=".ts.comparison" data-tooltip-position="left">圖片比較 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.context.menu" data-tooltip-position="left">複合功能選單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.dimmer" data-tooltip-position="left">淡化幕</a>
-                        <a href="#!" class="item" data-tooltip=".ts.dropdown" data-tooltip-position="left">下拉式選單</a>
-                        <a href="#!" class="item" data-tooltip=".ts.embed" data-tooltip-position="left">嵌入物件</a>
-                        <a href="#!" class="item" data-tooltip=".ts.modal" data-tooltip-position="left">對話視窗</a>
-                        <a href="#!" class="item" data-tooltip=".ts.popup" data-tooltip-position="left">彈出式訊息</a>
-                        <a href="#!" class="item" data-tooltip=".ts.progress" data-tooltip-position="left">進度列</a>
-                        <a href="#!" class="item" data-tooltip=".ts.rating" data-tooltip-position="left">評分 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.scrollspy" data-tooltip-position="left">捲動監聽</a>
-                        <a href="#!" class="item" data-tooltip=".ts.search" data-tooltip-position="left">搜尋 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.sidebar" data-tooltip-position="left">側邊欄</a>
-                        <a href="#!" class="item" data-tooltip=".ts.slider" data-tooltip-position="left">滑桿</a>
-                        <a href="#!" class="item" data-tooltip=".ts.snackbar" data-tooltip-position="left">點心條</a>
-                        <a href="#!" class="item" data-tooltip=".ts.tab" data-tooltip-position="left">分頁籤</a>
-                        <a href="#!" class="item" data-tooltip=".ts.transfer" data-tooltip-position="left">穿梭框 <span class="ts warning right floated label">新的</span></a>
-                        <a href="#!" class="item" data-tooltip=".ts.transition" data-tooltip-position="left">轉場效果 <span class="ts warning right floated label">新的</span></a>
-                    </div>
-                </div>
-                <!-- / 模塊 -->
-
-                <!-- 視圖型 -->
-                <div class="item">
-                    視圖型
-                    <div class="menu">
-                        <a href="#!" class="item" data-tooltip=".ts.card" data-tooltip-position="left">卡片</a>
-                        <a href="#!" class="item" data-tooltip=".ts.comments" data-tooltip-position="left">留言</a>
-                        <a href="#!" class="item" data-tooltip=".ts.feed" data-tooltip-position="left">動態消息</a>
-                        <a href="#!" class="item" data-tooltip=".ts.items" data-tooltip-position="left">項目</a>
-                        <a href="#!" class="item" data-tooltip=".ts.speeches" data-tooltip-position="left">對話氣泡</a>
-                        <a href="#!" class="item" data-tooltip=".ts.statistic" data-tooltip-position="left">統計數據</a>
-                    </div>
-                </div>
-                <!-- / 視圖型 -->
+            <div class="ts header">一般元素</div>
+            <div class="ts link list" data-is="links">
+                <a href="#!" class="item" data-tooltip=".ts.button">按鈕 <span>Button</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.container">容器 <span>Container</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.divider">分隔線 <span>Divider</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.flag">國旗 <span>Flag</span><span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.header">標題 <span>Header</span></a>
+                <a href="#!" class="item" data-tooltip="i.icon">圖示 <span>Icon</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.image">圖片 <span>Image</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.input">輸入欄位 <span>Input</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.label">標籤 <span>Label</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.list">清單 <span>List</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.loader">讀取指示器 <span>Loader</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.segment">片段 <span>Segmet</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.slate">板岩 <span>Slate</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.steps">步驟 <span>Steps</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.placeholder">預置區塊 <span>Placeholder</span><span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.quote">引言 <span>Quote</span></a>
             </div>
+
+            <div class="ts header">聚合型</div>
+            <div class="ts link list" data-is="links">
+                <a href="#!" class="item" data-tooltip=".ts.breadcrumb">麵包屑</a>
+                <a href="#!" class="item" data-tooltip=".ts.form">表單</a>
+                <a href="#!" class="item" data-tooltip=".ts.grid">網格系統</a>
+                <a href="#!" class="item" data-tooltip=".ts.menu">選單</a>
+                <a href="#!" class="item" data-tooltip=".ts.message">訊息</a>
+                <a href="#!" class="item" data-tooltip=".ts.table">表格</a>
+            </div>
+
+            <div class="ts header">模塊</div>
+            <div class="ts link list" data-is="links">
+                <a href="#!" class="item" data-tooltip=".ts.accordion">手風琴</a>
+                <a href="#!" class="item" data-tooltip=".ts.calendar">日曆</a>
+                <a href="#!" class="item" data-tooltip=".ts.carousel">幻燈片 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.checkbox">核取方塊</a>
+                <a href="#!" class="item" data-tooltip=".ts.comparison">圖片比較 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.context.menu">複合功能選單</a>
+                <a href="#!" class="item" data-tooltip=".ts.dimmer">淡化幕</a>
+                <a href="#!" class="item" data-tooltip=".ts.dropdown">下拉式選單</a>
+                <a href="#!" class="item" data-tooltip=".ts.embed">嵌入物件</a>
+                <a href="#!" class="item" data-tooltip=".ts.modal">對話視窗</a>
+                <a href="#!" class="item" data-tooltip=".ts.popup">彈出式訊息</a>
+                <a href="#!" class="item" data-tooltip=".ts.progress">進度列</a>
+                <a href="#!" class="item" data-tooltip=".ts.rating">評分 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.scrollspy">捲動監聽</a>
+                <a href="#!" class="item" data-tooltip=".ts.search">搜尋 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.sidebar">側邊欄</a>
+                <a href="#!" class="item" data-tooltip=".ts.slider">滑桿</a>
+                <a href="#!" class="item" data-tooltip=".ts.snackbar">點心條</a>
+                <a href="#!" class="item" data-tooltip=".ts.tab">分頁籤</a>
+                <a href="#!" class="item" data-tooltip=".ts.transfer">穿梭框 <span class="ts warning right floated label">新的</span></a>
+                <a href="#!" class="item" data-tooltip=".ts.transition">轉場效果 <span class="ts warning right floated label">新的</span></a>
+            </div>
+
+            <div class="ts header">視圖型</div>
+            <div class="ts link list" data-is="links">
+                <a href="#!" class="item" data-tooltip=".ts.card">卡片</a>
+                <a href="#!" class="item" data-tooltip=".ts.comments">留言</a>
+                <a href="#!" class="item" data-tooltip=".ts.feed">動態消息</a>
+                <a href="#!" class="item" data-tooltip=".ts.items">項目</a>
+                <a href="#!" class="item" data-tooltip=".ts.speeches">對話氣泡</a>
+                <a href="#!" class="item" data-tooltip=".ts.statistic">統計數據</a>
+            </div>
+
+            <div class="ts header">索引</div>
+
+
+            <div class="ts link list" data-is="links">
+                
+                    <div class="item">
+                        <a href="#!">種類</a>
+                        
+                        <div class="ts list">
+                            
+                            <a href="#!" class="item">彈出式訊息</a>
+                            
+                            <a href="#!" class="item">標籤</a>
+                            
+                            <a href="#!" class="item">附著於其他元素</a>
+                            
+                        </div>
+                        
+                    </div>
+                
+                    <div class="item">
+                        <a href="#!">狀態</a>
+                        
+                        <div class="ts list">
+                            
+                            <a href="#!" class="item">無彈出式訊息</a>
+                            
+                        </div>
+                        
+                    </div>
+                
+                    <div class="item">
+                        <a href="#!">外觀</a>
+                        
+                        <div class="ts list">
+                            
+                            <a href="#!" class="item">訊息位置</a>
+                            
+                            <a href="#!" class="item">出現延遲</a>
+                            
+                        </div>
+                        
+                    </div>
+                
+            </div>
+
             <!-- 元件選單 -->
         </div>
         <!-- / 左側選單欄位 -->
 
         <!-- 間隔欄位 -->
-        <div class="one wide column"></div>
+        <div class="one wide column" data-is="linksDivider"></div>
         <!-- / 間隔欄位 -->
 
         <!-- 右側邊主要內容欄位 -->
         <div class="twelve wide column">
-            <!-- 分類標題 -->
-            <h2 class="ts dividing header">索引</h2>
-            <!-- / 分類標題 -->
 
-            <ol class="ts ordered list" style="font-size: 16px">
-                <li>
-                    <a href="#!">你好</a>
-                    <ol class="ts ordered list">
-                        <li>
-                            <a href="#!">你好</a>
-                        </li>
-                        <li><a href="#!">你好</a></li>
-                        <li><a href="#!">你好</a></li>
-                        <li><a href="#!">你好</a></li>
-                        <li><a href="#!">你好</a></li>
-                        <li><a href="#!">你好</a></li>
-                    </ol>
-                </li>
-                <li><a href="#!">你好</a></li>
-                <li><a href="#!">你好</a></li>
-                <li><a href="#!">你好</a></li>
-                <li><a href="#!">你好</a></li>
-                <li><a href="#!">你好</a></li>
-            </ol>
+            <div style="max-width: 750px;margin:  0 auto;">
 
-            
-            <!-- 單個大分類 -->
+
+
+
 
                 <!-- 分類標題 -->
-                <h2 class="ts dividing header">種類</h2>
+                <h2 data-is="chapterHeader" class="ts dividing header">索引</h2>
                 <!-- / 分類標題 -->
 
-                <!-- 大分類解說 -->
-                <div style="font-size: 16px"><p>一個彈出式訊息具有多個不同的種類。</p>
-</div>
-                <!-- / 大分類解說 -->
+                <ol class="ts ordered list" style="font-size: 16px">
+                    
+                        <li>
+                            <a href="#!">種類</a>
+                            
+                            <ol class="ts ordered list">
+                                
+                                <li>
+                                    <a href="#!">彈出式訊息</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">標籤</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">附著於其他元素</a>
+                                </li>
+                                
+                            </ol>
+                            
+                        </li>
+                    
+                        <li>
+                            <a href="#!">狀態</a>
+                            
+                            <ol class="ts ordered list">
+                                
+                                <li>
+                                    <a href="#!">無彈出式訊息</a>
+                                </li>
+                                
+                            </ol>
+                            
+                        </li>
+                    
+                        <li>
+                            <a href="#!">外觀</a>
+                            
+                            <ol class="ts ordered list">
+                                
+                                <li>
+                                    <a href="#!">訊息位置</a>
+                                </li>
+                                
+                                <li>
+                                    <a href="#!">出現延遲</a>
+                                </li>
+                                
+                            </ol>
+                            
+                        </li>
+                    
+                </ol>
 
                 
-                <!-- 單個樣式說明 -->
+                <!-- 單個大分類 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        彈出式訊息
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                    <!-- 分類標題 -->
+                    <h2 data-is="chapterHeader" class="ts dividing header">種類</h2>
+                    <!-- / 分類標題 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>一個正常的彈出式訊息，彈出式訊息的位置預設在元素下方。</p>
+                    <!-- 大分類解說 -->
+                    <div style="font-size: 16px"><p>一個彈出式訊息具有多個不同的種類。</p>
 </div>
-                    <!-- / 解說 -->
+                    <!-- / 大分類解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <button class="ts info labeled icon {{button}}" [[data-tooltip]]="早安！我的朋友！你欠錢沒還！">
+                    
+                    <!-- 單個樣式說明 -->
+
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            彈出式訊息
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
+
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>一個正常的彈出式訊息，彈出式訊息的位置預設在元素下方。</p>
+</div>
+                        <!-- / 解說 -->
+
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <button class="ts info labeled icon {{button}}" data-tooltip="早安！我的朋友！你欠錢沒還！">
     <i class="mouse pointer {{icon}}"></i>
     滑鼠移至此查看範例
 </button>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info labeled icon {{button}}"</span> [[<span class="hljs-attr">data-tooltip</span>]]=<span class="hljs-string">"早安！我的朋友！你欠錢沒還！"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mouse pointer {{icon}}"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info labeled icon </span></span></span><span class="hljs-template-variable">{{button}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span> <mark><span class="hljs-attr">data-tooltip</span></mark>=<span class="hljs-string">"早安！我的朋友！你欠錢沒還！"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mouse pointer </span></span></span><span class="hljs-template-variable">{{icon}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
     滑鼠移至此查看範例
 <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-</code></pre>
+</span></code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        標籤
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            標籤
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>彈出式訊息可以看起來更像普通標籤，而不帶有指向某處的記號。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>彈出式訊息可以看起來更像普通標籤，而不帶有指向某處的記號。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <button class="ts info labeled icon {{button}}" [[data-tooltip-type]]="label" data-tooltip="這個彈出式訊息沒有箭頭，像普通標籤。">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <button class="ts info labeled icon {{button}}" data-tooltip-type="label" data-tooltip="這個彈出式訊息沒有箭頭，像普通標籤。">
     <i class="mouse pointer {{icon}}"></i>
     滑鼠移至此查看範例
 </button>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info labeled icon {{button}}"</span> [[<span class="hljs-attr">data-tooltip-type</span>]]=<span class="hljs-string">"label"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這個彈出式訊息沒有箭頭，像普通標籤。"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mouse pointer {{icon}}"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info labeled icon </span></span></span><span class="hljs-template-variable">{{button}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span> <mark><span class="hljs-attr">data-tooltip-type</span></mark>=<span class="hljs-string">"label"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這個彈出式訊息沒有箭頭，像普通標籤。"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"mouse pointer </span></span></span><span class="hljs-template-variable">{{icon}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
     滑鼠移至此查看範例
 <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-</code></pre>
+</span></code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        附著於其他元素
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            附著於其他元素
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>彈出式訊息也可以套用在一般的文字或是連結甚至其他元素上，需要注意的是這依賴著 <code>:after</code> 與 <code>:before</code> 選擇器，任何不是「容器」的都不適用，如：文字欄位、圖示、影像等。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>彈出式訊息也可以套用在一般的文字或是連結甚至其他元素上，需要注意的是這依賴著 <code>:after</code> 與 <code>:before</code> 選擇器，任何不是「容器」的都不適用，如：文字欄位、圖示、影像等。</p>
 
 <p>你需要有個額外的容器包覆這些不適用的元素，然後在容器上配置彈出式訊息，請參閱下面這個範例。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <a href="#!" [[data-tooltip]]="這是洨洨安。">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <a href="#!" data-tooltip="這是洨洨安。">
     <img class="ts circular avatar {{image}}" src="!-user-!">
 </a>
-<a href="#!" [[data-tooltip]]="這是我好朋友，長得跟洨洨安有點像。">
+<a href="#!" data-tooltip="這是我好朋友，長得跟洨洨安有點像。">
     <img class="ts circular avatar {{image}}" src="!-user-!">
 </a>
 <span>當然，你也能夠讓</span>
-<a href="#!" [[data-tooltip]]="早安！朋友！">
+<a href="#!" data-tooltip="早安！朋友！">
     普通的連結
 </a>
 <span>有彈出式訊息。</span>
-<div class="ts {{input}}" [[data-tooltip]]="請輸入您的帳號。">
+<div class="ts {{input}}" data-tooltip="請輸入您的帳號。">
     <input type="text" placeholder="滑鼠移過來">
 </div>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#!"</span> [[<span class="hljs-attr">data-tooltip</span>]]=<span class="hljs-string">"這是洨洨安。"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts circular avatar {{image}}"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"!-user-!"</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#!"</span> [[<span class="hljs-attr">data-tooltip</span>]]=<span class="hljs-string">"這是我好朋友，長得跟洨洨安有點像。"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts circular avatar {{image}}"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"!-user-!"</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>當然，你也能夠讓<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"#!"</span> [[<span class="hljs-attr">data-tooltip</span>]]=<span class="hljs-string">"早安！朋友！"</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;a href=<span class="hljs-string">"#!"</span> <span class="hljs-string"><mark>data-tooltip</mark></span>=<span class="hljs-string">"這是洨洨安。"</span>&gt;
+    &lt;img class=<span class="hljs-string">"ts circular avatar {{image}}"</span> src=<span class="hljs-string">""</span>&gt;
+&lt;/a&gt;
+&lt;a href=<span class="hljs-string">"#!"</span> <span class="hljs-string"><mark>data-tooltip</mark></span>=<span class="hljs-string">"這是我好朋友，長得跟洨洨安有點像。"</span>&gt;
+    &lt;img class=<span class="hljs-string">"ts circular avatar {{image}}"</span> src=<span class="hljs-string">""</span>&gt;
+&lt;/a&gt;
+&lt;span&gt;當然，你也能夠讓&lt;/span&gt;
+&lt;a href=<span class="hljs-string">"#!"</span> <span class="hljs-string"><mark>data-tooltip</mark></span>=<span class="hljs-string">"早安！朋友！"</span>&gt;
     普通的連結
-<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span>有彈出式訊息。<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts {{input}}"</span> [[<span class="hljs-attr">data-tooltip</span>]]=<span class="hljs-string">"請輸入您的帳號。"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"text"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"滑鼠移過來"</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+&lt;/a&gt;
+&lt;span&gt;有彈出式訊息。&lt;/span&gt;
+&lt;div class=<span class="hljs-string">"ts {{input}}"</span> <span class="hljs-string"><mark>data-tooltip</mark></span>=<span class="hljs-string">"請輸入您的帳號。"</span>&gt;
+    &lt;<span class="hljs-built_in">input</span> <span class="hljs-built_in">type</span>=<span class="hljs-string">"text"</span> placeholder=<span class="hljs-string">"滑鼠移過來"</span>&gt;
+&lt;/div&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+
+
+                <!-- / 單個大分類 -->
                 
+                <!-- 單個大分類 -->
 
+                    <!-- 分類標題 -->
+                    <h2 data-is="chapterHeader" class="ts dividing header">狀態</h2>
+                    <!-- / 分類標題 -->
 
-            <!-- / 單個大分類 -->
-            
-            <!-- 單個大分類 -->
-
-                <!-- 分類標題 -->
-                <h2 class="ts dividing header">狀態</h2>
-                <!-- / 分類標題 -->
-
-                <!-- 大分類解說 -->
-                <div style="font-size: 16px"><p>彈出式訊息也具有狀態。</p>
+                    <!-- 大分類解說 -->
+                    <div style="font-size: 16px"><p>彈出式訊息也具有狀態。</p>
 </div>
-                <!-- / 大分類解說 -->
+                    <!-- / 大分類解說 -->
 
-                
-                <!-- 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
 
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        無彈出式訊息
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            無彈出式訊息
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
 
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>有些時候你可能已經有外掛、或是插件來協助你完成彈出式訊息的實作，倘若你的外掛、插件也使用到了 <code>[data-tooltip]</code> 屬性，這個時候可能會與 Tocas UI 有所衝突，為此，你可以在該元素上加上 <code>.untooltipped</code> 樣式即可停用 Tocas UI 的彈出式訊息。</p>
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>有些時候你可能已經有外掛、或是插件來協助你完成彈出式訊息的實作，倘若你的外掛、插件也使用到了 <code>[data-tooltip]</code> 屬性，這個時候可能會與 Tocas UI 有所衝突，為此，你可以在該元素上加上 <code>.untooltipped</code> 樣式即可停用 Tocas UI 的彈出式訊息。</p>
 </div>
-                    <!-- / 解說 -->
+                        <!-- / 解說 -->
 
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <button class="ts info [[untooltipped]] button" data-tooltip="早安！我的朋友！你欠錢沒還！">
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <button class="ts info untooltipped button" data-tooltip="早安！我的朋友！你欠錢沒還！">
     這個按鈕不會有彈出式訊息
 </button>
 
-                        </div>
-                        <!-- / 展示區塊 -->
+                            </div>
+                            <!-- / 展示區塊 -->
 
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info [[untooltipped]] button"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"早安！我的朋友！你欠錢沒還！"</span>&gt;</span>
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts info <mark>untooltipped</mark> button"</span> <span class="hljs-meta">data</span>-tooltip=<span class="hljs-string">"早安！我的朋友！你欠錢沒還！"</span>&gt;
     這個按鈕不會有彈出式訊息
-<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+&lt;/<span class="hljs-keyword">button&gt;
+</span></code></pre>
+
+                            </div>
+                            <!-- / 原始碼區塊 -->
+                        </div>
+                        <!-- / 示範區域 -->
+
+                    <!-- / 單個樣式說明 -->
+                    
+
+
+                <!-- / 單個大分類 -->
+                
+                <!-- 單個大分類 -->
+
+                    <!-- 分類標題 -->
+                    <h2 data-is="chapterHeader" class="ts dividing header">外觀</h2>
+                    <!-- / 分類標題 -->
+
+                    <!-- 大分類解說 -->
+                    <div style="font-size: 16px"><p>你可以更改彈出式訊息的位置、大小。</p>
+</div>
+                    <!-- / 大分類解說 -->
+
+                    
+                    <!-- 單個樣式說明 -->
+
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            訊息位置
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
+
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>彈出式訊息出現的位置能夠被更改。</p>
+</div>
+                        <!-- / 解說 -->
+
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <button class="ts info button" data-tooltip-position="top left" data-tooltip="這是彈出式訊息。">上面左邊</button>
+<button class="ts info button" data-tooltip-position="top center" data-tooltip="這是彈出式訊息。">上面中間</button>
+<button class="ts info button" data-tooltip-position="top right" data-tooltip="這是彈出式訊息。">上面右邊</button>
+<button class="ts info button" data-tooltip-position="bottom left" data-tooltip="這是彈出式訊息。">下面左邊</button>
+<button class="ts info button" data-tooltip-position="bottom center" data-tooltip="這是彈出式訊息。">下面中間</button>
+<button class="ts info button" data-tooltip-position="bottom right" data-tooltip="這是彈出式訊息。">下面右邊</button>
+<button class="ts info button" data-tooltip-position="left" data-tooltip="這是彈出式訊息。">左邊</button>
+<button class="ts info button" data-tooltip-position="right" data-tooltip="這是彈出式訊息。">右邊</button>
+
+                            </div>
+                            <!-- / 展示區塊 -->
+
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;button class=<span class="hljs-string">"ts info button"</span> <span class="hljs-string"><mark>data-tooltip-position</mark></span>=<span class="hljs-string">"top left"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;上面左邊&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> <span class="hljs-string"><mark>data-tooltip-position</mark></span>=<span class="hljs-string">"top center"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;上面中間&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> <span class="hljs-string"><mark>data-tooltip-position</mark></span>=<span class="hljs-string">"top right"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;上面右邊&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> <span class="hljs-string"><mark>data-tooltip-position</mark></span>=<span class="hljs-string">"bottom left"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;下面左邊&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> <span class="hljs-string"><mark>data-tooltip-position</mark></span>=<span class="hljs-string">"bottom center"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;下面中間&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> <span class="hljs-string"><mark>data-tooltip-position</mark></span>=<span class="hljs-string">"bottom right"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;下面右邊&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> <span class="hljs-string"><mark>data-tooltip-position</mark></span>=<span class="hljs-string">"left"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;左邊&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> <span class="hljs-string"><mark>data-tooltip-position</mark></span>=<span class="hljs-string">"right"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;右邊&lt;/button&gt;
 </code></pre>
 
+                            </div>
+                            <!-- / 原始碼區塊 -->
                         </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
+                        <!-- / 示範區域 -->
 
-                <!-- / 單個樣式說明 -->
+                    <!-- / 單個樣式說明 -->
+                    
+                    <!-- 單個樣式說明 -->
+
+                        <!-- 樣式名稱 -->
+                        <h3 data-is="sectionHeader" class="ts header">
+                            出現延遲
+                            <!-- 原始碼按鈕 -->
+                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
+                                <i class="code icon"></i> 原始碼
+                            </button>
+                            <!-- / 原始碼按鈕 -->
+                        </h3>
+                        <!-- / 樣式名稱 -->
+
+                        <!-- 解說 -->
+                        <div style="font-size: 16px"><p>你可以決定滑鼠移至元素上後要過多久才會出現彈出式訊息。</p>
+</div>
+                        <!-- / 解說 -->
+
+                        <!-- 示範區域 -->
+                        <div class="ts padded segments" data-show-code="false">
+                            <!-- 展示區塊 -->
+                            <div class="ts basic fitted clearing segment">
+                                <button class="ts info button" data-tooltip="這是彈出式訊息。" data-tooltip-delay="disabled">停用延遲</button>
+<button class="ts info button" data-tooltip="這是彈出式訊息。" data-tooltip-delay="0.1">0.1 秒</button>
+<button class="ts info button" data-tooltip="這是彈出式訊息。" data-tooltip-delay="0.2">0.2 秒</button>
+<button class="ts info button" data-tooltip="這是彈出式訊息。" data-tooltip-delay="0.3">0.3 秒</button>
+<button class="ts info button" data-tooltip="這是彈出式訊息。" data-tooltip-delay="0.4">0.4 秒</button>
+<button class="ts info button" data-tooltip="這是彈出式訊息。" data-tooltip-delay="0.5">0.5 秒</button>
+<button class="ts info button" data-tooltip="這是彈出式訊息。" data-tooltip-delay="1">1 秒</button>
+<button class="ts info button" data-tooltip="這是彈出式訊息。" data-tooltip-delay="2">2 秒</button>
+<button class="ts info button" data-tooltip="這是彈出式訊息。" data-tooltip-delay="3">3 秒</button>
+<button class="ts info button" data-tooltip="這是彈出式訊息。" data-tooltip-delay="4">4 秒</button>
+<button class="ts info button" data-tooltip="這是彈出式訊息。" data-tooltip-delay="5">5 秒</button>
+
+                            </div>
+                            <!-- / 展示區塊 -->
+
+                            <!-- 原始碼區塊 -->
+                            <div class="ts tertiary segment" hidden>
+                                <pre><code class="html hljs">&lt;button class=<span class="hljs-string">"ts info button"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span> <span class="hljs-string"><mark>data-tooltip-delay</mark></span>=<span class="hljs-string">"disabled"</span>&gt;停用延遲&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span> <span class="hljs-string"><mark>data-tooltip-delay</mark></span>=<span class="hljs-string">"0.1"</span>&gt;<span class="hljs-number">0.1</span> 秒&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span> <span class="hljs-string"><mark>data-tooltip-delay</mark></span>=<span class="hljs-string">"0.2"</span>&gt;<span class="hljs-number">0.2</span> 秒&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span> <span class="hljs-string"><mark>data-tooltip-delay</mark></span>=<span class="hljs-string">"0.3"</span>&gt;<span class="hljs-number">0.3</span> 秒&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span> <span class="hljs-string"><mark>data-tooltip-delay</mark></span>=<span class="hljs-string">"0.4"</span>&gt;<span class="hljs-number">0.4</span> 秒&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span> <span class="hljs-string"><mark>data-tooltip-delay</mark></span>=<span class="hljs-string">"0.5"</span>&gt;<span class="hljs-number">0.5</span> 秒&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span> <span class="hljs-string"><mark>data-tooltip-delay</mark></span>=<span class="hljs-string">"1"</span>&gt;<span class="hljs-number">1</span> 秒&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span> <span class="hljs-string"><mark>data-tooltip-delay</mark></span>=<span class="hljs-string">"2"</span>&gt;<span class="hljs-number">2</span> 秒&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span> <span class="hljs-string"><mark>data-tooltip-delay</mark></span>=<span class="hljs-string">"3"</span>&gt;<span class="hljs-number">3</span> 秒&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span> <span class="hljs-string"><mark>data-tooltip-delay</mark></span>=<span class="hljs-string">"4"</span>&gt;<span class="hljs-number">4</span> 秒&lt;/button&gt;
+&lt;button class=<span class="hljs-string">"ts info button"</span> data-tooltip=<span class="hljs-string">"這是彈出式訊息。"</span> <span class="hljs-string"><mark>data-tooltip-delay</mark></span>=<span class="hljs-string">"5"</span>&gt;<span class="hljs-number">5</span> 秒&lt;/button&gt;
+</code></pre>
+
+                            </div>
+                            <!-- / 原始碼區塊 -->
+                        </div>
+                        <!-- / 示範區域 -->
+
+                    <!-- / 單個樣式說明 -->
+                    
+
+
+                <!-- / 單個大分類 -->
                 
-
-
-            <!-- / 單個大分類 -->
-            
-            <!-- 單個大分類 -->
 
                 <!-- 分類標題 -->
-                <h2 class="ts dividing header">外觀</h2>
+                <h2 data-is="chapterHeader" class="ts dividing header">本頁留言</h2>
+                <p>你現在可以在這裡留言啦！如果有功能建議或是發現錯誤，可以到這裡提出 Issue。</p>
                 <!-- / 分類標題 -->
 
-                <!-- 大分類解說 -->
-                <div style="font-size: 16px"><p>你可以更改彈出式訊息的位置、大小。</p>
-</div>
-                <!-- / 大分類解說 -->
-
-                
-                <!-- 單個樣式說明 -->
-
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        訊息位置
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
-
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>彈出式訊息出現的位置能夠被更改。</p>
-</div>
-                    <!-- / 解說 -->
-
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <button class="ts info button" [[data-tooltip-position]]="top left" data-tooltip="這是彈出式訊息。">上面左邊</button>
-<button class="ts info button" [[data-tooltip-position]]="top center" data-tooltip="這是彈出式訊息。">上面中間</button>
-<button class="ts info button" [[data-tooltip-position]]="top right" data-tooltip="這是彈出式訊息。">上面右邊</button>
-<button class="ts info button" [[data-tooltip-position]]="bottom left" data-tooltip="這是彈出式訊息。">下面左邊</button>
-<button class="ts info button" [[data-tooltip-position]]="bottom center" data-tooltip="這是彈出式訊息。">下面中間</button>
-<button class="ts info button" [[data-tooltip-position]]="bottom right" data-tooltip="這是彈出式訊息。">下面右邊</button>
-<button class="ts info button" [[data-tooltip-position]]="left" data-tooltip="這是彈出式訊息。">左邊</button>
-<button class="ts info button" [[data-tooltip-position]]="right" data-tooltip="這是彈出式訊息。">右邊</button>
-
-                        </div>
-                        <!-- / 展示區塊 -->
-
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> [[<span class="hljs-attr">data-tooltip-position</span>]]=<span class="hljs-string">"top left"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;</span>上面左邊<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> [[<span class="hljs-attr">data-tooltip-position</span>]]=<span class="hljs-string">"top center"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;</span>上面中間<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> [[<span class="hljs-attr">data-tooltip-position</span>]]=<span class="hljs-string">"top right"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;</span>上面右邊<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> [[<span class="hljs-attr">data-tooltip-position</span>]]=<span class="hljs-string">"bottom left"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;</span>下面左邊<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> [[<span class="hljs-attr">data-tooltip-position</span>]]=<span class="hljs-string">"bottom center"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;</span>下面中間<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> [[<span class="hljs-attr">data-tooltip-position</span>]]=<span class="hljs-string">"bottom right"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;</span>下面右邊<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> [[<span class="hljs-attr">data-tooltip-position</span>]]=<span class="hljs-string">"left"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;</span>左邊<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> [[<span class="hljs-attr">data-tooltip-position</span>]]=<span class="hljs-string">"right"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span>&gt;</span>右邊<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-</code></pre>
-
-                        </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
-
-                <!-- / 單個樣式說明 -->
-                
-                <!-- 單個樣式說明 -->
-
-                    <!-- 樣式名稱 -->
-                    <h3 class="ts header">
-                        出現延遲
-                        <!-- 原始碼按鈕 -->
-                        <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                            <i class="code icon"></i> 原始碼
-                        </button>
-                        <!-- / 原始碼按鈕 -->
-                    </h3>
-                    <!-- / 樣式名稱 -->
-
-                    <!-- 解說 -->
-                    <div style="font-size: 16px"><p>你可以決定滑鼠移至元素上後要過多久才會出現彈出式訊息。</p>
-</div>
-                    <!-- / 解說 -->
-
-                    <!-- 示範區域 -->
-                    <div class="ts padded segments" data-show-code="false">
-                        <!-- 展示區塊 -->
-                        <div class="ts basic fitted clearing segment">
-                            <button class="ts info button" data-tooltip="這是彈出式訊息。" [[data-tooltip-delay]]="disabled">停用延遲</button>
-<button class="ts info button" data-tooltip="這是彈出式訊息。" [[data-tooltip-delay]]="0.1">0.1 秒</button>
-<button class="ts info button" data-tooltip="這是彈出式訊息。" [[data-tooltip-delay]]="0.2">0.2 秒</button>
-<button class="ts info button" data-tooltip="這是彈出式訊息。" [[data-tooltip-delay]]="0.3">0.3 秒</button>
-<button class="ts info button" data-tooltip="這是彈出式訊息。" [[data-tooltip-delay]]="0.4">0.4 秒</button>
-<button class="ts info button" data-tooltip="這是彈出式訊息。" [[data-tooltip-delay]]="0.5">0.5 秒</button>
-<button class="ts info button" data-tooltip="這是彈出式訊息。" [[data-tooltip-delay]]="1">1 秒</button>
-<button class="ts info button" data-tooltip="這是彈出式訊息。" [[data-tooltip-delay]]="2">2 秒</button>
-<button class="ts info button" data-tooltip="這是彈出式訊息。" [[data-tooltip-delay]]="3">3 秒</button>
-<button class="ts info button" data-tooltip="這是彈出式訊息。" [[data-tooltip-delay]]="4">4 秒</button>
-<button class="ts info button" data-tooltip="這是彈出式訊息。" [[data-tooltip-delay]]="5">5 秒</button>
-
-                        </div>
-                        <!-- / 展示區塊 -->
-
-                        <!-- 原始碼區塊 -->
-                        <div class="ts tertiary segment" hidden>
-                            <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span> [[<span class="hljs-attr">data-tooltip-delay</span>]]=<span class="hljs-string">"disabled"</span>&gt;</span>停用延遲<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span> [[<span class="hljs-attr">data-tooltip-delay</span>]]=<span class="hljs-string">"0.1"</span>&gt;</span>0.1 秒<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span> [[<span class="hljs-attr">data-tooltip-delay</span>]]=<span class="hljs-string">"0.2"</span>&gt;</span>0.2 秒<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span> [[<span class="hljs-attr">data-tooltip-delay</span>]]=<span class="hljs-string">"0.3"</span>&gt;</span>0.3 秒<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span> [[<span class="hljs-attr">data-tooltip-delay</span>]]=<span class="hljs-string">"0.4"</span>&gt;</span>0.4 秒<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span> [[<span class="hljs-attr">data-tooltip-delay</span>]]=<span class="hljs-string">"0.5"</span>&gt;</span>0.5 秒<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span> [[<span class="hljs-attr">data-tooltip-delay</span>]]=<span class="hljs-string">"1"</span>&gt;</span>1 秒<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span> [[<span class="hljs-attr">data-tooltip-delay</span>]]=<span class="hljs-string">"2"</span>&gt;</span>2 秒<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span> [[<span class="hljs-attr">data-tooltip-delay</span>]]=<span class="hljs-string">"3"</span>&gt;</span>3 秒<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span> [[<span class="hljs-attr">data-tooltip-delay</span>]]=<span class="hljs-string">"4"</span>&gt;</span>4 秒<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span> <span class="hljs-attr">data-tooltip</span>=<span class="hljs-string">"這是彈出式訊息。"</span> [[<span class="hljs-attr">data-tooltip-delay</span>]]=<span class="hljs-string">"5"</span>&gt;</span>5 秒<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-</code></pre>
-
-                        </div>
-                        <!-- / 原始碼區塊 -->
-                    </div>
-                    <!-- / 示範區域 -->
-
-                <!-- / 單個樣式說明 -->
-                
-
-
-            <!-- / 單個大分類 -->
-            
-
+            </div>
 
         </div>
         <!-- / 右側邊主要內容欄位 -->
@@ -600,7 +784,7 @@
     <!-- / 空白分隔線 -->
 
     <!-- 底部片段 -->
-    <div class="ts bottom attached secondary very padded segment">
+    <div class="ts bottom attached secondary very padded segment" data-is="footer">
         <!-- 置中容器 -->
         <div class="ts container">
             <!-- 底部連結選單 -->
@@ -612,13 +796,8 @@
             </div>
             <!-- / 底部連結選單 -->
 
-            <!-- 空白分隔線 -->
-            <div class="ts hidden divider"></div>
-            <div class="ts hidden section divider"></div>
-            <!-- / 空白分隔線 -->
-
             <!-- 底部說明 -->
-            <span>由 <a href="https://www.facebook.com/yamiodymel">Yami Odymel</a> 所設計，還有<a href="https://github.com/TeaMeow/TocasUI/graphs/contributors">貢獻者們</a>的愛心 ❤️。原始碼授權方式為 MIT，文件則為 <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW">CC0 1.0 公眾領域</a>，還請盡情地使用和分享，或者是一同改進 :)</span>
+            <span>由 <a href="https://www.facebook.com/yamiodymel">Yami Odymel</a> 所設計，還有<a href="https://github.com/TeaMeow/TocasUI/graphs/contributors">貢獻者們</a>的愛心 ❤️。原始碼授權方式為 MIT，文件則為 <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW">CC0 1.0 公眾領域</a>，還請盡情地使用和分享，或者是一同改進 :)</span><span class="ubuntu preload"> </span>
             <!-- 底部說明 -->
         </div>
         <!-- / 置中容器 -->
