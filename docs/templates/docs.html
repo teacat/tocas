@@ -6,7 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../../dist/tocas.css">
     <link rel="stylesheet" href="../html/assets/highlight.css">
+    <link rel="stylesheet" href="../html/assets/docs.css">
     <link rel="stylesheet" href="../html/assets/images/style.css">
+    <link rel="stylesheet" href="../../assets/styles/tocas.css">
+    <link rel="stylesheet" href="../../assets/highlight.css">
+    <link rel="stylesheet" href="../../assets/docs.css">
+    <link rel="stylesheet" href="../../assets/images/style.css">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" defer></script>
@@ -17,159 +22,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-css.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-html.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>Document</title>
-    <style>
-        @font-face{
-            font-family: 'icomoon';
-            src        : url('../html/assets/images/fonts/icomoon.eot?en3o5m');
-            src        : url('../html/assets/images/fonts/icomoon.eot?en3o5m#iefix')   format('embedded-opentype'),
-                         url('../html/assets/images/fonts/icomoon.ttf?en3o5m')         format('truetype'),
-                         url('../html/assets/images/fonts/icomoon.woff?en3o5m')        format('woff'),
-                         url('../html/assets/images/fonts/icomoon.svg?en3o5m#icomoon') format('svg');
-            font-weight: normal;
-            font-style : normal;
-        }
-        [data-is="logo"] {
-            font-size    : 4em;
-            display      : block;
-            margin-top   : -32px;
-            margin-bottom: 50px;
-            margin-left  : -11px;
-            color        : #5a5a5a;
-
-            font-family   : 'icomoon' !important;
-            speak         : none;
-            font-style    : normal;
-            font-weight   : normal;
-            font-variant  : normal;
-            text-transform: none;
-            line-height   : 1;
-
-            -webkit-font-smoothing : antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        [data-is="logo"]:before {
-            content: "\e900";
-        }
-        [data-is="slate"] {
-            margin-bottom: 40px;
-            border-bottom: 1px solid #e9e9e9;
-            border-radius: 0;
-        }
-        [data-is="chapterHeader"] {
-            border-bottom : 2px solid #d9d9d9 !important;
-            padding-bottom: 10px !important;
-        }
-        [data-is="chapterHeader"]:not(:first-child) {
-            margin-top: 4.5em !important;
-        }
-        [data-is="sectionHeader"] {
-            margin-top: 4em !important;
-        }
-        [data-is="chapterHeader"] ~ p,
-        [data-is="sectionHeader"] ~ p {
-            margin     : .8em 0 !important;
-            font-size  : 16px;
-            line-height: 1.7;
-        }
-        [data-is="sectionHeader"]:after {
-            content   : "";
-            position  : absolute;
-            left      : -92px;
-            width     : 2px;
-            border    : 3px solid #fff;
-            background: #a2a2a2;
-            top       : -2px;
-            bottom    : -2px;
-        }
-        [data-is="links"] .item {
-            display    : flex !important;
-            line-height: 22px !important;
-            align-items: center !important;
-        }
-        [data-is="links"] .item .label {
-            padding: 9px;
-            height : 20px;
-        }
-        [data-is="links"] span:not(.label) {
-            margin-left   : 7px;
-            font-size     : 13px;
-            opacity       : 0.5;
-            pointer-events: none;
-        }
-        [data-is="linksDivider"]:before {
-            content       : "";
-            position      : absolute;
-            top           : 12px;
-            right         : 24px;
-            bottom        : 0;
-            left          : 0;
-            border-right  : 2px solid rgba(0,0,0,.1);
-            pointer-events: none;
-        }
-        [data-is="tab"] {
-            position: absolute;
-            bottom  : -3.17em;
-            left    : 70px;
-            width   : 750px;
-        }
-        [data-is="documentContainer"] {
-            max-width: 750px;
-            margin   : 0 auto;
-        }
-        [data-is="footer"] {
-            margin-top    : 40px !important;
-            margin-bottom : 0 !important;
-            padding-bottom: 90px !important;
-            box-shadow    : none !important;
-            border-top    : 1px solid #e9e9e9 !important;
-            border-radius : 0 !important;
-        }
-        .ts.segments {
-            margin-top: 2.3em !important;
-        }
-    </style>
+    <script src="../html/assets/script.js" defer></script>
+    <script src="../../assets/script.js" defer></script>
+    <title>{{ .Docs.Title }} - Tocas UI</title>
 </head>
 <body>
     <!-- 頂部板岩 -->
-    <div data-is="slate" class="ts padded big heading slate">
+    <header class="ts padded big heading slate">
         <!-- 網格容器 -->
         <div class="ts container grid">
             <!-- 側邊空白欄位 -->
             <div class="four wide column">
                 <!-- 主要 Logo -->
-                <i data-is="logo"></i>
+                <i></i>
                 <!-- / 主要 Logo -->
             </div>
             <!-- / 側邊空白欄位 -->
 
             <!-- 右側主要內容欄位 -->
             <div class="twelve wide column">
-                <div class="ts large text menu">
-                    <a href="#!" class="item">{{.UI.Documentation}}</a>
-                    <a href="#!" class="item">{{.UI.GettingStarted}}</a>
-                    <a href="#!" class="item">{{.UI.Responsive}}</a>
-                    <a href="#!" class="item">{{.UI.Examples}}</a>
-                    <a href="#!" class="item">{{.UI.Playground}}</a>
+                <nav class="ts large text menu">
+                    <a href="#!" class="item">{{ .UI.Documentation }}</a>
+                    <a href="#!" class="item">{{ .UI.GettingStarted }}</a>
+                    <a href="#!" class="item">{{ .UI.Responsive }}</a>
+                    <a href="#!" class="item">{{ .UI.Examples }}</a>
+                    <a href="#!" class="item">{{ .UI.Playground }}</a>
 
                     <!-- 靠右選單 -->
                     <div class="right menu">
-                        <a href="#!" class="item"><i class="globe icon"></i> {{.Main.Language}}}</a>
+                        <a href="#!" class="item"><i class="globe icon"></i> {{ .Main.Language }}</a>
                         <a href="#!" class="item"><i class="github icon"></i> GitHub</a>
                     </div>
                     <!-- / 靠右選單 -->
-                </div>
+                </nav>
             </div>
             <!-- / 右側主要內容欄位 -->
 
             <!-- 主要文件標題區 -->
             <div class="sixteen wide column">
                 <!-- 文件標題 -->
-                <div class="header">{{.Docs.Title}}</div>
+                <h1 class="header">{{ .Docs.Title }}</h1>
                 <!-- / 文件標題 -->
 
                 <!-- 文件類別名稱敘述 -->
-                <div class="description">{{.Docs.Description}}</div>
+                <p class="description">{{ .Docs.Description }}</p>
                 <!-- / 文件類別名稱敘述 -->
             </div>
             <!-- / 主要文件標題區 -->
@@ -181,209 +77,237 @@
 
             <!-- 分頁籤欄位 -->
             <div class="twelve wide column">
-                <div class="ts evenly divided tabbed menu" data-is="tab">
-                    <div class="active item">{{.UI.Tabs.Definitions}}</div>
-                    <div class="item">{{.UI.Tabs.Modules}}</div>
-                    <div class="item">{{.UI.Tabs.Definitions}}</div>
-                </div>
+                {{ $modulesLength  := len .Docs.Modules.Chapters }}
+                {{ $settingslength := len .Docs.Settings.Chapters }}
+                {{ if or (ne $modulesLength 0) (ne $settingslength 0) }}
+                <ul class="ts evenly divided tabbed menu">
+                    <li class="active item">
+                        <a href="#!">{{ .UI.TabDefinitions }}</a>
+                    </li>
+                    {{ if ne $modulesLength 0 }}
+                    <li class="item">
+                        <a href="#!">{{ .UI.TabModules }}</a>
+                    </li>
+                    {{ end }}
+                    {{ if ne $settingslength 0 }}
+                    <li class="item">
+                        <a href="#!">{{ .UI.TabSettings }}</a>
+                    </li>
+                    {{ end }}
+                </ul>
+                {{ end }}
             </div>
             <!-- / 分頁籤欄位 -->
         </div>
         <!-- / 網格容器 -->
-    </div>
+    </header>
     <!-- / 頂部板岩 -->
 
     <!-- 空白分隔線 -->
-    <div class="ts hidden divider"></div>
+    <hr class="ts hidden divider">
     <!-- / 空白分隔線 -->
 
     <!-- 主要網格系統 -->
     <div class="ts container relaxed grid">
         <!-- 左側選單欄位 -->
-        <div class="three wide column">
+        <aside class="three wide column">
             <!-- 搜尋輸入欄位 -->
-            <div class="ts fluid link icon input">
-                <input type="text" placeholder="{{.UI.Search}}">
-                <i class="search link icon"></i>
-            </div>
+            <form class="ts fluid small action input">
+                <input type="search" placeholder="{{ .UI.Search }}">
+                <button class="ts icon button">
+                    <i class="search icon"></i>
+                </button>
+            </form>
             <!-- / 搜尋輸入欄位 -->
 
             <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
+            <!-- 追加 ACTIVE INDICATOR -->
+            <!-- 追加 ACTIVE INDICATOR -->
+            <!-- 追加 ACTIVE INDICATOR -->
+            <!-- 追加 ACTIVE INDICATOR -->
+            <!-- 追加 ACTIVE INDICATOR -->
+            <!-- 追加 ACTIVE INDICATOR -->
+            <!-- 追加 ACTIVE INDICATOR -->
+            <!-- 追加 ACTIVE INDICATOR -->
+            <!-- 追加 ACTIVE INDICATOR -->
 
-            <!-- 元件選單 -->
-            {{range _, $Component := .UI.Components}}
-                <div class="ts header">{{$Component.Category}}</div>
-                <div class="ts link list" data-is="links">
-                    {{range $Component.Items}}
-                        <a href="{{$Component.Alias}}/{{.Alias}}.html" class="item">{{.Name}} <span>{{.Alias}}</span></a>
-                    {{end}}
-                </div>
-            {{end}}
-            <!-- / 元件選單 -->
+            <!-- 元件索引 -->
+            {{ range $_, $Component := .UI.Components }}
+                <h2 class="ts header">{{ $Component.Name }}</h2>
+                <ul class="ts link list">
+                    {{ range $Component.Items }}
+                        <li>
+                            <a href="../{{ ToLower $Component.Alias }}/{{ ToLower .Alias }}.html">
+                                {{ .Name }} <span>{{ .Alias }}</span>
+                            </a>
+                        </li>
+                    {{ end }}
+                </ul>
+            {{ end }}
+            <!-- / 元件索引 -->
 
-            <!-- 索引 -->
-            <div class="ts header">{{.UI.Indexes}}</div>
-            <div class="ts link list" data-is="links">
-                {{range .Docs.DefinitionIndexes}}
-                    <div class="item">
-                        <a href="#!">{{.Title}}</a>
-                        {{if .HasSubIndex}}
-                        <div class="ts list">
-                            {{range .SubIndexes}}
-                            <a href="#!" class="item">{{.Title}}</a>
-                            {{end}}
-                        </div>
-                        {{end}}
-                    </div>
-                {{end}}
-            </div>
-            <!-- / 索引 -->
-        </div>
+            <!-- 索引
+            <h2 class="ts header">{{ .UI.Indexes }}</h2>
+            <ul class="ts link list">
+                {{ range .Docs.Definitions.Indexes }}
+                    <li>
+                        <a href="#!">{{ .Title }}</a>
+                        {{ if .HasSubIndex }}
+                        <ul class="ts link list">
+                            {{ range .SubIndexes }}
+                            <li>
+                                <a href="#!">{{ .Title }}</a>
+                            </li>
+                            {{ end }}
+                        </ul>
+                        {{ end }}
+                    </li>
+                {{ end }}
+            </ul>
+            / 索引 -->
+        </aside>
         <!-- / 左側選單欄位 -->
 
         <!-- 間隔欄位 -->
-        <div class="one wide column" data-is="linksDivider"></div>
+        <div class="one wide offset column"></div>
         <!-- / 間隔欄位 -->
 
         <!-- 右側邊主要內容欄位 -->
         <div class="twelve wide column">
-            <div data-is="documentContainer">
-                <!-- 分類標題 -->
-                <h2 data-is="chapterHeader" class="ts dividing header">{{.UI.Indexes}}</h2>
-                <!-- / 分類標題 -->
+            <section>
+                <!-- 索引區段 -->
+                <h1 class="ts dividing header">{{ .UI.Indexes }}</h1>
 
-                <ol class="ts ordered list" style="font-size: 16px">
-                    {{range .Docs.DefinitionIndexes}}
-                        <li>
-                            <a href="#!">{{.Title}}</a>
-                            {{if .HasSubIndex}}
-                            <ol class="ts ordered list">
-                                {{range .SubIndexes}}
-                                <li>
-                                    <a href="#!">{{.Title}}</a>
+                <ul class="ts large list">
+                    {{ range .Docs.Definitions.Indexes }}
+                        <li class="item">
+                            <a href="#!">{{ .Title }}</a>
+                            {{ if .HasSubIndex }}
+                            <ul class="ts list">
+                                {{ range .SubIndexes }}
+                                <li class="item">
+                                    <a href="#!">{{ .Title }}</a> {{ range .Highlights }}<code>{{ . }}</code> {{ end }}
                                 </li>
-                                {{end}}
-                            </ol>
-                            {{end}}
+                                {{ end }}
+                            </ul>
+                            {{ end }}
                         </li>
-                    {{end}}
-                </ol>
+                    {{ end }}
+                </ul>
+                <!-- / 索引區段 -->
 
-                {{range .Docs.Definitions}}
+                {{ range .Docs.Definitions.Chapters }}
                 <!-- 單個大分類 -->
 
                     <!-- 分類標題 -->
-                    <h2 data-is="chapterHeader" class="ts dividing header">{{.Title}}</h2>
+                    <h1 class="ts dividing header">{{ .Title }}</h1>
                     <!-- / 分類標題 -->
 
                     <!-- 大分類解說 -->
-                    <div style="font-size: 16px">{{.Description}}</div>
+                    <p>{{ .Description }}</p>
                     <!-- / 大分類解說 -->
 
-                    {{range .Sections}}
+                    {{ range .Sections }}
                     <!-- 單個樣式說明 -->
 
                         <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            {{.Title}}
+                        <h2 class="ts header">
+                            {{ .Title }}
+
                             <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> {{.UI.SourceCode}}
+                            <button class="ts right floated small icon labeled button">
+                                <i class="code icon"></i> {{ $.UI.SourceCode }}
                             </button>
                             <!-- / 原始碼按鈕 -->
-                        </h3>
+
+                            <!-- 響應式預覽按鈕 -->
+                            {{ if .Responsive }}
+                            <button class="ts right floated small icon labeled button">
+                                <i class="mobile icon"></i> 響應式預覽
+                            </button>
+                            {{ end }}
+                            <!-- / 響應式預覽按鈕 -->
+                        </h2>
                         <!-- / 樣式名稱 -->
 
                         <!-- 解說 -->
-                        <div style="font-size: 16px">{{.Description}}</div>
+                        <p>{{ .Description }}</p>
                         <!-- / 解說 -->
 
                         <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
+                        <div class="ts padded segments">
                             <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                {{.HTML.Clean}}
-                            </div>
+                            <samp class="ts basic fitted clearing segment">
+                                {{ .HTML.Clean }}
+                            </samp>
                             <!-- / 展示區塊 -->
 
+                            <!-- 響應式展示區塊 -->
+                            <samp class="ts clearing segment" hidden>
+                                <iframe></iframe>
+                                <!--<span class="ts bottom right attached label">行動裝置模擬（767px）</span>-->
+                            </samp>
+                            <!-- / 響應式展示區塊 -->
+
                             <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                {{.HTML.Readable}}
-                            </div>
+                            <pre class='ts tertiary segment' hidden><code class='hljs'>{{ .HTML.Readable }}</code></pre>
                             <!-- / 原始碼區塊 -->
                         </div>
                         <!-- / 示範區域 -->
 
                     <!-- / 單個樣式說明 -->
-                    {{end}}
+                    {{ end }}
 
                 <!-- / 單個大分類 -->
-                {{end}}
+                {{ end }}
 
-                <!-- 分類標題 -->
-                <h2 data-is="chapterHeader" class="ts dividing header">{{.UI.Comment}}</h2>
-                <p>{{.UI.CommentDescription}}</p>
-                <!-- / 分類標題 -->
-            </div>
+                <!-- 留言區塊 -->
+                <h2 class="ts dividing header">{{ .UI.Comment }}</h2>
+                <p>{{ .UI.CommentDescription }}</p>
+
+                <div id="disqusThread"></div>
+                <!-- / 留言區塊 -->
+            </section>
         </div>
         <!-- / 右側邊主要內容欄位 -->
     </div>
     <!-- / 主要網格系統 -->
 
     <!-- 空白分隔線 -->
-    <div class="ts hidden divider"></div>
+    <hr class="ts hidden divider">
     <!-- / 空白分隔線 -->
 
+    <!-- 自動載入字型 -->
+    <span class="ubuntu preload"></span>
+    <!-- / 自動載入字型 -->
+
     <!-- 底部片段 -->
-    <div class="ts bottom attached secondary very padded segment" data-is="footer">
+    <footer class="ts bottom attached secondary very padded segment">
         <!-- 置中容器 -->
         <div class="ts container">
             <!-- 底部連結選單 -->
-            <div class="ts text menu">
-                <a href="#!" class="item"><i class="arrow up icon"></i> {{.UI.ToTop}}</a>
-                <a href="#!" class="item">GitHub</a>
-                <a href="#!" class="item">{{.UI.Examples}}</a>
-                <a href="#!" class="item">{{.UI.About}}</a>
-            </div>
+            <ul class="ts text menu">
+                <li class="item">
+                    <a href="#!"><i class="arrow up icon"></i> {{ .UI.ToTop }}</a>
+                </li>
+                <li class="item">
+                    <a href="#!">GitHub</a>
+                </li>
+                <li class="item">
+                    <a href="#!">{{ .UI.Examples }}</a>
+                </li>
+                <li class="item">
+                    <a href="#!">{{ .UI.About }}</a>
+                </li>
+            </ul>
             <!-- / 底部連結選單 -->
 
             <!-- 底部說明 -->
-            <span>{{Markdown .UI.Footer}}</span>
+            <p>{{ Markdown .UI.Footer }}</p>
             <!-- 底部說明 -->
         </div>
         <!-- / 置中容器 -->
-    </div>
+    </footer>
     <!-- / 底部片段 -->
-
-    <!-- 自動載入字型 -->
-    <span class="ubuntu preload"> </span>
-    <!-- / 自動載入字型 -->
-
-    <script>
-        $('[data-ts-toggle]').on('click', function() {
-            var $segment
-            $segment = $(this).parent().nextAll('.ts.segments').first()
-            $example = $segment.find('.ts.segment').first()
-            $code    = $segment.find('.ts.segment').last()
-            if ($segment.attr('data-show-code') == 'true') {
-                $segment.attr('data-show-code', 'false')
-                $example.addClass('fitted basic')
-                $code.attr('hidden', 'hidden')
-            } else {
-                $segment.attr('data-show-code', 'true')
-                $example.removeClass('fitted basic')
-                $code.removeAttr('hidden')
-            }
-        })
-    </script>
 </body>
 </html>
