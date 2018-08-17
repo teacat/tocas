@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"html"
 	"io/ioutil"
 	"log"
 	"os"
@@ -16,6 +15,9 @@ import (
 
 	"github.com/alecthomas/template"
 	dcopy "github.com/otiai10/copy"
+	"github.com/tdewolff/minify"
+	minifyHTML "github.com/tdewolff/minify/html"
+
 	"github.com/urfave/cli"
 	blackfriday "gopkg.in/russross/blackfriday.v2"
 	yaml "gopkg.in/yaml.v2"
@@ -35,11 +37,11 @@ type Document struct {
 	// Component 是元素名稱（例如：`Button`、`Card`）。
 	Component string
 	// Title 是標題。
-	Title string
+	Title string `yaml:"Title"`
 	// Description 是主要註釋。
-	Description string
+	Description string `yaml:"Description"`
 	// Outline 是開頭導引段落，可使用 Markdown 格式。
-	Outline string
+	Outline string `yaml:"Outline"`
 
 	// OriginalDefinitions 是多個樣式定義的大章節。
 	OriginalDefinitions []*Chapter `yaml:"Definitions"`
@@ -82,6 +84,8 @@ type Index struct {
 	Title string
 	// Name 是索引的錨點名稱，空白會被轉換成減號（`-`）作為分隔符。
 	Name string
+	//
+	Highlights []string
 	// HasSubIndex 表示此索引是否有子索引。
 	HasSubIndex bool
 	// SubIndexes 是子索引切片。
@@ -96,6 +100,8 @@ type Code struct {
 	Clean string
 	// Readable 是可供人類閱讀的程式碼，經過縮排且被整理過並帶有螢光標籤。
 	Readable string
+	// Highlights 是字串切片，其內容為程式碼中被螢光的地方（不重複）。
+	Highlights []string
 }
 
 // Section 是單個小章節的資料建構體。
@@ -104,6 +110,8 @@ type Section struct {
 	Title string `yaml:"Title"`
 	// Description 是註釋，可使用 Markdown 格式。
 	Description string `yaml:"Description"`
+	// Responsive 表示此段落範例是否需要響應式展示模式。
+	Responsive bool `yaml:"Responsive"`
 
 	// OrignalHTML 是包含 Tocas 文件標籤且尚未經過整理的 HTML 範例內容。
 	OriginalHTML string `yaml:"HTML"`
@@ -113,6 +121,9 @@ type Section struct {
 	HTML Code
 	// JavaScript 是經過多方整理之後的 JavaScript 範例資料。
 	JavaScript Code
+
+	//
+	Highlights []string
 
 	// Since 是此章節功能的 Tocas UI 起始版本號（例如：`3.0.0`），用以識別此功能是否為新追加。
 	Since string `yaml:"Since"`
@@ -174,6 +185,9 @@ func PrepareTemplate() {
 	if err != nil {
 		panic(err)
 	}
+	//
+	m := minify.New()
+	m.AddFunc("text/html", minifyHTML.Minify)
 	// 遍歷所有模板檔案，並且讀取出其內容且解析成模板建構體資料。
 	for _, file := range files {
 		tmplFile, err := ioutil.ReadFile(fmt.Sprintf("%s/%s", TemplatePath, file.Name()))
@@ -181,7 +195,15 @@ func PrepareTemplate() {
 			panic(err)
 		}
 		tmpl := template.New("")
-		tmpl, err = tmpl.Parse(string(tmplFile))
+		tmpl = tmpl.Funcs(template.FuncMap{
+			"Markdown": Markdown,
+			"ToLower":  strings.ToLower,
+		})
+		mb, err := m.Bytes("text/html", tmplFile)
+		if err != nil {
+			panic(err)
+		}
+		tmpl, err = tmpl.Parse(string(mb))
 		if err != nil {
 			panic(err)
 		}
@@ -211,18 +233,35 @@ func ReadDir(path string, callback func(file os.FileInfo, nestedPath string)) {
 		panic(err)
 	}
 	for _, v := range files {
-		callback(v, fmt.Sprintf("%s/%s", path, v.Name))
+		callback(v, fmt.Sprintf("%s/%s", path, v.Name()))
 	}
+}
+
+type Component struct {
+	Name  string
+	Alias string
+	Since string
+	Items []Component
 }
 
 // PrepareDocs 會預先載入所有語系的文件檔案，
 // 這樣就能夠在之後處理相關內容，而不需要邊解析邊處理。
 func PrepareDocs() {
+
 	//
 	ReadDir(DocsPath, func(language os.FileInfo, nestedPath string) {
+		var d *Document
 		if !language.IsDir() {
 			return
 		}
+		//
+		fmt.Printf("■ Parsing `%s` documentation...\n", Filename(language.Name()))
+		//
+		UI := make(map[string]interface{})
+		Main := make(map[string]interface{})
+		ReadYAML(fmt.Sprintf("%s/%s/ui.yml", DocsPath, Filename(language.Name())), &UI)
+		ReadYAML(fmt.Sprintf("%s/%s/main.yml", DocsPath, Filename(language.Name())), &Main)
+
 		//
 		ReadDir(nestedPath, func(category os.FileInfo, nestedPath string) {
 			if !category.IsDir() {
@@ -230,26 +269,42 @@ func PrepareDocs() {
 			}
 			//
 			ReadDir(nestedPath, func(component os.FileInfo, nestedPath string) {
-				d := &Document{
+				d = &Document{
 					Category:    Filename(category.Name()),
 					Component:   Filename(component.Name()),
 					Definitions: &Tab{},
 					Modules:     &Tab{},
 					Settings:    &Tab{},
 				}
-				err := yaml.Unmarshal(data, &d)
+				ReadYAML(nestedPath, &d)
+				//
+				d.Definitions = ParseChapters(Filename(component.Name()), d.OriginalDefinitions)
+				//
+				Documents[language.Name()] = append(Documents[language.Name()], d)
+				//
+				var r bytes.Buffer
+				err := Templates["docs"].Execute(&r, map[string]interface{}{
+					"UI":   UI,
+					"Docs": d,
+					"Main": Main,
+				})
+				if err != nil {
+					panic(err)
+				}
+				err = os.MkdirAll(fmt.Sprintf("./html/%s/%s/", Filename(language.Name()), Filename(category.Name())), os.ModePerm)
 				if err != nil {
 					panic(err)
 				}
 
-				d.Definitions = ParseChapters(d.OriginalDefinitions)
-
+				err = ioutil.WriteFile(fmt.Sprintf("./html/%s/%s/%s.html", Filename(language.Name()), Filename(category.Name()), Filename(component.Name())), r.Bytes(), 0644)
+				if err != nil {
+					panic(err)
+				}
+				//
+				fmt.Printf("\n")
 			})
 		})
 	})
-
-	Docs[language.Name()] = append(Docs[language.Name()], s)
-
 }
 
 func IndexingChapter(chapter *Chapter) *Index {
@@ -268,6 +323,7 @@ func IndexingChapter(chapter *Chapter) *Index {
 		indexes = append(indexes, &Index{
 			Title:       section.Title,
 			Name:        SpaceToDash(section.Title),
+			Highlights:  section.Highlights,
 			HasSubIndex: len(subIndexes) > 0,
 			SubIndexes:  subIndexes,
 		})
@@ -289,36 +345,104 @@ func RenderTemplate() {
 
 }
 
-func ParseChapters(chapters []*Chapter) *Tab {
-	var parsedChapters []*Chapter
-	for _, chapter := range chapters {
-		chapter.Title = Markdown(chapter.Title)
-		chapter.Description = Markdown(chapter.Description)
-		for _, section := range chapter.Sections {
-			section.Title = Markdown(section.Title)
-			section.Description = Markdown(section.Description)
-			section.HTML = Code{
-				Dirty:    section.OriginalHTML,
-				Clean:    Clean(section.OriginalHTML),
-				Readable: Tag(Highlight(Trim(section.OriginalHTML, section.Remove))),
-			}
-			section.JavaScript = Code{
-				Dirty:    section.OriginalJS,
-				Clean:    Clean(section.OriginalJS),
-				Readable: Tag(Highlight(Trim(section.OriginalJS, section.Remove))),
-			}
-		}
+func ReadYAML(path string, dst interface{}) {
+	b, err := ioutil.ReadFile(path)
+	if err != nil {
+		panic(err)
 	}
+	err = yaml.Unmarshal(b, dst)
+	if err != nil {
+		panic(fmt.Sprintf("%s: %+v", path, err))
+	}
+}
 
+func ParseChapters(componentName string, chapters []*Chapter) *Tab {
+	var parsedChapters []*Chapter
+	var parsedIndexes []*Index
+	//
+	now := time.Now()
+	//
+	fmt.Printf("  | Parsing `%s` chapters...", componentName)
+	//
+	for index, chapter := range chapters {
+		//
+		percent := int(float64((index + 1)) / float64(len(chapters)) * 100)
+		if percent == 100 {
+			fmt.Printf("%v%%", percent)
+		} else {
+			fmt.Printf("%v%%...", percent)
+		}
+
+		chapter.Description = Markdown(chapter.Description)
+
+		//
+		var wg sync.WaitGroup
+		wg.Add(len(chapter.Sections))
+
+		//
+		for _, section := range chapter.Sections {
+			go func(section *Section) {
+				section.Description = Markdown(section.Description)
+				//
+				section.Highlights = Analyze(section.OriginalHTML)
+				section.HTML = Code{
+					Dirty:    section.OriginalHTML,
+					Clean:    Clean(section.OriginalHTML),
+					Readable: Tag(Highlight(Placeholder(Trim(Beautify(section.OriginalHTML, "html"), section.Remove)))),
+				}
+				section.JavaScript = Code{
+					Dirty:    section.OriginalJS,
+					Clean:    Clean(section.OriginalJS),
+					Readable: Tag(Highlight(Trim(Beautify(section.OriginalJS, "js"), section.Remove))),
+				}
+
+				//
+				var wgSub sync.WaitGroup
+				wgSub.Add(len(section.SubSections))
+
+				//
+				for _, subSection := range section.SubSections {
+					go func(subSection *SubSection) {
+						subSection.Title = Markdown(subSection.Title)
+						subSection.Description = Markdown(subSection.Description)
+						subSection.HTML = Code{
+							Dirty:    subSection.OriginalHTML,
+							Clean:    Clean(subSection.OriginalHTML),
+							Readable: Highlight(Tag(Trim(Beautify(subSection.OriginalHTML, "html"), subSection.Remove))),
+						}
+						subSection.JavaScript = Code{
+							Dirty:    subSection.OriginalJS,
+							Clean:    Clean(subSection.OriginalJS),
+							Readable: Tag(Highlight(Trim(Beautify(subSection.OriginalJS, "js"), subSection.Remove))),
+						}
+						//
+						wgSub.Done()
+					}(subSection)
+				}
+				//
+				wgSub.Wait()
+				//
+				wg.Done()
+			}(section)
+		}
+		//
+		wg.Wait()
+		//
+		parsedChapters = append(parsedChapters, chapter)
+		//
+		parsedIndexes = append(parsedIndexes, IndexingChapter(chapter))
+	}
+	//
+	fmt.Printf(" (%v)", time.Since(now))
 	return &Tab{
 		Chapters: parsedChapters,
-		Indexes:  IndexingChapter(chapter),
+		Indexes:  parsedIndexes,
 	}
 }
 
 func main() {
 	Templates = make(map[string]*template.Template)
-	Docs = make(map[string][]*Single)
+	Documents = make(map[string][]*Document)
 
 	app := cli.NewApp()
 
@@ -340,69 +464,41 @@ func main() {
 					Name:  "build",
 					Usage: "單次編譯文件檔案為靜態頁面並結束程式",
 					Action: func(c *cli.Context) error {
-						//
+						// 複製最新的樣式與腳本至文件目的地。
 						PrepareAssets()
 						// 載入並解析文件模板。
 						PrepareTemplate()
-						//
+						// 載入並解析所有語系的文件。
 						PrepareDocs()
+						//
+						for language, documents := range Documents {
+							//
+							UI := make(map[string]string)
+							Main := make(map[string]string)
+							ReadYAML(fmt.Sprintf("%s/%s/ui.yml", DocsPath, language), &UI)
+							ReadYAML(fmt.Sprintf("%s/%s/main.yml", DocsPath, language), &Main)
 
-						for language, singles := range Docs {
-							var wgMain sync.WaitGroup
-							wgMain.Add(len(singles))
-
-							for _, single := range singles {
-								<-time.After(time.Second * 2)
-								go func(single *Single) {
-									var wg sync.WaitGroup
-									total := 0
-									for _, v := range single.Definitions {
-										total += len(v.Sections)
-										wg.Add(len(v.Sections))
-									}
-									fmt.Println(total)
-
-									for _, chapter := range single.Definitions {
-										chapter.Description = Markdown(chapter.Description)
-										go func(chapter *Chapter) {
-											for _, section := range chapter.Sections {
-												go func(section *Section) {
-													section.Description = Markdown(section.Description)
-													section.HTML = Code{
-														Dirty:    section.OriginalHTML,
-														Clean:    Clean(section.OriginalHTML),
-														Readable: Tag(Highlight(Trim(section.OriginalHTML, section.Remove))),
-													}
-													section.JavaScript = Code{
-														Dirty:    section.OriginalJS,
-														Clean:    Clean(section.OriginalJS),
-														Readable: Tag(Highlight(Trim(section.OriginalJS, section.Remove))),
-													}
-													wg.Done()
-												}(section)
-											}
-										}(chapter)
-									}
-									wg.Wait()
-									var r bytes.Buffer
-									err := Templates["docs"].Execute(&r, single)
-									if err != nil {
-										panic(err)
-									}
-									err = os.MkdirAll(fmt.Sprintf("./html/%s/%s/", language, single.Category), os.ModePerm)
-									if err != nil {
-										panic(err)
-									}
-									err = ioutil.WriteFile(fmt.Sprintf("./html/%s/%s/%s.html", language, single.Category, single.Component), r.Bytes(), 0644)
-									if err != nil {
-										panic(err)
-									}
-									fmt.Println(single.Component)
-									wgMain.Done()
-								}(single)
+							for _, v := range documents {
+								var r bytes.Buffer
+								err := Templates["docs"].Execute(&r, map[string]interface{}{
+									"UI":   UI,
+									"Docs": v,
+									"Main": Main,
+								})
+								if err != nil {
+									panic(err)
+								}
+								err = os.MkdirAll(fmt.Sprintf("./html/%s/%s/", language, v.Category), os.ModePerm)
+								if err != nil {
+									panic(err)
+								}
+								err = ioutil.WriteFile(fmt.Sprintf("./html/%s/%s/%s.html", language, v.Category, v.Component), r.Bytes(), 0644)
+								if err != nil {
+									panic(err)
+								}
 							}
-							wgMain.Wait()
 						}
+
 						return nil
 					},
 				},
@@ -436,17 +532,41 @@ func Trim(input string, cutsets []string) string {
 // Clean 會移除程式碼中的多餘文件標籤符號。
 func Clean(input string) string {
 	input = regexp.MustCompile(`\[\[(.*?)\]\]`).ReplaceAllString(input, "$1")
+	input = regexp.MustCompile(`{{(.*?)}}`).ReplaceAllString(input, "$1")
+	input = ReplaceAllStringSubmatchFunc(regexp.MustCompile(`!-(.*?)-!`), input, func(groups []string) string {
+		if len(groups) == 0 {
+			return ""
+		}
+		switch groups[1] {
+		case "16:9", "1:1", "4:3", "user", "user2", "user3":
+			return "../../assets/images/" + groups[1] + ".png"
+		case "embed:karen":
+			return "../../assets/images/videos/youtube.png"
+		case "embed:vimeo":
+			return "../../assets/images/videos/vimeo.png"
+		default:
+			return ""
+		}
+	})
+
+	return input
+}
+
+func Placeholder(input string) string {
+	input = regexp.MustCompile(`\[\[(.*?)\]\]`).ReplaceAllString(input, `MARK${1}MARKEND`)
+	input = regexp.MustCompile(`{{(.*?)}}`).ReplaceAllString(input, `COMP${1}COMPEND`)
+	input = regexp.MustCompile(`!-(.*?)-!`).ReplaceAllString(input, `IMAG${1}IMAGEND`)
 	return input
 }
 
 // Tag 會分析接收到的內容，並且將其中的文件標籤符號轉換成真正的內容和程式碼。
 func Tag(input string) string {
-	input = regexp.MustCompile(`\[\[(.*?)\]\]`).ReplaceAllString(input, "<mark>$1</mark>")
-	output := ReplaceAllStringSubmatchFunc(regexp.MustCompile("!-(.*?)-!"), input, func(groups []string) string {
+	input = regexp.MustCompile(`MARK(.*?)MARKEND`).ReplaceAllString(input, "<mark>$1</mark>")
+	input = ReplaceAllStringSubmatchFunc(regexp.MustCompile(`IMAG(.*?)IMAGEND`), input, func(groups []string) string {
 		if len(groups) == 0 {
 			return ""
 		}
-		switch groups[0] {
+		switch groups[1] {
 		case "16:9":
 			return "image.png"
 		case "1:1":
@@ -467,13 +587,70 @@ func Tag(input string) string {
 			return ""
 		}
 	})
-	return output
+	input = ReplaceAllStringSubmatchFunc(regexp.MustCompile(`COMP(.*?)COMPEND`), input, func(groups []string) string {
+		if len(groups) == 0 {
+			return ""
+		}
+		switch groups[1] {
+		case "button", "container", "divider", "header", "icon", "image",
+			"input", "slate", "label", "list", "loader", "quote", "segment", "step":
+			return fmt.Sprintf("<a href='/elements/%s.html'>%s</a>", groups[1], groups[1])
+		case "breadcrumb", "form", "grid", "menu", "message", "table":
+			return fmt.Sprintf("<a href='/collections/%s.html'>%s</a>", groups[1], groups[1])
+		case "accordion", "calendar", "checkbox", "dimmer", "dropdown",
+			"progress", "slider", "popup", "modal", "embed", "siderbar",
+			"snackbar", "tab", "contextmenu", "scrollspy":
+			return fmt.Sprintf("<a href='/modules/%s.html'>%s</a>", groups[1], groups[1])
+		case "card", "speeches", "comment", "feed", "items", "statistic":
+			return fmt.Sprintf("<a href='/views/%s.html'>%s</a>", groups[1], groups[1])
+		default:
+			return fmt.Sprintf("<a href='#'>%s</a>", groups[1])
+		}
+	})
+	return input
 }
 
 // Highlight 會接收程式碼並且透過 Node.js 的 hljs 套件來標註程式碼顏色。
 func Highlight(input string) string {
-	cmd := exec.Command("hljs")
-	cmd.Stdin = bytes.NewBuffer([]byte(fmt.Sprintf("<pre><code class='html'>%s</code></pre>", html.EscapeString(input))))
+	cmd := exec.Command("hljs", "-l", "html")
+	//cmd.Stdin = bytes.NewBuffer([]byte(input))
+	cmd.Stdin = bytes.NewBuffer([]byte(input))
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		panic(err.Error() + string(output))
+	}
+	return string(output)
+}
+
+func Analyze(input string) []string {
+	var output []string
+	result := regexp.MustCompile(`\[\[(.*?)\]\]`).FindAllStringSubmatch(input, -1)
+	for _, v := range result {
+		var has bool
+		for _, vv := range output {
+			if vv == v[1] {
+				has = true
+				break
+			}
+		}
+		if !has {
+			output = append(output, v[1])
+		}
+	}
+	return output
+}
+
+func Beautify(input string, typ string) string {
+	var cmd *exec.Cmd
+	switch typ {
+	case "css":
+		cmd = exec.Command("js-beautify", "--css", "-L false", "-N false")
+	case "js":
+		cmd = exec.Command("js-beautify")
+	case "html":
+		cmd = exec.Command("js-beautify", "--html")
+	}
+	cmd.Stdin = bytes.NewBuffer([]byte(input))
 	output, err := cmd.CombinedOutput()
 	if err != nil {
 		panic(err)
@@ -487,7 +664,7 @@ func Filename(path string) string {
 }
 
 // SpaceToDash 能夠將接收到的字串中，把空白字符轉換成減（`-`）分隔號。
-func SpaceToDash(input string) {
+func SpaceToDash(input string) string {
 	return strings.ToLower(strings.Replace(input, " ", "-", -1))
 }
 
