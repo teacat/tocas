@@ -1,492 +1,92 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../../dist/tocas.css">
-    <link rel="stylesheet" href="../html/assets/highlight.css">
-    <link rel="stylesheet" href="../html/assets/images/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/theme-monokai.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/mode-html.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-css.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-html.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>Document</title>
-    <style>
-        @font-face{
-            font-family: 'icomoon';
-            src:  url('../html/assets/images/fonts/icomoon.eot?en3o5m');
-            src:  url('../html/assets/images/fonts/icomoon.eot?en3o5m#iefix') format('embedded-opentype'),
-                url('../html/assets/images/fonts/icomoon.ttf?en3o5m') format('truetype'),
-                url('../html/assets/images/fonts/icomoon.woff?en3o5m') format('woff'),
-                url('../html/assets/images/fonts/icomoon.svg?en3o5m#icomoon') format('svg');
-            font-weight: normal;
-            font-style: normal;
-        }
-        [data-is="logo"] {
-            font-size: 4em;
-            display: block;
-            margin-top: -32px;
-            margin-bottom: 50px;
-            margin-left: -11px;
-            color: #5a5a5a;
+<!doctype html><html lang=zh-tw><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><link rel=stylesheet href=../../dist/tocas.css><link rel=stylesheet href=../html/assets/highlight.css><link rel=stylesheet href=../html/assets/docs.css><link rel=stylesheet href=../html/assets/images/style.css><link rel=stylesheet href=../../assets/styles/tocas.css><link rel=stylesheet href=../../assets/highlight.css><link rel=stylesheet href=../../assets/docs.css><link rel=stylesheet href=../../assets/images/style.css><link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel=stylesheet><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/theme-monokai.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/mode-html.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify.min.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-css.min.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-html.min.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js></script><script src=../html/assets/script.js defer></script><script src=../../assets/script.js defer></script><title>留言 - Tocas UI</title><header class="ts padded big heading slate"><div class="ts container grid"><div class="four wide column"><i></i></div><div class="twelve wide column"><nav class="ts large text menu"><a href=#! class=item>使用文件</a>
+<a href=#! class=item>從這開始</a>
+<a href=#! class=item>響應式</a>
+<a href=#! class=item>實際範例</a>
+<a href=#! class=item>即時測試</a><div class="right menu"><a href=#! class=item><i class="globe icon"></i>正體中文（台灣）</a>
+<a href=#! class=item><i class="github icon"></i>GitHub</a></div></nav></div><div class="sixteen wide column"><h1 class=header>留言</h1><p class=description>如何引發網路戰爭？一，留言；二，等待。</p></div><div class="four wide column"></div><div class="twelve wide column">
 
-            font-family: 'icomoon' !important;
-            speak: none;
-            font-style: normal;
-            font-weight: normal;
-            font-variant: normal;
-            text-transform: none;
-            line-height: 1;
-
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        [data-is="logo"]:before {
-            content: "\e900";
-        }
-        [data-is="slate"] {
-            margin-bottom: 40px;
-            border-bottom: 1px solid #e9e9e9;
-            border-radius: 0;
-        }
-        [data-is="chapterHeader"] {
-            border-bottom : 2px solid #d9d9d9 !important;
-            padding-bottom: 10px !important;
-        }
-        [data-is="chapterHeader"]:not(:first-child) {
-            margin-top: 4.5em !important;
-        }
-        [data-is="sectionHeader"] {
-            margin-top: 4em !important;
-        }
-        [data-is="chapterHeader"] ~ p,
-        [data-is="sectionHeader"] ~ p {
-            margin: .8em 0 !important;
-            font-size: 16px;
-            line-height: 1.7;
-        }
-        [data-is="sectionHeader"]:after {
-            content: "";
-            position: absolute;
-            left: -92px;
-            width: 2px;
-            border: 3px solid #fff;
-            background: #a2a2a2;
-            top: -2px;
-            bottom: -2px;
-        }
-        [data-is="links"] .item {
-            display: flex !important;
-            line-height: 22px !important;
-            align-items: center !important;
-        }
-        [data-is="links"] .item .label {
-            padding: 9px;
-            height: 20px;
-        }
-        [data-is="links"] span:not(.label) {
-            /*position: absolute;
-            right: 0;*/
-            margin-left: 7px;
-            font-size: 13px;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-        [data-is="linksDivider"]:before {
-            content: "";
-            position: absolute;
-            top: 12px;
-            right: 24px;
-            bottom: 0;
-            left: 0;
-            border-right: 2px solid rgba(0,0,0,.1);
-            pointer-events: none;
-        }
-        [data-is="tab"] {
-            position: absolute;
-            bottom: -3.17em;
-            left: 70px;
-            width: 750px;
-        }
-        [data-is="footer"] {
-            margin-top: 40px !important;
-            margin-bottom: 0 !important;
-            padding-bottom: 90px !important;
-            box-shadow: none !important;
-            border-top: 1px solid #e9e9e9 !important;
-            border-radius: 0 !important;
-        }
-        .ts.segments {
-            margin-top: 2.3em !important;
-        }
-
-    </style>
-</head>
-<body>
-    <!-- 頂部板岩 -->
-    <div data-is="slate" class="ts padded big heading slate">
-        <!-- 網格容器 -->
-        <div class="ts container grid">
-            <!-- 側邊空白欄位 -->
-            <div class="four wide column">
-                <!-- 主要 Logo -->
-                <i data-is="logo"></i>
-                <!-- / 主要 Logo -->
-            </div>
-            <!-- / 側邊空白欄位 -->
-
-            <!-- 右側主要內容欄位 -->
-            <div class="twelve wide column">
-                <div class="ts large text menu">
-                    <a href="#!" class="item">使用文件</a>
-                    <a href="#!" class="item">開始使用</a>
-                    <a href="#!" class="item">響應式</a>
-                    <a href="#!" class="item">實際範例</a>
-                    <a href="#!" class="item">即時測試</a>
-                    <div class="right menu">
-                        <a href="#!" class="item"><i class="globe icon"></i> 正體中文</a>
-                        <a href="#!" class="item"><i class="github icon"></i> GitHub</a>
-                    </div>
-                </div>
-
-            </div>
-            <!-- / 右側主要內容欄位 -->
-
-            <div class="sixteen wide column">
-                <!-- 文件標題 -->
-                <div class="header">留言</div>
-                <!-- / 文件標題 -->
-
-                <!-- 文件類別名稱敘述 -->
-                <div class="description">如何引發網路戰爭？一，留言；二，等待。</div>
-                <!-- / 文件類別名稱敘述 -->
-            </div>
-
-            <div class="four wide column">
-
-            </div>
-
-            <div class="twelve wide column">
-                <div class="ts evenly divided tabbed menu" data-is="tab">
-                <div class="item">yee</div>
-                <div class="active item">yee</div>
-            </div>
-            </div>
-
-
-
-
-        </div>
-        <!-- / 網格容器 -->
-    </div>
-    <!-- / 頂部板岩 -->
-
-    <!-- 空白分隔線 -->
-    <div class="ts hidden divider"></div>
-    <!-- / 空白分隔線 -->
-
-    <!-- 主要網格系統 -->
-    <div class="ts container relaxed grid">
-        <!-- 左側選單欄位 -->
-        <div class="three wide column">
-
-
-            <!-- 搜尋輸入欄位 -->
-            <div class="ts fluid link icon input">
-
-                <input type="text" placeholder="搜尋">
-                <i class="search link icon"></i>
-            </div>
-            <!-- / 搜尋輸入欄位 -->
-
-            <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-
-            <!-- 元件選單 -->
-            <div class="ts header">一般元素</div>
-            <div class="ts link list" data-is="links">
-                <a href="#!" class="item" data-tooltip=".ts.button">按鈕 <span>Button</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.container">容器 <span>Container</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.divider">分隔線 <span>Divider</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.flag">國旗 <span>Flag</span><span class="ts warning right floated label">新的</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.header">標題 <span>Header</span></a>
-                <a href="#!" class="item" data-tooltip="i.icon">圖示 <span>Icon</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.image">圖片 <span>Image</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.input">輸入欄位 <span>Input</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.label">標籤 <span>Label</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.list">清單 <span>List</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.loader">讀取指示器 <span>Loader</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.segment">片段 <span>Segmet</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.slate">板岩 <span>Slate</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.steps">步驟 <span>Steps</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.placeholder">預置區塊 <span>Placeholder</span><span class="ts warning right floated label">新的</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.quote">引言 <span>Quote</span></a>
-            </div>
-
-            <div class="ts header">聚合型</div>
-            <div class="ts link list" data-is="links">
-                <a href="#!" class="item" data-tooltip=".ts.breadcrumb">麵包屑</a>
-                <a href="#!" class="item" data-tooltip=".ts.form">表單</a>
-                <a href="#!" class="item" data-tooltip=".ts.grid">網格系統</a>
-                <a href="#!" class="item" data-tooltip=".ts.menu">選單</a>
-                <a href="#!" class="item" data-tooltip=".ts.message">訊息</a>
-                <a href="#!" class="item" data-tooltip=".ts.table">表格</a>
-            </div>
-
-            <div class="ts header">模塊</div>
-            <div class="ts link list" data-is="links">
-                <a href="#!" class="item" data-tooltip=".ts.accordion">手風琴</a>
-                <a href="#!" class="item" data-tooltip=".ts.calendar">日曆</a>
-                <a href="#!" class="item" data-tooltip=".ts.carousel">幻燈片 <span class="ts warning right floated label">新的</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.checkbox">核取方塊</a>
-                <a href="#!" class="item" data-tooltip=".ts.comparison">圖片比較 <span class="ts warning right floated label">新的</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.context.menu">複合功能選單</a>
-                <a href="#!" class="item" data-tooltip=".ts.dimmer">淡化幕</a>
-                <a href="#!" class="item" data-tooltip=".ts.dropdown">下拉式選單</a>
-                <a href="#!" class="item" data-tooltip=".ts.embed">嵌入物件</a>
-                <a href="#!" class="item" data-tooltip=".ts.modal">對話視窗</a>
-                <a href="#!" class="item" data-tooltip=".ts.popup">彈出式訊息</a>
-                <a href="#!" class="item" data-tooltip=".ts.progress">進度列</a>
-                <a href="#!" class="item" data-tooltip=".ts.rating">評分 <span class="ts warning right floated label">新的</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.scrollspy">捲動監聽</a>
-                <a href="#!" class="item" data-tooltip=".ts.search">搜尋 <span class="ts warning right floated label">新的</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.sidebar">側邊欄</a>
-                <a href="#!" class="item" data-tooltip=".ts.slider">滑桿</a>
-                <a href="#!" class="item" data-tooltip=".ts.snackbar">點心條</a>
-                <a href="#!" class="item" data-tooltip=".ts.tab">分頁籤</a>
-                <a href="#!" class="item" data-tooltip=".ts.transfer">穿梭框 <span class="ts warning right floated label">新的</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.transition">轉場效果 <span class="ts warning right floated label">新的</span></a>
-            </div>
-
-            <div class="ts header">視圖型</div>
-            <div class="ts link list" data-is="links">
-                <a href="#!" class="item" data-tooltip=".ts.card">卡片</a>
-                <a href="#!" class="item" data-tooltip=".ts.comments">留言</a>
-                <a href="#!" class="item" data-tooltip=".ts.feed">動態消息</a>
-                <a href="#!" class="item" data-tooltip=".ts.items">項目</a>
-                <a href="#!" class="item" data-tooltip=".ts.speeches">對話氣泡</a>
-                <a href="#!" class="item" data-tooltip=".ts.statistic">統計數據</a>
-            </div>
-
-            <div class="ts header">索引</div>
-
-
-            <div class="ts link list" data-is="links">
-                
-                    <div class="item">
-                        <a href="#!">種類</a>
-                        
-                        <div class="ts list">
-                            
-                            <a href="#!" class="item">基本</a>
-                            
-                        </div>
-                        
-                    </div>
-                
-                    <div class="item">
-                        <a href="#!">內容</a>
-                        
-                        <div class="ts list">
-                            
-                            <a href="#!" class="item">頭像</a>
-                            
-                            <a href="#!" class="item">作者</a>
-                            
-                            <a href="#!" class="item">內容</a>
-                            
-                            <a href="#!" class="item">中繼資料</a>
-                            
-                            <a href="#!" class="item"></a>
-                            
-                            <a href="#!" class="item">動作</a>
-                            
-                            <a href="#!" class="item"></a>
-                            
-                        </div>
-                        
-                    </div>
-                
-                    <div class="item">
-                        <a href="#!">外觀</a>
-                        
-                        <div class="ts list">
-                            
-                            <a href="#!" class="item">同列文字</a>
-                            
-                            <a href="#!" class="item">主題性質</a>
-                            
-                            <a href="#!" class="item">分隔的</a>
-                            
-                            <a href="#!" class="item">尺寸</a>
-                            
-                        </div>
-                        
-                    </div>
-                
-            </div>
-
-            <!-- 元件選單 -->
-        </div>
-        <!-- / 左側選單欄位 -->
-
-        <!-- 間隔欄位 -->
-        <div class="one wide column" data-is="linksDivider"></div>
-        <!-- / 間隔欄位 -->
-
-        <!-- 右側邊主要內容欄位 -->
-        <div class="twelve wide column">
-
-            <div style="max-width: 750px;margin:  0 auto;">
-
-
-
-
-
-                <!-- 分類標題 -->
-                <h2 data-is="chapterHeader" class="ts dividing header">索引</h2>
-                <!-- / 分類標題 -->
-
-                <ol class="ts ordered list" style="font-size: 16px">
-                    
-                        <li>
-                            <a href="#!">種類</a>
-                            
-                            <ol class="ts ordered list">
-                                
-                                <li>
-                                    <a href="#!">基本</a>
-                                </li>
-                                
-                            </ol>
-                            
-                        </li>
-                    
-                        <li>
-                            <a href="#!">內容</a>
-                            
-                            <ol class="ts ordered list">
-                                
-                                <li>
-                                    <a href="#!">頭像</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">作者</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">內容</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">中繼資料</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!"></a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">動作</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!"></a>
-                                </li>
-                                
-                            </ol>
-                            
-                        </li>
-                    
-                        <li>
-                            <a href="#!">外觀</a>
-                            
-                            <ol class="ts ordered list">
-                                
-                                <li>
-                                    <a href="#!">同列文字</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">主題性質</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">分隔的</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">尺寸</a>
-                                </li>
-                                
-                            </ol>
-                            
-                        </li>
-                    
-                </ol>
-
-                
-                <!-- 單個大分類 -->
-
-                    <!-- 分類標題 -->
-                    <h2 data-is="chapterHeader" class="ts dividing header">種類</h2>
-                    <!-- / 分類標題 -->
-
-                    <!-- 大分類解說 -->
-                    <div style="font-size: 16px"><p>留言具有不同的種類。</p>
-</div>
-                    <!-- / 大分類解說 -->
-
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            基本
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>一個最基本的留言。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts comments">
+</div></div></header><hr class="ts hidden divider"><div class="ts container relaxed grid"><aside class="three wide column"><form class="ts fluid small action input"><input type=search placeholder="搜尋">
+<button class="ts icon button">
+<i class="search icon"></i></button></form><h2 class="ts header">一般元素</h2><ul class="ts link list"><li><a href="../elements/button.html">按鈕 <span>Button</span></a>
+<li><a href="../elements/container.html">容器 <span>Container</span></a>
+<li><a href="../elements/divider.html">分隔線 <span>Divider</span></a>
+<li><a href="../elements/flag.html">國旗 <span>Flag</span></a>
+<li><a href="../elements/header.html">標題 <span>Header</span></a>
+<li><a href="../elements/icon.html">圖示 <span>Icon</span></a>
+<li><a href="../elements/image.html">圖片 <span>Image</span></a>
+<li><a href="../elements/input.html">輸入欄位 <span>Input</span></a>
+<li><a href="../elements/label.html">標籤 <span>Label</span></a>
+<li><a href="../elements/list.html">清單 <span>List</span></a>
+<li><a href="../elements/loader.html">讀取指示器 <span>Loader</span></a>
+<li><a href="../elements/segment.html">片段 <span>Segment</span></a>
+<li><a href="../elements/slate.html">板岩 <span>Slate</span></a>
+<li><a href="../elements/steps.html">步驟 <span>Steps</span></a>
+<li><a href="../elements/placeholder.html">預置欄位 <span>Placeholder</span></a>
+<li><a href="../elements/quote.html">引言 <span>Quote</span></a>
+</ul><h2 class="ts header">聚合型</h2><ul class="ts link list"><li><a href="../collections/breadcrumb.html">麵包屑 <span>Breadcrumb</span></a>
+<li><a href="../collections/form.html">表單 <span>Form</span></a>
+<li><a href="../collections/grid.html">網格系統 <span>Grid</span></a>
+<li><a href="../collections/menu.html">選單 <span>Menu</span></a>
+<li><a href="../collections/message.html">訊息 <span>Message</span></a>
+<li><a href="../collections/table.html">表格 <span>Table</span></a>
+</ul><h2 class="ts header">模塊</h2><ul class="ts link list"><li><a href="../modules/checkbox.html">核取方塊 <span>Checkbox</span></a>
+<li><a href="../modules/image comparision.html">圖片比較 <span>Image Comparision</span></a>
+<li><a href="../modules/context menu.html">複合式選單 <span>Context Menu</span></a>
+<li><a href="../modules/dimmer.html">淡化幕 <span>Dimmer</span></a>
+<li><a href="../modules/dropdown.html">下拉式選單 <span>Dropdown</span></a>
+<li><a href="../modules/embed.html">嵌入物件 <span>Embed</span></a>
+<li><a href="../modules/modal.html">對話視窗 <span>Modal</span></a>
+<li><a href="../modules/popup.html">彈出式提示 <span>Popup</span></a>
+<li><a href="../modules/progress.html">進度條 <span>Progress</span></a>
+<li><a href="../modules/rating.html">評分 <span>Rating</span></a>
+<li><a href="../modules/scrollspy.html">捲動監聽 <span>Scrollspy</span></a>
+<li><a href="../modules/search.html">搜尋 <span>Search</span></a>
+<li><a href="../modules/sidebar.html">側邊欄 <span>Sidebar</span></a>
+<li><a href="../modules/slider.html">滑桿 <span>Slider</span></a>
+<li><a href="../modules/snackbar.html">點心條 <span>Snackbar</span></a>
+<li><a href="../modules/tab.html">分頁籤 <span>Tab</span></a>
+<li><a href="../modules/transfer.html">穿梭框 <span>Transfer</span></a>
+<li><a href="../modules/transition.html">轉場效果 <span>Transition</span></a>
+</ul><h2 class="ts header">視圖型</h2><ul class="ts link list"><li><a href="../views/card.html">卡片 <span>Card</span></a>
+<li><a href="../views/comment.html">留言 <span>Comment</span></a>
+<li><a href="../views/conversation.html">對話 <span>Conversation</span></a>
+<li><a href="../views/feed.html">動態時軸 <span>Feed</span></a>
+<li><a href="../views/items.html">項目 <span>Items</span></a>
+<li><a href="../views/statistic.html">統計數據 <span>Statistic</span></a>
+</ul></aside><div class="one wide offset column"></div><div class="twelve wide column"><section><h1 class="ts dividing header">索引</h1><ul class="ts large list"><li class=item><a href=#!>種類</a>
+<ul class="ts list"><li class=item><a href=#!>基本</a> <code>comments</code> <code>comment</code> 
+</ul>
+<li class=item><a href=#!>內容</a>
+<ul class="ts list"><li class=item><a href=#!>頭像</a> <code>avatar</code> 
+<li class=item><a href=#!>作者</a> <code>author</code> 
+<li class=item><a href=#!>內容</a> <code>text</code> 
+<li class=item><a href=#!>中繼資料</a> <code>metadata</code> 
+<li class=item><a href=#!></a> <code>bulleted metadata</code> <code>middoted metadata</code> 
+<li class=item><a href=#!>動作</a> <code>actions</code> 
+<li class=item><a href=#!></a> <code>bulleted actions</code> <code>middoted actions</code> 
+</ul>
+<li class=item><a href=#!>外觀</a>
+<ul class="ts list"><li class=item><a href=#!>同列文字</a> <code>inline</code> 
+<li class=item><a href=#!>主題性質</a> <code>threaded</code> 
+<li class=item><a href=#!>分隔的</a> <code>divided</code> 
+<li class=item><a href=#!>尺寸</a> <code>tiny</code> <code>small</code> <code>medium</code> <code>large</code> <code>big</code> <code>huge</code> 
+</ul>
+</ul><h1 class="ts dividing header">種類</h1><p><p>留言具有不同的種類。</p>
+</p><h2 class="ts header">基本
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>一個最基本的留言。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts comments">
     <div class="comment">
         <a class="avatar">
-            <img src="!-user-!">
+            <img src="../../assets/images/user.png">
         </a>
         <div class="content">
             <a class="author">Yami Odymel</a>
             <div class="metadata">
                 <div>2 天前</div>
                 <div>
-                    <i class="star {{icon}}"></i>
+                    <i class="star icon"></i>
                     5 次收藏
                 </div>
             </div>
@@ -497,7 +97,7 @@
     </div>
     <div class="comment">
         <a class="avatar">
-            <img src="!-user2-!">
+            <img src="../../assets/images/user2.png">
         </a>
         <div class="content">
             <a class="author">Karisu</a>
@@ -510,205 +110,94 @@
         </div>
     </div>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>comments</mark>"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>comment</mark>"</span>&gt;
-        &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"avatar"</span>&gt;
-            &lt;img src=<span class="hljs-string">""</span>&gt;
-        &lt;/a&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"content"</span>&gt;
-            &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"author"</span>&gt;Yami Odymel&lt;/a&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"metadata"</span>&gt;
-                &lt;<span class="hljs-keyword">div</span>&gt;<span class="hljs-number">2</span> 天前&lt;/<span class="hljs-keyword">div</span>&gt;
-                &lt;<span class="hljs-keyword">div</span>&gt;
-                    &lt;i <span class="hljs-built_in">class</span>=<span class="hljs-string">"star {{icon}}"</span>&gt;&lt;/i&gt;
-                    <span class="hljs-number">5</span> 次收藏
-                &lt;/<span class="hljs-keyword">div</span>&gt;
-            &lt;/<span class="hljs-keyword">div</span>&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>comments</mark>"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<mark>comment</mark>"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Yami Odymel<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"metadata"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>2 天前<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"star <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span> 5 次收藏
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text"</span>&gt;</span>
                 你的思想不應該只屬於現在這個時間。
-            &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>comment</mark>"</span>&gt;
-        &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"avatar"</span>&gt;
-            &lt;img src=<span class="hljs-string">""</span>&gt;
-        &lt;/a&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"content"</span>&gt;
-            &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"author"</span>&gt;Karisu&lt;/a&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"metadata"</span>&gt;
-                &lt;<span class="hljs-keyword">div</span>&gt;<span class="hljs-number">42</span> 分鐘前&lt;/<span class="hljs-keyword">div</span>&gt;
-            &lt;/<span class="hljs-keyword">div</span>&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<mark>comment</mark>"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Karisu<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"metadata"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>42 分鐘前<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text"</span>&gt;</span>
                 有反對的聲音，世界才能中立。
-            &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-
-
-                <!-- / 單個大分類 -->
-                
-                <!-- 單個大分類 -->
-
-                    <!-- 分類標題 -->
-                    <h2 data-is="chapterHeader" class="ts dividing header">內容</h2>
-                    <!-- / 分類標題 -->
-
-                    <!-- 大分類解說 -->
-                    <div style="font-size: 16px"><p>留言包含了許多不同的內容。</p>
-</div>
-                    <!-- / 大分類解說 -->
-
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            頭像
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>用以顯示發言者、圖片的一個內容區塊。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts comments">
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div>
+<h1 class="ts dividing header">內容</h1><p><p>留言包含了許多不同的內容。</p>
+</p><h2 class="ts header">頭像
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>用以顯示發言者、圖片的一個內容區塊。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="!-user3-!">
+            <img src="../../assets/images/user3.png">
         </div>
     </div>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts comments"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comment"</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>avatar</mark>"</span>&gt;
-            &lt;img src=<span class="hljs-string">""</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            作者
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>顯示發言者的名稱。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts comments">
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<mark>avatar</mark>"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div><h2 class="ts header">作者
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>顯示發言者的名稱。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="!-user-!">
+            <img src="../../assets/images/user.png">
         </div>
         <div class="content">
             <div class="author">Yami Odymel</div>
         </div>
     </div>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts comments"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comment"</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"avatar"</span>&gt;
-            &lt;img src=<span class="hljs-string">""</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"content"</span>&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>author</mark>"</span>&gt;Yami Odymel&lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            內容
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>擺放留言內容的區塊。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts comments">
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<mark>author</mark>"</span>&gt;</span>Yami Odymel<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div><h2 class="ts header">內容
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>擺放留言內容的區塊。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="!-user2-!">
+            <img src="../../assets/images/user2.png">
         </div>
         <div class="content">
             <a class="author">Karisu</a>
@@ -716,58 +205,26 @@
         </div>
     </div>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts comments"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comment"</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"avatar"</span>&gt;
-            &lt;img src=<span class="hljs-string">""</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"content"</span>&gt;
-            &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"author"</span>&gt;Karisu&lt;/a&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>text</mark>"</span>&gt;發現自己做不到是進步過程中的一環。&lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            中繼資料
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>用以擺放時間、一些有關連的小型資料。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts comments">
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Karisu<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<mark>text</mark>"</span>&gt;</span>發現自己做不到是進步過程中的一環。<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div><h2 class="ts header">中繼資料
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>用以擺放時間、一些有關連的小型資料。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="!-user3-!">
+            <img src="../../assets/images/user3.png">
         </div>
         <div class="content">
             <a class="author">亞凡芽</a>
@@ -777,60 +234,28 @@
         </div>
     </div>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts comments"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comment"</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"avatar"</span>&gt;
-            &lt;img src=<span class="hljs-string">""</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"content"</span>&gt;
-            &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"author"</span>&gt;亞凡芽&lt;/a&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>metadata</mark>"</span>&gt;
-                &lt;<span class="hljs-keyword">div</span>&gt; <span class="hljs-number">42</span> 分鐘前 &lt;/<span class="hljs-keyword">div</span>&gt;
-            &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>中繼資料可以有「子彈點」或是「中點」來做區隔。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts comments">
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>亞凡芽<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<mark>metadata</mark>"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span> 42 分鐘前 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div><h2 class="ts header">
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>中繼資料可以有「子彈點」或是「中點」來做區隔。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="!-user-!">
+            <img src="../../assets/images/user.png">
         </div>
         <div class="content">
             <a class="author">Yami Odymel</a>
@@ -842,7 +267,7 @@
     </div><br>
     <div class="comment">
         <div class="avatar">
-            <img src="!-user2-!">
+            <img src="../../assets/images/user2.png">
         </div>
         <div class="content">
             <a class="author">比爾蓋飯</a>
@@ -853,73 +278,41 @@
         </div>
     </div>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts comments"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comment"</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"avatar"</span>&gt;
-            &lt;img src=<span class="hljs-string">""</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"content"</span>&gt;
-            &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"author"</span>&gt;Yami Odymel&lt;/a&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>bulleted metadata</mark>"</span>&gt;
-                &lt;<span class="hljs-keyword">div</span>&gt;<span class="hljs-number">3</span> 天前&lt;/<span class="hljs-keyword">div</span>&gt;
-                &lt;<span class="hljs-keyword">div</span>&gt;<span class="hljs-number">5</span> 個讚&lt;/<span class="hljs-keyword">div</span>&gt;
-            &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;/<span class="hljs-keyword">div</span>&gt;&lt;br&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comment"</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"avatar"</span>&gt;
-            &lt;img src=<span class="hljs-string">""</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"content"</span>&gt;
-            &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"author"</span>&gt;比爾蓋飯&lt;/a&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>middoted metadata</mark>"</span>&gt;
-                &lt;<span class="hljs-keyword">div</span>&gt;<span class="hljs-number">1</span> 月前&lt;/<span class="hljs-keyword">div</span>&gt;
-                &lt;<span class="hljs-keyword">div</span>&gt;已收藏&lt;/<span class="hljs-keyword">div</span>&gt;
-            &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            動作
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>一個可以擺放這個留言所可以執行動作的區塊。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts comments">
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Yami Odymel<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<mark>bulleted metadata</mark>"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>3 天前<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>5 個讚<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>比爾蓋飯<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<mark>middoted metadata</mark>"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>1 月前<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>已收藏<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div><h2 class="ts header">動作
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>一個可以擺放這個留言所可以執行動作的區塊。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="!-user3-!">
+            <img src="../../assets/images/user3.png">
         </div>
         <div class="content">
             <a class="author">吳雨藍</a>
@@ -936,16 +329,11 @@
         </div>
     </div>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts comments"</span>&gt;
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">""</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>吳雨藍<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
@@ -961,42 +349,15 @@
             <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>動作可以有「子彈點」或是「中點」來做區隔。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts comments">
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div><h2 class="ts header">
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>動作可以有「子彈點」或是「中點」來做區隔。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts comments">
     <div class="comment">
         <div class="avatar">
-            <img src="!-user-!">
+            <img src="../../assets/images/user.png">
         </div>
         <div class="content">
             <a class="author">Yami Odymel</a>
@@ -1010,7 +371,7 @@
     </div>
     <div class="comment">
         <div class="avatar">
-            <img src="!-user2-!">
+            <img src="../../assets/images/user2.png">
         </div>
         <div class="content">
             <a class="author">Yami Odymel</a>
@@ -1022,16 +383,11 @@
         </div>
     </div>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts comments"</span>&gt;
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">""</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Yami Odymel<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
@@ -1045,7 +401,7 @@
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">""</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Yami Odymel<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
@@ -1057,57 +413,16 @@
         <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-
-
-                <!-- / 單個大分類 -->
-                
-                <!-- 單個大分類 -->
-
-                    <!-- 分類標題 -->
-                    <h2 data-is="chapterHeader" class="ts dividing header">外觀</h2>
-                    <!-- / 分類標題 -->
-
-                    <!-- 大分類解說 -->
-                    <div style="font-size: 16px"><p>留言擁有一些不同的外觀。</p>
-</div>
-                    <!-- / 大分類解說 -->
-
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            同列文字
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>留言的文字可以與作者名稱同列。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts comments">
+</code></pre></div>
+<h1 class="ts dividing header">外觀</h1><p><p>留言擁有一些不同的外觀。</p>
+</p><h2 class="ts header">同列文字
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>留言的文字可以與作者名稱同列。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts comments">
     <div class="comment">
         <a class="avatar">
-            <img src="!-user3-!">
+            <img src="../../assets/images/user3.png">
         </a>
         <div class="content">
             <a class="author">橙希</a>
@@ -1118,23 +433,18 @@
                 <a class="reply">回應</a>
                 <a class="save">收藏</a>
                 <a>
-                    <i class="expand {{icon}}"></i>
+                    <i class="expand icon"></i>
                     全尺寸檢視
                 </a>
             </div>
         </div>
     </div>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts comments"</span>&gt;
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">""</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>橙希<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
@@ -1145,48 +455,21 @@
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"reply"</span>&gt;</span>回應<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"save"</span>&gt;</span>收藏<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>
-                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"expand {{icon}}"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"expand <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
                     全尺寸檢視
                 <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
             <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            主題性質
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>留言可以是一個主題性質，這將允許你的留言帶有層級制度，留言中可帶有子留言。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts threaded comments">
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div><h2 class="ts header">主題性質
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>留言可以是一個主題性質，這將允許你的留言帶有層級制度，留言中可帶有子留言。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts threaded comments">
     <div class="comment">
         <a class="avatar">
-            <img src="!-user-!">
+            <img src="../../assets/images/user.png">
         </a>
         <div class="content">
             <a class="author">Yami Odymel</a>
@@ -1197,7 +480,7 @@
         <div class="comments">
             <div class="comment">
                 <div class="avatar">
-                    <img src="!-user2-!">
+                    <img src="../../assets/images/user2.png">
                 </div>
                 <div class="content">
                     <a class="author">橙希</a>
@@ -1207,7 +490,7 @@
                 </div>
                 <div class="comment">
                     <div class="avatar">
-                        <img src="!-user3-!">
+                        <img src="../../assets/images/user3.png">
                     </div>
                     <div class="content">
                         <a class="author">吳雨藍</a>
@@ -1220,84 +503,52 @@
         </div>
     </div>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>threaded</mark> comments"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comment"</span>&gt;
-        &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"avatar"</span>&gt;
-            &lt;img src=<span class="hljs-string">""</span>&gt;
-        &lt;/a&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"content"</span>&gt;
-            &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"author"</span>&gt;Yami Odymel&lt;/a&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>threaded</mark> comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Yami Odymel<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text"</span>&gt;</span>
                 準備向令一個平行世界的你道歉，因為你將在這個世界有所作為。
-            &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comments"</span>&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comment"</span>&gt;
-                &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"avatar"</span>&gt;
-                    &lt;img src=<span class="hljs-string">""</span>&gt;
-                &lt;/<span class="hljs-keyword">div</span>&gt;
-                &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"content"</span>&gt;
-                    &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"author"</span>&gt;橙希&lt;/a&gt;
-                    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comments"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>橙希<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text"</span>&gt;</span>
                         早安！我的朋友！
-                    &lt;/<span class="hljs-keyword">div</span>&gt;
-                &lt;/<span class="hljs-keyword">div</span>&gt;
-                &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comment"</span>&gt;
-                    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"avatar"</span>&gt;
-                        &lt;img src=<span class="hljs-string">""</span>&gt;
-                    &lt;/<span class="hljs-keyword">div</span>&gt;
-                    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"content"</span>&gt;
-                        &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"author"</span>&gt;吳雨藍&lt;/a&gt;
-                        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>吳雨藍<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+                        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text"</span>&gt;</span>
                             第一個覺得檸檬是食物的人一定是個被虐狂。
-                        &lt;/<span class="hljs-keyword">div</span>&gt;
-                    &lt;/<span class="hljs-keyword">div</span>&gt;
-                &lt;/<span class="hljs-keyword">div</span>&gt;
-            &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            分隔的
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>留言可以帶有分隔線區分來和下一個留言做區分。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts divided comments">
+                        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div><h2 class="ts header">分隔的
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>留言可以帶有分隔線區分來和下一個留言做區分。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts divided comments">
     <div class="comment">
         <a class="avatar">
-            <img src="!-user-!">
+            <img src="../../assets/images/user.png">
         </a>
         <div class="content">
             <a class="author">Mac Taylor</a>
@@ -1308,7 +559,7 @@
     </div>
     <div class="comment">
         <div class="avatar">
-            <img src="!-user-!">
+            <img src="../../assets/images/user.png">
         </div>
         <div class="content">
             <a class="author">Mac Taylor</a>
@@ -1320,7 +571,7 @@
     </div>
     <div class="comment">
         <div class="avatar">
-            <img src="!-user3-!">
+            <img src="../../assets/images/user3.png">
         </div>
         <div class="content">
             <a class="author">Yami Odymel</a>
@@ -1330,83 +581,50 @@
         </div>
     </div>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>divided</mark> comments"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comment"</span>&gt;
-        &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"avatar"</span>&gt;
-            &lt;img src=<span class="hljs-string">""</span>&gt;
-        &lt;/a&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"content"</span>&gt;
-            &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"author"</span>&gt;Mac Taylor&lt;/a&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>divided</mark> comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Mac Taylor<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text"</span>&gt;</span>
                 你是一個漁夫。
-            &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comment"</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"avatar"</span>&gt;
-            &lt;img src=<span class="hljs-string">""</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"content"</span>&gt;
-            &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"author"</span>&gt;Mac Taylor&lt;/a&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;
-                如果你有去釣魚大賽，你可能會被禁止進入：&lt;br&gt;
-                「我們不歡迎職業選手」
-            &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comment"</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"avatar"</span>&gt;
-            &lt;img src=<span class="hljs-string">""</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"content"</span>&gt;
-            &lt;a <span class="hljs-built_in">class</span>=<span class="hljs-string">"author"</span>&gt;Yami Odymel&lt;/a&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Mac Taylor<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text"</span>&gt;</span>
+                如果你有去釣魚大賽，你可能會被禁止進入：<span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span> 「我們不歡迎職業選手」
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Yami Odymel<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"text"</span>&gt;</span>
                 你很機車人
-            &lt;/<span class="hljs-keyword">div</span>&gt;
-        &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            尺寸
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>留言可以有不同的尺寸。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts tiny comments">
+            <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div><h2 class="ts header">尺寸
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>留言可以有不同的尺寸。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts tiny comments">
     <div class="comment">
         <a class="avatar">
-            <img src="!-user-!">
+            <img src="../../assets/images/user.png">
         </a>
         <div class="content">
             <a class="author">Mac Taylor</a>
@@ -1417,7 +635,7 @@
                 <a class="reply">回應</a>
                 <a class="save">收藏</a>
                 <a>
-                    <i class="expand {{icon}}"></i>
+                    <i class="expand icon"></i>
                     全尺寸檢視
                 </a>
             </div>
@@ -1427,7 +645,7 @@
 <div class="ts small comments">
     <div class="comment">
         <a class="avatar">
-            <img src="!-user2-!">
+            <img src="../../assets/images/user2.png">
         </a>
         <div class="content">
             <a class="author">Mac Taylor</a>
@@ -1438,7 +656,7 @@
                 <a class="reply">回應</a>
                 <a class="save">收藏</a>
                 <a>
-                    <i class="expand {{icon}}"></i>
+                    <i class="expand icon"></i>
                     全尺寸檢視
                 </a>
             </div>
@@ -1448,7 +666,7 @@
 <div class="ts medium comments">
     <div class="comment">
         <a class="avatar">
-            <img src="!-user3-!">
+            <img src="../../assets/images/user3.png">
         </a>
         <div class="content">
             <a class="author">Mac Taylor</a>
@@ -1459,7 +677,7 @@
                 <a class="reply">回應</a>
                 <a class="save">收藏</a>
                 <a>
-                    <i class="expand {{icon}}"></i>
+                    <i class="expand icon"></i>
                     全尺寸檢視
                 </a>
             </div>
@@ -1469,7 +687,7 @@
 <div class="ts large comments">
     <div class="comment">
         <a class="avatar">
-            <img src="!-user-!">
+            <img src="../../assets/images/user.png">
         </a>
         <div class="content">
             <a class="author">Mac Taylor</a>
@@ -1480,7 +698,7 @@
                 <a class="reply">回應</a>
                 <a class="save">收藏</a>
                 <a>
-                    <i class="expand {{icon}}"></i>
+                    <i class="expand icon"></i>
                     全尺寸檢視
                 </a>
             </div>
@@ -1490,7 +708,7 @@
 <div class="ts big comments">
     <div class="comment">
         <a class="avatar">
-            <img src="!-user2-!">
+            <img src="../../assets/images/user2.png">
         </a>
         <div class="content">
             <a class="author">Mac Taylor</a>
@@ -1501,7 +719,7 @@
                 <a class="reply">回應</a>
                 <a class="save">收藏</a>
                 <a>
-                    <i class="expand {{icon}}"></i>
+                    <i class="expand icon"></i>
                     全尺寸檢視
                 </a>
             </div>
@@ -1511,7 +729,7 @@
 <div class="ts huge comments">
     <div class="comment">
         <a class="avatar">
-            <img src="!-user3-!">
+            <img src="../../assets/images/user3.png">
         </a>
         <div class="content">
             <a class="author">Mac Taylor</a>
@@ -1522,22 +740,17 @@
                 <a class="reply">回應</a>
                 <a class="save">收藏</a>
                 <a>
-                    <i class="expand {{icon}}"></i>
+                    <i class="expand icon"></i>
                     全尺寸檢視
                 </a>
             </div>
         </div>
     </div>
-</div>
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts <mark>tiny</mark> comments"</span>&gt;
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+</div></samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>tiny</mark> comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">""</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Mac Taylor<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
@@ -1548,17 +761,17 @@
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"reply"</span>&gt;</span>回應<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"save"</span>&gt;</span>收藏<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>
-                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"expand {{icon}}"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"expand <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
                     全尺寸檢視
                 <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
             <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
-&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts <mark>small</mark> comments"</span>&gt;
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>small</mark> comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">""</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Mac Taylor<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
@@ -1569,17 +782,17 @@
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"reply"</span>&gt;</span>回應<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"save"</span>&gt;</span>收藏<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>
-                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"expand {{icon}}"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"expand <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
                     全尺寸檢視
                 <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
             <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
-&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts <mark>medium</mark> comments"</span>&gt;
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>medium</mark> comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">""</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Mac Taylor<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
@@ -1590,17 +803,17 @@
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"reply"</span>&gt;</span>回應<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"save"</span>&gt;</span>收藏<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>
-                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"expand {{icon}}"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"expand <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
                     全尺寸檢視
                 <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
             <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
-&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts <mark>large</mark> comments"</span>&gt;
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>large</mark> comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">""</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Mac Taylor<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
@@ -1611,17 +824,17 @@
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"reply"</span>&gt;</span>回應<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"save"</span>&gt;</span>收藏<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>
-                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"expand {{icon}}"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"expand <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
                     全尺寸檢視
                 <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
             <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
-&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts <mark>big</mark> comments"</span>&gt;
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>big</mark> comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">""</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Mac Taylor<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
@@ -1632,17 +845,17 @@
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"reply"</span>&gt;</span>回應<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"save"</span>&gt;</span>收藏<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>
-                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"expand {{icon}}"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"expand <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
                     全尺寸檢視
                 <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
             <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
-&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts <mark>huge</mark> comments"</span>&gt;
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>huge</mark> comments"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"comment"</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"avatar"</span>&gt;</span>
-            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">""</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"user.png"</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
         <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content"</span>&gt;</span>
             <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"author"</span>&gt;</span>Mac Taylor<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
@@ -1653,79 +866,13 @@
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"reply"</span>&gt;</span>回應<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"save"</span>&gt;</span>收藏<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
                 <span class="hljs-tag">&lt;<span class="hljs-name">a</span>&gt;</span>
-                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"expand {{icon}}"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+                    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"expand <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
                     全尺寸檢視
                 <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
             <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
         <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-
-
-                <!-- / 單個大分類 -->
-                
-
-                <!-- 分類標題 -->
-                <h2 data-is="chapterHeader" class="ts dividing header">本頁留言</h2>
-                <p>你現在可以在這裡留言啦！如果有功能建議或是發現錯誤，可以到這裡提出 Issue。</p>
-                <!-- / 分類標題 -->
-
-            </div>
-
-        </div>
-        <!-- / 右側邊主要內容欄位 -->
-    </div>
-    <!-- / 主要網格系統 -->
-
-    <!-- 空白分隔線 -->
-    <div class="ts hidden divider"></div>
-    <!-- / 空白分隔線 -->
-
-    <!-- 底部片段 -->
-    <div class="ts bottom attached secondary very padded segment" data-is="footer">
-        <!-- 置中容器 -->
-        <div class="ts container">
-            <!-- 底部連結選單 -->
-            <div class="ts text menu">
-                <a href="#!" class="item"><i class="arrow up icon"></i> 回到頂部</a>
-                <a href="#!" class="item">GitHub</a>
-                <a href="#!" class="item">實際範例</a>
-                <a href="#!" class="item">關於</a>
-            </div>
-            <!-- / 底部連結選單 -->
-
-            <!-- 底部說明 -->
-            <span>由 <a href="https://www.facebook.com/yamiodymel">Yami Odymel</a> 所設計，還有<a href="https://github.com/TeaMeow/TocasUI/graphs/contributors">貢獻者們</a>的愛心 ❤️。原始碼授權方式為 MIT，文件則為 <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW">CC0 1.0 公眾領域</a>，還請盡情地使用和分享，或者是一同改進 :)</span><span class="ubuntu preload"> </span>
-            <!-- 底部說明 -->
-        </div>
-        <!-- / 置中容器 -->
-    </div>
-    <!-- / 底部片段 -->
-
-    <script>
-        $('[data-ts-toggle]').on('click', function() {
-            var $segment
-            $segment = $(this).parent().nextAll('.ts.segments').first()
-            $example = $segment.find('.ts.segment').first()
-            $code    = $segment.find('.ts.segment').last()
-            if ($segment.attr('data-show-code') == 'true') {
-                $segment.attr('data-show-code', 'false')
-                $example.addClass('fitted basic')
-                $code.attr('hidden', 'hidden')
-            } else {
-                $segment.attr('data-show-code', 'true')
-                $example.removeClass('fitted basic')
-                $code.removeAttr('hidden')
-            }
-        })
-    </script>
-</body>
-</html>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div>
+<h2 class="ts dividing header">本頁留言</h2><p>你現在可以在這裡留言啦！如果有功能建議或是發現錯誤，可以到這裡提出 Issue。<div id=disqusThread></div></section></div></div><hr class="ts hidden divider"><span class="ubuntu preload"></span><footer class="ts bottom attached secondary very padded segment"><div class="ts container"><ul class="ts text menu"><li class=item><a href=#!><i class="arrow up icon"></i>回到頂部</a><li class=item><a href=#!>GitHub</a><li class=item><a href=#!>實際範例</a><li class=item><a href=#!>關於</a></ul><p><p>由 <a href="https://www.facebook.com/yamiodymel">Yami Odymel</a> 所設計，還有<a href="https://github.com/TeaMeow/TocasUI/graphs/contributors">貢獻者們</a>的愛心 ❤️。原始碼授權方式為 MIT，文件則為 <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW">CC0 1.0 公眾領域</a>，還請盡情地使用和分享，或者是一同改進 :)</p>
+</p></div></footer>

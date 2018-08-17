@@ -1,919 +1,178 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="../../dist/tocas.css">
-    <link rel="stylesheet" href="../html/assets/highlight.css">
-    <link rel="stylesheet" href="../html/assets/images/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/theme-monokai.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/mode-html.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-css.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-html.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>Document</title>
-    <style>
-        @font-face{
-            font-family: 'icomoon';
-            src:  url('../html/assets/images/fonts/icomoon.eot?en3o5m');
-            src:  url('../html/assets/images/fonts/icomoon.eot?en3o5m#iefix') format('embedded-opentype'),
-                url('../html/assets/images/fonts/icomoon.ttf?en3o5m') format('truetype'),
-                url('../html/assets/images/fonts/icomoon.woff?en3o5m') format('woff'),
-                url('../html/assets/images/fonts/icomoon.svg?en3o5m#icomoon') format('svg');
-            font-weight: normal;
-            font-style: normal;
-        }
-        [data-is="logo"] {
-            font-size: 4em;
-            display: block;
-            margin-top: -32px;
-            margin-bottom: 50px;
-            margin-left: -11px;
-            color: #5a5a5a;
+<!doctype html><html lang=zh-tw><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta http-equiv=x-ua-compatible content="ie=edge"><link rel=stylesheet href=../../dist/tocas.css><link rel=stylesheet href=../html/assets/highlight.css><link rel=stylesheet href=../html/assets/docs.css><link rel=stylesheet href=../html/assets/images/style.css><link rel=stylesheet href=../../assets/styles/tocas.css><link rel=stylesheet href=../../assets/highlight.css><link rel=stylesheet href=../../assets/docs.css><link rel=stylesheet href=../../assets/images/style.css><link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel=stylesheet><script src=https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/theme-monokai.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/mode-html.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify.min.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-css.min.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.6.12/beautify-html.min.js defer></script><script src=https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js></script><script src=../html/assets/script.js defer></script><script src=../../assets/script.js defer></script><title>按鈕 - Tocas UI</title><header class="ts padded big heading slate"><div class="ts container grid"><div class="four wide column"><i></i></div><div class="twelve wide column"><nav class="ts large text menu"><a href=#! class=item>使用文件</a>
+<a href=#! class=item>從這開始</a>
+<a href=#! class=item>響應式</a>
+<a href=#! class=item>實際範例</a>
+<a href=#! class=item>即時測試</a><div class="right menu"><a href=#! class=item><i class="globe icon"></i>正體中文（台灣）</a>
+<a href=#! class=item><i class="github icon"></i>GitHub</a></div></nav></div><div class="sixteen wide column"><h1 class=header>按鈕</h1><p class=description>一個重要的按鈕，我們將它視為核彈按鈕般，精心設計和呵護。</p></div><div class="four wide column"></div><div class="twelve wide column">
 
-            font-family: 'icomoon' !important;
-            speak: none;
-            font-style: normal;
-            font-weight: normal;
-            font-variant: normal;
-            text-transform: none;
-            line-height: 1;
-
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        [data-is="logo"]:before {
-            content: "\e900";
-        }
-        [data-is="slate"] {
-            margin-bottom: 40px;
-            border-bottom: 1px solid #e9e9e9;
-            border-radius: 0;
-        }
-        [data-is="chapterHeader"] {
-            border-bottom : 2px solid #d9d9d9 !important;
-            padding-bottom: 10px !important;
-        }
-        [data-is="chapterHeader"]:not(:first-child) {
-            margin-top: 4.5em !important;
-        }
-        [data-is="sectionHeader"] {
-            margin-top: 4em !important;
-        }
-        [data-is="chapterHeader"] ~ p,
-        [data-is="sectionHeader"] ~ p {
-            margin: .8em 0 !important;
-            font-size: 16px;
-            line-height: 1.7;
-        }
-        [data-is="sectionHeader"]:after {
-            content: "";
-            position: absolute;
-            left: -92px;
-            width: 2px;
-            border: 3px solid #fff;
-            background: #a2a2a2;
-            top: -2px;
-            bottom: -2px;
-        }
-        [data-is="links"] .item {
-            display: flex !important;
-            line-height: 22px !important;
-            align-items: center !important;
-        }
-        [data-is="links"] .item .label {
-            padding: 9px;
-            height: 20px;
-        }
-        [data-is="links"] span:not(.label) {
-            /*position: absolute;
-            right: 0;*/
-            margin-left: 7px;
-            font-size: 13px;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-        [data-is="linksDivider"]:before {
-            content: "";
-            position: absolute;
-            top: 12px;
-            right: 24px;
-            bottom: 0;
-            left: 0;
-            border-right: 2px solid rgba(0,0,0,.1);
-            pointer-events: none;
-        }
-        [data-is="tab"] {
-            position: absolute;
-            bottom: -3.17em;
-            left: 70px;
-            width: 750px;
-        }
-        [data-is="footer"] {
-            margin-top: 40px !important;
-            margin-bottom: 0 !important;
-            padding-bottom: 90px !important;
-            box-shadow: none !important;
-            border-top: 1px solid #e9e9e9 !important;
-            border-radius: 0 !important;
-        }
-        .ts.segments {
-            margin-top: 2.3em !important;
-        }
-
-    </style>
-</head>
-<body>
-    <!-- 頂部板岩 -->
-    <div data-is="slate" class="ts padded big heading slate">
-        <!-- 網格容器 -->
-        <div class="ts container grid">
-            <!-- 側邊空白欄位 -->
-            <div class="four wide column">
-                <!-- 主要 Logo -->
-                <i data-is="logo"></i>
-                <!-- / 主要 Logo -->
-            </div>
-            <!-- / 側邊空白欄位 -->
-
-            <!-- 右側主要內容欄位 -->
-            <div class="twelve wide column">
-                <div class="ts large text menu">
-                    <a href="#!" class="item">使用文件</a>
-                    <a href="#!" class="item">開始使用</a>
-                    <a href="#!" class="item">響應式</a>
-                    <a href="#!" class="item">實際範例</a>
-                    <a href="#!" class="item">即時測試</a>
-                    <div class="right menu">
-                        <a href="#!" class="item"><i class="globe icon"></i> 正體中文</a>
-                        <a href="#!" class="item"><i class="github icon"></i> GitHub</a>
-                    </div>
-                </div>
-
-            </div>
-            <!-- / 右側主要內容欄位 -->
-
-            <div class="sixteen wide column">
-                <!-- 文件標題 -->
-                <div class="header">按鈕</div>
-                <!-- / 文件標題 -->
-
-                <!-- 文件類別名稱敘述 -->
-                <div class="description">一個重要的按鈕，我們將它視為核彈按鈕般，精心設計和呵護。</div>
-                <!-- / 文件類別名稱敘述 -->
-            </div>
-
-            <div class="four wide column">
-
-            </div>
-
-            <div class="twelve wide column">
-                <div class="ts evenly divided tabbed menu" data-is="tab">
-                <div class="item">yee</div>
-                <div class="active item">yee</div>
-            </div>
-            </div>
-
-
-
-
-        </div>
-        <!-- / 網格容器 -->
-    </div>
-    <!-- / 頂部板岩 -->
-
-    <!-- 空白分隔線 -->
-    <div class="ts hidden divider"></div>
-    <!-- / 空白分隔線 -->
-
-    <!-- 主要網格系統 -->
-    <div class="ts container relaxed grid">
-        <!-- 左側選單欄位 -->
-        <div class="three wide column">
-
-
-            <!-- 搜尋輸入欄位 -->
-            <div class="ts fluid link icon input">
-
-                <input type="text" placeholder="搜尋">
-                <i class="search link icon"></i>
-            </div>
-            <!-- / 搜尋輸入欄位 -->
-
-            <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-                    <!-- 追加 ACTIVE INDICATOR -->
-
-            <!-- 元件選單 -->
-            <div class="ts header">一般元素</div>
-            <div class="ts link list" data-is="links">
-                <a href="#!" class="item" data-tooltip=".ts.button">按鈕 <span>Button</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.container">容器 <span>Container</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.divider">分隔線 <span>Divider</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.flag">國旗 <span>Flag</span><span class="ts warning right floated label">新的</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.header">標題 <span>Header</span></a>
-                <a href="#!" class="item" data-tooltip="i.icon">圖示 <span>Icon</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.image">圖片 <span>Image</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.input">輸入欄位 <span>Input</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.label">標籤 <span>Label</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.list">清單 <span>List</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.loader">讀取指示器 <span>Loader</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.segment">片段 <span>Segmet</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.slate">板岩 <span>Slate</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.steps">步驟 <span>Steps</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.placeholder">預置區塊 <span>Placeholder</span><span class="ts warning right floated label">新的</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.quote">引言 <span>Quote</span></a>
-            </div>
-
-            <div class="ts header">聚合型</div>
-            <div class="ts link list" data-is="links">
-                <a href="#!" class="item" data-tooltip=".ts.breadcrumb">麵包屑</a>
-                <a href="#!" class="item" data-tooltip=".ts.form">表單</a>
-                <a href="#!" class="item" data-tooltip=".ts.grid">網格系統</a>
-                <a href="#!" class="item" data-tooltip=".ts.menu">選單</a>
-                <a href="#!" class="item" data-tooltip=".ts.message">訊息</a>
-                <a href="#!" class="item" data-tooltip=".ts.table">表格</a>
-            </div>
-
-            <div class="ts header">模塊</div>
-            <div class="ts link list" data-is="links">
-                <a href="#!" class="item" data-tooltip=".ts.accordion">手風琴</a>
-                <a href="#!" class="item" data-tooltip=".ts.calendar">日曆</a>
-                <a href="#!" class="item" data-tooltip=".ts.carousel">幻燈片 <span class="ts warning right floated label">新的</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.checkbox">核取方塊</a>
-                <a href="#!" class="item" data-tooltip=".ts.comparison">圖片比較 <span class="ts warning right floated label">新的</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.context.menu">複合功能選單</a>
-                <a href="#!" class="item" data-tooltip=".ts.dimmer">淡化幕</a>
-                <a href="#!" class="item" data-tooltip=".ts.dropdown">下拉式選單</a>
-                <a href="#!" class="item" data-tooltip=".ts.embed">嵌入物件</a>
-                <a href="#!" class="item" data-tooltip=".ts.modal">對話視窗</a>
-                <a href="#!" class="item" data-tooltip=".ts.popup">彈出式訊息</a>
-                <a href="#!" class="item" data-tooltip=".ts.progress">進度列</a>
-                <a href="#!" class="item" data-tooltip=".ts.rating">評分 <span class="ts warning right floated label">新的</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.scrollspy">捲動監聽</a>
-                <a href="#!" class="item" data-tooltip=".ts.search">搜尋 <span class="ts warning right floated label">新的</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.sidebar">側邊欄</a>
-                <a href="#!" class="item" data-tooltip=".ts.slider">滑桿</a>
-                <a href="#!" class="item" data-tooltip=".ts.snackbar">點心條</a>
-                <a href="#!" class="item" data-tooltip=".ts.tab">分頁籤</a>
-                <a href="#!" class="item" data-tooltip=".ts.transfer">穿梭框 <span class="ts warning right floated label">新的</span></a>
-                <a href="#!" class="item" data-tooltip=".ts.transition">轉場效果 <span class="ts warning right floated label">新的</span></a>
-            </div>
-
-            <div class="ts header">視圖型</div>
-            <div class="ts link list" data-is="links">
-                <a href="#!" class="item" data-tooltip=".ts.card">卡片</a>
-                <a href="#!" class="item" data-tooltip=".ts.comments">留言</a>
-                <a href="#!" class="item" data-tooltip=".ts.feed">動態消息</a>
-                <a href="#!" class="item" data-tooltip=".ts.items">項目</a>
-                <a href="#!" class="item" data-tooltip=".ts.speeches">對話氣泡</a>
-                <a href="#!" class="item" data-tooltip=".ts.statistic">統計數據</a>
-            </div>
-
-            <div class="ts header">索引</div>
-
-
-            <div class="ts link list" data-is="links">
-                
-                    <div class="item">
-                        <a href="#!">種類</a>
-                        
-                        <div class="ts list">
-                            
-                            <a href="#!" class="item">按鈕</a>
-                            
-                            <a href="#!" class="item">基本語氣</a>
-                            
-                            <a href="#!" class="item">肯定和否定</a>
-                            
-                            <a href="#!" class="item">次等的</a>
-                            
-                            <a href="#!" class="item">偏見</a>
-                            
-                            <a href="#!" class="item">圖案</a>
-                            
-                            <a href="#!" class="item">連結</a>
-                            
-                            <a href="#!" class="item">關閉</a>
-                            
-                            <a href="#!" class="item">基本</a>
-                            
-                            <a href="#!" class="item">標籤</a>
-                            
-                            <a href="#!" class="item">標籤圖示</a>
-                            
-                        </div>
-                        
-                    </div>
-                
-                    <div class="item">
-                        <a href="#!">群組</a>
-                        
-                        <div class="ts list">
-                            
-                            <a href="#!" class="item">按鈕群組</a>
-                            
-                            <a href="#!" class="item">垂直群組</a>
-                            
-                            <a href="#!" class="item">分開的</a>
-                            
-                            <a href="#!" class="item">較寬鬆的</a>
-                            
-                            <a href="#!" class="item">自動層疊</a>
-                            
-                            <a href="#!" class="item">垂直附著</a>
-                            
-                        </div>
-                        
-                    </div>
-                
-                    <div class="item">
-                        <a href="#!">內容</a>
-                        
-                        <div class="ts list">
-                            
-                            <a href="#!" class="item">條件</a>
-                            
-                            <a href="#!" class="item"></a>
-                            
-                        </div>
-                        
-                    </div>
-                
-                    <div class="item">
-                        <a href="#!">狀態</a>
-                        
-                        <div class="ts list">
-                            
-                            <a href="#!" class="item">已啟用</a>
-                            
-                            <a href="#!" class="item">已停用</a>
-                            
-                            <a href="#!" class="item">讀取中</a>
-                            
-                            <a href="#!" class="item">脈動中</a>
-                            
-                        </div>
-                        
-                    </div>
-                
-                    <div class="item">
-                        <a href="#!">外觀</a>
-                        
-                        <div class="ts list">
-                            
-                            <a href="#!" class="item">尺寸</a>
-                            
-                            <a href="#!" class="item">浮動</a>
-                            
-                            <a href="#!" class="item">角落</a>
-                            
-                            <a href="#!" class="item">垂直附著</a>
-                            
-                            <a href="#!" class="item">輕巧版</a>
-                            
-                            <a href="#!" class="item">圓形</a>
-                            
-                        </div>
-                        
-                    </div>
-                
-            </div>
-
-            <!-- 元件選單 -->
-        </div>
-        <!-- / 左側選單欄位 -->
-
-        <!-- 間隔欄位 -->
-        <div class="one wide column" data-is="linksDivider"></div>
-        <!-- / 間隔欄位 -->
-
-        <!-- 右側邊主要內容欄位 -->
-        <div class="twelve wide column">
-
-            <div style="max-width: 750px;margin:  0 auto;">
-
-
-
-
-
-                <!-- 分類標題 -->
-                <h2 data-is="chapterHeader" class="ts dividing header">索引</h2>
-                <!-- / 分類標題 -->
-
-                <ol class="ts ordered list" style="font-size: 16px">
-                    
-                        <li>
-                            <a href="#!">種類</a>
-                            
-                            <ol class="ts ordered list">
-                                
-                                <li>
-                                    <a href="#!">按鈕</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">基本語氣</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">肯定和否定</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">次等的</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">偏見</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">圖案</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">連結</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">關閉</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">基本</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">標籤</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">標籤圖示</a>
-                                </li>
-                                
-                            </ol>
-                            
-                        </li>
-                    
-                        <li>
-                            <a href="#!">群組</a>
-                            
-                            <ol class="ts ordered list">
-                                
-                                <li>
-                                    <a href="#!">按鈕群組</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">垂直群組</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">分開的</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">較寬鬆的</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">自動層疊</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">垂直附著</a>
-                                </li>
-                                
-                            </ol>
-                            
-                        </li>
-                    
-                        <li>
-                            <a href="#!">內容</a>
-                            
-                            <ol class="ts ordered list">
-                                
-                                <li>
-                                    <a href="#!">條件</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!"></a>
-                                </li>
-                                
-                            </ol>
-                            
-                        </li>
-                    
-                        <li>
-                            <a href="#!">狀態</a>
-                            
-                            <ol class="ts ordered list">
-                                
-                                <li>
-                                    <a href="#!">已啟用</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">已停用</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">讀取中</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">脈動中</a>
-                                </li>
-                                
-                            </ol>
-                            
-                        </li>
-                    
-                        <li>
-                            <a href="#!">外觀</a>
-                            
-                            <ol class="ts ordered list">
-                                
-                                <li>
-                                    <a href="#!">尺寸</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">浮動</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">角落</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">垂直附著</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">輕巧版</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="#!">圓形</a>
-                                </li>
-                                
-                            </ol>
-                            
-                        </li>
-                    
-                </ol>
-
-                
-                <!-- 單個大分類 -->
-
-                    <!-- 分類標題 -->
-                    <h2 data-is="chapterHeader" class="ts dividing header">種類</h2>
-                    <!-- / 分類標題 -->
-
-                    <!-- 大分類解說 -->
-                    <div style="font-size: 16px"><p>一個按鈕具有多個不同的種類。</p>
-</div>
-                    <!-- / 大分類解說 -->
-
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            按鈕
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>一個正常的按鈕。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts button">按鈕</button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>button</mark>"</span>&gt;按鈕&lt;/<span class="hljs-keyword">button&gt;
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            基本語氣
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>用來讓一個按鈕擁有不同的意思，但卻不帶有肯定或否定語氣。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts primary button">主要</button>
+</div></div></header><hr class="ts hidden divider"><div class="ts container relaxed grid"><aside class="three wide column"><form class="ts fluid small action input"><input type=search placeholder="搜尋">
+<button class="ts icon button">
+<i class="search icon"></i></button></form><h2 class="ts header">一般元素</h2><ul class="ts link list"><li><a href="../elements/button.html">按鈕 <span>Button</span></a>
+<li><a href="../elements/container.html">容器 <span>Container</span></a>
+<li><a href="../elements/divider.html">分隔線 <span>Divider</span></a>
+<li><a href="../elements/flag.html">國旗 <span>Flag</span></a>
+<li><a href="../elements/header.html">標題 <span>Header</span></a>
+<li><a href="../elements/icon.html">圖示 <span>Icon</span></a>
+<li><a href="../elements/image.html">圖片 <span>Image</span></a>
+<li><a href="../elements/input.html">輸入欄位 <span>Input</span></a>
+<li><a href="../elements/label.html">標籤 <span>Label</span></a>
+<li><a href="../elements/list.html">清單 <span>List</span></a>
+<li><a href="../elements/loader.html">讀取指示器 <span>Loader</span></a>
+<li><a href="../elements/segment.html">片段 <span>Segment</span></a>
+<li><a href="../elements/slate.html">板岩 <span>Slate</span></a>
+<li><a href="../elements/steps.html">步驟 <span>Steps</span></a>
+<li><a href="../elements/placeholder.html">預置欄位 <span>Placeholder</span></a>
+<li><a href="../elements/quote.html">引言 <span>Quote</span></a>
+</ul><h2 class="ts header">聚合型</h2><ul class="ts link list"><li><a href="../collections/breadcrumb.html">麵包屑 <span>Breadcrumb</span></a>
+<li><a href="../collections/form.html">表單 <span>Form</span></a>
+<li><a href="../collections/grid.html">網格系統 <span>Grid</span></a>
+<li><a href="../collections/menu.html">選單 <span>Menu</span></a>
+<li><a href="../collections/message.html">訊息 <span>Message</span></a>
+<li><a href="../collections/table.html">表格 <span>Table</span></a>
+</ul><h2 class="ts header">模塊</h2><ul class="ts link list"><li><a href="../modules/checkbox.html">核取方塊 <span>Checkbox</span></a>
+<li><a href="../modules/image comparision.html">圖片比較 <span>Image Comparision</span></a>
+<li><a href="../modules/context menu.html">複合式選單 <span>Context Menu</span></a>
+<li><a href="../modules/dimmer.html">淡化幕 <span>Dimmer</span></a>
+<li><a href="../modules/dropdown.html">下拉式選單 <span>Dropdown</span></a>
+<li><a href="../modules/embed.html">嵌入物件 <span>Embed</span></a>
+<li><a href="../modules/modal.html">對話視窗 <span>Modal</span></a>
+<li><a href="../modules/popup.html">彈出式提示 <span>Popup</span></a>
+<li><a href="../modules/progress.html">進度條 <span>Progress</span></a>
+<li><a href="../modules/rating.html">評分 <span>Rating</span></a>
+<li><a href="../modules/scrollspy.html">捲動監聽 <span>Scrollspy</span></a>
+<li><a href="../modules/search.html">搜尋 <span>Search</span></a>
+<li><a href="../modules/sidebar.html">側邊欄 <span>Sidebar</span></a>
+<li><a href="../modules/slider.html">滑桿 <span>Slider</span></a>
+<li><a href="../modules/snackbar.html">點心條 <span>Snackbar</span></a>
+<li><a href="../modules/tab.html">分頁籤 <span>Tab</span></a>
+<li><a href="../modules/transfer.html">穿梭框 <span>Transfer</span></a>
+<li><a href="../modules/transition.html">轉場效果 <span>Transition</span></a>
+</ul><h2 class="ts header">視圖型</h2><ul class="ts link list"><li><a href="../views/card.html">卡片 <span>Card</span></a>
+<li><a href="../views/comment.html">留言 <span>Comment</span></a>
+<li><a href="../views/conversation.html">對話 <span>Conversation</span></a>
+<li><a href="../views/feed.html">動態時軸 <span>Feed</span></a>
+<li><a href="../views/items.html">項目 <span>Items</span></a>
+<li><a href="../views/statistic.html">統計數據 <span>Statistic</span></a>
+</ul></aside><div class="one wide offset column"></div><div class="twelve wide column"><section><h1 class="ts dividing header">索引</h1><ul class="ts large list"><li class=item><a href=#!>種類</a>
+<ul class="ts list"><li class=item><a href=#!>按鈕</a> <code>button</code> 
+<li class=item><a href=#!>基本語氣</a> <code>primary</code> <code>warning</code> <code>info</code> <code>inverted</code> 
+<li class=item><a href=#!>肯定和否定</a> <code>positive</code> <code>negative</code> 
+<li class=item><a href=#!>次等的</a> <code>secondary</code> 
+<li class=item><a href=#!>偏見</a> <code>opinion</code> <code>secondary opinion</code> 
+<li class=item><a href=#!>圖案</a> <code>icon</code> 
+<li class=item><a href=#!>連結</a> <code>link</code> 
+<li class=item><a href=#!>關閉</a> <code>close</code> 
+<li class=item><a href=#!>基本</a> <code>basic</code> 
+<li class=item><a href=#!>標籤</a> <code>left labeled</code> <code>labeled</code> 
+<li class=item><a href=#!>標籤圖示</a> <code>labeled icon</code> <code>right labeled icon</code> 
+</ul>
+<li class=item><a href=#!>群組</a>
+<ul class="ts list"><li class=item><a href=#!>按鈕群組</a> <code>buttons</code> 
+<li class=item><a href=#!>垂直群組</a> <code>vertical</code> <code>buttons</code> 
+<li class=item><a href=#!>分開的</a> <code>separated</code> <code>buttons</code> 
+<li class=item><a href=#!>較寬鬆的</a> <code>relaxed</code> 
+<li class=item><a href=#!>自動層疊</a> <code>stackable</code> 
+<li class=item><a href=#!>垂直附著</a> <code>top attached</code> <code>bottom attached</code> 
+</ul>
+<li class=item><a href=#!>內容</a>
+<ul class="ts list"><li class=item><a href=#!>條件</a> <code>or</code> 
+<li class=item><a href=#!></a> <code>data-text</code> 
+</ul>
+<li class=item><a href=#!>狀態</a>
+<ul class="ts list"><li class=item><a href=#!>已啟用</a> <code>active</code> 
+<li class=item><a href=#!>已停用</a> <code>disabled</code> 
+<li class=item><a href=#!>讀取中</a> <code>loading</code> 
+<li class=item><a href=#!>脈動中</a> <code>pulsing</code> 
+</ul>
+<li class=item><a href=#!>外觀</a>
+<ul class="ts list"><li class=item><a href=#!>尺寸</a> <code>mini</code> <code>tiny</code> <code>small</code> <code>button</code> <code>medium</code> <code>large</code> <code>big</code> <code>huge</code> <code>massive</code> 
+<li class=item><a href=#!>浮動</a> <code>left floated</code> <code>right floated</code> 
+<li class=item><a href=#!>角落</a> <code>top right corner</code> 
+<li class=item><a href=#!>垂直附著</a> <code>top attached</code> <code>bottom attached</code> 
+<li class=item><a href=#!>輕巧版</a> <code>very compact</code> <code>compact</code> 
+<li class=item><a href=#!>圓形</a> <code>circular</code> 
+</ul>
+</ul><h1 class="ts dividing header">種類</h1><p><p>一個按鈕具有多個不同的種類。</p>
+</p><h2 class="ts header">按鈕
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>一個正常的按鈕。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts button">按鈕</button>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>button</mark>"</span>&gt;</span>按鈕<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre></div><h2 class="ts header">基本語氣
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>用來讓一個按鈕擁有不同的意思，但卻不帶有肯定或否定語氣。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts primary button">主要</button>
 <button class="ts warning button">警告</button>
 <button class="ts info button">資訊</button>
 <button class="ts inverted button">相反色</button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>primary</mark> button"</span>&gt;主要&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>warning</mark> button"</span>&gt;警告&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>info</mark> button"</span>&gt;資訊&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>inverted</mark> button"</span>&gt;相反色&lt;/<span class="hljs-keyword">button&gt;
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            肯定和否定
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>讓按鈕帶有肯定或否定的意思。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts positive button">肯定</button>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>primary</mark> button"</span>&gt;</span>主要<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>warning</mark> button"</span>&gt;</span>警告<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>info</mark> button"</span>&gt;</span>資訊<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>inverted</mark> button"</span>&gt;</span>相反色<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre></div><h2 class="ts header">肯定和否定
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>讓按鈕帶有肯定或否定的意思。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts positive button">肯定</button>
 <button class="ts negative button">否定</button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>positive</mark> button"</span>&gt;肯定&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>negative</mark> button"</span>&gt;否定&lt;/<span class="hljs-keyword">button&gt;
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            次等的
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>一個次等的按鈕的背景預設是白色的，令其較不顯眼。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts secondary button">次等</button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>secondary</mark> button"</span>&gt;次等&lt;/<span class="hljs-keyword">button&gt;
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            偏見
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>讓按鈕以背景顏色作為基礎，並以此產生深、暗差異的偏見。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts inverted info {{segment}}">
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>positive</mark> button"</span>&gt;</span>肯定<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>negative</mark> button"</span>&gt;</span>否定<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre></div><h2 class="ts header">次等的
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>一個次等的按鈕的背景預設是白色的，令其較不顯眼。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts secondary button">次等</button>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>secondary</mark> button"</span>&gt;</span>次等<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre></div><h2 class="ts header">偏見
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>讓按鈕以背景顏色作為基礎，並以此產生深、暗差異的偏見。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts inverted info segment">
     <button class="ts opinion button">偏見</button>
     <button class="ts secondary opinion button">次要偏見</button>
 </div>
-<div class="ts inverted warning {{segment}}">
+<div class="ts inverted warning segment">
     <button class="ts opinion button">偏見</button>
     <button class="ts secondary opinion button">次要偏見</button>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts inverted info </span></span></span><span class="hljs-template-variable">{{segment}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span>&gt;</span>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts inverted info <a href='/elements/segment.html'>segment</a>"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>opinion</mark> button"</span>&gt;</span>偏見<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>secondary opinion</mark> button"</span>&gt;</span>次要偏見<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts inverted warning </span></span></span><span class="hljs-template-variable">{{segment}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts inverted warning <a href='/elements/segment.html'>segment</a>"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>opinion</mark> button"</span>&gt;</span>偏見<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>secondary opinion</mark> button"</span>&gt;</span>次要偏見<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            圖案
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>只顯示圖案的按鈕。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts icon button">
-    <i class="heart {{icon}}"></i>
+</code></pre></div><h2 class="ts header">圖案
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>只顯示圖案的按鈕。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts icon button">
+    <i class="heart icon"></i>
 </button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>icon</mark> button"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"heart </span></span></span><span class="hljs-template-variable">{{icon}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>icon</mark> button"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"heart <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            連結
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>按鈕可以看起來像純文字連結。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                這是個<button class="ts link button">連結按鈕</button>喔！
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">這是個&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>link</mark> button"</span>&gt;連結按鈕&lt;/<span class="hljs-keyword">button&gt;喔！
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            關閉
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>按鈕可以呈現一個用於關閉其他元件的樣式。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts mini close button"></button>
+</code></pre></div><h2 class="ts header">連結
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>按鈕可以看起來像純文字連結。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment">這是個<button class="ts link button">連結按鈕</button>喔！
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs>這是個<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>link</mark> button"</span>&gt;</span>連結按鈕<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>喔！
+</code></pre></div><h2 class="ts header">關閉
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>按鈕可以呈現一個用於關閉其他元件的樣式。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts mini close button"></button>
 <button class="ts tiny close button"></button>
 <button class="ts small close button"></button>
 <button class="ts close button"></button>
@@ -921,833 +180,268 @@
 <button class="ts big close button"></button>
 <button class="ts huge close button"></button>
 <button class="ts massive close button"></button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;button <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts mini <mark>close</mark> button"</span>&gt;<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
-&lt;button <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts tiny <mark>close</mark> button"</span>&gt;<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
-&lt;button <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts small <mark>close</mark> button"</span>&gt;<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
-&lt;button <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts <mark>close</mark> button"</span>&gt;<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
-&lt;button <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts large <mark>close</mark> button"</span>&gt;<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
-&lt;button <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts big <mark>close</mark> button"</span>&gt;<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
-&lt;button <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts huge <mark>close</mark> button"</span>&gt;<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
-&lt;button <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts massive <mark>close</mark> button"</span>&gt;<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span>
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            基本
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>讓按鈕只帶有基本的架構。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts positive basic button">確定</button>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts mini <mark>close</mark> button"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts tiny <mark>close</mark> button"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts small <mark>close</mark> button"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>close</mark> button"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts large <mark>close</mark> button"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts big <mark>close</mark> button"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts huge <mark>close</mark> button"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts massive <mark>close</mark> button"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre></div><h2 class="ts header">基本
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>讓按鈕只帶有基本的架構。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts positive basic button">確定</button>
 <button class="ts negative basic button">拒絕</button>
 <button class="ts basic button">知道</button>
 <button class="ts secondary basic button">取消</button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts positive <mark>basic</mark> button"</span>&gt;確定&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts negative <mark>basic</mark> button"</span>&gt;拒絕&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>basic</mark> button"</span>&gt;知道&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts secondary <mark>basic</mark> button"</span>&gt;取消&lt;/<span class="hljs-keyword">button&gt;
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            標籤
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>帶有標籤的按鈕。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts left labeled button">
-    <div class="ts basic {{label}}">689</div>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts positive <mark>basic</mark> button"</span>&gt;</span>確定<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts negative <mark>basic</mark> button"</span>&gt;</span>拒絕<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>basic</mark> button"</span>&gt;</span>知道<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts secondary <mark>basic</mark> button"</span>&gt;</span>取消<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre></div><h2 class="ts header">標籤
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>帶有標籤的按鈕。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts left labeled button">
+    <div class="ts basic label">689</div>
     <button class="ts button">加入募集</button>
 </div>
 <div class="ts labeled button">
     <button class="ts button">加入募集</button>
-    <div class="ts basic {{label}}">689</div>
+    <div class="ts basic label">689</div>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>left labeled</mark> button"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts basic {{label}}"</span>&gt;<span class="hljs-number">689</span>&lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;button <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts button"</span>&gt;加入募集&lt;/button&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts <mark>labeled</mark> button"</span>&gt;
-    &lt;button <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts button"</span>&gt;加入募集&lt;/button&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts basic {{label}}"</span>&gt;<span class="hljs-number">689</span>&lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            標籤圖示
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>帶有標籤和圖示的按鈕。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts labeled icon button">
-    <i class="star {{icon}}"></i>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>left labeled</mark> button"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts basic <a href='/elements/label.html'>label</a>"</span>&gt;</span>689<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts button"</span>&gt;</span>加入募集<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>labeled</mark> button"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts button"</span>&gt;</span>加入募集<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts basic <a href='/elements/label.html'>label</a>"</span>&gt;</span>689<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div><h2 class="ts header">標籤圖示
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>帶有標籤和圖示的按鈕。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts labeled icon button">
+    <i class="star icon"></i>
     星號
 </button>
 <button class="ts right labeled icon button">
     加入最愛
-    <i class="heart {{icon}}"></i>
+    <i class="heart icon"></i>
 </button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>labeled icon</mark> button"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"star </span></span></span><span class="hljs-template-variable">{{icon}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>labeled icon</mark> button"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"star <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
     星號
 <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>right labeled icon</mark> button"</span>&gt;</span>
     加入最愛
-    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"heart </span></span></span><span class="hljs-template-variable">{{icon}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"heart <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-
-
-                <!-- / 單個大分類 -->
-                
-                <!-- 單個大分類 -->
-
-                    <!-- 分類標題 -->
-                    <h2 data-is="chapterHeader" class="ts dividing header">群組</h2>
-                    <!-- / 分類標題 -->
-
-                    <!-- 大分類解說 -->
-                    <div style="font-size: 16px"><p>將多個按鈕組成一列，或是擁有同樣性質。</p>
-</div>
-                    <!-- / 大分類解說 -->
-
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            按鈕群組
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>按鈕可以組合成一個群組。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts buttons">
+</code></pre></div>
+<h1 class="ts dividing header">群組</h1><p><p>將多個按鈕組成一列，或是擁有同樣性質。</p>
+</p><h2 class="ts header">按鈕群組
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>按鈕可以組合成一個群組。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts buttons">
     <button class="ts warning button">橙希</button>
     <button class="ts primary button">雨藍</button>
     <button class="ts inverted button">卡莉絲</button>
 </div>
 <br><br>
 <div class="ts icon buttons">
-  <button class="ts button"><i class="align left {{icon}}"></i></button>
-  <button class="ts button"><i class="align center {{icon}}"></i></button>
-  <button class="ts button active"><i class="align right {{icon}}"></i></button>
-  <button class="ts button"><i class="align justify {{icon}}"></i></button>
+  <button class="ts button"><i class="align left icon"></i></button>
+  <button class="ts button"><i class="align center icon"></i></button>
+  <button class="ts button active"><i class="align right icon"></i></button>
+  <button class="ts button"><i class="align justify icon"></i></button>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>buttons</mark>"</span>&gt;</span>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>buttons</mark>"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts warning button"</span>&gt;</span>橙希<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts primary button"</span>&gt;</span>雨藍<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts inverted button"</span>&gt;</span>卡莉絲<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 
 <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts icon <mark>buttons</mark>"</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts button"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"align left </span></span></span><span class="hljs-template-variable">{{icon}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts button"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"align center </span></span></span><span class="hljs-template-variable">{{icon}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts button active"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"align right </span></span></span><span class="hljs-template-variable">{{icon}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts button"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"align justify </span></span></span><span class="hljs-template-variable">{{icon}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts button"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"align left <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts button"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"align center <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts button active"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"align right <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts button"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"align justify <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            垂直群組
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>群組也可以是垂直擺放的。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts fluid vertical buttons">
+</code></pre></div><h2 class="ts header">垂直群組
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>群組也可以是垂直擺放的。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts fluid vertical buttons">
     <button class="ts warning button">橙希</button>
     <button class="ts primary button">雨藍</button>
     <button class="ts inverted button">卡莉絲</button>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts fluid <mark>vertical</mark> <mark>buttons</mark>"</span>&gt;</span>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts fluid <mark>vertical</mark> <mark>buttons</mark>"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts warning button"</span>&gt;</span>橙希<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts primary button"</span>&gt;</span>雨藍<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts inverted button"</span>&gt;</span>卡莉絲<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            分開的
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>按鈕群組也可以分開、有間距。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts separated buttons">
+</code></pre></div><h2 class="ts header">分開的
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>按鈕群組也可以分開、有間距。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts separated buttons">
     <button class="ts warning button">橙希</button>
     <button class="ts primary button">雨藍</button>
     <button class="ts inverted button">卡莉絲</button>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>separated</mark> <mark>buttons</mark>"</span>&gt;</span>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>separated</mark> <mark>buttons</mark>"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts warning button"</span>&gt;</span>橙希<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts primary button"</span>&gt;</span>雨藍<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts inverted button"</span>&gt;</span>卡莉絲<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            較寬鬆的
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>按鈕群組之間的間距可以更大、看起來更寬鬆。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts relaxed separated buttons">
+</code></pre></div><h2 class="ts header">較寬鬆的
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>按鈕群組之間的間距可以更大、看起來更寬鬆。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts relaxed separated buttons">
     <button class="ts warning button">橙希</button>
     <button class="ts primary button">雨藍</button>
     <button class="ts inverted button">卡莉絲</button>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>relaxed</mark> separated buttons"</span>&gt;</span>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>relaxed</mark> separated buttons"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts warning button"</span>&gt;</span>橙希<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts primary button"</span>&gt;</span>雨藍<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts inverted button"</span>&gt;</span>卡莉絲<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</code></pre>
+</code></pre></div><h2 class="ts header">自動層疊
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
 
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            自動層疊
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>按鈕群組可以在手機版上自動層疊，而不是保持水平排列。欲觀看此效果你需要使用手機來查看此範例。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts fluid stackable buttons">
+<button class="ts right floated small icon labeled button">
+<i class="mobile icon"></i>響應式預覽</button>
+</h2><p><p>按鈕群組可以在手機版上自動層疊，而不是保持水平排列。欲觀看此效果你需要使用手機來查看此範例。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts fluid stackable buttons">
     <button class="ts info button">希豹</button>
     <button class="ts negative button">祈浪</button>
     <button class="ts inverted button">余望</button>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts fluid <mark>stackable</mark> buttons"</span>&gt;</span>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts fluid <mark>stackable</mark> buttons"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts info button"</span>&gt;</span>希豹<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts negative button"</span>&gt;</span>祈浪<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts inverted button"</span>&gt;</span>余望<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            垂直附著
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>按鈕群組可以垂直附著在某個元素的上下端。</p>
+</code></pre></div><h2 class="ts header">垂直附著
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>按鈕群組可以垂直附著在某個元素的上下端。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts fluid top attached buttons">
+    <button class="ts primary button">按鈕一</button>
+    <button class="ts positive button">按鈕二</button>
 </div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts fluid top attached buttons">
-    <div class="ts primary button">按鈕一</div>
-    <div class="ts positive button">按鈕二</div>
-</div>
-<div class="ts attached {{segment}}">
+<div class="ts attached segment">
     <p>貓耳就是量子力學</p>
     <p>△×￥○＠％＆＄＃☆□！</p>
     <p>「冷靜一點、把咖啡歐蕾喝下去」</p>
 </div>
 <div class="ts fluid bottom attached buttons">
-    <div class="ts inverted button">按鈕三</div>
-    <div class="ts negative button">按鈕四</div>
+    <button class="ts inverted button">按鈕三</button>
+    <button class="ts negative button">按鈕四</button>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts fluid <mark>top attached</mark> buttons"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts primary button"</span>&gt;按鈕一&lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts positive button"</span>&gt;按鈕二&lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts attached {{segment}}"</span>&gt;
-    &lt;p&gt;貓耳就是量子力學&lt;/p&gt;
-    &lt;p&gt;△×￥○＠％＆＄＃☆□！&lt;/p&gt;
-    &lt;p&gt;「冷靜一點、把咖啡歐蕾喝下去」&lt;/p&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts fluid <mark>bottom attached</mark> buttons"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts inverted button"</span>&gt;按鈕三&lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts negative button"</span>&gt;按鈕四&lt;/<span class="hljs-keyword">div</span>&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-
-
-                <!-- / 單個大分類 -->
-                
-                <!-- 單個大分類 -->
-
-                    <!-- 分類標題 -->
-                    <h2 data-is="chapterHeader" class="ts dividing header">內容</h2>
-                    <!-- / 分類標題 -->
-
-                    <!-- 大分類解說 -->
-                    <div style="font-size: 16px"><p>按鈕內部可以有不同的內容。</p>
-</div>
-                    <!-- / 大分類解說 -->
-
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            條件
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>你能夠在按鈕群組的間隙中間安插像是條件式的文字讓使用者擇其一。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts buttons">
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts fluid <mark>top attached</mark> buttons"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts primary button"</span>&gt;</span>按鈕一<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts positive button"</span>&gt;</span>按鈕二<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts attached <a href='/elements/segment.html'>segment</a>"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>貓耳就是量子力學<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>△×￥○＠％＆＄＃☆□！<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>「冷靜一點、把咖啡歐蕾喝下去」<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts fluid <mark>bottom attached</mark> buttons"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts inverted button"</span>&gt;</span>按鈕三<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts negative button"</span>&gt;</span>按鈕四<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div>
+<h1 class="ts dividing header">內容</h1><p><p>按鈕內部可以有不同的內容。</p>
+</p><h2 class="ts header">條件
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>你能夠在按鈕群組的間隙中間安插像是條件式的文字讓使用者擇其一。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts buttons">
     <button class="ts button">取消</button>
     <div class="or"></div>
     <button class="ts positive button">儲存</button>
     <div class="or"></div>
     <button class="ts primary button">送出</button>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts buttons"</span>&gt;
-    &lt;button <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts button"</span>&gt;取消&lt;/button&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>or</mark>"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;button <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts positive button"</span>&gt;儲存&lt;/button&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>or</mark>"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;button <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts primary button"</span>&gt;送出&lt;/button&gt;
-&lt;/<span class="hljs-keyword">div</span>&gt;
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>你也能夠透過 <code>[data-text]</code> 來變動條件文字，但注意文字字數不可超過圓圈大小。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts buttons">
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts buttons"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts button"</span>&gt;</span>取消<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<mark>or</mark>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts positive button"</span>&gt;</span>儲存<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<mark>or</mark>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts primary button"</span>&gt;</span>送出<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div><h2 class="ts header">
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>你也能夠透過 <code>[data-text]</code> 來變動條件文字，但注意文字字數不可超過圓圈大小。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts buttons">
     <button class="ts button">Cancel</button>
     <div class="or" data-text="Or"></div>
     <button class="ts positive button">Save</button>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts buttons"</span>&gt;</span>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts buttons"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts button"</span>&gt;</span>Cancel<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"or"</span> <mark><span class="hljs-attr">data-text</span></mark>=<span class="hljs-string">"Or"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"or"</span> <span class="hljs-attr"><mark>data-text</mark></span>=<span class="hljs-string">"Or"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts positive button"</span>&gt;</span>Save<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-
-
-                <!-- / 單個大分類 -->
-                
-                <!-- 單個大分類 -->
-
-                    <!-- 分類標題 -->
-                    <h2 data-is="chapterHeader" class="ts dividing header">狀態</h2>
-                    <!-- / 分類標題 -->
-
-                    <!-- 大分類解說 -->
-                    <div style="font-size: 16px"><p>你可以隨時透過樣式類別切換一個按鈕的狀態。</p>
-</div>
-                    <!-- / 大分類解說 -->
-
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            已啟用
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>用以顯示這個按鈕已經被啟用、觸發。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts active button">按鈕</button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>active</mark> button"</span>&gt;按鈕&lt;/<span class="hljs-keyword">button&gt;
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            已停用
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>用以顯示這個按鈕已經被禁止按下。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts disabled button">按鈕</button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>disabled</mark> button"</span>&gt;按鈕&lt;/<span class="hljs-keyword">button&gt;
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            讀取中
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>按鈕也可以變成讀取狀態。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts loading button">按鈕</button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>loading</mark> button"</span>&gt;按鈕&lt;/<span class="hljs-keyword">button&gt;
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            脈動中
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>按鈕能夠看起來正在脈動，令人注意。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts pulsing button">按鈕</button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>pulsing</mark> button"</span>&gt;按鈕&lt;/<span class="hljs-keyword">button&gt;
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-
-
-                <!-- / 單個大分類 -->
-                
-                <!-- 單個大分類 -->
-
-                    <!-- 分類標題 -->
-                    <h2 data-is="chapterHeader" class="ts dividing header">外觀</h2>
-                    <!-- / 分類標題 -->
-
-                    <!-- 大分類解說 -->
-                    <div style="font-size: 16px"><p>你可以更改按鈕的位置、大小、或者形狀。</p>
-</div>
-                    <!-- / 大分類解說 -->
-
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            尺寸
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>按鈕可以有不同的大小尺寸。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts mini button">迷你</button>
+</code></pre></div>
+<h1 class="ts dividing header">狀態</h1><p><p>你可以隨時透過樣式類別切換一個按鈕的狀態。</p>
+</p><h2 class="ts header">已啟用
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>用以顯示這個按鈕已經被啟用、觸發。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts active button">按鈕</button>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>active</mark> button"</span>&gt;</span>按鈕<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre></div><h2 class="ts header">已停用
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>用以顯示這個按鈕已經被禁止按下。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts disabled button">按鈕</button>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>disabled</mark> button"</span>&gt;</span>按鈕<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre></div><h2 class="ts header">讀取中
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>按鈕也可以變成讀取狀態。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts loading button">按鈕</button>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>loading</mark> button"</span>&gt;</span>按鈕<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre></div><h2 class="ts header">脈動中
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>按鈕能夠看起來正在脈動，令人注意。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts pulsing button">按鈕</button>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>pulsing</mark> button"</span>&gt;</span>按鈕<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre></div>
+<h1 class="ts dividing header">外觀</h1><p><p>你可以更改按鈕的位置、大小、或者形狀。</p>
+</p><h2 class="ts header">尺寸
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>按鈕可以有不同的大小尺寸。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts mini button">迷你</button>
 <button class="ts tiny button">微小</button>
 <button class="ts small button">小型</button>
 <button class="ts button">預設</button>
@@ -1756,309 +450,78 @@
 <button class="ts big button">巨大</button>
 <button class="ts huge button">超大</button>
 <button class="ts massive button">重量級</button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>mini</mark> button"</span>&gt;迷你&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>tiny</mark> button"</span>&gt;微小&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>small</mark> button"</span>&gt;小型&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>button</mark>"</span>&gt;預設&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>medium</mark> button"</span>&gt;適中&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>large</mark> button"</span>&gt;大型&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>big</mark> button"</span>&gt;巨大&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>huge</mark> button"</span>&gt;超大&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>massive</mark> button"</span>&gt;重量級&lt;/<span class="hljs-keyword">button&gt;
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            浮動
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>按鈕可以向左或向右浮動對齊。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts left floated button">向左浮動</button>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>mini</mark> button"</span>&gt;</span>迷你<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>tiny</mark> button"</span>&gt;</span>微小<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>small</mark> button"</span>&gt;</span>小型<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>button</mark>"</span>&gt;</span>預設<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>medium</mark> button"</span>&gt;</span>適中<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>large</mark> button"</span>&gt;</span>大型<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>big</mark> button"</span>&gt;</span>巨大<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>huge</mark> button"</span>&gt;</span>超大<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>massive</mark> button"</span>&gt;</span>重量級<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre></div><h2 class="ts header">浮動
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>按鈕可以向左或向右浮動對齊。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts left floated button">向左浮動</button>
 <button class="ts right floated button">向右浮動</button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>left floated</mark> button"</span>&gt;向左浮動&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>right floated</mark> button"</span>&gt;向右浮動&lt;/<span class="hljs-keyword">button&gt;
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            角落
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>按鈕可以浮動在某個元素的角落中。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <div class="ts tiny image">
-    <img src="!-1:1-!">
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>left floated</mark> button"</span>&gt;</span>向左浮動<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>right floated</mark> button"</span>&gt;</span>向右浮動<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre></div><h2 class="ts header">角落
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>按鈕可以浮動在某個元素的角落中。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><div class="ts tiny image">
+    <img src="../../assets/images/1:1.png">
     <button class="ts top right corner close button"></button>
 </div>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts tiny image"</span>&gt;
-    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">""</span>&gt;</span>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts tiny image"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"image.png"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>top right corner</mark> close button"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
-</code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            垂直附著
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>按鈕可以單獨垂直附著在某個元素的上下端。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts fluid top attached button">附著於上</button>
-<div class="ts attached {{segment}}">
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</code></pre></div><h2 class="ts header">垂直附著
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>按鈕可以單獨垂直附著在某個元素的上下端。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts fluid top attached button">附著於上</button>
+<div class="ts attached segment">
     <p>TeaMeow 是一個社群網站，就像是你正在使用的 Facebook 或是 Twitter，</p>
     <p>不過我們強調的是「自由」和「日常」，我們不會整天刪你文章。</p>
 </div>
 <button class="ts fluid bottom attached button">附著於下</button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts fluid <mark>top attached</mark> button"</span>&gt;</span>附著於上<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts attached </span></span></span><span class="hljs-template-variable">{{segment}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span>&gt;</span>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts fluid <mark>top attached</mark> button"</span>&gt;</span>附著於上<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts attached <a href='/elements/segment.html'>segment</a>"</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>TeaMeow 是一個社群網站，就像是你正在使用的 Facebook 或是 Twitter，<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>不過我們強調的是「自由」和「日常」，我們不會整天刪你文章。<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts fluid <mark>bottom attached</mark> button"</span>&gt;</span>附著於下<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            輕巧版
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>縮小按鈕的內距。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts mini very compact button">非常輕巧</button>
+</code></pre></div><h2 class="ts header">輕巧版
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>縮小按鈕的內距。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts mini very compact button">非常輕巧</button>
 <button class="ts mini compact button">迷你輕巧</button>
 <button class="ts compact button">輕巧按鈕</button>
-
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs">&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts mini <mark>very compact</mark> button"</span>&gt;非常輕巧&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts mini <mark>compact</mark> button"</span>&gt;迷你輕巧&lt;/<span class="hljs-keyword">button&gt;
-</span>&lt;<span class="hljs-keyword">button </span>class=<span class="hljs-string">"ts <mark>compact</mark> button"</span>&gt;輕巧按鈕&lt;/<span class="hljs-keyword">button&gt;
-</span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-                    <!-- 單個樣式說明 -->
-
-                        <!-- 樣式名稱 -->
-                        <h3 data-is="sectionHeader" class="ts header">
-                            圓形
-                            <!-- 原始碼按鈕 -->
-                            <button data-ts-toggle="" class="ts right floated small icon labeled button" style="font-size: .8rem !important;">
-                                <i class="code icon"></i> 原始碼
-                            </button>
-                            <!-- / 原始碼按鈕 -->
-                        </h3>
-                        <!-- / 樣式名稱 -->
-
-                        <!-- 解說 -->
-                        <div style="font-size: 16px"><p>按鈕可以是圓形的。</p>
-</div>
-                        <!-- / 解說 -->
-
-                        <!-- 示範區域 -->
-                        <div class="ts padded segments" data-show-code="false">
-                            <!-- 展示區塊 -->
-                            <div class="ts basic fitted clearing segment">
-                                <button class="ts circular large icon button">
-    <i class="gift {{icon}}"></i>
+</samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts mini <mark>very compact</mark> button"</span>&gt;</span>非常輕巧<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts mini <mark>compact</mark> button"</span>&gt;</span>迷你輕巧<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>compact</mark> button"</span>&gt;</span>輕巧按鈕<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre></div><h2 class="ts header">圓形
+<button class="ts right floated small icon labeled button">
+<i class="code icon"></i>原始碼</button>
+</h2><p><p>按鈕可以是圓形的。</p>
+</p><div class="ts padded segments"><samp class="ts basic fitted clearing segment"><button class="ts circular large icon button">
+    <i class="gift icon"></i>
 </button>
-<button class="ts circular positive button">知道了！</button>
-                            </div>
-                            <!-- / 展示區塊 -->
-
-                            <!-- 原始碼區塊 -->
-                            <div class="ts tertiary segment" hidden>
-                                <pre><code class="html hljs"><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>circular</mark> large icon button"</span>&gt;</span>
-    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gift </span></span></span><span class="hljs-template-variable">{{icon}}</span><span class="xml"><span class="hljs-tag"><span class="hljs-string">"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+<button class="ts circular positive button">知道了！</button></samp>
+<samp class="ts clearing segment" hidden><iframe></iframe></samp><pre class="ts tertiary segment" hidden><code class=hljs><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>circular</mark> large icon button"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"gift <a href='/elements/icon.html'>icon</a>"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
 <span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
-<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>circular</mark> positive button"</span>&gt;</span>知道了！<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span></code></pre>
-
-                            </div>
-                            <!-- / 原始碼區塊 -->
-                        </div>
-                        <!-- / 示範區域 -->
-
-                    <!-- / 單個樣式說明 -->
-                    
-
-
-                <!-- / 單個大分類 -->
-                
-
-                <!-- 分類標題 -->
-                <h2 data-is="chapterHeader" class="ts dividing header">本頁留言</h2>
-                <p>你現在可以在這裡留言啦！如果有功能建議或是發現錯誤，可以到這裡提出 Issue。</p>
-                <!-- / 分類標題 -->
-
-            </div>
-
-        </div>
-        <!-- / 右側邊主要內容欄位 -->
-    </div>
-    <!-- / 主要網格系統 -->
-
-    <!-- 空白分隔線 -->
-    <div class="ts hidden divider"></div>
-    <!-- / 空白分隔線 -->
-
-    <!-- 底部片段 -->
-    <div class="ts bottom attached secondary very padded segment" data-is="footer">
-        <!-- 置中容器 -->
-        <div class="ts container">
-            <!-- 底部連結選單 -->
-            <div class="ts text menu">
-                <a href="#!" class="item"><i class="arrow up icon"></i> 回到頂部</a>
-                <a href="#!" class="item">GitHub</a>
-                <a href="#!" class="item">實際範例</a>
-                <a href="#!" class="item">關於</a>
-            </div>
-            <!-- / 底部連結選單 -->
-
-            <!-- 底部說明 -->
-            <span>由 <a href="https://www.facebook.com/yamiodymel">Yami Odymel</a> 所設計，還有<a href="https://github.com/TeaMeow/TocasUI/graphs/contributors">貢獻者們</a>的愛心 ❤️。原始碼授權方式為 MIT，文件則為 <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW">CC0 1.0 公眾領域</a>，還請盡情地使用和分享，或者是一同改進 :)</span><span class="ubuntu preload"> </span>
-            <!-- 底部說明 -->
-        </div>
-        <!-- / 置中容器 -->
-    </div>
-    <!-- / 底部片段 -->
-
-    <script>
-        $('[data-ts-toggle]').on('click', function() {
-            var $segment
-            $segment = $(this).parent().nextAll('.ts.segments').first()
-            $example = $segment.find('.ts.segment').first()
-            $code    = $segment.find('.ts.segment').last()
-            if ($segment.attr('data-show-code') == 'true') {
-                $segment.attr('data-show-code', 'false')
-                $example.addClass('fitted basic')
-                $code.attr('hidden', 'hidden')
-            } else {
-                $segment.attr('data-show-code', 'true')
-                $example.removeClass('fitted basic')
-                $code.removeAttr('hidden')
-            }
-        })
-    </script>
-</body>
-</html>
+<span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"ts <mark>circular</mark> positive button"</span>&gt;</span>知道了！<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</code></pre></div>
+<h2 class="ts dividing header">本頁留言</h2><p>你現在可以在這裡留言啦！如果有功能建議或是發現錯誤，可以到這裡提出 Issue。<div id=disqusThread></div></section></div></div><hr class="ts hidden divider"><span class="ubuntu preload"></span><footer class="ts bottom attached secondary very padded segment"><div class="ts container"><ul class="ts text menu"><li class=item><a href=#!><i class="arrow up icon"></i>回到頂部</a><li class=item><a href=#!>GitHub</a><li class=item><a href=#!>實際範例</a><li class=item><a href=#!>關於</a></ul><p><p>由 <a href="https://www.facebook.com/yamiodymel">Yami Odymel</a> 所設計，還有<a href="https://github.com/TeaMeow/TocasUI/graphs/contributors">貢獻者們</a>的愛心 ❤️。原始碼授權方式為 MIT，文件則為 <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW">CC0 1.0 公眾領域</a>，還請盡情地使用和分享，或者是一同改進 :)</p>
+</p></div></footer>
