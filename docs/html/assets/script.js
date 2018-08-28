@@ -4,8 +4,14 @@
     var Selector;
     Selector = {
       SOURCE_BTN: 'section > h2 > button.ts.button:first-of-type',
-      RESPONSIVE_BTN: 'section > h2 > button.ts.button:nth-of-type(2)'
+      RESPONSIVE_BTN: 'section > h2 > button.ts.button:nth-of-type(2)',
+      SECTION_HEADER: 'section > h2 > a'
     };
+    $(Selector.SECTION_HEADER).hover(function() {
+      return $(this).text('#').addClass('hovered');
+    }, function() {
+      return $(this).text('').removeClass('hovered');
+    });
     $(Selector.SOURCE_BTN).on('click', function() {
       var $codeBlock, $exampleBlock, $exampleSection;
       $exampleSection = $(this).parent().nextAll('.ts.segments').first();

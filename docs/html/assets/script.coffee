@@ -2,6 +2,12 @@ $ =>
     Selector =
     SOURCE_BTN    : 'section > h2 > button.ts.button:first-of-type'
     RESPONSIVE_BTN: 'section > h2 > button.ts.button:nth-of-type(2)'
+    SECTION_HEADER: 'section > h2 > a'
+
+    $(Selector.SECTION_HEADER).hover ->
+        $(@).text('#').addClass('hovered')
+    , ->
+        $(@).text('').removeClass('hovered')
 
     $(Selector.SOURCE_BTN).on 'click', ->
         $exampleSection = $(@).parent().nextAll('.ts.segments').first()
