@@ -168,11 +168,15 @@ Commits written in English are welcomed.
 
 [Elemental UI](http://elemental-ui.com/)
 
+[Ionic Framework](https://beta.ionicframework.com/docs/components)
+
 [iView UI](https://www.iviewui.com/)
 
 [Kube](https://imperavi.com/kube/)
 
 [Kule Lazy 3](http://www.kule.tw/)
+
+[Lightning Design System](https://www.lightningdesignsystem.com/)
 
 [Markdown UI](https://jjuliano.github.io/markdown-ui/)
 
@@ -204,6 +208,8 @@ Commits written in English are welcomed.
 
 [UI Kit](https://getuikit.com/)
 
+[MailChimp](http://ux.mailchimp.com/patterns)
+
 [Vital UI Kit](https://gss-fed.github.io/vital-ui-kit/index.html)
 
 [Vue Material](https://vuematerial.io/)
@@ -211,3 +217,5 @@ Commits written in English are welcomed.
 [Vux](https://vux.li/)
 
 [WeUI](https://weui.io/)
+
+[WiredJS](https://wiredjs.com/)
