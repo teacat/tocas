@@ -38,7 +38,8 @@
 內部資料
 ---------------
 
-    Data = {}
+    Data =
+        items: []
 
 模板
 ---------------
@@ -62,14 +63,18 @@
 
     ExportedMethods =
         # open 會打開指定的手風琴。
-        open: (index) =>
+        open: (index) ->
+            @open index
 
         # close 會關閉指定的手風琴。
-        close: (index) =>
+        close: (index) ->
+            @close index
 
         # closeOthers 會關閉指定手風琴以外的其他手風琴。
-        closeOthers: (index) =>
-
+        closeOthers: (index) ->
+            for item, i in @$data.items
+                if index isnt i
+                    item.visible = false
 
 內建方法
 ---------------
@@ -77,23 +82,22 @@
     Methods =
         # toggle 能夠切換一個手風琴，如果手風琴是開的則閉合，反之亦然。
         toggle: (index) ->
-            @$data[index].visible = !@$data[index].visible
+            @$data.items[index].visible = !@$data[index].visible
 
         # open 能夠打開一個手風琴。
         open : (index) ->
-            @$data[index].visible = yes
+            @$data.items[index].visible = yes
 
         # close 能夠關閉一個手風琴。
         close: (index) ->
-            @$data[index].visible = no
+            @$data.items[index].visible = no
 
 初始器
 ---------------
 
-    Initializer = ->
-        data = []
+    Initializer = (Data) ->
         ts(@).find(':scope > .title').each (element) =>
-            data.push
+            Data.items.push
                 title  : ts(element).html()
                 content: ts(element).next().html()
                 visible: false
