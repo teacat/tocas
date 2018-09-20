@@ -199,6 +199,210 @@
                 </ul>
                 <!-- / 索引區段 -->
 
+                <h1 class="ts dividing header">初始化</h1>
+
+                <p>透過下列程式碼來替指定的元素初始化其模組並套用最基本的預設設定值。</p>
+
+                <pre class="ts tertiary segment"><code class="hljs">ts('.ts.accordion')
+    .accordion()
+;</code></pre>
+
+                <p>初始化模組的時候，可以像下列程式碼一樣地將設定物件作為參數傳入。設定物件不一定要是完整的；不在物件內的設定則會套用 Tocas UI 預設的設定值。</p>
+
+                <pre class="ts tertiary segment"><code class="hljs">ts('.ts.accordion')
+    .accordion({
+        // 消音所有提示，甚至是錯誤訊息。
+        silent: false,
+        // 顯示除錯訊息。
+        debug : true,
+        // 監聽 DOM 結構異動並自動重整快取。
+        observeChanges: true,
+        // ... 其他設定 ...
+    })
+;</code></pre>
+
+<p>初始化模組的時候，Tocas UI 亦會將元素的 <code>[data-*]</code> 標籤作為設定值來源，而這個優先度大於以參數傳入的設定。這意味著元素標籤的 <code>[data-silent]</code> 內容即會套用於 <code>silent</code> 設定，而 <code>[data-image-url]</code> 會被作為 <code>image.url</code> 設定使用。</p>
+
+                <h1 class="ts dividing header">設定屬性</h1>
+
+                <p>此模組有下列設定可供使用。欲更改已初始化的模組設定，請透過 <code>setting</code> 方法並傳入欲覆蓋的設定。</p>
+
+                <table class="ts celled stackable definition table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>預設值</th>
+                            <th>註釋</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                {{ .Key }}
+                                <b class="type">{{ .Type }}</b>
+                                <br>
+                                <small><span class="name">({{ .Name }})</span></small>
+                            </td>
+                            <td>{{ .Default }}</td>
+                            <td>{{ .Description }}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                silent
+                                <b class="type">布林值</b>
+                                <br>
+                                <small><span class="name">(靜音模式)</span></small>
+                            </td>
+                            <td><code>false</code></td>
+                            <td>消音所有提示，甚至是錯誤訊息。</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                debug
+                                <b class="type">布林值</b>
+                                <br>
+                                <small><span class="name">(除錯模式)</span></small>
+                            </td>
+                            <td><code>true</code></td>
+                            <td>顯示除錯訊息。</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                observeChanges
+                                <b class="type">布林值</b>
+                                <br>
+                                <small><span class="name">(監聽節點異動)</span></small>
+                            </td>
+                            <td><code>true</code></td>
+                            <td>監聽 DOM 結構異動並自動重整快取。</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h1 class="ts dividing header">回呼函式</h1>
+
+                <p>透過設置回呼函式來在模組的特定時機執行指定的程式內容，回呼函式中的 <code>this</code> 本體物件會因為時機不同而有所異動。回呼函式需要被放置在設定裡一同傳入模組。</p>
+
+                <table class="ts celled stackable definition table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>觸發時機與參數</th>
+                            <th>本體物件</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="top aligned">
+                                onOpening
+                            </td>
+
+                            <td class="top aligned">
+                                當手風琴正在展開時。
+                                <hr class="ts divider">
+                                onOpening(<em>removedValue</em>, <em>removedText</em>, <em>$removedChoice</em>)
+                                <ul class="ts list">
+                                    <li class="item">
+                                        content<b class="type">字串</b> － <small><span class="name">(內容)</span></small>
+                                        <br>
+                                        欲開啟的手風琴項目索引編號。
+                                    </li>
+                                </ul>
+                            </td>
+                            <td class="top aligned">
+
+
+                                <span style="margin-bottom: 10px; display: block;"><code>.content</code> <b class="type">HTMLElement</b></span>
+
+                                正在展開的手風琴項目內容元素。
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <h1 class="ts dividing header">可用方法</h1>
+
+                <p>一個模組中有不少可用方法能夠呼叫，且用以執行特定動作。欲執行一個模組的動作，透過下列用法即可。</p>
+
+                <pre class="ts tertiary segment"><code class="hljs">$('.ts.accordion').accordion('方法名稱', 參數A, 參數B...);</code></pre>
+
+
+                <table class="ts celled stackable definition table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>說明與參數</th>
+                            <th>回傳內容</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="top aligned">
+                                close others
+                                <br>
+                                <small><span class="name">(關閉其他)</span></small>
+                            </td>
+
+                            <td class="top aligned">
+                                當手風琴正在展開時。
+                                <hr class="ts divider">
+                                <code><em>removedValue</em>, <em>removedText</em>, <em>$removedChoice</em></code>
+                                <ul class="ts list">
+                                    <li class="item">
+                                        content<b class="type">字串</b><b class="required" data-required="必填">*</b> － <small><span class="name">(內容)</span></small>
+                                        <br>
+                                        欲開啟的手風琴項目索引編號。
+                                    </li>
+                                </ul>
+                            </td>
+                            <td class="top aligned">
+
+
+                                <span style="margin-bottom: 10px; display: block;"><code>布林值</code></span>
+
+                                正在展開的手風琴項目內容元素。
+
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td class="top aligned">
+                                setting
+                                <br>
+                                <small><span class="name">(設置、取得設定)</span></small>
+                            </td>
+
+                            <td class="top aligned">
+                                取得模組的指定設定值，或是覆蓋現有模組的設定。
+                                <hr class="ts divider">
+                                <code>.accordion('setting', <em>keyOrSetting</em>)</code>
+                                <ul class="ts list">
+                                    <li class="item">
+                                        keyOrSetting<b class="type">字串|物件</b><b class="required" data-required="必填">*</b> － <small><span class="name">(鍵名或新設定)</span></small>
+                                        <br>
+                                        當此值為字串時，即表示某個設定的名稱，這能讓你取得目前模組的某個設定值；而此值為物件時，即是欲覆蓋目前模組設定的新設定物件。
+                                    </li>
+                                </ul>
+                            </td>
+                            <td class="top aligned">
+
+
+                                <span style="margin-bottom: 10px; display: block;"><code>任意</code></span>
+
+                                正在展開的手風琴項目內容元素。
+
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+
                 {{ range .Docs.Definitions.Chapters }}
                 <!-- 單個大分類 -->
 
