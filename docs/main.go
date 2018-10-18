@@ -23,7 +23,9 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
+// TemplatePath 是模板存放的路徑。
 const TemplatePath = "./templates"
+// DocsPath
 const DocsPath = "./yaml"
 const AssetSrcPath = "./../dist"
 const AssetsPath = "./html/assets/styles"
@@ -552,6 +554,8 @@ func Clean(input string) string {
 	return input
 }
 
+// Placeholder 會將指定模板符號轉換成更獨特的預置符號避免解析時出錯，
+// 在那之後會由另一個程序將預置符號轉換回正常的文字。
 func Placeholder(input string) string {
 	input = regexp.MustCompile(`\[\[(.*?)\]\]`).ReplaceAllString(input, `MARK${1}MARKEND`)
 	input = regexp.MustCompile(`{{(.*?)}}`).ReplaceAllString(input, `COMP${1}COMPEND`)
