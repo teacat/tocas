@@ -3,12 +3,36 @@ package model
 // Language 呈現了一個語系代稱（例如：`en-us`、`zh-tw`）。
 type Language string
 
+// Documentation 是單個語系的文件總彙。
+type Documentation struct {
+	// Language 是此總彙的語系。
+	Language Language
+	// LocalizedLanguage 是指以當地國家語言所顯示的語系文字（例如：`正體中文（台灣）`）。
+	LocalizedLanguage string
+	// Flag 是國旗名稱，基於 Tocas UI 的 Flag 元件。
+	Flag string
+	// Pages 是文件總彙的所有頁面。
+	Pages []*Page
+	// UI 是界面語系文字。
+	UI map[string]interface{}
+	// Contributors 是此總彙語系的貢獻者。
+	Contributors []*Contributor
+}
+
+// Contributor 是單個貢獻者。
+type Contributor struct {
+	// Name 是貢獻者名稱或暱稱。
+	Name string
+	// Website 是能夠聯繫到該貢獻者的網址連結。
+	Website string
+}
+
 // Page 呈現了單個文件頁面資料。
 type Page struct {
 	// Title 是主要標題。
-	Title string `mapstructure:"Title"`
+	Title string
 	// Description 是主要的註釋。
-	Description string `mapstructure:"Description"`
+	Description string
 	// Settings 是設定資料。
 	Settings Settings
 	// Usages 是使用方法資料。
