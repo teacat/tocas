@@ -78,7 +78,7 @@ ts.register class Accordion
 
     # Toggle 能夠切換指定的手風琴項目，當項目是關閉的時候開啟，反之亦然。
     Toggle: (index) =>
-        if @is.active index
+        if @isActive index
             @close index
         else
             @open index
@@ -105,6 +105,7 @@ ts.register class Accordion
     # 內部方法
     # --------------------------------------------------------------
 
+    # open 會開啟指定的分頁籤。
     open: (index) =>
         @setActive   index
         @triggerOpen index
@@ -112,10 +113,12 @@ ts.register class Accordion
         if @settings.exclusive
             @closeOthers index
 
+    # close 會關閉指定的分頁籤。
     close: (index) =>
         @setHidden    index
         @triggerClose index
 
+    # closeOthers 會關閉指定頁籤以外的所有分頁籤。
     closeOthers: (index) =>
         for i in [0..@data.$title.length-1]
             if i isnt index
@@ -123,29 +126,36 @@ ts.register class Accordion
         return @
 
     #
+    # Trigger
     #
 
+    # triggerOpen 會呼叫開啟分頁籤時的回呼函式。
     triggerOpen: (index) =>
         $content = @$getContent index
         @listener.trigger @events.open  , $content
         @listener.trigger @events.change, $content
 
+    # triggerClose 會呼叫關閉分頁籤時的回呼函式。
     triggerClose: (index) =>
         $content = @$getContent index
         @listener.trigger @events.close , $content
         @listener.trigger @events.change, $content
 
     #
+    # Is
     #
 
+    # isActive 會回傳一個分頁籤是否為開啟的布林值。
     isActive: (index) =>
         @data.$title
             .eq       index
             .hasClass @classNames.active
 
     #
+    # Set
     #
 
+    # setActive 會將指定的分頁籤設置為 Active 啟用狀態。
     setActive: (index) =>
         @data.$title
             .eq       index
@@ -154,6 +164,7 @@ ts.register class Accordion
             .eq       index
             .addClass @classNames.active
 
+    # setHidden 會將指定的分頁籤設置為 Hidden 隱藏狀態。
     setHidden: (index) =>
         @data.$title
             .eq          index
@@ -163,19 +174,27 @@ ts.register class Accordion
             .removeClass @classNames.active
 
     #
+    # $Get
     #
 
+    # $getContent 會回傳一個 Tocas 包裹的指定分頁籤內容元素。
     $getContent: (index) =>
         @data.$content.eq index
 
     #
+    # Bind
     #
 
+    # bindEvents 會綁定元素事件。
     bindEvents: =>
         @listener.on @events.click, @selectors.title, @eventClick
 
+    #
+    # Event
+    #
+
+    # eventClick 會監聽手風琴標題的點擊事件，並且切換該手風琴頁籤的展示。
     eventClick: (element) =>
-        console.log element
         index = @data.$title.indexOf element
         if @isActive index
             if @settings.collapsible
@@ -187,15 +206,18 @@ ts.register class Accordion
     # 生命週期
     # --------------------------------------------------------------
 
+    # beforeCreate 會在模組被初始化之前呼叫。
     beforeCreate: =>
 
+    # created 會在模組被初始化之後呼叫。
     created: =>
         @bindEvents()
 
-    beforeUpdate: =>
-
+    # beforeUpdate 會在 DOM 元素有異動時被呼叫。
     updated: =>
 
+    # beforeDestroy 會在模組被摧毀之前呼叫。
     beforeDestroy: =>
 
+    # destroyed 會在模組被摧毀之後呼叫。
     destroyed: =>
