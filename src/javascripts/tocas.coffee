@@ -116,20 +116,19 @@ ts.createElement = (html) =>
     div.firstChild
 
 # 註冊 Tocas 模塊
-# {NAME, MODULE_NAMESPACE, Settings}, starter
 ts.register = (module) =>
-    name = module.name
+    name = module.name.toLowerCase()
 
-    ts.fn[name] = value: (parameters) ->
+    ts.fn[name] = value: ->
         $allModules     = ts @
         moduleNamespace = "module-#{name}"
         query           = arguments[0]
-        queryArguments  = arguments[1...]
+        queryArguments  = Array.prototype.slice.call(arguments, 1)
         methodInvoked   = typeof query is 'string'
         returnedValue   = undefined
 
         consoleText = (args) =>
-            "%c#{NAME}%c #{args[0]}"
+            "%c#{name}%c #{args[0]}"
 
         headerCSS = """
             background   : #EEE;
@@ -155,6 +154,8 @@ ts.register = (module) =>
             id             = $module.uniqueID()
             instance       = $module.data moduleNamespace
             eventNamespace = ".#{name}-#{id}"
+
+            #
             settings       = ts.extend module::settings,
                 # 消音所有提示，甚至是錯誤訊息。
                 silent        : false
@@ -162,45 +163,56 @@ ts.register = (module) =>
                 debug         : true
                 # 監聽 DOM 結構異動並自動重整快取。
                 observeChanges: true
-            settings = if ts.isPlainObject(parameters) then ts.extend(settings, parameters) else ts.extend(settings)
+            settings = if ts.isPlainObject(query) then ts.extend(settings, query) else ts.extend(settings)
+            #
+            applyEventNamespace = (events = '') =>
+                newEvents = ''
+                events.split(' ').forEach (event) =>
+                    newEvents += "#{event}#{eventNamespace}"
+                return newEvents
+            #
             listener =
-                on: =>
-                    newArguments = arguments
-                    newEvents    = ''
-                    newArguments[0].split(' ').forEach (event) =>
-                        newEvents += "#{event}#{eventNamespace}"
-                    newArguments[0] = newEvents
-
-                    $module.on.apply element, newArguments
-
-                off: =>
-                    newArguments = arguments
-                    newEvents    = ''
-                    newArguments[0].split(' ').forEach (event) =>
-                        newEvents += "#{event}#{eventNamespace}"
-                    newArguments[0] = newEvents
-
-                    $module.off.apply element, newArguments
-
-                one: =>
-                    newArguments = arguments
-                    newEvents    = ''
-                    newArguments[0].split(' ').forEach (event) =>
-                        newEvents += "#{event}#{eventNamespace}"
-                    newArguments[0] = newEvents
-
-                    $module.one.apply element, newArguments
-
-            debug: =>
+                on: ->
+                    newArguments    = arguments
+                    newArguments[0] = applyEventNamespace newArguments[0]
+                    newArguments    = Array.from newArguments
+                    handlerIndex    = -1
+                    newArguments.forEach (el, index) =>
+                        if typeof el is 'function'
+                            handlerIndex = index
+                    callback                   = newArguments[handlerIndex]
+                    newArguments[handlerIndex] = ->
+                        event = arguments[0]
+                        args  = Array.prototype.slice.call(arguments, 1)
+                        self  = @
+                        callback.call self, self, event, args...
+                    $module.on.apply $module, newArguments
+                #
+                off: ->
+                    newArguments    = arguments
+                    newArguments[0] = applyEventNamespace newArguments[0]
+                    $module.off.apply $module, newArguments
+                #
+                one: ->
+                    #newArguments    = arguments
+                    #newArguments[0] = applyEventNamespace newArguments[0]
+                    #$module.one.apply $module, newArguments
+                #
+                trigger: (callbackName, context) ->
+                    callbackName = callbackName[0].toUpperCase() + callbackName[1...]
+                    settings["on#{callbackName}"].apply context, Array.prototype.slice.call(arguments, 2)...
+            #
+            debug = ->
                 return if not settings.debug or settings.silent
-                console.info.call console, consoleText(arguments), headerCSS, messageCSS, "\n", Array.prototype.slice.call(arguments).slice(1)...
-
-            error: =>
+                console.info.call console, consoleText(arguments), headerCSS, messageCSS, "\n", element, Array.prototype.slice.call(arguments).slice(1)...
+            #
+            error = ->
                 return if settings.silent
                 error = Function.prototype.bind.call console.error, console, consoleText(arguments), errorHeaderCSS, messageCSS
                 error.apply console, Array.prototype.slice.call(arguments, 1)
-
+            #
             instantiate = =>
+                debug 'instantiate'
                 module::beforeCreate()
                 instance = new module {
                     settings
@@ -211,8 +223,8 @@ ts.register = (module) =>
                     id
                 }
                 $module.data moduleNamespace, instance
-                module::created()
-
+                instance.created()
+            #
             observeChanges = =>
                 if not 'MutationObserver' of window
                     return
@@ -221,54 +233,57 @@ ts.register = (module) =>
                 observer.observe element,
                     childList : true
                     subtree   : true
-
+            #
             initialize = (module) =>
+                debug 'initialize'
                 if settings.observeChanges
                     observeChanges()
-               instantiate()
-
+                instantiate()
+            #
+            destroy = =>
+                debug 'destroy'
+                instance.beforeDestroy()
+                $module
+                    .off()
+                    .removeData moduleNamespace
+                instance.destroyed(queryArguments...)
+            #
             invoke = (query, passedArguments, context) =>
                 camelCaseQuery = ''
-
                 #
                 query.split(' ').forEach (word) =>
                     camelCaseQuery += word[0].toUpperCase() + word[1...]
-
-                switch camelCaseQuery
-                    when 'Destroy'
-                        #
-                        # Off + Remove Data Instance
-                        #
-                    when 'Setting'
-                        #
-                        #
-                        #
+                #
+                if camelCaseQuery is 'Destroy'
+                    destroy()
+                    return undefined
+                #
+                if camelCaseQuery is 'Setting'
+                    if ts.isPlainObject queryArguments[0]
+                        settings          = ts.extend settings, queryArguments[0]
+                        instance.settings = settings
+                        return undefined
+                    else
+                        return instance.settings[queryArguments[0]]
                 #
                 if instance[camelCaseQuery] is undefined
                     error '欲呼叫的方法並不存在', query
                     return undefined
-
-                response = instance[camelCaseQuery].apply context, passedArguments
-
                 #
-                if response is instance
-                    return $allModules
-                return response
+                return instance[camelCaseQuery].apply context, passedArguments
 
             if methodInvoked
                 if instance is undefined
                     initialize()
-                return invoke query, queryArguments, instance
+                returnedValue = invoke query, queryArguments, instance
             else
                 if instance isnt undefined
-                    instance.beforeDestroy()
-                    $module
-                        .off()
-                        .removeData moduleNamespace
-                    instance.destroyed.apply instance, queryArguments
+                    destroy()
                 initialize()
 
-        return if returnedValue isnt undefined then returnedValue else $allModules
+        if returnedValue is undefined or returnedValue instanceof module
+            return $allModules
+        return returnedValue
 
 # Get
 #
@@ -891,9 +906,10 @@ ts.fn.one =
 # 註銷事件監聽器。
 ts.fn.off =
     value: (events, handler) ->
-        events = ts.helper.eventAlias(events)
+        if events isnt undefined
+            events = ts.helper.eventAlias(events)
         @each ->
-            if events[0] is '(' and events[events.length-1] is ')'
+            if events?[0] is '(' and events[events.length-1] is ')'
                 return if @ isnt window
                 if window.$media is undefined
                     return
@@ -910,8 +926,8 @@ ts.fn.off =
 
             return if @$events is undefined
 
-            if events is ''
-                delete @$events
+            if events is undefined
+                @$events = {}
                 return
 
             events.split(' ').forEach (eventName) =>
@@ -1189,8 +1205,8 @@ ts.fn.repaint =
 
 ts.fn.uniqueID =
     value: ->
-        id = @$uniqueID
+        id = @get(0).$uniqueID
         if id
             return id
-        @$uniqueID = (Math.random().toString(16) + '000000000').substr(2, 8)
-        return @$uniqueID
+        @get(0).$uniqueID = (Math.random().toString(16) + '000000000').substr(2, 8)
+        return @get(0).$uniqueID

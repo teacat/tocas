@@ -34,7 +34,7 @@ observeChanges: true,
 <p>一個模組中有不少可用方法能夠呼叫，且用以執行特定動作。欲執行一個模組的動作，透過下列用法即可。</p>
 
 <!-- 使用程式碼範例 -->
-<pre class="ts tertiary segment"><code class="hljs">$('.ts.{{ .ModuleName }}').{{ .ModuleName }}('{{ .UI.Usage1 }}', {{ .UI.Usage2 }}, {{ .UI.Usage3 }}...);</code></pre>
+<pre class="ts tertiary segment"><code class="hljs">$('.ts.{{ .Docs.ModuleName }}').{{ .Docs.ModuleName }}('{{ .UI.Usage1 }}', {{ .UI.Usage2 }}, {{ .UI.Usage3 }}...);</code></pre>
 <!-- / 使用程式碼範例 -->
 
 <!-- 可用方法表格 -->
@@ -47,6 +47,7 @@ observeChanges: true,
         </tr>
     </thead>
     <tbody>
+        {{ range .Docs.Usages.Behaviors }}
         <!-- 單個方法 -->
         <tr>
             <!-- 方法名稱 -->
@@ -120,6 +121,7 @@ observeChanges: true,
             <!-- / 回傳數值 -->
         </tr>
         <!-- / 單個方法 -->
+        {{ end }}
     </tbody>
 </table>
 <!-- / 可用方法表格 -->
