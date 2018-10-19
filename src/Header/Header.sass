@@ -1,978 +1,456 @@
-@import ./Button.variables
+@import ../../variables/elements/header.variables
 
 //*******************************//
 //            Variations
 //*******************************//
 
-@mixin button-variant($colors)
-    $color                : nth($colors, 1)
-    $backgroundColor      : nth($colors, 2)
-    $hoverColor           : nth($colors, 3)
-    $hoverBackgroundColor : nth($colors, 4)
-    $activeColor          : nth($colors, 5)
-    $activeBackgroundColor: nth($colors, 6)
-    $borderColor          : nth($colors, 7)
-
-    border-color: $borderColor
-    background  : $backgroundColor
+@mixin header-variant($color, $borderColor, $subColor)
     color       : $color
+    border-color: $borderColor
 
-    &:active:not(.opinion),
-    &.dropdown.visible,
-    &.active
-        background: $activeBackgroundColor
-        color     : $activeColor
-
-    &:not(.visible):not(.hidden):not(.disabled):not([disabled]):not(.active):not(:active):not(.opinion):hover
-        background: $hoverBackgroundColor
-        color     : $hoverColor
-
-//*******************************//
-//           Animation
-//*******************************//
-
-// https://github.com/Dogfalo/materialize/blob/0e5d98d5a1ddb93a5c80246d473f83484e9d1e6b/sass/components/_pulse.scss
-@keyframes pulse-animation
-    0%
-        opacity  : 1
-        transform: scale(1) translateY(-1%) translateX(-1%)
-    50%
-        opacity  : 0
-        transform: scale(1.5) translateY(-1%) translateX(-1%)
-    100%
-        opacity  : 0
-        transform: scale(1.5) translateY(-1%) translateX(-1%)
-
-//-------------------//
-//       Basic
-//-------------------//
-
-@mixin button-basic-variant($color)
-    color: nth($color, 8)
-    &:hover
-        border-color: nth($color, 7)
-    &:active,
-    &.active
-        border-color: nth($color, 9)
-
-//-------------------//
-//   Inverted Basic
-//-------------------//
-
-@mixin button-inverted-basic-variant($color)
-    color: nth($color, 5)
-    &:hover
-        border-color: nth($color, 7)
-    &:active,
-    &.active
-        border-color: nth($color, 9)
+    .sub.header
+        color: $subColor
 
 //*******************************//
 //              Main
 //*******************************//
 
-.ts.button
-    +extend(no-select)
+.ts.header,
+h1, h2, h3, h4, h5, h6
+    margin     : $header_margin
+    line-height: $header_lineHeight
+    font-weight: $header_fontWeight
+    font-size  : $header_commonSize
 
-    cursor        : pointer
-    padding       : $button_padding
-    border-radius : $button_borderRadius
-    font-size     : $button_fontSize
-    font-weight   : $button_fontWeight
-    display       : inline-block
-    line-height   : $inputLineHeight
-    border-width  : $button_borderWidth
-    border-style  : solid
+    &:first-child
+        margin-top: $header_firstMargin
+
+    &:last-child
+        margin-bottom: $header_lastMargin
+
+.ts.header
+    display: table
+    width  : 100%
+    color  : $header_color
+
+.ts.header .sub.header
+    width      : 100%
+    font-weight: normal
+    line-height: $header_subHeaderLineHeight
+    color      : $header_subHeaderColor
+
+.ts.header .sub.header:not(.inline)
+    margin-top: $header_subHeaderDistance
+
+//-------------------//
+//  Inline Sub Header
+//-------------------//
+
+.ts.header .inline.sub.header
+    display       : inline
+    margin-left   : 1em
     vertical-align: middle
-    text-align    : center
-    position      : relative
-    z-index       : $z_button
-
-    +button-variant($button_defaultColors)
-
-//-------------------//
-//      Attached
-//-------------------//
-
-.ts.button[class*='top attached'],
-.ts.buttons[class*='top attached'] .button
-    border-bottom-left-radius : 0
-    border-bottom-right-radius: 0
-
-.ts.button.attached:not([class*='top attached']):not([class*='bottom attached']),
-.ts.buttons.attached:not([class*='top attached']):not([class*='bottom attached']) .button
-    border-radius: 0
-
-.ts.button[class*='bottom attached'],
-.ts.buttons[class*='bottom attached'] .button
-    border-top-left-radius : 0
-    border-top-right-radius: 0
-
-//-------------------//
-//     Secondary
-//-------------------//
-
-.ts.secondary.button:not(.basic):not(.opinion):not(:hover):not(:active):not(.active),
-.ts.secondary.buttons:not(.basic):not(.opinion) .ts.button:not(:hover):not(:active):not(.active)
-    background  : $white
-    border-color: transparent
-
-//-------------------//
-//      Pulsing
-//-------------------//
-
-.ts.pulsing.button
-    z-index: $z_button_pulsing
-
-.ts.pulsing.button:before
-    content : ''
-    display : block
-    position: absolute
-    width   : 100%
-    height  : 100%
-    top     : 0
-    left    : 0
-
-    background: inherit
-    border-radius   : inherit
-    transition      : opacity $button_pulsingTransitionDuration, transform $button_pulsingTransitionDuration
-    animation       : pulse-animation $button_pulsingDuration $button_pulsingTimingFunction infinite
-
-    z-index: $z_button_pulsingBefore
-
-.ts.pulsing.basic.button:before
-    border-color: inherit
-    border      : $button_borderWidth solid
-
-
-//-------------------//
-//      Circular
-//-------------------//
-
-.ts.button.circular,
-.ts.buttons.circular .button
-    border-radius: $circularRadius
-
-//-------------------//
-//      Disabled
-//-------------------//
-
-.ts.button[disabled],
-.ts.button.disabled,
-.ts.button.disabled:hover,
-.ts.buttons.disabled .button,
-.ts.buttons[disabled] .button,
-.ts.buttons.disabled .button:hover
-    +extend(no-select)
-    opacity       : $disabledOpacity !important
-    cursor        : not-allowed      !important
-    pointer-events: none             !important
-
-//-------------------//
-//         Or
-//-------------------//
-
-.ts.buttons > .or
-    position: relative
-    width   : $button_orGap
-    height  : $button_orHeight
-    z-index : $z_button_or
-
-.ts.buttons > .or:before
-    position     : absolute
-    text-align   : center
-    border-radius: $circularRadius
-
-    content: $button_orText
-    top    : 50%
-    left   : 50%
-
-    background: $button_orBackgroundColor
-
-    margin-top : $button_orVerticalOffset
-    margin-left: $button_orHorizontalOffset
-    width      : $button_orCircleSize
-    height     : $button_orCircleSize
-    line-height: $button_orLineHeight
-
-    color      : $button_orTextColor
-    font-style : $button_orTextStyle
-    font-weight: $button_orTextWeight
-
-.ts.buttons > .or[data-text]:before
-    content: attr(data-text)
-
-.ts.buttons > .or + .button.button.button.button.button
-    border-left-width: $button_borderWidth
-
-//-------------------//
-//      Loading
-//-------------------//
-
-.ts.loading.loading.loading.loading.loading.loading.button
-    position      : relative
-    //cursor      : not-allowed
-    text-shadow   : none !important
-    color         : transparent !important
-    opacity       : 1
-    pointer-events: auto
-    transition    : $button_loadingTransition
-
-.ts.loading.button:before
-    position     : absolute
-    content      : ''
-    top          : 50%
-    left         : 50%
-    margin       : $loaderMargin
-    width        : $loaderSize
-    height       : $loaderSize
-    border-radius: $circularRadius
-    border       : $loaderLineWidth solid $button_coloredLoaderFillColor
-
-.ts.loading.button:before:not(.primary):not(.info):not(.warning):not(.inverted):not(.positive):not(.negative):not(.secondary):before
-    border-color: $button_loaderFillColor
-
-.ts.loading.button:after
-    position: absolute
-    content : ''
-    top     : 50%
-    left    : 50%
-    margin  : $loaderMargin
-    width   : $loaderSize
-    height  : $loaderSize
-
-    animation                : button-spin $loaderSpeed linear
-    animation-iteration-count: infinite
-
-    border-radius: $circularRadius
-    border-color : $button_coloredLoaderLineColor transparent transparent
-    border-style : solid
-    border-width : $loaderLineWidth
-    box-shadow   : 0 0 0 1px transparent
-
-.ts.loading.button:not(.primary):not(.info):not(.warning):not(.inverted):not(.positive):not(.negative):not(.secondary):after
-    border-color: $button_loaderLineColor transparent transparent
-
-.ts.labeled.icon.loading.button .icon
-    background: transparent
-    box-shadow: none
-
-@keyframes button-spin
-    from
-        transform: rotate(0deg)
-    to
-        transform: rotate(360deg)
-
-.ts.basic.loading.button:not(.inverted):before
-    border-color: $loaderFillColor
-
-.ts.basic.loading.button:not(.inverted):after
-    border-top-color: $loaderLineColor
-
-//-------------------//
-//    Labeled Icon
-//-------------------//
-
-.ts.labeled.icon.buttons .button,
-.ts.labeled.icon.button
-    position     : relative
-    padding-left : $button_labeledIconPadding !important
-    padding-right: $button_horizontalPadding  !important
-
-/* Compact */
-.ts.compact.labeled.icon.buttons .button,
-.ts.compact.labeled.icon.button
-    padding-left : $button_compactLabeledIconPadding !important
-    padding-right: $button_compactHorizontalPadding  !important
-
-/* Very Compact */
-.ts.labeled.icon.buttons[class*="very compact"] .button,
-.ts.labeled.icon.button[class*="very compact"]
-    padding-left : $button_veryCompactLabeledIconPadding !important
-    padding-right: $button_veryCompactHorizontalPadding  !important
-
-/* Left Labeled */
-.ts.labeled.icon.buttons > .button > .icon,
-.ts.labeled.icon.button > .icon
-    position                 : absolute
-    height                   : 100%
-    line-height              : 1
-    border-radius            : 0
-    border-top-left-radius   : inherit
-    border-bottom-left-radius: inherit
-    text-align               : center
-    z-index                  : $z_buttonIcon
-    margin                   : $button_labeledIconMargin
-    width                    : $button_labeledIconWidth
-    background               : $button_labeledIconBackgroundColor
-    color                    : $button_labeledIconColor
-    box-shadow               : $button_labeledIconLeftShadow
-
-/* Compact */
-.ts.compact.labeled.icon.buttons > .button > .icon,
-.ts.compact.labeled.icon.button > .icon
-    width: $button_compactLabeledIconWidth
-
-/* Very Compact */
-.ts.labeled.icon.buttons[class*="very compact"] > .button > .icon,
-.ts.labeled.icon.button[class*="very compact"] > .icon
-    width: $button_veryCompactLabeledIconWidth
-
-/* Left Labeled */
-.ts.labeled.icon.buttons > .button > .icon,
-.ts.labeled.icon.button > .icon
-    top : 0
-    left: 0
-
-/* Right Labeled */
-.ts[class*="right labeled"].icon.button
-    padding-right: $button_labeledIconPadding !important
-    padding-left : $button_horizontalPadding !important
-
-/* Compact */
-.ts[class*="right labeled"].compact.labeled.icon.buttons .button,
-.ts[class*="right labeled"].compact.labeled.icon.button
-    padding-right: $button_compactLabeledIconPadding !important
-    padding-left : $button_compactHorizontalPadding  !important
-
-/* Very Compact */
-.ts[class*="right labeled"].labeled.icon.buttons[class*="very compact"] .button,
-.ts[class*="right labeled"].labeled.icon.button[class*="very compact"]
-    padding-right: $button_veryCompactLabeledIconPadding !important
-    padding-left : $button_veryCompactHorizontalPadding  !important
-
-.ts[class*="right labeled"].icon.button > .icon
-    left : auto
-    right: 0
-
-    border-radius             : 0
-    border-top-right-radius   : inherit
-    border-bottom-right-radius: inherit
-
-    box-shadow: $button_labeledIconRightShadow
-
-.ts.labeled.icon.buttons > .button > .icon:before,
-.ts.labeled.icon.button > .icon:before,
-.ts.labeled.icon.buttons > .button > .icon:after,
-.ts.labeled.icon.button > .icon:after
-    display   : block
-    position  : absolute
-    width     : 100%
-    top       : 50%
-    text-align: center
-    transform : translateY(-50%)
-
-.ts.labeled.icon.buttons .button > .icon
-    border-radius: 0
-
-.ts.labeled.icon.buttons .button:first-child > .icon
-    border-top-left-radius   : $button_borderRadius
-    border-bottom-left-radius: $button_borderRadius
-//
-// .ts.labeled.icon.buttons .button:last-child > .icon
-//     border-top-right-radius   : $button_borderRadius
-//     border-bottom-right-radius: $button_borderRadius
-
-.ts.vertical.labeled.icon.buttons .button:first-child > .icon
-    border-radius         : 0
-    border-top-left-radius: $button_borderRadius
-
-.ts.vertical.labeled.icon.buttons .button:last-child > .icon
-    border-radius            : 0
-    border-bottom-left-radius: $button_borderRadius
-
-/* Fluid Labeled */
-.ts.fluid[class*="left labeled"].icon.button,
-.ts.fluid[class*="right labeled"].icon.button
-    padding-left : $button_horizontalPadding !important
-    padding-right: $button_horizontalPadding !important
-
-//-------------------//
-//      Floated
-//-------------------//
-
-.ts.button[class*="left floated"],
-.ts.buttons[class*="left floated"]
-    float       : left
-    margin-right: auto
-.ts.button[class*="right floated"],
-.ts.buttons[class*="right floated"]
-    float      : right
-    margin-left: auto
-
-//-------------------//
-//       Fluid
-//-------------------//
-
-.ts.button.fluid,
-.ts.buttons.fluid,
-.ts.buttons.fluid .button
-    width: 100%
-    // This effects the .ts.buttons in card
-    // flex : 1
-
-//-------------------//
-//      Compact
-//-------------------//
-
-.ts.button.compact.compact,
-.ts.buttons.compact.compact .button
-    padding: $button_compactPadding
-
-.ts.button[class*="very compact"][class*="very compact"],
-.ts.buttons[class*="very compact"][class*="very compact"] .button
-    padding: $button_veryCompactPadding
-
-//-------------------//
-//       Sizes
-//-------------------//
-
-.ts.button.mini,
-.ts.buttons.mini .or,
-.ts.buttons.mini .button
-    font-size: $button_miniFontSize
-.ts.button.tiny,
-.ts.buttons.tiny .or,
-.ts.buttons.tiny .button
-    font-size: $button_tinyFontSize
-.ts.button.small,
-.ts.buttons.small .or,
-.ts.buttons.small .button
-    font-size: $button_smallFontSize
-.ts.button.medium,
-.ts.buttons.medium .or,
-.ts.buttons.medium .button
-    font-size: $button_mediumFontSize
-.ts.button.large,
-.ts.buttons.large .or,
-.ts.buttons.large .button
-    font-size: $button_largeFontSize
-.ts.button.big,
-.ts.buttons.big .or,
-.ts.buttons.big .button
-    font-size: $button_bigFontSize
-.ts.button.huge,
-.ts.buttons.huge .or,
-.ts.buttons.huge .button
-    font-size: $button_hugeFontSize
-.ts.button.massive,
-.ts.buttons.massive .or,
-.ts.buttons.massive .button
-    font-size: $button_massiveFontSize
-
-//-------------------//
-//      Labeled
-//-------------------//
-
-.ts.labeled.button:not(.icon)
-    +extend(no-select)
-
-    display       : inline-flex
-    flex-direction: row
-    background    : none !important
-    padding       : 0    !important
-    border        : none !important
-    box-shadow    : none !important
-    vertical-align: bottom
-
-.ts.labeled.button > .button
-    margin     : 0
-
-.ts.labeled.button > .label
-    display     : flex
-    height      : initial
-    align-items : $button_labeledLabelAlign
-    margin      : 0 0 0 $button_labeledLabelBorderOffset !important
-    font-size   : $button_labeledLabelFontSize
-    padding     : $button_labeledLabelPadding
-    font-size   : $button_labeledLabelFontSize
-    border-color: $button_labeledLabelBorderColor
-
-/* Tag */
-.ts.labeled.button > .tag.label:before
-    width : $button_labeledTagLabelSize
-    height: $button_labeledTagLabelSize
-
-/* Right */
-.ts.labeled.button:not([class*="left labeled"]) > .button
-    border-top-right-radius   : 0
-    border-bottom-right-radius: 0
-
-.ts.labeled.button:not([class*="left labeled"]) > .label
-    border-top-left-radius   : 0
-    border-bottom-left-radius: 0
-
-/* Left Side */
-.ts[class*="left labeled"].button > .button
-    border-top-left-radius   : 0
-    border-bottom-left-radius: 0
-
-.ts[class*="left labeled"].button > .label
-    border-top-right-radius   : 0
-    border-bottom-right-radius: 0
 
 //-------------------//
 //       Icon
 //-------------------//
 
-.ts.button.icon,
-.ts.buttons.icon .button
-    padding: $button_verticalPadding $button_verticalPadding
+.ts.header > .icon:not(.button)
+    opacity       : $header_iconOpacity
+    font-size     : $header_iconSize
+    vertical-align: middle
+    padding-right : $header_iconMargin
+    display       : table-cell
 
-/* Compact */
-.ts.compact.button.icon,
-.ts.compact.buttons.icon .button
-    padding: $button_compactVerticalPadding $button_compactVerticalPadding
-
-/* Very Compact */
-.ts.button[class*="very compact"].icon,
-.ts.buttons[class*="very compact"].icon .button
-    padding: $button_veryCompactVerticalPadding $button_veryCompactVerticalPadding
-
-.ts.button > .icon:not(.button)
-    height        : $button_iconHeight
-    opacity       : $button_iconOpacity
-    margin        : $button_iconMargin
-    transition    : $button_iconTransition
-    vertical-align: $button_iconVerticalAlign
-    color         : $button_iconColor
-
-.ts.button:not(.icon) > .icon:not(.button)
-    margin: $button_iconMargin
-
-.ts.button:not(.icon) > .right.icon:not(.button)
-    margin: $button_rightIconMargin
-
-.ts.icon.button > .icon,
-.ts.icon.buttons > .ts.button > .icon,
-    margin   : 0
-    font-size: $button_iconFontSize
+/* With Text Node */
+.ts.header:not(.icon) > .icon:not(.button):only-child,
+.ts.header:not(.icon) > i.flag:not(.button):not(.icon):only-child
+    display     : inline-block
+    padding     : 0em
+    margin-right: $header_iconMargin
 
 //-------------------//
-//       Close
+//    Single Line
 //-------------------//
 
-.ts.close.button
-    +extend(no-select)
-
-    display         : inline-flex
-    align-items     : center
-    justify-content : center
-    color           : $button_closeTextColor
-    background      : $button_closeBackgroundColor
-    border-radius   : $button_closeBorderRadius
-    cursor          : pointer
-    margin          : 0
-    padding         : $button_closePadding
-    border          : 0
-    opacity         : $button_closeOpacity
-
-.ts.close.button:hover
-    background: $button_closeBackgroundColor !important
-    color     : $button_closeTextColor       !important
-    opacity   : $button_closeHoverOpacity
-
-.ts.close.button:active
-    background: $button_closeBackgroundColor !important
-    color     : $button_closeTextColor !important
-    opacity   : $button_closeActiveOpacity
-
-.ts.close.button.disabled
-    opacity       : $button_closeDisabledpacity
-    pointer-events: none
-
-// Icon content
-.ts.close.button:after
-    content    : $button_closeContent
-    line-height: $button_closeLineHeight
-    font-family: $button_closeFont
-
-// Sizes
-.ts.close.button.mini
-    width : $button_closeMiniSize
-    height: $button_closeMiniSize
-.ts.close.button.tiny
-    width : $button_closeTinySize
-    height: $button_closeTinySize
-.ts.close.button.small
-    width : $button_closeSmallSize
-    height: $button_closeSmallSize
-.ts.close.button.medium,
-.ts.close.button
-    width : $button_closeMediumSize
-    height: $button_closeMediumSize
-.ts.close.button.large
-    width : $button_closeLargeSize
-    height: $button_closeLargeSize
-.ts.close.button.big
-    width : $button_closeBigSize
-    height: $button_closeBigSize
-.ts.close.button.huge
-    width : $button_closeHugeSize
-    height: $button_closeHugeSize
-.ts.close.button.massive
-    width : $button_closeMassiveSize
-    height: $button_closeMassiveSize
-
+.ts.header[class*="single line"]
+    word-wrap    : break-word
+    white-space  : nowrap
+    overflow     : hidden
+    text-overflow: ellipsis
 
 //-------------------//
-//       Corner
+//      Disabled
 //-------------------//
 
-.ts.button.corner
-    position: absolute
-    z-index : $z_button_corner
-.ts.button.corner[class*="top right"]
-    transform: translateY(-50%) translateX(50%)
-    top      : 0
-    right    : 0
-.ts.button.corner[class*="top left"]
-    transform: translateY(-50%) translateX(-50%)
-    top      : 0
-    left     : 0
-.ts.button.corner[class*="bottom right"]
-    transform: translateY(50%) translateX(50%)
-    bottom: 0
-    right : 0
-.ts.button.corner[class*="bottom left"]
-    transform: translateY(50%) translateX(-50%)
-    bottom   : 0
-    left     : 0
+.ts.header.disabled,
+.ts.header.disabled .sub.header,
+.ts.header .disabled.sub.header
+    opacity: $disabledOpacity
+
+//-------------------//
+//       Aligns
+//-------------------//
+
+.ts.header[class*="center aligned"][class*="center aligned"],
+.ts.header[class*="center aligned"][class*="center aligned"] .content
+    text-align     : center
+.ts.header[class*="left aligned"][class*="left aligned"],
+.ts.header[class*="left aligned"][class*="left aligned"] .content
+    text-align     : left
+.ts.header[class*="right aligned"][class*="right aligned"],
+.ts.header[class*="right aligned"][class*="right aligned"] .content
+    text-align     : right
+
+//-------------------//
+//      Dividing
+//-------------------//
+
+.ts.header.dividing
+    padding-bottom: $header_dividedBorderPadding
+    border-bottom : $header_dividedBorder
+.ts.header.dividing.primary
+    border-bottom: $header_dividedEmphasizedBorderWidth solid $header_primaryBorderColor
+.ts.header.dividing.info
+    border-bottom: $header_dividedEmphasizedBorderWidth solid $header_infoBorderColor
+.ts.header.dividing.warning
+    border-bottom: $header_dividedEmphasizedBorderWidth solid $header_warningBorderColor
+.ts.header.dividing.positive
+    border-bottom: $header_dividedEmphasizedBorderWidth solid $header_positiveBorderColor
+.ts.header.dividing.negative
+    border-bottom: $header_dividedEmphasizedBorderWidth solid $header_negativeBorderColor
+.ts.header.dividing.inverted
+    border-bottom: $header_dividedEmphasizedBorderWidth solid $header_invertedBorderColor
+
+//-------------------//
+//      Floated
+//-------------------//
+
+.ts.header[class*="left floated"]
+    float       : left
+    margin-right: auto
+.ts.header[class*="right floated"]
+    float      : right
+    margin-left: auto
+
+//-------------------//
+//    Icon Aligns
+//-------------------//
+
+.ts.header .icon[class*="top aligned"]
+    vertical-align: top
+.ts.header .icon[class*="middle aligned"]
+    vertical-align: middle
+.ts.header .icon[class*="bottom aligned"]
+    vertical-align: bottom
+
+//-------------------//
+//        Page
+//-------------------//
+
+h1.ts.header,
+h1
+    font-size: $h1
+h2.ts.header,
+h2
+    font-size: $h2
+h3.ts.header,
+h3
+    font-size: $h3
+h4.ts.header,
+h4
+    font-size: $h4
+h5.ts.header,
+h5
+    font-size: $h5
+h6.ts.header,
+h6
+    font-size: $h6
+
+h1.ts.header .sub.header,
+h1.ts.sub.header
+    font-size: $header_h1SubHeaderFontSize
+h2.ts.header .sub.header,
+h2.ts.sub.header
+    font-size: $header_h2SubHeaderFontSize
+h3.ts.header .sub.header,
+h3.ts.sub.header
+    font-size: $header_h3SubHeaderFontSize
+h4.ts.header .sub.header,
+h4.ts.sub.header
+    font-size: $header_h4SubHeaderFontSize
+h5.ts.header .sub.header,
+h5.ts.sub.header
+    font-size: $header_h5SubHeaderFontSize
+h6.ts.header .sub.header,
+h6.ts.sub.header
+    font-size: $header_h6SubHeaderFontSize
+
+h1.ts.header .small.sub.header,
+h1.ts.small.sub.header
+    font-size: $header_h2SubHeaderFontSize
+h2.ts.header .small.sub.header,
+h2.ts.small.sub.header
+    font-size: $header_h3SubHeaderFontSize
+h3.ts.header .small.sub.header,
+h3.ts.small.sub.header
+    font-size: $header_h4SubHeaderFontSize
+h4.ts.header .small.sub.header,
+h4.ts.small.sub.header
+    font-size: $header_h5SubHeaderFontSize
+h5.ts.header .small.sub.header,
+h5.ts.small.sub.header
+    font-size: $header_h6SubHeaderFontSize
+h6.ts.header .small.sub.header,
+h6.ts.small.sub.header
+    font-size: calc(#{$header_h6SubHeaderFontSize} / 1.5)
+
+//-------------------//
+//   Content Header
+//-------------------//
+
+.ts.massive.header
+    font-size: $header_massiveFontSize
+.ts.huge.header
+    min-height: 1em
+    font-size: $header_hugeFontSize
+.ts.big.header
+    font-size: $header_bigFontSize
+.ts.large.header
+    font-size: $header_largeFontSize
+.ts.header,
+.ts.medium.header
+    font-size: $header_mediumFontSize
+.ts.small.header
+    font-size: $header_smallFontSize
+.ts.tiny.header
+    font-size: $header_tinyFontSize
+.ts.mini.header
+    font-size: $header_miniFontSize
+
+.ts.massive.header .sub.header,
+.ts.massive.sub.header
+    font-size: $header_massiveSubHeaderFontSize
+.ts.huge.header .sub.header,
+.ts.huge.sub.header
+    font-size: $header_hugeSubHeaderFontSize
+.ts.big.header .sub.header,
+.ts.big.sub.header
+    font-size: $header_bigSubHeaderFontSize
+.ts.large.header .sub.header,
+.ts.large.sub.header
+    font-size: $header_largeSubHeaderFontSize
+.ts.header .sub.header,
+.ts.medium.header .sub.header,
+.ts.medium.sub.header,
+.ts.sub.header,
+    font-size: $header_mediumSubHeaderFontSize
+.ts.small.header .sub.header,
+.ts.small.sub.header
+    font-size: $header_smallSubHeaderFontSize
+.ts.tiny.header .sub.header,
+.ts.tiny.sub.header
+    font-size: $header_tinySubHeaderFontSize
+.ts.mini.header .sub.header,
+.ts.mini.sub.header
+    font-size: $header_miniSubHeaderFontSize
+
+.ts.massive.header .small.sub.header,
+.ts.massive.small.sub.header
+    font-size: $header_hugeSubHeaderFontSize
+.ts.huge.header .small.sub.header,
+.ts.huge.small.sub.header
+    font-size: $header_bigSubHeaderFontSize
+.ts.big.header .small.sub.header,
+.ts.big.small.sub.header
+    font-size: $header_largeSubHeaderFontSize
+.ts.large.header .small.sub.header,
+.ts.large.small.sub.header
+    font-size: $header_mediumSubHeaderFontSize
+.ts.medium.header .small.sub.header,
+.ts.medium.small.sub.header
+    font-size: $header_smallSubHeaderFontSize
+.ts.small.header .small.sub.header,
+.ts.small.small.sub.header
+    font-size: $header_tinySubHeaderFontSize
+.ts.tiny.header .small.sub.header,
+.ts.tiny.small.sub.header
+    font-size: $header_miniSubHeaderFontSize
+.ts.mini.header .small.sub.header,
+.ts.mini.small.sub.header
+    font-size: calc(#{$header_miniSubHeaderFontSize} / 1.5)
 
 //-------------------//
 //      Emphasis
 //-------------------//
 
-.ts.button.inverted,
-.ts.buttons.inverted .button
-    +button-variant($button_invertedColors)
-.ts.button.primary,
-.ts.buttons.primary .button
-    +button-variant($button_primaryColors)
-.ts.button.info,
-.ts.buttons.info .button
-    +button-variant($button_infoColors)
-.ts.button.warning,
-.ts.buttons.warning .button
-    +button-variant($button_warningColors)
-.ts.button.negative,
-.ts.buttons.negative .button
-    +button-variant($button_negativeColors)
-.ts.button.positive,
-.ts.buttons.positive .button
-    +button-variant($button_positiveColors)
+.ts.header.primary
+    +header-variant($header_primaryTextColor, $header_primaryBorderColor, $header_primarySubTextColor)
+.ts.header.info
+    +header-variant($header_infoTextColor, $header_infoBorderColor, $header_infoSubTextColor)
+.ts.header.warning
+    +header-variant($header_warningTextColor, $header_warningBorderColor, $header_warningSubTextColor)
+.ts.header.positive
+    +header-variant($header_positiveTextColor, $header_positiveBorderColor, $header_positiveSubTextColor)
+.ts.header.negative
+    +header-variant($header_negativeTextColor, $header_negativeBorderColor, $header_negativeSubTextColor)
+.ts.header.inverted
+    +header-variant($header_invertedTextColor, $header_invertedBorderColor, $header_invertedSubTextColor)
 
 //-------------------//
-//      Opinion
+//       Content
 //-------------------//
 
-.ts.button.opinion,
-.ts.buttons.opinion .button
-    border-color: transparent
-    background  : $button_opinionBackgroundColor
-    color       : $button_opinionTextColor
-
-    &:hover:not(.active):not(:active)
-        background: $button_opinionHoverBackgroundColor
-        color     : $button_opinionHoverTextColor
-    &:active,
-    &.active
-        background: $button_opinionActiveBackgroundColor
-        color     : $button_opinionActiveTextColor
-
-.ts.button.secondary.opinion,
-.ts.buttons.secondary.opinion .button
-    background: $button_opinionSecondryBackgroundColor
-    color     : $button_opinionSecondryTextColor
-
-    &:hover:not(.active):not(:active)
-        background: $button_opinionSecondryHoverBackgroundColor
-        color     : $button_opinionSecondryHoverTextColor
-    &:active,
-    &.active
-        background: $button_opinionSecondryActiveBackgroundColor
-        color     : $button_opinionSecondryActiveTextColor
-
-//-------------------//
-//       Basic
-//-------------------//
-
-.ts.button.basic
-    border-width: $button_basicBorderWidth
-
-.ts.button.basic,
-.ts.button.basic:hover:not(.active):not(:active),
-.ts.buttons.basic .button,
-.ts.buttons.basic .button:hover:not(.active):not(:active)
-    background: $button_basicBackgroundColor
-
-/* Basic */
-.ts.button.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.secondary),
-.ts.buttons.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.secondary) .button
-    background  : transparent
-    border-color: $button_basicBorderColor
-    color       : $button_basicTextColor
-    &:hover:hover:hover:hover:not(.active):not(:active)
-        border-color: $button_basicHoverBorderColor
-        background  : $button_basicHoverBorderColor
-        color       : $button_basicHoverTextColor
-    &:active:active:active:active,
-    &.active.active.active.active
-        border-color: $button_basicActiveBorderColor
-        background  : $button_basicActiveBackgroundColor
-        color       : $button_basicActiveTextColor
-
-/* Secondary Basic */
-.ts.button.basic.secondary:not(.primary):not(.info):not(.warning):not(.positive):not(.negative),
-.ts.buttons.basic.secondary:not(.primary):not(.info):not(.warning):not(.positive):not(.negative) .button
-    background  : transparent
-    border-color: $button_basicSecondaryBorderColor
-    color       : $button_basicSecondaryTextColor
-    &:hover:hover:hover:hover:not(.active):not(:active)
-        background: $button_basicSecondaryHoverBackgroundColor
-        color     : $button_basicSecondaryHoverTextColor
-    &:active:active:active:active,
-    &.active.active.active.active
-        border-color: $button_basicSecondaryActiveBorderColor
-        background  : $button_basicSecondaryActiveBackgroundColor
-        color       : $button_basicSecondaryActiveTextColor
-
-.ts.button.basic.inverted,
-.ts.buttons.basic.inverted .button,
-.ts.button.basic.secondary,
-.ts.buttons.basic.secondary .button
-    +button-basic-variant($inverted)
-.ts.button.basic.primary,
-.ts.buttons.basic.primary .button
-    +button-basic-variant($primary)
-.ts.button.basic.info,
-.ts.buttons.basic.info .button
-    +button-basic-variant($info)
-.ts.button.basic.warning,
-.ts.buttons.basic.warning .button
-    +button-basic-variant($warning)
-.ts.button.basic.negative,
-.ts.buttons.basic.negative .button
-    +button-basic-variant($negative)
-.ts.button.basic.positive,
-.ts.buttons.basic.positive .button
-    +button-basic-variant($positive)
-
-//-------------------//
-//   Inverted Basic
-//-------------------//
-
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative)
-    +button-inverted-basic-variant($inverted)
-    color       : $button_invertedBasicBorderColor
-    border-color: $button_invertedBasicTextColor
-
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.active):not(:active):hover:hover:hover:hover
-    background  : $button_invertedBasicHoverBackgroundColor
-    border-color: $button_invertedBasicHoverBackgroundColor
-    color       : $button_invertedBasicHoverTextColor
-
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):active:active:active:active,
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative).active.active.active.active
-    background  : $button_invertedBasicActiveBackgroundColor
-    border-color: $button_invertedBasicActiveBackgroundColor
-    color       : $button_invertedBasicActiveTextColor
-
-.ts.button.basic.inverted,
-.ts.buttons.basic.inverted .button,
-.ts.button.inverted.basic.secondary,
-.ts.buttons.inverted.basic.secondary .button
-    +button-inverted-basic-variant($inverted)
-    border-width: $button_invertedBasicBorderWidth
-    border-style: $button_invertedBasicBorderStyle
-.ts.button.inverted.basic.primary,
-.ts.buttons.inverted.basic.primary .button
-    +button-inverted-basic-variant($primary)
-.ts.button.inverted.basic.info,
-.ts.buttons.inverted.basic.info .button
-    +button-inverted-basic-variant($info)
-.ts.button.inverted.basic.warning,
-.ts.buttons.inverted.basic.warning .button
-    +button-inverted-basic-variant($warning)
-.ts.button.inverted.basic.negative,
-.ts.buttons.inverted.basic.negative .button
-    +button-inverted-basic-variant($negative)
-.ts.button.inverted.basic.positive,
-.ts.buttons.inverted.basic.positive .button
-    +button-inverted-basic-variant($positive)
-
-//-------------------//
-//        Link
-//-------------------//
-
-.ts.link.button
-    padding        : 0
-    margin         : 0
-    border         : 0
-    font-weight    : $button_linkFontWeight
-    line-height    : inherit
-    vertical-align : baseline
-    color          : $button_linkTextColor
-    text-decoration: $linkUnderline
-
-.ts.link.button.inverted
-    color: $button_invertedLinkTextColor
-
-.ts.link.button,
-.ts.link.button:hover,
-.ts.link.button:active
-    background: transparent !important
-
-.ts.link.button:hover
-    color          : $button_linkHoverTextColor !important
-    text-decoration: $linkHoverUnderline
-
-.ts.link.button:active
-    color          : $button_linkActiveTextColor !important
-    text-decoration: $linkActiveUnderline
-
-.ts.link.button.inverted:hover
-    color: $button_invertedLinkHoverTextColor !important
-
-.ts.link.button.inverted:active
-    color: $button_invertedLinkActiveTextColor !important
-
-//*******************************//
-//            Buttons
-//*******************************///
-
-.ts.buttons
-    display       : inline-flex
+.ts.header .content
+    display       : inline-block
     vertical-align: middle
 
-.ts.buttons:not(.separated):not(.vertical)
-    .ts.button
-        display: inline-block
+/* After Image */
+.ts.header > img + .content,
+.ts.header > .image + .content
+    padding-left  : $header_imageMargin
+    vertical-align: middle
 
-        &:not(:first-child)
-            border-top-left-radius   : 0
-            border-bottom-left-radius: 0
-            border-left-width        : 0
+/* After Icon */
+.ts.header > .icon + .content
+    padding-left  : $header_iconMargin
+    display       : table-cell
+    vertical-align: middle
 
-        &:not(:last-child)
-            border-top-right-radius   : 0
-            border-bottom-right-radius: 0
-            border-right-width        : $button_borderWidth
+//-------------------//
+//        Icon
+//-------------------//
 
-        &:last-child
-            border-left-width: 0
+.ts.icon.header
+    display   : inline-block
+    text-align: center
+    margin    : $header_iconHeaderTopMargin 0em $header_iconHeaderBottomMargin
 
-    &.inverted.basic .ts.button
-        &:not(:last-child)
-            border-right-width: $button_invertedBasicBorderWidth
+.ts.icon.header:after
+    content   : ''
+    display   : block
+    height    : 0px
+    clear     : both
+    visibility: hidden
 
-.ts.vertical.buttons:not(.separated)
+.ts.icon.header:first-child
+    margin-top: $header_iconHeaderFirstMargin
+
+.ts.icon.header .icon
+    float      : none
+    display    : block
+    width      : auto
+    height     : auto
+    line-height: 1
+    padding    : 0em
+    font-size  : $header_iconHeaderSize
+    margin     : 0em auto $header_iconHeaderMargin
+    opacity    : $header_iconHeaderOpacity
+
+.ts.icon.header .icon.loading
+    width: min-content
+
+// This still works with text node only, so commented.
+.ts.icon.header .icon:only-child
+    //margin-bottom: 0
+
+.ts.icon.header .content
     display: block
+    padding: 0em
 
-    .ts.button
-        display: block
+.ts.icon.header .circular.icon
+    font-size: $header_circularHeaderIconSize
 
-        &:not(:first-child)
-            border-top-left-radius : 0
-            border-top-right-radius: 0
-            border-bottom-width    : 0
+.ts.icon.header .rounded.icon,
+.ts.icon.header .bordered.icon,
+    font-size: $header_roundedHeaderIconSize
 
-        &:not(:last-child)
-            border-bottom-left-radius : 0
-            border-bottom-right-radius: 0
-            border-bottom-width       : 0
+.ts.block.icon.header .icon
+    margin-bottom: 0em
 
-        &:last-child
-            border-bottom-width       : $button_borderWidth
+.ts.icon.header.aligned
+    margin-left : auto
+    margin-right: auto
+    display     : block
 
-.ts.vertical.inverted.basic.buttons:not(.separated) .ts.button:last-child
-    border-bottom-width: $button_invertedBasicBorderWidth
-
-//-------------------//
-//     Separated
-//-------------------//
-
-.ts.separated.buttons > .ts.button
-    margin: 0 $button_buttonsSeparatedHorizontalMargin 0 0
-.ts.separated.buttons > .ts.button:last-child:last-child:last-child
-    margin-right: 0
-
-.ts.vertical.separated.buttons
-    flex-direction: column
-.ts.vertical.separated.buttons > .ts.button
-    margin: 0 0 $button_buttonsSeparatedVerticalMargin 0
-.ts.vertical.separated.buttons > .ts.button:last-child
-    margin-bottom: 0
-
-.ts.relaxed.separated.buttons > .ts.button
-    margin: 0 $button_buttonsRelaxedSeparatedHorizontalMargin 0 0
-.ts.vertical.relaxed.separated.buttons > .ts.button
-    margin: 0 0 $button_buttonsRelaxedSeparatedVerticalMargin 0
+/* Sizes */
+.ts.icon.header .mini.icon
+    font-size: $header_miniIconHeaderSize
+.ts.icon.header .tiny.icon
+    font-size: $header_tinyIconHeaderSize
+.ts.icon.header .small.icon
+    font-size: $header_smallIconHeaderSize
+.ts.icon.header .large.icon
+    font-size: $header_largeIconHeaderSize
+.ts.icon.header .big.icon
+    font-size: $header_bigIconHeaderSize
+.ts.icon.header .huge.icon
+    font-size: $header_hugeIconHeaderSize
+.ts.icon.header .massive.icon
+    font-size: $header_massiveIconHeaderSize
 
 //-------------------//
-//     Coupling
+//       Image
 //-------------------//
 
-.ts.button:not(.labeled) > .ts.label
-    margin        : $button_labelMargin
-    height        : $button_labelHeight
-    border        : 0
-    padding-left  : $button_labelHorizontalPadding
-    padding-right : $button_labelHorizontalPadding
-    pointer-events: none
-.ts.button:not(.labeled) > .ts.label:not(.basic):not(.positive):not(.negative):not(.info):not(.primary):not(.warning):not(.inverted)
-    background: $button_labelBackgroundColor
-.ts.button:not(.labeled):hover > .ts.label
-    opacity: $button_labelHoverOpacity
-.ts.button:not(.labeled):active > .ts.label
-    opacity: $button_labelActiveOpacity
+.ts.header > .image,
+.ts.header > img
+    display       : inline-block
+    width         : $header_imageWidth
+    height        : $header_imageHeight
+    max-height    : $header_imageWidth
+
+.ts.header > .image:only-child,
+.ts.header > img:only-child
+    margin-right: $header_imageMargin
 
 //-------------------//
-//     Stackable
+//      Attached
 //-------------------//
 
-.ts.separated.stackable.buttons
-    +rwd-serious(mobile)
-        flex-direction: column
-.ts.separated.stackable.buttons .ts.button
-    +rwd-serious(mobile)
-        margin: 0 0 $button_buttonsSeparatedVerticalMargin 0
-.ts.separated.stackable.buttons .ts.button:last-child
-    +rwd-serious(mobile)
-        margin-bottom: 0
+.ts.attached.header
+    padding      : $header_blockPadding
+    border       : $header_blockBorder
+    background   : $header_attachedBackgroundColor
+    border-radius: $header_blockBorderRadius
 
-.ts.stackable.buttons:not(.separated):not(.vertical)
-    +rwd-serious(mobile)
-        display: block
+.ts.header[class*="top attached"].top.attached
+    +extend(top-attached)
 
-        &:not(.fluid)
-            width: max-content
+.ts.attached:not([class*="bottom attached"]):not([class*="top attached"]).header
+    +extend(attached)
 
-        //-------------------//
-        //       Button
-        //-------------------//
+.ts.header[class*="bottom attached"].bottom.attached
+    +extend(bottom-attached)
 
-        .ts.button
-            border-radius: $button_borderRadius
-            display      : block
+.ts.inverted.attached.header
+    background   : $header_attachedInvertedBackgroundColor
+    border-color : $header_attachedInvertedBorderColor
 
-            &:not(:first-child)
-                border-top-left-radius : 0
-                border-top-right-radius: 0
-                border-bottom-width    : 0
+//-------------------//
+//       Block
+//-------------------//
 
-            &:not(:last-child)
-                border-bottom-left-radius : 0
-                border-bottom-right-radius: 0
-                border-bottom-width       : 0
+.ts.block.header
+    padding         : $header_blockPadding
+    border          : $header_blockBorder
+    background: $header_blockBackgroundColor
+    border-radius   : $header_blockBorderRadius
 
-            &:last-child
-                border-bottom-width       : $button_borderWidth
+//-------------------//
+//   Loose Coupling
+//-------------------//
 
-        //-------------------//
-        //         Or
-        //-------------------//
+.ts.header[class*="top attached"] + .ts.segment[class*="bottom attached"]
+    border-top: 0
 
-        > .or
-            width : 100%
-            height: calc(#{$button_orGap} * 2)
+.ts.header .ts.label
+    font-size     : $header_labelSize
+    margin-left   : $header_labelDistance
+    vertical-align: middle
+
+.ts.header > .ts.right.floated.label.label
+    margin-left: auto
+
+.ts.header .ts.horizontal.label
+    margin-left: 0

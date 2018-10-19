@@ -1,978 +1,332 @@
-@import ./Button.variables
-
-//*******************************//
-//            Variations
-//*******************************//
-
-@mixin button-variant($colors)
-    $color                : nth($colors, 1)
-    $backgroundColor      : nth($colors, 2)
-    $hoverColor           : nth($colors, 3)
-    $hoverBackgroundColor : nth($colors, 4)
-    $activeColor          : nth($colors, 5)
-    $activeBackgroundColor: nth($colors, 6)
-    $borderColor          : nth($colors, 7)
-
-    border-color: $borderColor
-    background  : $backgroundColor
-    color       : $color
-
-    &:active:not(.opinion),
-    &.dropdown.visible,
-    &.active
-        background: $activeBackgroundColor
-        color     : $activeColor
-
-    &:not(.visible):not(.hidden):not(.disabled):not([disabled]):not(.active):not(:active):not(.opinion):hover
-        background: $hoverBackgroundColor
-        color     : $hoverColor
+@import ../../variables/modules/progress.variables
 
 //*******************************//
 //           Animation
 //*******************************//
 
-// https://github.com/Dogfalo/materialize/blob/0e5d98d5a1ddb93a5c80246d473f83484e9d1e6b/sass/components/_pulse.scss
-@keyframes pulse-animation
+// https://github.com/lightningtgc/MProgress.js/blob/master/src/css/mprogress.styl
+@keyframes indeterminate-bar-animation
     0%
-        opacity  : 1
-        transform: scale(1) translateY(-1%) translateX(-1%)
-    50%
-        opacity  : 0
-        transform: scale(1.5) translateY(-1%) translateX(-1%)
+        margin-left: 0px
+        margin-right: 100%
+    40%
+        margin-left: 25%
+        margin-right: 0%
     100%
-        opacity  : 0
-        transform: scale(1.5) translateY(-1%) translateX(-1%)
+        margin-left: 100%
+        margin-right: 0
 
-//-------------------//
-//       Basic
-//-------------------//
+@keyframes buffer-bar-animation
+    0%
+        opacity            : 1
+        background-position: 0px -23px
+    50%
+        opacity: 0
+    100%
+        opacity            : 1
+        background-position: -200px -23px
 
-@mixin button-basic-variant($color)
-    color: nth($color, 8)
-    &:hover
-        border-color: nth($color, 7)
-    &:active,
-    &.active
-        border-color: nth($color, 9)
-
-//-------------------//
-//   Inverted Basic
-//-------------------//
-
-@mixin button-inverted-basic-variant($color)
-    color: nth($color, 5)
-    &:hover
-        border-color: nth($color, 7)
-    &:active,
-    &.active
-        border-color: nth($color, 9)
+@keyframes process-bar-animation
+    from
+        background-position: 0px
+    to
+        background-position: 40px
 
 //*******************************//
-//              Main
+//            Variations
 //*******************************//
 
-.ts.button
-    +extend(no-select)
+@mixin progress-bar-variant($color, $barColor, $activeBarColor)
+    background: $barColor
 
-    cursor        : pointer
-    padding       : $button_padding
-    border-radius : $button_borderRadius
-    font-size     : $button_fontSize
-    font-weight   : $button_fontWeight
-    display       : inline-block
-    line-height   : $inputLineHeight
-    border-width  : $button_borderWidth
-    border-style  : solid
-    vertical-align: middle
-    text-align    : center
-    position      : relative
-    z-index       : $z_button
+    > .progress,
+    > .text
+        color: $color
 
-    +button-variant($button_defaultColors)
+    &:after
+        background: $activeBarColor
 
-//-------------------//
-//      Attached
-//-------------------//
+//*******************************//
+//            Main
+//*******************************//
 
-.ts.button[class*='top attached'],
-.ts.buttons[class*='top attached'] .button
-    border-bottom-left-radius : 0
+.ts.progress
+    position     : relative
+    display      : flex
+    max-width    : 100%
+    border       : $progress_border
+    margin       : $progress_margin
+    background   : $progress_background
+    padding      : $progress_padding
+    border-radius: $progress_borderRadius
+    overflow     : hidden
+
+.ts.progress:first-child
+    margin: $progress_firstMargin
+.ts.progress:last-child
+    margin: $progress_lastMargin
+
+//*******************************//
+//            Content
+//*******************************//
+
+/* Activity Bar */
+.ts.progress .bar
+    display         : inline-block
+    line-height     : 1
+    position        : $progress_barPosition
+    width           : $progress_barInitialWidth
+    min-width       : $progress_barMinWidth
+    background      : $progress_defaultBarColor
+    transition      : width 300ms ease, background-color 300ms ease
+    border-radius   : $progress_barBorderRadius
+
+.ts.progress:not(.buffering) .bar:not(:last-child)
+    border-top-right-radius   : 0
     border-bottom-right-radius: 0
-
-.ts.button.attached:not([class*='top attached']):not([class*='bottom attached']),
-.ts.buttons.attached:not([class*='top attached']):not([class*='bottom attached']) .button
+.ts.progress .bar:last-child:not(:only-child)
+    border-top-left-radius   : 0
+    border-bottom-left-radius: 0
+.ts.progress .bar:not(:last-child):not(:first-child)
     border-radius: 0
 
-.ts.button[class*='bottom attached'],
-.ts.buttons[class*='bottom attached'] .button
-    border-top-left-radius : 0
-    border-top-right-radius: 0
+.ts.progress .bar > .text
+    white-space: nowrap
+    position   : $progress_progressPosition
+    width      : $progress_progressWidth
+    font-size  : $progress_progressSize
+    top        : $progress_progressTop
+    right      : $progress_progressRight
+    left       : $progress_progressLeft
+    bottom     : $progress_progressBottom
+    color      : $progress_defaultTextColor
+    margin-top : $progress_progressOffset
+    font-weight: $progress_progressFontWeight
+    text-align : $progress_progressTextAlign
+
+.ts.progress > .text
+    position   : absolute
+    top        : 50%
+    left       : 50%
+    transform  : translateY(-50%) translateX(-50%)
+    color      : $progress_floatingTextColor
+    text-shadow: $progress_floatingTextShadow
+    z-index    : $z_progress_floatingText
+
+//*******************************//
+//            States
+//*******************************//
 
 //-------------------//
-//     Secondary
+//   Indeterminate
 //-------------------//
 
-.ts.secondary.button:not(.basic):not(.opinion):not(:hover):not(:active):not(.active),
-.ts.secondary.buttons:not(.basic):not(.opinion) .ts.button:not(:hover):not(:active):not(.active)
-    background  : $white
-    border-color: transparent
+.ts.progress.indeterminate .bar
+    animation: indeterminate-bar-animation 2s cubic-bezier(0.4, 0, 0.2, 1) 0s infinite
+    width    : 100% !important
+    min-width: 0
 
 //-------------------//
-//      Pulsing
+// Queried Indeterminate
 //-------------------//
 
-.ts.pulsing.button
-    z-index: $z_button_pulsing
+.ts.progress.queried.indeterminate .bar
+    animation          : indeterminate-bar-animation 2s cubic-bezier(0.4, 0, 0.2, 1) 0s infinite
+    animation-direction: reverse
+    width              : 100% !important
+    min-width: 0
 
-.ts.pulsing.button:before
-    content : ''
-    display : block
+//-------------------//
+//     Buffer Bar
+//-------------------//
+
+.ts.progress.buffering .buffer.bar
     position: absolute
-    width   : 100%
-    height  : 100%
-    top     : 0
     left    : 0
-
-    background: inherit
-    border-radius   : inherit
-    transition      : opacity $button_pulsingTransitionDuration, transform $button_pulsingTransitionDuration
-    animation       : pulse-animation $button_pulsingDuration $button_pulsingTimingFunction infinite
-
-    z-index: $z_button_pulsingBefore
-
-.ts.pulsing.basic.button:before
-    border-color: inherit
-    border      : $button_borderWidth solid
-
+    opacity : .3
 
 //-------------------//
-//      Circular
+//     Preparing
 //-------------------//
 
-.ts.button.circular,
-.ts.buttons.circular .button
-    border-radius: $circularRadius
+.ts.progress.preparing
+    background-size : $progress_preparingBackgroundSize $progress_preparingBackgroundSize
+    background-image: $progress_defaultPreparingBackground
+    animation       : process-bar-animation 2s linear 0s infinite
+
+.ts.progress.preparing .bar
+    visibility: hidden
+
+//-------------------//
+//       Active
+//-------------------//
+
+.ts.active.progress .bar:not(.buffer)
+    position : relative
+    min-width: $progress_activeMinWidth
+
+.ts.progress.active .bar:not(.buffer):after
+    position        : absolute
+    top             : 0
+    bottom          : 0
+    left            : 0
+    content         : ''
+    background: $progress_defaultActiveBarColor
+    border-radius   : $progress_barBorderRadius
+    animation       : process-active 2s cubic-bezier(0.4, 0, 0.2, 1) infinite
+
+@keyframes process-active
+    from
+        opacity: .8
+        width: 0%
+    to
+        opacity: 0
+        width: 100%
 
 //-------------------//
 //      Disabled
 //-------------------//
 
-.ts.button[disabled],
-.ts.button.disabled,
-.ts.button.disabled:hover,
-.ts.buttons.disabled .button,
-.ts.buttons[disabled] .button,
-.ts.buttons.disabled .button:hover
-    +extend(no-select)
-    opacity       : $disabledOpacity !important
-    cursor        : not-allowed      !important
-    pointer-events: none             !important
+.ts.disabled.progress
+    opacity: 0.35
+
+.ts.disabled.progress .bar,
+.ts.disabled.progress .bar::after
+    animation: none !important
+
+//*******************************//
+//            Emphasis
+//*******************************//
+
+.ts.progress.primary .bar,
+.ts.progress .primary.bar
+    +progress-bar-variant($progress_primaryTextColor, $progress_primaryBarColor, $progress_primaryActiveBarColor)
+
+.ts.progress.preparing.primary
+    background-image: $progress_primaryPreparingBackground
+
+.ts.progress.info .bar,
+.ts.progress .info.bar
+    +progress-bar-variant($progress_infoTextColor, $progress_infoBarColor, $progress_infoActiveBarColor)
+
+.ts.progress.preparing.info
+    background-image: $progress_infoPreparingBackground
+
+.ts.progress.warning .bar,
+.ts.progress .warning
+    +progress-bar-variant($progress_warningTextColor, $progress_warningBarColor, $progress_warningActiveBarColor)
+
+.ts.progress.preparing.warning
+    background-image: $progress_warningPreparingBackground
+
+.ts.progress.positive .bar,
+.ts.progress.success .bar,
+.ts.progress .success.bar,
+.ts.progress .positive.bar
+    +progress-bar-variant($progress_positiveTextColor, $progress_positiveBarColor, $progress_positiveActiveBarColor)
+
+.ts.progress.preparing.success,
+.ts.progress.preparing.positive
+    background-image: $progress_positivePreparingBackground
+
+.ts.progress.negative .bar,
+.ts.progress.error .bar,
+.ts.progress .error.bar,
+.ts.progress .negative.bar
+    +progress-bar-variant($progress_negativeTextColor, $progress_negativeBarColor, $progress_negativeActiveBarColor)
+
+.ts.progress.preparing.negative,
+.ts.progress.preparing.error
+    background-image: $progress_negativePreparingBackground
 
 //-------------------//
-//         Or
+//     Attached
 //-------------------//
 
-.ts.buttons > .or
-    position: relative
-    width   : $button_orGap
-    height  : $button_orHeight
-    z-index : $z_button_or
+/* bottom attached */
+.ts.progress.attached
+    position  : relative
+    border    : none
+    margin    : 0em
+    //display   : block
+    overflow  : hidden
 
-.ts.buttons > .or:before
-    position     : absolute
-    text-align   : center
-    border-radius: $circularRadius
+.ts.progress.attached,
+.ts.progress.attached .bar
+    border-radius: 0em
 
-    content: $button_orText
-    top    : 50%
-    left   : 50%
+.ts.progress[class*="top attached"],
+.ts.progress[class*="bottom attached"]
+    background: $progress_attachedBackground
+    height    : $progress_attachedHeight
+    padding   : 0px
 
-    background: $button_orBackgroundColor
+.ts.progress[class*="bottom attached"],
+.ts.progress[class*="bottom attached"] .bar
+    border-bottom-left-radius: $progress_attachedBorderRadius
+    border-top-left-radius   : 0
+    border-top-right-radius  : 0
 
-    margin-top : $button_orVerticalOffset
-    margin-left: $button_orHorizontalOffset
-    width      : $button_orCircleSize
-    height     : $button_orCircleSize
-    line-height: $button_orLineHeight
+/* top attached */
+.ts.progress[class*="top attached"],
+.ts.progress[class*="top attached"] .bar
+    top: 0px
 
-    color      : $button_orTextColor
-    font-style : $button_orTextStyle
-    font-weight: $button_orTextWeight
-
-.ts.buttons > .or[data-text]:before
-    content: attr(data-text)
-
-.ts.buttons > .or + .button.button.button.button.button
-    border-left-width: $button_borderWidth
+    border-top-left-radius    : $progress_attachedBorderRadius
+    border-bottom-left-radius : 0
+    border-bottom-right-radius: 0
 
 //-------------------//
-//      Loading
+//      Coupling
 //-------------------//
 
-.ts.loading.loading.loading.loading.loading.loading.button
-    position      : relative
-    //cursor      : not-allowed
-    text-shadow   : none !important
-    color         : transparent !important
-    opacity       : 1
-    pointer-events: auto
-    transition    : $button_loadingTransition
-
-.ts.loading.button:before
-    position     : absolute
-    content      : ''
-    top          : 50%
-    left         : 50%
-    margin       : $loaderMargin
-    width        : $loaderSize
-    height       : $loaderSize
-    border-radius: $circularRadius
-    border       : $loaderLineWidth solid $button_coloredLoaderFillColor
-
-.ts.loading.button:before:not(.primary):not(.info):not(.warning):not(.inverted):not(.positive):not(.negative):not(.secondary):before
-    border-color: $button_loaderFillColor
-
-.ts.loading.button:after
+.ts.segment > .ts.progress[class*="top attached"],
+.ts.segment > .ts.progress[class*="bottom attached"],
+.ts.card > .ts.progress[class*="top attached"],
+.ts.card > .ts.progress[class*="bottom attached"]
     position: absolute
-    content : ''
-    top     : 50%
-    left    : 50%
-    margin  : $loaderMargin
-    width   : $loaderSize
-    height  : $loaderSize
+    top     : .01rem
+    left    : 0
+    bottom  : 100%
+    width   : 100%
 
-    animation                : button-spin $loaderSpeed linear
-    animation-iteration-count: infinite
-
-    border-radius: $circularRadius
-    border-color : $button_coloredLoaderLineColor transparent transparent
-    border-style : solid
-    border-width : $loaderLineWidth
-    box-shadow   : 0 0 0 1px transparent
-
-.ts.loading.button:not(.primary):not(.info):not(.warning):not(.inverted):not(.positive):not(.negative):not(.secondary):after
-    border-color: $button_loaderLineColor transparent transparent
-
-.ts.labeled.icon.loading.button .icon
-    background: transparent
-    box-shadow: none
-
-@keyframes button-spin
-    from
-        transform: rotate(0deg)
-    to
-        transform: rotate(360deg)
-
-.ts.basic.loading.button:not(.inverted):before
-    border-color: $loaderFillColor
-
-.ts.basic.loading.button:not(.inverted):after
-    border-top-color: $loaderLineColor
-
-//-------------------//
-//    Labeled Icon
-//-------------------//
-
-.ts.labeled.icon.buttons .button,
-.ts.labeled.icon.button
-    position     : relative
-    padding-left : $button_labeledIconPadding !important
-    padding-right: $button_horizontalPadding  !important
-
-/* Compact */
-.ts.compact.labeled.icon.buttons .button,
-.ts.compact.labeled.icon.button
-    padding-left : $button_compactLabeledIconPadding !important
-    padding-right: $button_compactHorizontalPadding  !important
-
-/* Very Compact */
-.ts.labeled.icon.buttons[class*="very compact"] .button,
-.ts.labeled.icon.button[class*="very compact"]
-    padding-left : $button_veryCompactLabeledIconPadding !important
-    padding-right: $button_veryCompactHorizontalPadding  !important
-
-/* Left Labeled */
-.ts.labeled.icon.buttons > .button > .icon,
-.ts.labeled.icon.button > .icon
-    position                 : absolute
-    height                   : 100%
-    line-height              : 1
-    border-radius            : 0
-    border-top-left-radius   : inherit
-    border-bottom-left-radius: inherit
-    text-align               : center
-    z-index                  : $z_buttonIcon
-    margin                   : $button_labeledIconMargin
-    width                    : $button_labeledIconWidth
-    background               : $button_labeledIconBackgroundColor
-    color                    : $button_labeledIconColor
-    box-shadow               : $button_labeledIconLeftShadow
-
-/* Compact */
-.ts.compact.labeled.icon.buttons > .button > .icon,
-.ts.compact.labeled.icon.button > .icon
-    width: $button_compactLabeledIconWidth
-
-/* Very Compact */
-.ts.labeled.icon.buttons[class*="very compact"] > .button > .icon,
-.ts.labeled.icon.button[class*="very compact"] > .icon
-    width: $button_veryCompactLabeledIconWidth
-
-/* Left Labeled */
-.ts.labeled.icon.buttons > .button > .icon,
-.ts.labeled.icon.button > .icon
-    top : 0
-    left: 0
-
-/* Right Labeled */
-.ts[class*="right labeled"].icon.button
-    padding-right: $button_labeledIconPadding !important
-    padding-left : $button_horizontalPadding !important
-
-/* Compact */
-.ts[class*="right labeled"].compact.labeled.icon.buttons .button,
-.ts[class*="right labeled"].compact.labeled.icon.button
-    padding-right: $button_compactLabeledIconPadding !important
-    padding-left : $button_compactHorizontalPadding  !important
-
-/* Very Compact */
-.ts[class*="right labeled"].labeled.icon.buttons[class*="very compact"] .button,
-.ts[class*="right labeled"].labeled.icon.button[class*="very compact"]
-    padding-right: $button_veryCompactLabeledIconPadding !important
-    padding-left : $button_veryCompactHorizontalPadding  !important
-
-.ts[class*="right labeled"].icon.button > .icon
-    left : auto
-    right: 0
-
-    border-radius             : 0
-    border-top-right-radius   : inherit
-    border-bottom-right-radius: inherit
-
-    box-shadow: $button_labeledIconRightShadow
-
-.ts.labeled.icon.buttons > .button > .icon:before,
-.ts.labeled.icon.button > .icon:before,
-.ts.labeled.icon.buttons > .button > .icon:after,
-.ts.labeled.icon.button > .icon:after
-    display   : block
-    position  : absolute
-    width     : 100%
-    top       : 50%
-    text-align: center
-    transform : translateY(-50%)
-
-.ts.labeled.icon.buttons .button > .icon
-    border-radius: 0
-
-.ts.labeled.icon.buttons .button:first-child > .icon
-    border-top-left-radius   : $button_borderRadius
-    border-bottom-left-radius: $button_borderRadius
-//
-// .ts.labeled.icon.buttons .button:last-child > .icon
-//     border-top-right-radius   : $button_borderRadius
-//     border-bottom-right-radius: $button_borderRadius
-
-.ts.vertical.labeled.icon.buttons .button:first-child > .icon
-    border-radius         : 0
-    border-top-left-radius: $button_borderRadius
-
-.ts.vertical.labeled.icon.buttons .button:last-child > .icon
-    border-radius            : 0
-    border-bottom-left-radius: $button_borderRadius
-
-/* Fluid Labeled */
-.ts.fluid[class*="left labeled"].icon.button,
-.ts.fluid[class*="right labeled"].icon.button
-    padding-left : $button_horizontalPadding !important
-    padding-right: $button_horizontalPadding !important
-
-//-------------------//
-//      Floated
-//-------------------//
-
-.ts.button[class*="left floated"],
-.ts.buttons[class*="left floated"]
-    float       : left
-    margin-right: auto
-.ts.button[class*="right floated"],
-.ts.buttons[class*="right floated"]
-    float      : right
-    margin-left: auto
+.ts.segment > .ts.progress[class*="bottom attached"],
+.ts.card > .ts.progress[class*="bottom attached"]
+    top   : auto
+    bottom: .01rem
 
 //-------------------//
 //       Fluid
 //-------------------//
 
-.ts.button.fluid,
-.ts.buttons.fluid,
-.ts.buttons.fluid .button
-    width: 100%
-    // This effects the .ts.buttons in card
-    // flex : 1
-
-//-------------------//
-//      Compact
-//-------------------//
-
-.ts.button.compact.compact,
-.ts.buttons.compact.compact .button
-    padding: $button_compactPadding
-
-.ts.button[class*="very compact"][class*="very compact"],
-.ts.buttons[class*="very compact"][class*="very compact"] .button
-    padding: $button_veryCompactPadding
+.ts.progress.fluid
+    border-radius: 0
 
 //-------------------//
 //       Sizes
 //-------------------//
 
-.ts.button.mini,
-.ts.buttons.mini .or,
-.ts.buttons.mini .button
-    font-size: $button_miniFontSize
-.ts.button.tiny,
-.ts.buttons.tiny .or,
-.ts.buttons.tiny .button
-    font-size: $button_tinyFontSize
-.ts.button.small,
-.ts.buttons.small .or,
-.ts.buttons.small .button
-    font-size: $button_smallFontSize
-.ts.button.medium,
-.ts.buttons.medium .or,
-.ts.buttons.medium .button
-    font-size: $button_mediumFontSize
-.ts.button.large,
-.ts.buttons.large .or,
-.ts.buttons.large .button
-    font-size: $button_largeFontSize
-.ts.button.big,
-.ts.buttons.big .or,
-.ts.buttons.big .button
-    font-size: $button_bigFontSize
-.ts.button.huge,
-.ts.buttons.huge .or,
-.ts.buttons.huge .button
-    font-size: $button_hugeFontSize
-.ts.button.massive,
-.ts.buttons.massive .or,
-.ts.buttons.massive .button
-    font-size: $button_massiveFontSize
-
-//-------------------//
-//      Labeled
-//-------------------//
-
-.ts.labeled.button:not(.icon)
-    +extend(no-select)
-
-    display       : inline-flex
-    flex-direction: row
-    background    : none !important
-    padding       : 0    !important
-    border        : none !important
-    box-shadow    : none !important
-    vertical-align: bottom
-
-.ts.labeled.button > .button
-    margin     : 0
-
-.ts.labeled.button > .label
-    display     : flex
-    height      : initial
-    align-items : $button_labeledLabelAlign
-    margin      : 0 0 0 $button_labeledLabelBorderOffset !important
-    font-size   : $button_labeledLabelFontSize
-    padding     : $button_labeledLabelPadding
-    font-size   : $button_labeledLabelFontSize
-    border-color: $button_labeledLabelBorderColor
-
-/* Tag */
-.ts.labeled.button > .tag.label:before
-    width : $button_labeledTagLabelSize
-    height: $button_labeledTagLabelSize
-
-/* Right */
-.ts.labeled.button:not([class*="left labeled"]) > .button
-    border-top-right-radius   : 0
-    border-bottom-right-radius: 0
-
-.ts.labeled.button:not([class*="left labeled"]) > .label
-    border-top-left-radius   : 0
-    border-bottom-left-radius: 0
-
-/* Left Side */
-.ts[class*="left labeled"].button > .button
-    border-top-left-radius   : 0
-    border-bottom-left-radius: 0
-
-.ts[class*="left labeled"].button > .label
-    border-top-right-radius   : 0
-    border-bottom-right-radius: 0
-
-//-------------------//
-//       Icon
-//-------------------//
-
-.ts.button.icon,
-.ts.buttons.icon .button
-    padding: $button_verticalPadding $button_verticalPadding
-
-/* Compact */
-.ts.compact.button.icon,
-.ts.compact.buttons.icon .button
-    padding: $button_compactVerticalPadding $button_compactVerticalPadding
-
-/* Very Compact */
-.ts.button[class*="very compact"].icon,
-.ts.buttons[class*="very compact"].icon .button
-    padding: $button_veryCompactVerticalPadding $button_veryCompactVerticalPadding
-
-.ts.button > .icon:not(.button)
-    height        : $button_iconHeight
-    opacity       : $button_iconOpacity
-    margin        : $button_iconMargin
-    transition    : $button_iconTransition
-    vertical-align: $button_iconVerticalAlign
-    color         : $button_iconColor
-
-.ts.button:not(.icon) > .icon:not(.button)
-    margin: $button_iconMargin
-
-.ts.button:not(.icon) > .right.icon:not(.button)
-    margin: $button_rightIconMargin
-
-.ts.icon.button > .icon,
-.ts.icon.buttons > .ts.button > .icon,
-    margin   : 0
-    font-size: $button_iconFontSize
-
-//-------------------//
-//       Close
-//-------------------//
-
-.ts.close.button
-    +extend(no-select)
-
-    display         : inline-flex
-    align-items     : center
-    justify-content : center
-    color           : $button_closeTextColor
-    background      : $button_closeBackgroundColor
-    border-radius   : $button_closeBorderRadius
-    cursor          : pointer
-    margin          : 0
-    padding         : $button_closePadding
-    border          : 0
-    opacity         : $button_closeOpacity
-
-.ts.close.button:hover
-    background: $button_closeBackgroundColor !important
-    color     : $button_closeTextColor       !important
-    opacity   : $button_closeHoverOpacity
-
-.ts.close.button:active
-    background: $button_closeBackgroundColor !important
-    color     : $button_closeTextColor !important
-    opacity   : $button_closeActiveOpacity
-
-.ts.close.button.disabled
-    opacity       : $button_closeDisabledpacity
-    pointer-events: none
-
-// Icon content
-.ts.close.button:after
-    content    : $button_closeContent
-    line-height: $button_closeLineHeight
-    font-family: $button_closeFont
-
-// Sizes
-.ts.close.button.mini
-    width : $button_closeMiniSize
-    height: $button_closeMiniSize
-.ts.close.button.tiny
-    width : $button_closeTinySize
-    height: $button_closeTinySize
-.ts.close.button.small
-    width : $button_closeSmallSize
-    height: $button_closeSmallSize
-.ts.close.button.medium,
-.ts.close.button
-    width : $button_closeMediumSize
-    height: $button_closeMediumSize
-.ts.close.button.large
-    width : $button_closeLargeSize
-    height: $button_closeLargeSize
-.ts.close.button.big
-    width : $button_closeBigSize
-    height: $button_closeBigSize
-.ts.close.button.huge
-    width : $button_closeHugeSize
-    height: $button_closeHugeSize
-.ts.close.button.massive
-    width : $button_closeMassiveSize
-    height: $button_closeMassiveSize
-
-
-//-------------------//
-//       Corner
-//-------------------//
-
-.ts.button.corner
-    position: absolute
-    z-index : $z_button_corner
-.ts.button.corner[class*="top right"]
-    transform: translateY(-50%) translateX(50%)
-    top      : 0
-    right    : 0
-.ts.button.corner[class*="top left"]
-    transform: translateY(-50%) translateX(-50%)
-    top      : 0
-    left     : 0
-.ts.button.corner[class*="bottom right"]
-    transform: translateY(50%) translateX(50%)
-    bottom: 0
-    right : 0
-.ts.button.corner[class*="bottom left"]
-    transform: translateY(50%) translateX(-50%)
-    bottom   : 0
-    left     : 0
-
-//-------------------//
-//      Emphasis
-//-------------------//
-
-.ts.button.inverted,
-.ts.buttons.inverted .button
-    +button-variant($button_invertedColors)
-.ts.button.primary,
-.ts.buttons.primary .button
-    +button-variant($button_primaryColors)
-.ts.button.info,
-.ts.buttons.info .button
-    +button-variant($button_infoColors)
-.ts.button.warning,
-.ts.buttons.warning .button
-    +button-variant($button_warningColors)
-.ts.button.negative,
-.ts.buttons.negative .button
-    +button-variant($button_negativeColors)
-.ts.button.positive,
-.ts.buttons.positive .button
-    +button-variant($button_positiveColors)
-
-//-------------------//
-//      Opinion
-//-------------------//
-
-.ts.button.opinion,
-.ts.buttons.opinion .button
-    border-color: transparent
-    background  : $button_opinionBackgroundColor
-    color       : $button_opinionTextColor
-
-    &:hover:not(.active):not(:active)
-        background: $button_opinionHoverBackgroundColor
-        color     : $button_opinionHoverTextColor
-    &:active,
-    &.active
-        background: $button_opinionActiveBackgroundColor
-        color     : $button_opinionActiveTextColor
-
-.ts.button.secondary.opinion,
-.ts.buttons.secondary.opinion .button
-    background: $button_opinionSecondryBackgroundColor
-    color     : $button_opinionSecondryTextColor
-
-    &:hover:not(.active):not(:active)
-        background: $button_opinionSecondryHoverBackgroundColor
-        color     : $button_opinionSecondryHoverTextColor
-    &:active,
-    &.active
-        background: $button_opinionSecondryActiveBackgroundColor
-        color     : $button_opinionSecondryActiveTextColor
-
-//-------------------//
-//       Basic
-//-------------------//
-
-.ts.button.basic
-    border-width: $button_basicBorderWidth
-
-.ts.button.basic,
-.ts.button.basic:hover:not(.active):not(:active),
-.ts.buttons.basic .button,
-.ts.buttons.basic .button:hover:not(.active):not(:active)
-    background: $button_basicBackgroundColor
-
-/* Basic */
-.ts.button.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.secondary),
-.ts.buttons.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.secondary) .button
-    background  : transparent
-    border-color: $button_basicBorderColor
-    color       : $button_basicTextColor
-    &:hover:hover:hover:hover:not(.active):not(:active)
-        border-color: $button_basicHoverBorderColor
-        background  : $button_basicHoverBorderColor
-        color       : $button_basicHoverTextColor
-    &:active:active:active:active,
-    &.active.active.active.active
-        border-color: $button_basicActiveBorderColor
-        background  : $button_basicActiveBackgroundColor
-        color       : $button_basicActiveTextColor
-
-/* Secondary Basic */
-.ts.button.basic.secondary:not(.primary):not(.info):not(.warning):not(.positive):not(.negative),
-.ts.buttons.basic.secondary:not(.primary):not(.info):not(.warning):not(.positive):not(.negative) .button
-    background  : transparent
-    border-color: $button_basicSecondaryBorderColor
-    color       : $button_basicSecondaryTextColor
-    &:hover:hover:hover:hover:not(.active):not(:active)
-        background: $button_basicSecondaryHoverBackgroundColor
-        color     : $button_basicSecondaryHoverTextColor
-    &:active:active:active:active,
-    &.active.active.active.active
-        border-color: $button_basicSecondaryActiveBorderColor
-        background  : $button_basicSecondaryActiveBackgroundColor
-        color       : $button_basicSecondaryActiveTextColor
-
-.ts.button.basic.inverted,
-.ts.buttons.basic.inverted .button,
-.ts.button.basic.secondary,
-.ts.buttons.basic.secondary .button
-    +button-basic-variant($inverted)
-.ts.button.basic.primary,
-.ts.buttons.basic.primary .button
-    +button-basic-variant($primary)
-.ts.button.basic.info,
-.ts.buttons.basic.info .button
-    +button-basic-variant($info)
-.ts.button.basic.warning,
-.ts.buttons.basic.warning .button
-    +button-basic-variant($warning)
-.ts.button.basic.negative,
-.ts.buttons.basic.negative .button
-    +button-basic-variant($negative)
-.ts.button.basic.positive,
-.ts.buttons.basic.positive .button
-    +button-basic-variant($positive)
-
-//-------------------//
-//   Inverted Basic
-//-------------------//
-
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative)
-    +button-inverted-basic-variant($inverted)
-    color       : $button_invertedBasicBorderColor
-    border-color: $button_invertedBasicTextColor
-
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.active):not(:active):hover:hover:hover:hover
-    background  : $button_invertedBasicHoverBackgroundColor
-    border-color: $button_invertedBasicHoverBackgroundColor
-    color       : $button_invertedBasicHoverTextColor
-
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):active:active:active:active,
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative).active.active.active.active
-    background  : $button_invertedBasicActiveBackgroundColor
-    border-color: $button_invertedBasicActiveBackgroundColor
-    color       : $button_invertedBasicActiveTextColor
-
-.ts.button.basic.inverted,
-.ts.buttons.basic.inverted .button,
-.ts.button.inverted.basic.secondary,
-.ts.buttons.inverted.basic.secondary .button
-    +button-inverted-basic-variant($inverted)
-    border-width: $button_invertedBasicBorderWidth
-    border-style: $button_invertedBasicBorderStyle
-.ts.button.inverted.basic.primary,
-.ts.buttons.inverted.basic.primary .button
-    +button-inverted-basic-variant($primary)
-.ts.button.inverted.basic.info,
-.ts.buttons.inverted.basic.info .button
-    +button-inverted-basic-variant($info)
-.ts.button.inverted.basic.warning,
-.ts.buttons.inverted.basic.warning .button
-    +button-inverted-basic-variant($warning)
-.ts.button.inverted.basic.negative,
-.ts.buttons.inverted.basic.negative .button
-    +button-inverted-basic-variant($negative)
-.ts.button.inverted.basic.positive,
-.ts.buttons.inverted.basic.positive .button
-    +button-inverted-basic-variant($positive)
-
-//-------------------//
-//        Link
-//-------------------//
-
-.ts.link.button
-    padding        : 0
-    margin         : 0
-    border         : 0
-    font-weight    : $button_linkFontWeight
-    line-height    : inherit
-    vertical-align : baseline
-    color          : $button_linkTextColor
-    text-decoration: $linkUnderline
-
-.ts.link.button.inverted
-    color: $button_invertedLinkTextColor
-
-.ts.link.button,
-.ts.link.button:hover,
-.ts.link.button:active
-    background: transparent !important
-
-.ts.link.button:hover
-    color          : $button_linkHoverTextColor !important
-    text-decoration: $linkHoverUnderline
-
-.ts.link.button:active
-    color          : $button_linkActiveTextColor !important
-    text-decoration: $linkActiveUnderline
-
-.ts.link.button.inverted:hover
-    color: $button_invertedLinkHoverTextColor !important
-
-.ts.link.button.inverted:active
-    color: $button_invertedLinkActiveTextColor !important
-
-//*******************************//
-//            Buttons
-//*******************************///
-
-.ts.buttons
-    display       : inline-flex
-    vertical-align: middle
-
-.ts.buttons:not(.separated):not(.vertical)
-    .ts.button
-        display: inline-block
-
-        &:not(:first-child)
-            border-top-left-radius   : 0
-            border-bottom-left-radius: 0
-            border-left-width        : 0
-
-        &:not(:last-child)
-            border-top-right-radius   : 0
-            border-bottom-right-radius: 0
-            border-right-width        : $button_borderWidth
-
-        &:last-child
-            border-left-width: 0
-
-    &.inverted.basic .ts.button
-        &:not(:last-child)
-            border-right-width: $button_invertedBasicBorderWidth
-
-.ts.vertical.buttons:not(.separated)
-    display: block
-
-    .ts.button
-        display: block
-
-        &:not(:first-child)
-            border-top-left-radius : 0
-            border-top-right-radius: 0
-            border-bottom-width    : 0
-
-        &:not(:last-child)
-            border-bottom-left-radius : 0
-            border-bottom-right-radius: 0
-            border-bottom-width       : 0
-
-        &:last-child
-            border-bottom-width       : $button_borderWidth
-
-.ts.vertical.inverted.basic.buttons:not(.separated) .ts.button:last-child
-    border-bottom-width: $button_invertedBasicBorderWidth
-
-//-------------------//
-//     Separated
-//-------------------//
-
-.ts.separated.buttons > .ts.button
-    margin: 0 $button_buttonsSeparatedHorizontalMargin 0 0
-.ts.separated.buttons > .ts.button:last-child:last-child:last-child
-    margin-right: 0
-
-.ts.vertical.separated.buttons
-    flex-direction: column
-.ts.vertical.separated.buttons > .ts.button
-    margin: 0 0 $button_buttonsSeparatedVerticalMargin 0
-.ts.vertical.separated.buttons > .ts.button:last-child
-    margin-bottom: 0
-
-.ts.relaxed.separated.buttons > .ts.button
-    margin: 0 $button_buttonsRelaxedSeparatedHorizontalMargin 0 0
-.ts.vertical.relaxed.separated.buttons > .ts.button
-    margin: 0 0 $button_buttonsRelaxedSeparatedVerticalMargin 0
-
-//-------------------//
-//     Coupling
-//-------------------//
-
-.ts.button:not(.labeled) > .ts.label
-    margin        : $button_labelMargin
-    height        : $button_labelHeight
-    border        : 0
-    padding-left  : $button_labelHorizontalPadding
-    padding-right : $button_labelHorizontalPadding
-    pointer-events: none
-.ts.button:not(.labeled) > .ts.label:not(.basic):not(.positive):not(.negative):not(.info):not(.primary):not(.warning):not(.inverted)
-    background: $button_labelBackgroundColor
-.ts.button:not(.labeled):hover > .ts.label
-    opacity: $button_labelHoverOpacity
-.ts.button:not(.labeled):active > .ts.label
-    opacity: $button_labelActiveOpacity
-
-//-------------------//
-//     Stackable
-//-------------------//
-
-.ts.separated.stackable.buttons
-    +rwd-serious(mobile)
-        flex-direction: column
-.ts.separated.stackable.buttons .ts.button
-    +rwd-serious(mobile)
-        margin: 0 0 $button_buttonsSeparatedVerticalMargin 0
-.ts.separated.stackable.buttons .ts.button:last-child
-    +rwd-serious(mobile)
-        margin-bottom: 0
-
-.ts.stackable.buttons:not(.separated):not(.vertical)
-    +rwd-serious(mobile)
-        display: block
-
-        &:not(.fluid)
-            width: max-content
-
-        //-------------------//
-        //       Button
-        //-------------------//
-
-        .ts.button
-            border-radius: $button_borderRadius
-            display      : block
-
-            &:not(:first-child)
-                border-top-left-radius : 0
-                border-top-right-radius: 0
-                border-bottom-width    : 0
-
-            &:not(:last-child)
-                border-bottom-left-radius : 0
-                border-bottom-right-radius: 0
-                border-bottom-width       : 0
-
-            &:last-child
-                border-bottom-width       : $button_borderWidth
-
-        //-------------------//
-        //         Or
-        //-------------------//
-
-        > .or
-            width : 100%
-            height: calc(#{$button_orGap} * 2)
+.ts.tiny.progress
+    font-size: $tiny
+.ts.tiny.progress .bar
+    height: $progress_tinyBarHeight
+
+.ts.small.progress
+    font-size: $small
+.ts.small.progress .bar
+    height: $progress_smallBarHeight
+
+.ts.progress
+    font-size: $medium
+.ts.progress .bar
+    height: $progress_barHeight
+
+.ts.large.progress
+    font-size: $large
+.ts.large.progress .bar
+    height: $progress_largeBarHeight
+
+.ts.big.progress
+    font-size: $big
+.ts.big.progress .bar
+    height: $progress_bigBarHeight

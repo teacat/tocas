@@ -1,978 +1,573 @@
-@import ./Button.variables
+@charset "UTF-8"
+@import ../../variables/collections/message.variables
 
 //*******************************//
 //            Variations
 //*******************************//
 
-@mixin button-variant($colors)
-    $color                : nth($colors, 1)
-    $backgroundColor      : nth($colors, 2)
-    $hoverColor           : nth($colors, 3)
-    $hoverBackgroundColor : nth($colors, 4)
-    $activeColor          : nth($colors, 5)
-    $activeBackgroundColor: nth($colors, 6)
-    $borderColor          : nth($colors, 7)
+@mixin message-variant($color, $backgroundColor, $borderColor)
+    color           : $color
+    background: $backgroundColor
+    border-color    : $borderColor
 
-    border-color: $borderColor
-    background  : $backgroundColor
-    color       : $color
+    &:not(.inverted) .header:not(.ts)
+        color: darken($color, 10%)
 
-    &:active:not(.opinion),
-    &.dropdown.visible,
-    &.active
-        background: $activeBackgroundColor
-        color     : $activeColor
+    a
+        color: rgba($color, 0.9)
 
-    &:not(.visible):not(.hidden):not(.disabled):not([disabled]):not(.active):not(:active):not(.opinion):hover
-        background: $hoverBackgroundColor
-        color     : $hoverColor
-
-//*******************************//
-//           Animation
-//*******************************//
-
-// https://github.com/Dogfalo/materialize/blob/0e5d98d5a1ddb93a5c80246d473f83484e9d1e6b/sass/components/_pulse.scss
-@keyframes pulse-animation
-    0%
-        opacity  : 1
-        transform: scale(1) translateY(-1%) translateX(-1%)
-    50%
-        opacity  : 0
-        transform: scale(1.5) translateY(-1%) translateX(-1%)
-    100%
-        opacity  : 0
-        transform: scale(1.5) translateY(-1%) translateX(-1%)
-
-//-------------------//
-//       Basic
-//-------------------//
-
-@mixin button-basic-variant($color)
-    color: nth($color, 8)
-    &:hover
-        border-color: nth($color, 7)
-    &:active,
-    &.active
-        border-color: nth($color, 9)
-
-//-------------------//
-//   Inverted Basic
-//-------------------//
-
-@mixin button-inverted-basic-variant($color)
-    color: nth($color, 5)
-    &:hover
-        border-color: nth($color, 7)
-    &:active,
-    &.active
-        border-color: nth($color, 9)
+        &:hover
+            color: rgba($color, 1)
 
 //*******************************//
 //              Main
 //*******************************//
 
-.ts.button
-    +extend(no-select)
+.ts.message
+    position        : relative
+    display         : table
+    width           : 100%
+    padding         : $message_padding
+    margin          : $message_margin
+    border          : $message_border
+    background: $message_backgroundColor
+    border-radius   : $message_borderRadius
+    color           : $message_textColor
+    word-wrap       : break-word
+    overflow        : hidden
 
-    cursor        : pointer
-    padding       : $button_padding
-    border-radius : $button_borderRadius
-    font-size     : $button_fontSize
-    font-weight   : $button_fontWeight
-    display       : inline-block
-    line-height   : $inputLineHeight
-    border-width  : $button_borderWidth
-    border-style  : solid
-    vertical-align: middle
-    text-align    : center
-    position      : relative
-    z-index       : $z_button
-
-    +button-variant($button_defaultColors)
-
-//-------------------//
-//      Attached
-//-------------------//
-
-.ts.button[class*='top attached'],
-.ts.buttons[class*='top attached'] .button
-    border-bottom-left-radius : 0
-    border-bottom-right-radius: 0
-
-.ts.button.attached:not([class*='top attached']):not([class*='bottom attached']),
-.ts.buttons.attached:not([class*='top attached']):not([class*='bottom attached']) .button
-    border-radius: 0
-
-.ts.button[class*='bottom attached'],
-.ts.buttons[class*='bottom attached'] .button
-    border-top-left-radius : 0
-    border-top-right-radius: 0
+.ts.message:first-child
+    margin-top: 0em
+.ts.message:last-child
+    margin-bottom: 0em
 
 //-------------------//
-//     Secondary
+//       Header
 //-------------------//
 
-.ts.secondary.button:not(.basic):not(.opinion):not(:hover):not(:active):not(.active),
-.ts.secondary.buttons:not(.basic):not(.opinion) .ts.button:not(:hover):not(:active):not(.active)
-    background  : $white
-    border-color: transparent
+.ts.message .header
+    display    : block
+    font-weight: $message_headerFontWeight
+    margin     : $message_headerMargin
 
-//-------------------//
-//      Pulsing
-//-------------------//
+.ts.message:not(.inverted):not(.positive):not(.info):not(.negative):not(.warning):not(.primary) .header:not(.ts)
+    color: $message_headerTextColor
 
-.ts.pulsing.button
-    z-index: $z_button_pulsing
-
-.ts.pulsing.button:before
-    content : ''
-    display : block
-    position: absolute
-    width   : 100%
-    height  : 100%
-    top     : 0
-    left    : 0
-
-    background: inherit
-    border-radius   : inherit
-    transition      : opacity $button_pulsingTransitionDuration, transform $button_pulsingTransitionDuration
-    animation       : pulse-animation $button_pulsingDuration $button_pulsingTimingFunction infinite
-
-    z-index: $z_button_pulsingBefore
-
-.ts.pulsing.basic.button:before
-    border-color: inherit
-    border      : $button_borderWidth solid
-
-
-//-------------------//
-//      Circular
-//-------------------//
-
-.ts.button.circular,
-.ts.buttons.circular .button
-    border-radius: $circularRadius
-
-//-------------------//
-//      Disabled
-//-------------------//
-
-.ts.button[disabled],
-.ts.button.disabled,
-.ts.button.disabled:hover,
-.ts.buttons.disabled .button,
-.ts.buttons[disabled] .button,
-.ts.buttons.disabled .button:hover
-    +extend(no-select)
-    opacity       : $disabledOpacity !important
-    cursor        : not-allowed      !important
-    pointer-events: none             !important
-
-//-------------------//
-//         Or
-//-------------------//
-
-.ts.buttons > .or
-    position: relative
-    width   : $button_orGap
-    height  : $button_orHeight
-    z-index : $z_button_or
-
-.ts.buttons > .or:before
-    position     : absolute
-    text-align   : center
-    border-radius: $circularRadius
-
-    content: $button_orText
-    top    : 50%
-    left   : 50%
-
-    background: $button_orBackgroundColor
-
-    margin-top : $button_orVerticalOffset
-    margin-left: $button_orHorizontalOffset
-    width      : $button_orCircleSize
-    height     : $button_orCircleSize
-    line-height: $button_orLineHeight
-
-    color      : $button_orTextColor
-    font-style : $button_orTextStyle
-    font-weight: $button_orTextWeight
-
-.ts.buttons > .or[data-text]:before
-    content: attr(data-text)
-
-.ts.buttons > .or + .button.button.button.button.button
-    border-left-width: $button_borderWidth
-
-//-------------------//
-//      Loading
-//-------------------//
-
-.ts.loading.loading.loading.loading.loading.loading.button
-    position      : relative
-    //cursor      : not-allowed
-    text-shadow   : none !important
-    color         : transparent !important
-    opacity       : 1
-    pointer-events: auto
-    transition    : $button_loadingTransition
-
-.ts.loading.button:before
-    position     : absolute
-    content      : ''
-    top          : 50%
-    left         : 50%
-    margin       : $loaderMargin
-    width        : $loaderSize
-    height       : $loaderSize
-    border-radius: $circularRadius
-    border       : $loaderLineWidth solid $button_coloredLoaderFillColor
-
-.ts.loading.button:before:not(.primary):not(.info):not(.warning):not(.inverted):not(.positive):not(.negative):not(.secondary):before
-    border-color: $button_loaderFillColor
-
-.ts.loading.button:after
-    position: absolute
-    content : ''
-    top     : 50%
-    left    : 50%
-    margin  : $loaderMargin
-    width   : $loaderSize
-    height  : $loaderSize
-
-    animation                : button-spin $loaderSpeed linear
-    animation-iteration-count: infinite
-
-    border-radius: $circularRadius
-    border-color : $button_coloredLoaderLineColor transparent transparent
-    border-style : solid
-    border-width : $loaderLineWidth
-    box-shadow   : 0 0 0 1px transparent
-
-.ts.loading.button:not(.primary):not(.info):not(.warning):not(.inverted):not(.positive):not(.negative):not(.secondary):after
-    border-color: $button_loaderLineColor transparent transparent
-
-.ts.labeled.icon.loading.button .icon
-    background: transparent
-    box-shadow: none
-
-@keyframes button-spin
-    from
-        transform: rotate(0deg)
-    to
-        transform: rotate(360deg)
-
-.ts.basic.loading.button:not(.inverted):before
-    border-color: $loaderFillColor
-
-.ts.basic.loading.button:not(.inverted):after
-    border-top-color: $loaderLineColor
-
-//-------------------//
-//    Labeled Icon
-//-------------------//
-
-.ts.labeled.icon.buttons .button,
-.ts.labeled.icon.button
-    position     : relative
-    padding-left : $button_labeledIconPadding !important
-    padding-right: $button_horizontalPadding  !important
-
-/* Compact */
-.ts.compact.labeled.icon.buttons .button,
-.ts.compact.labeled.icon.button
-    padding-left : $button_compactLabeledIconPadding !important
-    padding-right: $button_compactHorizontalPadding  !important
-
-/* Very Compact */
-.ts.labeled.icon.buttons[class*="very compact"] .button,
-.ts.labeled.icon.button[class*="very compact"]
-    padding-left : $button_veryCompactLabeledIconPadding !important
-    padding-right: $button_veryCompactHorizontalPadding  !important
-
-/* Left Labeled */
-.ts.labeled.icon.buttons > .button > .icon,
-.ts.labeled.icon.button > .icon
-    position                 : absolute
-    height                   : 100%
-    line-height              : 1
-    border-radius            : 0
-    border-top-left-radius   : inherit
-    border-bottom-left-radius: inherit
-    text-align               : center
-    z-index                  : $z_buttonIcon
-    margin                   : $button_labeledIconMargin
-    width                    : $button_labeledIconWidth
-    background               : $button_labeledIconBackgroundColor
-    color                    : $button_labeledIconColor
-    box-shadow               : $button_labeledIconLeftShadow
-
-/* Compact */
-.ts.compact.labeled.icon.buttons > .button > .icon,
-.ts.compact.labeled.icon.button > .icon
-    width: $button_compactLabeledIconWidth
-
-/* Very Compact */
-.ts.labeled.icon.buttons[class*="very compact"] > .button > .icon,
-.ts.labeled.icon.button[class*="very compact"] > .icon
-    width: $button_veryCompactLabeledIconWidth
-
-/* Left Labeled */
-.ts.labeled.icon.buttons > .button > .icon,
-.ts.labeled.icon.button > .icon
-    top : 0
-    left: 0
-
-/* Right Labeled */
-.ts[class*="right labeled"].icon.button
-    padding-right: $button_labeledIconPadding !important
-    padding-left : $button_horizontalPadding !important
-
-/* Compact */
-.ts[class*="right labeled"].compact.labeled.icon.buttons .button,
-.ts[class*="right labeled"].compact.labeled.icon.button
-    padding-right: $button_compactLabeledIconPadding !important
-    padding-left : $button_compactHorizontalPadding  !important
-
-/* Very Compact */
-.ts[class*="right labeled"].labeled.icon.buttons[class*="very compact"] .button,
-.ts[class*="right labeled"].labeled.icon.button[class*="very compact"]
-    padding-right: $button_veryCompactLabeledIconPadding !important
-    padding-left : $button_veryCompactHorizontalPadding  !important
-
-.ts[class*="right labeled"].icon.button > .icon
-    left : auto
-    right: 0
-
-    border-radius             : 0
-    border-top-right-radius   : inherit
-    border-bottom-right-radius: inherit
-
-    box-shadow: $button_labeledIconRightShadow
-
-.ts.labeled.icon.buttons > .button > .icon:before,
-.ts.labeled.icon.button > .icon:before,
-.ts.labeled.icon.buttons > .button > .icon:after,
-.ts.labeled.icon.button > .icon:after
-    display   : block
-    position  : absolute
-    width     : 100%
-    top       : 50%
-    text-align: center
-    transform : translateY(-50%)
-
-.ts.labeled.icon.buttons .button > .icon
-    border-radius: 0
-
-.ts.labeled.icon.buttons .button:first-child > .icon
-    border-top-left-radius   : $button_borderRadius
-    border-bottom-left-radius: $button_borderRadius
-//
-// .ts.labeled.icon.buttons .button:last-child > .icon
-//     border-top-right-radius   : $button_borderRadius
-//     border-bottom-right-radius: $button_borderRadius
-
-.ts.vertical.labeled.icon.buttons .button:first-child > .icon
-    border-radius         : 0
-    border-top-left-radius: $button_borderRadius
-
-.ts.vertical.labeled.icon.buttons .button:last-child > .icon
-    border-radius            : 0
-    border-bottom-left-radius: $button_borderRadius
-
-/* Fluid Labeled */
-.ts.fluid[class*="left labeled"].icon.button,
-.ts.fluid[class*="right labeled"].icon.button
-    padding-left : $button_horizontalPadding !important
-    padding-right: $button_horizontalPadding !important
-
-//-------------------//
-//      Floated
-//-------------------//
-
-.ts.button[class*="left floated"],
-.ts.buttons[class*="left floated"]
-    float       : left
-    margin-right: auto
-.ts.button[class*="right floated"],
-.ts.buttons[class*="right floated"]
-    float      : right
-    margin-left: auto
+.ts.message .header:not(.ts)
+    line-height: $message_headerLineHeight
+    font-size  : $message_headerFontSize
 
 //-------------------//
 //       Fluid
 //-------------------//
 
-.ts.button.fluid,
-.ts.buttons.fluid,
-.ts.buttons.fluid .button
-    width: 100%
-    // This effects the .ts.buttons in card
-    // flex : 1
-
-//-------------------//
-//      Compact
-//-------------------//
-
-.ts.button.compact.compact,
-.ts.buttons.compact.compact .button
-    padding: $button_compactPadding
-
-.ts.button[class*="very compact"][class*="very compact"],
-.ts.buttons[class*="very compact"][class*="very compact"] .button
-    padding: $button_veryCompactPadding
-
-//-------------------//
-//       Sizes
-//-------------------//
-
-.ts.button.mini,
-.ts.buttons.mini .or,
-.ts.buttons.mini .button
-    font-size: $button_miniFontSize
-.ts.button.tiny,
-.ts.buttons.tiny .or,
-.ts.buttons.tiny .button
-    font-size: $button_tinyFontSize
-.ts.button.small,
-.ts.buttons.small .or,
-.ts.buttons.small .button
-    font-size: $button_smallFontSize
-.ts.button.medium,
-.ts.buttons.medium .or,
-.ts.buttons.medium .button
-    font-size: $button_mediumFontSize
-.ts.button.large,
-.ts.buttons.large .or,
-.ts.buttons.large .button
-    font-size: $button_largeFontSize
-.ts.button.big,
-.ts.buttons.big .or,
-.ts.buttons.big .button
-    font-size: $button_bigFontSize
-.ts.button.huge,
-.ts.buttons.huge .or,
-.ts.buttons.huge .button
-    font-size: $button_hugeFontSize
-.ts.button.massive,
-.ts.buttons.massive .or,
-.ts.buttons.massive .button
-    font-size: $button_massiveFontSize
-
-//-------------------//
-//      Labeled
-//-------------------//
-
-.ts.labeled.button:not(.icon)
-    +extend(no-select)
-
-    display       : inline-flex
-    flex-direction: row
-    background    : none !important
-    padding       : 0    !important
-    border        : none !important
-    box-shadow    : none !important
-    vertical-align: bottom
-
-.ts.labeled.button > .button
-    margin     : 0
-
-.ts.labeled.button > .label
-    display     : flex
-    height      : initial
-    align-items : $button_labeledLabelAlign
-    margin      : 0 0 0 $button_labeledLabelBorderOffset !important
-    font-size   : $button_labeledLabelFontSize
-    padding     : $button_labeledLabelPadding
-    font-size   : $button_labeledLabelFontSize
-    border-color: $button_labeledLabelBorderColor
-
-/* Tag */
-.ts.labeled.button > .tag.label:before
-    width : $button_labeledTagLabelSize
-    height: $button_labeledTagLabelSize
-
-/* Right */
-.ts.labeled.button:not([class*="left labeled"]) > .button
-    border-top-right-radius   : 0
-    border-bottom-right-radius: 0
-
-.ts.labeled.button:not([class*="left labeled"]) > .label
-    border-top-left-radius   : 0
-    border-bottom-left-radius: 0
-
-/* Left Side */
-.ts[class*="left labeled"].button > .button
-    border-top-left-radius   : 0
-    border-bottom-left-radius: 0
-
-.ts[class*="left labeled"].button > .label
-    border-top-right-radius   : 0
-    border-bottom-right-radius: 0
+.ts.message.fluid
+    border-radius: 0
+    border-left  : 0
+    border-right : 0
 
 //-------------------//
 //       Icon
 //-------------------//
 
-.ts.button.icon,
-.ts.buttons.icon .button
-    padding: $button_verticalPadding $button_verticalPadding
+.ts.message.icon
+    width         : 100%
+    align-items   : center
+    flex-direction: row
+    display       : flex
 
-/* Compact */
-.ts.compact.button.icon,
-.ts.compact.buttons.icon .button
-    padding: $button_compactVerticalPadding $button_compactVerticalPadding
+.ts.message.icon > .icon:not(.close),
+.ts.message.icon > .ts.container > .icon:not(.close)
+    display       : block
+    flex          : 0 0 auto
+    width         : auto
+    line-height   : 1
+    vertical-align: $message_iconVerticalAlign
+    font-size     : $message_iconSize
+    opacity       : $message_iconOpacity
 
-/* Very Compact */
-.ts.button[class*="very compact"].icon,
-.ts.buttons[class*="very compact"].icon .button
-    padding: $button_veryCompactVerticalPadding $button_veryCompactVerticalPadding
+.ts.icon.message > .content
+    display       : block
+    flex          : 1 1 auto
+    vertical-align: $message_iconVerticalAlign
 
-.ts.button > .icon:not(.button)
-    height        : $button_iconHeight
-    opacity       : $button_iconOpacity
-    margin        : $button_iconMargin
-    transition    : $button_iconTransition
-    vertical-align: $button_iconVerticalAlign
-    color         : $button_iconColor
+.ts.icon.message .icon:not(.close) + .content
+    padding-left: $message_iconContentDistance
 
-.ts.button:not(.icon) > .icon:not(.button)
-    margin: $button_iconMargin
+.ts.icon.message .circular.icon
+    width: 1em
 
-.ts.button:not(.icon) > .right.icon:not(.button)
-    margin: $button_rightIconMargin
-
-.ts.icon.button > .icon,
-.ts.icon.buttons > .ts.button > .icon,
-    margin   : 0
-    font-size: $button_iconFontSize
+.ts.message > .icon,
+.ts.message > .ts.container > .icon
+    margin-right: $message_iconDistance
 
 //-------------------//
-//       Close
+//      Content
 //-------------------//
 
-.ts.close.button
-    +extend(no-select)
+.ts.message > .content
+    //flex       : 1
+    align-items: center
+    display    : flex
 
-    display         : inline-flex
-    align-items     : center
-    justify-content : center
-    color           : $button_closeTextColor
-    background      : $button_closeBackgroundColor
-    border-radius   : $button_closeBorderRadius
-    cursor          : pointer
-    margin          : 0
-    padding         : $button_closePadding
-    border          : 0
-    opacity         : $button_closeOpacity
-
-.ts.close.button:hover
-    background: $button_closeBackgroundColor !important
-    color     : $button_closeTextColor       !important
-    opacity   : $button_closeHoverOpacity
-
-.ts.close.button:active
-    background: $button_closeBackgroundColor !important
-    color     : $button_closeTextColor !important
-    opacity   : $button_closeActiveOpacity
-
-.ts.close.button.disabled
-    opacity       : $button_closeDisabledpacity
-    pointer-events: none
-
-// Icon content
-.ts.close.button:after
-    content    : $button_closeContent
-    line-height: $button_closeLineHeight
-    font-family: $button_closeFont
-
-// Sizes
-.ts.close.button.mini
-    width : $button_closeMiniSize
-    height: $button_closeMiniSize
-.ts.close.button.tiny
-    width : $button_closeTinySize
-    height: $button_closeTinySize
-.ts.close.button.small
-    width : $button_closeSmallSize
-    height: $button_closeSmallSize
-.ts.close.button.medium,
-.ts.close.button
-    width : $button_closeMediumSize
-    height: $button_closeMediumSize
-.ts.close.button.large
-    width : $button_closeLargeSize
-    height: $button_closeLargeSize
-.ts.close.button.big
-    width : $button_closeBigSize
-    height: $button_closeBigSize
-.ts.close.button.huge
-    width : $button_closeHugeSize
-    height: $button_closeHugeSize
-.ts.close.button.massive
-    width : $button_closeMassiveSize
-    height: $button_closeMassiveSize
-
+    +rwd-serious(mobile)
+        display: block
 
 //-------------------//
-//       Corner
+//      Actions
 //-------------------//
 
-.ts.button.corner
-    position: absolute
-    z-index : $z_button_corner
-.ts.button.corner[class*="top right"]
-    transform: translateY(-50%) translateX(50%)
-    top      : 0
-    right    : 0
-.ts.button.corner[class*="top left"]
-    transform: translateY(-50%) translateX(-50%)
-    top      : 0
-    left     : 0
-.ts.button.corner[class*="bottom right"]
-    transform: translateY(50%) translateX(50%)
-    bottom: 0
-    right : 0
-.ts.button.corner[class*="bottom left"]
-    transform: translateY(50%) translateX(-50%)
-    bottom   : 0
-    left     : 0
+.ts.message > .content > .actions
+    margin-left: auto
+    white-space: nowrap
+    align-self : flex-start
+
+    +rwd-serious(mobile)
+        margin-top : .8em
+        margin-left: 0
+
+//-------------------//
+//      Floating
+//-------------------//
+
+.ts.message.floating
+    box-shadow: $message_boxShadow
+
+//-------------------//
+//       Hidden
+//-------------------//
+
+.ts.message.hidden
+    display: none
+
+//-------------------//
+//      Visible
+//-------------------//
+
+.ts.message.visible
+    display: block
+
+//-------------------//
+//     Close Icon
+//-------------------//
+
+.ts.message > .ts.close.button,
+.ts.message > .ts.container > .ts.close.button
+    position  : absolute
+    margin    : 0
+    top       : $message_closeTopDistance
+    right     : $message_closeRightDistance
+    z-index   : $z_message_close
 
 //-------------------//
 //      Emphasis
 //-------------------//
 
-.ts.button.inverted,
-.ts.buttons.inverted .button
-    +button-variant($button_invertedColors)
-.ts.button.primary,
-.ts.buttons.primary .button
-    +button-variant($button_primaryColors)
-.ts.button.info,
-.ts.buttons.info .button
-    +button-variant($button_infoColors)
-.ts.button.warning,
-.ts.buttons.warning .button
-    +button-variant($button_warningColors)
-.ts.button.negative,
-.ts.buttons.negative .button
-    +button-variant($button_negativeColors)
-.ts.button.positive,
-.ts.buttons.positive .button
-    +button-variant($button_positiveColors)
+.ts.message.primary
+    +message-variant($message_primaryTextColor, $message_primaryBackgroundColor, $message_primaryBorderColor)
+.ts.message.info
+    +message-variant($message_infoTextColor, $message_infoBackgroundColor, $message_infoBorderColor)
+.ts.message.warning
+    +message-variant($message_warningTextColor, $message_warningBackgroundColor, $message_warningBorderColor)
+.ts.message.positive
+    +message-variant($message_positiveTextColor, $message_positiveBackgroundColor, $message_positiveBorderColor)
+.ts.message.negative
+    +message-variant($message_negativeTextColor, $message_negativeBackgroundColor, $message_negativeBorderColor)
+.ts.message.inverted
+    +message-variant($message_invertedTextColor, $message_invertedBackgroundColor, $message_invertedBorderColor)
 
 //-------------------//
-//      Opinion
+// Inverted Emphasis
 //-------------------//
 
-.ts.button.opinion,
-.ts.buttons.opinion .button
-    border-color: transparent
-    background  : $button_opinionBackgroundColor
-    color       : $button_opinionTextColor
+.ts.message.primary.inverted
+    +message-variant($message_invertedPrimaryTextColor, $message_invertedPrimaryBackgroundColor, $message_invertedPrimaryBorderColor)
+.ts.message.info.inverted
+    +message-variant($message_invertedInfoTextColor, $message_invertedInfoBackgroundColor, $message_invertedInfoBorderColor)
+.ts.message.warning.inverted
+    +message-variant($message_invertedWarningTextColor, $message_invertedWarningBackgroundColor, $message_invertedWarningBorderColor)
+.ts.message.positive.inverted
+    +message-variant($message_invertedPositiveTextColor, $message_invertedPositiveBackgroundColor, $message_invertedPositiveBorderColor)
+.ts.message.negative.inverted
+    +message-variant($message_invertedNegativeTextColor, $message_invertedNegativeBackgroundColor, $message_invertedNegativeBorderColor)
 
-    &:hover:not(.active):not(:active)
-        background: $button_opinionHoverBackgroundColor
-        color     : $button_opinionHoverTextColor
-    &:active,
-    &.active
-        background: $button_opinionActiveBackgroundColor
-        color     : $button_opinionActiveTextColor
+//-------------------//
+//      Secondary
+//-------------------//
 
-.ts.button.secondary.opinion,
-.ts.buttons.secondary.opinion .button
-    background: $button_opinionSecondryBackgroundColor
-    color     : $button_opinionSecondryTextColor
+.ts.message.secondary
+    border-left-width: $message_secondaryBorderWidth
+.ts.message.secondary:not(.inverted)
+    background: transparent
 
-    &:hover:not(.active):not(:active)
-        background: $button_opinionSecondryHoverBackgroundColor
-        color     : $button_opinionSecondryHoverTextColor
-    &:active,
-    &.active
-        background: $button_opinionSecondryActiveBackgroundColor
-        color     : $button_opinionSecondryActiveTextColor
+.ts.message.inverted.secondary.primary
+    border-left: $message_secondaryBorderWidth solid $message_primarySecondaryBorderColor
+.ts.message.inverted.secondary.info
+    border-left: $message_secondaryBorderWidth solid $message_infoSecondaryBorderColor
+.ts.message.inverted.secondary.warning
+    border-left: $message_secondaryBorderWidth solid $message_warningSecondaryBorderColor
+.ts.message.inverted.secondary.positive
+    border-left: $message_secondaryBorderWidth solid $message_positiveSecondaryBorderColor
+.ts.message.inverted.secondary.negative
+    border-left: $message_secondaryBorderWidth solid $message_negativeSecondaryBorderColor
+
+//-------------------//
+//        Sizes
+//-------------------//
+
+.ts.message.mini
+    font-size: $relativeMini
+.ts.message.tiny
+    font-size: $relativeTiny
+.ts.message.small
+    font-size: $relativeSmall
+.ts.message.medium
+    font-size: $relativeMedium
+.ts.message.large
+    font-size: $relativeLarge
+.ts.message.big
+    font-size: $relativeBig
+.ts.message.huge
+    font-size: $relativeHuge
+.ts.message.massive
+    font-size: $relativeMassive
 
 //-------------------//
 //       Basic
 //-------------------//
 
-.ts.button.basic
-    border-width: $button_basicBorderWidth
-
-.ts.button.basic,
-.ts.button.basic:hover:not(.active):not(:active),
-.ts.buttons.basic .button,
-.ts.buttons.basic .button:hover:not(.active):not(:active)
-    background: $button_basicBackgroundColor
-
-/* Basic */
-.ts.button.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.secondary),
-.ts.buttons.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.secondary) .button
-    background  : transparent
-    border-color: $button_basicBorderColor
-    color       : $button_basicTextColor
-    &:hover:hover:hover:hover:not(.active):not(:active)
-        border-color: $button_basicHoverBorderColor
-        background  : $button_basicHoverBorderColor
-        color       : $button_basicHoverTextColor
-    &:active:active:active:active,
-    &.active.active.active.active
-        border-color: $button_basicActiveBorderColor
-        background  : $button_basicActiveBackgroundColor
-        color       : $button_basicActiveTextColor
-
-/* Secondary Basic */
-.ts.button.basic.secondary:not(.primary):not(.info):not(.warning):not(.positive):not(.negative),
-.ts.buttons.basic.secondary:not(.primary):not(.info):not(.warning):not(.positive):not(.negative) .button
-    background  : transparent
-    border-color: $button_basicSecondaryBorderColor
-    color       : $button_basicSecondaryTextColor
-    &:hover:hover:hover:hover:not(.active):not(:active)
-        background: $button_basicSecondaryHoverBackgroundColor
-        color     : $button_basicSecondaryHoverTextColor
-    &:active:active:active:active,
-    &.active.active.active.active
-        border-color: $button_basicSecondaryActiveBorderColor
-        background  : $button_basicSecondaryActiveBackgroundColor
-        color       : $button_basicSecondaryActiveTextColor
-
-.ts.button.basic.inverted,
-.ts.buttons.basic.inverted .button,
-.ts.button.basic.secondary,
-.ts.buttons.basic.secondary .button
-    +button-basic-variant($inverted)
-.ts.button.basic.primary,
-.ts.buttons.basic.primary .button
-    +button-basic-variant($primary)
-.ts.button.basic.info,
-.ts.buttons.basic.info .button
-    +button-basic-variant($info)
-.ts.button.basic.warning,
-.ts.buttons.basic.warning .button
-    +button-basic-variant($warning)
-.ts.button.basic.negative,
-.ts.buttons.basic.negative .button
-    +button-basic-variant($negative)
-.ts.button.basic.positive,
-.ts.buttons.basic.positive .button
-    +button-basic-variant($positive)
+.ts.message.basic
+    background: transparent
+    border          : none
 
 //-------------------//
-//   Inverted Basic
+//     Borderless
 //-------------------//
 
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative)
-    +button-inverted-basic-variant($inverted)
-    color       : $button_invertedBasicBorderColor
-    border-color: $button_invertedBasicTextColor
-
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.active):not(:active):hover:hover:hover:hover
-    background  : $button_invertedBasicHoverBackgroundColor
-    border-color: $button_invertedBasicHoverBackgroundColor
-    color       : $button_invertedBasicHoverTextColor
-
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):active:active:active:active,
-.ts.button.inverted.basic:not(.primary):not(.info):not(.warning):not(.positive):not(.negative).active.active.active.active
-    background  : $button_invertedBasicActiveBackgroundColor
-    border-color: $button_invertedBasicActiveBackgroundColor
-    color       : $button_invertedBasicActiveTextColor
-
-.ts.button.basic.inverted,
-.ts.buttons.basic.inverted .button,
-.ts.button.inverted.basic.secondary,
-.ts.buttons.inverted.basic.secondary .button
-    +button-inverted-basic-variant($inverted)
-    border-width: $button_invertedBasicBorderWidth
-    border-style: $button_invertedBasicBorderStyle
-.ts.button.inverted.basic.primary,
-.ts.buttons.inverted.basic.primary .button
-    +button-inverted-basic-variant($primary)
-.ts.button.inverted.basic.info,
-.ts.buttons.inverted.basic.info .button
-    +button-inverted-basic-variant($info)
-.ts.button.inverted.basic.warning,
-.ts.buttons.inverted.basic.warning .button
-    +button-inverted-basic-variant($warning)
-.ts.button.inverted.basic.negative,
-.ts.buttons.inverted.basic.negative .button
-    +button-inverted-basic-variant($negative)
-.ts.button.inverted.basic.positive,
-.ts.buttons.inverted.basic.positive .button
-    +button-inverted-basic-variant($positive)
+.ts.message.borderless
+    border: none
 
 //-------------------//
-//        Link
+//       Compact
 //-------------------//
 
-.ts.link.button
-    padding        : 0
-    margin         : 0
-    border         : 0
-    font-weight    : $button_linkFontWeight
-    line-height    : inherit
-    vertical-align : baseline
-    color          : $button_linkTextColor
-    text-decoration: $linkUnderline
+.ts.message.compact
+    display: inline-block
+    width  : auto
 
-.ts.link.button.inverted
-    color: $button_invertedLinkTextColor
+//-------------------//
+//       Fitted
+//-------------------//
 
-.ts.link.button,
-.ts.link.button:hover,
-.ts.link.button:active
-    background: transparent !important
+.ts.message[class*="horizontally fitted"]
+    padding-left : 0
+    padding-right: 0
+.ts.message[class*="vertically fitted"]
+    padding-top   : 0
+    padding-bottom: 0
+.ts.message:not(.horizontally):not(.vertically).fitted
+    padding: 0
 
-.ts.link.button:hover
-    color          : $button_linkHoverTextColor !important
-    text-decoration: $linkHoverUnderline
+//-------------------//
+//       Aligns
+//-------------------//
 
-.ts.link.button:active
-    color          : $button_linkActiveTextColor !important
-    text-decoration: $linkActiveUnderline
+.ts.message[class*="center aligned"],
+.ts.message .content .description[class*="center aligned"]
+    text-align: center
+.ts.message[class*="left aligned"],
+.ts.message .content .description[class*="left aligned"]
+    text-align: left
+.ts.message[class*="right aligned"],
+.ts.message .content .description[class*="right aligned"]
+    text-align: right
 
-.ts.link.button.inverted:hover
-    color: $button_invertedLinkHoverTextColor !important
+//-------------------//
+//      Attached
+//-------------------//
 
-.ts.link.button.inverted:active
-    color: $button_invertedLinkActiveTextColor !important
+.ts.message[class*="top attached"]
+    +extend(top-attached)
+
+.ts.message.attached:not([class*="bottom attached"]):not([class*="top attached"])
+    +extend(attached)
+
+.ts.message[class*="bottom attached"]
+    +extend(bottom-attached)
+
+.ts.attached.input + .ts.message[class*="bottom attached"]
+    border-top-width: 0
+
+.ts.attached.message:not([class*="vertically fitted"]):not(.fitted),
+.ts.attached.message[class*="horizontally fitted"]
+    padding-top   : $message_attachedVerticalPadding
+    padding-bottom: $message_attachedVerticalPadding
+
+    > .ts.close.button
+        top: $message_attachedVerticalPadding
+
+.ts.attached.message.padded:not([class*="vertically fitted"]):not(.fitted),
+.ts.attached.message.padded[class*="horizontally fitted"]
+    padding-top   : $message_attachedPaddedVerticalPadding
+    padding-bottom: $message_attachedPaddedVerticalPadding
+
+    > .ts.close.button
+        top: $message_attachedPaddedVerticalPadding
+
+.ts.attached.message.very.padded:not([class*="vertically fitted"]):not(.fitted),
+.ts.attached.message.very.padded[class*="horizontally fitted"]
+    padding-top   : $message_attachedVeryPaddedVerticalPadding
+    padding-bottom: $message_attachedVeryPaddedVerticalPadding
+
+    > .ts.close.button
+        top: $message_attachedVeryPaddedVerticalPadding
+
+//-------------------//
+//    Dismissable
+//-------------------//
+
+.ts.message.dismissable
+    padding-right: $message_dismissableRightPadding
+
+//-------------------//
+//      Outlined
+//-------------------//
+
+.ts.outlined.message
+    background: transparent
+
+//-------------------//
+//     Typography
+//-------------------//
+
+.ts.message p
+    margin-top   : $message_pVerticalMargin
+    margin-bottom: $message_pVerticalMargin
+
+.ts.message p:first-child
+    margin-top: 0
 
 //*******************************//
-//            Buttons
-//*******************************///
+//          Structured
+//*******************************//
 
-.ts.buttons
-    display       : inline-flex
-    vertical-align: middle
-
-.ts.buttons:not(.separated):not(.vertical)
-    .ts.button
-        display: inline-block
-
-        &:not(:first-child)
-            border-top-left-radius   : 0
-            border-bottom-left-radius: 0
-            border-left-width        : 0
-
-        &:not(:last-child)
-            border-top-right-radius   : 0
-            border-bottom-right-radius: 0
-            border-right-width        : $button_borderWidth
-
-        &:last-child
-            border-left-width: 0
-
-    &.inverted.basic .ts.button
-        &:not(:last-child)
-            border-right-width: $button_invertedBasicBorderWidth
-
-.ts.vertical.buttons:not(.separated)
-    display: block
-
-    .ts.button
-        display: block
-
-        &:not(:first-child)
-            border-top-left-radius : 0
-            border-top-right-radius: 0
-            border-bottom-width    : 0
-
-        &:not(:last-child)
-            border-bottom-left-radius : 0
-            border-bottom-right-radius: 0
-            border-bottom-width       : 0
-
-        &:last-child
-            border-bottom-width       : $button_borderWidth
-
-.ts.vertical.inverted.basic.buttons:not(.separated) .ts.button:last-child
-    border-bottom-width: $button_invertedBasicBorderWidth
+.ts.structured.message
+    display       : flex
+    flex-direction: row
 
 //-------------------//
-//     Separated
+//       Avatar
 //-------------------//
 
-.ts.separated.buttons > .ts.button
-    margin: 0 $button_buttonsSeparatedHorizontalMargin 0 0
-.ts.separated.buttons > .ts.button:last-child:last-child:last-child
+.ts.structured.message > .avatar
+    display  : block
+    width    : $message_structuredAvatarWidth
+    min-width: $message_structuredAvatarWidth
+    height   : $message_structuredAvatarHeight
+    float    : left
+
+    margin-right: $message_horizontalPadding
+
+.ts.structured.message > .avatar > img
+    display      : block
+    margin       : 0 auto
+    width        : 100%
+    height       : auto
+    border-radius: $message_structuredAvatarBorderRadius
+
+//-------------------//
+//       Icon
+//-------------------//
+
+.ts.structured.message > .icon:not(i)
+    min-width: $message_structuredAvatarWidth
+    width    : $message_structuredAvatarWidth
+    height   : $message_structuredAvatarHeight
+
+
+.ts.structured.message > .icon > i.icon
+    display        : flex
+    align-items    : center
+    justify-content: center
+
+    width : 100%
+    height: 100%
+    margin: 0
+
+    font-size    : $message_structuredIconSize
+    border-radius: $message_structuredAvatarBorderRadius
+
+    background: $message_structuredIconBackgroundColor
+
+.ts.structured.message:not(.inverted) > .icon > i.icon
+    background: $message_structuredIconNotInvertedBackgroundColor
+
+.ts.structured.message:not(.inverted):not(.primary):not(.info):not(.warning):not(.positive):not(.negative) > .icon > i.icon
+    background: $message_structuredIconNoEmphasisBackgroundColor
+
+//-------------------//
+//      Content
+//-------------------//
+
+.ts.structured.message > .content
+    flex-direction: column
+    align-items   : initial
+    width         : 100%
+
+//-------------------//
+//     Description
+//-------------------//
+
+.ts.structured.message > .content > .description
+    min-height: $message_structuredMinDescriptionHeight
+
+//-------------------//
+//  Extra Description
+//-------------------//
+
+.ts.structured.message > .content > .description + .extra.description,
+.ts.structured.message > .content > .actions + .extra.description
+    padding-top: $message_structuredActionPaddingTop
+    margin-top : $message_structuredActionDistanceToText
+
+.ts.structured.message > .content > .description + .extra.description:before,
+.ts.structured.message > .content > .actions + .extra.description:before
+    position: absolute
+    top     : 0
+    left    : 0
+    right   : -1000px
+    height  : $message_structuredActionBorderWidth
+    content : ''
+
+    background: $message_structuredDividerColor
+
+//-------------------//
+//       Actions
+//-------------------//
+
+.ts.structured.message > .content > .actions
+    margin-left: 0
+    padding-top: $message_structuredActionPaddingTop
+    margin-top : $message_structuredActionDistanceToText
+    width      : 100%
+
+.ts.structured.message > .content > .actions:before
+    position: absolute
+    top     : 0
+    left    : 0
+    right   : -1000px
+    height  : $message_structuredActionBorderWidth
+    content : ''
+
+    background: $message_structuredDividerColor
+
+.ts.structured.message.primary > .content > .actions:before,
+.ts.structured.message.primary > .content > .description + .extra.description:before,
+.ts.structured.message.primary > .content > .actions + .extra.description:before
+    background: $message_structuredPrimaryDividerColor
+.ts.structured.message.info > .content > .actions:before,
+.ts.structured.message.info > .content > .description + .extra.description:before,
+.ts.structured.message.info > .content > .actions + .extra.description:before
+    background: $message_structuredInfoDividerColor
+.ts.structured.message.warning > .content > .actions:before,
+.ts.structured.message.warning > .content > .description + .extra.description:before,
+.ts.structured.message.warning > .content > .actions + .extra.description:before
+    background: $message_structuredWarningDividerColor
+.ts.structured.message.positive > .content > .actions:before,
+.ts.structured.message.positive > .content > .description + .extra.description:before,
+.ts.structured.message.positive > .content > .actions + .extra.description:before
+    background: $message_structuredPositiveDividerColor
+.ts.structured.message.negative > .content > .actions:before,
+.ts.structured.message.negative > .content > .description + .extra.description:before,
+.ts.structured.message.negative > .content > .actions + .extra.description:before
+    background: $message_structuredNegativeDividerColor
+
+.ts.structured.message:not(.inverted)
+    &.primary, &.info, &.warning, &.positive, &.negative
+        > .content > .actions:before,
+        > .content > .description + .extra.description:before,
+        > .content > .actions     + .extra.description:before
+            opacity: 0.15
+
+//-------------------//
+//    Actions Item
+//-------------------//
+
+.ts.structured.message > .content > .actions > a
+    +extend(no-select)
+
+    margin-right: $message_structuredActionItemMargin
+    opacity     : .9
+
+.ts.structured.message > .content > .actions > a:hover
+    opacity: .6
+.ts.structured.message > .content > .actions > a:active
+    opacity: 1
+
+.ts.structured.message > .content > .actions > a:last-child
     margin-right: 0
 
-.ts.vertical.separated.buttons
-    flex-direction: column
-.ts.vertical.separated.buttons > .ts.button
-    margin: 0 0 $button_buttonsSeparatedVerticalMargin 0
-.ts.vertical.separated.buttons > .ts.button:last-child
-    margin-bottom: 0
+.ts.structured.message > .content > .actions > a:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.inverted):not(.disabled):not(:hover)
+    opacity: .8
 
-.ts.relaxed.separated.buttons > .ts.button
-    margin: 0 $button_buttonsRelaxedSeparatedHorizontalMargin 0 0
-.ts.vertical.relaxed.separated.buttons > .ts.button
-    margin: 0 0 $button_buttonsRelaxedSeparatedVerticalMargin 0
+.ts.structured.message:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.inverted) > .content > .actions > a:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.inverted):not(.disabled)
+    color: $message_textColor
+
+//-------------------//
+//   Actions Item
+//-------------------//
+
+//-------------------//
+// Action Item Emphasis
+//-------------------//
+
+.ts.structured.message > .content > .actions > a.primary
+    color: $message_structuredPrimaryActionTextColor
+.ts.structured.message > .content > .actions > a.info
+    color: $message_structuredInfoActionTextColor
+.ts.structured.message > .content > .actions > a.warning
+    color: $message_structuredWarningActionTextColor
+.ts.structured.message > .content > .actions > a.positive
+    color: $message_structuredPositiveActionTextColor
+.ts.structured.message > .content > .actions > a.negative
+    color: $message_structuredNegativeActionTextColor
+.ts.structured.message > .content > .actions > a.inverted
+    color: $message_structuredPrimaryActionTextColor
+
+//-------------------//
+// Disabled Action Item
+//-------------------//
+
+.ts.structured.message > .content > .actions > a.disabled
+    +extend(no-select)
+
+    cursor: not-allowed
+    pointer-events: none
+    opacity       : .45
 
 //-------------------//
 //     Coupling
 //-------------------//
 
-.ts.button:not(.labeled) > .ts.label
-    margin        : $button_labelMargin
-    height        : $button_labelHeight
-    border        : 0
-    padding-left  : $button_labelHorizontalPadding
-    padding-right : $button_labelHorizontalPadding
-    pointer-events: none
-.ts.button:not(.labeled) > .ts.label:not(.basic):not(.positive):not(.negative):not(.info):not(.primary):not(.warning):not(.inverted)
-    background: $button_labelBackgroundColor
-.ts.button:not(.labeled):hover > .ts.label
-    opacity: $button_labelHoverOpacity
-.ts.button:not(.labeled):active > .ts.label
-    opacity: $button_labelActiveOpacity
+.ts.segment[class*="top attached"] + .ts.message[class*="bottom attached"]
+    border-top: 0
 
-//-------------------//
-//     Stackable
-//-------------------//
+.ts.message > .ts.container
+    display: flex
 
-.ts.separated.stackable.buttons
+.ts.icon.message > .ts.container
     +rwd-serious(mobile)
-        flex-direction: column
-.ts.separated.stackable.buttons .ts.button
-    +rwd-serious(mobile)
-        margin: 0 0 $button_buttonsSeparatedVerticalMargin 0
-.ts.separated.stackable.buttons .ts.button:last-child
-    +rwd-serious(mobile)
-        margin-bottom: 0
+        width       : 100% !important
+        margin-left : auto !important
+        margin-right: auto !important
 
-.ts.stackable.buttons:not(.separated):not(.vertical)
-    +rwd-serious(mobile)
-        display: block
+.ts.message > .ts.container > .ts.close.button
+    top  : 0
+    right: 0
 
-        &:not(.fluid)
-            width: max-content
-
-        //-------------------//
-        //       Button
-        //-------------------//
-
-        .ts.button
-            border-radius: $button_borderRadius
-            display      : block
-
-            &:not(:first-child)
-                border-top-left-radius : 0
-                border-top-right-radius: 0
-                border-bottom-width    : 0
-
-            &:not(:last-child)
-                border-bottom-left-radius : 0
-                border-bottom-right-radius: 0
-                border-bottom-width       : 0
-
-            &:last-child
-                border-bottom-width       : $button_borderWidth
-
-        //-------------------//
-        //         Or
-        //-------------------//
-
-        > .or
-            width : 100%
-            height: calc(#{$button_orGap} * 2)
+.ts.message .ts.list,
+.ts.message ul,
+.ts.message ol
+    color        : inherit
+    margin-top   : $message_listVerticalMargin
+    margin-bottom: $message_listVerticalMargin
