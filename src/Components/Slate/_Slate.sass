@@ -1,0 +1,458 @@
+@import ./slate.variables
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.slate
+    position: relative
+
+    padding      : $slate_padding
+    border-radius: $slate_borderRadius
+
+    background: $slate_backgroundColor
+    color     : $slate_textColor
+
+//-------------------//
+//      Compact
+//-------------------//
+
+.ts.compact.slate
+    display: inline-block
+
+//-------------------//
+//       Header
+//-------------------//
+
+.ts.slate .header:not(.ts):not(.sub):not(.item)
+    font-size  : $relativeHuge
+    line-height: $relativeHuge
+    font-weight: 500
+    display    : block
+    color      : $slate_headerTextColor
+
+.ts.slate:not(.heading):not([class*="left aligned"]):not([class*="right aligned"]) .header:not(.ts):not(.sub):not(.item)
+    text-align: center
+
+//-------------------//
+// Bolder & Thinner Header
+//-------------------//
+
+.ts.slate .bolder.header
+    font-weight: bolder
+
+.ts.slate .thinner.header
+    font-weight: 400
+
+//-------------------//
+//    Description
+//-------------------//
+
+.ts.slate .description
+    margin-top: $slate_descriptionMargin
+    opacity   : $slate_descriptionOpacity
+    display   : block
+
+.ts.slate:not(.heading) .description
+    text-align: center
+
+//-------------------//
+//       Action
+//-------------------//
+
+.ts.slate .action:not(.ts)
+    text-align: center
+    margin-top: $slate_actionMargin
+
+.ts.slate.heading .action:not(.ts)
+    text-align: left
+
+//-------------------//
+//   Image & Embed
+//-------------------//
+
+.ts.slate .image:not(i):not(.ts),
+.ts.slate .video:not(i)
+    +extend(no-select)
+
+    left    : 0
+    top     : 0
+    right   : 0
+    bottom  : 0
+    overflow: hidden
+    position: absolute
+
+    pointer-events: none
+
+.ts.slate .image:not(i) img,
+.ts.slate .video:not(i) video,
+.ts.slate .video:not(i) iframe
+    width     : 100%
+    height    : 100%
+    object-fit: cover
+
+.ts.slate .video > video,
+.ts.slate .video > iframe,
+.ts.slate .embed
+    top      : 50%
+    left     : 50%
+    transform: translateX(-50%) translateY(-50%)
+
+.ts.slate .image:not(i) ~ .header,
+.ts.slate .image:not(i) ~ .description,
+.ts.slate .video:not(i) ~ .header,
+.ts.slate .video:not(i) ~ .description,
+.ts.slate .embed ~ .header,
+.ts.slate .embed ~ .description,
+.ts.slate .image:not(i) ~ .ts.container .header,
+.ts.slate .image:not(i) ~ .ts.container .description,
+.ts.slate .video:not(i) ~ .ts.container .header,
+.ts.slate .video:not(i) ~ .ts.container .description
+    color         : $slate_imageTextColor
+    text-rendering: optimizelegibility
+    text-shadow   : $slate_imageTextShadow
+
+.ts.slate .image:not(i) ~ .header:not(.ts):not(.sub):not(.item)
+    color: $slate_imageTextColor
+
+//-------------------//
+//       Extra
+//-------------------//
+
+.ts.slate .extra
+    margin-top: $slate_extraMargin
+    opacity   : $slate_extraOpacity
+
+//-------------------//
+//       Icons
+//-------------------//
+
+.ts.slate .icons
+    text-align: center
+
+/* Single Icon */
+.ts.slate > .icon:not(.button):not(.menu):not(.symbol),
+.ts.slate > .icons > .icon,
+.ts.slate > .ts.container > .icon:not(.button):not(.menu):not(.symbol),
+.ts.slate > .ts.container > .icons > .icon
+    font-size: $slate_iconSize
+    display  : block
+    margin   : 0 auto
+
+.ts.slate > .icons > .icon,
+.ts.slate > .ts.container > .icons > .icon
+    display: inline-block
+
+.ts.slate .icons:not(.symbol) + .description,
+.ts.slate .icon:not(.symbol) + .description
+    margin-top: $slate_headerMargin
+
+.ts.slate .icons:not(.symbol) + .header,
+.ts.slate .icon:not(.symbol) + .header
+    margin-top: $slate_headerMargin
+
+.ts.slate .header + .icons:not(.symbol):not(.symbol),
+.ts.slate .header + .icon:not(.symbol):not(.symbol),
+.ts.slate .description + .icons:not(.symbol):not(.symbol),
+.ts.slate .description + .icon:not(.symbol):not(.symbol)
+    margin-top: $slate_iconMargin
+
+//-------------------//
+//      Relaxed
+//-------------------//
+
+//.ts.relaxed.slate .icons:not(.symbol) + .header,
+//.ts.relaxed.slate .icon:not(.symbol) + .header
+
+//.ts.relaxed.slate .description
+
+//.ts.relaxed.slate .action
+
+//-------------------//
+//      Attached
+//-------------------//
+
+.ts.slate[class*="top attached"]
+    +extend(top-attached)
+
+.ts.slate.attached:not([class*="top attached"]):not([class*="bottom attached"])
+    +extend(attached)
+
+.ts.slate[class*="bottom attached"]
+    +extend(bottom-attached)
+
+//-------------------//
+//     Secondary
+//-------------------//
+
+.ts.slate.secondary
+    background: $slate_secondaryBackgroundColor
+
+.ts.slate.tertiary
+    background: $slate_tertiaryBackgroundColor
+
+//-------------------//
+//  Secondary Icons
+//-------------------//
+
+.ts.slate .secondary.icons,
+.ts.slate .secondary.icon
+    opacity: $slate_secondaryIconOpacity
+
+//-------------------//
+//     Symbol Icon
+//-------------------//
+
+.ts.slate .symbol.icons
+    display: flex
+.ts.slate .symbol.icons .icon
+    font-size: $slate_symbolIconSize
+
+.ts.slate .symbol.icons,
+.ts.slate .symbol.icon
+    position : absolute
+    right    : 0
+    bottom   : 0
+    font-size: $slate_symbolIconFontSize
+    height   : $slate_symbolIconSize
+    opacity  : $slate_symbolIconOpacity
+    overflow : hidden
+    margin   : 0
+
+.ts.slate .symbol.icon
+    width: $slate_symbolIconSize
+
+//-------------------//
+//      Heading
+//-------------------//
+
+.ts.heading.slate
+    text-align: left
+
+.ts.heading.slate .header:not(.ts):not(.sub):not(.item)
+    font-size: $relativeMassive
+
+//-------------------//
+//      Insetted
+//-------------------//
+
+.ts.insetted.slate
+    box-shadow: $slate_insettedShadow
+
+//-------------------//
+//       Basic
+//-------------------//
+
+.ts.basic.slate
+    background: transparent
+    border    : $slate_basicBorder
+
+//-------------------//
+//       Dashed
+//-------------------//
+
+.ts.dashed.slate
+    border    : $slate_dashedBorder
+    background: transparent
+
+//-------------------//
+//     Borderless
+//-------------------//
+
+.ts.borderless.slate
+    border: 0
+
+//-------------------//
+//      Centered
+//-------------------//
+
+.ts.centered.slate
+    margin: 0 auto
+
+//-------------------//
+//       Padded
+//-------------------//
+
+.ts.slate.padded
+    padding: $slate_paddedPadding
+.ts.slate.very.padded
+    padding: $slate_veryPaddedPadding
+.ts.slate.extra.padded
+    padding: $slate_extraPaddedPadding
+
+.ts.slate.padded[class*="horizontally padded"]
+    padding: $slate_verticalPadding $slate_paddedPadding
+.ts.slate.very.padded[class*="horizontally very padded"]
+    padding: $slate_verticalPadding $slate_veryPaddedPadding
+.ts.slate.extra.padded[class*="horizontally extra padded"]
+    padding: $slate_verticalPadding $slate_extraPaddedPadding
+
+.ts.slate.padded[class*="vertically padded"]
+    padding: $slate_paddedPadding $slate_horizontalPadding
+.ts.slate.very.padded[class*="vertically very padded"]
+    padding: $slate_veryPaddedPadding $slate_horizontalPadding
+.ts.slate.extra.padded[class*="vertically extra padded"]
+    padding: $slate_extraPaddedPadding $slate_horizontalPadding
+
+//-------------------//
+//       Fitted
+//-------------------//
+
+.ts.slate.fitted.fitted:not([class*="horizontally fitted"]):not([class*="vertically fitted"])
+    padding: 0
+.ts.slate.horizontally.fitted[class*="horizontally fitted"]
+    padding-left : 0
+    padding-right: 0
+.ts.slate.vertically.fitted[class*="vertically fitted"]
+    padding-top   : 0
+    padding-bottom: 0
+
+//-------------------//
+//      Disabled
+//-------------------//
+
+.ts.slate.disabled
+    pointer-events: none
+    opacity       : $disabledOpacity
+    color         : $disabledTextColor
+
+//-------------------//
+//       Aligns
+//-------------------//
+
+.ts.slate[class*="left aligned"],
+.ts.slate[class*="left aligned"] .header,
+.ts.slate[class*="left aligned"] .description,
+.ts.slate[class*="left aligned"] .action
+    justify-content: flex-start
+    text-align     : left
+.ts.slate[class*="right aligned"],
+.ts.slate[class*="right aligned"] .header,
+.ts.slate[class*="right aligned"] .description,
+.ts.slate[class*="right aligned"] .action
+    justify-content: flex-end
+    text-align     : right
+.ts.slate[class*="center aligned"],
+.ts.slate[class*="center aligned"] .header,
+.ts.slate[class*="center aligned"] .description,
+.ts.slate[class*="center aligned"] .action
+    justify-content: center
+    text-align     : center
+
+//-------------------//
+//     Clickable
+//-------------------//
+
+.ts.clickable.slate
+    +extend(no-select)
+
+.ts.clickable.slate:hover
+    cursor: pointer
+
+.ts.clickable.slate:not(.basic):hover
+    background: $slate_clickableHoverBackgroundColor
+.ts.clickable.slate:not(.basic):active
+    background: $slate_clickableActiveBackgroundColor
+
+/* Basic */
+.ts.clickable.slate.basic:hover
+    border-color: $slate_clickableBasicHoverBackgroundColor
+.ts.clickable.slate.basic:active
+    border-color: $slate_clickableBasicActiveBackgroundColor
+
+//-------------------//
+//        Sizes
+//-------------------//
+
+.ts.mini.slate
+    font-size: $slate_miniFontSize
+.ts.tiny.slate
+    font-size: $slate_tinyFontSize
+.ts.small.slate
+    font-size: $slate_smallFontSize
+.ts.medium.slate
+    font-size: $slate_mediumFontSize
+.ts.large.slate
+    font-size: $slate_largeFontSize
+.ts.big.slate
+    font-size: $slate_bigFontSize
+.ts.huge.slate
+    font-size: $slate_hugeFontSize
+.ts.massive.slate
+    font-size: $slate_massiveFontSize
+
+//-------------------//
+//     Slate Menu
+//-------------------//
+
+.ts.slate .ts.menu[class*="top attached"]
+    margin: -#{$slate_verticalPadding} -#{$slate_horizontalPadding} $slate_verticalPadding -#{$slate_horizontalPadding}
+    width: calc(100% + #{$slate_horizontalPadding} * 2)
+.ts.padded.padded.slate:not(.horizontally) .ts.menu[class*="top attached"]
+    margin: -#{$slate_paddedPadding} -#{$slate_paddedPadding} $slate_paddedPadding -#{$slate_paddedPadding}
+    width: calc(100% + #{$slate_paddedPadding} * 2)
+.ts.very.padded.slate:not(.horizontally) .ts.menu[class*="top attached"]
+    margin: -#{$slate_veryPaddedPadding} -#{$slate_veryPaddedPadding} $slate_veryPaddedPadding -#{$slate_veryPaddedPadding}
+    width: calc(100% + #{$slate_veryPaddedPadding} * 2)
+.ts.extra.padded.slate:not(.horizontally) .ts.menu[class*="top attached"]
+    margin: -#{$slate_extraPaddedPadding} -#{$slate_extraPaddedPadding} $slate_extraPaddedPadding -#{$slate_extraPaddedPadding}
+    width: calc(100% + #{$slate_extraPaddedPadding} * 2)
+
+.ts.horizontally.padded.padded.slate .ts.menu[class*="top attached"]
+    margin-left: -#{$slate_paddedPadding}
+    margin-right: -#{$slate_paddedPadding}
+    width: calc(100% + #{$slate_paddedPadding} * 2)
+.ts.horizontally.very.padded.slate .ts.menu[class*="top attached"]
+    margin-left: -#{$slate_veryPaddedPadding}
+    margin-right: -#{$slate_veryPaddedPadding}
+    width: calc(100% + #{$slate_veryPaddedPadding} * 2)
+.ts.horizontally.extra.padded.slate .ts.menu[class*="top attached"]
+    margin-left: -#{$slate_extraPaddedPadding}
+    margin-right: -#{$slate_extraPaddedPadding}
+    width: calc(100% + #{$slate_extraPaddedPadding} * 2)
+
+.ts.slate .ts.container > .ts.menu.menu[class*="top attached"],
+.ts.slate .ts.container > .ts.menu.menu[class*="bottom attached"]
+    margin-left : 0
+    margin-right: 0
+    width       : 100%
+
+.ts.slate .ts.menu[class*="bottom attached"]
+    margin: $slate_verticalPadding -#{$slate_horizontalPadding} -#{$slate_verticalPadding} -#{$slate_horizontalPadding}
+    width: calc(100% + #{$slate_horizontalPadding} * 2)
+.ts.padded.padded.slate:not(.horizontally) .ts.menu[class*="bottom attached"]
+    margin: $slate_paddedPadding -#{$slate_paddedPadding} -#{$slate_paddedPadding} -#{$slate_paddedPadding}
+    width: calc(100% + #{$slate_paddedPadding} * 2)
+.ts.very.padded.slate:not(.horizontally) .ts.menu[class*="bottom attached"]
+    margin: $slate_veryPaddedPadding -#{$slate_veryPaddedPadding} -#{$slate_veryPaddedPadding} -#{$slate_veryPaddedPadding}
+    width: calc(100% + #{$slate_veryPaddedPadding} * 2)
+.ts.extra.padded.slate:not(.horizontally) .ts.menu[class*="bottom attached"]
+    margin: $slate_extraPaddedPadding -#{$slate_extraPaddedPadding} -#{$slate_extraPaddedPadding} -#{$slate_extraPaddedPadding}
+    width: calc(100% + #{$slate_extraPaddedPadding} * 2)
+
+.ts.horizontally.padded.padded.slate .ts.menu[class*="bottom attached"]
+    margin-left: -#{$slate_paddedPadding}
+    margin-right: -#{$slate_paddedPadding}
+    width: calc(100% + #{$slate_paddedPadding} * 2)
+.ts.horizontally.very.padded.slate .ts.menu[class*="bottom attached"]
+    margin-left: -#{$slate_veryPaddedPadding}
+    margin-right: -#{$slate_veryPaddedPadding}
+    width: calc(100% + #{$slate_veryPaddedPadding} * 2)
+.ts.horizontally.extra.padded.slate .ts.menu[class*="bottom attached"]
+    margin-left: -#{$slate_extraPaddedPadding}
+    margin-right: -#{$slate_extraPaddedPadding}
+    width: calc(100% + #{$slate_extraPaddedPadding} * 2)
+
+// TODO
+.ts.slate .ts.menu[class*="bottom attached"]:not(.secondary):not(.pointing)
+    margin-bottom: calc(-#{$slate_verticalPadding} + -1px)
+
+//-------------------//
+//     Coupling
+//-------------------//
+
+.ts.slate:not(.heading) > .ts.container:not(.grid)
+    align-items: center
+
+.ts.slate ~ .ts.segment[class*="bottom attached"]
+    border-top: 0

@@ -1,0 +1,446 @@
+@import ./checkbox.variables
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.checkbox
+    position   : relative
+    display    : inline-block
+    font-size  : 1rem
+    line-height: 17px
+
+//-------------------//
+//  Square Checkbox
+//-------------------//
+
+.ts.checkbox:not(.radio) label:before
+    position           : absolute
+    transform          : none
+    width              : $checkbox_radioSize
+    height             : $checkbox_radioSize
+    border-radius      : $defaultBorderRadius
+    top                : 0
+    left               : 0
+    content            : ''
+    background-repeat  : no-repeat
+    background-position: center center
+    background-size    : $checkbox_checkboxBackgroundSize $checkbox_checkboxBackgroundSize
+    background-color   : $checkbox_checkboxBackgroundColor
+    border             : $checkbox_checkboxBorder
+
+.ts.checkbox:not(.radio) input:checked + label:before
+    background-color: $checkbox_checkboxCheckedBackgroundColor
+    background-image: $checkbox_checkboxIndecatorURL
+
+.ts.checkbox:not(.radio) label:hover
+    cursor: pointer
+
+.ts.checkbox:not(.radio) label:hover:before
+    background-color: $checkbox_checkboxHoverBackgroundColor
+
+.ts.checkbox:not(.radio) label:active:before
+    background-color: $checkbox_checkboxActiveBackgroundColor
+
+.ts.checkbox:not(.radio) input:checked + label:hover:before
+    background-color: $checkbox_checkedHoverBackgroundColor
+
+.ts.checkbox:not(.radio) input:checked + label:active:before
+    background-color: $checkbox_checkedActiveBackgroundColor
+
+.ts.checkbox:not(.radio) label
+    +extend(no-select)
+
+    line-height : $checkbox_size
+    min-height  : $checkbox_size
+    position    : relative
+    padding-left: $checkbox_labelDistance
+    font-size   : 1em
+    display     : inline-block
+    color       : $textColor
+
+.ts.checkbox label:empty
+    padding-left: $checkbox_radioSize
+
+.ts.checkbox:not(.radio) input[type="checkbox"]
+    display: none
+
+//-------------------//
+//       Radio
+//-------------------//
+
+.ts.radio.checkbox label:before
+    position           : absolute
+    transform          : none
+    width              : $checkbox_radioSize
+    height             : $checkbox_radioSize
+    border-radius      : $circularRadius
+    top                : 0
+    left               : 0
+    content            : ''
+    background-repeat  : no-repeat
+    background-position: center center
+    background-size    : $checkbox_radioBackgroundSize $checkbox_radioBackgroundSize
+    background-color   : $checkbox_radioBackgroundColor
+    border             : $checkbox_radioBorder
+
+.ts.radio.checkbox input:checked + label:before
+    background-color: $checkbox_radioCheckedBackgroundColor
+    background-image: $checkbox_radioIndicatorURL
+
+.ts.radio.checkbox label:hover
+    cursor: pointer
+
+.ts.radio.checkbox label:hover:before
+    background-color: $checkbox_radioHoverBackgroundColor
+
+.ts.radio.checkbox label:active:before
+    background-color: $checkbox_radioActiveBackgroundColor
+
+.ts.radio.checkbox input:checked + label:hover:before
+    background-color: $checkbox_radioCheckedHoverBackgroundColor
+
+.ts.radio.checkbox input:checked + label:active:before
+    background-color: $checkbox_radioCheckedActiveBackgroundColor
+
+.ts.radio.checkbox label
+    +extend(no-select)
+
+    line-height : $checkbox_size
+    position    : relative
+    padding-left: $checkbox_labelDistance
+    font-size   : 1em
+    display     : inline-block
+    color       : $textColor
+
+.ts.radio.checkbox label:empty
+    padding-left: $checkbox_radioSize
+
+.ts.radio.checkbox input[type="radio"]
+    display: none
+
+//-------------------//
+//      Disabled
+//-------------------//
+
+.ts.checkbox.disabled,
+.ts.checkboxes.disabled,
+.ts.checkbox input[disabled]
+    cursor        : not-allowed
+    pointer-events: none
+    opacity       : $disabledOpacity
+
+//-------------------//
+//      Required
+//-------------------//
+
+.ts.required.checkboxes .ts.checkbox label:after,
+.ts.required.checkbox:after
+    position   : absolute
+    top        : 0%
+    left       : 100%
+    margin     : $checkbox_requiredMargin
+    content    : $checkbox_requiredContent
+    color      : $checkbox_requiredColor
+    font-weight: $checkbox_requiredFontWeight
+
+//-------------------//
+//     Variations
+//-------------------//
+
+.ts.toggle.checkbox
+    min-height: $checkbox_toggleHeight
+
+/* Input */
+.ts.toggle.checkbox input
+    width : $checkbox_toggleWidth
+    height: $checkbox_toggleHeight
+
+/* Label */
+.ts.toggle.checkbox .box,
+.ts.toggle.checkbox label
+    min-height  : $checkbox_toggleHandleSize
+    padding-left: $checkbox_toggleLabelDistance
+    color       : $checkbox_toggleOffLabelColor
+
+.ts.toggle.checkbox input:checked + label
+    color       : $checkbox_toggleOnLabelColor
+
+.ts.toggle.checkbox label
+    padding-top: $checkbox_toggleLabelOffset
+
+.ts.toggle.checkbox label:empty
+    padding-left: $checkbox_toggleLaneWidth
+
+/* Switch */
+.ts.toggle.checkbox .box:before,
+.ts.toggle.checkbox label:before
+    display         : block
+    position        : absolute
+    content         : ''
+    z-index         : $z_checkbox_toggleBefore
+    transform       : none
+    border          : none
+    background-image: none !important
+    top             : $checkbox_toggleLaneVerticalOffset
+    background      : $checkbox_toggleLaneBackground
+    width           : $checkbox_toggleLaneWidth
+    height          : $checkbox_toggleLaneHeight
+    border-radius   : $checkbox_toggleHandleRadius
+
+/* Handle */
+.ts.toggle.checkbox .box:after,
+.ts.toggle.checkbox label:after
+    background   : $checkbox_handleBackground
+    position     : absolute
+    content      : '' !important
+    opacity      : 1
+    z-index      : $z_checkbox_toggleAfter
+    border       : none
+    box-shadow   : $checkbox_handleBoxShadow
+    width        : $checkbox_toggleHandleSize
+    height       : $checkbox_toggleHandleSize
+    top          : $checkbox_toggleHandleOffset
+    left         : 0em
+    border-radius: $circularRadius
+    transition   : $checkbox_toggleHandleTransition
+
+.ts.toggle.checkbox input ~ .box:after,
+.ts.toggle.checkbox input ~ label:after
+    left: $checkbox_toggleOffOffset
+
+/* Focus */
+.ts.toggle.checkbox input:focus ~ .box:before,
+.ts.toggle.checkbox input:focus ~ label:before
+    background-color: $checkbox_toggleFocusColor
+    border          : none
+
+/* Hover */
+.ts.toggle.checkbox .box:hover:before,
+.ts.toggle.checkbox label:hover:before
+    background-color: $checkbox_toggleHoverColor
+    border          : none
+
+/* Active */
+.ts.toggle.checkbox .box:active:before,
+.ts.toggle.checkbox label:active:before
+    background-color: $checkbox_toggleActiveColor
+
+.ts.toggle.checkbox input:checked ~ .box:before,
+.ts.toggle.checkbox input:checked ~ label:before
+    background-color: $checkbox_toggleOnLaneColor !important
+
+.ts.toggle.checkbox input:checked ~ .box:hover:before,
+.ts.toggle.checkbox input:checked ~ label:hover:before
+    background-color: $checkbox_toggleOnHoverLaneColor !important
+
+.ts.toggle.checkbox input:checked ~ .box:active:before,
+.ts.toggle.checkbox input:checked ~ label:active:before
+    background-color: $checkbox_toggleOnActiveLaneColor !important
+
+.ts.toggle.checkbox input:checked ~ .box:after,
+.ts.toggle.checkbox input:checked ~ label:after
+    left: $checkbox_toggleOnOffset
+
+/* Active Focus */
+.ts.toggle.checkbox input:focus:checked ~ .box,
+.ts.toggle.checkbox input:focus:checked ~ label
+    //color: $checkbox_toggleOnFocusLabelColor !important
+
+.ts.toggle.checkbox input:focus:checked ~ .box:before,
+.ts.toggle.checkbox input:focus:checked ~ label:before
+    background-color: $checkbox_toggleOnFocusLaneColor !important
+
+//*******************************//
+//           Checkboxes
+//*******************************//
+
+.ts.checkboxes .ts.checkbox
+    display: flex
+    flex   : 1
+
+.ts.checkboxes:not(.horizontal) .ts.checkbox
+    margin-bottom: $checkbox_groupCheckboxSpacing
+
+.ts.checkboxes:not(.horizontal) .ts.checkbox:last-child
+    margin-bottom: 0
+
+//-------------------//
+//     Horizontal
+//-------------------//
+
+.ts.checkboxes.horizontal
+    display: flex
+
+.ts.checkboxes.horizontal .ts.checkbox
+    margin-right: $checkbox_labelDistance
+
+.ts.checkboxes.horizontal .ts.checkbox:last-child
+    margin-right: 0
+
+//-------------------//
+//      Stackable
+//-------------------//
+
+.ts.checkboxes.horizontal.stackable
+    +rwd-serious(mobile)
+        display: block
+
+.ts.checkboxes.horizontal.stackable .ts.checkbox
+    +rwd-serious(mobile)
+        margin-bottom: $checkbox_groupCheckboxSpacing
+
+.ts.checkboxes.horizontal.stackable .ts.checkbox:last-child
+    +rwd-serious(mobile)
+        margin-bottom: 0
+
+//-------------------//
+//      Inverted
+//-------------------//
+
+.ts.checkbox.inverted label,
+.ts.checkboxes.inverted label
+    color: $invertedTextColor
+
+//-------------------//
+//     Segmented
+//-------------------//
+
+.ts.segmented.checkboxes
+    border       : $checkbox_segmentedBorder
+    border-radius: $checkbox_segmentedBorderRadius
+
+.ts.segmented.checkboxes .ts.checkbox
+    margin : 0
+    z-index: $z_checkbox_segmented
+
+.ts.segmented.checkboxes .ts.checkbox label
+    padding: $checkbox_segmentedPadding
+    color  : $checkbox_checkedBackgroundColor
+    width  : 100%
+
+    text-align     : center
+    display        : flex
+    align-items    : center
+    justify-content: center
+
+.ts.segmented.padded.checkboxes .ts.checkbox label
+    padding: $checkbox_paddedSegmentedPadding
+
+.ts.segmented.checkboxes .ts.checkbox label:before
+    position: absolute
+    left    : 0
+    right   : 0
+    top     : 0
+    bottom  : 0
+    width   : auto
+    height  : auto
+
+    background   : transparent
+    border-radius: 0
+    z-index      : $z_checkbox_segmentedLabel
+
+/** Vertical */
+.ts.segmented.checkboxes:not(.horizontal) .ts.checkbox label:before
+    border-bottom: $checkbox_segmentedBorder
+.ts.segmented.checkboxes:not(.horizontal) .ts.checkbox.disabled label:before
+    border-bottom: 0
+.ts.segmented.checkboxes:not(.horizontal) .ts.disabled.checkbox + .ts.checkbox label:before
+    border-top: $checkbox_segmentedBorder
+.ts.segmented.checkboxes:not(.horizontal) .ts.checkbox:last-child label:before
+    border-bottom: 0
+
+/** Horizontal Stackable */
+.ts.segmented.checkboxes.horizontal.stackable .ts.checkbox
+    +rwd-serious(mobile)
+        margin-bottom: 0
+.ts.segmented.checkboxes.horizontal.stackable .ts.checkbox label:before
+    +rwd-serious(mobile)
+        border-bottom: $checkbox_segmentedBorder
+        border-right : 0
+.ts.segmented.checkboxes.horizontal.stackable .ts.disabled.checkbox + .ts.checkbox label:before
+    +rwd-serious(mobile)
+        border-left: 0
+        border-top : $checkbox_segmentedBorder
+.ts.segmented.checkboxes.horizontal.stackable .ts.checkbox.disabled label:before,
+.ts.segmented.checkboxes.horizontal.stackable .ts.checkbox:last-child label:before
+    +rwd-serious(mobile)
+        border-bottom          : 0
+        border-top-right-radius: 0
+.ts.segmented.checkboxes.horizontal.stackable .ts.checkbox:first-child label:before
+    +rwd-serious(mobile)
+        border-bottom-left-radius: 0
+
+/** Border Radius */
+.ts.segmented.checkboxes:not(.horizontal) .ts.checkbox:first-child label:before
+    border-top-left-radius : $checkbox_segmentedBorderRadius
+    border-top-right-radius: $checkbox_segmentedBorderRadius
+.ts.segmented.checkboxes:not(.horizontal) .ts.checkbox:last-child label:before
+    border-bottom-left-radius : $checkbox_segmentedBorderRadius
+    border-bottom-right-radius: $checkbox_segmentedBorderRadius
+.ts.segmented.checkboxes.horizontal .ts.checkbox:first-child label:before
+    border-top-left-radius   : $checkbox_segmentedBorderRadius
+    border-bottom-left-radius: $checkbox_segmentedBorderRadius
+.ts.segmented.checkboxes.horizontal .ts.checkbox:last-child label:before
+    border-top-right-radius   : $checkbox_segmentedBorderRadius
+    border-bottom-right-radius: $checkbox_segmentedBorderRadius
+
+/** Inverted */
+.ts.segmented.checkboxes.inverted .ts.checkbox label:hover:before
+    background: $checkbox_segmentedInvertedHoverBackgroundColor
+.ts.segmented.checkboxes.inverted .ts.checkbox label:active:before
+    background: $checkbox_segmentedInvertedActiveBackgroundColor
+
+/** Color */
+.ts.segmented.checkboxes .ts.checkbox label:hover:before
+    background: $checkbox_segmentedHoverBackgroundColor
+.ts.segmented.checkboxes .ts.checkbox label:active:before
+    background: $checkbox_segmentedActiveBackgroundColor
+.ts.segmented.checkboxes .ts.checkbox input:checked + label:hover:before
+    background: $checkbox_checkedHoverBackgroundColor
+.ts.segmented.checkboxes .ts.checkbox input:checked + label:active:before
+    background: $checkbox_checkedActiveBackgroundColor
+.ts.segmented.checkboxes .ts.checkbox input:checked + label:before
+    background: $checkbox_checkedBackgroundColor
+.ts.segmented.checkboxes .ts.checkbox input:checked + label
+    color: $checkbox_segmentedActiveTextColor
+
+/** Horizontal */
+.ts.segmented.horizontal.checkboxes .ts.checkbox label:before
+    border-right : $checkbox_segmentedBorder
+.ts.segmented.horizontal.checkboxes .ts.checkbox:last-child label:before,
+.ts.segmented.horizontal.checkboxes .ts.checkbox.disabled label:before
+    border-right : 0
+.ts.segmented.horizontal.checkboxes .ts.disabled.checkbox + .ts.checkbox label:before
+    border-left : $checkbox_segmentedBorder
+
+//-------------------//
+//      Compact
+//-------------------//
+
+.ts.checkboxes.compact
+    display: inline-flex
+
+.ts.checkboxes.compact .ts.checkbox
+    flex: initial
+
+//-------------------//
+//       Aligns
+//-------------------//
+
+.ts.checkboxes[class*="center aligned"]
+    width          : 100%
+    justify-content: center
+.ts.checkboxes[class*="left aligned"]
+    width          : 100%
+    justify-content: flex-start
+.ts.checkboxes[class*="right aligned"]
+    width          : 100%
+    justify-content: flex-end
+
+//-------------------//
+//      Coupling
+//-------------------//
+
+.ts.form .field .ts.horizontal.checkboxes
+    //padding: $input_padding

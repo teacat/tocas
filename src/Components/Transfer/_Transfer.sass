@@ -1,0 +1,194 @@
+@import ./transfer.variables
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.transfer
+    display: inline-flex
+
+//-------------------//
+//       Fluid
+//-------------------//
+
+.ts.transfer.fluid
+    display: flex
+    width  : 100%
+
+//-------------------//
+//     Stackable
+//-------------------//
+
+.ts.transfer.stackable
+    +rwd-serious(mobile)
+        flex-direction: column
+
+        .list
+            flex: auto
+
+        .actions
+            flex-direction: row
+            padding       : $transfer_actionPadding 0
+
+            .button
+                &.add:after
+                    content: $transfer_verticalAddButtonIcon
+
+                &.remove:after
+                    content: $transfer_verticalRemoveButtonIcon
+
+                &:not(:last-child)
+                    margin      : 0
+                    margin-right: $transfer_actionButtonGap
+
+//*******************************//
+//              List
+//*******************************//
+
+.ts.transfer .list
+    display: flex
+    width  : $transfer_listWidth
+    height : $transfer_listHeight
+    flex   : 1
+
+    flex-direction: column
+    border        : $transfer_border
+    border-radius : $transfer_borderRadius
+
+//*******************************//
+//             Header
+//*******************************//
+
+.ts.transfer .list .header
+    color        : $transfer_headerTextColor
+    background   : $transfer_headerBackgroundColor
+    padding      : $transfer_padding
+    font-weight  : $transfer_headerFontWeight
+    border-bottom: $transfer_headerDividerBorderBottom
+
+    white-space  : nowrap
+    overflow     : hidden
+    text-overflow: ellipsis
+
+//-------------------//
+//       Aligns
+//-------------------//
+
+.ts.transfer .list .header[class*="left aligned"]
+    text-align: left
+.ts.transfer .list .header[class*="center aligned"]
+    text-align: center
+.ts.transfer .list .header[class*="right aligned"]
+    text-align: right
+
+//*******************************//
+//             Search
+//*******************************//
+
+.ts.transfer .list .search
+    padding      : $transfer_padding
+    background   : $transfer_searchBackgroundColor
+    border-bottom: $transfer_headerDividerBorderBottom
+
+.ts.transfer .list .search input
+    width        : 100%
+    background   : $transfer_searchInputBackgroundColor
+    border       : $transfer_searchBorder
+    border-radius: $transfer_searchBorderRadius
+    font-size    : $transfer_searchFontSize
+    line-height  : 1
+    padding      : $transfer_searchPadding
+    padding-left : $transfer_searchIconDistance
+
+.ts.transfer .list .search:after
+    position   : absolute
+    left       : $transfer_searchHorizontalPadding
+    top        : $transfer_searchVerticalPadding * 2
+    content    : $transfer_searchIcon
+    font-size  : $transfer_searchFontSize
+    font-family: Icons
+
+    margin-left   : $transfer_horizontalPadding
+    pointer-events: none
+
+    opacity: $transfer_searchIconOpacity
+    z-index: $z_transfer_search
+
+.ts.transfer .list .header + .search
+    margin-top : -#{$transfer_headerDividerWidth * 2}
+    padding-top: 0
+    background : $transfer_searchBackgroundColor
+
+.ts.transfer .list .header + .search:after
+    top: $transfer_searchIconOffset
+
+//*******************************//
+//             Items
+//*******************************//
+
+.ts.transfer .list .items
+    flex    : 1
+    overflow: scroll
+
+//*******************************//
+//             Item
+//*******************************//
+
+.ts.transfer .list .items .item
+    +extend(no-select)
+
+    cursor     : pointer
+    padding    : $transfer_itemPadding
+
+    white-space  : nowrap
+    overflow     : hidden
+    text-overflow: ellipsis
+
+.ts.transfer .list .items .item:not(:last-child)
+    border-bottom: $transfer_itemBorder
+
+//-------------------//
+//     Borderless
+//-------------------//
+
+.ts.transfer .list .items.borderless .item:not(:last-child)
+    border-bottom: none
+
+.ts.transfer .list .items .item:hover
+    color     : $transfer_hoverTextColor
+    background: $transfer_hoverBackgroundColor
+
+.ts.transfer .list .items .item:active
+    color     : $transfer_activeTextColor
+    background: $transfer_activeBackgroundColor
+
+.ts.transfer .list .items .item.selected
+    color     : $transfer_selectedTextColor
+    background: $transfer_selectedBackgroundColor
+
+//*******************************//
+//            Actions
+//*******************************//
+
+.ts.transfer .actions
+    display        : flex
+    flex-direction : column
+    align-items    : center
+    justify-content: center
+    padding        : 0 $transfer_actionPadding
+
+.ts.transfer .actions .button
+    padding  : $transfer_actionButtonPadding
+    font-size: $transfer_actionButtonFontSize
+
+.ts.transfer .actions .button:not(:last-child)
+    margin-bottom: $transfer_actionButtonGap
+
+.ts.transfer .actions .button:after
+    font-family: Icons
+
+.ts.transfer .actions .add.button:after
+    content: $transfer_addButtonIcon
+
+.ts.transfer .actions .remove.button:after
+    content: $transfer_removeButtonIcon

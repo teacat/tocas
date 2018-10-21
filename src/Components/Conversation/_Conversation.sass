@@ -1,0 +1,611 @@
+@charset "UTF-8"
+@import ./conversation.variables
+
+//*******************************//
+//            Variations
+//*******************************//
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.conversation
+
+//-------------------//
+//      Compact
+//-------------------//
+
+.ts.compact.conversation
+
+//*******************************//
+//             Event
+//*******************************//
+
+.ts.conversation > .event
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    margin-bottom: 1em
+    background: nth($grey, 2)
+    border-radius: 4px
+    padding: 1em
+
+//-------------------//
+//       Link
+//-------------------//
+
+.ts.conversation > a.event
+
+//-------------------//
+//       Icon
+//-------------------//
+
+.ts.conversation > .event > .icon
+
+.ts.conversation > .event > .icon > i.icon
+    margin: 0
+    width: 2.8em
+    height: 2.8em
+    display: flex
+    justify-content: center
+    align-items: center
+    background: #fff
+    border-radius: 500em
+
+//-------------------//
+//      Header
+//-------------------//
+
+.ts.conversation > .event > .header
+    font-weight: bold
+    font-size: 1.1em
+    margin-top: .5em
+    color: nth($grey, 8)
+
+//-------------------//
+//    Description
+//-------------------//
+
+.ts.conversation > .event > .description
+    margin-top: .1em
+    color: nth($grey, 8)
+
+//-------------------//
+//       Time
+//-------------------//
+
+.ts.conversation > .event > .time
+    color: nth($grey, 6)
+    font-size: .9em
+    margin-top: .5em
+    margin-bottom: -.5em
+    width: 100%
+    text-align: right
+
+//*******************************//
+//          Notification
+//*******************************//
+
+.ts.conversation > .noticiation
+
+//*******************************//
+//            Divider
+//*******************************//
+
+
+
+//-------------------//
+//     Secondary
+//-------------------//
+
+//*******************************//
+//            Message
+//*******************************//
+
+.ts.conversation .message
+    width        : min-content
+    display      : flex
+    flex-wrap    : wrap
+    margin-bottom: $chat_messageDistance
+
+//-------------------//
+//       Avatar
+//-------------------//
+
+.ts.conversation .message > .avatar
+    position: absolute
+    top     : 0
+    left    : 0
+
+.ts.conversation .message > .avatar > img
+    width        : $chat_avatarWidth
+    height       : $chat_avatarHeight
+    border-radius: $chat_avatarBorderRadius
+    margin-right : $chat_avatarDistance
+
+.ts.conversation .own.group > .message > .avatar > img,
+.ts.conversation .own.message > .avatar > img
+    margin-right: 0
+    margin-left : $chat_avatarDistance
+
+//-------------------//
+//      Content
+//-------------------//
+
+.ts.conversation .message > .content
+    width     : max-content
+    max-width : $chat_messageMaxWidth
+    border    : $chat_messageBorder
+    background: $chat_messageBackgroundColor
+    padding   : $chat_messagePadding
+
+    margin-bottom: $chat_messageDistance
+    border-radius: $chat_messageBorderRadius
+    box-shadow   : $chat_messageBoxShadow
+
+.ts.conversation .message > .avatar ~ .content
+    margin-left: $chat_distanceToAvatar
+
+.ts.conversation .own.group > .message > .avatar ~ .content,
+.ts.conversation .own.message > .avatar ~ .content
+    margin-left : 0
+    margin-right: $chat_distanceToAvatar
+
+//-------------------//
+//       Text
+//-------------------//
+
+.ts.conversation .message > .content > .text
+    display: inline
+
+//-------------------//
+//       Author
+//-------------------//
+
+.ts.conversation .message > .content > .author
+    font-weight: $chat_authorFontWeight
+
+//-------------------//
+//       Image
+//-------------------//
+
+.ts.conversation .message > .content > .image
+    margin: $chat_imageMargin
+
+.ts.conversation .message > .content > .image > img
+    width     : 100%
+    object-fit: cover
+
+.ts.conversation .message > .content > img
+    margin-left: -#{$chat_messageHorizontalPadding}
+    width      : $chat_imageWidth
+    object-fit : cover
+
+//-------------------//
+//        Icon
+//-------------------//
+
+.ts.conversation .message > .content > .icon
+
+//-------------------//
+//      Sticker
+//-------------------//
+
+.ts.conversation .message > .content > .sticker
+
+//-------------------//
+//     Description
+//-------------------//
+
+.ts.conversation .message > .content > .description
+
+//-------------------//
+//       File
+//-------------------//
+
+.ts.conversation .message > .content > .file
+
+.ts.conversation .message > .content > .file > .download
+
+.ts.conversation .message > .content > .file > .name
+
+.ts.conversation .message > .content > .file > .size
+
+//-------------------//
+//       Reply
+//-------------------//
+
+.ts.conversation .message > .content > .reply
+    margin      : $chat_replyDistance 0
+    border-left : $chat_replyBorder
+    padding-left: $chat_replyPaddingLeft
+
+.ts.conversation .message > .content > .reply > .author
+    font-weight: bold
+
+.ts.conversation .message > .content > .reply > .text
+
+.ts.conversation .message > .content > .reply > .image
+
+.ts.conversation .message > .content > .reply > .image > img
+
+//-------------------//
+//      Preview
+//-------------------//
+
+.ts.conversation .message > .content > .preview
+    margin      : $chat_previewDistance 0
+    border-left : $chat_previewBorder
+    padding-left: $chat_previewPaddingLeft
+
+.ts.conversation .message > .content > .preview > .title
+    color      : $chat_previewTitleTextColor
+    font-weight: $chat_previewTitleTextWeight
+
+.ts.conversation .message > .content > .preview > .header
+    font-weight: $chat_previewHeaderTextWeight
+
+.ts.conversation .message > .content > .preview > .description
+    line-height: $chat_previewDescriptionLineHeight
+
+.ts.conversation .message > .content > .preview > .image
+
+.ts.conversation .message > .content > .preview > .image:first-child img
+    width : $chat_previewImageSize
+    height: $chat_previewImageSize
+    float : right
+    margin: $chat_previewImageMargin
+
+    border-radius: $chat_previewImageBorderRadius
+    object-fit   : cover
+
+.ts.conversation .message > .content > .preview > .image:not(:first-child) img
+    width        : 100%
+    margin-top   : $chat_previewImageFullSizeDistance
+    border-radius: $chat_previewImageBorderRadius
+    object-fit   : cover
+
+//-------------------//
+//        Meta
+//-------------------//
+
+.ts.conversation .message > .content > .meta
+    display        : flex
+    margin-bottom  : $chat_metaMarginBottom
+    justify-content: flex-end
+
+.ts.conversation .message > .content > .meta > .item
+    opacity     : $chat_metaItemOpacity
+    font-size   : $chat_metaItemFontSize
+    margin-right: $chat_metaItemSpacing
+
+.ts.conversation .own.group > .message > .content > .meta > .item,
+.ts.conversation .own.message > .content > .meta > .item
+    opacity: $chat_metaOwnMessageItemOpacity
+
+.ts.conversation .message > .content > .meta > .item:last-child
+    margin-right: 0
+
+//-------------------//
+//    Dotted Meta
+//-------------------//
+
+.ts.conversation .message > .content > .meta.middoted > *,
+.ts.conversation .message > .content > .meta.bulleted > *
+    margin-right: 0
+.ts.conversation .message > .content > .meta.middoted > *:not(:first-child):before
+    +extend(is-dot)
+
+    margin-left : $chat_metaItemSpacing / 1.5
+    margin-right: $chat_metaItemSpacing / 1.5
+    content     : '·'
+.ts.conversation .message > .content > .meta.bulleted > *:not(:first-child):before
+    +extend(is-dot)
+
+    margin-left : $chat_metaItemSpacing / 1.5
+    margin-right: $chat_metaItemSpacing / 1.5
+    content     : '•'
+
+//-------------------//
+//      Mention
+//-------------------//
+
+.ts.conversation .message > .content > .text > .mention
+    padding      : $chat_mentionPadding
+    margin       : 0 $chat_mentionDistance
+    color        : $chat_mentionTextColor
+    background   : $chat_mentionBackgroundColor
+    border-radius: $chat_mentionBorderRadius
+
+//-------------------//
+//     Code Block
+//-------------------//
+
+.ts.conversation .message > .content > .text > pre.code
+    margin    : $chat_codeDistance -#{$chat_messageHorizontalPadding}
+    border    : $chat_codeBorder
+    background: $chat_codeBackgroundColor
+
+.ts.conversation .message > .content > .text > pre.code > code
+    display     : block
+    white-space : pre-wrap
+    color       : $chat_codeTextColor
+    padding     : $chat_codePadding
+    font-size   : $chat_codeFontSize
+    line-height : $chat_codeLineHeight
+
+//-------------------//
+//        Video
+//-------------------//
+
+.ts.conversation .message > .content > video
+    width : $chat_videoWidth
+    margin: $chat_videoDistance -#{$chat_messageHorizontalPadding}
+
+//-------------------//
+//       Embed
+//-------------------//
+
+//-------------------//
+//      Indicator
+//-------------------//
+
+.ts.conversation > .typing.message > .content:after
+    +extend(is-dot)
+
+    content       : $chat_typingIndicatorSymbol
+    font-size     : $chat_typingIndicatorFontSize
+    line-height   : $chat_typingIndicatorLineHeight
+    letter-spacing: $chat_typingIndicatorLetterSpacing
+    background    : $chat_typingIndicatorBackground
+
+    background-clip: text
+    background-size: 200% auto
+    text-fill-color: transparent
+    -webkit-background-clip: text
+    -webkit-text-fill-color: transparent
+
+    animation: typing-message-shine $chat_typingIndicatorDuration linear infinite
+
+    @keyframes typing-message-shine
+        to
+            background-position: 200% center
+
+.ts.conversation > .warning.message > .content > .meta > .item:last-child:after,
+.ts.conversation > .error.message > .content > .meta > .item:last-child:after,
+.ts.conversation > .sending.message > .content > .meta > .item:last-child:after,
+.ts.conversation > .sent.message > .content > .meta > .item:last-child:after,
+.ts.conversation > .read.message > .content > .meta > .item:last-child:after
+    font-family: $chat_indicatorFontFamily
+    margin-left: $chat_indicatorDistance
+
+.ts.conversation > .warning.message > .content > .meta > .item:last-child:after
+    content: $chat_warningIndicatorSymbol
+
+.ts.conversation > .error.message > .content > .meta > .item:last-child:after
+    content: $chat_errorIndicatorSymbol
+
+.ts.conversation > .sending.message > .content > .meta > .item:last-child:after
+    content: $chat_sendingIndicatorSymbol
+
+.ts.conversation > .sent.message > .content > .meta > .item:last-child:after
+    content: $chat_sentIndicatorSymbol
+
+.ts.conversation > .read.message > .content > .meta > .item:last-child:after
+    content: $chat_readIndicatorSymbol
+
+//-------------------//
+//      Reactions
+//-------------------//
+
+.ts.conversation .message > .reactions
+    display      : flex
+    flex-wrap    : wrap
+    width        : 100%
+    max-width    : $chat_messageMaxWidth
+    margin-bottom: $chat_reactionDistance
+
+.ts.conversation .message > .avatar ~ .reactions
+    margin-left: $chat_distanceToAvatar
+
+.ts.conversation .own.group > .message > .avatar ~ .reactions,
+.ts.conversation .own.message > .avatar ~ .reactions
+    margin-left : 0
+    margin-right: $chat_distanceToAvatar
+
+.ts.conversation .message > .reactions > .item
+    display      : inline-flex
+    color        : $chat_reactionItemTextColor
+    background   : $chat_reactionItemBackgroundColor
+    padding      : $chat_reactionItemPadding
+    font-size    : $chat_reactionItemFontSize
+    border       : $chat_reactionItemBorder
+    border-radius: $chat_reactionItemBorderRadius
+    margin-bottom: $chat_reactionItemDistance
+    margin-right : $chat_reactionItemDistance
+
+.ts.conversation .message > .reactions > .item:hover
+    color     : $chat_reactionItemHoverTextColor
+    background: $chat_reactionItemHoverBackgroundColor
+
+.ts.conversation .message > .reactions > .item:active
+    color     : $chat_reactionItemDownTextColor
+    background: $chat_reactionItemDownBackgroundColor
+
+.ts.conversation .message > .reactions > .item:last-child
+    margin-right: 0
+
+.ts.conversation .message > .reactions > .item > .reaction
+
+.ts.conversation .message > .reactions > .item > .count
+    margin-left: $chat_reactionItemCountDistance
+
+.ts.conversation .message > .reactions > .item.active
+    font-weight: $chat_reactionItemActiveFontWeight
+    color      : $chat_reactionItemActiveTextColor
+    background : $chat_reactionItemActiveBackgroundColor
+
+.ts.conversation .message > .reactions > .item.disabled
+
+//-------------------//
+//      Actions
+//-------------------//
+
+.ts.conversation .message > .actions
+    display        : flex
+    justify-content: flex-end
+    margin-bottom  : $chat_actionDistance
+
+.ts.conversation .message > .avatar ~ .actions
+    margin-left: $chat_distanceToAvatar
+
+.ts.conversation .own.group > .message > .avatar ~ .actions,
+.ts.conversation .own.message > .avatar ~ .actions
+    margin-left : 0
+    margin-right: $chat_distanceToAvatar
+
+.ts.conversation .message > .actions > .item
+    color       : $chat_actionItemTextColor
+    font-size   : $chat_actionItemFontSize
+    margin-right: $chat_actionItemSpacing
+
+.ts.conversation .message > .actions > .item:hover
+    color: $chat_actionItemHoverTextColor
+
+.ts.conversation .message > .actions > .item:active
+    color: $chat_actionItemDownTextColor
+
+.ts.conversation .message > .actions > .item:last-child
+    margin-right: 0
+
+//-------------------//
+//  Dotted Actions
+//-------------------//
+
+.ts.conversation .message > .actions.middoted > *,
+.ts.conversation .message > .actions.bulleted > *
+    margin-right: 0
+.ts.conversation .message > .actions.middoted > *:not(:first-child):before
+    +extend(is-dot)
+
+    margin-left : $chat_actionItemSpacing / 1.5
+    margin-right: $chat_actionItemSpacing / 1.5
+    content     : '·'
+.ts.conversation .message > .actions.bulleted > *:not(:first-child):before
+    +extend(is-dot)
+
+    margin-left : $chat_actionItemSpacing / 1.5
+    margin-right: $chat_actionItemSpacing / 1.5
+    content     : '•'
+
+//-------------------//
+//     Callbacks
+//-------------------//
+
+.ts.conversation .message > .callbacks
+    display  : flex
+    flex-wrap: wrap
+    width    : 100%
+    max-width: $chat_messageMaxWidth
+
+.ts.conversation .message > .avatar ~ .callbacks
+    margin-left: $chat_distanceToAvatar
+
+.ts.conversation .own.group > .message > .avatar ~ .callbacks,
+.ts.conversation .own.message > .avatar ~ .callbacks
+    margin-left : 0
+    margin-right: $chat_distanceToAvatar
+
+.ts.conversation .message > .callbacks > .row
+    width  : 100%
+    display: flex
+
+.ts.conversation .message > .callbacks > .row > .item,
+.ts.conversation .message > .callbacks > .item
+    flex     : 1
+    width    : 100%
+    color    : $chat_callbackItemTextColor
+    font-size: $chat_callbackItemFontSize
+    padding  : $chat_callbackItemPadding
+
+    border-radius: $chat_callbackItemBorderRadius
+    background   : $chat_callbackItemBackgroundColor
+    text-align   : center
+    margin-right : $chat_callbackItemDistance
+    margin-bottom: $chat_callbackItemDistance
+
+.ts.conversation .message > .callbacks > .row > .item:hover,
+.ts.conversation .message > .callbacks > .item:hover
+    color     : $chat_callbackItemHoverTextColor
+    background: $chat_callbackItemHoverBackgroundColor
+
+.ts.conversation .message > .callbacks > .row > .item:active,
+.ts.conversation .message > .callbacks > .item:active
+    color     : $chat_callbackItemDownTextColor
+    background: $chat_callbackItemDownBackgroundColor
+
+.ts.conversation .message > .callbacks > .row > .item.loading,
+.ts.conversation .message > .callbacks > .item.loading
+
+.ts.conversation .message > .callbacks > .row > .item.disabled,
+.ts.conversation .message > .callbacks > .item.disabled
+
+.ts.conversation .message > .callbacks > .row > .item:last-child,
+.ts.conversation .message > .callbacks > .item:last-child
+    margin-right: 0
+
+//-------------------//
+//  Callback Symbol
+//-------------------//
+
+
+//-------------------//
+//    Own Message
+//-------------------//
+
+.ts.conversation .own.message,
+.ts.conversation > .own.group > .message
+    margin-left: auto
+
+.ts.conversation .own.message > .content,
+.ts.conversation > .own.group > .message > .content
+    background  : $chat_ownMessageBackgroundColor
+    color       : $chat_ownMessageTextColor
+
+.ts.conversation .own.message > .avatar,
+.ts.conversation > .own.group > .message > .avatar
+    right: 0
+    left : initial
+
+.ts.conversation .own.message > .content > .reply,
+.ts.conversation > .own.group > .message > .content > .reply
+    border-color: $chat_ownMessageReplyBorderColor
+
+.ts.conversation .own.message > .content > .preview,
+.ts.conversation > .own.group > .message > .content > .preview
+    border-color: $chat_ownMessagePreviewBorderColor
+.ts.conversation .own.message > .content > .preview > .title,
+.ts.conversation > .own.group > .message > .content > .preview > .title
+    color: $chat_ownMessagePreviewTitleTextColor
+
+//-------------------//
+//       Sizes
+//-------------------//
+
+.ts.conversation
+
+//-------------------//
+//       Group
+//-------------------//
+
+.ts.conversation .group .message:not(:first-child) > .avatar,
+.ts.conversation .group .message:not(:first-child) > .content > .author
+    display: none
+
+//-------------------//
+//      Emphasis
+//-------------------//
+
+
+

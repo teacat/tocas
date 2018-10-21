@@ -1,0 +1,1361 @@
+@charset "UTF-8"
+@import ./list.variables
+
+//*******************************//
+//              Main
+//*******************************//
+
+ul.ts.list,
+ol.ts.list,
+.ts.list
+    list-style-type: $list_listStyleType
+    margin         : $list_margin
+    padding        : $list_verticalPadding $list_horizontalPadding
+    color          : $list_textColor
+
+*:not(li) > ul.ts.list:first-child,
+*:not(li) > ol.ts.list:first-child,
+*:not(li) > .ts.list:first-child
+    margin-top : 0em
+    padding-top: 0em
+
+*:not(li) > ul.ts.list:last-child,
+*:not(li) > ol.ts.list:last-child,
+*:not(li) > .ts.list:last-child
+    margin-bottom : 0em
+    padding-bottom: 0em
+
+//-------------------//
+//       Item
+//-------------------//
+
+ul.ts.list li,
+ol.ts.list li,
+.ts.list > .item,
+.ts.list .list > .item
+    display            : table
+    list-style-type    : $list_listStyleType
+    list-style-position: $list_listStylePosition
+    padding            : $list_itemPadding
+    line-height        : $list_itemLineHeight
+    width              : 100%
+
+ul.ts.list > li:first-child:after,
+ol.ts.list > li:first-child:after,
+.ts.list > .list > .item,
+.ts.list > .item:after
+    content   : ''
+    display   : block
+    height    : 0
+    clear     : both
+    visibility: hidden
+
+ul.ts.list li:first-child,
+ol.ts.list li:first-child,
+.ts.list .list > .item:first-child,
+.ts.list > .item:first-child
+    padding-top: 0em
+
+ul.ts.list li:last-child,
+ol.ts.list li:last-child,
+.ts.list .list > .item:last-child,
+.ts.list > .item:last-child
+    padding-bottom: 0em
+
+//-------------------//
+//    Child List
+//-------------------//
+
+ul.ts.list ul,
+ol.ts.list ol,
+.ts.list .list
+    clear     : both
+    margin    : 0em
+    padding   : $list_childListPadding
+
+//-------------------//
+//  Child List Item
+//-------------------//
+
+ul.ts.list ul li,
+ol.ts.list ol li,
+.ts.list .list > .item
+    padding    : $list_childItemPadding
+    line-height: $list_childItemLineHeight
+
+//*******************************//
+//             Dots
+//*******************************//
+
+//-------------------//
+//     Custom Dot
+//-------------------//
+
+ul.ts.list:not(.horizontal) li[value]:before,
+ol.ts.list li[value]:before
+    content: attr(value)
+
+.ts.bulleted.list:not(.horizontal) .list > .item[data-value]:before,
+.ts.bulleted.list:not(.horizontal) > .item[data-value]:before,
+.ts.list .item[data-value]:before
+    content: attr(data-value)
+
+//-------------------//
+//      Floated
+//-------------------//
+
+.ts.list[class*="right floated"]
+    float: right
+.ts.list[class*="left floated"]
+    float: left
+
+//-------------------//
+//      Bulleted
+//-------------------//
+
+/* Margin for dotted list */
+.ts.bulleted.list:not(.horizontal),
+ul.ts.list:not(.horizontal)
+    margin-left: $list_bulletDistance
+
+.ts.bulleted.list .list,
+ul.ts.list ul
+    padding-left: $list_bulletDistance
+
+.ts.bulleted.list .list > a.item:before,
+.ts.bulleted.list > a.item:before
+    color: $list_bulletColor
+
+.ts.bulleted.list.inverted .list > a.item:before,
+.ts.bulleted.list.inverted > a.item:before
+    color: $list_invertedBulletColor
+
+ul.ts.list li:before,
+.ts.bulleted.list .list > .item:before,
+.ts.bulleted.list > .item:before
+    +extend(is-dot)
+    +extend(no-select)
+
+    position: absolute
+    top     : auto
+    left    : auto
+
+    margin-left   : -#{$list_bulletDistance}
+    margin-top    : $list_bulletMarginTop
+    opacity       : 1
+    color         : inherit
+    vertical-align: top
+
+    margin-right: calc(#{$list_horizontalBulletSpacing})
+    content     : '●'
+
+/* Levels */
+ul.ts.list:not(.horizontal) ul > li:before,
+.ts.bulleted.list:not(.horizontal) .list > .item:before
+    content: '○'
+ul.ts.list:not(.horizontal) ul ul > li:before,
+.ts.bulleted.list:not(.horizontal) .list .list > .item:before
+    margin-top: $list_thirdBulletMarginTop
+    content   : '￭'
+
+//-------------------//
+// Horizontal Bulleted
+//-------------------//
+
+ul.ts.horizontal.bulleted.list li,
+.ts.horizontal.bulleted.list > .item,
+ul.ts.horizontal.middoted.list li,
+.ts.horizontal.middoted.list > .item
+    margin-left : 0
+    margin-right: -#{$list_horizontalBulletSpacing / 2.25}
+
+ul.ts.horizontal.bulleted.list li:first-child:before,
+.ts.horizontal.bulleted.list > .item:first-child:before,
+ul.ts.horizontal.middoted.list li:first-child:before,
+.ts.horizontal.middoted.list > .item:first-child:before
+    display: none
+
+ul.ts.horizontal.bulleted.list li:not(:first-child):before,
+.ts.horizontal.bulleted.list > .item:not(:first-child):before,
+ul.ts.horizontal.middoted.list li:not(:first-child):before,
+.ts.horizontal.middoted.list > .item:not(:first-child):before
+    +extend(is-dot)
+
+    position      : relative
+    margin-top    : auto
+    vertical-align: initial
+    margin-left   : calc(#{$list_horizontalBulletSpacing} / 1.5)
+    margin-right  : calc(#{$list_horizontalBulletSpacing} / 1.5)
+    content       : '•'
+
+ul.ts.horizontal.middoted.list li:not(:first-child):before,
+.ts.horizontal.middoted.list > .item:not(:first-child):before
+    content: '·'
+
+//-------------------//
+//      Ordered
+//-------------------//
+
+ol.ts.list,
+.ts.ordered.list,
+.ts.ordered.list .list,
+ol.ts.list ol
+    counter-reset  : ordered
+    margin-left    : $list_orderedCountDistance
+    list-style-type: none
+
+ol.ts.list li,
+.ts.ordered.list .list > .item,
+.ts.ordered.list > .item
+    list-style-type: none
+    position       : relative
+
+ol.ts.list li:before,
+.ts.ordered.list .list > .item:before,
+.ts.ordered.list > .item:before
+    +extend(no-select)
+    position         : absolute
+    top              : auto
+    left             : auto
+    pointer-events   : none
+    margin-left      : -#{$list_orderedCountDistance}
+    counter-increment: $list_orderedCountName
+    content          : $list_orderedCountContent
+    text-align       : $list_orderedCountTextAlign
+    //color            : $list_orderedCountColor
+    vertical-align   : $list_orderedCountVerticalAlign
+    opacity          : $list_orderedCountOpacity
+
+ol.ts.inverted.list li:before,
+.ts.ordered.inverted.list .list > .item:before,
+.ts.ordered.inverted.list > .item:before
+    color: $list_orderedInvertedCountColor
+
+ol.ts.list ol li:before,
+.ts.ordered.list .list > .item:before
+    margin-left: $list_orderedChildCountOffset
+ol.ts.list ol ol li:before,
+.ts.ordered.list .list .list > .item:before
+    margin-left: $list_orderedcChildChildCountOffset
+ol.ts.list ol ol ol li:before,
+.ts.ordered.list .list .list .list > .item:before
+    margin-left: $list_orderedcChildChildChildCountOffset
+
+//-------------------//
+// Horizontal Ordered
+//-------------------//
+
+ol.ts.horizontal.list,
+.ts.ordered.horizontal.list
+    margin-left: 0em
+
+ol.ts.horizontal.list li:before,
+.ts.ordered.horizontal.list .list > .item:before,
+.ts.ordered.horizontal.list > .item:before
+    position      : static
+    margin        : 0em $list_horizontalOrderedCountDistance 0em 0em
+
+//*******************************//
+//           Content
+//*******************************//
+
+//-------------------//
+//       Header
+//-------------------//
+
+.ts.list .item .header:not(.ts),
+.ts.list .list .item .header:not(.ts)
+    display      : block
+    font-weight  : $list_itemHeaderFontWeight
+    color        : $list_itemHeaderColor
+
+//-------------------//
+//        Icon
+//-------------------//
+
+.ts.list .item .icon,
+.ts.list .list .item .icon
+    display: table-cell
+
+.ts.list .item .icon:only-child,
+.ts.list .list .item .icon:only-child
+    display       : inline-block
+    //vertical-align: top
+
+//-------------------//
+//      Content
+//-------------------//
+
+.ts.list .item .content
+    line-height : $list_itemContentLineHeight
+
+.ts.list .item .content:not(:first-child),
+.ts.list .list .item .content:not(:first-child)
+    display     : table-cell
+    padding-left: $list_itemContentDistance
+
+/** Floated */
+.ts.list .item .content[class*="right floated"],
+.ts.list .list .item .content[class*="right floated"]
+    // width      : 1px
+    // white-space: nowrap
+    float      : right
+
+//-------------------//
+//     Description
+//-------------------//
+
+.ts.list .list > .item .description,
+.ts.list > .item .description
+    word-break : break-all
+    white-space: normal
+    color      : $list_itemDescriptionColor
+
+.ts.list .list .item .extra.description,
+.ts.list .item .extra.description
+    color: $list_itemExtraDescriptionColor
+
+//-------------------//
+//        Price
+//-------------------//
+
+.ts.list .list > .item .price,
+.ts.list > .item .price
+    float: right
+
+//-------------------//
+//       Avatar
+//-------------------//
+
+.ts.list .list .item .ts.avatar.image,
+.ts.list .item .ts.avatar.image
+    vertical-align: top
+    margin        : 0
+
+//-------------------//
+// Avatar + Content Offsets
+//-------------------//
+
+.ts.list .list .item .ts.avatar.image + .content,
+.ts.list .item .ts.avatar.image + .content
+    display: inline-block
+
+.ts.list .list .item .ts.avatar.image + .content .header,
+.ts.list .item .ts.avatar.image + .content .header
+    line-height  : 0.95
+
+.ts.list .list .item .ts.avatar.image + .content .header:not(:only-child),
+.ts.list .item .ts.avatar.image + .content .header:not(:only-child)
+    margin-bottom: .2em
+
+.ts.list .list .item .ts.avatar.image + .content .description,
+.ts.list .item .ts.avatar.image + .content .description,
+.ts.list .list .item .ts.avatar.image + .content .meta,
+.ts.list .item .ts.avatar.image + .content .meta
+    line-height: 1
+
+.ts.list .list .item .ts.avatar.image + .content .header + .meta,
+.ts.list .item .ts.avatar.image + .content .header + .meta
+    margin-top : .4em
+
+.ts.list .list .item .ts.avatar.image + .content .meta:not(:last-child),
+.ts.list .item .ts.avatar.image + .content .meta:not(:last-child)
+    margin-bottom: .3em
+
+.ts.list .list .item .ts.avatar.image + .content .description + .meta,
+.ts.list .item .ts.avatar.image + .content .description + .meta
+    margin-top: .35em
+
+//-------------------//
+//      Action
+//-------------------//
+
+.ts.list > .divider > .action,
+.ts.list > .header > .action
+    float: right
+
+//-------------------//
+//      Actions
+//-------------------//
+
+.ts.list > .item > .actions
+    display       : table-cell
+    vertical-align: top
+    white-space   : nowrap
+    width         : 1px
+    padding-left  : $list_itemActionsDistance
+
+//-------------------//
+//      Category
+//-------------------//
+
+.ts.list > .category
+    background   : $list_itemCategoryBackgroundColor
+    border-bottom: $list_segmentedBorder
+
+.ts.list > .category > .header
+    position: sticky
+    top     : 0
+
+    width  : $list_itemCategoryWidth
+    float  : left
+    padding: $list_itemCategoryPadding
+
+    font-weight: $list_itemCategoryFontWeight
+    color      : $list_itemCategoryColor
+
+
+.ts.list > .category > .item
+    display   : table
+    width     : $list_itemCategoryItemWidth
+    background: $list_itemCategoryItemBackgroundColor
+
+    margin-left: $list_itemCategoryWidth
+    border-left: $list_segmentedBorder
+
+.ts.list > .category > .item:last-child
+    border-bottom: 0
+
+//-------------------//
+//        Meta
+//-------------------//
+
+.ts.list .item .meta,
+.ts.list .list .item .meta
+    display    : flex
+    flex-wrap  : wrap
+    color      : $list_metadataColor
+    font-size  : $list_metadataFontSize
+
+.ts.list .item .meta > *,
+.ts.list .list .item .meta > *
+    display    : inline-flex
+    margin     : 0 $list_metadataContentSpacing 0 0
+    align-items: baseline
+
+.ts.list .item .meta > :last-child,
+.ts.list .list .item .meta > :last-child
+    margin-right: 0
+
+/** Floated */
+.ts.list .item .meta[class*="right floated"],
+.ts.list .list .item .meta[class*="right floated"]
+    float: right
+.ts.list .item .meta[class*="left floated"],
+.ts.list .list .item .meta[class*="left floated"]
+    float: left
+
+//-------------------//
+//  Dotted Metadata
+//-------------------//
+
+.ts.list .list .item .meta.middoted > *,
+.ts.list .list .item .meta.bulleted > *,
+.ts.list .item .meta.middoted > *,
+.ts.list .item .meta.bulleted > *
+    margin-right: 0
+
+.ts.list .list .item .meta.middoted > *:not(:first-child):before,
+.ts.list .item .meta.middoted > *:not(:first-child):before
+    +extend(is-dot)
+
+    margin-left : $list_metadataSpacing / 1.5
+    margin-right: $list_metadataSpacing / 1.5
+    content     : '·'
+
+.ts.list .list .item .meta.bulleted > *:not(:first-child):before,
+.ts.list .item .meta.bulleted > *:not(:first-child):before
+    +extend(is-dot)
+
+    margin-left : $list_metadataSpacing / 1.5
+    margin-right: $list_metadataSpacing / 1.5
+    content     : '•'
+
+//*******************************//
+//          List Content
+//*******************************//
+
+//-------------------//
+//    List Header
+//-------------------//
+
+.ts.list > .header
+    font-size: $list_headerFontSize
+    margin   : $list_headerMargin
+
+.ts.list > .header:first-child
+    margin-top: 0
+
+.ts.list > .header > .action
+    font-size: $list_headerActionFontSize
+
+.ts.list.segmented > .header
+    font-size    : $list_segmentedHeaderFontSize
+    padding      : $list_segmentedHeaderPadding
+    color        : $list_segmentedHeaderColor
+    font-weight  : $list_segmentedHeaderFontWeight
+    border-bottom: $list_segmentedBorder
+    margin-bottom: 0
+
+.ts.list.segmented > .header:first-child
+    padding-top: $list_segmentedHeaderPaddingTop
+
+//-------------------//
+//   List Divider
+//-------------------//
+
+.ts.list > .divider:not(.text)
+    margin       : $list_dividerMargin
+    border-bottom: $list_segmentedBorder
+
+.ts.list.segmented > .divider:not(.text)
+    padding      : $list_segmentedDividerPadding
+    border-bottom: $list_segmentedBorder
+
+//-------------------//
+// List Text Divider
+//-------------------//
+
+.ts.list > .text.divider
+    padding: $list_textDividerPadding
+    opacity: $list_textDividerOpacity
+
+.ts.list.segmented > .text.divider
+    background   : $list_segmentedTextDividerBackgroundColor
+    padding      : $list_segmentedDividerPadding
+    border-bottom: $list_segmentedBorder
+    opacity      : 1
+
+//*******************************//
+//          Variations
+//*******************************//
+
+//-------------------//
+//      Emphasis
+//-------------------//
+
+.ts.list:not(.inverted) .item.primary:not(.indicated),
+.ts.list:not(.inverted) .item.primary:not(.indicated) .header:not(.ts),
+.ts.list:not(.inverted) .item.primary:not(.indicated) .description,
+.ts.list:not(.inverted) .item.primary:not(.indicated) .content,
+.ts.list:not(.inverted) .item.primary:not(.indicated) .content .header,
+.ts.list:not(.inverted) .item.primary:not(.indicated) .content .description,
+.ts.list:not(.inverted) .item.primary:not(.indicated) .content .meta
+    color: $list_primaryItemColor
+.ts.list:not(.inverted) .item.info:not(.indicated),
+.ts.list:not(.inverted) .item.info:not(.indicated) .header:not(.ts),
+.ts.list:not(.inverted) .item.info:not(.indicated) .description,
+.ts.list:not(.inverted) .item.info:not(.indicated) .content,
+.ts.list:not(.inverted) .item.info:not(.indicated) .content .header,
+.ts.list:not(.inverted) .item.info:not(.indicated) .content .description,
+.ts.list:not(.inverted) .item.info:not(.indicated) .content .meta
+    color: $list_infoItemColor
+.ts.list:not(.inverted) .item.warning:not(.indicated),
+.ts.list:not(.inverted) .item.warning:not(.indicated) .header:not(.ts),
+.ts.list:not(.inverted) .item.warning:not(.indicated) .description,
+.ts.list:not(.inverted) .item.warning:not(.indicated) .content,
+.ts.list:not(.inverted) .item.warning:not(.indicated) .content .header,
+.ts.list:not(.inverted) .item.warning:not(.indicated) .content .description,
+.ts.list:not(.inverted) .item.warning:not(.indicated) .content .meta
+    color: $list_warningItemColor
+.ts.list:not(.inverted) .item.positive:not(.indicated),
+.ts.list:not(.inverted) .item.positive:not(.indicated) .header:not(.ts),
+.ts.list:not(.inverted) .item.positive:not(.indicated) .description,
+.ts.list:not(.inverted) .item.positive:not(.indicated) .content,
+.ts.list:not(.inverted) .item.positive:not(.indicated) .content .header,
+.ts.list:not(.inverted) .item.positive:not(.indicated) .content .description,
+.ts.list:not(.inverted) .item.positive:not(.indicated) .content .meta
+    color: $list_positiveItemColor
+.ts.list:not(.inverted) .item.negative:not(.indicated),
+.ts.list:not(.inverted) .item.negative:not(.indicated) .header:not(.ts),
+.ts.list:not(.inverted) .item.negative:not(.indicated) .description,
+.ts.list:not(.inverted) .item.negative:not(.indicated) .content,
+.ts.list:not(.inverted) .item.negative:not(.indicated) .content .header,
+.ts.list:not(.inverted) .item.negative:not(.indicated) .content .description,
+.ts.list:not(.inverted) .item.negative:not(.indicated) .content .meta
+    color: $list_negativeItemColor
+.ts.list:not(.inverted) .item.inverted:not(.indicated),
+.ts.list:not(.inverted) .item.inverted:not(.indicated) .header:not(.ts),
+.ts.list:not(.inverted) .item.inverted:not(.indicated) .description,
+.ts.list:not(.inverted) .item.inverted:not(.indicated) .content,
+.ts.list:not(.inverted) .item.inverted:not(.indicated) .content .header,
+.ts.list:not(.inverted) .item.inverted:not(.indicated) .content .description,
+.ts.list:not(.inverted) .item.inverted:not(.indicated) .content .meta
+    color: $list_invertedDescriptionColor
+
+.ts.list.inverted .item.primary:not(.indicated),
+.ts.list.inverted .item.primary:not(.indicated) .header:not(.ts),
+.ts.list.inverted .item.primary:not(.indicated) .description,
+.ts.list.inverted .item.primary:not(.indicated) .content,
+.ts.list.inverted .item.primary:not(.indicated) .content .header,
+.ts.list.inverted .item.primary:not(.indicated) .content .description,
+.ts.list.inverted .item.primary:not(.indicated) .content .meta
+    color: $list_invertedPrimaryItemColor
+.ts.list.inverted .item.info:not(.indicated),
+.ts.list.inverted .item.info:not(.indicated) .header:not(.ts),
+.ts.list.inverted .item.info:not(.indicated) .description,
+.ts.list.inverted .item.info:not(.indicated) .content,
+.ts.list.inverted .item.info:not(.indicated) .content .header,
+.ts.list.inverted .item.info:not(.indicated) .content .description,
+.ts.list.inverted .item.info:not(.indicated) .content .meta
+    color: $list_invertedInfoItemColor
+.ts.list.inverted .item.warning:not(.indicated),
+.ts.list.inverted .item.warning:not(.indicated) .header:not(.ts),
+.ts.list.inverted .item.warning:not(.indicated) .description,
+.ts.list.inverted .item.warning:not(.indicated) .content,
+.ts.list.inverted .item.warning:not(.indicated) .content .header,
+.ts.list.inverted .item.warning:not(.indicated) .content .description,
+.ts.list.inverted .item.warning:not(.indicated) .content .meta
+    color: $list_invertedWarningItemColor
+.ts.list.inverted .item.positive:not(.indicated),
+.ts.list.inverted .item.positive:not(.indicated) .header:not(.ts),
+.ts.list.inverted .item.positive:not(.indicated) .description,
+.ts.list.inverted .item.positive:not(.indicated) .content,
+.ts.list.inverted .item.positive:not(.indicated) .content .header,
+.ts.list.inverted .item.positive:not(.indicated) .content .description,
+.ts.list.inverted .item.positive:not(.indicated) .content .meta
+    color: $list_invertedPositiveItemColor
+.ts.list.inverted .item.negative:not(.indicated),
+.ts.list.inverted .item.negative:not(.indicated) .header:not(.ts),
+.ts.list.inverted .item.negative:not(.indicated) .description,
+.ts.list.inverted .item.negative:not(.indicated) .content,
+.ts.list.inverted .item.negative:not(.indicated) .content .header,
+.ts.list.inverted .item.negative:not(.indicated) .content .description,
+.ts.list.inverted .item.negative:not(.indicated) .content .meta
+    color: $list_invertedNegativeItemColor
+.ts.list.inverted .item.inverted:not(.indicated),
+.ts.list.inverted .item.inverted:not(.indicated) .header:not(.ts),
+.ts.list.inverted .item.inverted:not(.indicated) .description,
+.ts.list.inverted .item.inverted:not(.indicated) .content,
+.ts.list.inverted .item.inverted:not(.indicated) .content .header,
+.ts.list.inverted .item.inverted:not(.indicated) .content .description,
+.ts.list.inverted .item.inverted:not(.indicated) .content .meta
+    color: $list_invertedDescriptionColor
+
+//-------------------//
+//        Image
+//-------------------//
+
+.ts.list:not(.horizontal) div.image,
+.ts.list:not(.horizontal) a.image
+    display       : table-cell
+    vertical-align: top
+
+.ts.list:not(.horizontal) div.image img,
+.ts.list:not(.horizontal) a.image img
+    vertical-align: top
+
+//-------------------//
+//     Horizontal
+//-------------------//
+
+.ts.list.horizontal
+    display  : inline-block
+    margin   : 0
+
+.ts.list.horizontal .item
+    display: inline-block
+    width  : auto
+
+    margin-right: 0.65em
+    padding     : 0
+
+.ts.list.horizontal.ordered .item:before
+    content: $list_orderedHorizontalCountContent
+
+.ts.list.horizontal .item .ts.avatar.image,
+.ts.list.horizontal .item .image,
+.ts.list.horizontal .item .content
+    vertical-align: middle
+
+//-------------------//
+//     Thumbnail
+//-------------------//
+
+.ts.list.thumbnail .item .header
+    font-size: $list_thumbnailListHeaderFontSize
+
+.ts.list.thumbnail .item .image
+    width : $list_thumbnailListImageSize
+    height: $list_thumbnailListImageSize
+
+.ts.list.thumbnail .item .content
+    display       : inline-block
+    vertical-align: middle
+    padding-left  : $list_thumbnailListContentDistance
+
+.ts.list.thumbnail .item .content .header + .ts.button
+    margin-top: $list_thumbnailListButtonDistance
+
+//-------------------//
+//     Icon List
+//-------------------//
+
+.ts.list.icon .item
+    white-space: nowrap
+    word-break : break-all
+
+.ts.list.icon .item > .icon
+    display       : inline-block
+    font-size     : $list_iconListIconFontSize
+    padding       : 0
+    margin-right  : $list_iconListIconDistance
+    vertical-align: top
+
+.ts.list.icon .item > i.rounded.icon
+    width  : $list_iconListIconRoundedFontSize !important
+    height : $list_iconListIconRoundedFontSize !important
+    padding: $list_iconListIconPadding         !important
+
+.ts.list.icon .item > .icon:only-child
+    margin-right: $list_iconListTextDistance
+
+.ts.list.icon .item > .content
+    display       : inline-block
+    padding-left  : 0
+    width         : $list_iconListContentWidth
+    vertical-align: top
+
+//-------------------//
+//     Segmented
+//-------------------//
+
+.ts.segmented.list
+    border       : $list_segmentedBorder
+    border-radius: $list_segmentedBorderRadius
+    box-shadow   : $list_segmentedBoxShadow
+    background   : $list_segmentedBackgroundColor
+
+.ts.segmented.list.horizontal
+    display: inline-flex
+
+.ts.segmented.list.horizontal .item
+    margin-right: 0
+
+.ts.segmented.list a.item
+    +extend(no-select)
+
+    color: $list_segmentedLinkColor
+
+// Hover
+.ts.segmented.list a.item:hover:not(.active):not(:active)
+    background: $list_segmentedLinkHoverBackground
+.ts.segmented.list a.item:hover:not(.active):not(:active),
+.ts.segmented.list a.item:hover:not(.active):not(:active) .icon,
+.ts.segmented.list a.item:hover:not(.active):not(:active) .header,
+.ts.segmented.list a.item:hover:not(.active):not(:active) .description,
+.ts.segmented.list a.item:hover:not(.active):not(:active) .meta
+    color: $list_segmentedLinkHoverColor
+
+// Active
+.ts.segmented.list a.item:active
+    background: $list_segmentedLinkDownBackground
+.ts.segmented.list a.item:active,
+.ts.segmented.list a.item:active .icon,
+.ts.segmented.list a.item:active .header,
+.ts.segmented.list a.item:active .description,
+.ts.segmented.list a.item:active .meta
+    color: $list_segmentedLinkDownColor
+
+// Forced Active
+.ts.segmented.list .item.active
+    background: $list_segmentedLinkActiveBackground
+.ts.segmented.list .item.active,
+.ts.segmented.list .item.active .icon,
+.ts.segmented.list .item.active .header,
+.ts.segmented.list .item.active .description,
+.ts.segmented.list .item.active .meta
+    color: $list_segmentedLinkActiveColor
+
+.ts.segmented.list .item
+    padding      : $list_segmentedPadding
+    border-radius: 0
+
+.ts.segmented.list:not(.horizontal) .item:not(:last-child)
+    border-bottom: $list_segmentedBorder
+
+.ts.segmented.list.horizontal .item:not(:last-child)
+    border-right: $list_segmentedBorder
+
+// Inverted
+.ts.inverted.segmented.list,
+.ts.inverted.segmented.list:not(.horizontal) .item:not(:last-child),
+.ts.inverted.segmented.list.horizontal .item:not(:last-child)
+    border-color: $list_segmentedInvertedBorderColor
+
+.ts.inverted.segmented.list
+    background: $list_segmentedInvertedBckgroundColor
+
+.ts.inverted.segmented.list a.item:hover:not(.active):not(:active)
+    background: $list_invertedSegmentedLinkHoverBackground
+.ts.inverted.segmented.list a.item:hover:not(.active):not(:active),
+.ts.inverted.segmented.list a.item:hover:not(.active):not(:active) .icon,
+.ts.inverted.segmented.list a.item:hover:not(.active):not(:active) .header,
+.ts.inverted.segmented.list a.item:hover:not(.active):not(:active) .description
+    color: $list_invertedSegmentedLinkHoverColor
+
+.ts.inverted.segmented.list a.item:active
+    background: $list_invertedSegmentedLinkDownBackground
+.ts.inverted.segmented.list a.item:active,
+.ts.inverted.segmented.list a.item:active .icon,
+.ts.inverted.segmented.list a.item:active .header,
+.ts.inverted.segmented.list a.item:active .description
+    color: $list_invertedSegmentedLinkDownColor
+
+.ts.inverted.segmented.list a.item.active
+    background: $list_invertedSegmentedLinkActiveBackground
+.ts.inverted.segmented.list a.item.active,
+.ts.inverted.segmented.list a.item.active .icon,
+.ts.inverted.segmented.list a.item.active .header,
+.ts.inverted.segmented.list a.item.active .description
+    color     : $list_invertedSegmentedLinkActiveColor
+
+// Indicated
+.ts.segmented.list:not(.horizontal) .item.positive.indicated
+    border-left: $list_segmentedIndicatedBorder $list_positiveIndicatedBorderColor
+
+.ts.segmented.list:not(.horizontal) .item.negative.indicated,
+.ts.segmented.list:not(.horizontal) .item.error.indicated
+    border-left: $list_segmentedIndicatedBorder $list_negativeIndicatedBorderColor
+
+.ts.segmented.list:not(.horizontal) .item.warning.indicated
+    border-left: $list_segmentedIndicatedBorder $list_warningIndicatedBorderColor
+
+.ts.segmented.list:not(.horizontal) .item.info.indicated
+    border-left: $list_segmentedIndicatedBorder $list_infoIndicatedBorderColor
+
+.ts.segmented.list:not(.horizontal) .item.primary.indicated
+    border-left: $list_segmentedIndicatedBorder $list_primaryIndicatedBorderColor
+
+.ts.segmented.list:not(.horizontal) .item.inverted.indicated
+    border-left: $list_segmentedIndicatedBorder $list_invertedIndicatedBorderColor
+
+//-------------------//
+// Divided & Celled
+//-------------------//
+
+.ts.divided.list > .item,
+.ts.celled.list > .item
+    border-top: $list_dividedBorder
+
+.ts.divided.list .list > .item,
+.ts.celled.list .list > .item
+    border-top: $list_dividedChildListBorder
+
+.ts.divided.list .item .list > .item,
+.ts.celled.list .item .list > .item
+    border-top: $list_dividedChildItemBorder
+
+.ts.divided.list .list > .item:first-child,
+.ts.divided.list > .item:first-child
+    border-top: none
+
+.ts.celled.list:not(.horizontal) .list > .item:first-child,
+.ts.celled.list:not(.horizontal) > .item:first-child
+    padding-top: $list_itemVerticalPadding
+
+.ts.celled.list:not(.horizontal) > .item:last-child
+    border-bottom : $list_dividedBorder
+    padding-bottom: $list_itemVerticalPadding
+
+/* Sub Menu */
+.ts.divided.list:not(.horizontal) .list > .item:first-child,
+.ts.celled.list:not(.horizontal) .list > .item:first-child
+    border-top-width: $list_dividedBorderWidth
+
+/* Divided bulleted */
+.ts.divided.bulleted.list:not(.horizontal),
+.ts.divided.bulleted.list .list,
+.ts.celled.bulleted.list:not(.horizontal),
+.ts.celled.bulleted.list .list
+    margin-left : 0em
+    padding-left: 0em
+
+.ts.divided.bulleted.list > .item:not(.horizontal),
+.ts.celled.bulleted.list > .item:not(.horizontal)
+    padding-left: $list_bulletDistance
+
+/* Divided Ordered */
+.ts.divided.ordered.list,
+.ts.celled.ordered.list
+    margin-left: 0em
+
+.ts.divided.ordered.list .list > .item,
+.ts.divided.ordered.list > .item,
+.ts.celled.ordered.list .list > .item,
+.ts.celled.ordered.list > .item
+    padding-left: $list_orderedCountDistance
+
+.ts.divided.ordered.list .item .list,
+.ts.celled.ordered.list .item .list
+    margin-left   : 0em
+    margin-right  : 0em
+    padding-bottom: $list_itemVerticalPadding
+
+.ts.divided.ordered.list .item .list > .item,
+.ts.celled.ordered.list .item .list > .item
+    padding-left: $list_orderedChildCountDistance
+
+/* Divided Selection */
+.ts.divided.selection.list .list > .item,
+.ts.divided.selection.list > .item,
+.ts.celled.selection.list .list > .item,
+.ts.celled.selection.list > .item
+    margin       : 0em
+    border-radius: 0em
+
+/* Divided horizontal */
+.ts.divided.horizontal.list,
+.ts.celled.horizontal.list
+    margin-left: 0em
+    font-size  : 0
+
+.ts.divided.horizontal.list > .item,
+.ts.celled.horizontal.list > .item
+    font-size: 1rem
+
+.ts.celled.horizontal.list > .item
+    padding-left: $list_horizontalDividedSpacing
+
+.ts.divided.horizontal.list > .item:not(:first-child),
+.ts.celled.horizontal.list > .item:not(:first-child)
+    padding-left: $list_horizontalDividedSpacing
+
+.ts.divided.horizontal.list > .item:not(:last-child)
+    padding-right: $list_horizontalDividedSpacing
+
+.ts.celled.horizontal.list > .item
+    padding-right: $list_horizontalDividedSpacing
+
+.ts.divided.horizontal.list > .item,
+.ts.celled.horizontal.list > .item
+    border-top : none
+    border-left: $list_dividedBorder
+    margin     : 0em
+    line-height: $list_horizontalDividedLineHeight
+
+.ts.divided.horizontal.list > .item:first-child
+    border-left: 0
+
+.ts.horizontal.celled.list > .item:last-child
+    border-right: $list_dividedBorder
+
+/* Inverted */
+.ts.divided.inverted.list > .item,
+.ts.divided.inverted.list > .list,
+.ts.divided.inverted.horizontal.list > .item,
+.ts.celled.inverted.list > .item,
+.ts.celled.inverted.list > .list,
+.ts.celled.inverted.horizontal.list > .item
+    border-color: $list_dividedInvertedBorderColor
+
+//-------------------//
+//      Attached
+//-------------------//
+
+.ts.segmented.list[class*="top attached"]
+    +extend(top-attached)
+
+.ts.segmented.list[class*="bottom attached"]
+    +extend(bottom-attached)
+
+.ts.segmented.list.attached:not([class*="top attached"]):not([class*="bottom attached"])
+    +extend(attached)
+
+//-------------------//
+//      Relaxed
+//-------------------//
+
+.ts.relaxed.list:not(.horizontal) > .item:not(:first-child)
+    padding-top: $list_relaxedItemVerticalPadding
+
+.ts.relaxed.list:not(.horizontal) > .item:not(:last-child)
+    padding-bottom: $list_relaxedItemVerticalPadding
+
+.ts.horizontal.relaxed.list .list > .item:not(:first-child),
+.ts.horizontal.relaxed.list > .item:not(:first-child)
+    padding-left: $list_relaxedHorizontalPadding
+
+.ts.horizontal.relaxed.list .list > .item:not(:last-child),
+.ts.horizontal.relaxed.list > .item:not(:last-child)
+    padding-right: $list_relaxedHorizontalPadding
+
+/* Very Relaxed */
+.ts[class*="very relaxed"].celled.list:not(.horizontal) > .item:first-child
+    padding-top: $list_veryRelaxedItemVerticalPadding
+
+.ts[class*="very relaxed"].list:not(.horizontal) > .item:not(:first-child)
+    padding-top: $list_veryRelaxedItemVerticalPadding
+
+.ts[class*="very relaxed"].list:not(.horizontal) > .item:not(:last-child)
+    padding-bottom: $list_veryRelaxedItemVerticalPadding
+
+.ts.horizontal[class*="very relaxed"].list .list > .item:not(:first-child),
+.ts.horizontal[class*="very relaxed"].list > .item:not(:first-child)
+    padding-left: $list_veryRelaxedHorizontalPadding
+
+.ts.horizontal[class*="very relaxed"].list .list > .item:not(:last-child),
+.ts.horizontal[class*="very relaxed"].list > .item:not(:last-child)
+    padding-right: $list_veryRelaxedHorizontalPadding
+
+/* Celled */
+.ts.relaxed.celled.list:not(.horizontal) > .item:first-child
+    padding-top: $list_relaxedItemVerticalPadding
+
+.ts[class*="very relaxed"].celled.list:not(.horizontal) > .item:first-child
+    padding-top: $list_veryRelaxedItemVerticalPadding
+
+.ts.horizontal.celled.relaxed.list > .item
+    padding-left : $list_relaxedHorizontalPadding
+    padding-right: $list_relaxedHorizontalPadding
+
+.ts.horizontal[class*="very relaxed"].celled.list .list > .item,
+.ts.horizontal[class*="very relaxed"].celled.list > .item
+    padding-left : $list_veryRelaxedHorizontalPadding
+    padding-right: $list_veryRelaxedHorizontalPadding
+
+//-------------------//
+//    Single Line
+//-------------------//
+
+.ts.list[class*="single line"] > .item
+    table-layout: fixed
+
+.ts.list[class*="single line"] > .item > .content
+    width: 100%
+
+.ts.list[class*="single line"] > .item > .content > .description,
+.ts.list[class*="single line"] > .item > .content > .header
+    white-space  : nowrap
+    text-overflow: ellipsis
+    overflow     : hidden
+
+//-------------------//
+//      Centered
+//-------------------//
+
+.ts.list.centered
+    width     : 100%
+    text-align: center
+
+//-------------------//
+// Reversed & Start
+//-------------------//
+
+.ts.list[reversed],
+.ts.list[start]
+    display: block
+
+.ts.list[reversed] > li,
+.ts.list[start] > li
+    list-style-type: decimal
+    display: list-item
+
+.ts.list[reversed] > li:before,
+.ts.list[start] > li:before
+    display: none
+
+//-------------------//
+//      Aligns
+//-------------------//
+
+.ts.list[class*="middle aligned"] .item,
+.ts.list[class*="middle aligned"] .image,
+.ts.list[class*="middle aligned"] .content,
+.ts.list [class*="middle aligned"]
+    vertical-align: middle !important
+
+.ts.list[class*="bottom aligned"] .item,
+.ts.list[class*="bottom aligned"] .image,
+.ts.list[class*="bottom aligned"] .content,
+.ts.list [class*="bottom aligned"]
+    vertical-align: bottom !important
+
+//-------------------//
+//   Content Aligns
+//-------------------//
+
+.ts.list .item .content[class*="top aligned"],
+.ts.list .list .item .content[class*="top aligned"]
+    vertical-align: top
+.ts.list .item .content[class*="middle aligned"],
+.ts.list .list .item .content[class*="middle aligned"]
+    vertical-align: middle
+.ts.list .item .content[class*="bottom aligned"],
+.ts.list .list .item .content[class*="bottom aligned"]
+    vertical-align: bottom
+
+//-------------------//
+//     Description
+//-------------------//
+
+.ts.list.description > .item
+    line-height: $lineHeight
+.ts.list.description .item .description
+    padding-left: $list_descriptionDistance
+
+//-------------------//
+//   Specification
+//-------------------//
+
+.ts.list.specification .item .header
+    font-size: $list_specificationHeaderFontSize
+
+//-------------------//
+//      Selected
+//-------------------//
+
+.ts.list .selected.item.item.item.item.item.item
+    color     : $list_selectedTextColor
+    background: $list_selectedBackgroundColor
+
+.ts.list .selected.item.item.item.item > .content,
+.ts.list .selected.item.item.item.item > .content > .header,
+.ts.list .selected.item.item.item.item > .content > .description,
+.ts.list .selected.item.item.item.item > .content > .meta,
+.ts.list .selected.item.item.item.item > .content > .meta > *
+    color: $list_selectedTextColor
+
+//-------------------//
+//      Disabled
+//-------------------//
+
+.ts.list .list > .disabled.item,
+.ts.list > .disabled.item,
+.ts.list .list > .disabled.item .header,
+.ts.list > .disabled.item .header,
+.ts.list .list > .disabled.item .description,
+.ts.list > .disabled.item .description,
+.ts.list .list > .disabled.item .meta,
+.ts.list > .disabled.item .meta
+    +extend(no-select)
+
+    pointer-events: none
+    color         : $list_disabledColor !important
+
+.ts.inverted.list .list > .disabled.item,
+.ts.inverted.list > .disabled.item,
+.ts.inverted.list .list > .disabled.item .header,
+.ts.inverted.list > .disabled.item .header,
+.ts.inverted.list .list > .disabled.item .description,
+.ts.inverted.list > .disabled.item .description
+    color: $list_invertedDisabledColor !important
+
+//-------------------//
+//      Inverted
+//-------------------//
+
+.ts.inverted.list:not(.segmented) .list > a.item > .icon,
+.ts.inverted.list:not(.segmented) > a.item > .icon
+    color: $list_invertedIconLinkColor
+
+.ts.inverted.list:not(.segmented) .list > a.item:hover > .icon,
+.ts.inverted.list:not(.segmented) > a.item:hover > .icon
+    color: $list_invertedIconLinkHoverColor
+
+.ts.inverted.list .list > .item .header,
+.ts.inverted.list > .item .header
+    color: $list_invertedHeaderColor
+
+.ts.inverted.list .list > .item .description,
+.ts.inverted.list > .item .description
+    color: $list_invertedDescriptionColor
+
+.ts.inverted.list .list > .item,
+.ts.inverted.list > .item
+    color: $list_invertedTextColor
+
+/* Item Link */
+.ts.inverted.list .list > a.item,
+.ts.inverted.list > a.item
+    cursor: pointer
+    color : $list_invertedItemLinkColor
+
+.ts.inverted.list .list > a.item:hover,
+.ts.inverted.list > a.item:hover
+    color: $list_invertedItemLinkHoverColor
+
+/* Linking Content */
+.ts.inverted.list .item a:not(.ts)
+    color: $list_invertedItemLinkColor !important
+
+.ts.inverted.list .item a:not(.ts):hover
+    color: $list_invertedItemLinkHoverColor !important
+
+//-------------------//
+//       Link
+//-------------------//
+
+.ts.link.list.list > li > a,
+.ts.link.list.list .item,
+.ts.link.list.list a.item,
+.ts.link.list.list .item a:not(.ts)
+    color: $list_linkListItemColor
+
+.ts.link.list.list > li > a:not(.active):hover,
+.ts.link.list.list a.item:not(.active):hover,
+.ts.link.list.list .item:not(.active) a:not(.ts):hover
+    color: $list_linkListItemHoverColor
+
+.ts.link.list.list > li > a:active:active:not(.active),
+.ts.link.list.list a.item:active:active:not(.active),
+.ts.link.list.list .item a:not(.ts):active:active:not(.active)
+    color: $list_linkListItemDownColor
+
+.ts.link.list.list > li > a.active,
+.ts.link.list.list .active.item,
+.ts.link.list.list .active.item a:not(.ts)
+    color: $list_linkListItemActiveColor
+
+/* Inverted */
+.ts.inverted.link.list.list > li > a,
+.ts.inverted.link.list.list .item,
+.ts.inverted.link.list.list a.item,
+.ts.inverted.link.list.list .item a:not(.ts)
+    color: $list_invertedLinkListItemColor
+
+.ts.inverted.link.list.list > li > a:not(.active):hover,
+.ts.inverted.link.list.list a.item:not(.active):hover,
+.ts.inverted.link.list.list .item:not(.active) a:not(.ts):hover
+    color: $list_invertedLinkListItemHoverColor
+
+.ts.inverted.link.list.list > li > a:active:active,
+.ts.inverted.link.list.list a.item:active:active,
+.ts.inverted.link.list.list .item a:not(.ts):active:active
+    color: $list_invertedLinkListItemDownColor
+
+.ts.inverted.link.list.list > li > a.active,
+.ts.inverted.link.list.list a.active.item,
+.ts.inverted.link.list.list .active.item a:not(.ts)
+    color: $list_invertedLinkListItemActiveColor
+
+//-------------------//
+//       Links
+//-------------------//
+
+.ts.list > .item a,
+.ts.list .list > .item a
+    cursor: pointer
+
+.ts.list:not(.segmented) .list > a.item,
+.ts.list:not(.segmented) > a.item
+    cursor: pointer
+    color : $list_itemLinkColor
+
+.ts.list:not(.segmented) .list > a.item:hover,
+.ts.list:not(.segmented) > a.item:hover
+    color: $list_itemLinkHoverColor
+
+.ts.list:not(.segmented) .list > a.item:hover .icon,
+.ts.list:not(.segmented) > a.item:hover .icon
+    color: $list_itemLinkIconHoverColor
+
+.ts.list:not(.segmented) .list > a.item:active,
+.ts.list:not(.segmented) > a.item:active
+    color: $list_itemLinkActiveColor
+
+/* Linked Item Icons */
+.ts.list:not(.segmented) .list > a.item i.icon,
+.ts.list:not(.segmented) > a.item i.icon
+    color: $list_itemLinkIconColor
+
+/* Header Link */
+.ts.list .list > .item a.header,
+.ts.list > .item a.header
+    cursor: pointer
+    color : $list_itemHeaderLinkColor !important
+
+.ts.list .list > .item a.header:hover,
+.ts.list > .item a.header:hover
+    color: $list_itemHeaderLinkHoverColor !important
+
+.ts.list .list > .item a.header:active,
+.ts.list > .item a.header:active
+    color: $list_itemHeaderLinkActiveColor !important
+
+//-------------------//
+//       Sizes
+//-------------------//
+
+.ts.mini.list
+    font-size: $relativeMini
+.ts.tiny.list
+    font-size: $relativeTiny
+.ts.small.list
+    font-size: $relativeSmall
+.ts.list
+    font-size: $relativeMedium
+.ts.large.list
+    font-size: $relativeLarge
+.ts.big.list
+    font-size: $relativeBig
+.ts.huge.list
+    font-size: $relativeHuge
+.ts.massive.list
+    font-size: $relativeMassive
+
+.ts.mini.horizontal.list .list > .item,
+.ts.mini.horizontal.list > .item
+    font-size: $absoluteMini
+.ts.tiny.horizontal.list .list > .item,
+.ts.tiny.horizontal.list > .item
+    font-size: $absoluteTiny
+.ts.small.horizontal.list .list > .item,
+.ts.small.horizontal.list > .item
+    font-size: $absoluteSmall
+.ts.horizontal.list .list > .item,
+.ts.horizontal.list > .item
+    font-size: $absoluteMedium
+.ts.large.horizontal.list .list > .item,
+.ts.large.horizontal.list > .item
+    font-size: $absoluteLarge
+.ts.big.horizontal.list .list > .item,
+.ts.big.horizontal.list > .item
+    font-size: $absoluteBig
+.ts.huge.horizontal.list .list > .item,
+.ts.huge.horizontal.list > .item
+    font-size: $absoluteHuge
+.ts.massive.horizontal.list .list > .item,
+.ts.massive.horizontal.list > .item
+    font-size: $absoluteMassive
+
+//-------------------//
+//     Stackable
+//-------------------//
+
+.ts.horizontal.list.stackable
+    +rwd-serious(mobile)
+        flex-direction: column
+
+//-------------------//
+//      Coupling
+//-------------------//
+
+.ts.menu .ts.list > .item,
+.ts.menu .ts.list .list > .item
+    display            : flex
+    flex-wrap          : wrap
+    background         : transparent
+    list-style-type    : $list_listStyleType
+    list-style-position: $list_listStylePosition
+    padding            : $list_itemVerticalPadding $list_itemHorizontalPadding
+    line-height        : $list_itemLineHeight
+
+.ts.menu .ts.list .list > .item:before,
+.ts.menu .ts.list > .item:before
+    border    : none
+    background: none
+
+.ts.menu .ts.list .list > .item:first-child,
+.ts.menu .ts.list > .item:first-child
+    padding-top: 0em
+
+.ts.menu .ts.list .list > .item:last-child,
+.ts.menu .ts.list > .item:last-child
+    padding-bottom: 0em
+
+.ts.card + .ts.list.floated
+    margin-top: 0
+
+.ts.segmented.list > .item > .ts.checkbox
+    padding: .15em 1.3em 0 .3em
