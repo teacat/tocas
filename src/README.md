@@ -178,6 +178,7 @@ go get -u github.com/wellington/wellington/wt
 
 ```bash
 sudo npm install -g pug
+sudo npm install -g pug-cli
 ```
 
 在安裝完畢後，透過 `pug` 來在任何目錄下執行檢查其指令是否可用。
