@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 
@@ -118,7 +120,38 @@ func cliDevelop() {
 							executeCommand("Sassc", []string{"sassc", "--sass", "../tocas.sass", "../../dist/tocas.css"}, event)
 						}
 					case "pug":
+
+						//fileContent := test + string(dat)
+						//fmt.Print(fileContent)
+						//fmt.Printf("%s.html", strings.TrimSuffix(event.Path, filepath.Ext(event.Path)))
+
+						//tmpPath := fmt.Sprintf("%s-tmp.pug", strings.TrimSuffix(event.Path, filepath.Ext(event.Path)))
+						//ioutil.WriteFile((tmpPath), dat, 777)
+						//executeCommand("Pug", []string{"pug", tmpPath}, event)
+
+						//executeCommand("Pug", []string{"echo", string(fileContent), "|", "pug", ">", fmt.Sprintf("%s.html", strings.TrimSuffix(event.Path, filepath.Ext(event.Path)))}, event)
 						executeCommand("Pug", []string{"pug", event.Path}, event)
+
+						tmpPath := fmt.Sprintf("%s.html", strings.TrimSuffix(event.Path, filepath.Ext(event.Path)))
+						dat, err := ioutil.ReadFile(tmpPath)
+						if err != nil {
+							panic(err)
+						}
+
+						newContent := fmt.Sprintf(`<html><head><title>%s</title><link rel="stylesheet" href="../../../dist/tocas.css"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body style="padding: 50px;">%s</body></html>`, strings.TrimSuffix(event.Name(), filepath.Ext(event.Name())), string(dat))
+
+						re, err := regexp.Compile(`<!-- \+ (.*?)-->`)
+						if err != nil {
+							panic(err)
+						}
+						newContent = re.ReplaceAllString(newContent, "<br><br><!-- + $1 --><h1>$1</h1>")
+
+						//newContent = strings.Replace(newContent, "<!-- +", "<br><br><!-- +", -1)
+						newContent = strings.Replace(newContent, ">", "> ", -1)
+						newContent = strings.Replace(newContent, "<", " <", -1)
+
+						ioutil.WriteFile((tmpPath), []byte(newContent), 777)
+
 					}
 
 				case err := <-w.Error:
