@@ -50,9 +50,6 @@
         color     : $detailTextColor
         background: $detailBackgroundColor !important
 
-    &.empty.triangle
-        border-bottom-color: $backgroundColor !important
-
 @mixin label-link-variant($color, $backgroundColor, $borderColor)
     $hoverBackgroundColor : lighten($backgroundColor, 3%)
     $activeBackgroundColor: darken($backgroundColor, 8%)
@@ -70,23 +67,8 @@
     &[class*="left corner"]:hover:after
         border-top-color: $hoverBackgroundColor !important
 
-    &:not(.basic):active
-        background: $activeBackgroundColor !important
-    &.basic:active
-        color       : darken($backgroundColor, 6%)
-        border-color: darken($borderColor, 8%)
-    &.empty.ribbon:active
-        border-left-color : $activeBackgroundColor !important
-        border-right-color: $activeBackgroundColor !important
-    &.corner:not([class*="left corner"]):active:after
-        border-right-color: $activeBackgroundColor !important
-    &[class*="left corner"]:active:after
-        border-top-color: $activeBackgroundColor !important
-
     &.corner:hover,
-    &.corner:active,
-    &.empty.ribbon:hover,
-    &.empty.ribbon:active
+    &.empty.ribbon:hover
         background: transparent !important
 
 //*******************************//
@@ -337,8 +319,7 @@ a.ts.label
 //-------------------//
 
 .ts.corner.label,
-.ts.corner.label:hover,
-.ts.corner.label:active
+.ts.corner.label:hover
     background: transparent !important
     border    : 0
 
@@ -524,40 +505,6 @@ a.ts.label
     border-radius: $circularRadius
 
 //-------------------//
-//       Empty
-//-------------------//
-
-.ts.labels.empty .ts.label,
-.ts.label.empty
-    text-indent: -9999px
-
-.ts.labels.empty.circular .ts.label,
-.ts.label.empty.circular
-    border-radius: $circularRadius
-    width        : 1em
-    height       : 1em
-    padding      : .5em
-
-.ts.labels.empty.triangle .ts.label,
-.ts.label.empty.triangle
-    border-radius      : 0
-    border-top         : none
-    background   : transparent !important
-    padding            : 0
-    border-left        : 0.5em solid transparent
-    border-right       : 0.5em solid transparent
-    border-left-color  : transparent !important
-    border-right-color : transparent !important
-    border-top-color   : transparent !important
-    border-bottom-width: 1em
-    border-bottom-style: solid
-
-.ts.labels.empty.square .ts.label,
-.ts.label.empty.square
-    border-radius: 0
-    padding      : .5em
-
-//-------------------//
 //       Basic
 //-------------------//
 
@@ -568,19 +515,12 @@ a.ts.label
     color     : $label_basicColor
 
 .ts.basic.labels a.ts.label:hover,
-.ts.basic.labels a.ts.label:active,
-a.ts.basic.label:hover,
-a.ts.basic.label:active
+a.ts.basic.label:hover
     background: $label_basicBackground !important
 
 .ts.basic.labels:not(.primary):not(.info):not(.negative):not(.positive):not(.warning):not(.inverted) a.ts.basic.label:hover,
 a.ts.basic.label:not(.primary):not(.info):not(.negative):not(.positive):not(.warning):not(.inverted):hover
     color : $label_basicHoverColor
-    border: $label_basicBorder
-
-.ts.basic.labels:not(.primary):not(.info):not(.negative):not(.positive):not(.warning):not(.inverted) a.ts.basic.label:active,
-a.ts.basic.label:not(.primary):not(.info):not(.negative):not(.positive):not(.warning):not(.inverted):active
-    color : $label_basicActiveColor
     border: $label_basicBorder
 
 /* Pointing */
