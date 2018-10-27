@@ -1,9 +1,13 @@
 package main
 
 import (
+	"context"
+	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -11,6 +15,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/google/go-github/github"
+	"github.com/mholt/archiver"
 	"github.com/radovskyb/watcher"
 	"gopkg.in/AlecAivazis/survey.v1"
 )
@@ -21,8 +27,8 @@ func main() {
 	var value string
 
 	prompt := &survey.Select{
-		Message: "歡迎使用 Tocas CLI：",
-		Options: []string{"文件工具", "自訂並建置", "開發選項", "Change Language"},
+		Message: "歡迎使用 Tocas 指令列程式",
+		Options: []string{"自訂並建置", "文件工具", "開發與編譯", "Change Language"},
 	}
 	survey.AskOne(prompt, &value, nil)
 
@@ -30,7 +36,7 @@ func main() {
 	case "自訂並建置":
 	case "文件工具":
 		cliDocumentation()
-	case "開發選項":
+	case "開發與編譯":
 		cliDevelop()
 	case "Change Language":
 	}
@@ -40,14 +46,15 @@ func cliDocumentation() {
 	var value string
 
 	prompt := &survey.Select{
-		Message: "試圖使用何種「文件工具」？",
-		Options: []string{"編譯文件"},
+		Message: "想要編譯或是開發文件嗎？",
+		Options: []string{"編譯靜態文件", "監聽並即時轉換文件"},
 	}
 	survey.AskOne(prompt, &value, nil)
 
 	switch value {
-	case "編譯文件":
+	case "編譯靜態文件":
 		Collect("../yaml/zh-tw")
+	case "監聽並即時轉換文件":
 	}
 }
 
@@ -81,22 +88,162 @@ func executeCommand(action string, command []string, event watcher.Event) {
 	cmd.Stderr = os.Stdout
 	cmd.Start()
 	cmd.Wait()
-	log.Printf("■ 已執行 %s（%s）：%s\n", action, time.Since(now), event.Path)
+	log.Printf("已執行 %s（%s）：%s\n", action, time.Since(now), event.Path)
+}
+
+type Icon struct {
+	Changes []string `json:"changes"`
+	Label   string   `json:"label"`
+	Styles  []string `json:"styles"`
+	Unicode string   `json:"unicode"`
 }
 
 func cliDevelop() {
 	var value string
 
 	prompt := &survey.Select{
-		Message: "你現在已成為開發人員，請問何事？",
-		Options: []string{"監聽並即時編譯樣式", "更改 Sass 編譯器"},
+		Message: "想要進行什麼開發手續？",
+		Options: []string{"監聽並即時編譯", "下載並更新圖示庫", "更改 Sass 編譯器"},
 	}
 	survey.AskOne(prompt, &value, nil)
 
 	switch value {
 	case "更改 Sass 編譯器":
 		cliChangeCompiler()
-	case "監聽並即時編譯樣式":
+	case "下載並更新圖示庫":
+
+		client := github.NewClient(nil)
+
+		release, _, err := client.Repositories.GetLatestRelease(context.Background(), "FortAwesome", "Font-Awesome")
+		if err != nil {
+			panic(err)
+		}
+
+		for _, asset := range release.Assets {
+			//
+			url := asset.GetBrowserDownloadURL()
+			//
+			if !strings.HasSuffix(url, "web.zip") {
+				continue
+			}
+
+			// 取得檔案名稱，沒有副檔名
+			fileprefix := filepath.Base(url)
+			fileprefix = strings.TrimSuffix(fileprefix, filepath.Ext(fileprefix))
+			//
+			filename := filepath.Base(url)
+
+			if _, err := os.Stat(fmt.Sprintf("%s/%s", os.TempDir(), fileprefix)); os.IsNotExist(err) {
+				file, err := ioutil.TempFile(os.TempDir(), filename)
+				if err != nil {
+					panic(err)
+				}
+
+				//
+				log.Printf("正在下載最新的 Font Awesome：%s", url)
+				resp, err := http.Get(url)
+				if err != nil {
+					panic(err)
+				}
+
+				//
+				n, err := io.Copy(file, resp.Body)
+				if err != nil {
+					panic(err)
+				}
+				log.Printf("已經複製 Font Awesome 整體套件（%d Bytes）", n)
+
+				//
+				log.Printf("正在解壓縮套件…")
+				err = archiver.Zip.Open(file.Name(), os.TempDir())
+				if err != nil {
+					panic(err)
+				}
+			} else {
+				//
+				log.Printf("已在本地找到最新的 Font Awesome：%s", fileprefix)
+			}
+
+			//
+			log.Printf("正在將最新的圖示字體複製至 Tocas UI 資料夾…")
+			fontsPath, err := filepath.Glob(fmt.Sprintf("%s/%s/webfonts/*", os.TempDir(), fileprefix))
+			if err != nil {
+				panic(err)
+			}
+			for _, v := range fontsPath {
+				dat, err := ioutil.ReadFile(v)
+				if err != nil {
+					panic(err)
+				}
+				err = ioutil.WriteFile(fmt.Sprintf("./../../dist/fonts/icons/%s", filepath.Base(v)), dat, 777)
+				if err != nil {
+					panic(err)
+				}
+				log.Printf("已複製 %s", v)
+			}
+
+			//
+			log.Printf("正在轉譯 Font Awesome 圖示至 Tocas UI 格式…")
+			iconList, err := ioutil.ReadFile(fmt.Sprintf("%s/%s/metadata/icons.json", os.TempDir(), fileprefix))
+			if err != nil {
+				panic(err)
+			}
+
+			//
+			var icons map[string]Icon
+			err = json.Unmarshal(iconList, &icons)
+			if err != nil {
+				panic(err)
+			}
+
+			//
+			var newContent string
+			for k, v := range icons {
+				//
+				className := strings.Replace(k, "-", ".", -1)
+				//
+				className = strings.Replace(k, ".alt.", ".alternate.", -1)
+				//
+				selector := fmt.Sprintf("i.%s.icon:before", className)
+				//
+				if v.Styles[0] == "brands" {
+					newContent += fmt.Sprintf("%s\n    +extend(brands)\n    content: \"\\%s\"\n", selector, v.Unicode)
+				} else {
+					newContent += fmt.Sprintf("%s\n    content: \"\\%s\"\n", selector, v.Unicode)
+				}
+			}
+
+			//
+			dat, err := ioutil.ReadFile("./../Components/Icon/_Icon.sass")
+			if err != nil {
+				panic(err)
+			}
+
+			//
+			re, err := regexp.Compile(`(\/\/ DO NOT EDIT AFTER THIS LINE \(不要編輯此行之後的樣式\))((.|\n)*)(\/\/ DO NOT EDIT BEFORE THIS LINE \(不要編輯此行之前的樣式\))`)
+			if err != nil {
+				panic(err)
+			}
+			newContent = re.ReplaceAllString(string(dat), fmt.Sprintf("$1\n%s$4", newContent))
+
+			//
+			re, err = regexp.Compile(`\/\/ DO NOT EDIT THIS LINE \(不要編輯此行\):.*?\n((.|\n)*)`)
+			if err != nil {
+				panic(err)
+			}
+			newContent = re.ReplaceAllString(string(dat), fmt.Sprintf("// DO NOT EDIT THIS LINE (不要編輯此行): %s\n$1", fileprefix))
+
+			//
+			err = ioutil.WriteFile("./../Components/Icon/_Icon.sass", []byte(newContent), 777)
+			if err != nil {
+				panic(err)
+			}
+			log.Printf("已將 Font Awesome 圖示轉譯並存入 Tocas UI 原始碼")
+		}
+
+	case "監聽並即時編譯":
+
+		log.Printf("已經開始監聽檔案…")
 
 		w := watcher.New()
 		w.SetMaxEvents(1)
@@ -107,7 +254,7 @@ func cliDevelop() {
 				case event := <-w.Event:
 					switch strings.TrimLeft(filepath.Ext(event.Name()), ".") {
 					case "coffee":
-						fmt.Printf("■ 已編譯 Coffee：%s\n", event.Path)
+						fmt.Printf("已編譯 Coffee：%s\n", event.Path)
 					case "sass":
 						switch sassCompiler {
 						case "sass":
@@ -120,16 +267,6 @@ func cliDevelop() {
 							executeCommand("Sassc", []string{"sassc", "--sass", "../tocas.sass", "../../dist/tocas.css"}, event)
 						}
 					case "pug":
-
-						//fileContent := test + string(dat)
-						//fmt.Print(fileContent)
-						//fmt.Printf("%s.html", strings.TrimSuffix(event.Path, filepath.Ext(event.Path)))
-
-						//tmpPath := fmt.Sprintf("%s-tmp.pug", strings.TrimSuffix(event.Path, filepath.Ext(event.Path)))
-						//ioutil.WriteFile((tmpPath), dat, 777)
-						//executeCommand("Pug", []string{"pug", tmpPath}, event)
-
-						//executeCommand("Pug", []string{"echo", string(fileContent), "|", "pug", ">", fmt.Sprintf("%s.html", strings.TrimSuffix(event.Path, filepath.Ext(event.Path)))}, event)
 						executeCommand("Pug", []string{"pug", event.Path}, event)
 
 						tmpPath := fmt.Sprintf("%s.html", strings.TrimSuffix(event.Path, filepath.Ext(event.Path)))
@@ -145,8 +282,6 @@ func cliDevelop() {
 							panic(err)
 						}
 						newContent = re.ReplaceAllString(newContent, "<br><br><!-- + $1 --><h1>$1</h1>")
-
-						//newContent = strings.Replace(newContent, "<!-- +", "<br><br><!-- +", -1)
 						newContent = strings.Replace(newContent, ">", "> ", -1)
 						newContent = strings.Replace(newContent, "<", " <", -1)
 
