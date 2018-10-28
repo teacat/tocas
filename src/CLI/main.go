@@ -285,6 +285,12 @@ func cliDevelop() {
 						newContent = strings.Replace(newContent, ">", "> ", -1)
 						newContent = strings.Replace(newContent, "<", " <", -1)
 
+						re, err = regexp.Compile(`<a class="([a-zA-Z0-9 -]*)">`)
+						if err != nil {
+							panic(err)
+						}
+						newContent = re.ReplaceAllString(newContent, "<a class=\"$1\" href=\"#!\">")
+
 						ioutil.WriteFile((tmpPath), []byte(newContent), 777)
 
 					}
