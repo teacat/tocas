@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -96,6 +97,23 @@ type Icon struct {
 	Label   string   `json:"label"`
 	Styles  []string `json:"styles"`
 	Unicode string   `json:"unicode"`
+}
+
+func ReplaceAllStringSubmatchFunc(re *regexp.Regexp, str string, repl func([]string) string) string {
+	result := ""
+	lastIndex := 0
+
+	for _, v := range re.FindAllSubmatchIndex([]byte(str), -1) {
+		groups := []string{}
+		for i := 0; i < len(v); i += 2 {
+			groups = append(groups, str[v[i]:v[i+1]])
+		}
+
+		result += str[lastIndex:v[0]] + repl(groups)
+		lastIndex = v[1]
+	}
+
+	return result + str[lastIndex:]
 }
 
 func cliDevelop() {
@@ -275,13 +293,40 @@ func cliDevelop() {
 							panic(err)
 						}
 
-						newContent := fmt.Sprintf(`<html><head><title>%s</title><link rel="stylesheet" href="../../../dist/tocas.css"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body style="padding: 50px;">%s</body></html>`, strings.TrimSuffix(event.Name(), filepath.Ext(event.Name())), string(dat))
+						var buttons string
 
 						re, err := regexp.Compile(`<!-- \+ (.*?)-->`)
 						if err != nil {
 							panic(err)
 						}
-						newContent = re.ReplaceAllString(newContent, "<br><br><!-- + $1 --><h1>$1</h1>")
+						a := re.FindAllStringSubmatch(string(dat), -1)
+						for _, v := range a {
+							buttons += fmt.Sprintf(`<a href="#%s" class="ts fluid button" style="text-align: left; margin-bottom: 8px">%s</a>`, url.QueryEscape(v[1]), v[1])
+						}
+
+						newContent := fmt.Sprintf(`<html><head><title>%s</title><link rel="stylesheet" href="../../../dist/tocas.css"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body style="padding: 50px 50px 50px 350px;"><div class="ts attached segment form" style="
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 3;
+            width: 300px;
+			overflow: scroll;
+			overflow-x: hidden;
+        ">
+        <fieldset>
+            <legend>Core</legend>%s</fieldset></div>%s</body></html>`, strings.TrimSuffix(event.Name(), filepath.Ext(event.Name())), buttons, string(dat))
+
+						re, err = regexp.Compile(`<!-- \+ (.*?)-->`)
+						if err != nil {
+							panic(err)
+						}
+
+						newContent = ReplaceAllStringSubmatchFunc(re, newContent, func(groups []string) string {
+							return fmt.Sprintf(`<br><br><!-- + %s --><h1 id="%s">%s</h1>`, groups[1], url.QueryEscape(groups[1]), groups[1])
+						})
+
+						//newContent = re.ReplaceAllString(newContent, "<br><br><!-- + $1 --><h1>$1</h1>")
 						newContent = strings.Replace(newContent, ">", "> ", -1)
 						newContent = strings.Replace(newContent, "<", " <", -1)
 
