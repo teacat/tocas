@@ -1,0 +1,274 @@
+@import ./Panes.variables
+
+//*******************************//
+//             Main
+//*******************************//
+
+.ts.panes
+    display: flex
+    flex-direction: row
+    flex-wrap: nowrap
+    height: 100%
+    flex: auto
+
+.ts.panes .pane:not(.padded) > .ts.panes
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+
+//-------------------//
+//       Fixed
+//-------------------//
+
+.ts.panes.fixed
+    position: fixed
+    left    : 0
+    right   : 0
+    bottom  : 0
+    right   : 0
+
+//-------------------//
+//      Vertical
+//-------------------//
+
+.ts.vertical.panes
+    display: flex
+    flex-wrap: nowrap
+    height: 100%
+    flex-direction: column
+    flex-wrap: nowrap
+    flex: auto
+
+.ts.panes .pane > .ts.vertical.panes
+    //margin: -1em
+
+//-------------------//
+//     Stretched
+//-------------------//
+
+.ts.panes .pane.stretched:not([class*="stretched mobile"]):not([class*="stretched tablet"]):not([class*="stretched computer"]):not([class*="stretched large screen"])
+    flex: 1
+.ts.panes .pane[class*="stretched mobile"]
+    +rwd-serious(mobile)
+        flex: 1
+.ts.panes .pane[class*="stretched tablet"]
+    +rwd-serious(tablet)
+        flex: 1
+.ts.panes .pane[class*="stretched computer"]
+    +rwd-serious(computer)
+        flex: 1
+.ts.panes .pane[class*="stretched large screen"]
+    +rwd-serious(large)
+        flex: 1
+
+//-------------------//
+//        Pane
+//-------------------//
+
+.ts.panes .pane
+    //padding: 1em
+
+//-------------------//
+//      Padded
+//-------------------//
+
+.ts.panes .pane.padded
+    padding: 1em
+
+//-------------------//
+//      Fitted
+//-------------------//
+
+.ts.panes .fitted.pane
+    padding: 0
+
+//-------------------//
+//  Secondary & Tertiary
+//-------------------//
+
+.ts.panes .pane.secondary
+
+.ts.panes .pane.tertiary
+
+//-------------------//
+//      Celled
+//-------------------//
+
+.ts.panes.celled > .pane
+    border: 1px solid #EEE
+
+.ts.panes.celled:not(.vertical) > .pane + .pane
+    border-left: 0
+
+.ts.panes.celled:not(.vertical) > .pane > .panes > .pane
+    border-left: 0
+    //border-top: 0
+    //border-bottom: 0
+
+.ts.panes.celled:not(.vertical) > .pane > .panes.vertical > .pane:first-child
+    border-top: 0
+
+.ts.panes.celled:not(.vertical) > .pane > .panes.vertical > .pane:last-child
+    border-bottom: 0
+
+.ts.panes.celled.vertical > .pane + .pane
+    border-top: 0
+
+.ts.panes.celled.vertical > .pane > .panes:not(.vertical) > .pane
+    border-top: 0
+    border-bottom: 0
+
+.ts.panes.celled.vertical > .pane > .panes:not(.vertical) > .pane:first-child
+    border-left: 0
+
+.ts.panes.celled.vertical > .pane > .panes:not(.vertical) > .pane:last-child
+    border-right: 0
+
+//-------------------//
+//     Scrollable
+//-------------------//
+
+.ts.panes .pane[class*="vertically scrollable"]
+    overflow-y: scroll
+    overflow-x: hidden
+.ts.panes .pane[class*="horizontally scrollable"]
+    overflow-y: hidden
+    overflow-x: scroll
+.ts.panes .pane.scrollable:not([class*="vertically scrollable"]):not([class*="horizontally scrollable"])
+    overflow: scroll
+
+//-------------------//
+//       Block
+//-------------------//
+
+$wides: one $oneWide, two $twoWide, three $threeWide, four $fourWide, five $fiveWide, six $sixWide, seven $sevenWide, eight $eightWide, nine $nineWide, ten $tenWide, eleven $elevenWide, twelve $twelveWide, thirteen $thirteenWide, fourteen $fourteenWide, fifteen $fifteenWide, sixteen $sixteenWide
+
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
+
+    .ts.panes > .pane[class*="#{$name} block"]
+        width: $width !important
+    .ts.vertical.panes > .pane[class*="#{$name} block"]
+        height: $width !important
+        width : auto   !important
+
+//-------------------//
+//    Mobile Block
+//-------------------//
+
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
+
+    .ts.panes > .pane[class*="#{$name} block mobile"]
+        +rwd-serious(mobile)
+            width: $width !important
+
+        &:not([class*="block tablet"])
+            +rwd-serious(tablet)
+                width: $width !important
+        &:not([class*="block computer"])
+            +rwd-serious(computer)
+                width: $width !important
+        &:not([class*="block large screen"])
+            +rwd-serious(large)
+                width: $width !important
+
+    .ts.vertical.panes > .pane[class*="#{$name} block mobile"]
+        +rwd-serious(mobile)
+            height: $width !important
+            width : auto   !important
+
+        &:not([class*="block tablet"])
+            +rwd-serious(tablet)
+                height: $width !important
+                width : auto   !important
+        &:not([class*="block computer"])
+            +rwd-serious(computer)
+                height: $width !important
+                width : auto   !important
+        &:not([class*="block large screen"])
+            +rwd-serious(large)
+                height: $width !important
+                width : auto   !important
+
+//-------------------//
+//   Tablet Block
+//-------------------//
+
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
+
+    .ts.panes > .pane[class*="#{$name} block tablet"]
+        +rwd-serious(tablet)
+            width: $width !important
+
+        &:not([class*="block computer"])
+            +rwd-serious(computer)
+                width: $width !important
+        &:not([class*="block large screen"])
+            +rwd-serious(large)
+                width: $width !important
+
+    .ts.vertical.panes > .pane[class*="#{$name} block tablet"]
+        +rwd-serious(tablet)
+            height: $width !important
+            width : auto   !important
+
+        &:not([class*="block computer"])
+            +rwd-serious(computer)
+                height: $width !important
+                width : auto   !important
+        &:not([class*="block large screen"])
+            +rwd-serious(large)
+                height: $width !important
+                width : auto   !important
+
+//-------------------//
+//  Computer Block
+//-------------------//
+
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
+
+    .ts.panes > .pane[class*="#{$name} block computer"]
+        +rwd-serious(computer)
+            width: $width !important
+
+        &:not([class*="block large screen"])
+            +rwd-serious(large)
+                width: $width !important
+
+    .ts.vertical.panes > .pane[class*="#{$name} block computer"]
+        +rwd-serious(computer)
+            height: $width !important
+            width : auto   !important
+
+        &:not([class*="block large screen"])
+            +rwd-serious(large)
+                height: $width !important
+                width : auto   !important
+
+
+
+//-------------------//
+// Large Screen Block
+//-------------------//
+
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
+
+    .ts.panes > .pane[class*="#{$name} block large screen"]
+        +rwd-serious(large)
+            height: $width !important
+
+    .ts.vertical.panes > .pane[class*="#{$name} block large screen"]
+        +rwd-serious(large)
+            height: $width !important
+            width : auto   !important
