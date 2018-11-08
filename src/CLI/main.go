@@ -304,18 +304,29 @@ func cliDevelop() {
 							buttons += fmt.Sprintf(`<a href="#%s" class="ts fluid button" style="text-align: left; margin-bottom: 8px">%s</a>`, url.QueryEscape(v[1]), v[1])
 						}
 
-						newContent := fmt.Sprintf(`<html><head><title>%s</title><link rel="stylesheet" href="../../../dist/tocas.css"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head><body style="padding: 50px 50px 50px 350px;"><div class="ts attached segment form" style="
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            z-index: 3;
-            width: 300px;
-			overflow: scroll;
-			overflow-x: hidden;
-        ">
-        <fieldset>
-            <legend>Core</legend>%s</fieldset></div>%s</body></html>`, strings.TrimSuffix(event.Name(), filepath.Ext(event.Name())), buttons, string(dat))
+						newContent := fmt.Sprintf(`<html>
+						<head>
+						<title>%s</title>
+						<link rel="stylesheet" href="../../../dist/tocas.css"><meta charset="utf-8">
+						<meta name="viewport" content="width=device-width, initial-scale=1.0">
+						</head>
+						<body>
+							<div class="ts panes">
+								<div class="two block vertically scrollable padded pane">
+									<div class="ts form">
+										<fieldset>
+											<legend>Core</legend>
+											%s
+										</fieldset>
+									</div>
+								</div>
+								<div class="stretched vertically scrollable padded pane">
+									%s
+								</div>
+							</div>
+
+						</body>
+						</html>`, strings.TrimSuffix(event.Name(), filepath.Ext(event.Name())), buttons, string(dat))
 
 						re, err = regexp.Compile(`<!-- \+ (.*?)-->`)
 						if err != nil {
