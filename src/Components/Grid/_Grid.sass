@@ -31,8 +31,20 @@
 //  Stretched Column
 //-------------------//
 
-.ts.grid .stretched.column:not([class*="vertically stretched"])
+.ts.grid .stretched.column:not([class*="vertically stretched"]):not([class*="stretched mobile"]):not([class*="stretched tablet"]):not([class*="stretched computer"]):not([class*="stretched large screen"])
     flex: 1
+.ts.grid .column[class*="stretched mobile"]
+    +rwd-serious(mobile)
+        flex: 1
+.ts.grid .column[class*="stretched tablet"]
+    +rwd-serious(tablet)
+        flex: 1
+.ts.grid .column[class*="stretched computer"]
+    +rwd-serious(computer)
+        flex: 1
+.ts.grid .column[class*="stretched large screen"]
+    +rwd-serious(large)
+        flex: 1
 
 .ts.grid > .row > .column[class*="vertically stretched"],
 .ts.grid > .column[class*="vertically stretched"]:not(.row),
@@ -680,3 +692,117 @@ $wides: one $oneWide, two $twoWide, three $threeWide, four $fourWide, five $five
 
 .ts.grid.container
     display: flex
+
+//*******************************//
+//           Vertical
+//*******************************//
+
+.ts.vertical.grid
+    flex-direction: column
+    flex-wrap: nowrap
+
+//-------------------//
+//        Row
+//-------------------//
+
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
+
+    .ts.column.vertical.grid > .column[class*="#{$name} wide"],
+    .ts.vertical.grid > .column.row > .column[class*="#{$name} wide"],
+    .ts.vertical.grid > .row > .column[class*="#{$name} wide"],
+    .ts.vertical.grid > .column[class*="#{$name} wide"]
+        height: $width !important
+        width: auto !important
+
+//-------------------//
+//    Mobile Row
+//-------------------//
+
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
+
+    .ts.column.vertical.grid > .column[class*="#{$name} wide mobile"],
+    .ts.vertical.grid > .column.row > .column[class*="#{$name} wide mobile"],
+    .ts.vertical.grid > .row > .column[class*="#{$name} wide mobile"],
+    .ts.vertical.grid > .column[class*="#{$name} wide mobile"]
+        +rwd-serious(mobile)
+            height: $width !important
+            width: auto !important
+
+        &:not([class*="wide tablet"])
+            +rwd-serious(tablet)
+                height: $width !important
+                width: auto !important
+        &:not([class*="wide computer"])
+            +rwd-serious(computer)
+                height: $width !important
+                width: auto !important
+        &:not([class*="wide large screen"])
+            +rwd-serious(large)
+                height: $width !important
+                width: auto !important
+
+//-------------------//
+//    Tablet Row
+//-------------------//
+
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
+
+    .ts.column.vertical.grid > .column[class*="#{$name} wide tablet"],
+    .ts.vertical.grid > .column.row > .column[class*="#{$name} wide tablet"],
+    .ts.vertical.grid > .row > .column[class*="#{$name} wide tablet"],
+    .ts.vertical.grid > .column[class*="#{$name} wide tablet"]
+        +rwd-serious(tablet)
+            height: $width !important
+            width: auto !important
+
+        &:not([class*="wide computer"])
+            +rwd-serious(computer)
+                height: $width !important
+                width: auto !important
+        &:not([class*="wide large screen"])
+            +rwd-serious(large)
+                height: $width !important
+                width: auto !important
+
+//-------------------//
+//   Computer Row
+//-------------------//
+
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
+
+    .ts.column.vertical.grid > .column[class*="#{$name} wide computer"],
+    .ts.vertical.grid > .column.row > .column[class*="#{$name} wide computer"],
+    .ts.vertical.grid > .row > .column[class*="#{$name} wide computer"],
+    .ts.vertical.grid > .column[class*="#{$name} wide computer"]
+        +rwd-serious(computer)
+            height: $width !important
+            width: auto !important
+
+        &:not([class*="wide large screen"])
+            +rwd-serious(large)
+                height: $width !important
+                width: auto !important
+
+//-------------------//
+//    Large Row
+//-------------------//
+
+@each $wide in $wides
+    $name : nth($wide, 1)
+    $width: nth($wide, 2)
+
+    .ts.column.vertical.grid > .column[class*="#{$name} wide large screen"],
+    .ts.vertical.grid > .column.row > .column[class*="#{$name} large screen"],
+    .ts.vertical.grid > .row > .column[class*="#{$name} large screen"],
+    .ts.vertical.grid > .column[class*="#{$name} large screen"]
+        +rwd-serious(large)
+            height: $width !important
+            width: auto !important
