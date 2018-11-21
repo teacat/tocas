@@ -2,6 +2,9 @@
 <h1 align="center">
   <br>
   <a href="http://www.amitmerchant.com/electron-markdownify"><img src="./assets/images/logo.png" alt="Markdownify" width="200"></a>
+  <br>
+  Tocas UI
+  <br>
 </h1>
 
 <h4 align="center">支援響應式設計並基於 CSS3 的多元介面元件庫，可快速建置任何規模的網站且用法簡易。</h4>
@@ -31,54 +34,45 @@
 
 ![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
 
-## Key Features
+## 特色
 
-* LivePreview - Make changes, See changes
-  - Instantly see what your Markdown documents look like in HTML as you create them.
-* Sync Scrolling
-  - While you type, LivePreview will automatically scroll to the current location you're editing.
-* GitHub Flavored Markdown
-* Syntax highlighting
-* [KaTeX](https://khan.github.io/KaTeX/) Support
-* Dark/Light mode
-* Toolbar for basic Markdown formatting
-* Supports multiple cursors
-* Save the Markdown preview as PDF
-* Emoji support in preview :tada:
-* App will keep alive in tray for quick usage
-* Full screen mode
-  - Write distraction free.
-* Cross platform
-  - Windows, macOS and Linux ready.
+* 更簡潔、沒有像 Bootstrap 那樣雜亂的樣式名稱
+  * 你再也不會看見 `.m-l-1`、`.p-x-2`、`.p-a-3` 這種東西了。
+* 以支援行動裝置為優先
+  * 易於在不同裝置上有所變化的元件系統。
+* 更加彈性的網格系統
+  * 達到 16 格欄位的高度客製化佈局，且支援更多不同與顯示排列方式。
+* 具有回饋力的動畫特效 :tada:
+* 元件之間可交互使用
+* 標準對比的設計讓網頁更為一致化且易於閱讀
+  * 不會過於強調黑白色彩，讓頁面風格更加地與人親近。
+* 不仰賴 jQuery 函式庫的獨立 JavaScript 模塊
 
-## How To Use
+## 瀏覽器支援
 
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+除了 Microsoft 所提供的瀏覽器（如：Edge、Internet Explorer）外，都獲得後續的支援與開發。
 
-```bash
-# Clone this repository
-$ git clone https://github.com/amitmerchant1990/electron-markdownify
+|         | ![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_64x64.png)<br>Chrome | ![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_64x64.png)<br>Firefox | ![Edge](https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_64x64.png)<br>Edge | ![WebView](https://raw.githubusercontent.com/alrra/browser-logos/master/src/android-webview-beta/android-webview-beta_64x64.png)<br>Android WebView | ![Opera](https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_64x64.png)<br>Opera | ![Safari](https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_64x64.png)<br>Safari |
+|---------|--------|---------|------|-------------------|-------|--------|
+| Android | 29+    | 28+     | N/A  | Android 5.0+      | 17+   | N/A    |
+| iOS     | 29+    | 28+     | N/A  | N/A               | 17+   | 9.2+   |
+| macOS   | 29+    | 28+     | N/A  | N/A               | 17+   | 9+     |
+| Windows | 29+    | 28+     | ✖    | N/A               | 17+   | 9+     |
 
-# Go into the repository
-$ cd electron-markdownify
+## 文件
 
-# Install dependencies
-$ npm install
+## 使用方式
 
-# Run the app
-$ npm start
+將下列標籤放入網頁的 `<head>...</head>` 標籤之中。
+
+```html
+<!-- Tocas UI：CSS 與元件 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/3.0.0/tocas.min.css">
+<!-- Tocas JS：模塊與 JavaScript 函式 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/3.0.0/tocas.min.js"></script>
 ```
 
-Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
 
-
-## Download
-
-You can [download](https://github.com/amitmerchant1990/electron-markdownify/releases/tag/v1.2.0) the latest installable version of Markdownify for Windows, macOS and Linux.
-
-## Emailware
-
-Markdownify is an [emailware](https://en.wiktionary.org/wiki/emailware). Meaning, if you liked using this app or has helped you in anyway, I'd like you send me an email on <bullredeyes@gmail.com> about anything you'd want to say about this software. I'd really appreciate it!
 
 ## Credits
 
