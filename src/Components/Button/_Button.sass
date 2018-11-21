@@ -700,6 +700,10 @@
 //       Basic
 //-------------------//
 
+.ts.button.basic,
+.ts.buttons.basic .button
+    border-color: transparent
+
 .ts.button.basic.primary,
 .ts.buttons.basic.primary .button
     background-color: $button_basicPrimaryBackgroundColor
@@ -729,7 +733,8 @@
 //      Outlined
 //-------------------//
 
-.ts.button.outlined
+.ts.button.outlined,
+.ts.buttons.outlined .ts.button
     border-width: $button_outlinedBorderWidth
 
 .ts.button.outlined.outlined,
@@ -878,50 +883,33 @@
     display       : inline-flex
     vertical-align: middle
 
-.ts.buttons:not(.separated):not(.vertical)
-    .ts.button
-        display: inline-block
+.ts.buttons:not(.separated):not(.vertical) .ts.button
+    display: inline-block
 
-        &:not(:first-child)
-            border-top-left-radius   : 0
-            border-bottom-left-radius: 0
-            border-left-width        : 0
-            margin-left              : $button_buttonsGap
+.ts.buttons:not(.separated):not(.vertical) .ts.button:not(:first-child)
+    border-top-left-radius   : 0
+    border-bottom-left-radius: 0
+    margin-left              : $button_buttonsGap
 
-        &:not(:last-child)
-            border-top-right-radius   : 0
-            border-bottom-right-radius: 0
-            border-right-width        : $button_borderWidth
+.ts.buttons:not(.separated):not(.vertical) .ts.button:not(:last-child)
+    border-top-right-radius   : 0
+    border-bottom-right-radius: 0
+    border-right-width        : 0
 
-        &:last-child
-            border-left-width: 0
-
-    &.inverted.outlined .ts.button
-        &:not(:last-child)
-            border-right-width: $button_invertedOutlinedBorderWidth
-
-.ts.vertical.buttons:not(.separated)
+// Vertical
+.ts.vertical.buttons:not(.separated),
+.ts.vertical.buttons:not(.separated) .ts.button
     display: block
 
-    .ts.button
-        display: block
+.ts.vertical.buttons:not(.separated) .ts.button:not(:first-child)
+    border-top-left-radius : 0
+    border-top-right-radius: 0
+    margin-top             : $button_buttonsGap
 
-        &:not(:first-child)
-            border-top-left-radius : 0
-            border-top-right-radius: 0
-            border-bottom-width    : 0
-            margin-top             : $button_buttonsGap
-
-        &:not(:last-child)
-            border-bottom-left-radius : 0
-            border-bottom-right-radius: 0
-            border-bottom-width       : 0
-
-        &:last-child
-            border-bottom-width       : $button_borderWidth
-
-.ts.vertical.inverted.outlined.buttons:not(.separated) .ts.button:last-child
-    border-bottom-width: $button_invertedOutlinedBorderWidth
+.ts.vertical.buttons:not(.separated) .ts.button:not(:last-child)
+    border-bottom-left-radius : 0
+    border-bottom-right-radius: 0
+    border-bottom-width       : 0
 
 //-------------------//
 //     Separated
