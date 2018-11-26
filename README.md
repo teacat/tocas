@@ -1,11 +1,12 @@
 
-<h1 align="center">
+<p align="center">
   <br>
   <a href="http://www.amitmerchant.com/electron-markdownify"><img src="./assets/images/logo.png" alt="Markdownify" width="200"></a>
   <br>
-  Tocas UI
   <br>
-</h1>
+</p>
+
+---
 
 <h4 align="center">支援響應式設計並基於 CSS3 的多元介面元件庫，可快速建置任何規模的網站且用法簡易。</h4>
 
@@ -38,12 +39,12 @@
 
 * 更簡潔、沒有像 Bootstrap 那樣雜亂的樣式名稱
   * 你再也不會看見 `.m-l-1`、`.p-x-2`、`.p-a-3` 這種東西了。
+* 豐富的元件系統，符合手機應用、甚至是大型規模的網站
 * 以支援行動裝置為優先
   * 易於在不同裝置上有所變化的元件系統。
 * 更加彈性的網格系統
   * 達到 16 格欄位的高度客製化佈局，且支援更多不同與顯示排列方式。
 * 具有回饋力的動畫特效 :tada:
-* 元件之間可交互使用
 * 標準對比的設計讓網頁更為一致化且易於閱讀
   * 不會過於強調黑白色彩，讓頁面風格更加地與人親近。
 * 不仰賴 jQuery 函式庫的獨立 JavaScript 模塊
