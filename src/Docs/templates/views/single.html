@@ -129,18 +129,15 @@
             <!-- 追加 ACTIVE INDICATOR -->
 
             <!-- 元件索引 -->
-            {{ range $_, $Component := .UI.Components }}
-                <h2 class="ts header">{{ $Component.Name }}</h2>
-                <ul class="ts link list">
-                    {{ range $Component.Items }}
-                        <li>
-                            <a href="../{{ ToLower $Component.Alias }}/{{ ToLower .Alias }}.html">
-                                {{ .Name }} <span>{{ .Alias }}</span>
-                            </a>
-                        </li>
-                    {{ end }}
-                </ul>
-            {{ end }}
+            <ul class="ts link list">
+                {{ range .UI.Components }}
+                <li>
+                    <a href="/components/{{ ToLower .Alias }}.html">
+                        {{ .Name }} <span>{{ .Alias }}</span>
+                    </a>
+                </li>
+                {{ end }}
+            </ul>
             <!-- / 元件索引 -->
         </aside>
         <!-- / 左側選單欄位 -->
