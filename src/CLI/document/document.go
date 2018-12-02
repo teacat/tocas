@@ -54,7 +54,7 @@ func Compile(path string) {
 }
 
 func (d *Document) LoadUI() {
-	b, err := ioutil.ReadFile(fmt.Sprintf("translations/%s/ui.yml", d.Language))
+	b, err := ioutil.ReadFile(fmt.Sprintf("../Docs/translations/%s/ui.yml", d.Language))
 	if err != nil {
 		panic(err)
 	}
@@ -169,7 +169,6 @@ func New(fullpath string) *Document {
 	//
 	return &Document{
 		Language: parts[0],
-		Category: parts[1],
 		Name:     strings.TrimSuffix(basename, filepath.Ext(basename)),
 		Path:     fullpath,
 		Executor: executor.New(),
@@ -292,22 +291,7 @@ func (d *Document) Asset(name string) string {
 
 // Component 會接收一個元件的簡寫，並且將其轉換成指向到該文件的連結路徑。
 func (d *Document) Component(name string) string {
-	switch name {
-	case "button", "container", "divider", "header", "icon", "image",
-		"input", "slate", "label", "list", "loader", "quote", "segment", "step":
-		name = fmt.Sprintf("<a href='/elements/%s.html'>%s</a>", name, name)
-	case "breadcrumb", "form", "grid", "menu", "message", "table":
-		name = fmt.Sprintf("<a href='/collections/%s.html'>%s</a>", name, name)
-	case "accordion", "calendar", "checkbox", "dimmer", "dropdown",
-		"progress", "slider", "popup", "modal", "embed", "siderbar",
-		"snackbar", "tab", "contextmenu", "scrollspy":
-		name = fmt.Sprintf("<a href='/modules/%s.html'>%s</a>", name, name)
-	case "card", "speeches", "comment", "feed", "items", "statistic":
-		name = fmt.Sprintf("<a href='/views/%s.html'>%s</a>", name, name)
-	default:
-		name = fmt.Sprintf("<a href='#'>%s</a>", name)
-	}
-	return name
+	return fmt.Sprintf("<a href='/components/%s.html'>%s</a>", name, name)
 }
 
 // Tag 會分析接收到的內容，並且將其中的文件標籤符號轉換成真正的內容和程式碼。
@@ -402,6 +386,12 @@ func (d *Document) Compile() {
 		if err != nil {
 			panic(err)
 		}
+		tmpl.Funcs(template.FuncMap{
+			"Markdown": func(input string) string {
+				return string(blackfriday.Run([]byte(input)))
+			},
+			"ToLower": strings.ToLower,
+		})
 		buf := bytes.NewBuffer([]byte(""))
 		err = tmpl.Execute(buf, data)
 		if err != nil {
@@ -416,30 +406,30 @@ func (d *Document) Compile() {
 			"UI":       d.UI,
 		}
 		sub := parse(path, data)
-		return parse("templates/views/single.html", map[string]interface{}{
+		return parse("../Docs/templates/views/single.html", map[string]interface{}{
 			"Document": d,
 			"UI":       d.UI,
 			"HTML":     sub,
 		})
 	}
 
-	d.CompiledContent.Definitions = compile("templates/components/definitions.html")
-	d.CompiledContent.Settings = compile("templates/components/settings.html")
-	d.CompiledContent.Usages = compile("templates/components/usages.html")
+	d.CompiledContent.Definitions = compile("../Docs/templates/components/definitions.html")
+	d.CompiledContent.Settings = compile("../Docs/templates/components/settings.html")
+	d.CompiledContent.Usages = compile("../Docs/templates/components/usages.html")
 }
 
 // Save 能夠將整個已經解析且編譯完的文件作為靜態檔案而保存到指定的位置。
 func (d *Document) Save() {
 	save := func(path string, content string) {
 		if content != "" {
-			err := ioutil.WriteFile(path, content, 777)
+			err := ioutil.WriteFile(path, []byte(content), 777)
 			if err != nil {
 				panic(err)
 			}
 		}
 	}
 
-	save(fmt.Sprintf("dist/%s/%s.html", d.Category, d.Name), d.CompiledContent.Definitions)
-	save(fmt.Sprintf("dist/%s/%s-settings.html", d.Category, d.Name), d.CompiledContent.Settings)
-	save(fmt.Sprintf("dist/%s/%s-usages.html", d.Category, d.Name), d.CompiledContent.Usages)
+	save(fmt.Sprintf("../Docs/dist/%s/%s.html", d.Language, d.Name), d.CompiledContent.Definitions)
+	save(fmt.Sprintf("../Docs/dist/%s/%s-settings.html", d.Language, d.Name), d.CompiledContent.Settings)
+	save(fmt.Sprintf("../Docs/dist/%s/%s-usages.html", d.Language, d.Name), d.CompiledContent.Usages)
 }

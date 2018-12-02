@@ -6,7 +6,6 @@ import (
 
 type Document struct {
 	Language string
-	Category string
 	Name     string
 	Path     string
 	Content  []byte
