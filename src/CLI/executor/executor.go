@@ -1,6 +1,7 @@
 package executor
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"os"
@@ -66,4 +67,15 @@ func (e *Executor) CommandToName(command string) string {
 		return "Pug"
 	}
 	return "NONAME"
+}
+
+//
+func (e *Executor) Highlight(input string) string {
+	cmd := exec.Command("hljs", "-l", "html")
+	cmd.Stdin = bytes.NewBuffer([]byte(input))
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		panic(err.Error() + string(output))
+	}
+	return string(output)
 }

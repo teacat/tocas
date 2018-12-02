@@ -1,28 +1,11 @@
 package main
 
 import (
-	"context"
-	"encoding/json"
-	"fmt"
-	"io"
-	"io/ioutil"
-	"log"
-	"net/http"
-	"net/url"
-	"os"
-	"os/exec"
-	"path/filepath"
-	"regexp"
-	"strings"
-	"time"
-
-	"github.com/google/go-github/github"
-	"github.com/mholt/archiver"
-	"github.com/radovskyb/watcher"
+	"github.com/TeaMeow/TocasUI/src/CLI/watcher"
 	"gopkg.in/AlecAivazis/survey.v1"
 )
 
-var sassCompiler = "wt"
+var sassCompiler int
 
 func main() {
 	var value string
@@ -38,7 +21,7 @@ func main() {
 	case "文件工具":
 		cliDocumentation()
 	case "開發與編譯":
-		cliDevelop()
+		Developer()
 	case "Change Language":
 	}
 }
@@ -59,7 +42,7 @@ func cliDocumentation() {
 	}
 }
 
-func cliChangeCompiler() {
+func ChangeSassCompiler() {
 	var value string
 
 	prompt := &survey.Select{
@@ -70,26 +53,16 @@ func cliChangeCompiler() {
 
 	switch value {
 	case "Sassc（快速、C/C++）":
-		sassCompiler = "sassc"
+		sassCompiler = watcher.SasscCompiler
 	case "Wellington（快速、Golang）":
-		sassCompiler = "wt"
+		sassCompiler = watcher.WellingtonCompiler
 	case "Node Sass（稍慢、Node.js）":
-		sassCompiler = "node-sass"
+		sassCompiler = watcher.NodeCompiler
 	case "Sass（最慢、Dart）":
-		sassCompiler = "sass"
+		sassCompiler = watcher.SassCompiler
 	}
 
-	cliDevelop()
-}
-
-func executeCommand(action string, command []string, event watcher.Event) {
-	now := time.Now()
-	cmd := exec.Command(command[0], command[1:]...)
-	//cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stdout
-	cmd.Start()
-	cmd.Wait()
-	log.Printf("已執行 %s（%s）：%s\n", action, time.Since(now), event.Path)
+	Developer()
 }
 
 type Icon struct {
@@ -99,24 +72,7 @@ type Icon struct {
 	Unicode string   `json:"unicode"`
 }
 
-func ReplaceAllStringSubmatchFunc(re *regexp.Regexp, str string, repl func([]string) string) string {
-	result := ""
-	lastIndex := 0
-
-	for _, v := range re.FindAllSubmatchIndex([]byte(str), -1) {
-		groups := []string{}
-		for i := 0; i < len(v); i += 2 {
-			groups = append(groups, str[v[i]:v[i+1]])
-		}
-
-		result += str[lastIndex:v[0]] + repl(groups)
-		lastIndex = v[1]
-	}
-
-	return result + str[lastIndex:]
-}
-
-func cliDevelop() {
+func Developer() {
 	var value string
 
 	prompt := &survey.Select{
@@ -127,242 +83,17 @@ func cliDevelop() {
 
 	switch value {
 	case "更改 Sass 編譯器":
-		cliChangeCompiler()
+		ChangeSassCompiler()
 	case "下載並更新圖示庫":
-
-		client := github.NewClient(nil)
-
-		release, _, err := client.Repositories.GetLatestRelease(context.Background(), "FortAwesome", "Font-Awesome")
-		if err != nil {
-			panic(err)
-		}
-
-		for _, asset := range release.Assets {
-			//
-			url := asset.GetBrowserDownloadURL()
-			//
-			if !strings.HasSuffix(url, "web.zip") {
-				continue
-			}
-
-			// 取得檔案名稱，沒有副檔名
-			fileprefix := filepath.Base(url)
-			fileprefix = strings.TrimSuffix(fileprefix, filepath.Ext(fileprefix))
-			//
-			filename := filepath.Base(url)
-
-			if _, err := os.Stat(fmt.Sprintf("%s/%s", os.TempDir(), fileprefix)); os.IsNotExist(err) {
-				file, err := ioutil.TempFile(os.TempDir(), filename)
-				if err != nil {
-					panic(err)
-				}
-
-				//
-				log.Printf("正在下載最新的 Font Awesome：%s", url)
-				resp, err := http.Get(url)
-				if err != nil {
-					panic(err)
-				}
-
-				//
-				n, err := io.Copy(file, resp.Body)
-				if err != nil {
-					panic(err)
-				}
-				log.Printf("已經複製 Font Awesome 整體套件（%d Bytes）", n)
-
-				//
-				log.Printf("正在解壓縮套件…")
-				err = archiver.Zip.Open(file.Name(), os.TempDir())
-				if err != nil {
-					panic(err)
-				}
-			} else {
-				//
-				log.Printf("已在本地找到最新的 Font Awesome：%s", fileprefix)
-			}
-
-			//
-			log.Printf("正在將最新的圖示字體複製至 Tocas UI 資料夾…")
-			fontsPath, err := filepath.Glob(fmt.Sprintf("%s/%s/webfonts/*", os.TempDir(), fileprefix))
-			if err != nil {
-				panic(err)
-			}
-			for _, v := range fontsPath {
-				dat, err := ioutil.ReadFile(v)
-				if err != nil {
-					panic(err)
-				}
-				err = ioutil.WriteFile(fmt.Sprintf("./../../dist/fonts/icons/%s", filepath.Base(v)), dat, 777)
-				if err != nil {
-					panic(err)
-				}
-				log.Printf("已複製 %s", v)
-			}
-
-			//
-			log.Printf("正在轉譯 Font Awesome 圖示至 Tocas UI 格式…")
-			iconList, err := ioutil.ReadFile(fmt.Sprintf("%s/%s/metadata/icons.json", os.TempDir(), fileprefix))
-			if err != nil {
-				panic(err)
-			}
-
-			//
-			var icons map[string]Icon
-			err = json.Unmarshal(iconList, &icons)
-			if err != nil {
-				panic(err)
-			}
-
-			//
-			var newContent string
-			for k, v := range icons {
-				//
-				className := strings.Replace(k, "-", ".", -1)
-				//
-				className = strings.Replace(k, ".alt.", ".alternate.", -1)
-				//
-				selector := fmt.Sprintf("i.%s.icon:before", className)
-				//
-				if v.Styles[0] == "brands" {
-					newContent += fmt.Sprintf("%s\n    +extend(brands)\n    content: \"\\%s\"\n", selector, v.Unicode)
-				} else {
-					newContent += fmt.Sprintf("%s\n    content: \"\\%s\"\n", selector, v.Unicode)
-				}
-			}
-
-			//
-			dat, err := ioutil.ReadFile("./../Components/Icon/_Icon.sass")
-			if err != nil {
-				panic(err)
-			}
-
-			//
-			re, err := regexp.Compile(`(\/\/ DO NOT EDIT AFTER THIS LINE \(不要編輯此行之後的樣式\))((.|\n)*)(\/\/ DO NOT EDIT BEFORE THIS LINE \(不要編輯此行之前的樣式\))`)
-			if err != nil {
-				panic(err)
-			}
-			newContent = re.ReplaceAllString(string(dat), fmt.Sprintf("$1\n%s$4", newContent))
-
-			//
-			re, err = regexp.Compile(`\/\/ DO NOT EDIT THIS LINE \(不要編輯此行\):.*?\n((.|\n)*)`)
-			if err != nil {
-				panic(err)
-			}
-			newContent = re.ReplaceAllString(string(dat), fmt.Sprintf("// DO NOT EDIT THIS LINE (不要編輯此行): %s\n$1", fileprefix))
-
-			//
-			err = ioutil.WriteFile("./../Components/Icon/_Icon.sass", []byte(newContent), 777)
-			if err != nil {
-				panic(err)
-			}
-			log.Printf("已將 Font Awesome 圖示轉譯並存入 Tocas UI 原始碼")
-		}
-
+		UpdateIcons()
 	case "監聽並即時編譯":
-
-		log.Printf("已經開始監聽檔案…")
-
-		w := watcher.New()
-		w.SetMaxEvents(1)
-
-		go func() {
-			for {
-				select {
-				case event := <-w.Event:
-					switch strings.TrimLeft(filepath.Ext(event.Name()), ".") {
-					case "coffee":
-						fmt.Printf("已編譯 Coffee：%s\n", event.Path)
-					case "sass":
-						switch sassCompiler {
-						case "sass":
-							executeCommand("Sass", []string{"sass", "--indented", "../tocas.sass:../../dist/tocas.css"}, event)
-						case "wt":
-							executeCommand("Wellington", []string{"wt", "compile", "../tocas.sass", "-b", "../../dist/"}, event)
-						case "node-sass":
-							executeCommand("Node Sass", []string{"node-sass", "../tocas.sass", ">", "../../dist/tocas.css"}, event)
-						case "sassc":
-							executeCommand("Sassc", []string{"sassc", "--sass", "../tocas.sass", "../../dist/tocas.css"}, event)
-						}
-					case "pug":
-						executeCommand("Pug", []string{"pug", event.Path}, event)
-
-						tmpPath := fmt.Sprintf("%s.html", strings.TrimSuffix(event.Path, filepath.Ext(event.Path)))
-						dat, err := ioutil.ReadFile(tmpPath)
-						if err != nil {
-							panic(err)
-						}
-
-						var buttons string
-
-						re, err := regexp.Compile(`<!-- \+ (.*?)-->`)
-						if err != nil {
-							panic(err)
-						}
-						a := re.FindAllStringSubmatch(string(dat), -1)
-						for _, v := range a {
-							buttons += fmt.Sprintf(`<a href="#%s" class="ts fluid button" style="text-align: left; margin-bottom: 8px">%s</a>`, url.QueryEscape(v[1]), v[1])
-						}
-
-						newContent := fmt.Sprintf(`<html>
-						<head>
-						<title>%s</title>
-						<link rel="stylesheet" href="../../../dist/tocas.css"><meta charset="utf-8">
-						<meta name="viewport" content="width=device-width, initial-scale=1.0">
-						</head>
-						<body>
-							<div class="ts panes">
-								<div class="two block vertically scrollable padded pane">
-									<div class="ts form">
-										<fieldset>
-											<legend>Core</legend>
-											%s
-										</fieldset>
-									</div>
-								</div>
-								<div class="stretched vertically scrollable padded pane">
-									%s
-								</div>
-							</div>
-
-						</body>
-						</html>`, strings.TrimSuffix(event.Name(), filepath.Ext(event.Name())), buttons, string(dat))
-
-						re, err = regexp.Compile(`<!-- \+ (.*?)-->`)
-						if err != nil {
-							panic(err)
-						}
-
-						newContent = ReplaceAllStringSubmatchFunc(re, newContent, func(groups []string) string {
-							return fmt.Sprintf(`<br><br><!-- + %s --><h1 id="%s">%s</h1>`, groups[1], url.QueryEscape(groups[1]), groups[1])
-						})
-
-						//newContent = re.ReplaceAllString(newContent, "<br><br><!-- + $1 --><h1>$1</h1>")
-						newContent = strings.Replace(newContent, ">", "> ", -1)
-						newContent = strings.Replace(newContent, "<", " <", -1)
-
-						re, err = regexp.Compile(`<a class="([a-zA-Z0-9 -]*)">`)
-						if err != nil {
-							panic(err)
-						}
-						newContent = re.ReplaceAllString(newContent, "<a class=\"$1\" href=\"#!\">")
-
-						ioutil.WriteFile((tmpPath), []byte(newContent), 777)
-
-					}
-
-				case err := <-w.Error:
-					log.Fatalln(err)
-				case <-w.Closed:
-					return
-				}
-			}
-		}()
-		if err := w.AddRecursive("../Components"); err != nil {
-			log.Fatalln(err)
-		}
-		if err := w.Start(time.Millisecond * 100); err != nil {
-			log.Fatalln(err)
-		}
+		WatchFiles()
 	}
+}
+
+func WatchFiles() {
+	w := watcher.New(&watcher.Option{
+		SassCompiler: sassCompiler,
+	})
+	w.Run()
 }

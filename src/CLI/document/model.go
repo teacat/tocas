@@ -1,11 +1,35 @@
 package document
 
+import (
+	"github.com/TeaMeow/TocasUI/src/CLI/executor"
+)
+
 type Document struct {
 	Language string
 	Category string
 	Name     string
 	Path     string
 	Content  []byte
+	Executor *executor.Executor
+
+	//
+	UI map[string]interface{}
+	//
+	CompiledContent *DocumentContent
+
+	// Title 是此文件的標題名稱。
+	Title string `yaml:"Title"`
+	// Description 是此文件的簡短段落說明。
+	Description string `yaml:"Description"`
+	// Outline 是文件的較長大綱敘述（支援 Markdown）。
+	Outline string `yaml:"Outline"`
+
+	//
+	HasSettings bool
+	//
+	HasUsages bool
+	//
+	HasDefinitions bool
 
 	// Settings 是文件的設定屬性。
 	Settings *DocumentSettings `yaml:"Settings"`
@@ -16,6 +40,14 @@ type Document struct {
 
 	// Indexes 是文件的索引相關資料。
 	Indexes *DocumentIndexes
+}
+
+//
+type DocumentContent struct {
+	Settings    string
+	Usages      string
+	Definitions string
+	Default     string
 }
 
 // DocumentIndexes 是文件的索引相關資料。
@@ -30,6 +62,10 @@ type DocumentIndex struct {
 	Title string
 	// Name 是索引的錨點名稱，空白會被轉換成減號（`-`）作為分隔符。
 	Name string
+	//
+	SubIndexes []*DocumentIndex
+	//
+	HasSubIndex bool
 	// Labels 是此索引的額外標註標籤，有時候會呈現於頁面中。
 	Labels []string
 }
@@ -153,12 +189,16 @@ type DefinitionSection struct {
 
 	// HTMLReadable 是可供人類閱讀的 HTML 程式碼，經過縮排且被整理過並帶有螢光標籤。
 	HTMLReadable string
+	// HTMLNative 是整理之後的 HTML 原生程式碼內容，可以直接被執行。
+	HTMLNative string
 	// JavaScriptReadable 是可供人類閱讀的 JavaScript 程式碼，經過縮排且被整理過並帶有螢光標籤。
 	JavaScriptReadable string
-	// JavaScriptExecutable 是整理之後的 JavaScript 原生程式碼內容，可以直接被執行。
-	JavaScriptExecutable string
+	// JavaScriptNative 是整理之後的 JavaScript 原生程式碼內容，可以直接被執行。
+	JavaScriptNative string
 	// CSSReadable 是可供人類閱讀的 CSS 程式碼，經過縮排且被整理過並帶有螢光標籤。
 	CSSReadable string
+	// CSSNative 是整理之後的 CSS 原生程式碼內容，可以直接被執行。
+	CSSNative string
 	// Highlights 是此章節的特別標註內容，由程式分析段落內容而彙整的。
 	Highlights []string
 }
