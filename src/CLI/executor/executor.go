@@ -39,16 +39,15 @@ func (e *Executor) Execute(format string, args ...interface{}) {
 }
 
 // ExecuteWithEvent 能夠接收檔案監聽器的變動事件作為標記，同時執行指定的系統指令。
-func (e *Executor) ExecuteWithEvent(event watcher.Event, format string, args ...interface{}) {
-	format = fmt.Sprintf(format, args)
-	command := strings.Fields(format)
+func (e *Executor) ExecuteWithEvent(event watcher.Event, command []string) {
 	now := time.Now()
 	cmd := exec.Command(command[0], command[1:]...)
 	//cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stdout
-	if err := cmd.Run(); err != nil {
-		panic(err)
-	}
+	cmd.Run()
+	//if err := cmd.Run(); err != nil {
+	//	panic(err)
+	//}
 	log.Printf("已執行 %s（%s）：%s\n", e.CommandToName(command[0]), time.Since(now), event.Path)
 }
 
@@ -63,6 +62,8 @@ func (e *Executor) CommandToName(command string) string {
 		return "Node Sass"
 	case "sassc":
 		return "Sassc"
+	case "pug":
+		return "Pug"
 	}
 	return "NONAME"
 }
