@@ -119,6 +119,10 @@ func UpdateIcons() {
 			className := strings.Replace(k, "-", ".", -1)
 			// 將別名的 `alt` 縮寫改為正統的 `alternate` 名字。
 			className = strings.Replace(k, ".alt.", ".alternate.", -1)
+			// 如果類別名稱比較特殊就脫逸字元作為暫時解法。
+			if className == "500px" {
+				className = "\\35 00px"
+			}
 			// 替這次修改的樣式名稱建立一個 CSS 樣式選擇器。
 			selector := fmt.Sprintf("i.%s.icon:before", className)
 

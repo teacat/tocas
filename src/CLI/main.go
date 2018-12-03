@@ -37,7 +37,7 @@ func cliDocumentation() {
 
 	switch value {
 	case "編譯靜態文件":
-		Collect("../yaml/zh-tw")
+		//Collect("../yaml/zh-tw")
 	case "監聽並即時轉換文件":
 	}
 }

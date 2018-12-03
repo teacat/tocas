@@ -14,6 +14,8 @@ type Document struct {
 	//
 	UI map[string]interface{}
 	//
+	Main map[string]interface{}
+	//
 	CompiledContent *DocumentContent
 
 	// Title 是此文件的標題名稱。

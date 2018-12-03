@@ -55,6 +55,9 @@ func (w *Watcher) Run() {
 	if err := w.Watcher.AddRecursive("../Components"); err != nil {
 		log.Fatalln(err)
 	}
+	if err := w.Watcher.AddRecursive("../Docs"); err != nil {
+		log.Fatalln(err)
+	}
 	if err := w.Watcher.Start(time.Millisecond * 100); err != nil {
 		log.Fatalln(err)
 	}
@@ -73,7 +76,7 @@ func (w *Watcher) Watch() {
 				w.SassHandler(event)
 			case "pug":
 				w.PugHandler(event)
-			case "yaml":
+			case "yml":
 				w.YamlHandler(event)
 			}
 		case err := <-w.Watcher.Error:

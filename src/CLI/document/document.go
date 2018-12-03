@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
+	"log"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"regexp"
@@ -18,38 +20,55 @@ import (
 )
 
 var (
-	AssetPath string = "xxx"
+	AssetPath string = "../../assets"
 )
 
 func Compile(path string) {
 	d := New(path)
 	// 讀取文件的內容。
+	log.Printf("Read")
 	d.Read()
 	// 將文件內容的 YAML 資料轉譯並映射到本地結構體。
+	log.Printf("Unmarshal")
 	d.Unmarshal()
 	//
+	log.Printf("Analyze")
 	d.Analyze()
 	//
+	log.Printf("Markdown")
 	d.Markdown()
 	// 將部份內容轉換成預置模板標籤，避免被 Highlight JS 轉譯。
+	log.Printf("Placeholder")
 	d.Placeholder()
 	//
+	log.Printf("Beatify")
 	d.Beatify()
 	//
+	log.Printf("Trim")
 	d.Trim()
 	// 將範例程式碼透過 Highlight JS 螢光標記。
+	log.Printf("Highlight")
 	d.Highlight()
 	// 將原先的預置模板標籤轉換回真正的 HTML 程式碼。
+	log.Printf("Tag")
 	d.Tag()
 	//
+	log.Printf("Clean")
 	d.Clean()
 	// 索引所有章節。
+	log.Printf("Index")
 	d.Index()
 	//
+	log.Printf("LoadUI")
 	d.LoadUI()
+	//
+	log.Printf("LoadMain")
+	d.LoadMain()
 	// 將文件透過模板引擎編譯成一個靜態的網頁內容。
+	log.Printf("Compile")
 	d.Compile()
 	// 將靜態網頁保存於指定位置。
+	log.Printf("Save")
 	d.Save()
 }
 
@@ -59,6 +78,17 @@ func (d *Document) LoadUI() {
 		panic(err)
 	}
 	err = yaml.Unmarshal(b, &d.UI)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func (d *Document) LoadMain() {
+	b, err := ioutil.ReadFile(fmt.Sprintf("../Docs/translations/%s/main.yml", d.Language))
+	if err != nil {
+		panic(err)
+	}
+	err = yaml.Unmarshal(b, &d.Main)
 	if err != nil {
 		panic(err)
 	}
@@ -161,18 +191,20 @@ func (d *Document) Beatify() {
 // 並且以此作為基礎建立一個新的文件結構體。
 func New(fullpath string) *Document {
 	//
-	parts := strings.Split(fullpath, "/translations")
+	parts := strings.Split(fullpath, "/translations/")
 	//
 	parts = strings.Split(parts[1], "/")
 	//
 	basename := filepath.Base(fullpath)
 	//
 	return &Document{
-		Language: parts[0],
-		Name:     strings.TrimSuffix(basename, filepath.Ext(basename)),
-		Path:     fullpath,
-		Executor: executor.New(),
-		UI:       make(map[string]interface{}),
+		Language:        parts[0],
+		Name:            strings.TrimSuffix(basename, filepath.Ext(basename)),
+		Path:            fullpath,
+		CompiledContent: &DocumentContent{},
+		Executor:        executor.New(),
+		Indexes:         &DocumentIndexes{},
+		UI:              make(map[string]interface{}),
 	}
 }
 
@@ -192,10 +224,10 @@ func (d *Document) Unmarshal() {
 		panic(err)
 	}
 	//
-	if len(d.Settings.Callbacks) > 0 || len(d.Settings.Properties) > 0 {
+	if d.Settings != nil {
 		d.HasSettings = true
 	}
-	if len(d.Usages.Behaviors) > 0 {
+	if d.Usages != nil {
 		d.HasUsages = true
 	}
 	if len(d.Definitions) > 0 {
@@ -345,6 +377,7 @@ func (d *Document) Index() {
 			})
 		}
 		i.HasSubIndex = len(i.SubIndexes) > 0
+		d.Indexes.DefinitionIndexes = append(d.Indexes.DefinitionIndexes, i)
 	}
 }
 
@@ -382,16 +415,20 @@ func (d *Document) Highlight() {
 //
 func (d *Document) Compile() {
 	parse := func(path string, data map[string]interface{}) string {
-		tmpl, err := template.ParseFiles(path)
-		if err != nil {
-			panic(err)
-		}
+		tmpl := template.New(filepath.Base(path))
 		tmpl.Funcs(template.FuncMap{
 			"Markdown": func(input string) string {
 				return string(blackfriday.Run([]byte(input)))
 			},
+			"UI": func(input string) interface{} {
+				return d.UI[input]
+			},
 			"ToLower": strings.ToLower,
 		})
+		tmpl, err := tmpl.ParseFiles(path)
+		if err != nil {
+			panic(err)
+		}
 		buf := bytes.NewBuffer([]byte(""))
 		err = tmpl.Execute(buf, data)
 		if err != nil {
@@ -409,6 +446,7 @@ func (d *Document) Compile() {
 		return parse("../Docs/templates/views/single.html", map[string]interface{}{
 			"Document": d,
 			"UI":       d.UI,
+			"Main":     d.Main,
 			"HTML":     sub,
 		})
 	}
@@ -422,14 +460,23 @@ func (d *Document) Compile() {
 func (d *Document) Save() {
 	save := func(path string, content string) {
 		if content != "" {
-			err := ioutil.WriteFile(path, []byte(content), 777)
+
+			if _, err := os.Stat(filepath.Dir(path)); os.IsNotExist(err) {
+				err = os.MkdirAll(filepath.Dir(path), 0777)
+				if err != nil {
+					panic(err)
+				}
+			}
+
+			err := ioutil.WriteFile(path, []byte(content), 0777)
 			if err != nil {
 				panic(err)
 			}
 		}
 	}
 
-	save(fmt.Sprintf("../Docs/dist/%s/%s.html", d.Language, d.Name), d.CompiledContent.Definitions)
-	save(fmt.Sprintf("../Docs/dist/%s/%s-settings.html", d.Language, d.Name), d.CompiledContent.Settings)
-	save(fmt.Sprintf("../Docs/dist/%s/%s-usages.html", d.Language, d.Name), d.CompiledContent.Usages)
+	// 依照讀取檔案決定編譯內容
+	save(fmt.Sprintf("../Docs/dist/%s/components/%s.html", d.Language, d.Name), d.CompiledContent.Definitions)
+	save(fmt.Sprintf("../Docs/dist/%s/components/%s-settings.html", d.Language, d.Name), d.CompiledContent.Settings)
+	save(fmt.Sprintf("../Docs/dist/%s/components/%s-usages.html", d.Language, d.Name), d.CompiledContent.Usages)
 }
