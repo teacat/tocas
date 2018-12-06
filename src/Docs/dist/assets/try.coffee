@@ -12,30 +12,7 @@ class Try
             hidden    : 'hidden'
             disabled  : 'disabled'
         @data =
-            html        : """
-            <!-- 標題 -->
-            <div class="ts large header">
-                <i class="top aligned smile icon"></i>
-                <div class="content">
-                    歡迎來到遊樂場！
-                    <div class="sub header">你可以編輯這裡的所有文字。</div>
-                </div>
-            </div>
-            <!-- / 標題 -->
-            <!-- 說明 -->
-            <p>透過上方的 <a href="https://ace.c9.io/">Ace Editor</a> 你能夠編輯 HTML 標籤，並開始嚐鮮試用 Tocas UI！而且有趣的是你所編輯的 HTML 標籤都會立即呈現在頁面的即時預覽上！</p>
-            <!-- / 說明 -->
-            <!-- 圖片 -->
-            <img class="ts centered big image" src="#{placeholderKaren}">
-            <!-- / 圖片 -->
-            <p>我們已經幫你讀取好最新的 Tocas UI 樣式庫了，接下來你要做的就是去文件中，抓幾個範例丟來這裡試試看。</p>
-            <!-- 引言 -->
-            <div class="ts quote">
-                <p>天阿！這真是太夭壽讚了！這裡還能夠擺放引言元件！</p>
-                <cite>Tocas UI 作者如此說道</cite>
-            </div>
-            <!-- / 引言 -->
-            """
+            html        : ''
             isPreviewing : true
             isCoding     : true
             isTwoColumns : true
@@ -55,6 +32,7 @@ class Try
         @update()
 
     initialize: =>
+        @data.html = $editor.html()
         @data.editor = ace.edit 'editor'
         @data.editor.getSession().setMode 'ace/mode/html'
         @data.editor.getSession().setUseWrapMode true
