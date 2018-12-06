@@ -12,33 +12,15 @@ func main() {
 
 	prompt := &survey.Select{
 		Message: "歡迎使用 Tocas 指令列程式",
-		Options: []string{"自訂並建置", "文件工具", "開發與編譯", "Change Language"},
+		Options: []string{"開發與編譯", "自訂並建置", "Change Language"},
 	}
 	survey.AskOne(prompt, &value, nil)
 
 	switch value {
-	case "自訂並建置":
-	case "文件工具":
-		cliDocumentation()
 	case "開發與編譯":
 		Developer()
+	case "自訂並建置":
 	case "Change Language":
-	}
-}
-
-func cliDocumentation() {
-	var value string
-
-	prompt := &survey.Select{
-		Message: "想要編譯或是開發文件嗎？",
-		Options: []string{"編譯靜態文件", "監聽並即時轉換文件"},
-	}
-	survey.AskOne(prompt, &value, nil)
-
-	switch value {
-	case "編譯靜態文件":
-		//Collect("../yaml/zh-tw")
-	case "監聽並即時轉換文件":
 	}
 }
 
@@ -82,12 +64,12 @@ func Developer() {
 	survey.AskOne(prompt, &value, nil)
 
 	switch value {
+	case "監聽並即時編譯":
+		WatchFiles()
 	case "更改 Sass 編譯器":
 		ChangeSassCompiler()
 	case "下載並更新圖示庫":
 		UpdateIcons()
-	case "監聽並即時編譯":
-		WatchFiles()
 	}
 }
 
