@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"sync"
 
 	"github.com/TeaMeow/TocasUI/src/CLI/executor"
 	"github.com/alecthomas/template"
@@ -61,9 +62,6 @@ func Compile(path string) {
 	//
 	log.Printf("LoadUI")
 	d.LoadUI()
-	//
-	log.Printf("LoadMain")
-	d.LoadMain()
 	// 將文件透過模板引擎編譯成一個靜態的網頁內容。
 	log.Printf("Compile")
 	d.Compile()
@@ -72,8 +70,12 @@ func Compile(path string) {
 	d.Save()
 }
 
+// 美化
+// Code 裡面的 IMAGE PATH
+//
+
 func (d *Document) LoadUI() {
-	b, err := ioutil.ReadFile(fmt.Sprintf("../Docs/translations/%s/ui.yml", d.Language))
+	b, err := ioutil.ReadFile(fmt.Sprintf("../Docs/translations/%s/%s.yml", d.Language, d.Language))
 	if err != nil {
 		panic(err)
 	}
@@ -81,16 +83,24 @@ func (d *Document) LoadUI() {
 	if err != nil {
 		panic(err)
 	}
-}
-
-func (d *Document) LoadMain() {
-	b, err := ioutil.ReadFile(fmt.Sprintf("../Docs/translations/%s/main.yml", d.Language))
+	var linkContainer *LinkContainer
+	err = yaml.Unmarshal(b, &linkContainer)
 	if err != nil {
 		panic(err)
 	}
-	err = yaml.Unmarshal(b, &d.Main)
+	var contributorContainer *ContributorContainer
+	err = yaml.Unmarshal(b, &contributorContainer)
 	if err != nil {
 		panic(err)
+	}
+	d.Links = linkContainer.Links
+	d.Contributors = contributorContainer.Contributors
+
+	for _, v := range d.Links {
+		for _, i := range v.Items {
+			i.URL = fmt.Sprintf("/components/%s.html", ToAnchor(i.Alias))
+			i.IsCurrent = d.Name == ToAnchor(i.Alias)
+		}
 	}
 }
 
@@ -102,7 +112,7 @@ func (d *Document) Clean() {
 			if len(groups) == 0 {
 				return ""
 			}
-			return d.Asset(groups[1])
+			return d.Asset(groups[1], true)
 		})
 		return input
 	}
@@ -172,19 +182,27 @@ func (d *Document) Beatify() {
 		}
 		return string(output)
 	}
+
+	var waitGroup sync.WaitGroup
+
 	for _, v := range d.Definitions {
 		for _, s := range v.Sections {
-			if s.HTML != "" {
-				s.HTMLReadable = replace(s.HTMLReadable, "html")
-			}
-			if s.CSS != "" {
-				s.CSSReadable = replace(s.CSSReadable, "css")
-			}
-			if s.JavaScript != "" {
-				s.JavaScriptReadable = replace(s.JavaScriptReadable, "js")
-			}
+			waitGroup.Add(1)
+			go func(s *DefinitionSection) {
+				if s.HTML != "" {
+					s.HTMLReadable = replace(s.HTMLReadable, "html")
+				}
+				if s.CSS != "" {
+					s.CSSReadable = replace(s.CSSReadable, "css")
+				}
+				if s.JavaScript != "" {
+					s.JavaScriptReadable = replace(s.JavaScriptReadable, "js")
+				}
+				waitGroup.Done()
+			}(s)
 		}
 	}
+	waitGroup.Wait()
 }
 
 // New 會讀取一個指定路徑中的 YAML 文件資料，
@@ -204,7 +222,7 @@ func New(fullpath string) *Document {
 		CompiledContent: &DocumentContent{},
 		Executor:        executor.New(),
 		Indexes:         &DocumentIndexes{},
-		UI:              make(map[string]interface{}),
+		UI:              make(map[interface{}]interface{}),
 	}
 }
 
@@ -299,7 +317,24 @@ func (d *Document) Placeholder() {
 }
 
 // Asset 會接收一個檔案的簡寫名稱，並且將其轉換成真正指向到 Tocas 文件靜態圖片、資源檔案的路徑。
-func (d *Document) Asset(name string) string {
+func (d *Document) Asset(name string, real bool) string {
+	if !real {
+		switch name {
+		case "16:9":
+		case "1:1":
+		case "4:3":
+			return "image.png"
+		case "user":
+		case "user2":
+		case "user3":
+			return "user.png"
+		case "embed:karen":
+		case "embed:vimeo":
+			return "placeholder.png"
+		case "embed:video":
+			return "video.mp4"
+		}
+	}
 	switch name {
 	case "16:9":
 		name = "images/16-9.png"
@@ -317,6 +352,8 @@ func (d *Document) Asset(name string) string {
 		name = "images/videos/karen.png"
 	case "embed:vimeo":
 		name = "images/videos/vimeo.png"
+	case "embed:video":
+		name = "videos/video.mp4"
 	}
 	return fmt.Sprintf("%s/%s", AssetPath, name)
 }
@@ -336,7 +373,7 @@ func (d *Document) Tag() {
 			if len(groups) == 0 {
 				return ""
 			}
-			return d.Asset(groups[1])
+			return d.Asset(groups[1], false)
 		})
 		// 將元件連結模板符號轉換成真正指向到該元件文件的 HTML 連結程式碼。
 		input = util.ReplaceAllStringSubmatchFunc(regexp.MustCompile(`COMP(.*?)COMPEND`), input, func(groups []string) string {
@@ -397,19 +434,47 @@ func (d *Document) Highlight() {
 		}
 		return string(output)
 	}
+
+	var waitGroup sync.WaitGroup
+
 	for _, v := range d.Definitions {
 		for _, s := range v.Sections {
-			if s.HTML != "" {
-				s.HTMLReadable = replace(s.HTMLReadable)
-			}
-			if s.CSS != "" {
-				s.CSSReadable = replace(s.CSSReadable)
-			}
-			if s.JavaScript != "" {
-				s.JavaScriptReadable = replace(s.JavaScriptReadable)
-			}
+			waitGroup.Add(1)
+			go func(s *DefinitionSection) {
+				if s.HTML != "" {
+					s.HTMLReadable = replace(s.HTMLReadable)
+				}
+				if s.CSS != "" {
+					s.CSSReadable = replace(s.CSSReadable)
+				}
+				if s.JavaScript != "" {
+					s.JavaScriptReadable = replace(s.JavaScriptReadable)
+				}
+				waitGroup.Done()
+			}(s)
 		}
 	}
+	waitGroup.Wait()
+}
+
+func (d *Document) UIString(input string) string {
+	keys := strings.Split(input, ".")
+	currentMap := d.UI
+
+	for i, v := range keys {
+		if i+1 == len(keys) {
+			break
+		}
+		currentMap = currentMap[v].(map[interface{}]interface{})
+	}
+	//fmt.Printf("%+v", input)
+	input = currentMap[keys[len(keys)-1]].(string)
+
+	if strings.Contains(input, "[") || strings.Contains(input, "*") || strings.Contains(input, "`") {
+		input = string(blackfriday.Run([]byte(input)))
+	}
+
+	return input
 }
 
 //
@@ -417,13 +482,7 @@ func (d *Document) Compile() {
 	parse := func(path string, data map[string]interface{}) string {
 		tmpl := template.New(filepath.Base(path))
 		tmpl.Funcs(template.FuncMap{
-			"Markdown": func(input string) string {
-				return string(blackfriday.Run([]byte(input)))
-			},
-			"UI": func(input string) interface{} {
-				return d.UI[input]
-			},
-			"ToLower": strings.ToLower,
+			"String": d.UIString,
 		})
 		tmpl, err := tmpl.ParseFiles(path)
 		if err != nil {
@@ -431,9 +490,9 @@ func (d *Document) Compile() {
 		}
 		buf := bytes.NewBuffer([]byte(""))
 		err = tmpl.Execute(buf, data)
-		if err != nil {
-			panic(err)
-		}
+		//if err != nil {
+		//	panic(err)
+		//}
 		return string(buf.Bytes())
 	}
 
@@ -446,7 +505,6 @@ func (d *Document) Compile() {
 		return parse("../Docs/templates/views/single.html", map[string]interface{}{
 			"Document": d,
 			"UI":       d.UI,
-			"Main":     d.Main,
 			"HTML":     sub,
 		})
 	}

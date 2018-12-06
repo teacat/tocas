@@ -12,9 +12,7 @@ type Document struct {
 	Executor *executor.Executor
 
 	//
-	UI map[string]interface{}
-	//
-	Main map[string]interface{}
+	UI map[interface{}]interface{}
 	//
 	CompiledContent *DocumentContent
 
@@ -41,6 +39,38 @@ type Document struct {
 
 	// Indexes 是文件的索引相關資料。
 	Indexes *DocumentIndexes
+	//
+	Links []*DocumentLink
+	//
+	Contributors []*DocumentContributor
+}
+
+type LinkContainer struct {
+	//
+	Links []*DocumentLink `yaml:"Links"`
+}
+
+type ContributorContainer struct {
+	//
+	Contributors []*DocumentContributor `yaml:"Contributors"`
+}
+
+type DocumentContributor struct {
+	Name    string `yaml:"Name"`
+	Website string `yaml:"Website"`
+}
+
+//
+type DocumentLink struct {
+	Title string      `yaml:"Title"`
+	Items []*LinkItem `yaml:"Items"`
+}
+
+type LinkItem struct {
+	Name      string `yaml:"Name"`
+	Alias     string `yaml:"Alias"`
+	URL       string
+	IsCurrent bool
 }
 
 //
