@@ -55,7 +55,7 @@ func (w *Watcher) Run() {
 	if err := w.Watcher.AddRecursive("../Components"); err != nil {
 		log.Fatalln(err)
 	}
-	if err := w.Watcher.AddRecursive("../Docs"); err != nil {
+	if err := w.Watcher.AddRecursive("../../docs"); err != nil {
 		log.Fatalln(err)
 	}
 	if err := w.Watcher.AddRecursive("../System"); err != nil {
