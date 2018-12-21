@@ -65,6 +65,8 @@ func (e *Executor) CommandToName(command string) string {
 		return "Sassc"
 	case "pug":
 		return "Pug"
+	case "coffee":
+		return "CoffeeScript"
 	}
 	return "NONAME"
 }
