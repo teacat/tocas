@@ -218,6 +218,8 @@ type DefinitionSection struct {
 	// Responsive 表示此章節的範例是否可在響應式模式下觀看。
 	Responsive bool `yaml:"Responsive"`
 
+	//
+	Anchor string
 	// HTMLReadable 是可供人類閱讀的 HTML 程式碼，經過縮排且被整理過並帶有螢光標籤。
 	HTMLReadable string
 	// HTMLNative 是整理之後的 HTML 原生程式碼內容，可以直接被執行。

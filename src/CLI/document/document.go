@@ -36,6 +36,9 @@ func Compile(path string) {
 	log.Printf("Analyze")
 	d.Analyze()
 	//
+	log.Printf("Anchor")
+	d.Anchor()
+	//
 	log.Printf("Markdown")
 	d.Markdown()
 	// 將部份內容轉換成預置模板標籤，避免被 Highlight JS 轉譯。
@@ -138,6 +141,14 @@ func (d *Document) Markdown() {
 		v.Description = string(blackfriday.Run([]byte(v.Description)))
 		for _, s := range v.Sections {
 			s.Description = string(blackfriday.Run([]byte(s.Description)))
+		}
+	}
+}
+
+func (d *Document) Anchor() {
+	for _, v := range d.Definitions {
+		for _, s := range v.Sections {
+			s.Anchor = ToAnchor(s.Title)
 		}
 	}
 }
