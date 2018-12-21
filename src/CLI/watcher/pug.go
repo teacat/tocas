@@ -26,6 +26,7 @@ func (w *Watcher) PugHandler(event watcher.Event) {
 
 	// 保存所有章節標記的按鈕 HTML 內容。
 	var buttons string
+	var jsButtons string
 
 	// 找到所有的章節標記，然後透過 RegExp 取得其中的章節名稱。
 	re, err := regexp.Compile(`<!-- \+ (.*?)-->`)
@@ -35,6 +36,17 @@ func (w *Watcher) PugHandler(event watcher.Event) {
 	headers := re.FindAllStringSubmatch(string(dat), -1)
 	for _, v := range headers {
 		buttons += fmt.Sprintf(`<a href="#%s" class="ts fluid button">%s</a>`, url.QueryEscape(v[1]), v[1])
+	}
+
+	//
+	re, err = regexp.Compile(`(?s)<!-- \- (.*?)--><script>(.*?)<\/script>`)
+	if err != nil {
+		panic(err)
+	}
+
+	headers = re.FindAllStringSubmatch(string(dat), -1)
+	for k, v := range headers {
+		jsButtons += fmt.Sprintf(`<script>function action%d(){%s}</script><a href="#!" class="ts fluid button" onclick="action%d()">%s</a>`, k, v[2], k, v[1])
 	}
 
 	// 初始化一個新的測試頁面 HTML 內容。
@@ -59,6 +71,10 @@ func (w *Watcher) PugHandler(event watcher.Event) {
 						<legend>Core</legend>
 						%s
 					</fieldset>
+					<fieldset>
+						<legend>Module</legend>
+						%s
+					</fieldset>
 				</div>
 			</div>
 			<div class="stretched vertically scrollable padded pane">
@@ -67,7 +83,7 @@ func (w *Watcher) PugHandler(event watcher.Event) {
 		</div>
 
 	</body>
-	</html>`, strings.TrimSuffix(event.Name(), filepath.Ext(event.Name())), buttons, string(dat))
+	</html>`, strings.TrimSuffix(event.Name(), filepath.Ext(event.Name())), buttons, jsButtons, string(dat))
 
 	//
 	re, err = regexp.Compile(`<!-- \+ (.*?)-->`)
@@ -78,6 +94,13 @@ func (w *Watcher) PugHandler(event watcher.Event) {
 	newContent = util.ReplaceAllStringSubmatchFunc(re, newContent, func(groups []string) string {
 		return fmt.Sprintf(`<br><br><!-- + %s --><h1 id="%s">%s</h1>`, groups[1], url.QueryEscape(groups[1]), groups[1])
 	})
+
+	//
+	re, err = regexp.Compile(`(?s)<!-- \- (.*?)--><script>(.*?)<\/script>`)
+	if err != nil {
+		panic(err)
+	}
+	newContent = re.ReplaceAllString(newContent, "")
 
 	//
 	newContent = strings.Replace(newContent, ">", "> ", -1)
