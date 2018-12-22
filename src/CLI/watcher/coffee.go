@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/TeaMeow/TocasUI/src/CLI/path"
 	"github.com/radovskyb/watcher"
 )
 
@@ -12,6 +13,5 @@ import (
 func (w *Watcher) CoffeeHandler(event watcher.Event) {
 	dest := strings.ToLower(strings.TrimSuffix(filepath.Base(event.Path), filepath.Ext(filepath.Base(event.Path))))
 
-	w.Executor.ExecuteWithEvent(event, []string{"coffee", "--output", "../../dist/" + dest + ".js", "--compile", event.Path})
-	fmt.Printf("已編譯 Coffee：%s\n", event.Path)
+	w.Executor.ExecuteWithEvent(event, []string{"coffee", "--output", fmt.Sprintf("%s%s.js", path.DistPath, dest), "--compile", event.Path})
 }

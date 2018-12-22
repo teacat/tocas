@@ -13,6 +13,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/TeaMeow/TocasUI/src/CLI/path"
 	"github.com/google/go-github/github"
 	"github.com/mholt/archiver"
 )
@@ -89,7 +90,7 @@ func UpdateIcons() {
 			if err != nil {
 				panic(err)
 			}
-			err = ioutil.WriteFile(fmt.Sprintf("./../../dist/fonts/icons/%s", filepath.Base(v)), dat, 777)
+			err = ioutil.WriteFile(fmt.Sprintf("%s%s", path.DistIconPath, filepath.Base(v)), dat, 777)
 			if err != nil {
 				panic(err)
 			}
@@ -136,7 +137,7 @@ func UpdateIcons() {
 		}
 
 		// 讀取 Tocas 目前的圖示原始檔案。
-		dat, err := ioutil.ReadFile("./../Components/Icon/_Icon.sass")
+		dat, err := ioutil.ReadFile(path.SassIconPath)
 		if err != nil {
 			panic(err)
 		}
@@ -156,7 +157,7 @@ func UpdateIcons() {
 		newContent = re.ReplaceAllString(string(dat), fmt.Sprintf("// DO NOT EDIT THIS LINE (不要編輯此行): %s\n$1", fileprefix))
 
 		// 將機器自動修改後的結果存入 Tocas 的圖示原始碼內，完成本次的自動升級。
-		err = ioutil.WriteFile("./../Components/Icon/_Icon.sass", []byte(newContent), 777)
+		err = ioutil.WriteFile(path.SassIconPath, []byte(newContent), 777)
 		if err != nil {
 			panic(err)
 		}

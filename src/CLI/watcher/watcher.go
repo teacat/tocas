@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/TeaMeow/TocasUI/src/CLI/executor"
+	"github.com/TeaMeow/TocasUI/src/CLI/path"
 	"github.com/radovskyb/watcher"
 )
 
@@ -52,13 +53,13 @@ func (w *Watcher) Run() {
 	w.Watcher.SetMaxEvents(1)
 	go w.Watch()
 
-	if err := w.Watcher.AddRecursive("../Components"); err != nil {
+	if err := w.Watcher.AddRecursive(path.ComponentsSystem); err != nil {
 		log.Fatalln(err)
 	}
-	if err := w.Watcher.AddRecursive("../../docs"); err != nil {
+	if err := w.Watcher.AddRecursive(path.DocsPath); err != nil {
 		log.Fatalln(err)
 	}
-	if err := w.Watcher.AddRecursive("../System"); err != nil {
+	if err := w.Watcher.AddRecursive(path.SystemPath); err != nil {
 		log.Fatalln(err)
 	}
 	if err := w.Watcher.Start(time.Millisecond * 100); err != nil {

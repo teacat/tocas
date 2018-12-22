@@ -13,15 +13,12 @@ import (
 	"sync"
 
 	"github.com/TeaMeow/TocasUI/src/CLI/executor"
+	"github.com/TeaMeow/TocasUI/src/CLI/path"
 	"github.com/alecthomas/template"
 
 	"github.com/TeaMeow/TocasUI/src/CLI/util"
 	blackfriday "gopkg.in/russross/blackfriday.v2"
 	yaml "gopkg.in/yaml.v2"
-)
-
-var (
-	AssetPath string = "../../assets"
 )
 
 func Compile(path string) {
@@ -78,7 +75,7 @@ func Compile(path string) {
 //
 
 func (d *Document) LoadUI() {
-	b, err := ioutil.ReadFile(fmt.Sprintf("../Docs/translations/%s/%s.yml", d.Language, d.Language))
+	b, err := ioutil.ReadFile(fmt.Sprintf("%s%s/%s.yml", path.TranslationsPath, d.Language, d.Language))
 	if err != nil {
 		panic(err)
 	}
@@ -366,7 +363,7 @@ func (d *Document) Asset(name string, real bool) string {
 	case "embed:video":
 		name = "videos/video.mp4"
 	}
-	return fmt.Sprintf("%s/%s", AssetPath, name)
+	return fmt.Sprintf("%s%s", path.AssetsPath, name)
 }
 
 // Component 會接收一個元件的簡寫，並且將其轉換成指向到該文件的連結路徑。
@@ -490,12 +487,12 @@ func (d *Document) UIString(input string) string {
 
 //
 func (d *Document) Compile() {
-	parse := func(path string, data map[string]interface{}) string {
-		tmpl := template.New(filepath.Base(path))
+	parse := func(ppath string, data map[string]interface{}) string {
+		tmpl := template.New(filepath.Base(ppath))
 		tmpl.Funcs(template.FuncMap{
 			"String": d.UIString,
 		})
-		tmpl, err := tmpl.ParseFiles(path)
+		tmpl, err := tmpl.ParseFiles(ppath)
 		if err != nil {
 			panic(err)
 		}
@@ -507,22 +504,22 @@ func (d *Document) Compile() {
 		return string(buf.Bytes())
 	}
 
-	compile := func(path string) string {
+	compile := func(ppath string) string {
 		data := map[string]interface{}{
 			"Document": d,
 			"UI":       d.UI,
 		}
-		sub := parse(path, data)
-		return parse("../Docs/templates/views/single.html", map[string]interface{}{
+		sub := parse(ppath, data)
+		return parse(fmt.Sprintf("%ssingle.html", path.TemplateViewsPath), map[string]interface{}{
 			"Document": d,
 			"UI":       d.UI,
 			"HTML":     sub,
 		})
 	}
 
-	d.CompiledContent.Definitions = compile("../Docs/templates/components/definitions.html")
-	d.CompiledContent.Settings = compile("../Docs/templates/components/settings.html")
-	d.CompiledContent.Usages = compile("../Docs/templates/components/usages.html")
+	d.CompiledContent.Definitions = compile(fmt.Sprintf("%sdefinitions.html", path.TemplateComponentsPath))
+	d.CompiledContent.Settings = compile(fmt.Sprintf("%ssettings.html", path.TemplateComponentsPath))
+	d.CompiledContent.Usages = compile(fmt.Sprintf("%susages.html", path.TemplateComponentsPath))
 }
 
 // Save 能夠將整個已經解析且編譯完的文件作為靜態檔案而保存到指定的位置。
@@ -545,7 +542,7 @@ func (d *Document) Save() {
 	}
 
 	// 依照讀取檔案決定編譯內容
-	save(fmt.Sprintf("../Docs/dist/%s/components/%s.html", d.Language, d.Name), d.CompiledContent.Definitions)
-	save(fmt.Sprintf("../Docs/dist/%s/components/%s-settings.html", d.Language, d.Name), d.CompiledContent.Settings)
-	save(fmt.Sprintf("../Docs/dist/%s/components/%s-usages.html", d.Language, d.Name), d.CompiledContent.Usages)
+	save(fmt.Sprintf("%s%s/components/%s.html", path.DocsDistPath, d.Language, d.Name), d.CompiledContent.Definitions)
+	save(fmt.Sprintf("%s%s/components/%s-settings.html", path.DocsDistPath, d.Language, d.Name), d.CompiledContent.Settings)
+	save(fmt.Sprintf("%s%s/components/%s-usages.html", path.DocsDistPath, d.Language, d.Name), d.CompiledContent.Usages)
 }
