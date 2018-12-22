@@ -56,8 +56,10 @@ func (w *Watcher) PugHandler(event watcher.Event) {
 	<title>%s</title>
 	<link rel="stylesheet" href="../../../dist/tocas.css"><meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="../../../dist/tocas.js"></script>
+	<script src="../../../dist/accordion.js"></script>
 	<style type="text/css">
-	.ts.panes .ts.button {
+	.ts.panes > .pane > .ts.form > fieldset .ts.button {
 		text-align   : left;
 		margin-bottom: 8px;
 	}
@@ -112,5 +114,5 @@ func (w *Watcher) PugHandler(event watcher.Event) {
 	}
 	newContent = re.ReplaceAllString(newContent, "<a class=\"$1\" href=\"#!\">")
 
-	ioutil.WriteFile((tmpPath), []byte(newContent), 777)
+	ioutil.WriteFile(tmpPath, []byte(newContent), 777)
 }
