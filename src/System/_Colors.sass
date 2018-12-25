@@ -19,3 +19,60 @@ $black: #000
 
 $selectedTextColor      : $white
 $selectedBackgroundColor: #1e7fcb
+
+//*******************************//
+//             Colors
+//*******************************//
+
+$color_default : default , #545454, #eeeeee, #545454
+$color_primary : primary , #00adea, #00adea, #ffffff
+$color_info    : info    , #598294, #598294, #ffffff
+$color_warning : warning , #d9b636, #d9b636, #402b06
+$color_positive: positive, #52c41a, #52c41a, #ffffff
+$color_negative: negative, #f5222d, #f5222d, #ffffff
+$color_inverted: inverted, #333333, #333333, #ffffff
+
+$colors  : $color_primary, $color_positive, $color_negative, $color_info, $color_warning, $color_inverted
+
+@function color($color, $name, $inverted: false)
+    @if $name == name
+        @return nth($color, 1)
+    @else if $name == brand
+        @return nth($color, 2)
+    @else if $name == hover
+        @return darken(color($color, text, $inverted), 2%)
+    @else if $name == down
+        @return darken(color($color, hover, $inverted), 2%)
+    @else if $name == active
+        @return darken(color($color, down, $inverted), 2%)
+    @else if $name == disabled
+        @return lighten(color($color, brand), 20%)
+    @else if $name == header
+        @return color($color, text, $inverted)
+    @else if $name == subHeader
+        @return lighten(color($color, header, $inverted), 2%)
+    @else if $name == border
+        @return darken(color($color, background), 2%)
+    @else if $name == text
+        @if $inverted
+            @return nth($color, 4)
+        @else
+            @return color($color, brand)
+    @else if $name == background
+        @return nth($color, 3)
+    @else if $name == backgroundHover
+        @return darken(color($color, background), 2%)
+    @else if $name == backgroundDown
+        @return darken(color($color, backgroundHover), 2%)
+    @else if $name == backgroundActive
+        @return color($color, backgroundDown)
+    @else if $name == backgroundSecondary
+        @return darken(color($color, background), 2%)
+    @else if $name == backgroundTertiary
+        @return darken(color($color, backgroundSecondary), 2%)
+
+@mixin each()
+  @each $color in $colors
+    $color: $color              !global
+    $name : color($color, name) !global 
+    @content
