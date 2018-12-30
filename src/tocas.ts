@@ -1,30 +1,30 @@
 ///<reference path="./tocas.d.ts" />
-
-declare type Selector = (Node | Node[] | NodeList | Tocas.Tocas | string)
-
 namespace Tocas {
     /**
      * Tocas 是 Tocas UI 中的主要元素選擇器核心類別。
      */
     export class Tocas {
         /** nodes 是選擇器核心中所選擇的節點元素。 */
-        public nodes: Node[]
+        public nodes: any[]
         /** selector 是選擇器選擇時的依據字串或元素。 */
-        public selector: Selector
+        public selector: any
         /** context 是選擇器的上下文選擇器，用以作為子元素搜尋依據。 */
         public context: string
         /** previousObject 是這個選擇器的上一個選擇器物件，用來得知相關的連結關係。 */
         public previousObject?: Tocas
 
-        constructor(selector: Selector, context: string = '') {
+        constructor(selector: any, context: string = '') {
             /** 如果選擇器是文字，但是是標籤（如：`<div>`）就建立新的元素 */
             if (typeof selector === 'string' && selector[0] === '<') {
-                var tag = selector.match(/<(.*)\/>|<(.*)>/)
-                this.nodes = [document.createElement(tag[1] ? tag[1] : tag[2])]
+                var matches = selector.match(/<(.*)\/>|<(.*)>/)
+                var tag = matches[1] ? matches[1] : matches[2]
+                this.nodes = [document.createElement(tag)]
             }
             /** 如果選擇器是一般的文字，就選取元素。 */
-            else if (typeof selector === 'string' && context === undefined) {
-                document.querySelectorAll(selector).forEach((element) => this.nodes.push(element))
+            else if (typeof selector === 'string' && context === '') {
+                document.querySelectorAll(selector).forEach((element) => {
+                    this.nodes.push(element)
+                })
             }
             /** 如果選擇器有上下文選擇器，就透過選擇器找出上下文元素。 */
             else if (typeof selector === 'string' && context !== '') {
@@ -45,7 +45,7 @@ namespace Tocas {
                 this.nodes = this.nodes.concat(selector)
             }
             /** 如果是單個 DOM 元素，就放入選擇器然後繼續。 */
-            else if (selector instanceof Element || selector instanceof HTMLBodyElement || selector instanceof HTMLElement || selector instanceof HTMLDocument) {
+            else if (selector instanceof Element || selector instanceof HTMLDocument || selector instanceof Window) {
                 this.nodes = [selector]
             }
         }
@@ -111,14 +111,14 @@ namespace Tocas {
          *
          * @param index 欲取得的元素索引。
          */
-        public get(index: number = 0): Node {
+        public get(index: number = 0): any {
             return this.nodes[index]
         }
 
         /**
          * toArray 可以將選擇器轉換成元素節點陣列。
          */
-        public toArray(): Node[] {
+        public toArray(): any[] {
             return this.nodes
         }
 
@@ -127,7 +127,7 @@ namespace Tocas {
          *
          * @param callback 針對每個元素作為處理的回呼函式。
          */
-        public each(callback: (element: (Node | Element), index: number) => void): Tocas {
+        public each(callback: (element: any, index: number) => void): Tocas {
             this.nodes.forEach((element, index) => {
                 callback.call(element, element, index)
             })
@@ -139,7 +139,7 @@ namespace Tocas {
          *
          * @param callback 針對每個元素作為處理的回呼函式。
          */
-        private _collectSwap(callback: (element: Element, index: number) => (Node | NodeList | Array<Node>)): Tocas {
+        private _collectSwap(callback: (element: any, index: number) => (Node | NodeList | Array<Node>)): Tocas {
             var collection: Node[]
 
             this.each((element, index) => {
@@ -165,12 +165,13 @@ namespace Tocas {
                     }
                 }
             })
-            /** */
+            /** 透過 Set 型態移除重複的節點。 */
             var set = new Set(collection)
-            /** */
+            /** 然後將 Set 轉換成陣列，建立新的選擇器。 */
             var newTocas = newTocas([...collection])
-            /** */
+            /** 保存選擇器之前的所有節點。 */
             newTocas.previousObject = this
+            /** 回傳這個新的選擇器。 */
             return newTocas
         }
 
@@ -197,7 +198,7 @@ namespace Tocas {
          *
          * @param selector 最頂的父節點比對選擇器，若父節點與此選擇器結果相同，則不繼續往上搜尋
          */
-        public parents(selector: (string | Node)): Tocas {
+        public parents(selector: Element): Tocas {
             return this._collectSwap((element) => {
                 var parents: Node[]
                 var matchedSelector: boolean
@@ -299,7 +300,7 @@ namespace Tocas {
          *
          * @param selector 欲作為插入子元素的選擇器
          */
-        public append(selector: Selector): Tocas {
+        public append(selector: Element): Tocas {
             var shouldClone = this.nodes.length !== 1
             if (selector instanceof Tocas) {
                 return this.each((element) => {
@@ -711,23 +712,28 @@ namespace Tocas {
                 }
                 events.split(' ').forEach((eventName) => {
                     var event = eventName.split('.')
+                    /** 透過事件的「event.alias」取得「點」後面的別名。 */
                     var hasAlias = event.length > 1
                     var eventName = event[0]
                     var eventAlias = hasAlias ? event[1] : ''
 
+                    /** 如果事件還沒在這個物件內產生過，就初始化一個事件結構。 */
                     if (element.$events[eventName] === undefined) {
                         element.$events[eventName] = {
                             anonymous: []
                         }
 
+                        /** 然後建立一個管理多個事件的事件管理處理程式。 */
                         element.addEventListener(eventName, (event) => {
+                            /** 是否有自訂參數。 */
                             var hasArgs = event.detail && event.detail.args && event.deftail.args.length > 0
+                            /** 是否有呼叫事件別名。 */
                             var calledAlias = event.detail && event.detail.alias !== ''
-
+                            /** 如果該事件已經被移除則停止後續的反應。 */
                             if (element.$events[eventName] === undefined) {
                                 return
                             }
-
+                            /** 將被觸發的事件裡面的所有處理程式全部呼叫一次。 */
                             for (var alias in element.$events[eventName]) {
                                 if (calledAlias && calledAlias !== alias) {
                                     continue
@@ -742,23 +748,29 @@ namespace Tocas {
                                         continue
                                     }
                                     single = element.$events[eventName][alias][index]
-                                    content = element
 
+                                    /** 設置事件的上下文。 */
+                                    content = element
+                                    /** 如果這個事件有選擇器的話，則使用該選擇器為主。 */
                                     if (single.selector !== undefined) {
                                         selector = single.selector
                                         closest = new Tocas(event.target).closest(selector)
+                                        /** 如果找不到指定選擇棄的元素，就不要觸發此事件。 */
                                         if (this.closest.length === 0) {
                                             continue
                                         } else {
+                                            /** 替換上下文為選擇器元素。 */
                                             context = closest.get()
                                         }
                                     }
+                                    /** 將事件預資料放入事件中供處理函式取得。 */
                                     event.data = single.data
                                     if (hasArgs) {
                                         single.func.call(context, event, ...event.detail.args)
                                     } else {
                                         single.func.call(context, event)
                                     }
+                                    /** 如果這個程式只能被呼叫一次就在處理程式呼叫後移除。 */
                                     if (single.once === true) {
                                         element.$events[eventName][alias].splice(index, 1)
                                     }
@@ -767,6 +779,8 @@ namespace Tocas {
                         })
                     }
 
+                    /** 將新的事件處理程式註冊到事件清單中。 */
+                    /** 如果有別名，就不要推送到匿名陣列中，我們替這個別名另開物件。 */
                     if (hasAlias) {
                         if (element.$events[eventName][eventAlias] === undefined) {
                             element.$events[eventName][eventAlias] = []
@@ -777,7 +791,9 @@ namespace Tocas {
                             data: data,
                             once: options ? options.once : false,
                         })
-                    } else {
+                    }
+                    /** 如果沒有，就照常推進匿名陣列中。 */
+                    else {
                         element.$events[eventName].anonymous.push({
                             func: handler,
                             selector: selector,
@@ -809,7 +825,7 @@ namespace Tocas {
          * @param data 自訂的事件資料，將會在呼叫回呼函式時傳入
          * @param options 註冊時的相關選項
          */
-        public onWithData(events: string, handler: () => void, data: any, options?: EventOptions) {
+        public onWithData(events: string, handler: () => void, data: any, options?: EventOptions): Tocas {
 
         }
 
@@ -834,7 +850,9 @@ namespace Tocas {
          * @param handler 事件監聽器的回呼函式
          * @param options 註冊時的相關選項
          */
-        public onChildWithData(events: string, selector: string, data: any, handler: () => void, options?: EventOptions)
+        public onChildWithData(events: string, selector: string, data: any, handler: () => void, options?: EventOptions): Tocas {
+
+        }
 
         public one(): Tocas {
 
@@ -886,12 +904,18 @@ namespace Tocas {
                 }
 
                 events.split(' ').forEach((eventName) => {
-                    event = eventName.split('.')
-                    isAlias = eventName[0] === '.'
-                    hasAlias = event.length === 2 && event[0] !== ''
-                    aliasName = hasAlias || isAlias ? event[1] : ''
+                    /** 將事件名稱由中間的「.」切成兩半。 */
+                    var event = eventName.split('.')
+                    /** 如果事件開頭是「.」符號，表示這是個別名，不是事件名稱。 */
+                    var isAlias = eventName[0] === '.'
+                    /** 如果事件分切後有兩個項目，表示這個事件有別名。 */
+                    var hasAlias = event.length === 2 && event[0] !== ''
+                    /** 如果有別名的話，取得別名。 */
+                    var aliasName = hasAlias || isAlias ? event[1] : ''
+                    /** 如果此事件不是只有別名的話，取得事件名稱。 */
                     eventName = !isAlias ? event[0] : ''
 
+                    /** 當有指定監聽函式時。 */
                     if (handler !== undefined && element.$events[eventName] !== undefined) {
                         element.$events[eventName].anonymous.forEach((item, index) => {
                             if (handler === item.func) {
@@ -899,10 +923,14 @@ namespace Tocas {
                             }
                         })
                     }
+                    /** 當本事件名稱不僅是別名時。 */
                     else if (!isAlias && hasAlias && element.$events[eventName] !== undefined) {
+                        /** 移除指定事件的別名監聽函式。 */
                         delete element.$events[eventName][aliasName]
                     }
+                    /** 僅有指定別名時。 */
                     else if (isAlias && !hasAlias) {
+                        /** 移除所有與此別名有關的事件監聽器。 */
                         for (event in element.$events) {
                             for (alias in element.$events[event]) {
                                 if (aliasName === alias) {
@@ -911,6 +939,7 @@ namespace Tocas {
                             }
                         }
                     }
+                    /** 當僅有指定事件名稱時。 */
                     else if (element.$events[eventName] !== undefined) {
                         delete element.$events[eventName]
                     }
@@ -1055,9 +1084,12 @@ namespace Tocas {
          */
         public empty() {
             return this.each((element) => {
-                if (element.value !== undefined) {
-                    element.value = null
+                if (element as HTMLInputElement) {
+                    if (element.value !== undefined) {
+                        element.value = null
+                    }
                 }
+
                 if (element.innerHTML !== undefined) {
                     element.innerHTML = null
                 }
@@ -1181,23 +1213,33 @@ namespace Tocas {
                         clearInterval(element.$timers[options.name].timer)
                     }
                     var timer = () => {
+                        /** 當設置有說明，頁面不可見的時候就不要繼續計時。 */
                         if (options.visible && document.hidden) {
                             return
                         }
+                        /** 替計時器加上 10 毫秒。 */
                         element.$timers[options.name].passed += 10
+                        /** 如果計時器的經過時間還不到使用者設定的時間 */
+                        /** 就返回而不要繼續執行。 */
                         if (element.$timers[options.name].passed < options.interval) {
                             return
                         }
+                        /** 呼叫回呼函式。 */
                         options.callback()
+                        /** 如果要循環的話，就在計時器執行後重設時間即可。 */
                         if (options.looping) {
                             element.$timers[options.name].passed = 0
                         } else {
                             if (element.$timers[options.name] !== undefined) {
+                                /** 不然就移除計時器資訊。 */
                                 clearInterval(element.$timers[options.name].timer)
+                                /** 移除在 DOM 元素內的這個計時器物件。 */
                                 // delete @$timers[options.name]
                             }
                         }
                     }
+
+                    /** 在此元素內初始化計時器物件。 */
                     element.$timers[options.name] = {
                         timer: setInterval(timer, 10),
                         passed: 0,
@@ -1223,7 +1265,9 @@ namespace Tocas {
                 if (element.$timers === undefined || element.$timers[key] === undefined) {
                     return
                 }
+                /** 清除計數計時器達到暫停效果。 */
                 clearInterval(element.$timers[key].timer)
+                /** 表示暫停。 */
                 element.$timers[key].paused = true
             })
         }
@@ -1238,7 +1282,9 @@ namespace Tocas {
                 if (element.$timers === undefined || element.$timers[key] === undefined || !element.$timers[key].paused) {
                     return
                 }
+                /** 重新初始化計數計時器來達到繼續的效果。 */
                 element.$timers[key].timer = setInterval(element.$timers[key].initializer, 10)
+                /** 表示重新啟動。 */
                 element.$timers[key].paused = false
             })
         }
@@ -1253,7 +1299,9 @@ namespace Tocas {
                 if (element.$timers === undefined || element.$timers[key] === undefined) {
                     return
                 }
+                /** 清除計數計時器。 */
                 clearInterval(element.$timers[key].timer)
+                /** 移除在 DOM 元素內的計時器物件。 */
                 delete element.$timers[key]
             })
         }
