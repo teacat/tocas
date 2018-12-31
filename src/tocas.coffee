@@ -1,321 +1,128 @@
-# 主要的選擇器函式。
-ts = (selector, context) ->
-    nodes = []
-    # 如果選擇器是文字，但是是標籤（如：`<div>`）就建立新的元素
-    if typeof selector is 'string' and selector[0] is '<'
-        tag   = selector.match(/<(.*)\/>|<(.*)>/)
-        nodes = [document.createElement(tag[1] ? tag[2])]
-    # 如果選擇器是一般的文字，就選取元素。
-    else if typeof selector is 'string' and context is undefined
-        document.querySelectorAll(selector).forEach (element) -> nodes.push(element)
-    # 如果選擇器有上下文選擇器，就透過選擇器找出上下文元素。
-    else if typeof context is 'string'
-        nodes = ts(selector).find(context).toArray()
-    # 如果選擇器是 NodeList 就轉換成元素陣列然後取出來接著繼續。
-    else if selector instanceof NodeList
-        selector.forEach (element) -> nodes.push(element)
-    # 如果選擇器是陣列，就當作是元素陣列，取出來然後繼續。
-    # 或傳入的是一個選擇器，就取出裡面的元素然後繼續。
-    else if Array.isArray(selector) or selector?.isSelector is true
-        nodes    = nodes.concat(selector)
-        selector = selector.selector
-        context  = selector?.context
-    # 如果是單個 DOM 元素，就放入選擇器然後繼續。
-    else if selector instanceof HTMLElement     or
-            selector instanceof HTMLDocument    or
-            selector instanceof HTMLBodyElement or
-            selector is window
-        nodes = [selector]
+export class Tocas
 
-    # 保存目前的選擇器文字與上下文選擇器文字。
-    nodes.selector = if typeof selector is 'string' then selector else null
-    nodes.context  = if typeof context  is 'string' then context  else null
-    # 將自訂的選擇器方法插入到節點陣列中，這樣才能夠串連使用。
-    Object.defineProperties nodes, ts.fn
-    # 將節點陣列標註為是選擇器，這樣才能判斷傳入的是不是我們自己的選擇器。
-    Object.defineProperty nodes, 'isSelector',
-        value: true
-    return nodes
+    constructor = (selector = '', context = '') ->
+        @nodes          = []
+        @selector       = selector
+        @context        = context
+        @previousObject = null
 
-# 註冊到視窗上。
-window.ts = ts
+        #
+        if selector is ''
+            return
+        # 如果選擇器是文字，但是是標籤（如：`<div>`）就建立新的元素
+        else if typeof selector is 'string' and selector[0] is '<'
+            tag   = selector.match(/<(.*)\/>|<(.*)>/)
+            @nodes = [document.createElement(tag[1] ? tag[2])]
+        # 如果選擇器是一般的文字，就選取元素。
+        else if typeof selector is 'string' and context is ''
+            document.querySelectorAll(selector).forEach (element) => @nodes.push(element)
+        # 如果選擇器有上下文選擇器，就透過選擇器找出上下文元素。
+        else if typeof context is 'string'
+            @nodes = ts(selector).find(context).toArray()
+        # 如果選擇器是 NodeList 就轉換成元素陣列然後取出來接著繼續。
+        else if selector instanceof NodeList
+            selector.forEach (element) => @nodes.push(element)
+        # 如果選擇器是陣列，就當作是元素陣列，取出來然後繼續。
+        # 或傳入的是一個選擇器，就取出裡面的元素然後繼續。
+        else if Array.isArray(selector) or selector?.isSelector is true
+            @nodes    = @nodes.concat(selector)
+            @selector = selector.selector
+            @context  = selector.context
+        # 如果是單個 DOM 元素，就放入選擇器然後繼續。
+        else if selector instanceof HTMLElement     or
+                selector instanceof HTMLDocument    or
+                selector instanceof HTMLBodyElement or
+                selector is window
+            @nodes = [selector]
 
-# 函式鏈。
-ts.fn = {}
+    # _alias
+    _alias = (event) ->
+        pair  = event.split '.'
+        alias = if pair[1] isnt undefined then ".#{pair[1]}" else ''
 
-# 輔助函式。
-ts.helper = {}
-
-# 事件輔助函式。
-ts.helper.eventAlias = (event) ->
-    pair  = event.split('.')
-    alias = if pair[1] isnt undefined then ".#{pair[1]}" else ''
-
-    switch
-        when pair.indexOf('animationend') isnt -1
-            "webkitAnimationEnd#{alias} mozAnimationEnd#{alias} MSAnimationEnd#{alias} oanimationend#{alias} animationend#{alias}"
-        when pair.indexOf('transitionend') isnt -1
-            "webkitTransitionEnd#{alias} mozTransitionEnd#{alias} oTransitionEnd#{alias} msTransitionEnd#{alias} transitionend#{alias}"
-        else
-            event
-# 是否為物件。
-ts.isPlainObject = (object) ->
-    Object.prototype.toString.call(object) is '[object Object]'
-
-# 是否為可觸控裝置。
-ts.isTouchDevice = ->
-    'ontouchstart' of window or navigator.maxTouchPoints
-
-# 取得裝置資料。
-ts.device = =>
-    switch
-        when window.innerWidth < 767
-            device = 'mobile'
-        when window.innerWidth > 767 and window.innerWidth < 991
-            device = 'tablet'
-        when window.innerWidth > 991 and window.innerWidth < 1199
-            device = 'computer'
-        when window.innerWidth > 1199 and window.innerWidth < 1919
-            device = 'large'
-    return {
-        device: device
-    }
-
-# 從指定坐標取得元素。
-ts.fromPoint = (x, y) =>
-    ts(document.elementFromPoint(x, y))
-
-# 延展物件的函式，與 ES 的 `...` 不同之處在於 extend 並不會替換掉整個子物件，而會以補插的方式執行。
-# https://gomakethings.com/vanilla-javascript-version-of-jquery-extend/
-ts.extend =->
-    extended = {}
-    deep     = true
-    i        = 0
-    length   = arguments.length
-    if Object::toString.call(arguments[0]) == '[object Boolean]'
-        deep = arguments[0]
-        i++
-    merge = (obj) ->
-        for prop of obj
-            if Object::hasOwnProperty.call(obj, prop)
-                if deep and Object::toString.call(obj[prop]) == '[object Object]'
-                    extended[prop] = ts.extend(true, extended[prop], obj[prop])
-                else
-                    extended[prop] = obj[prop]
-        return
-    while i < length
-        obj = arguments[i]
-        merge obj
-        i++
-    extended
-
-# 建立元素
-ts.createElement = (html) =>
-    div = document.createElement('div')
-    div.innerHTML = html.trim()
-    div.firstChild
-
-# 註冊 Tocas 模塊
-ts.register = (module) =>
-    name = module.name.toLowerCase()
-
-    ts.fn[name] = value: ->
-        $allModules     = ts @
-        moduleNamespace = "module-#{name}"
-        query           = arguments[0]
-        queryArguments  = Array.prototype.slice.call(arguments, 1)
-        methodInvoked   = typeof query is 'string'
-        returnedValue   = undefined
-
-        consoleText = (args) =>
-            "%c#{name}%c #{args[0]}"
-
-        headerCSS = """
-            background   : #EEE;
-            color        : #5A5A5A;
-            font-size    : 1em;
-            padding      : 8px 8px;
-            line-height  : 5px;
-            margin       : 5px 0 5px 0;
-            border-radius: 1000em;
-        """
-        errorHeaderCSS = """
-            #{headerCSS}
-            background: #CE5F58;
-            color: #FFF;
-        """
-        messageCSS = """
-            font-weight: bold;
-        """
-
-        $allModules.each (_, index) ->
-            element        = @
-            $module        = ts element
-            id             = $module.uniqueID()
-            instance       = $module.data moduleNamespace
-            eventNamespace = ".#{name}-#{id}"
-
-            #
-            settings       = ts.extend module::settings,
-                # 消音所有提示，甚至是錯誤訊息。
-                silent        : false
-                # 顯示除錯訊息。
-                debug         : true
-                # 監聽 DOM 結構異動並自動重整快取。
-                observeChanges: true
-            settings = if ts.isPlainObject(query) then ts.extend(settings, query) else ts.extend(settings)
-            #
-            applyEventNamespace = (events = '') =>
-                newEvents = ''
-                events.split(' ').forEach (event) =>
-                    newEvents += "#{event}#{eventNamespace}"
-                return newEvents
-            #
-            listener =
-                on: ->
-                    newArguments    = arguments
-                    newArguments[0] = applyEventNamespace newArguments[0]
-                    newArguments    = Array.from newArguments
-                    handlerIndex    = -1
-                    newArguments.forEach (el, index) =>
-                        if typeof el is 'function'
-                            handlerIndex = index
-                    callback                   = newArguments[handlerIndex]
-                    newArguments[handlerIndex] = ->
-                        event = arguments[0]
-                        args  = Array.prototype.slice.call(arguments, 1)
-                        self  = @
-                        callback.call self, self, event, args...
-                    $module.on.apply $module, newArguments
-                #
-                off: ->
-                    newArguments    = arguments
-                    newArguments[0] = applyEventNamespace newArguments[0]
-                    $module.off.apply $module, newArguments
-                #
-                one: ->
-                    #newArguments    = arguments
-                    #newArguments[0] = applyEventNamespace newArguments[0]
-                    #$module.one.apply $module, newArguments
-                #
-                trigger: (callbackName, context) ->
-                    callbackName = callbackName[0].toUpperCase() + callbackName[1...]
-                    settings["on#{callbackName}"].apply context, Array.prototype.slice.call(arguments, 2)...
-            #
-            debug = ->
-                return if not settings.debug or settings.silent
-                console.info.call console, consoleText(arguments), headerCSS, messageCSS, "\n", element, Array.prototype.slice.call(arguments).slice(1)...
-            #
-            error = ->
-                return if settings.silent
-                error = Function.prototype.bind.call console.error, console, consoleText(arguments), errorHeaderCSS, messageCSS
-                error.apply console, Array.prototype.slice.call(arguments, 1)
-            #
-            instantiate = =>
-                debug 'instantiate'
-                module::beforeCreate()
-                instance = new module {
-                    settings
-                    $allModules
-                    $module
-                    element
-                    listener
-                    id
-                }
-                $module.data moduleNamespace, instance
-                instance.created()
-            #
-            observeChanges = =>
-                if not 'MutationObserver' of window
-                    return
-                observer = new MutationObserver (mutations) =>
-                    instance.updated()
-                observer.observe element,
-                    childList : true
-                    subtree   : true
-            #
-            initialize = (module) =>
-                debug 'initialize'
-                if settings.observeChanges
-                    observeChanges()
-                instantiate()
-            #
-            destroy = =>
-                debug 'destroy'
-                instance.beforeDestroy()
-                $module
-                    .off()
-                    .removeData moduleNamespace
-                instance.destroyed(queryArguments...)
-            #
-            invoke = (query, passedArguments, context) =>
-                camelCaseQuery = ''
-                #
-                query.split(' ').forEach (word) =>
-                    camelCaseQuery += word[0].toUpperCase() + word[1...]
-                #
-                if camelCaseQuery is 'Destroy'
-                    destroy()
-                    return undefined
-                #
-                if camelCaseQuery is 'Setting'
-                    if ts.isPlainObject queryArguments[0]
-                        settings          = ts.extend settings, queryArguments[0]
-                        instance.settings = settings
-                        return undefined
-                    else
-                        return instance.settings[queryArguments[0]]
-                #
-                if instance[camelCaseQuery] is undefined
-                    error '欲呼叫的方法並不存在', query
-                    return undefined
-                #
-                return instance[camelCaseQuery].apply context, passedArguments
-
-            if methodInvoked
-                if instance is undefined
-                    initialize()
-                returnedValue = invoke query, queryArguments, instance
+        switch
+            when pair.indexOf('animationend') isnt -1
+                "webkitAnimationEnd#{alias} mozAnimationEnd#{alias} MSAnimationEnd#{alias} oanimationend#{alias} animationend#{alias}"
+            when pair.indexOf('transitionend') isnt -1
+                "webkitTransitionEnd#{alias} mozTransitionEnd#{alias} oTransitionEnd#{alias} msTransitionEnd#{alias} transitionend#{alias}"
             else
-                if instance isnt undefined
-                    destroy()
-                initialize()
+                event
 
-        if returnedValue is undefined or returnedValue instanceof module
-            return $allModules
-        return returnedValue
+    # isPlainObject
+    isPlainObject = (object) =>
+        Object.prototype.toString.call(object) is '[object Object]'
 
-# Get
-#
-# 取得選擇器內的指定元素，並且回傳一個 DOM 元素而非選擇器。
-ts.fn.get =
-    value: (index = 0) ->
-        @[index]
+    # isTouchDevice
+    isTouchDevice = =>
+        'ontouchstart' of window or navigator.maxTouchPoints
 
-# ToArray
-#
-# 將選擇器轉換成帶有節點的一般陣列。
-ts.fn.toArray =
-    value: ->
+    # device
+    device = =>
+        switch
+            when window.innerWidth < 767
+                device = 'mobile'
+            when window.innerWidth > 767 and window.innerWidth < 991
+                device = 'tablet'
+            when window.innerWidth > 991 and window.innerWidth < 1199
+                device = 'computer'
+            when window.innerWidth > 1199 and window.innerWidth < 1919
+                device = 'large'
+        return {
+            device: device
+        }
+
+    # fromPoint
+    fromPoint = (x, y) =>
+        ts document.elementFromPoint x, y
+
+    # extend
+    extend =->
+        extended = {}
+        deep     = true
+        i        = 0
+        length   = arguments.length
+        if Object::toString.call(arguments[0]) == '[object Boolean]'
+            deep = arguments[0]
+            i++
+        merge = (obj) ->
+            for prop of obj
+                if Object::hasOwnProperty.call(obj, prop)
+                    if deep and Object::toString.call(obj[prop]) == '[object Object]'
+                        extended[prop] = ts.extend(true, extended[prop], obj[prop])
+                    else
+                        extended[prop] = obj[prop]
+            return
+        while i < length
+            obj = arguments[i]
+            merge obj
+            i++
+        extended
+
+    # 建立元素
+    createElement = (html) =>
+        div = document.createElement('div')
+        div.innerHTML = html.trim()
+        div.firstChild
+
+    # get 會取得選擇器內的指定元素，並且回傳一個 DOM 元素而非選擇器。
+    get = (index = 0) ->
+        @nodes[index]
+
+    # toArray 將選擇器轉換成帶有節點的一般陣列。
+    toArray = ->
         array = []
-        @forEach (element) ->
+        @nodes.forEach (element) ->
             array.push(element)
         return array
 
-# Each
-#
-# 遍歷整個選擇器陣列。
-ts.fn.each =
-    value: (callback) ->
-        @forEach (element, index) ->
+    # each 遍歷整個選擇器陣列。
+    each = (callback) ->
+        @nodes.forEach (element, index) ->
             callback.call(element, element, index)
         @
 
-# CollectSwap
-#
-# 將收集到的元素替換掉目前選擇器內的所有元素。
-ts.fn.collectSwap =
-    value: (callback) ->
+    # collectSwap 將收集到的元素替換掉目前選擇器內的所有元素。
+    collectSwap = (callback) ->
         collection = []
 
         @each (element, index) ->
@@ -340,26 +147,17 @@ ts.fn.collectSwap =
         # 回傳這個新的選擇器。
         return newSelector
 
-# Eq
-#
-# 取得選擇器的指定元素，然後繼續回傳僅帶有該元素的選擇器。
-ts.fn.eq =
-    value: (index) ->
+    # eq 取得選擇器的指定元素，然後繼續回傳僅帶有該元素的選擇器。
+    eq = (index) ->
         ts(@get(index))
 
-# Parent
-#
-# 回傳元素的父元素選擇器。
-ts.fn.parent =
-    value: ->
+    # parent 回傳元素的父元素選擇器。
+    parent = ->
         @collectSwap ->
             @parentNode
 
-# Parents
-#
-# 回傳元素的所有父元素直至指定父元素。
-ts.fn.parents =
-    value: (selector) ->
+    # parents 回傳元素的所有父元素直至指定父元素。
+    parents = (selector) ->
         @collectSwap (self) ->
             parents         = []
             matchedSelector = false
@@ -367,51 +165,36 @@ ts.fn.parents =
                 self = self.parentNode
                 break if self.nodeType is 9
                 parents.push(self)
-                if ts(self).is(selector)
+                if ts(self).equal(selector)
                     matchedSelector = true
                     break
             return [] if selector and not matchedSelector
             return parents
 
-# Closest
-#
-# 回傳最接近指定的父元素選擇器。
-ts.fn.closest =
-    value: (selector) ->
+    # closest 回傳最接近指定的父元素選擇器。
+    closest = (selector) ->
         @collectSwap ->
             @closest(selector)
 
-# Find
-#
-# 在目前元素中搜尋指定元素並回傳其選擇器。
-ts.fn.find =
-    value: (selector) ->
+    # find 在目前元素中搜尋指定元素並回傳其選擇器。
+    find = (selector) ->
         @collectSwap ->
             @querySelectorAll(selector)
 
-# Insert Before
-#
-# 將選擇器元素安插在指定元素前。
-ts.fn.insertBefore =
-    value: (target) ->
+    # insertBefore 將選擇器元素安插在指定元素前。
+    insertBefore = (target) ->
         @each ->
             ts(target).each (element) =>
                 element.parentNode.insertBefore(@, element)
 
-# Insert After
-#
-# 將選擇器元素安插在指定元素後。
-ts.fn.insertAfter =
-    value: (target) ->
+    # insertAfter 將選擇器元素安插在指定元素後。
+    insertAfter = (target) ->
         @each ->
             ts(target).each (element) =>
                 element.parentNode.insertBefore(@, element.nextSibling)
 
-# Wrap
-#
-# 將元素用指定元素包覆起來。
-ts.fn.wrap =
-    value: (element) ->
+    # wrap 將元素用指定元素包覆起來。
+    wrap = (element) ->
         @each ->
             if @nextSibling
                 @parentNode.insertBefore(element, @nextSibling)
@@ -419,19 +202,13 @@ ts.fn.wrap =
                 @parentNode.appendChild(element)
             element.appendChild(@)
 
-# Clone
-#
-# 複製元素。
-ts.fn.clone =
-    value: ->
+    # clone 複製元素。
+    clone = ->
         @collectSwap ->
             @cloneNode(true)
 
-# Append
-#
-# 將元素插入在目前選擇器元素的內部最後面。
-ts.fn.append =
-    value: (element) ->
+    # append 將元素插入在目前選擇器元素的內部最後面。
+    append = (element) ->
         shouldClone = @length isnt 1
         if element.isSelector isnt undefined
             @each ->
@@ -443,19 +220,13 @@ ts.fn.append =
             @each ->
                 @appendChild(if shouldClone then element.cloneNode(true) else element)
 
-# AppendTo
-#
-# 將目前選擇器元素插入到指定元素的內部最後面。
-ts.fn.appendTo =
-    value: (selector) ->
+    # appendTo 將目前選擇器元素插入到指定元素的內部最後面。
+    appendTo = (selector) ->
         @each ->
             ts(selector).append(@)
 
-# Prepend
-#
-# 將元素插入在目前選擇器元素的內部最前面。
-ts.fn.prepend =
-    value: (element) ->
+    # prepend 將元素插入在目前選擇器元素的內部最前面。
+    prepend = (element) ->
         shouldClone = @length isnt 1
         if element.isSelector isnt undefined
             @each ->
@@ -467,27 +238,18 @@ ts.fn.prepend =
             @each ->
                 @prepend(if shouldClone then element.cloneNode(true) else element)
 
-# PrependTo
-#
-# 將目前選擇器元素插入到指定元素的內部最前面。
-ts.fn.prependTo =
-    value: (selector) ->
+    # prependTo 將目前選擇器元素插入到指定元素的內部最前面。
+    prependTo = (selector) ->
         @each ->
             ts(selector).prepend(@)
 
-# Remove
-#
-# 將選擇器元素從頁面上中移除。
-ts.fn.remove =
-    value: ->
+    # remove 將選擇器元素從頁面上中移除。
+    remove = ->
         @each ->
             @parentNode?.removeChild(@)
 
-# Is
-#
-# 選擇一些元素，然後用來比對目前的選擇器元素是否在這群當中。
-ts.fn.is =
-    value: (selector) ->
+    # equal 選擇一些元素，然後用來比對目前的選擇器元素是否在這群當中。
+    equal = (selector) ->
         isInElements = false
         if selector instanceof HTMLElement
             return @get(0)?.isSameNode(selector)
@@ -496,87 +258,54 @@ ts.fn.is =
                 isInElements = true if @ is compareElement
         return isInElements
 
-# Contains
-#
-# 是否擁有指定子元素。
-ts.fn.contains =
-    value: (selector) ->
+    # contains 是否擁有指定子元素。
+    contains = (selector) ->
         @get(0)?.contains(ts(selector).get())
 
-# Exists
-#
-# 是否存在。
-ts.fn.exists =
-    value: ->
+    # exists 是否存在。
+    exists = ->
         @length isnt 0
 
-# Not
-#
-# 將指定元素從選擇器中剔除。
-ts.fn.not =
-    value: (selector) ->
+    # notEqual 將指定元素從選擇器中剔除。
+    notEqual = (selector) ->
         ts @toArray().filter (element) =>
             ts(selector).indexOf(element) is -1
 
-# Filter
-#
-# 將指定元素從選擇器中保留，簡單說就是 `Not` 的相反。
-ts.fn.filter =
-    value: (selector) ->
+    # filter 將指定元素從選擇器中保留，簡單說就是 `Not` 的相反。
+    filter = (selector) ->
         ts @toArray().filter (element) =>
             ts(selector).indexOf(element) isnt -1
 
-# Slice
-#
-# 替元素陣列進行切分。
-ts.fn.slice =
-    value: (from, to) ->
+    # slice 替元素陣列進行切分。
+    slice = (from, to) ->
         ts @toArray().slice from, to
 
-# Children
-#
-# 取得容器裡的第一層子節點。
-ts.fn.children =
-    value: (selector) ->
+    # children 取得容器裡的第一層子節點。
+    children = (selector) ->
         @collectSwap ->
             @querySelectorAll if selector? then ":scope > #{selector}" else ':scope > *'
 
-# Replace With
-#
-# 將元素替換為指定選擇器元素。
-ts.fn.replaceWith =
-    value: (selector) ->
+    # replaceWith 將元素替換為指定選擇器元素。
+    replaceWith = (selector) ->
         element = ts(selector).get()
         @each ->
             @replaceWith(element)
 
-# Last
-#
-# 選擇器中的最後一個元素。
-ts.fn.last =
-    value: () -> @eq(@length-1)
+    # last 選擇器中的最後一個元素。
+    last = () -> @eq(@length-1)
 
-# Next
-#
-# 下一個元素。
-ts.fn.next =
-    value: ->
+    # next 下一個元素。
+    next = ->
         @collectSwap ->
             @nextElementSibling
 
-# Prev
-#
-# 上一個元素。
-ts.fn.prev =
-    value: ->
+    # previous 上一個元素。
+    previous = ->
         @collectSwap ->
             @previousElementSibling
 
-# NextAll
-#
-# 這個元素之後的所有同階層元素。
-ts.fn.nextAll =
-    value: (selector) ->
+    # nextAll 這個元素之後的所有同階層元素。
+    nextAll = (selector) ->
         @collectSwap ->
             $self     = ts(@)
             $parent   = $self.parent()
@@ -585,11 +314,8 @@ ts.fn.nextAll =
 
             $children.slice index + 1
 
-# PrevAll
-#
-# 這個元素之前的所有同階層元素。
-ts.fn.prevAll =
-    value: (selector) ->
+    # previousAll 這個元素之前的所有同階層元素。
+    previousAll = (selector) ->
         @collectSwap ->
             $self     = ts(@)
             $parent   = $self.parent()
@@ -598,20 +324,14 @@ ts.fn.prevAll =
 
             $children.slice 0, index
 
-# AddBack
-#
-# 在目前的選擇器節點陣列中加上先前選擇的所有節點。
-ts.fn.addBack =
-    value: ->
+    # addBack 在目前的選擇器節點陣列中加上先前選擇的所有節點。
+    addBack = ->
         if @prevObject
             @prevObject.toArray().forEach (element) => @push(element)
         @
 
-# Index
-#
-# 該元素在容器內的索引。
-ts.fn.index =
-    value: ->
+    # index 該元素在容器內的索引。
+    index = ->
         node  = @get(0)
         index = 0
 
@@ -619,36 +339,25 @@ ts.fn.index =
         index++ while (node = node.previousElementSibling)
         return index
 
-# Attr
-#
-# 取得或是建立新的標籤到目前的選擇器元素。
-ts.fn.attr =
-    value: (name, value) ->
-        # 如果有 value 就設置簡單鍵值資料。
-        if value isnt undefined
-            @each -> @setAttribute name, value
-        # 如果傳入的是物件就設置多重資料。
-        else if typeof name is 'object'
+    # getAttribute 取得或是建立新的標籤到目前的選擇器元素。
+    getAttribute = (name, value) ->
+        @get()?.getAttribute name
+
+    # setAttribute 設置選擇器元素標籤。
+    setAttribute = (name, value) ->
+        if typeof name is 'object'
             @each ->
                 for key of name
                     @setAttribute key, name[key]
-        # 不然就取得資料。
         else
-            @get()?.getAttribute name
+            @each -> @setAttribute name, value
 
-# RemoveAttr
-#
-# 移除目前選擇器元素的指定標籤。
-ts.fn.removeAttr =
-    value: (name) ->
-        @each ->
-            @removeAttribute name
+    # removeAttribute 移除目前選擇器元素的指定標籤。
+    removeAttribute = (name) ->
+        @each -> @removeAttribute name
 
-# AddClass
-#
-# 在目前選擇器元素插入新的樣式類別名稱。
-ts.fn.addClass =
-    value: (names) ->
+    # addClass 在目前選擇器元素插入新的樣式類別名稱。
+    addClass = (names) ->
         if typeof names is 'object'
             newNames = ''
             for name of names
@@ -660,11 +369,8 @@ ts.fn.addClass =
         @each ->
             DOMTokenList.prototype.add.apply(@classList, names.split(' ').filter(Boolean))
 
-# RemoveClass
-#
-# 移除目前選擇器元素的指定樣式類別。
-ts.fn.removeClass =
-    value: (names) ->
+    # removeClass 移除目前選擇器元素的指定樣式類別。
+    removeClass = (names) ->
         if typeof names is 'object'
             newNames = ''
             for name of names
@@ -676,45 +382,32 @@ ts.fn.removeClass =
         @each ->
             DOMTokenList.prototype.remove.apply(@classList, names.split(' ').filter(Boolean))
 
-# ToggleClass
-#
-# 切換目前選擇器元素的樣式。
-ts.fn.toggleClass =
-    value: (names) ->
+    # toggleClass 切換目前選擇器元素的樣式。
+    toggleClass = (names) ->
         @each ->
             names.split(' ').forEach (name) ->
                 @classList.toggle(name)
             , @
 
-# HasClass
-#
-# 回傳選擇器元素是否帶有指定樣式類別，是布林值。
-ts.fn.hasClass =
-    value: (name) ->
+    # hasClass 回傳選擇器元素是否帶有指定樣式類別，是布林值。
+    hasClass = (name) ->
         @get(0)?.classList.contains(name)
 
-# CSS
-#
-# 將選擇器元素套用指定的 CSS 樣式。
-ts.fn.css =
-    value: (name, value) ->
-        # 有 name 也有 value 就設置樣式。
-        if typeof name is 'string' and value isnt undefined
-            @each -> @style[name] = value
-        # 有 name 但沒有 value 就取得樣式。
-        else if typeof name is 'string' and value is undefined
-            if @get()? then document.defaultView.getComputedStyle(@get(), null).getPropertyValue(name) else null
-        # 有 name 但他是 object，就設置多重樣式。
-        else if typeof name is 'object'
+    # getCSS 取得選擇器元素指定的 CSS 樣式。
+    getCSS = (name) ->
+        if @get()? then document.defaultView.getComputedStyle(@get(), null).getPropertyValue(name) else null
+
+    # setCSS 將選擇器元素套用指定的 CSS 樣式。
+    setCSS = (name, value) ->
+        if typeof name is 'object'
             for key of name
                 @each -> @style[key] = name[key]
             @
+        else
+            @each -> @style[name] = value
 
-# Rect
-#
-# 回傳選擇器元素的渲染形狀。
-ts.fn.rect =
-    value: ->
+    # rect 回傳選擇器元素的渲染形狀。
+    rect = ->
         r = @get(0)?.getBoundingClientRect()
         return {
             top: r.top,
@@ -727,50 +420,50 @@ ts.fn.rect =
             y: r.y
         }
 
-# On
-#
-# 綁定並註冊一個事件監聽器。
-ts.fn.on =
-    value: () ->
-        switch arguments.length
-            # Event 與 Handler。
-            when 2
-                events  = arguments[0]
-                handler = arguments[1]
-            # Event 與 Selector 與 Handler。
-            # Event 與 Data 與 Handler。
-            # Event 與 Handler 與 Options。
-            when 3
-                events  = arguments[0]
-                handler = arguments[2]
-                switch typeof arguments[1]
-                    when "string"
-                        selector = arguments[1]
-                    when "function"
-                        handler  = arguments[1]
-                        options  = arguments[2]
-                    else
-                        data     = arguments[1]
-            # Event 與 Selector 與 Data 與 Handler。
-            # Event 與 Selector 與 Handler 與 Options。
-            when 4
-                events   = arguments[0]
-                selector = arguments[1]
-                handler  = arguments[3]
-                switch typeof arguments[2]
-                    when "function"
-                        handler  = arguments[2]
-                        options  = arguments[3]
-                    else
-                        data     = arguments[2]
-            # Event 與 Selector 與 Data 與 Handler 與 Options。
-            when 5
-                events   = arguments[0]
-                selector = arguments[1]
-                data     = arguments[2]
-                handler  = arguments[3]
-                options  = arguments[4]
+    # bind 綁定並註冊一個事件監聽器。
+    bind = (events, handler, options = {once: false}) ->
+        @each ->
+            ts(@).bindWithOptions({
+                events: events
+                handler: handler
+                options: options
+            })
 
+    # bindWithData 綁定並註冊一個帶有自訂資料的事件監聽器。
+    bindWithData = (events, data, handler, options = {once: false}) ->
+        @each ->
+            ts(@).bindWithOptions({
+                events: events
+                handler: handler
+                data: data
+                options: options
+            })
+
+    # bindWithChild 綁定並註冊一個事件監聽器在父元素，但監聽的是子元素事件。
+    bindWithChild = (events, selector, handler, options = {once: false}) ->
+        @each ->
+            ts(@).bindWithOptions({
+                events: events
+                handler: handler
+                selector: selector
+                data: data
+                options: options
+            })
+
+    # bindWithChildData 綁定並註冊一個帶有自訂資料的事件監聽器在父元素，但監聽的是子元素事件。
+    bindWithChildData = (events, selector, data, handler, options = {once: false}) ->
+        @each ->
+            ts(@).bindWithOptions({
+                events: events
+                handler: handler
+                selector: selector
+                data: data
+                options: options
+            })
+
+    # bindWithOptions 以進階選項綁定並註冊一個事件監聽器。
+    bindWithOptions = (options) ->
+        {events, handler, selector, data, options} = options
         events = ts.helper.eventAlias(events)
 
         # $events.click =
@@ -891,21 +584,15 @@ ts.fn.on =
                         once    : options?.once
             , @
 
-# One
-#
-# 綁定一次性的事件監聽器，當被觸發之後就會被移除。
-ts.fn.one =
-    value: (events, handler) ->
+    # bindOnce 綁定一次性的事件監聽器，當被觸發之後就會被移除。
+    bindOnce = (events, handler) ->
         events = ts.helper.eventAlias(events)
 
         @each ->
-            ts(@).on(events, handler, {once: true})
+            ts(@).bindWithOptions(events, handler, {once: true})
 
-# Off
-#
-# 註銷事件監聽器。
-ts.fn.off =
-    value: (events, handler) ->
+    # unbind 註銷事件監聽器。
+    unbind = (events, handler) ->
         if events isnt undefined
             events = ts.helper.eventAlias(events)
         @each ->
@@ -965,11 +652,8 @@ ts.fn.off =
                         delete @$events[eventName]
             , @
 
-# Trigger
-#
-# 觸發指定事件。
-ts.fn.trigger =
-    value: (events) ->
+    # trigger 觸發指定事件。
+    trigger = (events) ->
         events          = ts.helper.eventAlias(events)
         customArguments = [].slice.call arguments, 1
 
@@ -986,12 +670,9 @@ ts.fn.trigger =
 
                 @dispatchEvent event
 
-# Emulate
-#
-# 在指定的秒數過後觸發指定事件，若已被觸發則不再次觸發。
-# 這能用以強迫讓某個事件發生。
-ts.fn.emulate =
-    value: (event, duration) ->
+    # emulate 在指定的秒數過後觸發指定事件，若已被觸發則不再次觸發。
+    # 這能用以強迫讓某個事件發生。
+    emulate = (event, duration) ->
         @each ->
             called = false
             ts(@).one event, ->
@@ -1000,102 +681,85 @@ ts.fn.emulate =
                 ts(@).trigger(event) if not called
             , duration
 
-# Text
-#
-# 變更或取得選擇器元素的內容文字。
-ts.fn.text =
-    value: (text) ->
-        if text isnt undefined then @each -> @innerText = text else @get()?.innerText
+    # getText 取得選擇器元素的內容文字。
+    getText = () ->
+        @get()?.innerText
 
-# Val
-#
-# 變更或取得選擇器元素的值。
-ts.fn.val =
-    value: (value) ->
-        if value isnt undefined then @each -> @value = value else @get()?.value
+    # setText 變更選擇器元素的內容文字。
+    setText = (text) ->
+        @each ->
+            @innerText = text
 
-# HTML
-#
-# 變更或取得選擇器元素的 HTML。
-ts.fn.html =
-    value: (html) ->
-        if html isnt undefined then @each -> @innerHTML = html else @get()?.innerHTML
+    # getValue 取得選擇器元素的值。
+    getValue = (value) ->
+        @get()?.value
 
-# Empty
-#
-# 將選擇器元素的內容清除，例如值或文字。
-ts.fn.empty =
-    value: ->
+    # setValue 變更選擇器元素的值。
+    setValue = (value) ->
+        @each ->
+            @value = value
+
+    # getHTML 取得選擇器元素的 HTML。
+    getHTML = () ->
+        @get()?.innerHTML
+
+    # setHTML 變更選擇器元素的 HTML。
+    setHTML = (html) ->
+        @each ->
+            @innerHTML = html
+
+    # empty 將選擇器元素的內容清除，例如值或文字。
+    empty = ->
         @each ->
             @value     = null if @value     isnt undefined
             @innerHTML = null if @innerHTML isnt undefined
             @innerText = null if @innerText isnt undefined
 
-# Prop
-#
-# 變更或取得選擇器元素的屬性，例如 `.src`、`.width`。
-ts.fn.prop =
-    value: (name, value) ->
-        # 有 name 也有 value 就設置屬性。
-        if typeof name is 'string' and value isnt undefined
-            @each -> @[name] = value
-        # 有 name 但沒有 value 就取得屬性。
-        else if typeof name is 'string' and value is undefined
-            @get()?[name]
-        # 有 name 但他是 object，就設置多重屬性。
-        else if typeof name is 'object'
+    # getProperty 取得選擇器元素的屬性，例如 `.src`、`.width`。
+    getProperty = (name) ->
+        @get()?[name]
+
+    # setProperty 變更選擇器元素的屬性，例如 `.src`、`.width`。
+    setProperty = (name, value) ->
+        if typeof name is 'object'
             for key of name
                 @each -> @[key] = name[key]
             @
+        else
+            @each -> @[name] = value
 
-# Data
-#
-# 在選擇器元素中存放資料，類似 Attr 但頁面不可見。
-ts.fn.data =
-    value: (name, value) ->
-        # 有 name 也有 value 就設置資料。
-        if typeof name is 'string' and value isnt undefined
-            @each ->
-                @$data       = {} if @$data is undefined
-                @$data[name] = value
-        # 有 name 但沒有 value 就取得資料。
-        else if typeof name is 'string' and value is undefined
-            @get()?.$data?[name]
-        # 有 name 但他是 object，就設置多重樣式。
-        else if typeof name is 'object'
+    # getData 取得選擇器元素的存放資料。
+    getData = (name) ->
+        @get()?.$data?[name]
+
+    # setData 在選擇器元素中存放資料，類似 Attr 但頁面不可見。
+    setData = (name, value) ->
+        if typeof name is 'object'
             for key of name
                 @each ->
                     @$data      = {} if @$data is undefined
                     @$data[key] = name[key]
             @
+        else
+            @each ->
+                @$data       = {} if @$data is undefined
+                @$data[name] = value
 
-# Remove Data
-#
-# 移除指定的資料。
-ts.fn.removeData =
-    value: (name) ->
+    # removeData 移除選擇器元素中的存放資料。
+    removeData = (name) ->
         @each ->
             delete @$data[name] if @$data[name]?
 
-# Has Timer
-#
-# 確認是否有指定的計時器。
-ts.fn.hasTimer =
-    value: (name) ->
+    # hasTimer 確認是否有指定的計時器。
+    hasTimer = (name) ->
         @get(0)?.$timers?[name]?
 
-# Get Timer
-#
-# 取得計時器內容。
-ts.fn.getTimer =
-    value: (name) ->
+    # getTimer 取得計時器內容。
+    getTimer = (name) ->
         @get(0)?.$timers?[name]
 
-# Set Timer
-#
-# 設置一個新的計時器。
-ts.fn.setTimer =
-    value: (options) ->
+    # setTimer 設置一個新的計時器。
+    setTimer = (options) ->
         setTimeout =>
             options = {
                 {
@@ -1147,11 +811,8 @@ ts.fn.setTimer =
                     paused     : false
         , 0
 
-# Pause Timer
-#
-# 暫停一個計時器。
-ts.fn.pauseTimer =
-    value: (name) ->
+    # pauseTimer 暫停一個計時器。
+    pauseTimer = (name) ->
         @each ->
             if not @$timers?[name]?
                 return
@@ -1160,11 +821,8 @@ ts.fn.pauseTimer =
             # 表示暫停。
             @$timers[name].paused = true
 
-# Play Timer
-#
-# 重啟一個計時器。
-ts.fn.playTimer =
-    value: (name) ->
+    # playTimer 重啟一個計時器。
+    playTimer = (name) ->
         @each ->
             if not @$timers?[name]?
                 return
@@ -1176,11 +834,8 @@ ts.fn.playTimer =
             # 表示重新啟動。
             @$timers[name].paused = false
 
-# Remove Timer
-#
-# 移除一個計時器。
-ts.fn.removeTimer =
-    value: (name) ->
+    # removeTimer 移除一個計時器。
+    removeTimer = (name) ->
         @each ->
             if not @$timers?[name]?
                 return
@@ -1190,21 +845,13 @@ ts.fn.removeTimer =
             # 移除在 DOM 元素內的計時器物件。
             delete @$timers[name]
 
-# Repaint
-#
-# 讓瀏覽器重繪元素。
-
-ts.fn.repaint =
-    value: ->
+    # repaint 讓瀏覽器重繪元素。
+    repaint = ->
         @each ->
             `void(this.offsetHeight)`
 
-# Unique ID
-#
-# 取得為此元素而產生的獨立編號，若無則建立。
-
-ts.fn.uniqueID =
-    value: ->
+    # uniqueID 取得為此元素而產生的獨立編號，若無則建立。
+    uniqueID = ->
         id = @get(0).$uniqueID
         if id
             return id
