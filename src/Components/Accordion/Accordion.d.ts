@@ -41,3 +41,7 @@ declare const enum Selector {
     ActiveContent = '.active.content',
     Active = '.active',
 }
+
+declare interface HTMLElement {
+    SetData(data: any): void,
+}

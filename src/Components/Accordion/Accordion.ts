@@ -1,19 +1,16 @@
 ///<reference path="./Accordion.d.ts" />
 
-class Accordion {
-    /** element 是手風琴元素。 */
-    private _element: HTMLElement
+import { Tocas } from './../../tocas.js'
+
+export class Accordion {
+    /** _tocas 是手風琴元素。 */
+    private _tocas: Tocas
     /** options 是手風琴元件的設置選項。 */
     public options: Options
 
-    constructor(element: HTMLElement | string, options: Options) {
+    constructor(element: any, options: Options) {
+        this._tocas = new Tocas(element)
         this.options = options
-
-        if (element instanceof HTMLElement) {
-            this._element = element
-        } else {
-            this._element = document.querySelector(element)
-        }
 
         this._bindEvents()
     }
@@ -69,6 +66,15 @@ class Accordion {
      * @returns 手風琴物件
      */
     public closeAll(): Accordion {
+
+        return this
+    }
+
+    /**
+     *
+     * @param index
+     */
+    public closeOthers(index: number): Accordion {
         return this
     }
 
@@ -114,7 +120,9 @@ class Accordion {
      * @returns 手風琴物件
      */
     private _closeOthers(index: number) {
+        for (var i = 0; i < this._getCount() - 1; i++) {
 
+        }
     }
 
     // --------------------------------------------------------------
@@ -135,8 +143,8 @@ class Accordion {
      * @param index 欲啟用的項目索引
      */
     private _setActive(index: number) {
-        this._element.querySelectorAll(Selector.Title)[index].classList.add(ClassName.Active)
-        this._element.querySelectorAll(Selector.Content)[index].classList.add(ClassName.Active)
+        this._tocas.find(Selector.Title)[index].addClass(ClassName.Active)
+        this._tocas.find(Selector.Content)[index].addClass(ClassName.Active)
     }
 
     /**
@@ -145,8 +153,8 @@ class Accordion {
      * @param index 欲停用的項目索引
      */
     private _setHidden(index: number) {
-        this._element.querySelectorAll(Selector.Title)[index].classList.remove(ClassName.Active)
-        this._element.querySelectorAll(Selector.Content)[index].classList.remove(ClassName.Active)
+        this._tocas.find(Selector.Title)[index].removeClass(ClassName.Active)
+        this._tocas.find(Selector.Content)[index].removeClass(ClassName.Active)
     }
 
     // --------------------------------------------------------------
@@ -154,11 +162,18 @@ class Accordion {
     // --------------------------------------------------------------
 
     private _getContent(index: number): Element {
-        return this._element.querySelectorAll(Selector.Content)[index]
+        return this._tocas.(Selector.Content)[index]
     }
 
     private _getContents(): NodeListOf<Element> {
         return this._element.querySelectorAll(Selector.Content)
+    }
+
+    /**
+     * getCount 能夠取得手風琴的項目數量。
+     */
+    private _getCount(): number {
+        return this._tocas.find(Selector.Content).length()
     }
 
     // --------------------------------------------------------------
@@ -229,7 +244,7 @@ class Accordion {
 
     private _bindEvents() {
         this._element.querySelectorAll(Selector.Title).forEach((element: HTMLElement) => {
-            element.addEventListener('click', element.dataset._handlerClick = (event: Event) => {
+            element.addEventListener('click', element.SetData(_handlerClick) = (event: Event) => {
                 this._handlerClick(event)
             })
         })
