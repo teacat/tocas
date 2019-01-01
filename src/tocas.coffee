@@ -1,6 +1,6 @@
-export class Tocas
+class Tocas
 
-    constructor = (selector = '', context = '') ->
+    constructor: (selector = '', context = '') ->
         @nodes          = []
         @selector       = selector
         @context        = context
@@ -17,8 +17,8 @@ export class Tocas
         else if typeof selector is 'string' and context is ''
             document.querySelectorAll(selector).forEach (element) => @nodes.push(element)
         # 如果選擇器有上下文選擇器，就透過選擇器找出上下文元素。
-        else if typeof context is 'string'
-            @nodes = ts(selector).find(context).toArray()
+        else if context isnt ''
+            @nodes = new Tocas(selector).find(context).toArray()
         # 如果選擇器是 NodeList 就轉換成元素陣列然後取出來接著繼續。
         else if selector instanceof NodeList
             selector.forEach (element) => @nodes.push(element)
@@ -36,7 +36,7 @@ export class Tocas
             @nodes = [selector]
 
     # _alias
-    _alias = (event) ->
+    _alias: (event) ->
         pair  = event.split '.'
         alias = if pair[1] isnt undefined then ".#{pair[1]}" else ''
 
@@ -49,15 +49,15 @@ export class Tocas
                 event
 
     # isPlainObject
-    isPlainObject = (object) =>
+    isPlainObject: (object) =>
         Object.prototype.toString.call(object) is '[object Object]'
 
     # isTouchDevice
-    isTouchDevice = =>
+    isTouchDevice: =>
         'ontouchstart' of window or navigator.maxTouchPoints
 
     # device
-    device = =>
+    device: =>
         switch
             when window.innerWidth < 767
                 device = 'mobile'
@@ -72,11 +72,11 @@ export class Tocas
         }
 
     # fromPoint
-    fromPoint = (x, y) =>
+    fromPoint: (x, y) =>
         ts document.elementFromPoint x, y
 
     # extend
-    extend =->
+    extend: ->
         extended = {}
         deep     = true
         i        = 0
@@ -88,7 +88,7 @@ export class Tocas
             for prop of obj
                 if Object::hasOwnProperty.call(obj, prop)
                     if deep and Object::toString.call(obj[prop]) == '[object Object]'
-                        extended[prop] = ts.extend(true, extended[prop], obj[prop])
+                        extended[prop] = new Tocas().extend(true, extended[prop], obj[prop])
                     else
                         extended[prop] = obj[prop]
             return
@@ -99,30 +99,30 @@ export class Tocas
         extended
 
     # 建立元素
-    createElement = (html) =>
+    createElement: (html) =>
         div = document.createElement('div')
         div.innerHTML = html.trim()
         div.firstChild
 
     # get 會取得選擇器內的指定元素，並且回傳一個 DOM 元素而非選擇器。
-    get = (index = 0) ->
+    get: (index = 0) ->
         @nodes[index]
 
     # toArray 將選擇器轉換成帶有節點的一般陣列。
-    toArray = ->
+    toArray: ->
         array = []
         @nodes.forEach (element) ->
             array.push(element)
         return array
 
     # each 遍歷整個選擇器陣列。
-    each = (callback) ->
+    each: (callback) ->
         @nodes.forEach (element, index) ->
             callback.call(element, element, index)
         @
 
     # collectSwap 將收集到的元素替換掉目前選擇器內的所有元素。
-    collectSwap = (callback) ->
+    collectSwap: (callback) ->
         collection = []
 
         @each (element, index) ->
@@ -140,7 +140,7 @@ export class Tocas
         # 透過 Set 型態移除重複的節點。
         collection  = new Set collection
         # 然後將 Set 轉換成陣列，建立新的選擇器。
-        newSelector = ts([...collection])
+        newSelector = new Tocas([...collection])
         # 保存選擇器之前的所有節點。
         Object.defineProperty newSelector, 'prevObject',
             value: @
@@ -148,16 +148,16 @@ export class Tocas
         return newSelector
 
     # eq 取得選擇器的指定元素，然後繼續回傳僅帶有該元素的選擇器。
-    eq = (index) ->
-        ts(@get(index))
+    eq: (index) ->
+        new Tocas(@get(index))
 
     # parent 回傳元素的父元素選擇器。
-    parent = ->
+    parent: ->
         @collectSwap ->
             @parentNode
 
     # parents 回傳元素的所有父元素直至指定父元素。
-    parents = (selector) ->
+    parents: (selector) ->
         @collectSwap (self) ->
             parents         = []
             matchedSelector = false
@@ -165,36 +165,36 @@ export class Tocas
                 self = self.parentNode
                 break if self.nodeType is 9
                 parents.push(self)
-                if ts(self).equal(selector)
+                if new Tocas(self).equal(selector)
                     matchedSelector = true
                     break
             return [] if selector and not matchedSelector
             return parents
 
     # closest 回傳最接近指定的父元素選擇器。
-    closest = (selector) ->
+    closest: (selector) ->
         @collectSwap ->
             @closest(selector)
 
     # find 在目前元素中搜尋指定元素並回傳其選擇器。
-    find = (selector) ->
+    find: (selector) ->
         @collectSwap ->
             @querySelectorAll(selector)
 
     # insertBefore 將選擇器元素安插在指定元素前。
-    insertBefore = (target) ->
+    insertBefore: (target) ->
         @each ->
-            ts(target).each (element) =>
+            new Tocas(target).each (element) =>
                 element.parentNode.insertBefore(@, element)
 
     # insertAfter 將選擇器元素安插在指定元素後。
-    insertAfter = (target) ->
+    insertAfter: (target) ->
         @each ->
-            ts(target).each (element) =>
+            new Tocas(target).each (element) =>
                 element.parentNode.insertBefore(@, element.nextSibling)
 
     # wrap 將元素用指定元素包覆起來。
-    wrap = (element) ->
+    wrap: (element) ->
         @each ->
             if @nextSibling
                 @parentNode.insertBefore(element, @nextSibling)
@@ -203,12 +203,12 @@ export class Tocas
             element.appendChild(@)
 
     # clone 複製元素。
-    clone = ->
+    clone: ->
         @collectSwap ->
             @cloneNode(true)
 
     # append 將元素插入在目前選擇器元素的內部最後面。
-    append = (element) ->
+    append: (element) ->
         shouldClone = @length isnt 1
         if element.isSelector isnt undefined
             @each ->
@@ -221,12 +221,12 @@ export class Tocas
                 @appendChild(if shouldClone then element.cloneNode(true) else element)
 
     # appendTo 將目前選擇器元素插入到指定元素的內部最後面。
-    appendTo = (selector) ->
+    appendTo: (selector) ->
         @each ->
-            ts(selector).append(@)
+            new Tocas(selector).append(@)
 
     # prepend 將元素插入在目前選擇器元素的內部最前面。
-    prepend = (element) ->
+    prepend: (element) ->
         shouldClone = @length isnt 1
         if element.isSelector isnt undefined
             @each ->
@@ -239,75 +239,79 @@ export class Tocas
                 @prepend(if shouldClone then element.cloneNode(true) else element)
 
     # prependTo 將目前選擇器元素插入到指定元素的內部最前面。
-    prependTo = (selector) ->
+    prependTo: (selector) ->
         @each ->
-            ts(selector).prepend(@)
+            new Tocas(selector).prepend(@)
 
     # remove 將選擇器元素從頁面上中移除。
-    remove = ->
+    remove: ->
         @each ->
             @parentNode?.removeChild(@)
 
     # equal 選擇一些元素，然後用來比對目前的選擇器元素是否在這群當中。
-    equal = (selector) ->
+    equal: (selector) ->
         isInElements = false
         if selector instanceof HTMLElement
             return @get(0)?.isSameNode(selector)
         @each ->
-            ts(selector).each (compareElement) =>
+            new Tocas(selector).each (compareElement) =>
                 isInElements = true if @ is compareElement
         return isInElements
 
     # contains 是否擁有指定子元素。
-    contains = (selector) ->
-        @get(0)?.contains(ts(selector).get())
+    contains: (selector) ->
+        @get(0)?.contains(new Tocas(selector).get())
 
     # exists 是否存在。
-    exists = ->
+    exists: ->
         @length isnt 0
 
     # notEqual 將指定元素從選擇器中剔除。
-    notEqual = (selector) ->
+    notEqual: (selector) ->
         ts @toArray().filter (element) =>
-            ts(selector).indexOf(element) is -1
+            new Tocas(selector).indexOf(element) is -1
 
     # filter 將指定元素從選擇器中保留，簡單說就是 `Not` 的相反。
-    filter = (selector) ->
+    filter: (selector) ->
         ts @toArray().filter (element) =>
-            ts(selector).indexOf(element) isnt -1
+            new Tocas(selector).indexOf(element) isnt -1
 
     # slice 替元素陣列進行切分。
-    slice = (from, to) ->
+    slice: (from, to) ->
         ts @toArray().slice from, to
 
     # children 取得容器裡的第一層子節點。
-    children = (selector) ->
+    children: (selector) ->
         @collectSwap ->
             @querySelectorAll if selector? then ":scope > #{selector}" else ':scope > *'
 
     # replaceWith 將元素替換為指定選擇器元素。
-    replaceWith = (selector) ->
-        element = ts(selector).get()
+    replaceWith: (selector) ->
+        element = new Tocas(selector).get()
         @each ->
             @replaceWith(element)
 
+    # legnth 取得節點元素的數量。
+    length: () ->
+        @nodes.length
+
     # last 選擇器中的最後一個元素。
-    last = () -> @eq(@length-1)
+    last: () -> @eq(@length-1)
 
     # next 下一個元素。
-    next = ->
+    next: ->
         @collectSwap ->
             @nextElementSibling
 
     # previous 上一個元素。
-    previous = ->
+    previous: ->
         @collectSwap ->
             @previousElementSibling
 
     # nextAll 這個元素之後的所有同階層元素。
-    nextAll = (selector) ->
+    nextAll: (selector) ->
         @collectSwap ->
-            $self     = ts(@)
+            $self     = new Tocas(@)
             $parent   = $self.parent()
             $children = if selector? then $parent.find(":scope > #{selector}") else $parent.find(':scope > *')
             index     = $self.index()
@@ -315,9 +319,9 @@ export class Tocas
             $children.slice index + 1
 
     # previousAll 這個元素之前的所有同階層元素。
-    previousAll = (selector) ->
+    previousAll: (selector) ->
         @collectSwap ->
-            $self     = ts(@)
+            $self     = new Tocas(@)
             $parent   = $self.parent()
             $children = if selector? then $parent.find(":scope > #{selector}") else $parent.find(':scope > *')
             index     = $self.index()
@@ -325,26 +329,29 @@ export class Tocas
             $children.slice 0, index
 
     # addBack 在目前的選擇器節點陣列中加上先前選擇的所有節點。
-    addBack = ->
+    addBack: ->
         if @prevObject
             @prevObject.toArray().forEach (element) => @push(element)
         @
 
     # index 該元素在容器內的索引。
-    index = ->
-        node  = @get(0)
-        index = 0
-
+    index: (selector) ->
+        node = @get(0)
         return -1 if not node?
+
+        if selector isnt undefined
+            return new Tocas(selector).toArray().indexOf node
+
+        index = 0
         index++ while (node = node.previousElementSibling)
         return index
 
     # getAttribute 取得或是建立新的標籤到目前的選擇器元素。
-    getAttribute = (name, value) ->
+    getAttribute: (name, value) ->
         @get()?.getAttribute name
 
     # setAttribute 設置選擇器元素標籤。
-    setAttribute = (name, value) ->
+    setAttribute: (name, value) ->
         if typeof name is 'object'
             @each ->
                 for key of name
@@ -353,11 +360,11 @@ export class Tocas
             @each -> @setAttribute name, value
 
     # removeAttribute 移除目前選擇器元素的指定標籤。
-    removeAttribute = (name) ->
+    removeAttribute: (name) ->
         @each -> @removeAttribute name
 
     # addClass 在目前選擇器元素插入新的樣式類別名稱。
-    addClass = (names) ->
+    addClass: (names) ->
         if typeof names is 'object'
             newNames = ''
             for name of names
@@ -370,7 +377,7 @@ export class Tocas
             DOMTokenList.prototype.add.apply(@classList, names.split(' ').filter(Boolean))
 
     # removeClass 移除目前選擇器元素的指定樣式類別。
-    removeClass = (names) ->
+    removeClass: (names) ->
         if typeof names is 'object'
             newNames = ''
             for name of names
@@ -383,22 +390,22 @@ export class Tocas
             DOMTokenList.prototype.remove.apply(@classList, names.split(' ').filter(Boolean))
 
     # toggleClass 切換目前選擇器元素的樣式。
-    toggleClass = (names) ->
+    toggleClass: (names) ->
         @each ->
             names.split(' ').forEach (name) ->
                 @classList.toggle(name)
             , @
 
     # hasClass 回傳選擇器元素是否帶有指定樣式類別，是布林值。
-    hasClass = (name) ->
+    hasClass: (name) ->
         @get(0)?.classList.contains(name)
 
     # getCSS 取得選擇器元素指定的 CSS 樣式。
-    getCSS = (name) ->
+    getCSS: (name) ->
         if @get()? then document.defaultView.getComputedStyle(@get(), null).getPropertyValue(name) else null
 
     # setCSS 將選擇器元素套用指定的 CSS 樣式。
-    setCSS = (name, value) ->
+    setCSS: (name, value) ->
         if typeof name is 'object'
             for key of name
                 @each -> @style[key] = name[key]
@@ -407,7 +414,7 @@ export class Tocas
             @each -> @style[name] = value
 
     # rect 回傳選擇器元素的渲染形狀。
-    rect = ->
+    rect: ->
         r = @get(0)?.getBoundingClientRect()
         return {
             top: r.top,
@@ -421,18 +428,18 @@ export class Tocas
         }
 
     # bind 綁定並註冊一個事件監聽器。
-    bind = (events, handler, options = {once: false}) ->
+    bind: (events, handler, options = {once: false}) ->
         @each ->
-            ts(@).bindWithOptions({
+            new Tocas(@).bindWithOptions({
                 events: events
                 handler: handler
                 options: options
             })
 
     # bindWithData 綁定並註冊一個帶有自訂資料的事件監聽器。
-    bindWithData = (events, data, handler, options = {once: false}) ->
+    bindWithData: (events, data, handler, options = {once: false}) ->
         @each ->
-            ts(@).bindWithOptions({
+            new Tocas(@).bindWithOptions({
                 events: events
                 handler: handler
                 data: data
@@ -440,20 +447,19 @@ export class Tocas
             })
 
     # bindWithChild 綁定並註冊一個事件監聽器在父元素，但監聽的是子元素事件。
-    bindWithChild = (events, selector, handler, options = {once: false}) ->
+    bindWithChild: (events, selector, handler, options = {once: false}) ->
         @each ->
-            ts(@).bindWithOptions({
+            new Tocas(@).bindWithOptions({
                 events: events
                 handler: handler
                 selector: selector
-                data: data
                 options: options
             })
 
     # bindWithChildData 綁定並註冊一個帶有自訂資料的事件監聽器在父元素，但監聽的是子元素事件。
-    bindWithChildData = (events, selector, data, handler, options = {once: false}) ->
+    bindWithChildData: (events, selector, data, handler, options = {once: false}) ->
         @each ->
-            ts(@).bindWithOptions({
+            new Tocas(@).bindWithOptions({
                 events: events
                 handler: handler
                 selector: selector
@@ -462,9 +468,9 @@ export class Tocas
             })
 
     # bindWithOptions 以進階選項綁定並註冊一個事件監聽器。
-    bindWithOptions = (options) ->
+    bindWithOptions: (options) ->
         {events, handler, selector, data, options} = options
-        events = ts.helper.eventAlias(events)
+        events = @_alias(events)
 
         # $events.click =
         # {
@@ -547,7 +553,7 @@ export class Tocas
                                 # 如果這個事件有選擇器的話，則使用該選擇器為主。
                                 if single.selector isnt undefined
                                     selector = single.selector
-                                    closest  = ts(event.target).closest(selector)
+                                    closest  = new Tocas(event.target).closest(selector)
                                     # 如果找不到指定選擇棄的元素，就不要觸發此事件。
                                     if closest.length is 0
                                         continue
@@ -585,16 +591,16 @@ export class Tocas
             , @
 
     # bindOnce 綁定一次性的事件監聽器，當被觸發之後就會被移除。
-    bindOnce = (events, handler) ->
-        events = ts.helper.eventAlias(events)
+    bindOnce: (events, handler) ->
+        events = @_alias(events)
 
         @each ->
-            ts(@).bindWithOptions(events, handler, {once: true})
+            new Tocas(@).bindWithOptions(events, handler, {once: true})
 
     # unbind 註銷事件監聽器。
-    unbind = (events, handler) ->
+    unbind: (events, handler) ->
         if events isnt undefined
-            events = ts.helper.eventAlias(events)
+            events = @_alias(events)
         @each ->
             if events?[0] is '(' and events[events.length-1] is ')'
                 return if @ isnt window
@@ -653,8 +659,8 @@ export class Tocas
             , @
 
     # trigger 觸發指定事件。
-    trigger = (events) ->
-        events          = ts.helper.eventAlias(events)
+    trigger: (events) ->
+        events          = @_alias(events)
         customArguments = [].slice.call arguments, 1
 
         @each ->
@@ -672,55 +678,55 @@ export class Tocas
 
     # emulate 在指定的秒數過後觸發指定事件，若已被觸發則不再次觸發。
     # 這能用以強迫讓某個事件發生。
-    emulate = (event, duration) ->
+    emulate: (event, duration) ->
         @each ->
             called = false
-            ts(@).one event, ->
+            new Tocas(@).one event, ->
                 called = true
             setTimeout =>
-                ts(@).trigger(event) if not called
+                new Tocas(@).trigger(event) if not called
             , duration
 
     # getText 取得選擇器元素的內容文字。
-    getText = () ->
+    getText: () ->
         @get()?.innerText
 
     # setText 變更選擇器元素的內容文字。
-    setText = (text) ->
+    setText: (text) ->
         @each ->
             @innerText = text
 
     # getValue 取得選擇器元素的值。
-    getValue = (value) ->
+    getValue: (value) ->
         @get()?.value
 
     # setValue 變更選擇器元素的值。
-    setValue = (value) ->
+    setValue: (value) ->
         @each ->
             @value = value
 
     # getHTML 取得選擇器元素的 HTML。
-    getHTML = () ->
+    getHTML: () ->
         @get()?.innerHTML
 
     # setHTML 變更選擇器元素的 HTML。
-    setHTML = (html) ->
+    setHTML: (html) ->
         @each ->
             @innerHTML = html
 
     # empty 將選擇器元素的內容清除，例如值或文字。
-    empty = ->
+    empty: ->
         @each ->
             @value     = null if @value     isnt undefined
             @innerHTML = null if @innerHTML isnt undefined
             @innerText = null if @innerText isnt undefined
 
     # getProperty 取得選擇器元素的屬性，例如 `.src`、`.width`。
-    getProperty = (name) ->
+    getProperty: (name) ->
         @get()?[name]
 
     # setProperty 變更選擇器元素的屬性，例如 `.src`、`.width`。
-    setProperty = (name, value) ->
+    setProperty: (name, value) ->
         if typeof name is 'object'
             for key of name
                 @each -> @[key] = name[key]
@@ -729,11 +735,11 @@ export class Tocas
             @each -> @[name] = value
 
     # getData 取得選擇器元素的存放資料。
-    getData = (name) ->
+    getData: (name) ->
         @get()?.$data?[name]
 
     # setData 在選擇器元素中存放資料，類似 Attr 但頁面不可見。
-    setData = (name, value) ->
+    setData: (name, value) ->
         if typeof name is 'object'
             for key of name
                 @each ->
@@ -746,20 +752,20 @@ export class Tocas
                 @$data[name] = value
 
     # removeData 移除選擇器元素中的存放資料。
-    removeData = (name) ->
+    removeData: (name) ->
         @each ->
             delete @$data[name] if @$data[name]?
 
     # hasTimer 確認是否有指定的計時器。
-    hasTimer = (name) ->
+    hasTimer: (name) ->
         @get(0)?.$timers?[name]?
 
     # getTimer 取得計時器內容。
-    getTimer = (name) ->
+    getTimer: (name) ->
         @get(0)?.$timers?[name]
 
     # setTimer 設置一個新的計時器。
-    setTimer = (options) ->
+    setTimer: (options) ->
         setTimeout =>
             options = {
                 {
@@ -812,7 +818,7 @@ export class Tocas
         , 0
 
     # pauseTimer 暫停一個計時器。
-    pauseTimer = (name) ->
+    pauseTimer: (name) ->
         @each ->
             if not @$timers?[name]?
                 return
@@ -822,7 +828,7 @@ export class Tocas
             @$timers[name].paused = true
 
     # playTimer 重啟一個計時器。
-    playTimer = (name) ->
+    playTimer: (name) ->
         @each ->
             if not @$timers?[name]?
                 return
@@ -835,7 +841,7 @@ export class Tocas
             @$timers[name].paused = false
 
     # removeTimer 移除一個計時器。
-    removeTimer = (name) ->
+    removeTimer: (name) ->
         @each ->
             if not @$timers?[name]?
                 return
@@ -846,12 +852,12 @@ export class Tocas
             delete @$timers[name]
 
     # repaint 讓瀏覽器重繪元素。
-    repaint = ->
+    repaint: ->
         @each ->
             `void(this.offsetHeight)`
 
     # uniqueID 取得為此元素而產生的獨立編號，若無則建立。
-    uniqueID = ->
+    uniqueID: ->
         id = @get(0).$uniqueID
         if id
             return id
