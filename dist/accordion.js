@@ -21,6 +21,8 @@ Accordion = class Accordion {
     this._open = this._open.bind(this);
     this._close = this._close.bind(this);
     this._isActive = this._isActive.bind(this);
+    this._isMenu = this._isMenu.bind(this);
+    this._getSelector = this._getSelector.bind(this);
     this._getCount = this._getCount.bind(this);
     this._getContent = this._getContent.bind(this);
     // --------------------------------------------------------------
@@ -47,24 +49,24 @@ Accordion = class Accordion {
     };
     // 樣式名稱。
     this._CLASSNAMES = {
-      ACTIVE: 'active'
+      ACTIVE: 'active',
+      MENU: 'menu'
     };
     // 選擇器名稱。
     this._SELECTORS = {
       TITLE: ':scope > .title',
       CONTENT: ':scope > .content',
-      ACCORDION: ':scope > .ts.accordion',
-      ACTIVE_CONTENT: ':scope > .active.content',
-      ACTIVE: ':scope > .active'
+      MENU_TITLE: ':scope > .item > .title',
+      MENU_CONTENT: ':scope > .item > .content'
     };
     // 模組設定。
     this._OPTIONS = {
       // 是否僅允許單個手風琴只有一個分頁能被打開。
       exclusive: true,
       // 展開的手風琴是否可以被關閉。
-      collapsible: true,
+      // collapsible: true
       // 當手風琴被關閉時，是否一同閉合子手風琴。
-      closeNested: true,
+      // closeNested: true
       // 當手風琴正在展開時所會呼叫的函式。
       onOpening: () => {},
       // 當手風琴展開時所會呼叫的函式。
@@ -81,6 +83,7 @@ Accordion = class Accordion {
     // --------------------------------------------------------------
     this._tocas = new Tocas(selector);
     this._options = new Tocas().extend(this._OPTIONS, options);
+    this._isMenuAccordion = this._isMenu();
     // --------------------------------------------------------------
     // 初始化
     // --------------------------------------------------------------
@@ -88,11 +91,20 @@ Accordion = class Accordion {
   }
 
   open(index) {
+    if (this.isActive(index)) {
+      return;
+    }
+    if (this._options.exclusive) {
+      this.closeAll();
+    }
     this._open(index);
     return this;
   }
 
   close(index) {
+    if (!this.isActive(index)) {
+      return;
+    }
     this._close(index);
     return this;
   }
@@ -123,36 +135,56 @@ Accordion = class Accordion {
   }
 
   _open(index) {
-    this._tocas.find(this._SELECTORS.TITLE).eq(index).addClass(this._CLASSNAMES.ACTIVE);
-    this._tocas.find(this._SELECTORS.CONTENT).eq(index).addClass(this._CLASSNAMES.ACTIVE);
+    console.log(this._getSelector('content'));
+    this._tocas.find(this._getSelector('title')).eq(index).addClass(this._CLASSNAMES.ACTIVE);
+    this._tocas.find(this._getSelector('content')).eq(index).addClass(this._CLASSNAMES.ACTIVE);
     return this._triggerOpen();
   }
 
   _close(index) {
-    this._tocas.find(this._SELECTORS.TITLE).eq(index).removeClass(this._CLASSNAMES.ACTIVE);
-    this._tocas.find(this._SELECTORS.CONTENT).eq(index).removeClass(this._CLASSNAMES.ACTIVE);
+    this._tocas.find(this._getSelector('title')).eq(index).removeClass(this._CLASSNAMES.ACTIVE);
+    this._tocas.find(this._getSelector('content')).eq(index).removeClass(this._CLASSNAMES.ACTIVE);
     return this._triggerClose();
   }
 
   _isActive(index) {
-    return this._tocas.find(this._SELECTORS.TITLE).eq(index).hasClass(this._CLASSNAMES.ACTIVE);
+    return this._tocas.find(this._getSelector('title')).eq(index).hasClass(this._CLASSNAMES.ACTIVE);
+  }
+
+  _isMenu() {
+    return this._tocas.hasClass(this._CLASSNAMES.MENU);
+  }
+
+  _getSelector(name) {
+    switch (name) {
+      case 'title':
+        if (this._isMenuAccordion) {
+          return this._SELECTORS.MENU_TITLE;
+        }
+        return this._SELECTORS.TITLE;
+      case 'content':
+        if (this._isMenuAccordion) {
+          return this._SELECTORS.MENU_CONTENT;
+        }
+        return this._SELECTORS.CONTENT;
+    }
   }
 
   _getCount() {
-    return this._tocas.find(this._SELECTORS.TITLE).count();
+    return this._tocas.find(this._getSelector('title')).length();
   }
 
   _getContent(index) {
-    return this._tocas.find(this._SELECTORS.CONTENT).get(index);
+    return this._tocas.find(this._getSelector('content')).get(index);
   }
 
   _bindEvents() {
-    return this._tocas.bindWithChild(this._EVENTS.CLICK, this._SELECTORS.TITLE, this._eventClick);
+    return this._tocas.bindWithChild(this._EVENTS.CLICK, this._getSelector('title'), this._eventClick);
   }
 
   _eventClick(event) {
     var index;
-    index = this._tocas.find(this._SELECTORS.TITLE).toArray().indexOf(event.target);
+    index = this._tocas.find(this._getSelector('title')).toArray().indexOf(event.target);
     return this.toggle(index);
   }
 
