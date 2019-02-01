@@ -1,22 +1,55 @@
+
 <p align="center">
-  <img src="assets/tocas-og.png">
+  <br>
+  <a href="http://www.amitmerchant.com/electron-markdownify"><img src="./assets/images/logo.png" alt="Markdownify" width="200"></a>
+  <br>
+  <br>
 </p>
 
-&nbsp;
+---
 
-# Tocas UI 2
+<h4 align="center">支援響應式設計並基於 CSS3 的多元介面元件庫，可快速建置任何規模的網站且用法簡易。</h4>
 
-[![](assets/forthebadge/built-with-love.png)](https://forthebadge.com/) [![](assets/forthebadge/contains-xiaoxiaoan.png)](https://forthebadge.com/) [![](assets/forthebadge/powered-by-water.png)](https://forthebadge.com/) [![](assets/forthebadge/from-taiwan.png)](https://forthebadge.com/)
+<p align="center">
+  <a href="https://github.com/TeaMeow/TocasUI/releases">
+    <img src="https://img.shields.io/github/release/teameow/tocasui.svg"
+         alt="GitHub Release">
+  </a>
+  <a href="https://t.me/tocasui"><img src="./assets/images/badges/telegram.svg"></a>
+  <a href="https://github.com/TeaMeow/TocasUI/issues">
+      <img src="https://img.shields.io/github/issues/teameow/tocasui.svg">
+  </a>
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg">
+  </a>
+</p>
 
-Tocas UI 是基於 SASS 和 CSS3 的元件框架，可快速建立大型或小型網站的介面，
+<p align="center">
+  <a href="#how-to-use">特色</a> •
+  <a href="#key-features">瀏覽器支援</a> •
+  <a href="#credits">文件</a> •
+  <a href="#download">使用方式</a> •
+  <a href="#credits">範例</a> •
+  <a href="#related">社群</a>
+</p>
 
-其用法與 Bootstrap 差異甚多，Tocas UI 以不雜亂，有意義為主。
+![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
 
-**可至：https://tocas-ui.com/ 觀看教學文件。**
+## 特色
 
-&nbsp;
+* 更簡潔、沒有像 Bootstrap 那樣雜亂的樣式名稱
+  * 你再也不會看見 `.m-l-1`、`.p-x-2`、`.p-a-3` 這種東西了。
+* 豐富的元件系統，符合手機應用、甚至是大型規模的網站
+* 以支援行動裝置為優先
+  * 易於在不同裝置上有所變化的元件系統。
+* 更加彈性的網格系統
+  * 達到 16 格欄位的高度客製化佈局，且支援更多不同與顯示排列方式。
+* 具有回饋力的動畫特效 :tada:
+* 標準對比的設計讓網頁更為一致化且易於閱讀
+  * 不會過於強調黑白色彩，讓頁面風格更加地與人親近。
+* 不仰賴 jQuery 函式庫的獨立 JavaScript 模塊
 
-# 瀏覽器支援
+## 瀏覽器支援
 
 除了 Microsoft 所提供的瀏覽器（如：Edge、Internet Explorer）外，都獲得後續的支援與開發。
 
@@ -27,195 +60,58 @@ Tocas UI 是基於 SASS 和 CSS3 的元件框架，可快速建立大型或小�
 | macOS   | 29+    | 28+     | N/A  | N/A               | 17+   | 9+     |
 | Windows | 29+    | 28+     | ✖    | N/A               | 17+   | 9+     |
 
-&nbsp;
+## 文件
 
-# 特色
-
-1. 更簡潔，沒有像 Bootstrap 那樣**雜亂**的樣式名稱。（如：`.m-l-1`, `.p-x-2`, `.p-a-3`）
-
-2. 以**意義**為樣式命名的主要精神。
-
-3. 以支援行動裝置為**優先**。
-
-4. **更加彈性的格線系統**，並達到 16 格線。
-
-5. 具有**回饋力**的動畫。
-
-6. 元件之間可交互使用。
-
-7. 模塊**不需要 jQuery**（耶！）。
-
-&nbsp;
-
-# 使用
+## 使用方式
 
 將下列標籤放入網頁的 `<head>...</head>` 標籤之中。
 
 ```html
 <!-- Tocas UI：CSS 與元件 -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/2.3.3/tocas.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/3.0.0/tocas.min.css">
 <!-- Tocas JS：模塊與 JavaScript 函式 -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/2.3.3/tocas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/3.0.0/tocas.min.js"></script>
 ```
 
-&nbsp;
 
-# 範例
 
-Tocas UI 的樣式命名方式來自於 Semantic UI 的精神，以意義為主，並且很適合用於模板引擎中。
+## Credits
 
-```html
-<!-- Tocas 大的 主要 按鈕 -->
-<button class="ts big primary button"></button>
-```
+This software uses the following open source packages:
 
-讓我們看看 Bootstrap 的樣式命名方式。
+- [Electron](http://electron.atom.io/)
+- [Node.js](https://nodejs.org/)
+- [Marked - a markdown parser](https://github.com/chjj/marked)
+- [showdown](http://showdownjs.github.io/showdown/)
+- [CodeMirror](http://codemirror.net/)
+- Emojis are taken from [here](https://github.com/arvida/emoji-cheat-sheet.com)
+- [highlight.js](https://highlightjs.org/)
 
-```html
-<!-- 按鈕 按鈕-大的 按鈕-主要 -->
-<button class="btn btn-lg btn-primary"></button>
-```
+## Related
 
-&nbsp;
+[markdownify-web](https://github.com/amitmerchant1990/markdownify-web) - Web version of Markdownify
 
-# 簡短，而且更有意義
+## Support
 
-讓我們展示一些更進階的用法，讓你清楚了解 Tocas UI 和 Bootstrap 之間的差異。
+<a href="https://www.buymeacoffee.com/5Zn8Xh3l9" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
 
-```html
-<nav class="ts menu">
-    <a class="header item">商標</a>
-    <a class="active item">首頁</a>
-    <a class="item">特色</a>
-    <a class="item">價格</a>
-    <a class="item">關於</a>
-</nav>
-```
+<p>Or</p>
 
-而這是 Bootstrap。
+<a href="https://www.patreon.com/amitmerchant">
+	<img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
+</a>
 
-```html
-<nav class="navbar navbar-light bg-faded">
-    <a class="navbar-brand">商標</a>
-    <ul class="nav navbar-nav">
-        <li class="nav-item active">
-            <a class="nav-link">首頁</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link">特色</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link">價格</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link">關於</a>
-        </li>
-    </ul>
-</nav>
-```
+## You may also like...
 
-&nbsp;
+- [Pomolectron](https://github.com/amitmerchant1990/pomolectron) - A pomodoro app
+- [Correo](https://github.com/amitmerchant1990/correo) - A menubar/taskbar Gmail App for Windows and macOS
 
-# 社群
+## License
 
-## Pull Request
+MIT
 
-我們很高興接受任何 Pull Request（如果是新功能的話要符合相關理念 :D），
+---
 
-Commit 可以是英文或是中文，有時間就會去檢查。
-
-Commits written in English are welcomed.
-
-&nbsp;
-
-## 功能需求
-
-可以開啟 Issue 來回報自己要的功能，最後會被標上可行或是不可行的標籤，
-
-如果最終不可行的話還敬請見諒，但不要因此而停止提出建議喔 :D。
-
-&nbsp;
-
-## Bug 回報
-
-一樣可以開啟 Issue 然後稍微敘述一下問題，有空就會去檢查。
-
-&nbsp;
-
-# 可參考文件
-
-這裡是幾個可能會啟發你創意，或是更能讓你了解這類東西的連結。
-
-[Amaze UI](http://amazeui.org/)
-
-[Ant Design](http://ant.design/)
-
-[Bass CSS](http://www.basscss.com/)
-
-[Bootstrap](http://v4-alpha.getbootstrap.com/)
-
-[Bootstrap Material Design](http://rosskevin.github.io/bootstrap-material-design/)
-
-[Bttn CSS](https://bttn.surge.sh/)
-
-[Bulma](http://bulma.io/)
-
-[Core UI](http://coreui.io/)
-
-[Dojo](http://dojo.kickserv.com/)
-
-[Element](http://element.eleme.io/)
-
-[Elemental UI](http://elemental-ui.com/)
-
-[Ionic Framework](https://beta.ionicframework.com/docs/components)
-
-[iView UI](https://www.iviewui.com/)
-
-[Kube](https://imperavi.com/kube/)
-
-[Kule Lazy 3](http://www.kule.tw/)
-
-[Lightning Design System](https://www.lightningdesignsystem.com/)
-
-[Markdown UI](https://jjuliano.github.io/markdown-ui/)
-
-[Material Components for the Web](https://material.io/components/web/)
-
-[MDUI](http://www.mdui.org/)
-
-[Milligram](https://milligram.github.io/)
-
-[Muse UI](https://museui.github.io/#/index)
-
-[Office UI Fabric](http://dev.office.com/fabric#/components)
-
-[Photon](http://photonkit.com/)
-
-[Primer](http://primercss.io/)
-
-[Pure](http://purecss.io/)
-
-[Semantic UI](http://semantic-ui.com/)
-
-[Spectre](https://picturepan2.github.io/spectre/)
-
-[SUI](http://sui.taobao.org/sui/docs/)
-
-[SUI Mobile](https://github.com/sdc-alibaba/SUI-Mobile)
-
-[Tapestry](http://tapestry.wisembly.com/)
-
-[UI Kit](https://getuikit.com/)
-
-[MailChimp](http://ux.mailchimp.com/patterns)
-
-[Vital UI Kit](https://gss-fed.github.io/vital-ui-kit/index.html)
-
-[Vue Material](https://vuematerial.io/)
-
-[Vux](https://vux.li/)
-
-[WeUI](https://weui.io/)
-
-[WiredJS](https://wiredjs.com/)
+> [amitmerchant.com](https://www.amitmerchant.com) &nbsp;&middot;&nbsp;
+> GitHub [@amitmerchant1990](https://github.com/amitmerchant1990) &nbsp;&middot;&nbsp;
+> Twitter [@amit_merchant](https://twitter.com/amit_merchant)

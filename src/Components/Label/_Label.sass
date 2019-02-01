@@ -1,0 +1,914 @@
+@import ./label.variables
+
+//*******************************//
+//            Variations
+//*******************************//
+
+@mixin label-variant($colors)
+    $color                : nth($colors, 1)
+    $backgroundColor      : nth($colors, 2)
+    $borderColor          : nth($colors, 3)
+    $detailTextColor      : nth($colors, 4)
+    $detailBackgroundColor: nth($colors, 5)
+
+    background  : $backgroundColor
+    border-color: $borderColor
+    color       : $color
+
+    /** Coupon */
+    &.coupon:after,
+    &.coupon:before
+        border-color: $borderColor
+
+    /** Banner */
+    &.banner:after,
+    &.banner:before
+        border-color: darken($borderColor, 10%)
+
+    /** Empty Ribbon */
+    &.empty.ribbon.label
+        border-left-color : $backgroundColor
+        border-right-color: $backgroundColor
+
+    /** Vertical Ribbon */
+    &.vertical.ribbon:after
+        border-color: $backgroundColor $backgroundColor transparent $backgroundColor
+
+    /** Ribbon */
+    &.ribbon:not([class*="right ribbon"]):not(.empty):not(.vertical):after
+        border-right-color: darken($borderColor, 10%)
+    &.ribbon[class*="right ribbon"]:not(.empty):not(.vertical):after
+        border-top-color: darken($borderColor, 10%)
+
+    /** Corner Label */
+    &.corner:not([class*="left corner"]):after
+        border-right-color: $backgroundColor
+    &[class*="left corner"]:after
+        border-top-color: $backgroundColor
+
+    &.image .detail
+        color     : $detailTextColor
+        background: $detailBackgroundColor !important
+
+@mixin label-link-variant($color, $backgroundColor, $borderColor)
+    $hoverBackgroundColor : lighten($backgroundColor, 3%)
+    $activeBackgroundColor: darken($backgroundColor, 8%)
+
+    &:not(.basic):hover
+        background: $hoverBackgroundColor !important
+    &.basic:hover
+        color       : lighten($backgroundColor, 8%)
+        border-color: lighten($borderColor, 10%)
+    &.empty.ribbon:hover
+        border-left-color : $hoverBackgroundColor !important
+        border-right-color: $hoverBackgroundColor !important
+    &.corner:not([class*="left corner"]):hover:after
+        border-right-color: $hoverBackgroundColor !important
+    &[class*="left corner"]:hover:after
+        border-top-color: $hoverBackgroundColor !important
+
+    &.corner:hover,
+    &.empty.ribbon:hover
+        background: transparent !important
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.label
+    +label-variant($label_defaultColors)
+
+    display        : inline-flex
+    align-items    : center
+    justify-content: center
+    line-height    : 1
+    vertical-align : $label_verticalAlign
+    margin         : $label_verticalMargin $label_horizontalMargin
+    padding        : $label_verticalPadding $label_horizontalPadding
+    font-weight    : $label_fontWeight
+    border         : $label_border
+    border-radius  : $label_borderRadius
+
+.ts.label:not(.empty)
+    height: $label_height
+
+.ts.label:first-child
+    margin-left: 0em
+
+.ts.label:last-child
+    margin-right: 0em
+
+/* Link */
+a.ts.label
+    +label-link-variant($label_defaultTextColor, $label_defaultBackgroundColor, $label_defaultBorderColor)
+    cursor: pointer
+
+/* Inside Link */
+.ts.label > a
+    cursor    : pointer
+    color     : inherit
+    opacity   : $label_linkOpacity
+
+.ts.label > a:hover
+    opacity: 1
+
+/* Image */
+.ts.label > img
+    width         : auto !important
+    vertical-align: middle
+    height        : $label_imageHeight !important
+
+/* Icon */
+.ts.label > .icon
+    width: auto
+    margin: 0em $label_iconDistance 0em 0em
+
+/* Detail */
+.ts.label > .detail
+    display       : inline-flex
+    align-items   : center
+    height        : $label_height
+    font-weight   : $label_detailFontWeight
+    margin-left   : $label_detailMargin
+    opacity       : $label_detailOpacity
+
+.ts.label > .detail .icon
+    margin: 0em $label_detailIconDistance 0em 0em
+
+/* Removable label */
+.ts.label > .ts.close.button,
+.ts.label > .detail > .ts.close.button
+    margin-left : $label_deleteMargin
+    margin-right: $label_deleteRightMargin
+
+//-------------------//
+//      Ribbon
+//-------------------//
+
+.ts.ribbon.label:not(.empty):not(.vertical)
+    position: relative
+    margin  : 0
+    left    : $label_ribbonOffset
+
+    margin-right : -$label_ribbonTriangleSize
+    padding-left : $label_ribbonDistance
+    padding-right: $label_ribbonTriangleSize
+    border-radius: 0 $defaultBorderRadius $defaultBorderRadius 0
+    z-index      : $z_label_ribbon
+
+.ts.ribbon.label:not(.empty):not(.vertical):not(.basic)
+    border-width: 0
+
+.ts.ribbon.label:not(.empty):not(.vertical):after
+    position: absolute
+    content : ''
+    top     : 100%
+    left    : 0
+    width   : 0
+    height  : 0
+
+    border-style      : solid
+    border-width      : 0 $label_ribbonTriangleSize $label_ribbonTriangleSize 0
+    border-color      : transparent
+    background-color  : transparent !important
+
+/** Right */
+.ts.label[class*="right ribbon"]:not(.empty):not(.vertical)
+    left         : $label_ribbonRightDistance
+    padding-left : $label_ribbonTriangleSize
+    padding-right: $label_ribbonDistance
+    border-radius: $defaultBorderRadius 0 0 $defaultBorderRadius
+    transform    : translateX(-100%)
+
+.ts.label[class*="right ribbon"]:not(.empty):not(.vertical):after
+    left            : auto
+    right           : 0
+    border-style    : solid
+    border-width    : $label_ribbonTriangleSize $label_ribbonTriangleSize 0 0
+    border-color    : transparent
+    border-top-color: inherit
+
+/* Inside Table */
+.ts.image > .ribbon.label:not(.empty):not(.vertical)
+.ts.card .image > .ribbon.label:not(.empty):not(.vertical)
+    position: absolute
+    top     : $label_ribbonImageTopDistance
+
+.ts.card .image > .ts.ribbon.label:not(.empty):not(.vertical),
+.ts.image > .ts.ribbon.label:not(.empty):not(.vertical)
+    left: $label_ribbonImageOffset
+
+.ts.card .image > .ts[class*="right ribbon"].label:not(.empty):not(.vertical),
+.ts.image > .ts[class*="right ribbon"].label:not(.empty):not(.vertical)
+    left        : $label_rightRibbonImageOffset
+    padding-left: $label_horizontalPadding
+
+/* Inside Table */
+.ts.table td > .ts.ribbon.label:not(.empty):not(.vertical)
+    left: $label_ribbonTableOffset
+
+.ts.table td > .ts[class*="right ribbon"].label:not(.empty):not(.vertical)
+    left        : $label_rightRibbonTableOffset
+    padding-left: $label_horizontalPadding
+
+//-------------------//
+//       Banner
+//-------------------//
+
+.ts.banner.label
+    position  : relative
+    text-align: center
+
+    margin       : $label_bannerMargin
+    padding-left : $label_bannerHorizontalPadding
+    padding-right: $label_bannerHorizontalPadding
+
+    box-shadow   : $label_bannerBoxShadow
+    border-radius: 0
+    border       : 0
+    z-index      : auto
+
+.ts.banner.label:after,
+.ts.banner.label:before
+    position: absolute
+    content : ''
+    bottom  : $label_bannerRibbonVerticalOffset
+    z-index : $z_label_banner
+
+    border-width: $label_bannerRibbonSize
+    border-style: $label_bannerRibbonStyle
+
+.ts.banner.label:after
+    right             : $label_bannerRibbonHorizontalOffset
+    border-right-color: transparent !important
+
+.ts.banner.label:before
+    left             : $label_bannerRibbonHorizontalOffset
+    border-left-color: transparent !important
+
+//-------------------//
+//   Empty Ribbon
+//-------------------//
+
+.ts.empty.ribbon.label
+    position: absolute
+    top     : 0
+    right   : $label_emptyRibbonDistance
+    margin  : 0
+
+    display: inline-block
+    width  : 0
+    height : $label_emptyRibbonHeight
+    padding: 0
+    border : 0
+
+    background   : transparent
+    border-radius: 0
+
+    border-right-width : $label_emptyRibbonBorderWidth
+    border-left-width  : $label_emptyRibbonBorderWidth
+    border-right-style : solid
+    border-left-style  : solid
+    border-bottom      : $label_emptyRibbonBorderWidth solid transparent
+
+    z-index: $z_label_ribbon
+
+/** Empty Corner Ribbons */
+.ts.empty.label[class*="left ribbon"]
+    right: auto
+    left : $label_emptyRibbonDistance
+
+//-------------------//
+//  Vertical Ribbon
+//-------------------//
+
+.ts.vertical.ribbon.label
+    position: absolute
+    display : block
+    top     : 0
+    right   : $label_verticalRibbonDistance
+    height  : auto
+    left    : auto
+    width   : $label_verticalRibbonWidth
+
+    border       : 0
+    padding      : $label_verticalRibbonPadding
+    margin-right : 0
+    border-radius: 0
+    line-height  : $label_verticalRibbonLineHeight
+    text-align   : center
+    word-break   : break-all
+
+    z-index: $z_label_ribbon
+
+.ts.vertical.ribbon.label:after
+    position: absolute
+    content : ''
+    left    : 0
+    width   : 0
+    bottom  : -#{$label_verticalRibbonTailHeight}
+
+    border-width: 0 $label_verticalRibbonTailWidth $label_verticalRibbonTailHeight
+    border-style: solid
+
+.ts.vertical.label[class*="left ribbon"]
+    left: $label_verticalRibbonDistance
+
+//-------------------//
+//       Corner
+//-------------------//
+
+.ts.corner.label,
+.ts.corner.label:hover
+    background: transparent !important
+    border    : 0
+
+.ts.left.corner.label:after
+    border-top-width  : $label_cornerSize
+    border-top-style  : solid
+    border-right      : $label_cornerSize solid transparent
+    border-bottom     : 0 solid transparent
+    border-left       : 0 solid transparent
+
+.ts.left.corner.label
+    right: auto
+    left : 0
+
+.ts.corner.label
+    position: absolute
+    top     : 0
+    right   : 0
+    margin  : 0
+    padding : 0
+    width   : $label_cornerSize
+    height  : $label_cornerSize
+
+    align-items : flex-start
+    text-align  : center
+
+    z-index: $z_label_corner
+
+.ts.corner.label:after
+    position: absolute
+    content : ''
+    right   : 0
+    top     : 0
+    width   : 0
+    height  : 0
+    z-index : $z_label_cornerAfter
+
+    background-color  : transparent !important
+    border-top-width  : 0
+    border-top-style  : solid
+    border-right-width: $label_cornerSize
+    border-right-style: solid
+    border-bottom     : $label_cornerSize solid transparent
+    border-left       : 0 solid transparent
+
+.ts.left.corner.label .icon
+    left: -#{$label_cornerIconHorizontalOffset}
+
+.ts.corner.label .icon
+    position      : relative
+    top           : $label_cornerIconVerticalOffset
+    left          : $label_cornerIconHorizontalOffset
+    margin        : 0
+    cursor        : default
+    font-size     : $label_cornerIconSize
+    pointer-events: none
+
+//-------------------//
+//        Tag
+//-------------------//
+
+.ts.tag.labels .ts.label,
+.ts.tag.label
+    position         : relative
+    margin-left      : $label_tagArrowSize
+    padding-left     : $label_tagHorizontalPadding
+    padding-right    : $label_tagHorizontalPadding
+    border-left-width: 0 !important
+    border-radius    : 0 $defaultBorderRadius $defaultBorderRadius 0
+    transition       : none
+
+    border-left-width: 0
+
+.ts.tag.labels .ts.label:before,
+.ts.tag.label:before
+    position: absolute
+    content : ''
+    top     : 50%
+    right   : 100%
+    width   : $label_tagArrowSizeCalculation
+    height  : $label_tagArrowSizeCalculation
+
+    border-left      : inherit
+    border-left-width: $label_tagArrowBorderWidth
+    border-top       : inherit
+    border-top-width : $label_tagArrowBorderWidth
+    background-color : inherit
+    background-image : none
+
+    transform : $label_tagArrowTransform
+    transition: none
+
+.ts.basic.tag.labels .ts.label:before,
+.ts.basic.tag.label:before
+    border-top       : inherit
+    border-left      : inherit
+    border-left-width: $label_tagArrowBorderWidth
+
+.ts.tag.labels .ts.label:after,
+.ts.tag.label:after
+    position: absolute
+    content : ''
+    top     : $label_tagHoleTop
+    left    : $label_tagHoleLeft
+    width   : $label_tagHoleSize
+    height  : $label_tagHoleSize
+
+    box-shadow      : $label_tagHoleBoxShadow
+    border-radius   : $circularRadius
+    margin-top      : $label_tagHoleOffset
+    background-color: $label_tagHoleBackgroundColor !important
+
+.ts.basic.tag.labels .ts.label:after,
+.ts.basic.tag.label:after
+    border           : inherit
+    border-left-width: $label_tagArrowBorderWidth
+    box-shadow       : none
+
+//-------------------//
+//       Coupon
+//-------------------//
+
+.ts.coupon.labels .ts.label:before,
+.ts.coupon.labels .ts.label:after,
+.ts.coupon.label:before,
+.ts.coupon.label:after
+    position     : absolute
+    content      : ''
+    background   : $label_couponDotBackgroundColor
+    border-radius: $circularRadius
+    width        : $label_couponDotSize
+    height       : $label_couponDotSize
+    top          : 50%
+    transform    : translateY(-50%)
+    border-color : $label_couponDotBorderColor
+
+.ts.coupon.labels .ts.label:after,
+.ts.coupon.label:after
+    left              : $label_couponDotOffset
+    border-right-style: $label_couponDotBorderStyle
+    border-right-width: $label_couponDotBorderWidth
+
+.ts.coupon.labels .ts.label:before,
+.ts.coupon.label:before
+    right            : $label_couponDotOffset
+    border-left-style: $label_couponDotBorderStyle
+    border-left-width: $label_couponDotBorderWidth
+
+//-------------------//
+//       Image
+//-------------------//
+
+.ts.image.labels .ts.label,
+.ts.image.label
+    width         : auto !important
+    margin-top    : 0em
+    margin-bottom : 0em
+    max-width     : 9999px
+    vertical-align: middle
+    padding       : $label_imageLabelPadding
+    border-radius : $label_imageLabelBorderRadius
+
+.ts.image.labels .ts.label img,
+.ts.image.label img
+    display       : inline-block
+    vertical-align: top
+    height        : $label_height
+    margin        : $label_imageLabelImageMargin
+    border-radius : $label_imageLabelImageBorderRadius
+
+.ts.image.basic.labels .ts.label img,
+.ts.image.basic.label img
+    height     : $label_imageBasicLabelImageHeight
+    margin-left: $label_imageBasicLabelImageMarginOffset
+
+.ts.image.labels .ts.label .detail,
+.ts.image.label .detail
+    margin       : $label_imageLabelDetailMargin
+    padding      : $label_imageLabelDetailPadding
+    border-radius: 0em $label_imageLabelBorderRadius $label_imageLabelBorderRadius 0em
+
+//-------------------//
+//      Circular
+//-------------------//
+
+.ts.labels.circular .ts.label,
+.ts.label.circular
+    border-radius: $circularRadius
+
+//-------------------//
+//       Basic
+//-------------------//
+
+.ts.basic.labels .ts.label,
+.ts.basic.label
+    background: $label_basicBackground
+    border    : $label_basicBorder
+    color     : $label_basicColor
+
+.ts.basic.labels a.ts.label:hover,
+a.ts.basic.label:hover
+    background: $label_basicBackground !important
+
+.ts.basic.labels:not(.primary):not(.info):not(.negative):not(.positive):not(.warning):not(.inverted) a.ts.basic.label:hover,
+a.ts.basic.label:not(.primary):not(.info):not(.negative):not(.positive):not(.warning):not(.inverted):hover
+    color : $label_basicHoverColor
+    border: $label_basicBorder
+
+/* Pointing */
+.ts.basic.pointing.labels .ts.label:before,
+.ts.basic.pointing.label:before
+    border-color: inherit
+
+/* Emphasis */
+.ts.basic.labels.primary .ts.label,
+.ts.basic.labels.info .ts.label,
+.ts.basic.labels.warning .ts.label,
+.ts.basic.labels.positive .ts.label,
+.ts.basic.labels.negative .ts.label,
+.ts.basic.labels.inverted .ts.label,
+.ts.basic.label.primary,
+.ts.basic.label.info,
+.ts.basic.label.warning,
+.ts.basic.label.positive,
+.ts.basic.label.negative,
+.ts.basic.label.inverted
+    background: $label_basicBackground
+
+.ts.basic.labels.primary .ts.label,
+.ts.basic.label.primary
+    color: $label_primaryBorderColor
+.ts.basic.labels.info .ts.label,
+.ts.basic.label.info
+    color: $label_infoBorderColor
+.ts.basic.labels.warning .ts.label,
+.ts.basic.label.warning
+    color: $label_warningBorderColor
+.ts.basic.labels.positive .ts.label,
+.ts.basic.label.positive
+    color: $label_positiveBorderColor
+.ts.basic.labels.negative .ts.label,
+.ts.basic.label.negative
+    color: $label_negativeBorderColor
+.ts.basic.labels.inverted .ts.label,
+.ts.basic.label.inverted
+    color: $label_invertedBorderColor
+
+//-------------------//
+//      Compact
+//-------------------//
+
+.ts.compact.labels .ts.label,
+.ts.compact.label
+    padding: $label_compactVerticalPadding $label_compactHorizontalPadding
+
+//-------------------//
+//     Pointing
+//-------------------//
+
+.ts.attached.pointing.label
+    position: absolute
+
+.ts.pointing.label:before
+    background: inherit
+    background-image: inherit
+    border-width    : none
+    border-style    : solid
+    border-color    : $label_pointingBorderColor
+
+/* Arrow */
+.ts.pointing.label:before
+    position        : absolute
+    content         : ''
+    transform       : rotate(45deg)
+    background-image: none
+
+    z-index   : $z_label_pointingTriangle
+    width     : $label_pointingTriangleSize
+    height    : $label_pointingTriangleSize
+    transition: $label_pointingTriangleTransition
+
+/*--- Above ---*/
+.ts.pointing.label,
+.ts[class*="pointing above"].label
+    margin-top: $label_pointingVerticalDistance
+
+.ts.pointing.label:before,
+.ts[class*="pointing above"].label:before
+    border-width: $label_borderWidth 0 0 $label_borderWidth
+    transform   : translateX(-50%) translateY(-50%) rotate(45deg)
+    top         : 0%
+    left        : 50%
+
+/*--- Below ---*/
+.ts[class*="bottom pointing"].label,
+.ts[class*="pointing below"].label
+    margin-top   : 0
+    margin-bottom: $label_pointingVerticalDistance
+
+.ts[class*="bottom pointing"].label:before,
+.ts[class*="pointing below"].label:before
+    border-width: 0 $label_borderWidth $label_borderWidth 0
+    top         : auto
+    right       : auto
+    transform   : translateX(-50%) translateY(-50%) rotate(45deg)
+    top         : 100%
+    left        : 50%
+
+/*--- Left ---*/
+.ts[class*="left pointing"].label
+    margin-top : 0
+    margin-left: $label_pointingHorizontalDistance
+
+.ts[class*="left pointing"].label:before
+    border-width: 0 0 $label_borderWidth $label_borderWidth
+    transform   : translateX(-50%) translateY(-50%) rotate(45deg)
+    bottom      : auto
+    right       : auto
+    top         : 50%
+    left        : 0
+
+/*--- Right ---*/
+.ts[class*="right pointing"].label
+    margin-top  : 0
+    margin-right: $label_pointingHorizontalDistance
+
+.ts[class*="right pointing"].label:before
+    border-width: $label_borderWidth $label_borderWidth 0 0
+    transform   : translateX(50%) translateY(-50%) rotate(45deg)
+    top         : 50%
+    right       : 0%
+    bottom      : auto
+    left        : auto
+
+/* Basic Pointing */
+
+/*--- Above ---*/
+.ts.basic.pointing.label:before,
+.ts.basic[class*="pointing above"].label:before
+    margin-top: $label_basicPointingTriangleOffset
+
+/*--- Below ---*/
+.ts.basic[class*="bottom pointing"].label:before,
+.ts.basic[class*="pointing below"].label:before
+    bottom    : auto
+    top       : 100%
+    margin-top: -$label_basicPointingTriangleOffset
+
+/*--- Left ---*/
+.ts.basic[class*="left pointing"].label:before
+    top : 50%
+    left: $label_basicPointingTriangleOffset
+
+/*--- Right ---*/
+.ts.basic[class*="right pointing"].label:before
+    top  : 50%
+    right: $label_basicPointingTriangleOffset
+
+//-------------------//
+//       Sizes
+//-------------------//
+
+.ts.mini.labels .ts.label,
+.ts.mini.label
+    font-size: $label_mini
+.ts.tiny.labels .ts.label,
+.ts.tiny.label
+    font-size: $label_tiny
+.ts.small.labels .ts.label,
+.ts.small.label
+    font-size: $label_small
+.ts.labels .ts.label,
+.ts.label
+    font-size: $label_medium
+.ts.large.labels .ts.label,
+.ts.large.label
+    font-size: $label_large
+.ts.big.labels .ts.label,
+.ts.big.label
+    font-size: $label_big
+.ts.huge.labels .ts.label,
+.ts.huge.label
+    font-size: $label_huge
+.ts.massive.labels .ts.label,
+.ts.massive.label
+    font-size: $label_massive
+
+//-------------------//
+//      Attached
+//-------------------//
+
+.ts.label[class*="top attached"],
+.ts.attached.label
+    width           : 100%
+    position        : absolute
+    margin          : 0em
+    top             : 0em
+    left            : 0em
+    padding         : $label_attachedVerticalPadding $label_attachedHorizontalPadding
+    border-radius   : $label_attachedCornerBorderRadius $label_attachedCornerBorderRadius 0em 0em
+
+.ts.label[class*="top attached"]
+    border-top-width: 0
+
+.ts.label[class*="bottom attached"]
+    top                : auto
+    bottom             : 0em
+    border-radius      : 0em 0em $label_attachedCornerBorderRadius $label_attachedCornerBorderRadius
+    border-bottom-width: 0
+
+.ts.label[class*="top left attached"]
+    width            : auto
+    margin-top       : 0em !important
+    border-radius    : $label_attachedCornerBorderRadius 0em $label_attachedBorderRadius 0em
+    border-top-width : 0
+    border-left-width: 0
+
+.ts.label[class*="top right attached"]
+    width             : auto
+    left              : auto
+    right             : 0em
+    border-radius     : 0em $label_attachedCornerBorderRadius 0em $label_attachedBorderRadius
+    border-top-width  : 0
+    border-right-width: 0
+
+.ts.label[class*="bottom left attached"]
+    width              : auto
+    top                : auto
+    bottom             : 0em
+    border-radius      : 0em $label_attachedBorderRadius 0em $label_attachedCornerBorderRadius
+    border-bottom-width: 0
+    border-left-width  : 0
+
+.ts.label[class*="bottom right attached"]
+    top                : auto
+    bottom             : 0em
+    left               : auto
+    right              : 0em
+    width              : auto
+    border-radius      : $label_attachedBorderRadius 0em $label_attachedCornerBorderRadius 0em
+    border-bottom-width: 0
+    border-right-width : 0
+
+//-------------------//
+//       Fluid
+//-------------------//
+
+.ts.fluid.labels .ts.label,
+.ts.fluid.label
+    display: block
+
+//-------------------//
+//      Floating
+//-------------------//
+
+.ts.floating.label
+    position: absolute
+    z-index : $z_label_floating
+    top     : $label_floatingTopOffset
+    left    : 100%
+    margin  : 0em 0em 0em $label_floatingLeftOffset !important
+
+//-------------------//
+//      Floated
+//-------------------//
+
+.ts.label[class*="right floated"]
+    float      : right
+    margin-left: auto
+.ts.label[class*="left floated"]
+    float       : left
+    margin-right: auto
+
+//-------------------//
+//       Icon
+//-------------------//
+
+.ts.icon.labels:not([class*="left icon"]):not([class*="right icon"]) .ts.label > .icon,
+.ts.icon.label:not([class*="left icon"]):not([class*="right icon"]) > .icon
+    margin: 0
+
+.ts.icon.labels[class*="left icon"] .ts.label > .icon,
+.ts.icon.label[class*="left icon"] > .icon
+    margin-left : 0
+    margin-right: $label_iconDistance
+
+.ts.icon.labels[class*="right icon"] .ts.label > .icon,
+.ts.icon.label[class*="right icon"] > .icon
+    margin-left : $label_iconDistance
+    margin-right: 0
+
+//-------------------//
+//     Borderless
+//-------------------//
+
+.ts.borderless.labels .ts.label,
+.ts.borderless.label
+    border: 0
+
+//-------------------//
+//      Coupling
+//-------------------//
+
+/* Remove border radius on attached segment */
+.ts.attached.segment > .ts.top.left.attached.label,
+.ts.bottom.attached.segment > .ts.top.left.attached.label
+    border-top-left-radius: 0
+
+.ts.attached.segment > .ts.top.right.attached.label,
+.ts.bottom.attached.segment > .ts.top.right.attached.label
+    border-top-right-radius: 0
+
+.ts.top.attached.segment > .ts.bottom.left.attached.label
+    border-bottom-left-radius: 0
+
+.ts.top.attached.segment > .ts.bottom.right.attached.label
+    border-bottom-right-radius: 0
+
+/* Padding on next content after a label */
+.ts.top.attached.label:first-child + :not(.attached),
+.ts.top.attached.label + [class*="right floated"] + *
+    margin-top: $label_attachedSegmentPadding !important
+
+.ts.bottom.attached.label:first-child ~ :last-child:not(.attached)
+    margin-top   : 0em
+    margin-bottom: $label_attachedSegmentPadding !important
+
+.ts.button .ts.label
+    +extend(no-select)
+
+.ts.button .ts.label:not(.floating):not(.floating):hover
+    background: $white !important
+
+.ts.button .ts.label:not(a):hover
+    cursor: default
+
+//-------------------//
+//      Emphasis
+//-------------------//
+
+.ts.labels.primary .ts.label,
+.ts.label.primary
+    +label-variant($label_primaryColors)
+.ts.labels.info .ts.label,
+.ts.label.info
+    +label-variant($label_infoColors)
+.ts.labels.warning .ts.label,
+.ts.label.warning
+    +label-variant($label_warningColors)
+.ts.labels.positive .ts.label,
+.ts.label.positive
+    +label-variant($label_positiveColors)
+.ts.labels.negative .ts.label,
+.ts.label.negative
+    +label-variant($label_negativeColors)
+.ts.labels.inverted .ts.label,
+.ts.label.inverted
+    +label-variant($label_invertedColors)
+
+//-------------------//
+//    Link Emphasis
+//-------------------//
+
+.ts.labels.primary a.ts.label,
+a.ts.label.primary
+    +label-link-variant($label_primaryTextColor, $label_primaryBackgroundColor, $label_primaryBorderColor)
+.ts.labels.info a.ts.label,
+a.ts.label.info
+    +label-link-variant($label_infoTextColor, $label_infoBackgroundColor, $label_infoBorderColor)
+.ts.labels.warning a.ts.label,
+a.ts.label.warning
+    +label-link-variant($label_warningTextColor, $label_warningBackgroundColor, $label_warningBorderColor)
+.ts.labels.positive a.ts.label,
+a.ts.label.positive
+    +label-link-variant($label_positiveTextColor, $label_positiveBackgroundColor, $label_positiveBorderColor)
+.ts.labels.negative a.ts.label,
+a.ts.label.negative
+    +label-link-variant($label_negativeTextColor, $label_negativeBackgroundColor, $label_negativeBorderColor)
+.ts.labels.inverted a.ts.label,
+a.ts.label.inverted
+    +label-link-variant($label_invertedTextColor, $label_invertedBackgroundColor, $label_invertedBorderColor)
+
+//-------------------//
+//     Horizontal
+//-------------------//
+
+.ts.horizontal.label.label.label.label
+    display   : inline-flex
+    margin    : 0em $label_horizontalLabelMargin 0em 0em
+    padding   : $label_horizontalLabelVerticalPadding $label_horizontalPadding
+    min-width : $label_horizontalLabelMinWidth
+    text-align: center
