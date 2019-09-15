@@ -1,0 +1,259 @@
+@charset "UTF-8"
+@import ../variables/carousel.variables
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.carousel
+    overflow: hidden
+
+//-------------------//
+//      Controls
+//-------------------//
+
+.ts.carousel > .controls
+    position: absolute
+    top     : 0
+    left    : 0
+    right   : 0
+    bottom  : 0
+    display : flex
+    z-index : $z_carousel_controls
+
+    pointer-events: none
+
+.ts.carousel > .controls > .left,
+.ts.carousel > .controls > .right
+    display        : flex
+    align-items    : center
+    justify-content: center
+
+    width    : $carousel_controlItemWidth
+    min-width: $carousel_controlItemMinWidth
+    height   : $carousel_controlItemHeight
+    color    : $carousel_controlItemColor
+    font-size: $carousel_controlItemSize
+    opacity  : $carousel_controlItemOpacity
+
+    user-select   : none
+    pointer-events: auto
+    user-drag     : none
+
+.ts.carousel > .compact.controls > .left,
+.ts.carousel > .compact.controls > .right
+    width     : $carousel_compactControlItemWidth
+    background: $carousel_compactControlItemBackgroundColor
+    height    : $carousel_compactControlItemHeight
+    top       : $carousel_compactControlItemTop
+
+.ts.carousel > .compact.controls > .left
+    border-top-right-radius   : $carousel_compactControlItemBorderRadius
+    border-bottom-right-radius: $carousel_compactControlItemBorderRadius
+
+.ts.carousel > .compact.controls > .right
+    border-top-left-radius   : $carousel_compactControlItemBorderRadius
+    border-bottom-left-radius: $carousel_compactControlItemBorderRadius
+
+.ts.carousel > .controls:not(.overlapped) + .items
+    width : $carousel_itemNotOverlappedWidth
+    margin: 0 auto
+
+.ts.carousel > .controls:not(.overlapped):not(.compact) > .left,
+.ts.carousel > .controls:not(.overlapped):not(.compact) > .right
+    width: $carousel_controlItemNotOverlappedWidth
+
+.ts.carousel > .controls > .left .icon,
+.ts.carousel > .controls > .right .icon
+    margin: 0
+
+    -webkit-text-stroke: $carousel_controlItemTextStroke
+    text-stroke        : $carousel_controlItemTextStroke
+
+.ts.carousel > .controls > .left:hover,
+.ts.carousel > .controls > .right:hover
+    opacity: $carousel_controlItemHoverOpacity
+
+.ts.carousel > .controls > .left:active,
+.ts.carousel > .controls > .right:active
+    color: $carousel_controlItemActiveColor
+
+.ts.carousel > .controls > .right
+    margin-left: auto
+
+//-------------------//
+//     Indicators
+//-------------------//
+
+.ts.carousel > .indicators
+    display : flex
+    position: absolute
+    bottom  : $carousel_indicatorsBottom
+    left    : $carousel_indicatorsLeft
+    right   : 0
+    z-index : $z_carousel_indicators
+
+    align-items    : center
+    justify-content: center
+
+    transform: $carousel_indicatorsTransform
+
+.ts.carousel > .indicators:not(.overlapped)
+    position: relative
+    bottom  : initial
+    left    : initial
+    height  : $carousel_indicatorsHeight
+    width   : $carousel_indicatorsWidth
+
+    transform: none
+
+.ts.carousel > .indicators:not(.overlapped) + .controls:not(.overlapped)
+    bottom: $carousel_controlItemNotOverlappedBottom
+
+.ts.carousel > .navigable.indicators > .item
+    cursor: pointer
+
+.ts.carousel > .indicators > .item
+    margin: $carousel_indicatorsItemMargin
+    height: $carousel_indicatorsItemHeight
+    width : $carousel_indicatorsItemWidth
+    border: $carousel_indicatorsItemBorder
+
+    background   : $carousel_indicatorsItemBackground
+    border-radius: $carousel_indicatorsItemBorderRadius
+    transition   : $carousel_indicatorsItemTransition
+
+.ts.carousel > .indicators > .item:before
+    position: absolute
+    bottom  : $carousel_indicatorsItemBeforeBottom
+    left    : 0
+    display : inline-block
+    width   : $carousel_indicatorsItemBeforeWidth
+    height  : $carousel_indicatorsItemBeforeHeight
+    content : ""
+
+.ts.carousel > .indicators > .item:after
+    position: absolute
+    top     : $carousel_indicatorsItemAfterTop
+    left    : 0
+    display : inline-block
+    width   : $carousel_indicatorsItemAfterWidth
+    height  : $carousel_indicatorsItemAfterHeight
+    content : ""
+
+.ts.carousel > .indicators > .item.active
+    background: $carousel_indicatorsItemActiveBackground
+
+.ts.carousel > .indicators.circular > .item
+    height: $carousel_indicatorsItemCircularSize
+    width : $carousel_indicatorsItemCircularSize
+
+    border-radius: $circularRadius
+
+//-------------------//
+//       Items
+//-------------------//
+
+.ts.carousel > .items
+    overflow   : hidden
+    white-space: nowrap
+    width      : $carousel_itemsWidth
+
+//-------------------//
+//       Item
+//-------------------//
+
+.ts.carousel > .item:not(:first-child),
+.ts.carousel > .items > .item
+    display: none
+
+.ts.carousel > .item:first-child,
+.ts.carousel > .items > .item
+    width              : $carousel_itemWidth
+    align-items        : center
+    backface-visibility: hidden
+    perspective        : $carousel_itemPerspective
+    transition         : $carousel_itemTransition
+
+.ts.carousel > .items > .item.active,
+.ts.carousel > .items > .item.next,
+.ts.carousel > .items > .item.previous
+    display: block
+
+.ts.carousel > .items > .item.next,
+.ts.carousel > .items > .item.previous
+    position: absolute
+    top     : 0
+
+.ts.carousel > .items > .item.next[class*="moving left"],
+.ts.carousel > .items > .item.previous[class*="moving right"]
+    transform: translate3d(0, 0, 0)
+
+.ts.carousel > .items > .item.next,
+.ts.carousel > .items > .item.active[class*="moving right"]
+    transform: translate3d(100%, 0, 0)
+
+.ts.carousel > .items > .item.previous,
+.ts.carousel > .items > .item.active[class*="moving left"]
+    transform: translate3d(-100%, 0, 0)
+
+//-------------------//
+//       Image
+//-------------------//
+
+.ts.carousel > .item > .image
+.ts.carousel > .items > .item > .image
+    user-select      : none
+    user-drag        : none
+    -webkit-user-drag: none
+    width            : $carousel_imageWidth
+
+//-------------------//
+//      Covered
+//-------------------//
+
+.ts.carousel > .item > .image.covered img,
+.ts.carousel > .items > .item > .image.covered img
+    width     : $carousel_imageCoveredWidth
+    height    : $carousel_imageCoveredHeight
+    object-fit: cover
+
+//-------------------//
+//      Content
+//-------------------//
+
+.ts.carousel > .item > .content,
+.ts.carousel > .items > .item > .content
+    position: absolute
+    left    : 0
+    bottom  : $carousel_itemContentBottom
+    right   : 0
+    z-index : $z_carousel_content
+
+    display        : flex
+    align-items    : center
+    flex-direction : column
+    justify-content: center
+
+    padding: $carousel_itemContentPadding
+    color  : $carousel_itemContentTextColor
+
+//-------------------//
+//      Header
+//-------------------//
+
+.ts.carousel > .item > .content .header,
+.ts.carousel > .items > .item > .content .header
+    font-size  : $carousel_itemHeaderFontSize
+    line-height: $carousel_itemHeaderLineHeight
+    text-shadow: $carousel_itemHeaderTextShadow
+
+//-------------------//
+//    Description
+//-------------------//
+
+.ts.carousel > .item > .content .description,
+.ts.carousel > .items > .item > .content .description
+    font-size  : $carousel_itemDescriptionFontSize
+    line-height: $carousel_itemDescriptionLineHeight
+    text-shadow: $carousel_itemDescriptionTextShadow

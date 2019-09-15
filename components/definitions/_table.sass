@@ -1,0 +1,965 @@
+@charset "UTF-8"
+@charset "UTF-8"
+@import ../variables/table.variables
+
+//*******************************//
+//            Variations
+//*******************************//
+
+@mixin column-variant($color, $backgroundColor)
+    color           : $color           !important
+    background: $backgroundColor !important
+
+//*******************************//
+//              Main
+//*******************************//
+
+/* Prototype */
+.ts.table
+    width          : 100%
+    background     : $table_background
+    margin         : $table_margin
+    border         : $table_border
+    border-radius  : $table_borderRadius
+    text-align     : $table_textAlign
+    color          : $table_color
+    border-collapse: $table_borderCollapse
+    border-spacing : $table_borderSpacing
+
+.ts.table:first-child
+    margin-top: 0em
+.ts.table:last-child
+    margin-bottom: 0em
+
+//*******************************//
+//              Parts
+//*******************************//
+
+.ts.table thead th
+    cursor        : auto
+    background    : $table_headerBackground
+    text-align    : $table_headerAlign
+    color         : $table_headerColor
+    padding: $table_headerVerticalPadding $table_headerHorizontalPadding
+    vertical-align: $table_headerVerticalAlign
+    font-weight   : $table_headerFontWeight
+    border-bottom : $table_headerBorder
+    border-left   : $table_headerDivider
+
+.ts.table thead tr > th:first-child
+    border-left: none
+
+.ts.table thead tr:first-child > th:first-child
+    border-radius: $table_borderRadius 0em 0em 0em
+
+.ts.table thead tr:first-child > th:last-child
+    border-radius: 0em $table_borderRadius 0em 0em
+
+.ts.table thead tr:first-child > th:only-child
+    border-radius: $table_borderRadius $table_borderRadius 0em 0em
+
+.ts.table tfoot th
+    cursor        : auto
+    border-top    : $table_footerBorder
+    background    : $table_footerBackground
+    text-align    : $table_footerAlign
+    color         : $table_footerColor
+    padding       : $table_footerVerticalPadding $table_footerHorizontalPadding
+    vertical-align: $table_footerVerticalAlign
+    font-weight   : $table_footerFontWeight
+
+.ts.table tfoot tr > th:first-child
+    border-left: none
+
+.ts.table tfoot tr:first-child > th:first-child
+    border-radius: 0em 0em 0em $table_borderRadius
+
+.ts.table tfoot tr:first-child > th:last-child
+    border-radius: 0em 0em $table_borderRadius 0em
+
+.ts.table tfoot tr:first-child > th:only-child
+    border-radius: 0em 0em $table_borderRadius $table_borderRadius
+
+/* Table Row */
+.ts.table tr td
+    border-top: $table_rowBorder
+
+.ts.table tr:first-child td
+    border-top: none
+
+/* Table Cells */
+.ts.table td
+    padding   : $table_cellVerticalPadding $table_cellHorizontalPadding
+    text-align: $table_cellTextAlign
+
+/* Icons */
+.ts.table > .icon
+    vertical-align: $table_iconVerticalAlign
+
+.ts.table > .icon:only-child
+    margin: 0em
+
+/* Table Segment */
+.ts.table.segment
+    padding: 0em
+
+.ts.table.segment:after
+    display: none
+
+.ts.table.segment.stacked:after
+    display: block
+
+/* Responsive */
++rwd-serious(mobile)
+    .ts.table.stackable
+        width: 100%
+
+    .ts.table.stackable tbody,
+    .ts.table.stackable tr,
+    .ts.table.stackable tr > th,
+    .ts.table.stackable tr > td
+        display: block !important
+        width  : auto  !important
+        display: block !important
+
+    .ts.table.stackable
+        padding: 0em
+
+    .ts.table.stackable thead
+        display: $table_responsiveHeaderDisplay
+
+    .ts.table.stackable tfoot
+        display: $table_responsiveFooterDisplay
+
+    .ts.table.stackable tr
+        padding-top   : $table_responsiveRowVerticalPadding
+        padding-bottom: $table_responsiveRowVerticalPadding
+
+    .ts.table.stackable.definition > thead > tr > th:first-child:empty
+        display: none !important
+
+    .ts.table.stackable tr > th,
+    .ts.table.stackable tr > td
+        background: none
+        border    : none !important
+        padding   : $table_responsiveCellVerticalPadding $table_responsiveCellHorizontalPadding !important
+
+    .ts.table.stackable th:first-child,
+    .ts.table.stackable td:first-child
+        font-weight: bold
+
+    /* Definition Table */
+    .ts.definition.table.stackable thead th:first-child
+        box-shadow: none !important
+
+//-------------------//
+//     Coupling
+//-------------------//
+
+/* UI Image */
+.ts.table th .image,
+.ts.table th .image img,
+.ts.table td .image,
+.ts.table td .image img
+    max-width: none
+
+//*******************************//
+//              Types
+//*******************************//
+
+//-------------------//
+//      Complex
+//-------------------//
+
+.ts.structured.table
+    border-collapse: collapse
+
+.ts.structured.table thead th
+    border-left : $table_headerDivider
+    border-right: $table_headerDivider
+
+.ts.structured.sortable.table thead th
+    border-left : $table_sortableBorder
+    border-right: $table_sortableBorder
+
+.ts.structured.basic.table th
+    border-left : $table_basicTableHeaderDivider
+    border-right: $table_basicTableHeaderDivider
+
+.ts.structured.celled.table tr th,
+.ts.structured.celled.table tr td
+    border-left : $table_cellBorder
+    border-right: $table_cellBorder
+
+//-------------------//
+//     Definition
+//-------------------//
+
+.ts.definition.table thead:not(.full-width) th:first-child
+    background : $table_definitionHeaderBackground
+    font-weight: $table_definitionHeaderFontWeight
+    color      : $table_definitionHeaderColor
+    pointer-events: none
+
+.ts.definition.table tfoot:not(.full-width) th:first-child
+    pointer-events: none
+    background    : $table_definitionFooterBackground
+    font-weight   : $table_definitionFooterFontWeight
+    color         : $table_definitionFooterColor
+
+/* Highlight Defining Column */
+.ts.definition.table tr td:first-child:not(.ignored),
+.ts.definition.table tr td.definition
+    background : $table_definitionColumnBackground
+    font-weight: $table_definitionColumnFontWeight
+    color      : $table_definitionColumnColor
+    font-size  : $table_definitionColumnFontSize
+
+/* Fix 2nd Column */
+.ts.definition.table thead:not(.full-width) th:nth-child(2)
+    border-left: $table_border
+
+.ts.definition.table tfoot:not(.full-width) th:nth-child(2)
+    border-left: $table_border
+
+.ts.definition.table td:nth-child(2)
+    border-left: $table_border
+
+//*******************************//
+//            States
+//*******************************//
+
+//-------------------//
+//      Emphasis
+//-------------------//
+
+.ts.table tr.positive:not(.indicated),
+.ts.table td.positive:not(.indicated)
+    +column-variant($table_positiveColor, $table_positiveBackgroundColor)
+
+.ts.table tr.negative:not(.indicated),
+.ts.table td.negative:not(.indicated),
+.ts.table tr.error:not(.indicated),
+.ts.table td.error:not(.indicated)
+    +column-variant($table_negativeColor, $table_negativeBackgroundColor)
+
+.ts.table tr.warning:not(.indicated),
+.ts.table td.warning:not(.indicated)
+    +column-variant($table_warningColor, $table_warningBackgroundColor)
+
+.ts.table tr.info:not(.indicated),
+.ts.table td.info:not(.indicated)
+    +column-variant($table_infoColor, $table_infoBackgroundColor)
+
+.ts.table tr.primary:not(.indicated),
+.ts.table td.primary:not(.indicated)
+    +column-variant($table_primaryColor, $table_primaryBackgroundColor)
+
+.ts.table tr.inverted:not(.indicated),
+.ts.table td.inverted:not(.indicated)
+    +column-variant($table_invertedColor, $table_invertedBackgroundColor)
+
+//-------------------//
+//       Active
+//-------------------//
+
+.ts.table tr.active:not(.indicated),
+.ts.table td.active:not(.indicated)
+    +column-variant($table_activeColor, $table_activeBackgroundColor)
+
+.ts.table.inverted tr.active:not(.indicated),
+.ts.table.inverted td.active:not(.indicated)
+    +column-variant($table_activeInvertedColor, $table_activeInvertedBackgroundColor)
+
+//-------------------//
+//     Indicated
+//-------------------//
+
+.ts.table tr.positive.indicated,
+.ts.table td.positive.indicated
+    box-shadow: $table_indicatedShadow $table_positiveBorderColor inset
+
+.ts.table tr.negative.indicated,
+.ts.table td.negative.indicated,
+.ts.table tr.error.indicated,
+.ts.table td.error.indicated
+    box-shadow: $table_indicatedShadow $table_negativeBorderColor inset
+
+.ts.table tr.warning.indicated,
+.ts.table td.warning.indicated
+    box-shadow: $table_indicatedShadow $table_warningBorderColor inset
+
+.ts.table tr.info.indicated,
+.ts.table td.info.indicated
+    box-shadow: $table_indicatedShadow $table_infoBorderColor inset
+
+.ts.table tr.primary.indicated,
+.ts.table td.primary.indicated
+    box-shadow: $table_indicatedShadow $table_primaryBorderColor inset
+
+.ts.table tr.inverted.indicated,
+.ts.table td.inverted.indicated
+    box-shadow: $table_indicatedShadow $table_invertedBackgroundColor inset
+
+.ts.table tr.indicated:not(.positive):not(.negative):not(.error):not(.warning):not(.info):not(.primary):not(.inverted),
+.ts.table td.indicated:not(.positive):not(.negative):not(.error):not(.warning):not(.info):not(.primary):not(.inverted)
+    box-shadow: $table_indicatedShadow $table_activeBackgroundColor inset
+
+//-------------------//
+//      Disabled
+//-------------------//
+
+.ts.table tr.disabled td,
+.ts.table tr td.disabled,
+.ts.table tr.disabled:hover,
+.ts.table tr:hover td.disabled
+    pointer-events: none
+    color         : $table_disabledColor
+
+//*******************************//
+//           Variations
+//*******************************//
+
+//-------------------//
+//     Stackable
+//-------------------//
+
++rwd-serious(tablet)
+
+    .ts[class*="tablet stackable"].table,
+    .ts[class*="tablet stackable"].table tbody,
+    .ts[class*="tablet stackable"].table tr,
+    .ts[class*="tablet stackable"].table tr > th,
+    .ts[class*="tablet stackable"].table tr > td
+        display: block !important
+        width  : 100%  !important
+        display: block !important
+
+    .ts[class*="tablet stackable"].table
+        padding: 0em
+
+    .ts[class*="tablet stackable"].table thead
+        display: $table_responsiveHeaderDisplay
+
+    .ts[class*="tablet stackable"].table tfoot
+        display: $table_responsiveFooterDisplay
+
+    .ts[class*="tablet stackable"].table tr
+        padding-top   : $table_responsiveRowVerticalPadding
+        padding-bottom: $table_responsiveRowVerticalPadding
+
+    .ts[class*="tablet stackable"].table tr > th,
+    .ts[class*="tablet stackable"].table tr > td
+        background: none
+        border    : none !important
+        padding   : $table_responsiveCellVerticalPadding $table_responsiveCellHorizontalPadding
+
+
+    /* Definition Table */
+    .ts.definition[class*="tablet stackable"].table thead th:first-child
+        box-shadow: none !important
+
+//-------------------//
+//       Empty
+//-------------------//
+
+.ts.table td.empty:after
+    user-select   : none
+    pointer-events: none
+    content       : $table_emptySymbol
+    opacity       : $table_emptyOpacity
+
+//-------------------//
+//    Expandable
+//-------------------//
+
+.ts.table tr.expandable.expanded + tr
+    display: table-row
+
+.ts.table tr.expandable:not(.expanded) td.expand.control i.icon
+    transform: rotate(-90deg)
+
+.ts.table tr.expandable:not(.expanded) + tr
+    display: none
+
+.ts.table tr td.expand.control
+    width: 1px
+    text-align: center
+    cursor: pointer
+    user-select: none
+
+.ts.table tr.expanded td.expand.control i.icon,
+.ts.table tr.expanded td.expand.control:hover i.icon
+    opacity: 1
+
+.ts.table tr td.expand.control:hover i.icon
+    opacity: 0.8
+
+.ts.table tr td.expand.control:active i.icon
+    opacity: 1
+
+.ts.table tr td.expand.control i.icon
+    //transition: transform .25s ease
+    margin: 0
+    opacity: 0.6
+
+.ts.table tr.expandable + tr > td
+    background: nth($grey, 2)
+    padding: 30px 30px !important
+    box-shadow: inset 0px 0px 7px rgba(0, 0, 0, 0.05)
+
+//-------------------//
+//   Text Alignment
+//-------------------//
+
+.ts.table[class*="left aligned"],
+.ts.table [class*="left aligned"]
+    text-align: left
+
+.ts.table[class*="center aligned"],
+.ts.table [class*="center aligned"]
+    text-align: center
+
+.ts.table[class*="right aligned"],
+.ts.table [class*="right aligned"]
+    text-align: right
+
+//-------------------//
+// Vertical Alignment
+//-------------------//
+
+.ts.table[class*="top aligned"],
+.ts.table [class*="top aligned"]
+    vertical-align: top
+
+.ts.table[class*="middle aligned"],
+.ts.table [class*="middle aligned"]
+    vertical-align: middle
+
+.ts.table[class*="bottom aligned"],
+.ts.table [class*="bottom aligned"]
+    vertical-align: bottom
+
+//-------------------//
+//     Collapsing
+//-------------------//
+
+.ts.table th.collapsing,
+.ts.table td.collapsing
+    width      : 1px
+    white-space: nowrap
+
+//-------------------//
+//     Segmented
+//-------------------//
+
+.ts.segmented.table
+    box-shadow: $table_segmentedShadow
+
+//-------------------//
+//       Fixed
+//-------------------//
+
+.ts.fixed.table
+    table-layout: fixed
+
+.ts.fixed.table th,
+.ts.fixed.table td
+    overflow     : hidden
+    text-overflow: ellipsis
+
+//-------------------//
+//     Selectable
+//-------------------//
+
+/* Selectable Cell Link */
+.ts.table tbody tr td.selectable
+    padding: 0em
+
+.ts.table tbody tr td.selectable > a:not(.ts)
+    display: block
+    color  : inherit
+    padding: $table_cellVerticalPadding $table_cellHorizontalPadding
+
+.ts.selectable.table tbody tr:hover,
+.ts.table tbody tr td.selectable:hover
+    +column-variant($table_selectableTextColor, $table_selectableBackground)
+
+.ts.selectable.inverted.table tbody tr:hover,
+.ts.inverted.table tbody tr td.selectable:hover
+    +column-variant($table_selectableInvertedTextColor, $table_selectableInvertedBackground)
+
+/* Other States */
+.ts.selectable.table tr.warning:hover:hover,
+.ts.table tr td.selectable.warning:hover:hover,
+.ts.selectable.table tr:hover:hover td.warning
+    +column-variant($table_warningColorHover, $table_warningBackgroundHover)
+
+.ts.selectable.table tr.info:hover:hover,
+.ts.table tr td.selectable.info:hover:hover,
+.ts.selectable.table tr:hover:hover td.info
+    +column-variant($table_infoColorHover, $table_infoBackgroundHover)
+
+.ts.selectable.table tr.primary:hover:hover,
+.ts.table tr td.selectable.primary:hover:hover,
+.ts.selectable.table tr:hover:hover td.primary
+    +column-variant($table_primaryColorHover, $table_primaryBackgroundHover)
+
+.ts.selectable.table tr.inverted:hover:hover,
+.ts.table tr td.selectable.inverted:hover:hover,
+.ts.selectable.table tr:hover:hover td.inverted
+    +column-variant($table_invertedColorHover, $table_invertedBackgroundHover)
+
+.ts.selectable.table tr.active:hover:hover,
+.ts.table tr td.selectable.active:hover:hover,
+.ts.selectable.table tr:hover:hover td.active
+    +column-variant($table_activeColor, $table_activeBackgroundColor)
+
+.ts.selectable.table tr.positive:hover:hover,
+.ts.table tr td.selectable.positive:hover:hover,
+.ts.selectable.table tr:hover:hover td.positive
+    +column-variant($table_positiveColorHover, $table_positiveBackgroundHover)
+
+.ts.selectable.table tr.negative:hover:hover,
+.ts.table tr td.selectable.negative:hover:hover,
+.ts.selectable.table tr:hover:hover td.negative,
+.ts.selectable.table tr.error:hover:hover,
+.ts.table tr td.selectable.error:hover:hover,
+.ts.selectable.table tr:hover:hover td.error
+    +column-variant($table_negativeColorHover, $table_negativeBackgroundHover)
+
+.ts.table.inverted tr.active:not(.indicated):hover:hover,
+.ts.table.inverted td.active:not(.indicated):hover:hover
+    +column-variant($table_activeInvertedHoverColor, $table_activeInvertedHoverBackgroundColor)
+
+//-------------------//
+//      Attached
+//-------------------//
+
+.ts.table.attached.attached.attached thead tr,
+.ts.table.attached.attached.attached thead th
+    border-radius: 0
+
+/* Middle */
+.ts.attached.table:not([class*="top attached"]):not([class*="bottom attached"])
+    +extend(attached)
+
+.ts.table[class*="top attached"]
+    +extend(top-attached)
+
+.ts.table[class*="bottom attached"]
+    +extend(bottom-attached)
+
+//-------------------//
+//      Striped
+//-------------------//
+
+/* Table Striping */
+.ts.striped.table > tr:nth-child(2n),
+.ts.striped.table tbody tr:nth-child(2n)
+    background: $table_stripedBackground
+
+/* Stripes */
+.ts.inverted.striped.table > tr:nth-child(2n):nth-child(2n),
+.ts.inverted.striped.table tbody tr:nth-child(2n):nth-child(2n)
+    background: $table_invertedStripedBackground
+
+/* Allow striped active hover */
+.ts.striped.selectable.selectable.selectable.table tbody tr.active:hover
+    +column-variant($table_activeColorHover, $table_activeBackgroundHover)
+
+//-------------------//
+//    Single Line
+//-------------------//
+
+.ts.table[class*="single line"],
+.ts.table [class*="single line"]
+    white-space: nowrap
+
+.ts.table[class*="single line"],
+.ts.table [class*="single line"]
+    white-space: nowrap
+
+//-------------------//
+//    Column Count
+//-------------------//
+
+/* Grid Based */
+.ts.one.column.table td
+    width: $oneColumn
+
+.ts.two.column.table td
+    width: $twoColumn
+.ts.three.column.table td
+    width: $threeColumn
+
+.ts.four.column.table td
+    width: $fourColumn
+
+.ts.five.column.table td
+    width: $fiveColumn
+
+.ts.six.column.table td
+    width: $sixColumn
+
+.ts.seven.column.table td
+    width: $sevenColumn
+
+.ts.eight.column.table td
+    width: $eightColumn
+
+.ts.nine.column.table td
+    width: $nineColumn
+
+.ts.ten.column.table td
+    width: $tenColumn
+
+.ts.eleven.column.table td
+    width: $elevenColumn
+
+.ts.twelve.column.table td
+    width: $twelveColumn
+
+.ts.thirteen.column.table td
+    width: $thirteenColumn
+
+.ts.fourteen.column.table td
+    width: $fourteenColumn
+
+.ts.fifteen.column.table td
+    width: $fifteenColumn
+
+.ts.sixteen.column.table td
+    width: $sixteenColumn
+
+/* Column Width */
+.ts.table th.one.wide,
+.ts.table td.one.wide
+    width: $oneWide
+
+.ts.table th.two.wide,
+.ts.table td.two.wide
+    width: $twoWide
+
+.ts.table th.three.wide,
+.ts.table td.three.wide
+    width: $threeWide
+
+.ts.table th.four.wide,
+.ts.table td.four.wide
+    width: $fourWide
+
+.ts.table th.five.wide,
+.ts.table td.five.wide
+    width: $fiveWide
+
+.ts.table th.six.wide,
+.ts.table td.six.wide
+    width: $sixWide
+
+.ts.table th.seven.wide,
+.ts.table td.seven.wide
+    width: $sevenWide
+
+.ts.table th.eight.wide,
+.ts.table td.eight.wide
+    width: $eightWide
+
+.ts.table th.nine.wide,
+.ts.table td.nine.wide
+    width: $nineWide
+
+.ts.table th.ten.wide,
+.ts.table td.ten.wide
+    width: $tenWide
+
+.ts.table th.eleven.wide,
+.ts.table td.eleven.wide
+    width: $elevenWide
+
+.ts.table th.twelve.wide,
+.ts.table td.twelve.wide
+    width: $twelveWide
+
+.ts.table th.thirteen.wide,
+.ts.table td.thirteen.wide
+    width: $thirteenWide
+
+.ts.table th.fourteen.wide,
+.ts.table td.fourteen.wide
+    width: $fourteenWide
+
+.ts.table th.fifteen.wide,
+.ts.table td.fifteen.wide
+    width: $fifteenWide
+
+.ts.table th.sixteen.wide,
+.ts.table td.sixteen.wide
+    width: $sixteenWide
+
+//-------------------//
+//     Sortable
+//-------------------//
+
+.ts.sortable.table thead th
+    cursor     : pointer
+    white-space: nowrap
+    border-left: $table_sortableBorder
+    color      : $table_sortableColor
+
+.ts.sortable.table.inverted thead th
+    color     : $table_invertedHeaderColor
+
+.ts.sortable.table thead th:first-child
+    border-left: none
+
+.ts.sortable.table thead th.sorted,
+.ts.sortable.table thead th.sorted:hover
+    +extend(no-select)
+
+.ts.sortable.table thead th:after
+    display        : none
+    font-weight    : normal
+    text-decoration: inherit
+    content        : ''
+    height         : 1em
+    width          : $table_sortableIconWidth
+    opacity        : $table_sortableIconOpacity
+    margin         : 0em 0em 0em $table_sortableIconDistance
+    font-family    : $table_sortableIconFont
+
+.ts.sortable.table thead th.ascending:after
+    content: $table_sortableIconAscending
+
+.ts.sortable.table thead th.descending:after
+    content: $table_sortableIconDescending
+
+/* Hover */
+.ts.sortable.table th.disabled:hover
+    cursor: auto
+    color : $table_sortableDisabledColor
+
+.ts.sortable.table thead th:hover
+    background: $table_sortableHoverBackground
+    //color     : $table_sortableHoverColor
+
+/* Active */
+.ts.sortable.table thead th:active
+    background: $table_sortablePressedBackground
+    color     : $table_sortableHoverColor
+
+/* Sorted */
+.ts.sortable.table thead th.sorted
+    background: $table_sortableActiveBackground
+    color     : $table_sortableActiveColor
+
+.ts.sortable.table thead th.sorted:after
+    display: inline-block
+
+/* Sorted Hover */
+.ts.sortable.table thead th.sorted:hover
+    background: $table_sortableActiveHoverBackground
+    color: $table_sortableActiveHoverColor
+
+/* Sorted Active */
+.ts.sortable.table thead th.sorted:active
+    background: $table_sortableActivePressedBackground
+    color     : $table_sortableActivePressedColor
+
+/* Inverted */
+.ts.inverted.sortable.table thead th.sorted
+    background: $table_sortableInvertedActiveBackground
+    color     : $table_sortableInvertedActiveColor
+
+.ts.inverted.sortable.table thead th:hover
+    background: $table_sortableInvertedHoverBackground
+    color     : $table_sortableInvertedHoverColor
+
+.ts.inverted.sortable.table thead th
+    border-left-color : $table_sortableInvertedBorderColor
+    border-right-color: $table_sortableInvertedBorderColor
+
+/* Sorted Active */
+.ts.sortable.inverted.table thead th.sorted:active,
+.ts.sortable.inverted.table thead th:active
+    background: $table_sortableInvertedPressedBackground
+    color     : $table_sortableInvertedPressedColor
+
+//-------------------//
+//     Inverted
+//-------------------//
+
+/* Text Color */
+.ts.inverted.table
+    background: $table_invertedBackground
+    color     : $table_invertedCellColor
+    border    : $table_invertedBorder
+
+.ts.inverted.table th
+    background: $table_invertedHeaderBackground
+    border-color    : $table_invertedHeaderBorderColor !important
+    color           : $table_invertedHeaderColor
+
+.ts.inverted.table tr td
+    border-color: $table_invertedCellBorderColor !important
+
+.ts.inverted.table tr.disabled td,
+.ts.inverted.table tr td.disabled,
+.ts.inverted.table tr.disabled:hover td,
+.ts.inverted.table tr:hover td.disabled
+    pointer-events: none
+    color         : $table_disabledInvertedColor
+
+/* Definition */
+.ts.inverted.definition.table tfoot:not(.full-width) th:first-child,
+.ts.inverted.definition.table thead:not(.full-width) th:first-child
+    background: $table_definitionPageBackground
+
+.ts.inverted.definition.table tr td:first-child
+    background: $table_invertedDefinitionColumnBackground
+    color     : $table_invertedDefinitionColumnColor
+
+//-------------------//
+//     Collapsing
+//-------------------//
+
+.ts.collapsing.table
+    width: auto
+
+//-------------------//
+//       Basic
+//-------------------//
+
+.ts.basic.table
+    background: $table_basicTableBackground
+    border    : $table_basicTableBorder
+    box-shadow: $table_basicBoxShadow
+
+.ts.inverted.basic.table
+    border: $table_basicInvertedTableBorder
+
+.ts.basic.table thead,
+.ts.basic.table tfoot
+    box-shadow: none
+
+.ts.basic.table th
+    background : $table_basicTableHeaderBackground
+    border-left: $table_basicTableHeaderDivider
+
+.ts.basic.table tbody tr
+    border-bottom: $table_basicTableCellBorder
+
+.ts.basic.table td
+    background: $table_basicTableCellBackground
+
+.ts.basic.striped.table tbody tr:nth-child(2n)
+    background: $table_stripedBackground
+
+/* Very Basic */
+.ts[class*="very basic"].table
+    border: none
+
+.ts[class*="very basic"].table:not(.sortable):not(.striped) th,
+.ts[class*="very basic"].table:not(.sortable):not(.striped) td
+    padding: $table_basicTableCellPadding
+
+.ts[class*="very basic"].table:not(.sortable):not(.striped) th:first-child,
+.ts[class*="very basic"].table:not(.sortable):not(.striped) td:first-child
+    padding-left: 0em
+
+.ts[class*="very basic"].table:not(.sortable):not(.striped) th:last-child,
+.ts[class*="very basic"].table:not(.sortable):not(.striped) td:last-child
+    padding-right: 0em
+
+.ts[class*="very basic"].table:not(.sortable):not(.striped) thead tr:first-child th
+    padding-top: 0em
+
+//-------------------//
+//      Celled
+//-------------------//
+
+.ts.celled.table tr th,
+.ts.celled.table tr td
+    border-left: $table_cellBorder
+
+.ts.celled.table tr th:first-child,
+.ts.celled.table tr td:first-child
+    border-left: none
+
+//-------------------//
+//       Padded
+//-------------------//
+
+.ts.padded.table th
+    padding-left : $table_paddedHorizontalPadding
+    padding-right: $table_paddedHorizontalPadding
+
+.ts.padded.table th,
+.ts.padded.table td
+    padding: $table_paddedVerticalPadding $table_paddedHorizontalPadding
+
+/* Very */
+.ts[class*="very padded"].table th
+    padding-left : $table_veryPaddedHorizontalPadding
+    padding-right: $table_veryPaddedHorizontalPadding
+
+.ts[class*="very padded"].table td
+    padding: $table_veryPaddedVerticalPadding $table_veryPaddedHorizontalPadding
+
+//-------------------//
+//      Compact
+//-------------------//
+
+.ts.compact.table th
+    padding-left : $table_compactHorizontalPadding
+    padding-right: $table_compactHorizontalPadding
+
+.ts.compact.table td
+    padding: $table_compactVerticalPadding $table_compactHorizontalPadding
+
+/* Very */
+.ts[class*="very compact"].table th
+    padding-left : $table_veryCompactHorizontalPadding
+    padding-right: $table_veryCompactHorizontalPadding
+
+.ts[class*="very compact"].table td
+    padding: $table_veryCompactVerticalPadding $table_veryCompactHorizontalPadding
+
+//-------------------//
+//       Sizes
+//-------------------//
+
+.ts.mini.table
+    font-size: $table_mini
+.ts.tiny.table
+    font-size: $table_tiny
+.ts.small.table
+    font-size: $table_small
+.ts.table
+    font-size: $table_medium
+.ts.large.table
+    font-size: $table_large
+.ts.big.table
+    font-size: $table_big
+.ts.huge.table
+    font-size: $table_huge
+
+//-------------------//
+//     Borderless
+//-------------------//
+
+.ts.table.borderless,
+.ts.table.borderless tr th,
+.ts.table.borderless tr td
+    border: 0
+
+//-------------------//
+//      Caption
+//-------------------//
+
+.ts.table caption
+    padding-top   : $table_captionVerticalPadding
+    padding-bottom: $table_captionVerticalPadding
+    color         : $table_captionTextColor
+    text-align    : left
+    caption-side  : bottom

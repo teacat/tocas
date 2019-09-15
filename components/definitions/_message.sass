@@ -1,0 +1,574 @@
+@charset "UTF-8"
+@charset "UTF-8"
+@import ../variables/message.variables
+
+//*******************************//
+//            Variations
+//*******************************//
+
+@mixin message-variant($color, $backgroundColor, $borderColor)
+    color           : $color
+    background: $backgroundColor
+    border-color    : $borderColor
+
+    &:not(.inverted) .header:not(.ts)
+        color: darken($color, 10%)
+
+    a
+        color: rgba($color, 0.9)
+
+        &:hover
+            color: rgba($color, 1)
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.message
+    position        : relative
+    display         : table
+    width           : 100%
+    padding         : $message_padding
+    margin          : $message_margin
+    border          : $message_border
+    background: $message_backgroundColor
+    border-radius   : $message_borderRadius
+    color           : $message_textColor
+    word-wrap       : break-word
+    overflow        : hidden
+
+.ts.message:first-child
+    margin-top: 0em
+.ts.message:last-child
+    margin-bottom: 0em
+
+//-------------------//
+//       Header
+//-------------------//
+
+.ts.message .header
+    display    : block
+    font-weight: $message_headerFontWeight
+    margin     : $message_headerMargin
+
+.ts.message:not(.inverted):not(.positive):not(.info):not(.negative):not(.warning):not(.primary) .header:not(.ts)
+    color: $message_headerTextColor
+
+.ts.message .header:not(.ts)
+    line-height: $message_headerLineHeight
+    font-size  : $message_headerFontSize
+
+//-------------------//
+//       Fluid
+//-------------------//
+
+.ts.message.fluid
+    border-radius: 0
+    border-left  : 0
+    border-right : 0
+
+//-------------------//
+//       Icon
+//-------------------//
+
+.ts.message.icon
+    width         : 100%
+    align-items   : center
+    flex-direction: row
+    display       : flex
+
+.ts.message.icon > .icon:not(.close),
+.ts.message.icon > .ts.container > .icon:not(.close)
+    display       : block
+    flex          : 0 0 auto
+    width         : auto
+    line-height   : 1
+    vertical-align: $message_iconVerticalAlign
+    font-size     : $message_iconSize
+    opacity       : $message_iconOpacity
+
+.ts.icon.message > .content
+    display       : block
+    flex          : 1 1 auto
+    vertical-align: $message_iconVerticalAlign
+
+.ts.icon.message .icon:not(.close) + .content
+    padding-left: $message_iconContentDistance
+
+.ts.icon.message .circular.icon
+    width: 1em
+
+.ts.message > .icon,
+.ts.message > .ts.container > .icon
+    margin-right: $message_iconDistance
+
+//-------------------//
+//      Content
+//-------------------//
+
+.ts.message > .content
+    //flex       : 1
+    align-items: center
+    display    : flex
+
+    +rwd-serious(mobile)
+        display: block
+
+//-------------------//
+//      Actions
+//-------------------//
+
+.ts.message > .content > .actions
+    margin-left: auto
+    white-space: nowrap
+    align-self : flex-start
+
+    +rwd-serious(mobile)
+        margin-top : .8em
+        margin-left: 0
+
+//-------------------//
+//      Floating
+//-------------------//
+
+.ts.message.floating
+    box-shadow: $message_boxShadow
+
+//-------------------//
+//       Hidden
+//-------------------//
+
+.ts.message.hidden
+    display: none
+
+//-------------------//
+//      Visible
+//-------------------//
+
+.ts.message.visible
+    display: block
+
+//-------------------//
+//     Close Icon
+//-------------------//
+
+.ts.message > .ts.close.button,
+.ts.message > .ts.container > .ts.close.button
+    position  : absolute
+    margin    : 0
+    top       : $message_closeTopDistance
+    right     : $message_closeRightDistance
+    z-index   : $z_message_close
+
+//-------------------//
+//      Emphasis
+//-------------------//
+
+.ts.message.primary
+    +message-variant($message_primaryTextColor, $message_primaryBackgroundColor, $message_primaryBorderColor)
+.ts.message.info
+    +message-variant($message_infoTextColor, $message_infoBackgroundColor, $message_infoBorderColor)
+.ts.message.warning
+    +message-variant($message_warningTextColor, $message_warningBackgroundColor, $message_warningBorderColor)
+.ts.message.positive
+    +message-variant($message_positiveTextColor, $message_positiveBackgroundColor, $message_positiveBorderColor)
+.ts.message.negative
+    +message-variant($message_negativeTextColor, $message_negativeBackgroundColor, $message_negativeBorderColor)
+.ts.message.inverted
+    +message-variant($message_invertedTextColor, $message_invertedBackgroundColor, $message_invertedBorderColor)
+
+//-------------------//
+// Inverted Emphasis
+//-------------------//
+
+.ts.message.primary.inverted
+    +message-variant($message_invertedPrimaryTextColor, $message_invertedPrimaryBackgroundColor, $message_invertedPrimaryBorderColor)
+.ts.message.info.inverted
+    +message-variant($message_invertedInfoTextColor, $message_invertedInfoBackgroundColor, $message_invertedInfoBorderColor)
+.ts.message.warning.inverted
+    +message-variant($message_invertedWarningTextColor, $message_invertedWarningBackgroundColor, $message_invertedWarningBorderColor)
+.ts.message.positive.inverted
+    +message-variant($message_invertedPositiveTextColor, $message_invertedPositiveBackgroundColor, $message_invertedPositiveBorderColor)
+.ts.message.negative.inverted
+    +message-variant($message_invertedNegativeTextColor, $message_invertedNegativeBackgroundColor, $message_invertedNegativeBorderColor)
+
+//-------------------//
+//      Secondary
+//-------------------//
+
+.ts.message.secondary
+    border-left-width: $message_secondaryBorderWidth
+.ts.message.secondary:not(.inverted)
+    background: transparent
+
+.ts.message.inverted.secondary.primary
+    border-left: $message_secondaryBorderWidth solid $message_primarySecondaryBorderColor
+.ts.message.inverted.secondary.info
+    border-left: $message_secondaryBorderWidth solid $message_infoSecondaryBorderColor
+.ts.message.inverted.secondary.warning
+    border-left: $message_secondaryBorderWidth solid $message_warningSecondaryBorderColor
+.ts.message.inverted.secondary.positive
+    border-left: $message_secondaryBorderWidth solid $message_positiveSecondaryBorderColor
+.ts.message.inverted.secondary.negative
+    border-left: $message_secondaryBorderWidth solid $message_negativeSecondaryBorderColor
+
+//-------------------//
+//        Sizes
+//-------------------//
+
+.ts.message.mini
+    font-size: $relativeMini
+.ts.message.tiny
+    font-size: $relativeTiny
+.ts.message.small
+    font-size: $relativeSmall
+.ts.message.medium
+    font-size: $relativeMedium
+.ts.message.large
+    font-size: $relativeLarge
+.ts.message.big
+    font-size: $relativeBig
+.ts.message.huge
+    font-size: $relativeHuge
+.ts.message.massive
+    font-size: $relativeMassive
+
+//-------------------//
+//       Basic
+//-------------------//
+
+.ts.message.basic
+    background: transparent
+    border          : none
+
+//-------------------//
+//     Borderless
+//-------------------//
+
+.ts.message.borderless
+    border: none
+
+//-------------------//
+//       Compact
+//-------------------//
+
+.ts.message.compact
+    display: inline-block
+    width  : auto
+
+//-------------------//
+//       Fitted
+//-------------------//
+
+.ts.message[class*="horizontally fitted"]
+    padding-left : 0
+    padding-right: 0
+.ts.message[class*="vertically fitted"]
+    padding-top   : 0
+    padding-bottom: 0
+.ts.message:not(.horizontally):not(.vertically).fitted
+    padding: 0
+
+//-------------------//
+//       Aligns
+//-------------------//
+
+.ts.message[class*="center aligned"],
+.ts.message .content .description[class*="center aligned"]
+    text-align: center
+.ts.message[class*="left aligned"],
+.ts.message .content .description[class*="left aligned"]
+    text-align: left
+.ts.message[class*="right aligned"],
+.ts.message .content .description[class*="right aligned"]
+    text-align: right
+
+//-------------------//
+//      Attached
+//-------------------//
+
+.ts.message[class*="top attached"]
+    +extend(top-attached)
+
+.ts.message.attached:not([class*="bottom attached"]):not([class*="top attached"])
+    +extend(attached)
+
+.ts.message[class*="bottom attached"]
+    +extend(bottom-attached)
+
+.ts.attached.input + .ts.message[class*="bottom attached"]
+    border-top-width: 0
+
+.ts.attached.message:not([class*="vertically fitted"]):not(.fitted),
+.ts.attached.message[class*="horizontally fitted"]
+    padding-top   : $message_attachedVerticalPadding
+    padding-bottom: $message_attachedVerticalPadding
+
+    > .ts.close.button
+        top: $message_attachedVerticalPadding
+
+.ts.attached.message.padded:not([class*="vertically fitted"]):not(.fitted),
+.ts.attached.message.padded[class*="horizontally fitted"]
+    padding-top   : $message_attachedPaddedVerticalPadding
+    padding-bottom: $message_attachedPaddedVerticalPadding
+
+    > .ts.close.button
+        top: $message_attachedPaddedVerticalPadding
+
+.ts.attached.message.very.padded:not([class*="vertically fitted"]):not(.fitted),
+.ts.attached.message.very.padded[class*="horizontally fitted"]
+    padding-top   : $message_attachedVeryPaddedVerticalPadding
+    padding-bottom: $message_attachedVeryPaddedVerticalPadding
+
+    > .ts.close.button
+        top: $message_attachedVeryPaddedVerticalPadding
+
+//-------------------//
+//    Dismissable
+//-------------------//
+
+.ts.message.dismissable
+    padding-right: $message_dismissableRightPadding
+
+//-------------------//
+//      Outlined
+//-------------------//
+
+.ts.outlined.message
+    background: transparent
+
+//-------------------//
+//     Typography
+//-------------------//
+
+.ts.message p
+    margin-top   : $message_pVerticalMargin
+    margin-bottom: $message_pVerticalMargin
+
+.ts.message p:first-child
+    margin-top: 0
+
+//*******************************//
+//          Structured
+//*******************************//
+
+.ts.structured.message
+    display       : flex
+    flex-direction: row
+
+//-------------------//
+//       Avatar
+//-------------------//
+
+.ts.structured.message > .avatar
+    display  : block
+    width    : $message_structuredAvatarWidth
+    min-width: $message_structuredAvatarWidth
+    height   : $message_structuredAvatarHeight
+    float    : left
+
+    margin-right: $message_horizontalPadding
+
+.ts.structured.message > .avatar > img
+    display      : block
+    margin       : 0 auto
+    width        : 100%
+    height       : auto
+    border-radius: $message_structuredAvatarBorderRadius
+
+//-------------------//
+//       Icon
+//-------------------//
+
+.ts.structured.message > .icon:not(i)
+    min-width   : $message_structuredAvatarWidth
+    width       : $message_structuredAvatarWidth
+    height      : $message_structuredAvatarHeight
+    margin-right: $message_structuredIconDistance
+
+.ts.structured.message > .icon > i.icon
+    display        : flex
+    align-items    : center
+    justify-content: center
+
+    width : 100%
+    height: 100%
+    margin: 0
+
+    font-size    : $message_structuredIconSize
+    border-radius: $message_structuredAvatarBorderRadius
+
+    background: $message_structuredIconBackgroundColor
+
+.ts.structured.message:not(.inverted) > .icon > i.icon
+    background: $message_structuredIconNotInvertedBackgroundColor
+
+.ts.structured.message:not(.inverted):not(.primary):not(.info):not(.warning):not(.positive):not(.negative) > .icon > i.icon
+    background: $message_structuredIconNoEmphasisBackgroundColor
+
+//-------------------//
+//      Content
+//-------------------//
+
+.ts.structured.message > .content
+    flex-direction: column
+    align-items   : initial
+    width         : 100%
+
+//-------------------//
+//     Description
+//-------------------//
+
+.ts.structured.message > .content > .description
+    min-height: $message_structuredMinDescriptionHeight
+
+//-------------------//
+//  Extra Description
+//-------------------//
+
+.ts.structured.message > .content > .description + .extra.description,
+.ts.structured.message > .content > .actions + .extra.description
+    padding-top: $message_structuredActionPaddingTop
+    margin-top : $message_structuredActionDistanceToText
+
+.ts.structured.message > .content > .description + .extra.description:before,
+.ts.structured.message > .content > .actions + .extra.description:before
+    position: absolute
+    top     : 0
+    left    : 0
+    right   : -1000px
+    height  : $message_structuredActionBorderWidth
+    content : ''
+
+    background: $message_structuredDividerColor
+
+//-------------------//
+//       Actions
+//-------------------//
+
+.ts.structured.message > .content > .actions
+    margin-left: 0
+    padding-top: $message_structuredActionPaddingTop
+    margin-top : $message_structuredActionDistanceToText
+    width      : 100%
+
+.ts.structured.message > .content > .actions:before
+    position: absolute
+    top     : 0
+    left    : 0
+    right   : -1000px
+    height  : $message_structuredActionBorderWidth
+    content : ''
+
+    background: $message_structuredDividerColor
+
+.ts.structured.message.primary > .content > .actions:before,
+.ts.structured.message.primary > .content > .description + .extra.description:before,
+.ts.structured.message.primary > .content > .actions + .extra.description:before
+    background: $message_structuredPrimaryDividerColor
+.ts.structured.message.info > .content > .actions:before,
+.ts.structured.message.info > .content > .description + .extra.description:before,
+.ts.structured.message.info > .content > .actions + .extra.description:before
+    background: $message_structuredInfoDividerColor
+.ts.structured.message.warning > .content > .actions:before,
+.ts.structured.message.warning > .content > .description + .extra.description:before,
+.ts.structured.message.warning > .content > .actions + .extra.description:before
+    background: $message_structuredWarningDividerColor
+.ts.structured.message.positive > .content > .actions:before,
+.ts.structured.message.positive > .content > .description + .extra.description:before,
+.ts.structured.message.positive > .content > .actions + .extra.description:before
+    background: $message_structuredPositiveDividerColor
+.ts.structured.message.negative > .content > .actions:before,
+.ts.structured.message.negative > .content > .description + .extra.description:before,
+.ts.structured.message.negative > .content > .actions + .extra.description:before
+    background: $message_structuredNegativeDividerColor
+
+.ts.structured.message:not(.inverted)
+    &.primary, &.info, &.warning, &.positive, &.negative
+        > .content > .actions:before,
+        > .content > .description + .extra.description:before,
+        > .content > .actions     + .extra.description:before
+            opacity: 0.15
+
+//-------------------//
+//    Actions Item
+//-------------------//
+
+.ts.structured.message > .content > .actions > a
+    +extend(no-select)
+
+    margin-right: $message_structuredActionItemMargin
+    opacity     : .9
+
+.ts.structured.message > .content > .actions > a:hover
+    opacity: .6
+.ts.structured.message > .content > .actions > a:active
+    opacity: 1
+
+.ts.structured.message > .content > .actions > a:last-child
+    margin-right: 0
+
+.ts.structured.message > .content > .actions > a:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.inverted):not(.disabled):not(:hover)
+    opacity: .8
+
+.ts.structured.message:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.inverted) > .content > .actions > a:not(.primary):not(.info):not(.warning):not(.positive):not(.negative):not(.inverted):not(.disabled)
+    color: $message_textColor
+
+//-------------------//
+//   Actions Item
+//-------------------//
+
+//-------------------//
+// Action Item Emphasis
+//-------------------//
+
+.ts.structured.message > .content > .actions > a.primary
+    color: $message_structuredPrimaryActionTextColor
+.ts.structured.message > .content > .actions > a.info
+    color: $message_structuredInfoActionTextColor
+.ts.structured.message > .content > .actions > a.warning
+    color: $message_structuredWarningActionTextColor
+.ts.structured.message > .content > .actions > a.positive
+    color: $message_structuredPositiveActionTextColor
+.ts.structured.message > .content > .actions > a.negative
+    color: $message_structuredNegativeActionTextColor
+.ts.structured.message > .content > .actions > a.inverted
+    color: $message_structuredPrimaryActionTextColor
+
+//-------------------//
+// Disabled Action Item
+//-------------------//
+
+.ts.structured.message > .content > .actions > a.disabled
+    +extend(no-select)
+
+    cursor: not-allowed
+    pointer-events: none
+    opacity       : .45
+
+//-------------------//
+//     Coupling
+//-------------------//
+
+.ts.segment[class*="top attached"] + .ts.message[class*="bottom attached"]
+    border-top: 0
+
+.ts.message > .ts.container
+    display: flex
+
+.ts.icon.message > .ts.container
+    +rwd-serious(mobile)
+        width       : 100% !important
+        margin-left : auto !important
+        margin-right: auto !important
+
+.ts.message > .ts.container > .ts.close.button
+    top  : 0
+    right: 0
+
+.ts.message .ts.list,
+.ts.message ul,
+.ts.message ol
+    color        : inherit
+    margin-top   : $message_listVerticalMargin
+    margin-bottom: $message_listVerticalMargin

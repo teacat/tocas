@@ -1,0 +1,117 @@
+{{ define "settings" }}
+{{ if .Document.HasSettings }}
+<h1 class="ts dividing header">設定屬性</h1>
+
+<p>此模組有下列設定可供使用。欲更改已初始化的模組設定，請透過 <code>setting</code> 方法並傳入欲覆蓋的設定。</p>
+
+<!-- 設定屬性表格 -->
+<table class="ts celled stackable definition table">
+    <thead>
+        <tr>
+            <th>屬性名稱</th>
+            <th>預設值</th>
+            <th>註釋</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ range .Document.Settings.Properties }}
+        <tr>
+            <td>
+                {{ .Key }}
+                <b class="type">{{ .Type }}</b>
+            </td>
+            <td><code>{{ .Default }}</code></td>
+            <td>{{ .Description }}</td>
+        </tr>
+        {{ end }}
+    </tbody>
+</table>
+<!-- / 設定屬性表格 -->
+
+<h1 class="ts dividing header">回呼函式</h1>
+
+<p>透過設置回呼函式來在模組的特定時機執行指定的程式內容，回呼函式中的 <code>this</code> 本體物件會因為時機不同而有所異動。回呼函式需要被放置在設定裡一同傳入模組。</p>
+
+<!-- 回呼函式表格 -->
+<table class="ts celled stackable definition table">
+    <thead>
+        <tr>
+            <th>行為名稱</th>
+            <th>觸發時機與參數</th>
+            <th>本體物件</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ range .Document.Settings.Callbacks }}
+        <!-- 單個回呼函式 -->
+        <tr>
+            <!-- 回呼名稱 -->
+            <td class="top aligned">
+                {{ .Name }}
+            </td>
+            <!-- / 回呼名稱 -->
+
+            <!-- 觸發時機與參數 -->
+            <td class="top aligned">
+                <!-- 說明 -->
+                {{ .Description }}
+                <!-- / 說明 -->
+
+                {{ $argumentLength  := len .Arguments }}
+                {{ if ne $argumentLength 0 }}
+                    <!-- 分隔線 -->
+                    <hr class="ts divider">
+                    <!-- / 分隔線 -->
+
+                    <!-- 使用範例 -->
+                    <code>
+                        {{ .Name }}
+                        (
+                            {{ range $k, $v := .Arguments }}
+                                {{ if $k }},{{end}}<em>{{ $v.Name }}</em>
+                            {{ end }}
+                        )
+                    </code>
+                    <!-- / 使用範例 -->
+
+                    <!-- 參數清單 -->
+                    <ul class="ts list">
+                        {{ range .Arguments }}
+                            <!-- 單個參數說明 -->
+                            <li class="item">
+                                {{ .Name }}
+                                <b class="type">
+                                    {{ .Type }}
+                                </b>
+                                <br>
+                                {{ .Description }}
+                            </li>
+                            <!-- / 單個參數說明 -->
+                        {{ end }}
+                    </ul>
+                    <!-- / 參數清單 -->
+                {{ end }}
+            </td>
+            <!-- / 觸發時機與參數 -->
+
+            <!-- 本體物件 -->
+            <td class="top aligned">
+                <!-- 資料型態 -->
+                <span class="return">
+                    <code>{{ .Context.Type }}</code>
+                </span>
+                <!-- / 資料型態 -->
+
+                <!-- 說明 -->
+                {{ .Context.Description }}
+                <!-- / 說明 -->
+            </td>
+            <!-- / 本體物件 -->
+        </tr>
+        <!-- / 單個回呼函式 -->
+        {{ end }}
+    </tbody>
+</table>
+<!-- / 回呼函式表格 -->
+{{ end }}
+{{ end }}

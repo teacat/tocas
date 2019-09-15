@@ -1,0 +1,551 @@
+@charset "UTF-8"
+@import ../variables/form.variables
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.form
+    position: relative
+
+.ts.form > p
+    margin: $form_paragraphMargin
+
+//-------------------//
+//       Inline
+//-------------------//
+
+.ts.form .inline.fields,
+.ts.horizontal.form .fields
+    align-items: center
+
+.ts.form .inline.field > label
+    padding-top   : $form_staticTextVerticalPadding
+    padding-bottom: $form_staticTextVerticalPadding
+
+.ts.form .inline.field > label,
+.ts.horizontal.form .field label
+    display       : inline-block
+    width         : auto
+    margin-top    : 0
+    margin-bottom : 0
+    vertical-align: baseline
+    font-size     : $form_inlineLabelFontSize
+    font-weight   : $form_inlineLabelFontWeight
+    color         : $form_inlineLabelColor
+
+.ts.form .inline.field > :first-child,
+.ts.form .inline.fields .field > :first-child,
+.ts.horizontal.form .field > :first-child,
+.ts.horizontal.form .fields .field > :first-child
+    margin: 0 $form_inlineLabelDistance 0 0
+
+.ts.form .inline.field > :only-child,
+.ts.form .inline.fields .field > :only-child,
+.ts.horizontal.form .field > :only-child,
+.ts.horizontal.form .fields .field > :only-child
+    margin: 0
+
+.ts.form .inline.fields .wide.field,
+.ts.form .inline.field,
+.ts.horizontal.form .fields .wide.field,
+.ts.horizontal.form .field
+    display    : flex
+    align-items: center
+    flex-wrap  : nowrap
+
+.ts.form .inline.fields .wide.field input,
+.ts.form .inline.field input,
+.ts.horizontal.form .fields .wide.field input,
+.ts.horizontal.form .field input
+    flex: 1
+
+//-------------------//
+//     Horizontal
+//-------------------//
+
+.ts.horizontal.form .field
+    flex-wrap   : wrap
+    padding-left: $form_horizontalFieldLeftOffset
+
+.ts.horizontal.form .field
+    +rwd-serious(mobile)
+        padding-left  : 0
+        flex-direction: column
+        align-items   : initial
+
+.ts.horizontal.form .field.field > label
+    position: absolute
+    left    : 0
+    top     : $form_horizontalLabelTopOffest
+
+    min-width  : $form_horizontalLabelWidth
+    max-width  : $form_horizontalLabelWidth
+    text-align : right
+    word-wrap  : break-word
+    white-space: normal
+
+.ts.horizontal.form .field.field > label
+    +rwd-serious(mobile)
+        position  : relative
+        top       : 0
+        left      : 0
+        flex      : 1
+        width     : 100%
+        margin    : $form_labelMargin
+        max-width : none
+        min-width : initial
+        text-align: left
+
+.ts.horizontal.form .field > .ts.message
+    width: 100%
+
+.ts.horizontal.form .field > label + *:not(.input):not(input):not(select):not(textarea):not(.dropdowns)
+    margin-top: $form_horizontalFieldTopOffset
+
+.ts.horizontal.form .field > label + *:not(.input):not(input):not(select):not(textarea):not(.dropdowns)
+    +rwd-serious(mobile)
+        margin-top: 0
+
+// First Child
+.ts.horizontal.form .field:first-child > label
+//    top: 0
+.ts.horizontal.form .field:first-child > label + *:not(.input):not(input):not(select):not(textarea)
+//    margin-top: 0
+
+//-------------------//
+//    Helper Text
+//-------------------//
+
+.ts.form .field > small,
+.ts.form .field > .inputs > small
+    display  : block
+    margin   : $form_fieldHelperTextMargin
+    opacity  : $form_fieldHelperOpacity
+    color    : $form_fieldHelperTextColor
+    font-size: $form_fieldHelperFontSize
+    flex     : 0 0 100%
+
+.ts.form .field > .message:not(.ts) + small,
+.ts.form .field > .inputs > .message:not(.ts) + small
+    margin: $form_fieldHelperDistanceToMessage
+
+.ts.form.horizontal .field > .message,
+.ts.form.horizontal .field > small
+    width: 100%
+
+//-------------------//
+//        Wide
+//-------------------//
+
+.ts.form .field[class*="one wide"]
+    width: $oneWide
+.ts.form .field[class*="two wide"]
+    width: $twoWide
+.ts.form .field[class*="three wide"]
+    width: $threeWide
+.ts.form .field[class*="four wide"]
+    width: $fourWide
+.ts.form .field[class*="five wide"]
+    width: $fiveWide
+.ts.form .field[class*="six wide"]
+    width: $sixWide
+.ts.form .field[class*="seven wide"]
+    width: $sevenWide
+.ts.form .field[class*="eight wide"]
+    width: $eightWide
+.ts.form .field[class*="nine wide"]
+    width: $nineWide
+.ts.form .field[class*="ten wide"]
+    width: $tenWide
+.ts.form .field[class*="eleven wide"]
+    width: $elevenWide
+.ts.form .field[class*="twelve wide"]
+    width: $twelveWide
+.ts.form .field[class*="thirteen wide"]
+    width: $thirteenWide
+.ts.form .field[class*="fourteen wide"]
+    width: $fourteenWide
+.ts.form .field[class*="fifteen wide"]
+    width: $fifteenWide
+.ts.form .field[class*="sixteen wide"]
+    width: $sixteenWide
+
+//-------------------//
+//    Equal Width
+//-------------------//
+
+.ts.form[class*="equal width"] .field,
+.ts.form.fields[class*="equal width"] .field
+    width: 100%
+    flex : 1 1 auto
+
+//-------------------//
+//       Fields
+//-------------------//
+
+.ts.form .one.fields .field
+    width: $form_oneFields
+.ts.form .two.fields .field
+    width: $form_twoFields
+.ts.form .three.fields .field
+    width: $form_threeFields
+.ts.form .four.fields .field
+    width: $form_fourFields
+.ts.form .five.fields .field
+    width: $form_fiveFields
+.ts.form .six.fields .field
+    width: $form_sixFields
+.ts.form .seven.fields .field
+    width: $form_sevenFields
+.ts.form .eight.fields .field
+    width: $form_eightFields
+.ts.form .nine.fields .field
+    width: $form_nineFields
+.ts.form .ten.fields .field
+    width: $form_tenFields
+
+//-------------------//
+//      Loading
+//-------------------//
+
+.ts.loading.form
+    position    : relative
+    cursor      : default
+    point-events: none
+
+.ts.loading.form:before
+    position        : absolute
+    content         : ''
+    top             : 0%
+    left            : 0%
+    background: $form_loaderDimmerBackgroundColor
+    width           : 100%
+    height          : 100%
+    z-index         : $z_form_loaderDimmer
+
+.ts.loading.form:after
+    position     : absolute
+    content      : ''
+    top          : 50%
+    left         : 50%
+    margin       : $loaderMargin
+    width        : $form_loaderSize
+    height       : $form_loaderSize
+    border-radius: $circularRadius
+    border-color : $loaderLineColor $loaderFillColor $loaderFillColor $loaderFillColor
+    border-style : solid
+    border-width : $loaderLineWidth
+    box-shadow   : 0px 0px 0px 1px transparent
+    visibility   : visible
+    z-index      : $z_form_loaderLine
+
+    animation                : form-spin $loaderSpeed linear
+    animation-iteration-count: infinite
+
+@keyframes form-spin
+    from
+        transform: rotate(0deg)
+    to
+        transform: rotate(360deg)
+
+//-------------------//
+//      Relaxed
+//-------------------//
+
+.ts.form.relaxed .field
+    clear: both
+
+//-------------------//
+//       Field
+//-------------------//
+
+.ts.form .field
+    width : 100%
+    clear : both
+    margin: $form_fieldMargin
+
+.ts.form:not(.unstackable) .fields:not(.unstackable) + .field,
+.ts.form:not(.unstackable) .fields:not(.unstackable) + .fields
+    +rwd-serious(mobile)
+        margin-top: $form_rowDistance
+
+.ts.form .fields > .field
+    padding-left : var(--columnPadding)
+    padding-right: var(--columnPadding)
+
+.ts.form.relaxed .fields > .field
+    padding-left : var(--columnRelaxedPadding)
+    padding-right: var(--columnRelaxedPadding)
+
+.ts.form .field:last-child,
+.ts.form .fields:last-child .field
+    margin-bottom: 0em
+
+.ts.form:not(.unstackable) .fields:last-child .field
+    +rwd-serious(mobile)
+        margin: $form_fieldMargin
+
+        &:last-child
+            margin-bottom: 0
+
+.ts.form .field input:not([type="radio"]),
+.ts.form .field textarea,
+.ts.form .field select
+    width    : 100%
+    min-width: 1px
+
+//-------------------//
+//      Centered
+//-------------------//
+
+.ts.form.centered
+    margin: 0 auto
+
+//-------------------//
+//       Error
+//-------------------//
+
+.ts.form .field.error.error,
+.ts.form .field.error.error label
+    color: $form_errorTextColor
+.ts.form .field.error.error label
+    font-weight: $form_errorLabelFontWeight
+
+//-------------------//
+//      Message
+//-------------------//
+
+.ts.form .field .message:not(.ts)
+    font-size: $form_fieldMessageFontSize
+    margin   : $form_fieldMessageTextMargin
+
+.ts.form .field .message:not(.ts) + .message:not(.ts)
+    margin: $form_fieldMessageDistanceToMessage
+
+.ts.form .field.error .message:not(.ts)
+    color: $form_fieldMessageErrorTextColor
+
+.ts.form .field.warning .message:not(.ts)
+    color: $form_fieldMessageWarningTextColor
+
+.ts.form .field.success .message:not(.ts)
+    color: $form_fieldMessageSuccessTextColor
+
+//-------------------//
+//       Aligns
+//-------------------//
+
+.ts.form .field[class*="center aligned"]
+    text-align: center
+.ts.form .field[class*="left aligned"]
+    text-align: left
+.ts.form .field[class*="right aligned"]
+    text-align: right
+
+//-------------------//
+//       Labels
+//-------------------//
+
+.ts.form .field > label
+    display       : block
+    white-space   : nowrap
+    margin        : $form_labelMargin
+    color         : $form_labelColor
+    font-size     : $form_labelFontSize
+    font-weight   : $form_labelFontWeight
+
+//-------------------//
+//      Disabled
+//-------------------//
+
+.ts.form .disabled.fields .field,
+.ts.form .disabled.field,
+.ts.form .field :disabled
+    pointer-events: none
+    opacity       : $disabledOpacity
+
+.ts.form .field.disabled label
+    opacity: $disabledLabelOpacity
+
+.ts.form .field.disabled :disabled
+    opacity: 1
+
+//-------------------//
+//      Required
+//-------------------//
+
+.ts.form:not(.horizontal) .required.fields:not(.grouped) > .field > .checkbox:after,
+.ts.form:not(.horizontal) .required.field > .checkbox:after,
+.ts.form:not(.horizontal) .required.fields:not(.grouped) > .field > .checkboxes > .checkbox:after,
+.ts.form:not(.horizontal) .required.field > .checkboxes > .checkbox:after,
+.ts.form:not(.horizontal) .required.fields:not(.grouped) > .field > label:after,
+.ts.form:not(.horizontal) .required.fields.grouped > label:after,
+.ts.form:not(.horizontal) .required.field > label:after
+    margin     : $form_requiredMargin
+    content    : $form_requiredContent
+    color      : $form_requiredColor
+    font-weight: $form_requiredFontWeight
+
+.ts.form:not(.horizontal) .required.fields:not(.grouped) > .field > label:after,
+.ts.form:not(.horizontal) .required.fields.grouped > label:after,
+.ts.form:not(.horizontal) .required.field > label:after
+    display       : inline-block
+    vertical-align: top
+
+.ts.form:not(.horizontal) .required.fields:not(.grouped) > .field > .checkbox:after,
+.ts.form:not(.horizontal) .required.field > .checkbox:after
+    position: absolute
+    top     : 0%
+    left    : 100%
+
+.ts.form:not(.horizontal) .required.field > label ~ .checkbox:after,
+.ts.form:not(.horizontal) .required.field > label ~ .checkboxes > .checkbox:after
+    display: none
+
+/** Horizontal */
+.ts.form.horizontal .required.fields:not(.grouped) > .field > .checkbox:before,
+.ts.form.horizontal .required.field > .checkbox:before,
+.ts.form.horizontal .required.fields:not(.grouped) > .field > .checkboxes > .checkbox:before,
+.ts.form.horizontal .required.field > .checkboxes > .checkbox:before,
+.ts.form.horizontal .required.fields:not(.grouped) > .field > label:before,
+.ts.form.horizontal .required.fields.grouped > label:before,
+.ts.form.horizontal .required.field > label:before
+    margin     : $form_requiredMargin
+    content    : $form_requiredContent
+    color      : $form_requiredColor
+    font-weight: $form_requiredFontWeight
+
+.ts.form.horizontal .required.fields:not(.grouped) > .field > label:before,
+.ts.form.horizontal .required.fields.grouped > label:before,
+.ts.form.horizontal .required.field > label:before
+    display       : inline-block
+    vertical-align: top
+
+.ts.form.horizontal .required.fields:not(.grouped) > .field > .checkbox:before,
+.ts.form.horizontal .required.field > .checkbox:before
+    position: absolute
+    top     : 0%
+    left    : 100%
+
+.ts.form.horizontal .required.field > label ~ .checkbox:before,
+.ts.form.horizontal .required.field > label ~ .checkboxes > .checkbox:before
+    display: none
+
+//-------------------//
+//      Fieldset
+//-------------------//
+
+.ts.form fieldset
+    border       : $form_fieldsetBorder
+    border-radius: $form_fieldsetBorderRadius
+    padding      : $form_fieldsetPadding
+
+.ts.form:not(.unstackable) .fields + fieldset:not(:first-child)
+    +rwd-serious(mobile)
+        margin-top: $form_rowDistance
+
+.ts.form fieldset:not(:last-child)
+    margin-bottom: $form_rowDistance
+
+.ts.form fieldset legend
+    +extend(no-select)
+
+    color      : $form_legendTextColor
+    padding    : $form_legendPadding
+    margin-left: -$form_legendHorizontalPadding
+    font-weight: $form_legendFontWeight
+
+    pointer-events: none
+
+//-------------------//
+// Secondary Fieldset
+//-------------------//
+
+.ts.form fieldset.secondary
+    background: $form_fieldsetSecondaryBackgroundColor
+.ts.form fieldset.secondary legend
+    color: $form_legendSecondaryTextColor
+
+.ts.form fieldset.tertiary
+    background: $form_fieldsetTertiaryBackgroundColor
+.ts.form fieldset.tertiary legend
+    color: $form_legendTertiaryTextColor
+
+//-------------------//
+//       Sizes
+//-------------------//
+
+.ts.form.mini
+    font-size: $mini
+.ts.form.tiny
+    font-size: $tiny
+.ts.form.small
+    font-size: $small
+.ts.form.medium
+    font-size: $medium
+.ts.form.large
+    font-size: $large
+.ts.form.big
+    font-size: $big
+.ts.form.huge
+    font-size: $huge
+.ts.form.massive
+    font-size: $massive
+
+//-------------------//
+//      Inverted
+//-------------------//
+
+.ts.form.inverted .field > label
+    color: $form_invertedTextColor
+.ts.form.inverted .field > small
+    color: $form_invertedTextColor
+.ts.form.inverted fieldset
+    border: $form_invertedFieldsetBorder
+.ts.form.inverted fieldset legend
+    color: $form_invertedLegendTextColor
+.ts.form.inverted fieldset.secondary legend
+    color: $form_invertedLegendSecondaryTextColor
+.ts.form.inverted fieldset.tertiary legend
+    color: $form_invertedLegendTertiaryTextColor
+.ts.form.inverted fieldset.secondary
+    background: $form_invertedFieldsetSecondaryBackgroundColor
+.ts.form.inverted fieldset.tertiary
+    background: $form_invertedFieldsetTertiaryBackgroundColor
+
+//*******************************//
+//             Fields
+//*******************************//
+
+.ts.form .fields
+    position      : relative
+    display       : flex
+    flex-direction: row
+    flex-wrap     : nowrap
+    width         : 100%
+    margin-left   : calc(-1 * var(--columnPadding))
+    margin-right  : calc(-1 * var(--columnPadding))
+    width         : calc(100% + var(--columnPadding) * 2)
+
+.ts.form.relaxed .fields
+    margin-left : calc(-1 * var(--columnRelaxedPadding))
+    margin-right: calc(-1 * var(--columnRelaxedPadding))
+    width       : calc(100% + var(--columnRelaxedPadding) * 2)
+
+//*******************************//
+//               RWD
+//*******************************//
+
+.ts.form:not(.unstackable)
+    +rwd-serious(mobile)
+        .fields:not(.unstackable),
+        .relaxed.fields:not(.unstackable)
+            margin-left   : 0 !important
+            margin-right  : 0 !important
+            flex-direction: column
+        .fields:not(.unstackable),
+        .fields:not(.unstackable) .field
+            padding-left : 0    !important
+            padding-right: 0    !important
+            width        : 100% !important
