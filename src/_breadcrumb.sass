@@ -1,0 +1,106 @@
+//*******************************//
+//             Mixins
+//*******************************//
+
+%breadcrumb-divider
+    color         : var(--dividerTextColor)
+    margin        : 0 var(--absoluteTinyGap) 0
+    font-size     : var(--relativeTiny)
+    display       : inline-block
+    vertical-align: bottom
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.breadcrumb
+    font-size     : 1rem
+    display       : inline-block
+    line-height   : 1
+    vertical-align: middle
+    color         : var(--textColor)
+
+//-------------------//
+//       Item
+//-------------------//
+
+.ts.breadcrumb .item
+    display       : inline-block
+    vertical-align: baseline
+
+//-------------------//
+//      Bulleted
+//-------------------//
+
+.ts.breadcrumb.-bulleted .item:not(:last-child)::after
+    +extend(bulleted)
+    +extend(breadcrumb-divider)
+
+//-------------------//
+//      Slashed
+//-------------------//
+
+.ts.breadcrumb.-slashed .item:not(:last-child)::after
+    +extend(breadcrumb-divider)
+
+    content: "/"
+
+//-------------------//
+//     Chevroned
+//-------------------//
+
+.ts.breadcrumb.-chevroned .item:not(:last-child)::after
+    +extend(icon)
+    +extend(breadcrumb-divider)
+
+    content: ""
+
+//-------------------//
+//      Disabled
+//-------------------//
+
+.ts.breadcrumb .item.-disabled
+    color: var(--disabledTextColor)
+
+//-------------------//
+//      Active
+//-------------------//
+
+.ts.breadcrumb .item.-active
+    color      : var(--activeTextColor)
+    font-weight: bold
+
+//-------------------//
+//       Link
+//-------------------//
+
+.ts.breadcrumb a
+    +extend(link)
+
+//-------------------//
+//      Divider
+//-------------------//
+
+.ts.breadcrumb .divider
+    +extend(breadcrumb-divider)
+
+//-------------------//
+//       Sizes
+//-------------------//
+
+.ts.breadcrumb.-mini
+    +absolute-size(mini)
+.ts.breadcrumb.-tiny
+    +absolute-size(tiny)
+.ts.breadcrumb.-small
+    +absolute-size(small)
+.ts.breadcrumb
+    +absolute-size(medium)
+.ts.breadcrumb.-large
+    +absolute-size(large)
+.ts.breadcrumb.-big
+    +absolute-size(big)
+.ts.breadcrumb.-huge
+    +absolute-size(huge)
+.ts.breadcrumb.-massive
+    +absolute-size(massive)

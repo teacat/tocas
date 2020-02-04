@@ -1,0 +1,664 @@
+//*******************************//
+//           Variables
+//*******************************//
+
+.ts.button,
+.ts.buttons > .or
+    --horizontalPadding: 1.3em
+    --verticalPadding  : .75em
+    --outlinedWidth    : 2px
+    --buttonGap        : 2px
+    --defaultBackgroundColor: #F2F2F2
+
+//*******************************//
+//           Animation
+//*******************************//
+
+@keyframes button-pulse
+    0%
+        opacity  : 1
+        transform: scale(1) translateY(-1%) translateX(-1%)
+    50%
+        opacity  : 0
+        transform: scale(1.5) translateY(-1%) translateX(-1%)
+    100%
+        opacity  : 0
+        transform: scale(1.5) translateY(-1%) translateX(-1%)
+
+//*******************************//
+//              Main
+//*******************************//
+
+.ts.button
+    display: inline-block
+
+.ts.button button
+    font-size     : 1rem
+    font-weight   : 500
+    border-radius : var(--defaultBorderRadius)
+    padding       : var(--verticalPadding) var(--horizontalPadding)
+    cursor        : pointer
+    user-select   : none
+    vertical-align: middle
+
+    background: var(--emphasizedBackgroundColor)
+    color     : var(--emphasizedTextColor)
+
+.ts.button button:hover
+    background: var(--emphasizedHoveredBackgroundColor)
+    color     : var(--emphasizedHoveredTextColor)
+
+.ts.button button:active,
+.ts.button.-pressed button,
+.ts.buttons.-pressed .ts.button button
+    background: var(--emphasizedPressedBackgroundColor)
+    color     : var(--emphasizedPressedTextColor)
+
+//-------------------//
+//      Pulsing
+//-------------------//
+
+.ts.button.-pulsing button
+    z-index: $z_button_pulsing
+
+.ts.button.-pulsing button::before
+    content : ''
+    display : block
+    position: absolute
+    width   : 100%
+    height  : 100%
+    top     : 0
+    left    : 0
+
+    background   : inherit
+    border-radius: inherit
+    transition   : opacity .3s, transform .3s
+    animation    : button-pulse 1s cubic-bezier(0.24, 0, 0.38, 1) infinite
+
+    z-index: $z_button_pulsingBefore
+
+.ts.button.-pulsing.-outlined button::before
+    box-shadow: inherit
+
+//-------------------//
+//     Detailed
+//-------------------//
+
+.ts.button.-detailed button .description
+    font-size  : var(--relativeSmall)
+    font-weight: normal
+    margin-top : var(--absoluteTinyGap)
+
+//-------------------//
+//      Attached
+//-------------------//
+
+.ts.button.-attached button,
+.ts.buttons.-attached .ts.button button
+    +extend(attached)
+
+.ts.button.-top-attached button,
+.ts.buttons.-top-attached .ts.button button
+    +extend(top-attached)
+
+.ts.button.-bottom-attached button,
+.ts.buttons.-bottom-attached .ts.button button
+    +extend(bottom-attached)
+
+.ts.button[class*="-attached"],
+.ts.button[class*="-attached"] button,
+.ts.buttons[class*="-attached"] .ts.button button
+    width: 100%
+
+//-------------------//
+//      Outlined
+//-------------------//
+
+.ts.button.-outlined button,
+.ts.buttons.-outlined .ts.button button
+    background: none
+    color     : var(--outlinedTextColor)
+    box-shadow: 0 0 0 var(--outlinedWidth) var(--outlinedBorderColor) inset
+
+.ts.button.-outlined button:hover,
+.ts.buttons.-outlined .ts.button button:hover
+    color     : var(--emphasizedHoveredTextColor)
+    background: var(--emphasizedHoveredBackgroundColor)
+    box-shadow: none
+
+.ts.button.-outlined button:active,
+.ts.buttons.-outlined .ts.button button:active,
+.ts.button.-outlined.-pressed button,
+.ts.buttons.-outlined.-pressed .ts.button button
+    color     : var(--emphasizedPressedTextColor)
+    background: var(--emphasizedPressedBackgroundColor)
+    box-shadow: none
+
+//-------------------//
+//     Secondary
+//-------------------//
+
+.ts.button.-secondary button,
+.ts.buttons.-secondary .ts.button button
+    color     : var(--standaloneTextColor)
+    background: var(--defaultBackgroundColor)
+
+.ts.button.-secondary button:hover,
+.ts.buttons.-secondary .ts.button button:hover
+    color     : var(--emphasizedHoveredTextColor)
+    background: var(--emphasizedHoveredBackgroundColor)
+
+.ts.button.-secondary button:active,
+.ts.buttons.-secondary .ts.button button:active,
+.ts.button.-secondary.-pressed button,
+.ts.buttons.-secondary.-pressed .ts.button button
+    color     : var(--emphasizedPressedTextColor)
+    background: var(--emphasizedPressedBackgroundColor)
+
+//-------------------//
+//      Circular
+//-------------------//
+
+.ts.button.-circular button,
+.ts.buttons.-circular .ts.button button
+    border-radius: var(--defaultCircularBorderRadius)
+
+//-------------------//
+//      Disabled
+//-------------------//
+
+.ts.button.-disabled button,
+.ts.buttons.-disabled .ts.button button
+    pointer-events: none
+
+    background: var(--emphasizedDisabledBackgroundColor)
+    color     : var(--emphasizedDisabledTextColor)
+
+//-------------------//
+//      Loading
+//-------------------//
+
+.ts.button.-loading button
+    +loader-apply
+
+    text-shadow: none        !important
+    color      : transparent !important
+
+//-------------------//
+//       Floated
+//-------------------//
+
+.ts.button.-left-floated
+    float: left
+.ts.button.-right-floated
+    float: right
+
+//-------------------//
+//       Aligns
+//-------------------//
+
+.ts.button.-left-aligned button
+    text-align: left
+.ts.button.-center-aligned button
+    text-align: center
+.ts.button.-right-aligned button
+    text-align: right
+
+//-------------------//
+//       Fluid
+//-------------------//
+
+.ts.button.-fluid,
+.ts.button.-fluid button,
+.ts.buttons.-fluid,
+.ts.buttons.-fluid .ts.button,
+.ts.buttons.-fluid .ts.button button
+    width: 100%
+
+//-------------------//
+//      Compact
+//-------------------//
+
+.ts.button.-compact button,
+.ts.buttons.-compact .ts.button button
+    padding: calc(var(--verticalPadding) / 2) calc(var(--horizontalPadding) / 2)
+
+//-------------------//
+//       Sizes
+//-------------------//
+
+.ts.button.-mini button,
+.ts.buttons.-mini .ts.button button,
+.ts.buttons.-mini > .or
+    font-size: var(--absoluteMini)
+.ts.button.-tiny button,
+.ts.buttons.-tiny .ts.button button,
+.ts.buttons.-tiny > .or
+    font-size: var(--absoluteTiny)
+.ts.button.-small button,
+.ts.buttons.-small .ts.button button,
+.ts.buttons.-small > .or
+    font-size: var(--absoluteSmall)
+.ts.button.-large button,
+.ts.buttons.-large .ts.button button,
+.ts.buttons.-large > .or
+    font-size: var(--absoluteLarge)
+.ts.button.-big button,
+.ts.buttons.-big .ts.button button,
+.ts.buttons.-big > .or
+    font-size: var(--absoluteBig)
+.ts.button.-huge button,
+.ts.buttons.-huge .ts.button button,
+.ts.buttons.-huge > .or
+    font-size: var(--absoluteHuge)
+.ts.button.-massive button,
+.ts.buttons.-massive .ts.button button,
+.ts.buttons.-massive > .or
+    font-size: var(--absoluteMassive)
+
+//-------------------//
+//      Labeled
+//-------------------//
+
+.ts.button[class*="-labeled"],
+.ts.buttons[class*="-labeled"] .ts.button
+    display       : inline-flex
+    flex-direction: row
+
+.ts.button[class*="-labeled"] .ts.label,
+.ts.buttons[class*="-labeled"] .ts.button .ts.label
+    border: 1px solid #EEE
+    display: inline-flex
+    align-items: center
+    padding: .5rem
+    font-size: 1rem
+    color: #333
+    padding: 0.5rem .75rem
+
+// Right Labeled
+.ts.button.-right-labeled button,
+.ts.buttons.-right-labeled .ts.button button
+    border-top-right-radius   : 0
+    border-bottom-right-radius: 0
+.ts.button.-right-labeled .ts.label,
+.ts.buttons.-right-labeled .ts.button .ts.label
+    border-left               : 0
+    border-top-right-radius   : var(--defaultBorderRadius)
+    border-bottom-right-radius: var(--defaultBorderRadius)
+
+// Left Labeled
+.ts.button.-left-labeled button,
+.ts.buttons.-left-labeled .ts.button button
+    border-top-left-radius   : 0
+    border-bottom-left-radius: 0
+.ts.button.-left-labeled .ts.label,
+.ts.buttons.-left-labeled .ts.button .ts.label
+    border-right             : 0
+    border-top-left-radius   : var(--defaultBorderRadius)
+    border-bottom-left-radius: var(--defaultBorderRadius)
+
+//-------------------//
+//    Labeled Icon
+//-------------------//
+
+.ts.button[class*="-labeled-icon"] button > i.icon,
+.ts.buttons[class*="-labeled-icon"] .ts.button button > i.icon
+    --borderRadius: var(--defaultBorderRadius)
+    --edgeDistance: 0
+
+    position     : absolute
+    background   : rgba(0,0,0,0.05)
+    top          : var(--edgeDistance)
+    bottom       : var(--edgeDistance)
+    padding-left : calc(var(--verticalPadding) / 1.125) // .525em
+    padding-right: calc(var(--verticalPadding) / 1.125) // .525em
+    font-size    : var(--relativeLarge)
+
+.ts.button[class*="-labeled-icon"].-outlined button > i.icon,
+.ts.buttons[class*="-labeled-icon"].-outlined .ts.button button > i.icon
+    --edgeDistance: var(--outlinedWidth)
+
+.ts.button[class*="-labeled-icon"].-circular button > i.icon,
+.ts.buttons[class*="-labeled-icon"].-circular .ts.button button > i.icon
+    --borderRadius: var(--defaultCircularBorderRadius)
+
+.ts.button[class*="-labeled-icon"] button > i.icon::before,
+.ts.buttons[class*="-labeled-icon"] .ts.button button > i.icon::before
+    display   : block
+    position  : absolute
+    width     : 100%
+    top       : 50%
+    left      : 50%
+    text-align: center
+    transform : translateY(-50%) translateX(-50%)
+
+.ts.button.-left-labeled-icon button,
+.ts.buttons.-left-labeled-icon .ts.button button
+    padding-left: calc(var(--verticalPadding) * 2 + 1.18em * 1.125 + var(--horizontalPadding))
+.ts.button.-left-labeled-icon button > i.icon,
+.ts.buttons.-left-labeled-icon .ts.button button > i.icon
+    left: var(--edgeDistance)
+    border-top-left-radius   : var(--borderRadius)
+    border-bottom-left-radius: var(--borderRadius)
+
+.ts.button.-right-labeled-icon button,
+.ts.buttons.-right-labeled-icon .ts.button button
+    padding-right: calc(var(--verticalPadding) * 2 + 1.18em * 1.125 + var(--horizontalPadding))
+.ts.button.-right-labeled-icon button > i.icon,
+.ts.buttons.-right-labeled-icon .ts.button button > i.icon
+    right: var(--edgeDistance)
+    border-top-right-radius   : var(--borderRadius)
+    border-bottom-right-radius: var(--borderRadius)
+
+//-------------------//
+//       Icon
+//-------------------//
+
+.ts.button.-icon button,
+.ts.buttons.-icon .ts.button button
+    padding: calc(var(--verticalPadding) - (var(--relativeLarge) - 1em) / 2) var(--verticalPadding)
+
+.ts.button.-icon button > i.icon,
+.ts.buttons.-icon .ts.button button > i.icon
+    height: 1em
+
+.ts.button.-icon button > i.icon,
+.ts.button.-left-icon button > i.icon,
+.ts.button.-right-icon button > i.icon,
+.ts.buttons.-icon .ts.button button > i.icon,
+.ts.buttons.-left-icon .ts.button button > i.icon,
+.ts.buttons.-right-icon .ts.button button > i.icon
+    font-size: var(--relativeLarge)
+
+.ts.button.-left-icon button > i.icon,
+.ts.button.-right-icon button > i.icon,
+.ts.buttons.-left-icon .ts.button button > i.icon,
+.ts.buttons.-right-icon .ts.button button > i.icon
+    line-height: 0
+
+.ts.button.-right-icon button > i.icon,
+.ts.buttons.-right-icon .ts.button button > i.icon
+    margin-left: var(--relativeSmall)
+.ts.button.-right-icon button,
+.ts.buttons.-right-icon .ts.button button
+    padding-right : calc(var(--horizontalPadding) / 2)
+
+.ts.button.-left-icon button > i.icon,
+.ts.buttons.-left-icon .ts.button button > i.icon
+    margin-right: var(--relativeSmall)
+.ts.button.-left-icon button,
+.ts.buttons.-left-icon .ts.button button
+    padding-left : calc(var(--horizontalPadding) / 2)
+
+//-------------------//
+//       Close
+//-------------------//
+
+.ts.button.-close button
+    display        : inline-flex
+    align-items    : center
+    justify-content: center
+    color          : #fff
+    background     : rgba(60,60,60,0.3)
+    border-radius  : var(--defaultCircularBorderRadius)
+    cursor         : pointer
+    margin         : 0
+    padding        : 0
+    border         : 0
+
+.ts.button.-close button:hover
+    background: rgba(60,60,60,0.35)
+
+.ts.button.-close button:active,
+.ts.button.-close.-pressed button
+    background: rgba(60,60,60,0.4)
+
+.ts.button.-close button::after
+    content    : ""
+    line-height: 1em
+    font-family: "Icons"
+    font-size  : var(--relativeLarge)
+
+.ts.button.-close.-mini button
+    width : calc(var(--relativeTiny) + var(--verticalPadding) / 2)
+    height: calc(var(--relativeTiny) + var(--verticalPadding) / 2)
+.ts.button.-close.-tiny button
+    width : calc(var(--relativeSmall) + var(--verticalPadding) / 2)
+    height: calc(var(--relativeSmall) + var(--verticalPadding) / 2)
+.ts.button.-close.-small button
+    width : calc(var(--relativeSmall) + var(--verticalPadding) / 2)
+    height: calc(var(--relativeSmall) + var(--verticalPadding) / 2)
+.ts.button.-close button
+    width : calc(var(--relativeMedium) + var(--verticalPadding) / 2)
+    height: calc(var(--relativeMedium) + var(--verticalPadding) / 2)
+.ts.button.-close.-large button
+    width : calc(var(--relativeLarge) + var(--verticalPadding) / 2)
+    height: calc(var(--relativeLarge) + var(--verticalPadding) / 2)
+.ts.button.-close.-big button
+    width : calc(var(--relativeLarge) + var(--verticalPadding) / 2)
+    height: calc(var(--relativeLarge) + var(--verticalPadding) / 2)
+.ts.button.-close.-huge button
+    width : calc(var(--relativeBig) + var(--verticalPadding) / 2)
+    height: calc(var(--relativeBig) + var(--verticalPadding) / 2)
+.ts.button.-close.-massive button
+    width : calc(var(--relativeHuge) + var(--verticalPadding) / 2)
+    height: calc(var(--relativeHuge) + var(--verticalPadding) / 2)
+
+//-------------------//
+//       Corner
+//-------------------//
+
+.ts.button.-top-left-corner button
+.ts.button.-top-right-corner button
+.ts.button.-bottom-left-corner button
+.ts.button.-bottom-right-corner button
+
+//-------------------//
+//      Emphasis
+//-------------------//
+
+//-------------------//
+//      Opinion
+//-------------------//
+
+.ts.button.-opinion button,
+.ts.buttons.-opinion .ts.button button
+    color     : #FFF
+    background: rgba(0, 0, 0, 0.05)
+.ts.button.-opinion button:hover,
+.ts.buttons.-opinion .ts.button button:hover
+    color     : #FFF
+    background: rgba(0, 0, 0, 0.08)
+.ts.button.-opinion button:active,
+.ts.button.-opinion.-pressed button,
+.ts.buttons.-opinion .ts.button button:active,
+.ts.buttons.-opinion.-pressed .ts.button button
+    color     : #FFF
+    background: rgba(0, 0, 0, 0.11)
+
+.ts.button.-secondary-opinion button,
+.ts.buttons.-secondary-opinion .ts.button button
+    color     : #FFF
+    background: rgba(0, 0, 0, 0.15)
+.ts.button.-secondary-opinion button:hover,
+.ts.buttons.-secondary-opinion .ts.button button:hover
+    color     : #FFF
+    background: rgba(0, 0, 0, 0.18)
+.ts.button.-secondary-opinion button:active,
+.ts.button.-secondary-opinion.-pressed button,
+.ts.buttons.-secondary-opinion .ts.button button:active,
+.ts.buttons.-secondary-opinion.-pressed .ts.button button
+    color     : #FFF
+    background: rgba(0, 0, 0, 0.21)
+
+//-------------------//
+//       Basic
+//-------------------//
+
+.ts.button.-basic button,
+.ts.buttons.-basic .ts.button button
+    color     : var(--standaloneTextColor)
+    background: #FFF
+
+.ts.button.-basic button:hover,
+.ts.buttons.-basic .ts.button button:hover
+    color     : var(--emphasizedHoveredTextColor)
+    background: var(--emphasizedHoveredBackgroundColor)
+
+.ts.button.-basic button:active,
+.ts.button.-basic.-pressed button,
+.ts.buttons.-basic .ts.button button:active,
+.ts.buttons.-basic.-pressed .ts.button button
+    color     : var(--emphasizedPressedTextColor)
+    background: var(--emphasizedPressedBackgroundColor)
+
+//-------------------//
+//       Link
+//-------------------//
+
+.ts.button.-link,
+.ts.buttons.-link .ts.button
+    display: inline
+
+.ts.button.-link button,
+.ts.buttons.-link .ts.button button
+    font-size      : 1em
+    padding        : 0
+    background     : none
+    border-radius  : 0
+    text-decoration: underline
+    user-select    : text
+    display        : inline
+    vertical-align : baseline
+
+    color: $linkTextColor
+
+.ts.button.-link button:hover,
+.ts.buttons.-link .ts.button button:hover
+    color: $linkHoverTextColor
+
+.ts.button.-link button:active,
+.ts.button.-link.-pressed button,
+.ts.buttons.-link .ts.button button:active,
+.ts.buttons.-link.-pressed .ts.button button
+    color: $linkPressTextColor
+
+//-------------------//
+//      Progress
+//-------------------//
+
+//*******************************//
+//            Buttons
+//*******************************//
+
+.ts.buttons
+    display: inline-flex
+
+.ts.buttons .ts.button
+
+.ts.buttons:not(.-separated) .ts.button:not(:last-child) button
+    border-top-right-radius   : 0
+    border-bottom-right-radius: 0
+
+.ts.buttons:not(.-separated) .ts.button:not(:first-child) button
+    border-top-left-radius   : 0
+    border-bottom-left-radius: 0
+
+.ts.buttons:not(.-separated) .ts.button:not(:last-child)
+    margin-right: var(--buttonGap)
+
+//-------------------//
+//     Separated
+//-------------------//
+
+.ts.buttons .ts.button
+
+.ts.buttons.-separated .ts.button:not(:last-child) button
+    margin-right: var(--absoluteMediumGap)
+
+//-------------------//
+//     Stackable
+//-------------------//
+
+.ts.buttons.-stackable
+    +respond-to(minimal)
+        flex-direction: column
+
+.ts.buttons.-stackable.-separated .ts.button:not(:last-child)
+    +respond-to(minimal)
+        margin-bottom: var(--absoluteMediumGap)
+
+.ts.buttons.-stackable:not(.-separated) .ts.button button
+    +respond-to(minimal)
+        border-radius: var(--defaultBorderRadius)
+
+.ts.buttons.-stackable:not(.-separated) .ts.button:not(:first-child) button
+    +respond-to(minimal)
+        border-top-left-radius : 0
+        border-top-right-radius: 0
+
+.ts.buttons.-stackable:not(.-separated) .ts.button:not(:last-child) button
+    +respond-to(minimal)
+        border-bottom-left-radius : 0
+        border-bottom-right-radius: 0
+
+//-------------------//
+//      Vertical
+//-------------------//
+
+.ts.buttons.-vertical
+    display: block
+
+.ts.buttons.-vertical .ts.button
+    display: block
+
+.ts.buttons.-vertical:not(.-separated) .ts.button button
+    border-radius: var(--defaultBorderRadius)
+
+.ts.buttons.-vertical:not(.-separated) .ts.button:not(:first-child) button
+    border-top-left-radius : 0
+    border-top-right-radius: 0
+
+.ts.buttons.-vertical:not(.-separated) .ts.button:not(:last-child) button
+    border-bottom-left-radius : 0
+    border-bottom-right-radius: 0
+
+.ts.buttons.-vertical.-separated .ts.button:not(:last-child)
+    margin-bottom: var(--absoluteMediumGap)
+
+//-------------------//
+//        Or
+//-------------------//
+
+.ts.buttons > .or
+    --horizontalOffset: var(--buttonGap)
+
+    position   : relative
+    z-index    : $z_button_or
+    user-select: none
+
+.ts.buttons > .or::before
+    position     : absolute
+    text-align   : center
+    border-radius: var(--defaultCircularBorderRadius)
+    content      : "或"
+    top          : 50%
+    left         : 50%
+    transform    : translateX(calc(-50% - var(--horizontalOffset))) translateY(-50%)
+    background   : var(--defaultBackgroundColor)
+    width        : calc(var(--verticalPadding) + 1em)
+    height       : calc(var(--verticalPadding) + 1em)
+    line-height  : calc(var(--verticalPadding) + 1em)
+    color        : var(--defaultSecondaryTextColor)
+    font-style   : normal
+    font-weight  : 500
+
+.ts.buttons > .or[data-text]::before
+    content: attr(data-text)
+
+.ts.buttons.-stackable > .or
+    +respond-to(minimal)
+        --horizontalOffset: 0px
+
+        width : 100%
+        height: var(--absoluteMediumGap)

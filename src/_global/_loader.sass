@@ -1,0 +1,37 @@
+@keyframes loader-spin
+    from
+        transform: translate(-50%, -50%) rotate(0deg)
+    to
+        transform: translate(-50%, -50%) rotate(360deg)
+
+//-------------------//
+//
+//-------------------//
+
+@mixin loader-apply()
+    --loaderSize: var(--relativeMedium)
+
+    &::before
+        position     : absolute
+        content      : ''
+        top          : 50%
+        left         : 50%
+        transform    : translate(-50%, -50%)
+        width        : var(--loaderSize)
+        height       : var(--loaderSize)
+        border-radius: var(--defaultCircularBorderRadius)
+        border       : var(--loaderWidth, .2em) solid var(--loaderFillColor, rgba(200, 200, 200, 0.45))
+
+    &::after
+        position     : absolute
+        content      : ''
+        top          : 50%
+        left         : 50%
+        width        : var(--loaderSize)
+        height       : var(--loaderSize)
+        animation    : loader-spin .5s linear infinite
+        border-radius: var(--defaultCircularBorderRadius)
+        border-color : #fff transparent transparent
+        border-style : solid
+        border-width : var(--loaderWidth, .2em)
+        border-color : var(--loaderLineColor, #999) transparent transparent
