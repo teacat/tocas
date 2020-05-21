@@ -1,3 +1,7 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
 .ts.quote {
     /**
      * Block
@@ -6,6 +10,7 @@
     --block_padding         : var(--default__block_padding);
     --block_background-color: var(--default__block_secondary-background-color);
     --block_line-color      : var(--default__block_line-color);
+    --block_margin          : var(--default__block_margin);
 
     /**
      * Typography
@@ -17,6 +22,10 @@
     --typography_symbol-color     : var(--default__typography_symbol-color);
     --typography_description-color: var(--default__typography_description-color);
 }
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
 
 .ts.quote {
     position   : relative;
@@ -36,6 +45,18 @@
     font-family: Georgia, "Times New Roman", Times;
     color      : var(--typography_symbol-color);
     line-height: 1;
+}
+
+.ts.quote:first-child {
+    margin-block-start: 0;
+}
+
+.ts.quote:last-child {
+    margin-block-end: 0;
+}
+
+.ts.quote:not(:first-child) {
+    margin-block-start: var(--block_margin);
 }
 
 /* ==========================================================================

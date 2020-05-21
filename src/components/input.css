@@ -1,8 +1,13 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
 .ts.input {
     /**
      * Block
      */
 
+    --block_margin                    : var(--default__block_margin);
     --block_border-radius             : var(--default__block_border-radius);
     --block_border-color              : var(--default__block_border-color);
     --block_padding                   : var(--default__block_padding);
@@ -33,6 +38,10 @@
     --typography_line-height      : var(--default__typography_line-height);
 }
 
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
 .ts.input {
     position   : relative;
     display    : inline-block;
@@ -40,6 +49,22 @@
     color      : var(--element_color);
     line-height: var(--element_line-height);
 }
+
+.ts.input:first-child {
+    margin-block-start: 0;
+}
+
+.ts.input:last-child {
+    margin-block-end: 0;
+}
+
+.ts.input:not(:first-child) {
+    margin-block-start: var(--block_margin);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
 
 .ts.input input,
 .ts.input textarea {
@@ -71,12 +96,6 @@
 .ts.input textarea::placeholder {
     color: var(--typography_placeholder-color);
 }
-
-/* ==========================================================================
-   Structure
-   ========================================================================== */
-
-
 
 /* ==========================================================================
    Variations
