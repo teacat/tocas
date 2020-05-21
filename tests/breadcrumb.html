@@ -1,89 +1,124 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<title>breadcrumb.html</title>
-<link rel="stylesheet" href="../dist/tocas.css">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="../dist/tocas.js"></script>
-<style type="text/css">
-body > .sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 300px;
-    overflow-y: auto;
-    padding: 15px;
-    box-sizing: border-box;
-    border-right: 1px solid #eee;
-}
-
-body > .sidebar .sidebar__link {
-    display: block;
-    background: #EEE;
-    padding: 10px 15px;
-    color: #2f2f2f;
-    text-decoration: none;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-body {
-    padding: 15px;
-    padding-left: 315px;
-    overflow-y: auto;
-}
-
-body > .section__header {
-    font-size: 28px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    display: block;
-    color: #333;
-    text-decoration: none;
-    clear: both;
-    outline: none;
-}
-
-body > .section__header:not(:first-child) {
-    margin-top: 50px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./../src/tocas.css">
+    <title>Breadcrumb</title>
+    <style>
+        body {
+            padding: 100px;
+        }
+    </style>
 </head>
 <body>
-    <!-- .sidebar -->
-    <div class="sidebar">
-        <a href="#Bulleted" class="sidebar__link">Bulleted</a><a href="#Slashed" class="sidebar__link">Slashed</a><a href="#Chevroned" class="sidebar__link">Chevroned</a><a href="#Disabled" class="sidebar__link">Disabled</a><a href="#Active" class="sidebar__link">Active</a><a href="#Link" class="sidebar__link">Link</a><a href="#Divider" class="sidebar__link">Divider</a><a href="#Sizes" class="sidebar__link">Sizes</a>
+    <h1>Breadcrumb</h1>
+    <div class="ts breadcrumb">
+        <div class="item">Item</div>
+        <div class="item">Item</div>
+        <div class="item">Item</div>
     </div>
-    <!-- / .sidebar -->
 
-    <!-- .section -->
-    <a id="Bulleted" href="#Bulleted" class="section__header">Bulleted</a><div class="ts breadcrumb -bulleted"><div class="item">朋人又覺</div><div class="item">落快亮方</div><div class="item">中會道</div></div><a id="Slashed" href="#Slashed" class="section__header">Slashed</a><div class="ts breadcrumb -slashed"><div class="item">朋人又覺</div><div class="item">落快亮方</div><div class="item">中會道</div></div><a id="Chevroned" href="#Chevroned" class="section__header">Chevroned</a><div class="ts breadcrumb -chevroned"><div class="item">朋人又覺</div><div class="item">落快亮方</div><div class="item">中會道</div></div><a id="Disabled" href="#Disabled" class="section__header">Disabled</a><div class="ts breadcrumb -chevroned"><div class="item -disabled">停用文字</div><div class="item">朋人又覺</div><div class="item">落快亮方</div></div><a id="Active" href="#Active" class="section__header">Active</a><div class="ts breadcrumb -chevroned"><div class="item">朋人又覺</div><div class="item">落快亮方</div><div class="item -active">啟用文字</div></div><a id="Link" href="#Link" class="section__header">Link</a><div class="ts breadcrumb -bulleted"><a class="item" href="#!">連結文字</a><div class="item">落快亮方</div><div class="item">中會道：<a href="#!">連結文字</a></div></div><a id="Divider" href="#Divider" class="section__header">Divider</a><div class="ts breadcrumb"><div class="item">朋人又覺</div><div class="divider"><i class="icon" data-icon="arrow-right"></i></div><div class="item">落快亮方</div><div class="divider"><i class="icon" data-icon="arrow-right"></i></div><div class="item">中會道</div></div><p></p><div class="ts breadcrumb"><div class="item">朋人又覺</div><div class="divider"><i class="icon" data-icon="caret-right"></i></div><div class="item">落快亮方</div><div class="divider"><i class="icon" data-icon="caret-right"></i></div><div class="item">中會道</div></div><p></p><div class="ts breadcrumb"><div class="item">朋人又覺</div><div class="divider">/</div><div class="item">落快亮方</div><div class="divider">/</div><div class="item">中會道</div></div><a id="Sizes" href="#Sizes" class="section__header">Sizes</a><div class="ts breadcrumb -mini -bulleted"><div class="item">迷你</div><div class="item">迷你</div><div class="item">迷你</div></div><p></p><div class="ts breadcrumb -tiny -bulleted"><div class="item">微小</div><div class="item">微小</div><div class="item">微小</div></div><p></p><div class="ts breadcrumb -small -bulleted"><div class="item">小型</div><div class="item">小型</div><div class="item">小型</div></div><p></p><div class="ts breadcrumb -bulleted"><div class="item">標準</div><div class="item">標準</div><div class="item">標準</div></div><p></p><div class="ts breadcrumb -large -bulleted"><div class="item">大型</div><div class="item">大型</div><div class="item">大型</div></div><p></p><div class="ts breadcrumb -big -bulleted"><div class="item">更大</div><div class="item">更大</div><div class="item">更大</div></div><p></p><div class="ts breadcrumb -huge -bulleted"><div class="item">巨大</div><div class="item">巨大</div><div class="item">巨大</div></div><p></p><div class="ts breadcrumb -massive -bulleted"><div class="item">重量級</div><div class="item">重量級</div><div class="item">重量級</div></div>
-    <!-- / .section -->
-    <script>
-        var mySocket = new WebSocket("ws://localhost:8356/ws");
-        mySocket.onmessage = function(e) {
-            var d = JSON.parse(e.data)
-            if (d.update == "sass") {
-                for (var link of document.querySelectorAll("link[rel=stylesheet]")) {
-                    link.href = link.href.replace(/\?.*|$/, "?ts=" + new Date().getTime())
-                }
-            }
-        }
+    <h1>Bulleted</h1>
+    <div class="ts breadcrumb -bulleted">
+        <div class="item">Item</div>
+        <div class="item">Item</div>
+        <div class="item">Item</div>
+    </div>
 
-        document.addEventListener('scroll', function( event ) {
-            var top = 9999
-            var el
+    <h1>Slashed</h1>
+    <div class="ts breadcrumb -slashed">
+        <div class="item">Item</div>
+        <div class="item">Item</div>
+        <div class="item">Item</div>
+    </div>
 
-            document.querySelectorAll('.section__header').forEach((v) => {
-                if (v.getBoundingClientRect().top > top || v.getBoundingClientRect().top < 0) {
-                    return
-                }
-                top = v.getBoundingClientRect().top
-                el  = v
-            })
-            window.location.hash = el.hash.substr(1)
-        } )
-    </script>
+    <h1>Chevroned</h1>
+    <div class="ts breadcrumb -chevroned">
+        <div class="item">Item</div>
+        <div class="item">Item</div>
+        <div class="item">Item</div>
+    </div>
+
+    <h1>Disabled</h1>
+    <div class="ts breadcrumb -chevroned">
+        <div class="item">Item</div>
+        <div class="item -disabled">Disabled</div>
+        <div class="item">Item</div>
+    </div>
+
+    <h1>Active</h1>
+    <div class="ts breadcrumb -bulleted">
+        <div class="item">Item</div>
+        <div class="item -active">Active</div>
+        <div class="item">Item</div>
+    </div>
+
+    <h1>Divider</h1>
+    <div class="ts breadcrumb">
+        <div class="item">Item</div>
+        <div class="divider">/</div>
+        <div class="item">Item</div>
+        <div class="divider">/</div>
+        <div class="item">Item</div>
+    </div>
+
+    <h1>Link</h1>
+    <div class="ts breadcrumb -slashed">
+        <div class="item">Item</div>
+        <a href="#!" class="item">Link</a>
+        <a href="#!" class="item -disabled">Disabled</a>
+        <a href="#!" class="item -active">Active</a>
+        <div class="item">搜尋：<a href="#!">連結</a></div>
+    </div>
+
+    <h1>Sizes</h1>
+    <div class="ts breadcrumb -mini -slashed">
+        <div class="item">Mini</div>
+        <div class="item">Mini</div>
+        <div class="item">Mini</div>
+    </div>
+    <br>
+    <div class="ts breadcrumb -tiny -slashed">
+        <div class="item">Tiny</div>
+        <div class="item">Tiny</div>
+        <div class="item">Tiny</div>
+    </div>
+    <br>
+    <div class="ts breadcrumb -small -slashed">
+        <div class="item">Small</div>
+        <div class="item">Small</div>
+        <div class="item">Small</div>
+    </div>
+    <br>
+    <div class="ts breadcrumb -slashed">
+        <div class="item">Medium</div>
+        <div class="item">Medium</div>
+        <div class="item">Medium</div>
+    </div>
+    <br>
+    <div class="ts breadcrumb -large -slashed">
+        <div class="item">Large</div>
+        <div class="item">Large</div>
+        <div class="item">Large</div>
+    </div>
+    <br>
+    <div class="ts breadcrumb -big -slashed">
+        <div class="item">Big</div>
+        <div class="item">Big</div>
+        <div class="item">Big</div>
+    </div>
+    <br>
+    <div class="ts breadcrumb -huge -slashed">
+        <div class="item">Huge</div>
+        <div class="item">Huge</div>
+        <div class="item">Huge</div>
+    </div>
+    <br>
+    <div class="ts breadcrumb -massive -slashed">
+        <div class="item">Massive</div>
+        <div class="item">Massive</div>
+        <div class="item">Massive</div>
+    </div>
 </body>
 </html>

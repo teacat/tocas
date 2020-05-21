@@ -1,0 +1,91 @@
+.ts.quote {
+    /**
+     * Block
+     */
+
+    --block_padding         : var(--default__block_padding);
+    --block_background-color: var(--default__block_secondary-background-color);
+    --block_line-color      : var(--default__block_line-color);
+
+    /**
+     * Typography
+     */
+
+    --typography_font-size        : var(--default__typography_font-size);
+    --typography_color            : var(--default__typography_color);
+    --typography_line-height      : var(--default__typography_line-height);
+    --typography_symbol-color     : var(--default__typography_symbol-color);
+    --typography_description-color: var(--default__typography_description-color);
+}
+
+.ts.quote {
+    position   : relative;
+    padding    : 1em 0 .5em 3em;
+    margin-left: 0;
+    font-size  : var(--typography_font-size);
+    color      : var(--typography_color);
+    line-height: var(--typography_line-height);
+}
+
+.ts.quote::before {
+    content    : "“";
+    position   : absolute;
+    top        : 0;
+    left       : 0;
+    font-size  : 5em;
+    font-family: Georgia, "Times New Roman", Times;
+    color      : var(--typography_symbol-color);
+    line-height: 1;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+/**
+ * Cite
+ */
+
+.ts.quote cite {
+    display   : inline-block;
+    font-style: normal;
+    color     : var(--typography_description-color);
+}
+
+.ts.quote cite::after {
+    content: " —";
+}
+
+.ts.quote cite::before {
+    content: "— ";
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Secondary
+ */
+
+.ts.quote.-secondary {
+    padding    : 0 0 0 1.6em;
+    border-left: 3px solid var(--block_line-color);
+}
+
+.ts.quote.-secondary::before {
+    content: none;
+}
+
+/**
+ * Block
+ */
+
+.ts.quote.-block {
+    padding   : var(--block_padding);
+    background: var(--block_background-color);
+}
+
+.ts.quote.-block::before {
+    content: none;
+}

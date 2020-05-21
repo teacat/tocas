@@ -1,0 +1,304 @@
+.ts.button {
+    background: #f0f0f0;
+    border: none;
+    box-shadow: none;
+    font-size: .95rem;
+    font-weight: 500;
+    color: #333;
+    padding: .6rem 1.2rem;
+    font-family: var(--global_fontFamily);
+    border-radius: var(--global_borderRadius);
+    transition: box-shadow .1s ease-in-out;
+    user-select: none;
+}
+
+.ts.button:hover {
+    background: #e8e8e8;
+    cursor: pointer;
+}
+
+.ts.button:focus {
+    box-shadow: 0 0 0 2px #dddddd;
+    outline: none;
+}
+
+.ts.button:active {
+
+}
+
+/* ==========================================================================
+   Animation
+   ========================================================================== */
+
+@keyframes button-pulse {
+    0% {
+        opacity: 1;
+        transform: scale(1) translateY(-1%) translateX(-1%);
+    }
+    50% {
+        opacity: 0;
+        transform: scale(1.5) translateY(-1%) translateX(-1%);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.5) translateY(-1%) translateX(-1%);
+    }
+}
+
+
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+/**
+ * Field
+ */
+
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Outlined
+ */
+
+.ts.button.-outlined {
+    border: 2px solid #f0f0f0;
+    background: transparent;
+}
+
+.ts.button.-outlined:hover {
+    border-color: #e8e8e8;
+}
+
+/**
+ * Link Outlined
+ */
+
+.ts.button.-outlined.-link {
+    border: 2px solid #f0f0f0;
+    background: transparent;
+}
+
+.ts.button.-outlined.-link:hover {
+    border-color: #f0f0f0;
+    text-decoration: underline;
+}
+
+/**
+ * Attached
+ */
+
+.ts.button.-top-attached {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-bottom: 0;
+}
+
+.ts.button.-attached {
+    border-radius: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.ts.button.-bottom-attached {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    margin-top: 0;
+}
+
+/**
+ * Pulsing
+ */
+
+.ts.button.-pulsing {
+    position: relative;
+}
+
+.ts.button.-pulsing::before {
+    content : '';
+    display : block;
+    position: absolute;
+    width   : 100%;
+    height  : 100%;
+    top     : 0;
+    left    : 0;
+
+    background   : inherit;
+    border-radius: inherit;
+    transition   : opacity .3s, transform .3s;
+    animation    : button-pulse 1.5s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+
+    z-index: var(--z_button_pulsingBefore);
+}
+
+/**
+ * Circular
+ */
+
+.ts.button.-circular {
+    border-radius: 500em;
+}
+
+/**
+ * Disabled
+ */
+
+.ts.button.-disabled,
+.ts.button[disabled] {
+    background: #f9f9f9;
+    color: #b7b7b7;
+    pointer-events: none;
+}
+
+/**
+ * Icon
+ */
+
+.ts.button.-icon {
+    width: 44px;
+    height: 42px;
+    vertical-align: top;
+    line-height: 0;
+    position: relative;
+    font-size: 1.18em;
+}
+
+.ts.button.-icon i.icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/**
+ * Side Icon
+ */
+
+.ts.button.-left-icon i.icon {
+    margin-right: 10px;
+}
+.ts.button.-right-icon i.icon {
+    margin-left: 10px;
+}
+
+/**
+ * Labeled Icon
+ */
+
+.ts.button.-left-labeled-icon,
+.ts.button.-right-labeled-icon {
+    position: relative;
+}
+
+.ts.button.-left-labeled-icon {
+    padding-left: 66px;
+}
+
+.ts.button.-left-labeled-icon i.icon,
+.ts.button.-right-labeled-icon i.icon {
+    background: #e6e6e6;
+    padding: .6rem 1rem;
+    position: absolute;
+    width: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    bottom: 0;
+    font-size: 1.18em;
+}
+
+.ts.button.-left-labeled-icon i.icon {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    left: 0;
+}
+
+.ts.button.-right-labeled-icon {
+    padding-right: 66px;
+}
+
+.ts.button.-right-labeled-icon i.icon {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    right: 0;
+}
+
+/**
+ * Sizes
+ */
+
+.ts.button.-mini {
+    font-size: .75rem;
+}
+
+.ts.button.-tiny {
+    font-size: .85rem;
+}
+
+.ts.button.-small {
+    font-size: .9rem;
+}
+
+.ts.button.-large {
+    font-size: 1.2rem;
+}
+
+.ts.button.-big {
+    font-size: 1.4rem;
+}
+
+.ts.button.-huge {
+    font-size: 1.6rem;
+}
+
+.ts.button.-massive {
+    font-size: 1.8rem;
+}
+
+/**
+ * Fluid
+ */
+
+.ts.button.-fluid {
+    width: 100%;
+}
+
+/**
+ * Detailed
+ */
+
+.ts.button.-detailed .header {
+    font-weight: bold;
+}
+
+.ts.button.-detailed .description {
+    font-weight: normal;
+    font-size: .9rem;
+}
+
+/**
+ * Link
+ */
+
+.ts.button.-link:not(.-outlined) {
+    color: #005d7e;
+    background: transparent;
+    display: inline;
+    font-weight: normal;
+    font-size: 1rem;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 1px;
+    user-select: text;
+}
+
+.ts.button.-link:not(.-outlined):hover {
+    border-bottom-width: 2px;
+    padding-bottom: 0;
+}

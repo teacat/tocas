@@ -1,0 +1,358 @@
+.ts.input {
+    /**
+     * Block
+     */
+
+    --block_border-radius             : var(--default__block_border-radius);
+    --block_border-color              : var(--default__block_border-color);
+    --block_padding                   : var(--default__block_padding);
+    --block_focus-border-color        : var(--default__block_focus-border-color);
+    --block_focus-outline-color       : var(--default__block_focus-outline-color);
+    --block_hover-border-color        : var(--default__block_hover-border-color);
+    --block_disabled-border-color     : var(--default__block_disabled-border-color);
+    --block_secondary-background-color: var(--default__block_secondary-background-color);
+
+    /**
+     * Element
+     */
+
+    --element_font-size       : var(--default__element_font-size);
+    --element_vertical-padding: var(--default__element_vertical-padding);
+    --element_color           : var(--default__typography_color);
+    --element_line-height     : var(--default__typography_line-height);
+
+    /**
+     * Typography
+     */
+
+    --typography_disabled-color   : var(--default__typography_disabled-color);
+    --typography_placeholder-color: var(--default__typography_placeholder-color);
+    --typography_description-color: var(--default__typography_description-color);
+    --typography_font-size        : var(--default__typography_font-size);
+    --typography_color            : var(--default__typography_color);
+    --typography_line-height      : var(--default__typography_line-height);
+}
+
+.ts.input {
+    position   : relative;
+    display    : inline-block;
+    font-size  : var(--element_font-size);
+    color      : var(--element_color);
+    line-height: var(--element_line-height);
+}
+
+.ts.input input,
+.ts.input textarea {
+    border       : 1px solid var(--block_border-color);
+    border-radius: var(--block_border-radius);
+    padding      : var(--element_vertical-padding) var(--block_padding);
+    font-family  : var(--global_font-family);
+    font-size    : var(--element_font-size);
+    color        : var(--element_color);
+    line-height  : var(--element_line-height);
+    outline      : none;
+    box-shadow   : none;
+    resize       : none;
+}
+
+.ts.input input:hover,
+.ts.input textarea:hover {
+    border-color: var(--block_hover-border-color);
+}
+
+.ts.input input:focus,
+.ts.input textarea:focus {
+    border-color: var(--block_focus-border-color);
+    /*box-shadow  : 0 0 0 2px var(--block_focus-outline-color);*/
+    outline     : none;
+}
+
+.ts.input input::placeholder,
+.ts.input textarea::placeholder {
+    color: var(--typography_placeholder-color);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+.ts.input {
+
+}
+
+/**
+ * Resizable
+ */
+
+.ts.input.-resizable textarea {
+    resize: vertical;
+}
+
+/**
+ * Basic
+ */
+
+.ts.input.-basic input,
+.ts.input.-basic textarea {
+    border: 0;
+}
+
+/**
+ * Underlined
+ */
+
+.ts.input.-underlined input,
+.ts.input.-underlined textarea {
+    border       : 0;
+    border-radius: 0;
+    border-bottom: 1px solid var(--block_border-color);
+}
+
+.ts.input.-underlined input:hover,
+.ts.input.-underlined textarea:hover {
+    border-color: var(--block_hover-border-color);
+}
+
+.ts.input.-underlined input:focus,
+.ts.input.-underlined textarea:focus {
+    border       : 0;
+    box-shadow   : none;
+    border-bottom: 1px solid var(--block_focus-border-color);
+    box-shadow   : inset 0px -11px 0px -10px var(--block_focus-border-color);
+}
+
+/**
+ * Secondary
+ */
+
+.ts.input.-secondary input,
+.ts.input.-secondary textarea {
+    background: var(--block_secondary-background-color);
+}
+
+/**
+ * Circular
+ */
+
+.ts.input.-circular input,
+.ts.input.-circular textarea {
+    border-radius: 10em
+}
+
+/**
+ * Centered
+ */
+
+.ts.input.-centered {
+    margin : 0 auto;
+    display: block;
+    width  : fit-content;
+}
+
+/**
+ * Fluid
+ */
+
+.ts.input.-fluid,
+.ts.input.-fluid input,
+.ts.input.-fluid textarea {
+    width: 100%;
+}
+
+/**
+ * Disabled
+ */
+
+.ts.input.-disabled input,
+.ts.input.-disabled textarea,
+.ts.input input[disabled],
+.ts.input textarea[disabled] {
+    background    : transparent;
+    border-color  : var(--block_disabled-border-color) !important;
+    color         : var(--typography_disabled-color) !important;
+    pointer-events: none;
+    user-select   : none;
+}
+
+/**
+ * Fitted
+ */
+
+.ts.input.-fitted input,
+.ts.input.-fitted textarea {
+    padding: 0;
+    border : 0;
+}
+
+.ts.input.-fitted.-left-icon i.icon,
+.ts.input.-fitted.-right-icon i.icon {
+    padding: 0;
+}
+
+.ts.input.-fitted.-left-icon input,
+.ts.input.-fitted.-left-icon textarea {
+    padding-left: calc(var(--block_padding) * 2);
+}
+
+.ts.input.-fitted.-right-icon input,
+.ts.input.-fitted.-right-icon textarea {
+    padding-right: calc(var(--block_padding) * 2);
+}
+
+/**
+ * Icon
+ */
+
+.ts.input.-left-icon i.icon,
+.ts.input.-right-icon i.icon {
+    padding    : var(--element_vertical-padding) var(--block_padding);
+    position   : absolute;
+    font-size  : 16px;
+    color      : #999;
+    box-sizing : content-box;
+    line-height: calc(var(--element_line-height) - 0.2);
+}
+
+.ts.input.-left-icon i.icon {
+    left: 0;
+}
+
+.ts.input.-right-icon i.icon {
+    right: 0;
+}
+
+.ts.input.-left-icon input,
+.ts.input.-left-icon textarea {
+    padding-left: calc(var(--block_padding) * 3);
+}
+
+.ts.input.-right-icon input,
+.ts.input.-right-icon textarea {
+    padding-right: calc(var(--block_padding) * 3);
+}
+
+/**
+ * PIN
+ */
+
+.ts.input.-pin input {
+    width     : calc(var(--block_padding) * 2 + 1.5em);
+    text-align: center;
+}
+
+.ts.input.-pin input::-webkit-outer-spin-button,
+.ts.input.-pin input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin            : 0;
+}
+
+.ts.input.-pin input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/**
+ * Labeled
+ */
+
+.ts.input.-left-labeled,
+.ts.input.-right-labeled {
+    display: inline-flex;
+}
+
+.ts.input.-left-labeled .ts.label,
+.ts.input.-right-labeled .ts.label {
+    font-size    : var(--global_secondary-font-size);
+    padding-left : 1rem;
+    padding-right: 1rem;
+    border       : 1px solid var(--block_border-color);
+}
+
+.ts.input.-left-labeled > :not(:first-child),
+.ts.input.-right-labeled > :not(:first-child) {
+    border-top-left-radius   : 0;
+    border-bottom-left-radius: 0;
+}
+.ts.input.-left-labeled > *:not(:first-child):not(input):not(:focus),
+.ts.input.-right-labeled > *:not(:first-child):not(input):not(:focus) {
+    border-left: 0;
+}
+.ts.input.-left-labeled > input:not(:first-child):not(:focus):not(:hover),
+.ts.input.-right-labeled > input:not(:first-child):not(:focus):not(:hover) {
+    border-left-color: transparent;
+}
+
+.ts.input.-left-labeled > :not(:last-child),
+.ts.input.-right-labeled > :not(:last-child) {
+    border-top-right-radius   : 0;
+    border-bottom-right-radius: 0;
+}
+
+.ts.input.-right-labeled .ts.label {
+
+}
+
+/**
+ * Quantity
+ */
+
+.ts.input.-quantity {
+
+}
+
+.ts.input.-quantity {
+    display: inline-flex;
+}
+
+.ts.input.-quantity input::-webkit-outer-spin-button,
+.ts.input.-quantity input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin            : 0;
+}
+
+.ts.input.-quantity input[type="number"] {
+    -moz-appearance   : textfield;
+    border-left-color : transparent;
+    border-right-color: transparent;
+
+}
+
+.ts.input.-quantity :first-child {
+    border-top-left-radius   : var(--block_border-radius);
+    border-bottom-left-radius: var(--block_border-radius);
+}
+
+.ts.input.-quantity :not(:first-child):not(:last-child) {
+    border-radius: 0;
+}
+
+.ts.input.-quantity :last-child {
+    border-top-right-radius   : var(--block_border-radius);
+    border-bottom-right-radius: var(--block_border-radius);
+}
+
+.ts.input.-quantity input[type="number"]:hover {
+    border-left-color : var(--block_hover-border-color);
+    border-right-color: var(--block_hover-border-color);
+}
+
+.ts.input.-quantity input[type="number"]:focus {
+    border-left-color : var(--block_focus-border-color);
+    border-right-color: var(--block_focus-border-color);
+}
+
+.ts.input.-quantity button {
+    background: transparent;
+    box-shadow: none;
+    border: 1px solid var(--block_border-color);
+    font-size: 16px;
+    padding   : .28em var(--block_padding);
+    color        : var(--element_color);
+    line-height  : var(--typography_line-height);
+    box-sizing: border-box;
+}

@@ -1,0 +1,294 @@
+.ts.slate {
+    /**
+     * Block
+     */
+
+    --block_border-radius                   : var(--default__block_border-radius);
+    --block_border-color                    : var(--default__block_border-color);
+    --block_padding                         : calc(var(--default__block_padding) * 3);
+    --block_secondary-background-color      : var(--default__block_secondary-background-color);
+    --block_hover-secondary-background-color: var(--default__block_hover-secondary-background-color);
+    --block_hover-border-color              : var(--default__block_hover-border-color);
+
+    /**
+     * Typography
+     */
+
+    --typography_font-size        : var(--default__typography_font-size);
+    --typography_color            : var(--default__typography_color);
+    --typography_line-height      : var(--default__typography_line-height);
+    --typography_description-color: var(--default__typography_description-color);
+    --typography_margin           : var(--default__typography_margin);
+    --typography_header-font-size : 1.375rem;
+}
+
+.ts.slate {
+    position     : relative;
+    background   : var(--block_secondary-background-color);
+    padding      : calc(var(--block_padding) / 1.5) var(--block_padding);
+    border-radius: var(--block_border-radius);
+    border       : 0;
+    box-shadow   : none;
+    outline      : 0;
+    box-sizing   : border-box;
+    width        : 100%;
+    font-size    : var(--typography_font-size);
+    color        : var(--typography_color);
+    line-height  : var(--typography_line-height);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+/**
+ * Header
+ */
+
+.ts.slate .header {
+    font-size  : var(--typography_header-font-size);
+    font-weight: 500;
+}
+
+/**
+ * Description
+ */
+
+.ts.slate .description {
+    color: var(--typography_description-color);
+}
+
+/**
+ * Actions
+ */
+
+.ts.slate .action {
+    margin-top: calc(var(--typography_margin) * 2);
+}
+
+/**
+ * Image
+ */
+
+.ts.slate .image {
+    left          : 0;
+    top           : 0;
+    right         : 0;
+    bottom        : 0;
+    overflow      : hidden;
+    position      : absolute;
+    pointer-events: none;
+    border-radius : var(--borderRadius);
+}
+
+.ts.slate .image img {
+    width     : 100%;
+    height    : 100%;
+    object-fit: cover;
+}
+
+.ts.slate .image ~ .header,
+.ts.slate .image ~ .description {
+    color         : #fff;
+    text-rendering: optimizelegibility;
+    text-shadow   : 0 0 3px rgba(0,0,0,0.8);
+    z-index       : var(--z_slate_typography);
+    position      : relative;
+}
+
+/**
+ * Symbol
+ */
+
+.ts.slate .symbol {
+    position      : absolute;
+    right         : 0;
+    bottom        : 0;
+    height        : 11rem;
+    font-size     : 8rem;
+    color         : var(--typography_color);
+    opacity       : 0.08;
+    overflow      : hidden;
+    margin        : 0;
+    user-select   : none;
+    pointer-events: none;
+}
+
+.ts.slate .symbol i.icon {
+    line-height: 1;
+}
+
+/**
+ * Slate Menu
+ */
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Attached
+ */
+
+.ts.slate.-top-attached {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius : 0;
+    margin-bottom             : 0;
+}
+
+.ts.slate.-attached {
+    border-radius: 0;
+    margin-top   : 0;
+    margin-bottom: 0;
+}
+
+.ts.slate.-bottom-attached {
+    border-top-right-radius: 0;
+    border-top-left-radius : 0;
+    margin-top             : 0;
+}
+
+/**
+ * Fluid
+ */
+
+.ts.slate.-fluid {
+    border-radius: 0;
+}
+
+/**
+ * Basic
+ */
+
+.ts.slate.-basic {
+    background: transparent;
+}
+
+/**
+ * Aligns
+ */
+
+.ts.slate.-left-aligned {
+    text-align: left;
+}
+
+.ts.slate.-center-aligned {
+    text-align: center;
+}
+
+.ts.slate.-right-aligned {
+    text-align: right;
+}
+
+/**
+ * Padded
+ */
+
+.ts.slate.-padded {
+    padding: calc(var(--block_padding) * 1.25);
+}
+
+.ts.slate.-vertically-padded {
+    padding-top   : calc(var(--block_padding) * 1.25);
+    padding-bottom: calc(var(--block_padding) * 1.25);
+}
+
+.ts.slate.-horizontally-padded {
+    padding-left : calc(var(--block_padding) * 1.25);
+    padding-right: calc(var(--block_padding) * 1.25);
+}
+
+/**
+ * Secondary
+ */
+
+.ts.slate.-secondary {
+    background: transparent;
+    border    : 2px solid var(--block_border-color);
+}
+
+/**
+ * Tertiary
+ */
+
+.ts.slate.-tertiary {
+    background: transparent;
+    border    : 2px dashed var(--block_border-color);
+}
+
+/**
+ * Interactive
+ */
+
+.ts.slate.-interactive {
+    font-family: var(--global_font-family);
+}
+
+.ts.slate.-interactive:hover {
+    cursor    : pointer;
+    background: var(--block_hover-secondary-background-color);
+}
+
+.ts.slate.-interactive.-secondary:hover,
+.ts.slate.-interactive.-tertiary:hover {
+    background  : transparent;
+    border-color: var(--block_hover-border-color);
+}
+
+/**
+ * Fitted
+ */
+
+.ts.slate.-fitted {
+    padding: 0;
+}
+
+.ts.slate.-vertically-fitted {
+    padding-top   : 0;
+    padding-bottom: 0;
+}
+
+.ts.slate.-horizontally-fitted {
+    padding-left : 0;
+    padding-right: 0;
+}
+
+/**
+ * Sizes
+ */
+
+.ts.slate.-massive {
+    --typography_header-font-size: 2rem;
+
+    font-size: 1.125rem;
+}
+
+.ts.slate.-huge {
+    --typography_header-font-size: 1.75rem;
+
+    font-size: 1.0625rem;
+}
+
+.ts.slate.-big {
+    --typography_header-font-size: 1.625rem;
+}
+
+.ts.slate.-large {
+    --typography_header-font-size: 1.5rem;
+}
+
+.ts.slate.-small {
+    --typography_header-font-size: 1.25rem;
+}
+
+.ts.slate.-tiny {
+    --typography_header-font-size: 1.125rem;
+
+    font-size: .9375rem;
+}
+
+.ts.slate.-mini {
+    --typography_header-font-size: 1rem;
+
+    font-size: .9375rem;
+}

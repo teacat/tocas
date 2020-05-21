@@ -23,13 +23,13 @@ func path(typ string) string {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	r := pathx.JoinDir(strings.Split(exe, "tocas/")[0], "tocas")
+	r := pathx.JoinDir(strings.Split(exe, "tocas-4/")[0], "tocas-4")
 
 	switch typ {
 	case "src":
 		return pathx.JoinDir(r, "src")
 	case "icon":
-		return pathx.Join(r, "src/_generated/_icon.map.sass")
+		return pathx.Join(r, "src/components/icon.map.css")
 	case "icons":
 		return pathx.JoinDir(r, "dist/fonts/icons")
 	case "/":
@@ -142,25 +142,16 @@ func main() {
 		// 遞迴每個圖示。
 		for k, v := range icons {
 			className := k
-			// 將新圖示中的每個分隔符號，轉換成另一個 CSS 類別名稱，
-			// 因為這樣才能符合 Tocas 的命名方式（如：`user-add` 變成 `user add`）。
-			// className := strings.Replace(k, "-", ".", -1)
-			// 將別名的 `alt` 縮寫改為正統的 `alternate` 名字。
-			// className = strings.Replace(k, ".alt.", ".alternate.", -1)
-			// 如果類別名稱比較特殊就脫逸字元作為暫時解法。
-			// if className == "500px" {
-			// 	className = "\\35 00px"
-			// }
 			// 替這次修改的樣式名稱建立一個 CSS 樣式選擇器。
-			selector := fmt.Sprintf(`i.icon[data-icon="%s"]:before`, className)
+			selector := fmt.Sprintf(`i.icon[data-icon="%s"]::before {`, className)
 
 			// 將這個圖示組合成一個 Sass 語法，稍會會收集所有語法且一次存入 Tocas 圖示原始碼中。
-			newContent += fmt.Sprintf("%s\n    ", selector)
+			newContent += fmt.Sprintf("%s\n", selector)
 			// 如果這個圖示是 Logo 商標的話，那麼就額外追加商標的樣式。
 			if v.Styles[0] == "brands" {
-				newContent += fmt.Sprintf("+extend(icon-brands)\n    ")
+				newContent += fmt.Sprintf("    font-family: \"IconsBrands\";\n")
 			}
-			newContent += fmt.Sprintf("content: \"\\%s\"\n", v.Unicode)
+			newContent += fmt.Sprintf("    content: \"\\%s\";\n}\n\n", v.Unicode)
 		}
 
 		// 將機器自動修改後的結果存入 Tocas 的圖示原始碼內，完成本次的自動升級。
