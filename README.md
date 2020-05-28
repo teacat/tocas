@@ -11,13 +11,12 @@
 <h4 align="center">支援響應式設計並基於 CSS3 的多元介面元件庫，可快速建置任何規模的網站且用法簡易。</h4>
 
 <p align="center">
-  <a href="https://github.com/TeaMeow/TocasUI/releases">
-    <img src="https://img.shields.io/github/release/teameow/tocasui.svg"
+  <a href="https://github.com/teacat/tocas/releases">
+    <img src="https://img.shields.io/github/release/teacat/tocas.svg"
          alt="GitHub Release">
   </a>
-  <a href="https://t.me/tocasui"><img src="./assets/images/badges/telegram.svg"></a>
-  <a href="https://github.com/TeaMeow/TocasUI/issues">
-      <img src="https://img.shields.io/github/issues/teameow/tocasui.svg">
+  <a href="https://github.com/teacat/tocas/issues">
+      <img src="https://img.shields.io/github/issues/teacat/tocas.svg">
   </a>
   <a href="https://opensource.org/licenses/MIT">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg">
@@ -83,5 +82,5 @@ MIT
 
 ---
 
-> [caris.events](https://caris.events) &nbsp;&middot;&nbsp;
-> Author [Yami Odymel](https://yami.io) &nbsp;&middot;&nbsp;
+> Group [卡莉絲伊繁星](https://caris.events) &nbsp;&middot;&nbsp;
+> Author [Yami Odymel](https://yami.io)
