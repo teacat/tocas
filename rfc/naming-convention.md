@@ -201,33 +201,30 @@ Tocas UI 在設計元件名稱與用法時所該遵循的注意事項和風格�
 
 頁面上不應該充滿一堆顏色，請記住一點：「當所有事情都被凸顯，所有事情都將顯得不重要」，為此 Tocas UI 中也沒有顏色樣式，因為語意才是最重要的。將顏色以語意命名能夠限制你所使用的方式、避免濫用且導向正軌。
 
-透過「負面的」、「警告的」來命名顏色，而不是「紅色」、「黃色」，這令你能夠替換樣式佈景的時候而不會因為改了顏色卻繼續使用像「黃色」這種制式名稱而有所不符。
+透過「負面的」、「警告的」來命名顏色，而不是「紅色」、「黃色」，這令你能夠替換樣式佈景的時候而不會因為改了顏色卻繼續使用像「黃色」這種制式名稱而有所不符。命名的方式不再是透過 `class` 而是使用 HTML 屬性標籤（`[data-emphasis]`）來定義。如此一來更能夠支援 Tocas 4.0 所新增的自訂動態主題。
 
 ```html
 <!-- ✓ 請這麼做 -->
-<button class="ts -negative button"></button>
-<button class="ts -warning button"></button>
-
-<button class="ts button"></button>
+<button class="ts button" data-emphasis="negative"></button>
+<button class="ts button" data-emphasis="warning"></button>
 
 <!-- ✖ 別這樣 -->
 <button class="ts -red button"></button>
 <button class="ts -yellow button"></button>
+<button class="ts -warning button"></button>
 ```
 
 #### 響應式可見詞
 
-在 Tocas UI 中不會有任何的全域裝飾詞，唯一例外的是響應式可見詞。響應式可見詞是 Tocas UI 中唯一能夠套用到任何元件的樣式，這能夠切換某個元件出現的實機（例如：僅在手機出現），而這也被稱作為響應式設計（Responsive Design）。
-
-響應式可見詞的命名方式為 `_`（底線）開頭，而單字之間仍保持以 `-`（減號）分隔。
+在 Tocas UI 中，響應式可見詞就和圖示、語意一樣都擁有自己的 HTML 屬性標籤（`[data-responsive]`）。這能夠切換某個元件出現的實機（例如：僅在手機出現），而這也被稱作為響應式設計（Responsive Design）。響應式名稱已經不再以裝置作為稱呼，這部份請參閱[響應式文件](./responsive.md)。
 
 ```html
 <!-- ✓ 請這麼做 -->
-<button class="ts _mobile-only -large button"></button>
+<button class="ts -large button" data-responsive="maximal"></button>
 
 <!-- ✖ 別這樣 -->
-<button class="ts -large -mobile-only button"></button>
-<button class="ts -large button" data-rwd="mobile only"></button>
+<button class="ts -large _mobile-only button"></button>
+<button class="ts -large -maximal button"></button>
 ```
 
 #### 圖示
@@ -248,13 +245,16 @@ Tocas UI 在設計元件名稱與用法時所該遵循的注意事項和風格�
 
 ```html
 <!-- ✓ 請這麼做 -->
-<div class="ts grid">
-    <div class="-mobile-3 -widescreen-10 column"></div>
+<div class="ts -horizontal grid">
+    <div class="column" data-size="maximal-3 standard-3 minimal-12"></div>
 </div>
 
 <!-- ✖ 別這樣 -->
 <div class="ts grid">
     <div class="-three-wide-mobile -ten-wide-large-screen column"></div>
+</div>
+<div class="ts grid">
+    <div class="-maximal-3 -minimal-12 column"></div>
 </div>
 ```
 
