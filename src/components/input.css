@@ -11,11 +11,11 @@
     --block_border-radius             : var(--default__block_border-radius);
     --block_border-color              : var(--default__block_border-color);
     --block_padding                   : var(--default__block_padding);
-    --block_focus-border-color        : var(--default__block_focus-border-color);
-    --block_focus-outline-color       : var(--default__block_focus-outline-color);
-    --block_hover-border-color        : var(--default__block_hover-border-color);
-    --block_disabled-border-color     : var(--default__block_disabled-border-color);
-    --block_secondary-background-color: var(--default__block_secondary-background-color);
+    --block_border-focus-color        : var(--default__block_border-focus-color);
+    --block_outline-focus-color       : var(--default__block_outline-focus-color);
+    --block_border-hover-color        : var(--default__block_border-hover-color);
+    --block_border-disabled-color     : var(--default__block_border-disabled-color);
+    --block_background-secondary-color: var(--default__block_background-secondary-color);
 
     /**
      * Element
@@ -46,7 +46,7 @@
     position   : relative;
     display    : inline-block;
     font-size  : var(--element_font-size);
-    color      : var(--element_color);
+    color      : rgb(var(--element_color));
     line-height: var(--element_line-height);
 }
 
@@ -68,12 +68,12 @@
 
 .ts.input input,
 .ts.input textarea {
-    border       : 1px solid var(--block_border-color);
+    border       : 1px solid rgb(var(--block_border-color));
     border-radius: var(--block_border-radius);
     padding      : var(--element_vertical-padding) var(--block_padding);
     font-family  : var(--global_font-family);
     font-size    : var(--element_font-size);
-    color        : var(--element_color);
+    color        : rgb(var(--element_color));
     line-height  : var(--element_line-height);
     outline      : none;
     box-shadow   : none;
@@ -82,19 +82,19 @@
 
 .ts.input input:hover,
 .ts.input textarea:hover {
-    border-color: var(--block_hover-border-color);
+    border-color: rgb(var(--block_border-hover-color));
 }
 
 .ts.input input:focus,
 .ts.input textarea:focus {
-    border-color: var(--block_focus-border-color);
-    /*box-shadow  : 0 0 0 2px var(--block_focus-outline-color);*/
+    border-color: rgb(var(--block_border-focus-color));
+    /*box-shadow  : 0 0 0 2px var(--block_outline-focus-color);*/
     outline     : none;
 }
 
 .ts.input input::placeholder,
 .ts.input textarea::placeholder {
-    color: var(--typography_placeholder-color);
+    color: rgb(var(--typography_placeholder-color));
 }
 
 /* ==========================================================================
@@ -130,20 +130,20 @@
 .ts.input.-underlined textarea {
     border       : 0;
     border-radius: 0;
-    border-bottom: 1px solid var(--block_border-color);
+    border-bottom: 1px solid rgb(var(--block_border-color));
 }
 
 .ts.input.-underlined input:hover,
 .ts.input.-underlined textarea:hover {
-    border-color: var(--block_hover-border-color);
+    border-color: rgb(var(--block_border-hover-color));
 }
 
 .ts.input.-underlined input:focus,
 .ts.input.-underlined textarea:focus {
     border       : 0;
     box-shadow   : none;
-    border-bottom: 1px solid var(--block_focus-border-color);
-    box-shadow   : inset 0px -11px 0px -10px var(--block_focus-border-color);
+    border-bottom: 1px solid rgb(var(--block_border-focus-color));
+    box-shadow   : inset 0px -11px 0px -10px rgb(var(--block_border-focus-color));
 }
 
 /**
@@ -152,7 +152,7 @@
 
 .ts.input.-secondary input,
 .ts.input.-secondary textarea {
-    background: var(--block_secondary-background-color);
+    background: rgb(var(--block_background-secondary-color));
 }
 
 /**
@@ -193,8 +193,8 @@
 .ts.input input[disabled],
 .ts.input textarea[disabled] {
     background    : transparent;
-    border-color  : var(--block_disabled-border-color) !important;
-    color         : var(--typography_disabled-color) !important;
+    border-color  : rgb(var(--block_border-disabled-color)) !important;
+    color         : rgb(var(--typography_disabled-color)) !important;
     pointer-events: none;
     user-select   : none;
 }
@@ -289,7 +289,7 @@
     font-size    : var(--global_secondary-font-size);
     padding-left : 1rem;
     padding-right: 1rem;
-    border       : 1px solid var(--block_border-color);
+    border       : 1px solid rgb(var(--block_border-color));
 }
 
 .ts.input.-left-labeled > :not(:first-child),
@@ -356,22 +356,22 @@
 }
 
 .ts.input.-quantity input[type="number"]:hover {
-    border-left-color : var(--block_hover-border-color);
-    border-right-color: var(--block_hover-border-color);
+    border-left-color : var(--block_border-hover-color);
+    border-right-color: var(--block_border-hover-color);
 }
 
 .ts.input.-quantity input[type="number"]:focus {
-    border-left-color : var(--block_focus-border-color);
-    border-right-color: var(--block_focus-border-color);
+    border-left-color : rgb(var(--block_border-focus-color));
+    border-right-color: rgb(var(--block_border-focus-color));
 }
 
 .ts.input.-quantity button {
-    background: transparent;
-    box-shadow: none;
-    border: 1px solid var(--block_border-color);
-    font-size: 16px;
-    padding   : .28em var(--block_padding);
-    color        : var(--element_color);
-    line-height  : var(--typography_line-height);
-    box-sizing: border-box;
+    background : transparent;
+    box-shadow : none;
+    border     : 1px solid rgb(var(--block_border-color));
+    font-size  : 16px;
+    padding    : .28em var(--block_padding);
+    color      : rgb(var(--element_color));
+    line-height: var(--typography_line-height);
+    box-sizing : border-box;
 }
