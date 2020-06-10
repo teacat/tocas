@@ -7,23 +7,33 @@
      * Block
      */
 
-    --block_margin                    : var(--default__block_margin);
-    --block_border-color              : var(--default__block_border-color);
-    --block_border-radius             : var(--default__block_border-radius);
-    --block_background-color          : var(--default__block_background-color);
-    --block_background-secondary-color: var(--default__block_background-secondary-color);
-    --block_background-tertiary-color : var(--default__block_background-tertiary-color);
+    --border-radius: var(--global__border-radius);
+
+    /**
+     * Distance
+     */
+
+    --distance-block: var(--global__distance-block);
+    --distance-text : var(--global__distance-text);
 
     /**
      * Typography
      */
 
-    --typography_disabled-color   : var(--default__typography_disabled-color);
-    --typography_description-color: var(--default__typography_description-color);
-    --typography_margin           : var(--default__typography_margin);
-    --typography_font-size        : var(--default__typography_font-size);
-    --typography_color            : var(--default__typography_color);
-    --typography_line-height      : var(--default__typography_line-height);
+    --font-size  : 1rem;
+    --line-height: var(--global__line-height);
+
+    /**
+     * Color
+     */
+
+    --color                     : var(--default__color);
+    --border-color              : var(--default__border-color);
+    --disabled-color            : var(--default__disabled-color);
+    --description-color         : var(--default__description-color);
+    --background-color          : var(--default__background-color);
+    --background-secondary-color: var(--default__background-secondary-color);
+    --background-tertiary-color : var(--default__background-tertiary-color);
 }
 
 /* ==========================================================================
@@ -32,15 +42,15 @@
 
 .ts.table {
     width          : 100%;
-    background     : rgb(var(--block_background-color));
-    border         : 1px solid rgb(var(--block_border-color));
-    border-radius  : var(--block_border-radius);
+    background     : rgb(var(--background-color));
+    border         : 1px solid rgb(var(--border-color));
+    border-radius  : var(--border-radius);
     text-align     : left;
     border-collapse: separate;
     border-spacing : 0;
-    font-size      : var(--typography_font-size);
-    color          : rgb(var(--typography_color));
-    line-height    : var(--typography_line-height);
+    font-size      : var(--font-size);
+    color          : rgb(var(--color));
+    line-height    : var(--line-height);
 }
 
 .ts.table:first-child {
@@ -52,7 +62,7 @@
 }
 
 .ts.table:not(:first-child) {
-    margin-block-start: var(--block_margin);
+    margin-block-start: var(--distance-block);
 }
 
 /* ==========================================================================
@@ -77,9 +87,9 @@
  */
 
 .ts.table thead th {
-    background   : rgb(var(--block_background-secondary-color));
+    background   : rgb(var(--background-secondary-color));
     font-weight  : 500;
-    border-bottom: 1px solid rgb(var(--block_border-color));
+    border-bottom: 1px solid rgb(var(--border-color));
     border-left  : none;
 }
 
@@ -95,7 +105,7 @@
 }
 
 .ts.table tr td {
-    border-top: 1px solid rgb(var(--block_border-color));
+    border-top: 1px solid rgb(var(--border-color));
 }
 
 /**
@@ -103,8 +113,8 @@
  */
 
 .ts.table tfoot th {
-    border-top : 1px solid rgb(var(--block_border-color));
-    background : rgb(var(--block_background-secondary-color));
+    border-top : 1px solid rgb(var(--border-color));
+    background : rgb(var(--background-secondary-color));
     font-weight: normal;
 }
 
@@ -146,7 +156,7 @@
 
 .ts.table.-celled tr th,
 .ts.table.-celled tr td {
-    border-left: 1px solid rgb(var(--block_border-color));
+    border-left: 1px solid rgb(var(--border-color));
 }
 
 .ts.table.-celled tr th:first-child,
@@ -162,7 +172,7 @@
 .ts.table.-basic tfoot tr th,
 .ts.table.-very-basic thead tr th,
 .ts.table.-very-basic tfoot tr th {
-    background: rgb(var(--block_background-color));
+    background: rgb(var(--background-color));
 }
 
 .ts.table.-very-basic {
@@ -178,7 +188,7 @@
 .ts.table.-basic.-definition thead tr th,
 .ts.table.-very-basic.-definition thead tr th {
     border-bottom-width: 1px;
-    background         : rgb(var(--block_background-color));
+    background         : rgb(var(--background-color));
 }
 
 /*.ts.table.-basic.-definition tfoot th:first-child,
@@ -221,22 +231,22 @@
 .ts.table.-definition thead th:first-child {
     background    : transparent;
     font-weight   : normal;
-    color         : rgb(var(--typography_disabled-color));
+    color         : rgb(var(--disabled-color));
     pointer-events: none;
     user-select   : none;
-    box-shadow    : -.1em -.2em 0 .1em rgb(var(--block_background-color));
+    box-shadow    : -.1em -.2em 0 .1em rgb(var(--background-color));
 }
 
 .ts.table.-definition tr td:first-child:not(.-ignored),
 .ts.table.-definition tr td.-definition {
-    background : rgb(var(--block_background-secondary-color));
+    background : rgb(var(--background-secondary-color));
     font-weight: 500;
 }
 
 /** .ts.table.-definition tfoot th:nth-child(2), */
 .ts.table.-definition thead th:nth-child(2),
 .ts.table.-definition td:nth-child(2) {
-    border-left: 1px solid rgb(var(--block_border-color));
+    border-left: 1px solid rgb(var(--border-color));
 }
 
 /**
@@ -337,7 +347,7 @@
 
 .ts.table.-striped > tr:nth-child(2n),
 .ts.table.-striped tbody tr:nth-child(2n) {
-    background: rgb(var(--block_background-secondary-color));
+    background: rgb(var(--background-secondary-color));
 }
 
 /**
@@ -345,9 +355,9 @@
  */
 
 .ts.table caption {
-    margin-top   : var(--typography_margin);
-    margin-bottom: var(--typography_margin);
-    color        : rgb(var(--typography_description-color));
+    margin-top   : var(--distance-text);
+    margin-bottom: var(--distance-text);
+    color        : rgb(var(--description-color));
     text-align   : left;
     caption-side : bottom;
 }
@@ -360,7 +370,7 @@
     user-select   : none;
     pointer-events: none;
     content       : "－";
-    color         : rgb(var(--typography_description-color));
+    color         : rgb(var(--description-color));
 }
 
 /**
@@ -372,7 +382,7 @@
 .ts.table tr.-disabled:hover,
 .ts.table tr:hover td.-disabled {
     pointer-events: none;
-    color         : rgb(var(--typography_disabled-color));
+    color         : rgb(var(--disabled-color));
 }
 
 /**
@@ -384,17 +394,17 @@
 }
 
 .ts.table.-structured thead th {
-    border-left : 1px solid rgb(var(--block_border-color));
-    border-right: 1px solid rgb(var(--block_border-color));
+    border-left : 1px solid rgb(var(--border-color));
+    border-right: 1px solid rgb(var(--border-color));
 }
 
 .ts.table.-structured.-basic th {
-    border-left : 1px solid rgb(var(--block_border-color));
-    border-right: 1px solid rgb(var(--block_border-color));
+    border-left : 1px solid rgb(var(--border-color));
+    border-right: 1px solid rgb(var(--border-color));
 }
 
 .ts.table.-structured.-celled tr th,
 .ts.table.-structured.-celled tr td {
-    border-left : 1px solid rgb(var(--block_border-color));
-    border-right: 1px solid rgb(var(--block_border-color));
+    border-left : 1px solid rgb(var(--border-color));
+    border-right: 1px solid rgb(var(--border-color));
 }
