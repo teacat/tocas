@@ -7,20 +7,32 @@
      * Block
      */
 
-    --block_padding         : var(--default__block_padding);
-    --block_background-color: var(--default__block_background-secondary-color);
-    --block_line-color      : var(--default__block_line-color);
-    --block_margin          : var(--default__block_margin);
+    --block-padding      : var(--global__block_padding);
+    --block-border-radius: var(--global__border-radius);
+
+    /**
+     * Distance
+     */
+
+    --distance-block: var(--global__distance-block);
 
     /**
      * Typography
      */
 
-    --typography_font-size        : var(--default__typography_font-size);
-    --typography_color            : var(--default__typography_color);
-    --typography_line-height      : var(--default__typography_line-height);
-    --typography_symbol-color     : var(--default__typography_symbol-color);
-    --typography_description-color: var(--default__typography_description-color);
+    --font-size  : 1rem;
+    --line-height: var(--global__line-height);
+
+    /**
+     * Color
+     */
+
+    --color            : var(--default__color);
+    --symbol-color     : var(--default__symbol-color);
+    --description-color: var(--default__description-color);
+    --line-color       : var(--default__line-color);
+
+    --block-background-color: var(--default__background-secondary-color);
 }
 
 /* ==========================================================================
@@ -31,9 +43,9 @@
     position   : relative;
     padding    : 1em 0 .5em 3em;
     margin-left: 0;
-    font-size  : var(--typography_font-size);
-    color      : rgb(var(--typography_color));
-    line-height: var(--typography_line-height);
+    font-size  : var(--font-size);
+    color      : rgb(var(--color));
+    line-height: var(--line-height);
 }
 
 .ts.quote::before {
@@ -43,7 +55,7 @@
     left       : 0;
     font-size  : 5em;
     font-family: Georgia, "Times New Roman", Times;
-    color      : rgb(var(--typography_symbol-color));
+    color      : rgb(var(--symbol-color));
     line-height: 1;
 }
 
@@ -56,7 +68,7 @@
 }
 
 .ts.quote:not(:first-child) {
-    margin-block-start: var(--block_margin);
+    margin-block-start: var(--distance-block);
 }
 
 /* ==========================================================================
@@ -70,7 +82,7 @@
 .ts.quote cite {
     display   : inline-block;
     font-style: normal;
-    color     : rgb(var(--typography_description-color));
+    color     : rgb(var(--description-color));
 }
 
 .ts.quote cite::after {
@@ -91,7 +103,7 @@
 
 .ts.quote.-secondary {
     padding    : 0 0 0 1.6em;
-    border-left: 3px solid rgb(var(--block_line-color));
+    border-left: 3px solid rgb(var(--line-color));
 }
 
 .ts.quote.-secondary::before {
@@ -103,8 +115,9 @@
  */
 
 .ts.quote.-block {
-    padding   : var(--block_padding);
-    background: rgb(var(--block_background-color));
+    padding      : var(--block-padding);
+    background   : rgb(var(--block-background-color));
+    border-radius: var(--block-border-radius);
 }
 
 .ts.quote.-block::before {
