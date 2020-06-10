@@ -7,35 +7,37 @@
      * Block
      */
 
-    --block_margin                    : var(--default__block_margin);
-    --block_border-radius             : var(--default__block_border-radius);
-    --block_border-color              : var(--default__block_border-color);
-    --block_padding                   : var(--default__block_padding);
-    --block_border-focus-color        : var(--default__block_border-focus-color);
-    --block_outline-focus-color       : var(--default__block_outline-focus-color);
-    --block_border-hover-color        : var(--default__block_border-hover-color);
-    --block_border-disabled-color     : var(--default__block_border-disabled-color);
-    --block_background-secondary-color: var(--default__block_background-secondary-color);
+    --border-radius     : var(--global__border-radius);
+    --horizontal-padding: var(--global__block_padding);
+    --vertical-padding  : calc(var(--global__block_padding) / 2);
 
     /**
-     * Element
+     * Distance
      */
 
-    --element_font-size       : var(--default__element_font-size);
-    --element_vertical-padding: var(--default__element_vertical-padding);
-    --element_color           : var(--default__typography_color);
-    --element_line-height     : var(--default__typography_line-height);
+    --distance-block: var(--global__distance-block);
 
     /**
      * Typography
      */
 
-    --typography_disabled-color   : var(--default__typography_disabled-color);
-    --typography_placeholder-color: var(--default__typography_placeholder-color);
-    --typography_description-color: var(--default__typography_description-color);
-    --typography_font-size        : var(--default__typography_font-size);
-    --typography_color            : var(--default__typography_color);
-    --typography_line-height      : var(--default__typography_line-height);
+    --font-size  : .9375rem;
+    --line-height: 1.6rem;
+
+    /**
+     * Color
+     */
+
+    --color                     : var(--default__color);
+    --disabled-color            : var(--default__disabled-color);
+    --placeholder-color         : var(--default__placeholder-color);
+    --description-color         : var(--default__description-color);
+    --border-color              : var(--default__border-color);
+    --border-focus-color        : var(--default__border-focus-color);
+    --outline-focus-color       : var(--default__outline-focus-color);
+    --border-hover-color        : var(--default__border-hover-color);
+    --border-disabled-color     : var(--default__border-disabled-color);
+    --background-secondary-color: var(--default__background-secondary-color);
 }
 
 /* ==========================================================================
@@ -45,9 +47,9 @@
 .ts.input {
     position   : relative;
     display    : inline-block;
-    font-size  : var(--element_font-size);
-    color      : rgb(var(--element_color));
-    line-height: var(--element_line-height);
+    font-size  : var(--font-size);
+    color      : rgb(var(--color));
+    line-height: var(--line-height);
 }
 
 .ts.input:first-child {
@@ -59,7 +61,7 @@
 }
 
 .ts.input:not(:first-child) {
-    margin-block-start: var(--block_margin);
+    margin-block-start: var(--distance-block);
 }
 
 /* ==========================================================================
@@ -68,13 +70,13 @@
 
 .ts.input input,
 .ts.input textarea {
-    border       : 1px solid rgb(var(--block_border-color));
-    border-radius: var(--block_border-radius);
-    padding      : var(--element_vertical-padding) var(--block_padding);
+    border       : 1px solid rgb(var(--border-color));
+    border-radius: var(--border-radius);
+    padding      : var(--vertical-padding) var(--horizontal-padding);
     font-family  : var(--global_font-family);
-    font-size    : var(--element_font-size);
-    color        : rgb(var(--element_color));
-    line-height  : var(--element_line-height);
+    font-size    : var(--font-size);
+    color        : rgb(var(--color));
+    line-height  : var(--line-height);
     outline      : none;
     box-shadow   : none;
     resize       : none;
@@ -82,19 +84,19 @@
 
 .ts.input input:hover,
 .ts.input textarea:hover {
-    border-color: rgb(var(--block_border-hover-color));
+    border-color: rgb(var(--border-hover-color));
 }
 
 .ts.input input:focus,
 .ts.input textarea:focus {
-    border-color: rgb(var(--block_border-focus-color));
-    /*box-shadow  : 0 0 0 2px var(--block_outline-focus-color);*/
+    border-color: rgb(var(--border-focus-color));
+    /*box-shadow  : 0 0 0 2px var(--outline-focus-color);*/
     outline     : none;
 }
 
 .ts.input input::placeholder,
 .ts.input textarea::placeholder {
-    color: rgb(var(--typography_placeholder-color));
+    color: rgb(var(--placeholder-color));
 }
 
 /* ==========================================================================
@@ -130,20 +132,20 @@
 .ts.input.-underlined textarea {
     border       : 0;
     border-radius: 0;
-    border-bottom: 1px solid rgb(var(--block_border-color));
+    border-bottom: 1px solid rgb(var(--border-color));
 }
 
 .ts.input.-underlined input:hover,
 .ts.input.-underlined textarea:hover {
-    border-color: rgb(var(--block_border-hover-color));
+    border-color: rgb(var(--border-hover-color));
 }
 
 .ts.input.-underlined input:focus,
 .ts.input.-underlined textarea:focus {
     border       : 0;
     box-shadow   : none;
-    border-bottom: 1px solid rgb(var(--block_border-focus-color));
-    box-shadow   : inset 0px -11px 0px -10px rgb(var(--block_border-focus-color));
+    border-bottom: 1px solid rgb(var(--border-focus-color));
+    box-shadow   : inset 0px -11px 0px -10px rgb(var(--border-focus-color));
 }
 
 /**
@@ -152,7 +154,7 @@
 
 .ts.input.-secondary input,
 .ts.input.-secondary textarea {
-    background: rgb(var(--block_background-secondary-color));
+    background: rgb(var(--background-secondary-color));
 }
 
 /**
@@ -193,8 +195,8 @@
 .ts.input input[disabled],
 .ts.input textarea[disabled] {
     background    : transparent;
-    border-color  : rgb(var(--block_border-disabled-color)) !important;
-    color         : rgb(var(--typography_disabled-color)) !important;
+    border-color  : rgb(var(--border-disabled-color)) !important;
+    color         : rgb(var(--disabled-color)) !important;
     pointer-events: none;
     user-select   : none;
 }
@@ -216,12 +218,12 @@
 
 .ts.input.-fitted.-left-icon input,
 .ts.input.-fitted.-left-icon textarea {
-    padding-left: calc(var(--block_padding) * 2);
+    padding-left: calc(var(--horizontal-padding) * 2);
 }
 
 .ts.input.-fitted.-right-icon input,
 .ts.input.-fitted.-right-icon textarea {
-    padding-right: calc(var(--block_padding) * 2);
+    padding-right: calc(var(--horizontal-padding) * 2);
 }
 
 /**
@@ -230,12 +232,12 @@
 
 .ts.input.-left-icon i.icon,
 .ts.input.-right-icon i.icon {
-    padding    : var(--element_vertical-padding) var(--block_padding);
+    padding    : var(--vertical-padding) var(--horizontal-padding);
     position   : absolute;
     font-size  : 16px;
     color      : #999;
     box-sizing : content-box;
-    line-height: calc(var(--element_line-height) - 0.2);
+    line-height: calc(var(--line-height) - 0.2);
 }
 
 .ts.input.-left-icon i.icon {
@@ -248,12 +250,12 @@
 
 .ts.input.-left-icon input,
 .ts.input.-left-icon textarea {
-    padding-left: calc(var(--block_padding) * 3);
+    padding-left: calc(var(--horizontal-padding) * 3);
 }
 
 .ts.input.-right-icon input,
 .ts.input.-right-icon textarea {
-    padding-right: calc(var(--block_padding) * 3);
+    padding-right: calc(var(--horizontal-padding) * 3);
 }
 
 /**
@@ -261,7 +263,7 @@
  */
 
 .ts.input.-pin input {
-    width     : calc(var(--block_padding) * 2 + 1.5em);
+    width     : calc(var(--horizontal-padding) * 2 + 1.5em);
     text-align: center;
 }
 
@@ -286,10 +288,10 @@
 
 .ts.input.-left-labeled .ts.label,
 .ts.input.-right-labeled .ts.label {
-    font-size    : var(--global_secondary-font-size);
+    font-size    : .9375rem;
     padding-left : 1rem;
     padding-right: 1rem;
-    border       : 1px solid rgb(var(--block_border-color));
+    border       : 1px solid rgb(var(--border-color));
 }
 
 .ts.input.-left-labeled > :not(:first-child),
@@ -342,8 +344,8 @@
 }
 
 .ts.input.-quantity :first-child {
-    border-top-left-radius   : var(--block_border-radius);
-    border-bottom-left-radius: var(--block_border-radius);
+    border-top-left-radius   : var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
 }
 
 .ts.input.-quantity :not(:first-child):not(:last-child) {
@@ -351,27 +353,27 @@
 }
 
 .ts.input.-quantity :last-child {
-    border-top-right-radius   : var(--block_border-radius);
-    border-bottom-right-radius: var(--block_border-radius);
+    border-top-right-radius   : var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
 }
 
 .ts.input.-quantity input[type="number"]:hover {
-    border-left-color : var(--block_border-hover-color);
-    border-right-color: var(--block_border-hover-color);
+    border-left-color : var(--border-hover-color);
+    border-right-color: var(--border-hover-color);
 }
 
 .ts.input.-quantity input[type="number"]:focus {
-    border-left-color : rgb(var(--block_border-focus-color));
-    border-right-color: rgb(var(--block_border-focus-color));
+    border-left-color : rgb(var(--border-focus-color));
+    border-right-color: rgb(var(--border-focus-color));
 }
 
 .ts.input.-quantity button {
     background : transparent;
     box-shadow : none;
-    border     : 1px solid rgb(var(--block_border-color));
+    border     : 1px solid rgb(var(--border-color));
     font-size  : 16px;
-    padding    : .28em var(--block_padding);
-    color      : rgb(var(--element_color));
-    line-height: var(--typography_line-height);
+    padding    : .28em var(--padding);
+    color      : rgb(var(--color));
+    line-height: var(--line-height);
     box-sizing : border-box;
 }
