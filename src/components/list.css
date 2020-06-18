@@ -15,6 +15,7 @@
 
     --distance-block              : var(--global__distance-block);
     --distance-item               : .25rem;
+    --distance-item-relaxed       : .55rem;
     --distance-item-horizontal    : .6rem;
     --distance-item-bullet        : .5rem;
     --distance-nested-list        : 2rem;
@@ -64,8 +65,17 @@
    Structure
    ========================================================================== */
 
+.ts.list > .item:first-child {
+    padding-top: var(--distance-item);
+}
+
 .ts.list > .item:not(:first-child) {
-    margin-top: var(--distance-item);
+    margin-top : var(--distance-item);
+    padding-top: var(--distance-item);
+}
+
+.ts.list > .item:last-child {
+    padding-bottom: var(--distance-item);
 }
 
 /**
@@ -156,6 +166,14 @@
 
 .ts.list.-compact {
     --distance-item: 0;
+}
+
+/**
+ * Relaxed
+ */
+
+.ts.list.-relaxed {
+    --distance-item: var(--distance-item-relaxed);
 }
 
 /**
