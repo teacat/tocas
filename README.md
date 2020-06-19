@@ -34,6 +34,10 @@
 
 ![screenshot](https://raw.githubusercontent.com/amitmerchant1990/electron-markdownify/master/app/img/markdownify.gif)
 
+## 國籍注意
+
+本套件中含有中華民國（台灣）國旗，欲使用至政治敏感用途，請注意。
+
 ## 特色
 
 * 更簡潔、沒有像 Bootstrap 那樣雜亂的樣式名稱
