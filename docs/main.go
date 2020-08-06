@@ -1,6 +1,7 @@
 package main
 
 import (
+	"html/template"
 	"io/ioutil"
 	"net/http"
 
@@ -21,8 +22,14 @@ func main() {
 	}
 
 	r := gin.Default()
-	r.LoadHTMLGlob("./templates/*")
+
 	r.StaticFile("global.css", "./templates/global.css")
+	r.SetFuncMap(template.FuncMap{
+		"html": func(html string) template.HTML {
+			return template.HTML(html)
+		},
+	})
+	r.LoadHTMLGlob("./templates/*")
 	r.GET("/article", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "article.html", Data{
 			Meta: meta,
