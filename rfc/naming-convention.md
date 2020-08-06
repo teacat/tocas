@@ -245,8 +245,8 @@ Tocas UI 在設計元件名稱與用法時所該遵循的注意事項和風格�
 
 ```html
 <!-- ✓ 請這麼做 -->
-<div class="ts -horizontal grid">
-    <div class="column" data-size="maximal-3 standard-3 minimal-12"></div>
+<div class="ts grid">
+    <div class="column -maximal-3 -standard-3 -minimal-12"></div>
 </div>
 
 <!-- ✖ 別這樣 -->
@@ -254,7 +254,7 @@ Tocas UI 在設計元件名稱與用法時所該遵循的注意事項和風格�
     <div class="-three-wide-mobile -ten-wide-large-screen column"></div>
 </div>
 <div class="ts grid">
-    <div class="-maximal-3 -minimal-12 column"></div>
+    <div class="column" data-size="maximal-3 standard-6"></div>
 </div>
 ```
 
