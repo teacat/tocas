@@ -3,59 +3,76 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./global.css" />
         <title>Document</title>
     </head>
     <body>
         <application-main>
             <!-- 開頭矚目看板 -->
             <main-slate>
-                <!-- 導航連結 -->
-                <slate-nav>
-                    <nav-left>
-                        <a href="#!">Tocas UI</a>
-                        <a href="#!">{{ .UI.GettingStarted }}</a>
-                        <a href="#!">{{ .UI.Components }}</a>
-                        <a href="#!">{{ .UI.Responsive }}</a>
-                        <a href="#!">{{ .UI.Examples }}</a>
-                        <a href="#!">{{ .UI.Playground }}</a>
-                    </nav-left>
-                    <nav-right>
-                        <a href="#!">GitHub</a>
-                    </nav-right>
-                </slate-nav>
-                <!-- / 導航連結 -->
+                <screen-container>
+                    <!-- 導航連結 -->
+                    <slate-nav>
+                        <nav-left>
+                            <a href="#!">Tocas UI</a>
+                            <a href="#!">{{ index .Meta.UI.Navigation "getting_started" }}</a>
+                            <a href="#!">{{ index .Meta.UI.Navigation "components" }}</a>
+                            <a href="#!">{{ index .Meta.UI.Navigation "responsive" }}</a>
+                            <a href="#!">{{ index .Meta.UI.Navigation "examples" }}</a>
+                            <a href="#!">{{ index .Meta.UI.Navigation "playground" }}</a>
+                        </nav-left>
+                        <nav-right>
+                            <a href="#!">GitHub</a>
+                        </nav-right>
+                    </slate-nav>
+                    <!-- / 導航連結 -->
 
-                <!-- 標題與副標題 -->
-                <slate-header>按鈕</slate-header>
-                <slate-description
-                    >這是一個精心設計的核爆按鈕。</slate-description
-                >
-                <!-- / 標題與副標題 -->
+                    <!-- 標題與副標題 -->
+                    <slate-header>按鈕</slate-header>
+                    <slate-description
+                        >這是一個精心設計的核爆按鈕。</slate-description
+                    >
+                    <!-- / 標題與副標題 -->
+                </screen-container>
             </main-slate>
             <!-- / 開頭矚目看板 -->
 
-            <!-- 說明文件內容區域 -->
+            <!-- 文件內容 -->
             <main-content>
-                <!-- 側邊索引 -->
-                <content-sidebar>
-                    <sidebar-header>介面排版</sidebar-header>
-                    <a href="#!">按鈕 <span>Button</span></a>
-                    <sidebar-header>一般元素</sidebar-header>
-                    <sidebar-header>聚合型</sidebar-header>
-                    <sidebar-header>模組</sidebar-header>
-                </content-sidebar>
-                <!-- / 側邊索引 -->
-            </main-content>
-            <!-- / 說明文件內容區域 -->
+                <screen-container data-row>
+                    <!-- 側邊索引 -->
+                    <content-sidebar>
+                    {{ range $key, $value := .Meta.Components }}
+                        <sidebar-header>{{ index $.Meta.UI.ComponentsCategories $key }}</sidebar-header>
+                        {{ range $value }}
+                            <a href="#!">{{ index $.Meta.UI.Components . }}<span>{{ . }}</span></a>
+                        {{ end }}
+                    {{ end }}
+                    </content-sidebar>
+                    <!-- / 側邊索引 -->
 
+                    <!-- 主要內容 -->
+                    <content-content>
+                        <content-header>說明</content-header>
+                        <content-description>一高新外重個成統強且火事評程數河不廠、做沒寫環記每有班，一產著事收來者年子那性回過檢夜行的土。更回如的，一著亮門中山臉集樂散開人機，去產情能：該們己個名至推我還？苦好發建不市個人過大，放少的候王得到舉引明建人所門案？提平古學電士。人克興個沒國意車許命人園工！</content-description>
+                    </content-content>
+                    <!-- / 主要內容 -->
+                </screen-container>
+            </main-content>
+            <!-- / 文件內容 -->
+
+            <!-- 頁腳 -->
             <main-footer>
-                <footer-nav>
-                    <a href="#!">[X] 回到頂部</a>
-                    <a href="#!">GitHub</a>
-                    <a href="#!">實際範例</a>
-                    <a href="#!">關於</a>
-                </footer-nav>
+                <screen-container>
+                    <footer-nav>
+                        <a href="#!">[X] {{ index .Meta.UI.Navigation "back_to_top" }}</a>
+                        <a href="#!">GitHub</a>
+                        <a href="#!">{{ index .Meta.UI.Navigation "examples" }}</a>
+                        <a href="#!">{{ index .Meta.UI.Navigation "about" }}</a>
+                    </footer-nav>
+                </screen-container>
             </main-footer>
+            <!-- / 頁腳 -->
         </application-main>
     </body>
 </html>
