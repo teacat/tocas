@@ -24,6 +24,7 @@ func main() {
 	r := gin.Default()
 
 	r.StaticFile("global.css", "./templates/global.css")
+	r.StaticFile("logo.svg", "./templates/logo.svg")
 	r.SetFuncMap(template.FuncMap{
 		"html": func(html string) template.HTML {
 			return template.HTML(html)
