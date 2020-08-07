@@ -34,7 +34,7 @@ application-main {
 main-slate {
     display: block;
     background: #f7f7f7;
-    padding: 2rem 2rem 3rem;
+    padding: 2rem 2rem 4rem;
 }
 
 /** 導航連結 */
@@ -88,13 +88,13 @@ main-slate slate-description {
 
 main-content {
     display: block;
-    padding: 3rem 2rem;
+    padding: 4rem 2rem;
     flex: 1;
 }
 
 main-content content-sidebar {
     display: block;
-    margin-right: 3rem;
+    margin-right: 4rem;
     border-right: 2px solid #e8e8e8;
     padding-right: 3rem;
 }
@@ -135,8 +135,17 @@ main-content content-content > content-header {
     display: block;
     color: #333;
     font-weight: 500;
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin-bottom: 0.8rem;
+}
+
+main-content content-content > content-header:not(:first-child) {
+    margin-top: 6rem;
+}
+
+main-content content-content > content-header[data-dividing] {
+    border-bottom: 2px solid #e8e8e8;
+    padding-bottom: 0.8rem;
 }
 
 main-content content-content > content-description {
@@ -145,9 +154,100 @@ main-content content-content > content-description {
     color: #333;
 }
 
+main-content content-content > content-component {
+    display: block;
+    margin-top: 4rem;
+}
+
+main-content content-content > content-component > component-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+main-content
+    content-content
+    > content-component
+    > component-info
+    > info-header {
+    flex: 1;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #333;
+    position: relative;
+}
+
+main-content
+    content-content
+    > content-component
+    > component-info
+    > info-header::before {
+    display: block;
+    height: 128%;
+    position: absolute;
+    border-top: 5px solid #fff;
+    border-bottom: 5px solid #fff;
+    background: #a4a4a4;
+    width: 2px;
+    box-sizing: border-box;
+    left: -66px;
+    content: "";
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+main-content
+    content-content
+    > content-component
+    > component-info
+    > info-actions {
+}
+
+main-content
+    content-content
+    > content-component
+    > component-info
+    > info-actions
+    button {
+    appearance: none;
+    border: 2px solid #e8e8e8;
+    background: #eee;
+    background: #fff;
+    color: #333;
+    border-radius: 0.4rem;
+    padding: 0.4rem 1.2rem;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: "Noto Sans CJK TC";
+}
+
+main-content content-content > content-component > component-description {
+    display: block;
+    line-height: 2;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+main-content content-content > content-component > component-showcase {
+    display: block;
+    padding: 1.5rem;
+    border: 1px solid #e8e8e8;
+    border-radius: 0.4rem 0.4rem 0 0;
+}
+
+main-content content-content > content-component > component-html {
+    display: block;
+    padding: 1.5rem;
+    border: 1px solid #e8e8e8;
+    border-radius: 0 0 0.4rem 0.4rem;
+    border-top: 0;
+    background: #fafafa;
+    color: #333;
+}
+
 /** */
 main-content content-indexes {
-    margin-left: 3rem;
+    margin-left: 4rem;
     min-width: 200px;
 }
 
@@ -184,29 +284,43 @@ main-footer {
     display: block;
 }
 
-main-footer footer-nav {
+main-footer screen-container {
+    align-items: flex-end;
 }
 
-main-footer footer-nav > a {
+main-footer footer-content {
+    flex: 1;
+}
+
+main-footer footer-content footer-nav > a {
     text-decoration: none;
     color: #333;
     padding: 0 0.8rem;
 }
 
-main-footer footer-nav > a:first-child {
+main-footer footer-content footer-nav > a:first-child {
     color: #777;
     padding-left: 0;
 }
 
-main-footer footer-paragraph {
+main-footer footer-content footer-paragraph {
     display: block;
     color: #777;
     margin-top: 2rem;
     font-size: 0.95rem;
     line-height: 2;
+    max-width: 50rem;
 }
 
-main-footer footer-paragraph a {
+main-footer footer-content footer-paragraph a {
     color: #333; /* 108ee9*/
     text-decoration: underline;
+}
+
+main-footer footer-brand {
+    margin-left: 3rem;
+}
+
+main-footer footer-brand img {
+    width: 150px;
 }
