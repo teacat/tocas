@@ -51,7 +51,12 @@
                     {{ range $key, $value := .Meta.Components }}
                         <sidebar-header>{{ index $.Meta.UI.ComponentsCategories $key }}</sidebar-header>
                         {{ range $value }}
-                            <a href="#!">{{ index $.Meta.UI.Components . }}<span>{{ . | capitalize }}</span></a>
+                            <a href="#!">
+                                {{ index $.Meta.UI.Components . }}
+                                {{ if ne (index $.Meta.UI.Components .) (. | capitalize) }}
+                                <span>{{ . | capitalize }}</span>
+                                {{ end }}
+                            </a>
                         {{ end }}
                     {{ end }}
                     </content-sidebar>
