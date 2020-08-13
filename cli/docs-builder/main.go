@@ -2,12 +2,14 @@ package main
 
 import (
 	"bytes"
+	"html/template"
 	"log"
 	"net/http"
 	"os"
 	"os/exec"
 
 	"github.com/gin-gonic/gin"
+	"github.com/teacat/pathx"
 	"github.com/urfave/cli/v2"
 )
 
@@ -64,20 +66,36 @@ var (
 func serve(c *cli.Context) error {
 	r := gin.Default()
 	// 將所有靜態多媒體檔案都放到 `/` 根目錄下提供。
-	r.Static("/", pathAssets)
+	r.Static("/assets/images/xx", pathx.JoinDir(pathAssets, "images"))
+	r.Static("/assets/syles/x", pathx.JoinDir(pathAssets, "syles"))
+	//
+	fm := template.FuncMap{
+		"html":       tmplHTML,
+		"capitalize": tmplCapitalize,
+		"highlight":  tmplHighlight,
+	}
+
 	//
 	r.GET("/:language", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "article.html", Data{
-			Meta: meta,
-		})
+		//
+		d := loadLanguage(c.Param("language"), "")
+		fm["translators"] = tmplTranslators(d.Meta)
+		r.SetFuncMap(fm)
+		r.LoadHTMLGlob(pathx.Join(pathTemplate, "*.html"))
+
+		c.HTML(http.StatusOK, "index.html", d)
 	})
 	//
 	r.GET("/:language/:path", func(c *gin.Context) {
-		c.HTML(http.StatusOK, "article.html", Data{
-			Meta: meta,
-		})
-	})
+		//
+		d := loadLanguage(c.Param("language"), c.Param("path"))
+		fm["translators"] = tmplTranslators(d.Meta)
+		r.SetFuncMap(fm)
+		r.LoadHTMLGlob(pathx.Join(pathTemplate, "*"))
 
+		c.HTML(http.StatusOK, "article.html", d)
+	})
+	r.Run()
 	return nil
 }
 
