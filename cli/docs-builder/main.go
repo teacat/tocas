@@ -2,13 +2,14 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"os"
 	"os/exec"
 
-	"github.com/gin-gonic/gin"
+	"github.com/teacat/davai"
 	"github.com/teacat/pathx"
 	"github.com/urfave/cli/v2"
 )
@@ -64,38 +65,36 @@ var (
 
 // serve 會執行網頁伺服器服務文件內容。
 func serve(c *cli.Context) error {
-	r := gin.Default()
-	// 將所有靜態多媒體檔案都放到 `/` 根目錄下提供。
-	r.Static("/assets/images/xx", pathx.JoinDir(pathAssets, "images"))
-	r.Static("/assets/syles/x", pathx.JoinDir(pathAssets, "syles"))
+	d := davai.New()
 	//
 	fm := template.FuncMap{
 		"html":       tmplHTML,
 		"capitalize": tmplCapitalize,
 		"highlight":  tmplHighlight,
 	}
+	d.ServeFiles("/assets", pathAssets)
 
-	//
-	r.GET("/:language", func(c *gin.Context) {
+	d.Get("/{language}", func(w http.ResponseWriter, r *http.Request) {
 		//
-		d := loadLanguage(c.Param("language"), "")
+		d := loadLanguage(davai.Vars(r)["language"], "")
 		fm["translators"] = tmplTranslators(d.Meta)
-		r.SetFuncMap(fm)
-		r.LoadHTMLGlob(pathx.Join(pathTemplate, "*.html"))
-
-		c.HTML(http.StatusOK, "index.html", d)
+		t, err := template.New(pathx.Join(pathTemplate, "index.html")).Funcs(fm).ParseFiles("index.html")
+		if err != nil {
+			panic(err)
+		}
+		fmt.Fprint(w, t)
 	})
-	//
-	r.GET("/:language/:path", func(c *gin.Context) {
+	d.Get("/{language}/{path}", func(w http.ResponseWriter, r *http.Request) {
 		//
-		d := loadLanguage(c.Param("language"), c.Param("path"))
+		d := loadLanguage(davai.Vars(r)["language"], davai.Vars(r)["path"])
 		fm["translators"] = tmplTranslators(d.Meta)
-		r.SetFuncMap(fm)
-		r.LoadHTMLGlob(pathx.Join(pathTemplate, "*"))
-
-		c.HTML(http.StatusOK, "article.html", d)
+		t, err := template.New(pathx.Join(pathTemplate, "article.html")).Funcs(fm).ParseFiles("article.html")
+		if err != nil {
+			panic(err)
+		}
+		fmt.Fprint(w, t)
 	})
-	r.Run()
+	d.Run()
 	return nil
 }
 
