@@ -1,3 +1,12 @@
+main-slate {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 6rem;
+}
+
+main-content {
+    padding: 3rem 0 0;
+}
+
 main-slate content-header {
     font-size: 3rem;
     font-weight: bold;
@@ -22,6 +31,7 @@ main-slate slate-layout {
 
 main-slate slate-layout layout-content {
     flex: 1;
+    text-align: center;
 }
 
 content-action {
@@ -34,25 +44,12 @@ content-action {
     font-weight: 500;
     text-decoration: none;
     border: 3px solid #e0e0e0;
+    letter-spacing: 0.8px;
 }
 
-main-slate aside-code {
-    max-width: 800px;
-    padding: 2rem 2rem 4rem;
-    display: block;
-    border: 3px solid #f0f0f0;
-    border-radius: 0.4rem;
-    color: #333;
-    margin: 0 auto;
-    overflow-x: auto;
-    overflow-y: hidden;
-}
-
-main-slate aside-code pre {
-    font-family: "Ubuntu", "Noto Sans CJK TC";
-    line-height: 1.65;
-    font-size: 0.9rem;
-    margin: 0;
+content-action[data-secondary] {
+    color: #777;
+    border: 0;
 }
 
 aside-message {
@@ -61,4 +58,198 @@ aside-message {
     font-size: 0.9rem;
     /* text-align: right; */
     color: #777;
+}
+
+content-section + content-section {
+    margin-top: 6rem;
+    padding-top: 6rem;
+    border-top: 1px solid #eee;
+}
+
+section-header {
+    font-size: 2rem;
+    font-weight: 500;
+    display: block;
+    padding: 0 2rem;
+    color: #333;
+    line-height: 1;
+}
+
+section-description {
+    display: block;
+    color: #777;
+    font-size: 1.25rem;
+    padding: 0 2rem;
+    margin-top: 1rem;
+}
+
+section-masonry {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2.5rem;
+    margin-top: 4rem;
+    grid-template-areas:
+        "main main main"
+        "secondary secondary secondary";
+}
+
+section-masonry masonry-main {
+    grid-area: main;
+    display: block;
+    grid-column: span 3;
+    background: #f7f7f7;
+    padding: 2rem;
+    color: #333;
+}
+
+section-masonry masonry-secondary {
+    grid-area: secondary;
+    display: block;
+    grid-column: span 1;
+    background: #f7f7f7;
+    padding: 2rem;
+    color: #333;
+}
+
+section-masonry masonry-main masonry-header,
+section-masonry masonry-secondary masonry-header {
+    display: block;
+    line-height: 1;
+    color: #777;
+}
+
+section-masonry masonry-main masonry-description,
+section-masonry masonry-secondary masonry-description {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    line-height: 1.85;
+}
+
+content-section[data-started] {
+    display: block;
+    margin-top: 6rem;
+    background: #333;
+    padding: 6rem 0;
+}
+
+content-section[data-started] section-header,
+content-section[data-started] section-description {
+    text-align: center;
+    color: #fff;
+}
+
+content-section[data-started] section-description {
+    color: #d3d3d3;
+}
+
+section-code {
+    max-width: 800px;
+    padding: 2rem 2rem 4rem;
+    display: block;
+    border: 3px solid #535353;
+    border-radius: 0.4rem;
+    color: #fff;
+    margin: 0 auto;
+    margin-top: 6rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+section-code pre {
+    font-family: "Ubuntu", "Noto Sans CJK TC";
+    line-height: 1.65;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+section-explanations {
+    display: grid;
+}
+
+section-explanations explanations-explanation {
+    grid-area: secondary;
+    display: block;
+    grid-column: span 1;
+    padding: 0 2rem;
+}
+
+section-explanations explanations-explanation explanation-header {
+    display: block;
+    color: #333;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 1;
+}
+
+section-explanations explanations-explanation explanation-description {
+    display: block;
+    font-size: 1.0625rem;
+    color: #777;
+    margin-top: 1rem;
+    line-height: 1.85;
+    text-align: justify;
+}
+
+section-clear {
+    text-align: center;
+}
+
+section-action {
+    margin-top: 4rem;
+    display: inline-block;
+    border-radius: 0.4rem;
+    color: #fff;
+    font-size: 1.1rem;
+    padding: 0.6rem 1.8rem;
+    font-weight: 500;
+    text-decoration: none;
+    border: 3px solid #535353;
+    letter-spacing: 0.8px;
+}
+
+content-section[data-donators] section-header {
+    padding: 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+content-section[data-donators] section-donators {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3rem -1rem 0;
+    flex-wrap: wrap;
+}
+
+content-section[data-donators] donators-donator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+content-section[data-donators] donators-donator {
+    margin: 1rem;
+}
+
+content-section[data-donators] donators-donator img {
+    border-radius: 500rem;
+    width: 48px;
+    margin-right: 1.5rem;
+    filter: grayscale(0.5);
+    opacity: 0.9;
+    border: 3px solid #eaeaea;
+    box-sizing: border-box;
+}
+
+content-section[data-donators] donators-donator donator-name {
+    color: #333;
+    font-weight: 500;
+}
+
+content-section[data-donators] + content-section {
+    margin-top: 3rem;
 }
