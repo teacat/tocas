@@ -4,7 +4,7 @@ package main
 type Data struct {
 	Meta    Meta
 	Article Article
-	Type    pageType
+	Type    string
 }
 
 // Meta

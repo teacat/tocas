@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"html/template"
 	"log"
 	"net/http"
@@ -78,21 +77,21 @@ func serve(c *cli.Context) error {
 		//
 		d := loadLanguage(davai.Vars(r)["language"], "")
 		fm["translators"] = tmplTranslators(d.Meta)
-		t, err := template.New(pathx.Join(pathTemplate, "index.html")).Funcs(fm).ParseFiles("index.html")
+		t, err := template.New("index.html").Funcs(fm).ParseFiles(pathx.Join(pathTemplate, "index.html"))
 		if err != nil {
 			panic(err)
 		}
-		fmt.Fprint(w, t)
+		t.Execute(w, d)
 	})
-	d.Get("/{language}/{path}", func(w http.ResponseWriter, r *http.Request) {
+	d.Get("/{language}/{*:path}", func(w http.ResponseWriter, r *http.Request) {
 		//
 		d := loadLanguage(davai.Vars(r)["language"], davai.Vars(r)["path"])
 		fm["translators"] = tmplTranslators(d.Meta)
-		t, err := template.New(pathx.Join(pathTemplate, "article.html")).Funcs(fm).ParseFiles("article.html")
+		t, err := template.New("article.html").Funcs(fm).ParseFiles(pathx.Join(pathTemplate, "article.html"))
 		if err != nil {
 			panic(err)
 		}
-		fmt.Fprint(w, t)
+		t.Execute(w, d)
 	})
 	d.Run()
 	return nil

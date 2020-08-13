@@ -10,14 +10,6 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-const (
-	//
-	pageTypeArticle pageType = "Article"
-)
-
-//
-type pageType string
-
 //
 func loadAllLanguages() (m map[string]Meta) {
 	files, err := ioutil.ReadDir(pathLanguages)
@@ -56,7 +48,7 @@ func loadLanguage(lang string, path string) (d Data) {
 		return d
 	}
 	// 載入頁面的獨立檔案。
-	b, err = ioutil.ReadFile(pathx.Join(pathLanguages, path+".yml"))
+	b, err = ioutil.ReadFile(pathx.Join(pathLanguages, lang, path+".yml"))
 	if err != nil {
 		panic(err)
 	}
@@ -65,9 +57,9 @@ func loadLanguage(lang string, path string) (d Data) {
 	if err != nil {
 		panic(err)
 	}
-	d.Type = t["Type"].(pageType)
+	d.Type = t["Type"].(string)
 	switch d.Type {
-	case pageTypeArticle:
+	case "Article":
 		var a Article
 		err = yaml.Unmarshal(b, &a)
 		if err != nil {
