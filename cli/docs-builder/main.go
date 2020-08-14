@@ -82,7 +82,7 @@ func serve(c *cli.Context) error {
 			panic(err)
 		}
 		t.Execute(w, d)
-	})
+	}).AddPriority(100)
 	d.Get("/{language}/{*:path}", func(w http.ResponseWriter, r *http.Request) {
 		//
 		d := loadLanguage(davai.Vars(r)["language"], davai.Vars(r)["path"])
