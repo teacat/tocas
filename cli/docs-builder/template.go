@@ -43,8 +43,8 @@ func loadLanguage(lang string, path string) (d Data) {
 	if err != nil {
 		panic(err)
 	}
+	d.Meta = meta
 	if path == "" {
-		d.Meta = meta
 		return d
 	}
 	// 載入頁面的獨立檔案。
