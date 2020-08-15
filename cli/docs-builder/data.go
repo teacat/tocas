@@ -125,9 +125,10 @@ type ArticleDefinition struct {
 
 // ArticleDefinitionSection
 type ArticleDefinitionSection struct {
-	Title       string `yaml:"Title"`
-	Description string `yaml:"Description"`
-	Version     string `yaml:"Version"`
-	HTML        string `yaml:"HTML"`
-	Responsive  bool   `yaml:"Responsive"`
+	Title       string   `yaml:"Title"`
+	Description string   `yaml:"Description"`
+	Version     string   `yaml:"Version"`
+	HTML        string   `yaml:"HTML"`
+	Responsive  bool     `yaml:"Responsive"`
+	Remove      []string `yaml:"Remove"`
 }
