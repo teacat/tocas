@@ -10,6 +10,10 @@ body {
     padding: 0;
 }
 
+font-preload {
+    font-family: "Ubuntu Mono";
+}
+
 screen-container {
     display: flex;
     flex-direction: column;
@@ -49,6 +53,10 @@ main-slate slate-nav > nav-left {
 main-slate slate-nav > nav-right {
     display: block;
     margin-left: auto;
+}
+
+main-slate slate-nav > nav-right i.fas {
+    margin-right: 0.25rem;
 }
 
 main-slate slate-nav a {
@@ -184,7 +192,8 @@ main-content
     content-content
     > content-component
     > component-info
-    > info-header::before {
+    > info-header
+    > a {
     display: block;
     height: 128%;
     position: absolute;
@@ -203,6 +212,36 @@ main-content
     content-content
     > content-component
     > component-info
+    > info-header
+    > a:hover {
+    background: transparent;
+}
+
+main-content
+    content-content
+    > content-component
+    > component-info
+    > info-header
+    > a:hover::before {
+    text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff,
+        -1px -1px 0 #fff, 0px 1px 0 #fff, 0px -1px 0 #fff, -1px 0px 0 #fff,
+        1px 0px 0 #fff, 2px 2px 0 #fff, -2px 2px 0 #fff, 2px -2px 0 #fff,
+        -2px -2px 0 #fff, 0px 2px 0 #fff, 0px -2px 0 #fff, -2px 0px 0 #fff,
+        2px 0px 0 #fff, 1px 2px 0 #fff, -1px 2px 0 #fff, 1px -2px 0 #fff,
+        -1px -2px 0 #fff, 2px 1px 0 #fff, -2px 1px 0 #fff, 2px -1px 0 #fff,
+        -2px -1px 0 #fff;
+    left: -8px;
+    top: -10px;
+    font-size: 2rem;
+    color: #a4a4a4;
+    content: "#";
+    position: absolute;
+}
+
+main-content
+    content-content
+    > content-component
+    > component-info
     > info-actions {
 }
 
@@ -214,7 +253,6 @@ main-content
     button {
     appearance: none;
     border: 2px solid #e8e8e8;
-    background: #eee;
     background: #fff;
     color: #333;
     border-radius: 0.4rem;
@@ -222,6 +260,49 @@ main-content
     font-size: 15px;
     font-weight: 500;
     font-family: "Noto Sans CJK TC";
+    outline: none;
+    cursor: pointer;
+}
+
+main-content
+    content-content
+    > content-component:not([data-active])
+    > component-info
+    > info-actions
+    button:hover {
+    border-color: #dddcdc;
+}
+
+main-content
+    content-content
+    > content-component
+    > component-info
+    > info-actions
+    button
+    > i.fas {
+    color: #777;
+    margin-right: 0.25rem;
+}
+
+main-content
+    content-content
+    > content-component[data-active]
+    > component-info
+    > info-actions
+    button
+    > i.fas {
+    color: #ccc;
+}
+
+main-content
+    content-content
+    > content-component[data-active]
+    > component-info
+    > info-actions
+    button {
+    background: #333;
+    color: #fff;
+    border-color: #333;
 }
 
 main-content content-content > content-component > component-description {
@@ -231,15 +312,25 @@ main-content content-content > content-component > component-description {
     margin-bottom: 2rem;
 }
 
-main-content content-content > content-component > component-showcase {
-    display: block;
+main-content
+    content-content
+    > content-component[data-active]
+    component-showcase {
     padding: 1.5rem;
     border: 1px solid #e8e8e8;
     border-radius: 0.4rem 0.4rem 0 0;
 }
 
-main-content content-content > content-component > component-html {
+main-content content-content > content-component[data-active] component-html {
     display: block;
+}
+
+main-content content-content > content-component > component-showcase {
+    display: block;
+}
+
+main-content content-content > content-component > component-html {
+    display: none;
     padding: 1.5rem;
     border: 1px solid #e8e8e8;
     border-radius: 0 0 0.4rem 0.4rem;
@@ -268,7 +359,7 @@ main-content content-indexes > indexes-header {
     margin-bottom: 1rem;
 }
 
-main-content content-indexes > indexes-header:not(:last-child) {
+main-content content-indexes > indexes-header:not(:first-child) {
     margin-top: 3rem;
 }
 
@@ -308,6 +399,10 @@ main-footer footer-content footer-nav > a {
 main-footer footer-content footer-nav > a:first-child {
     color: #777;
     padding-left: 0;
+}
+
+main-footer footer-content footer-nav i.fas {
+    margin-right: 0.25rem;
 }
 
 main-footer footer-content footer-paragraph {
