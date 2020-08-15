@@ -36,7 +36,7 @@ func loadLanguage(lang string, path string) (d Data) {
 	// 載入該語系的中繼檔案。
 	b, err := ioutil.ReadFile(pathx.Join(pathLanguages, lang, "meta.yml"))
 	if err != nil {
-		panic(err)
+		return d
 	}
 	var meta Meta
 	err = yaml.Unmarshal(b, &meta)
@@ -50,7 +50,7 @@ func loadLanguage(lang string, path string) (d Data) {
 	// 載入頁面的獨立檔案。
 	b, err = ioutil.ReadFile(pathx.Join(pathLanguages, lang, path+".yml"))
 	if err != nil {
-		panic(err)
+		return d
 	}
 	var t map[string]interface{}
 	err = yaml.Unmarshal(b, &t)
@@ -95,4 +95,20 @@ func tmplTranslators(meta Meta) func(string) template.HTML {
 	return func(s string) template.HTML {
 		return template.HTML(fmt.Sprintf(s, strings.TrimRight(ss, meta.UI.Paragraph["TranslatorSeperator"])))
 	}
+}
+
+// tmplMarkdown 會將 Markdown 純文字轉譯為 HTML 標籤。
+func tmplMarkdown(s string) template.HTML {
+	return template.HTML(markdown(s))
+}
+
+// tmplCode 會將純文字程式碼螢光標記並整理，解析之後轉為 HTML 標籤。
+func tmplCode(s string) template.HTML {
+	return template.HTML(decodePlaceholder(highlight(beautify(placeholder(s), "html"))))
+	// return template.HTML(decodePlaceholder(highlight(beautify(placeholder(s), typ))))
+}
+
+// tmplPreview 會將傳入的 HTML 純文字移除相關的模板字元然後輸出純淨的 HTML。
+func tmplPreview(s string) template.HTML {
+	return template.HTML(clean(s))
 }
