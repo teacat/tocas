@@ -20,6 +20,7 @@ type MetaInformation struct {
 	Language string `yaml:"Language"`
 	Flag     string `yaml:"Flag"`
 	Version  string `yaml:"Version"`
+	Path     string `yaml:"Path"`
 }
 
 // MetaContributor
