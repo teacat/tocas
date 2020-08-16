@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"io/ioutil"
+	"regexp"
 	"strings"
 
 	"github.com/teacat/pathx"
@@ -111,4 +112,17 @@ func tmplCode(s string) template.HTML {
 // tmplPreview 會將傳入的 HTML 純文字移除相關的模板字元然後輸出純淨的 HTML。
 func tmplPreview(s string) template.HTML {
 	return template.HTML(clean(s))
+}
+
+// tmplMarked
+func tmplMarked(s string) string {
+	s = regexp.MustCompile(`(?:\[\[)(.*?)(?:\]\])`).FindAllStringSubmatch(s, -1)[0][1]
+	return s
+}
+
+//
+func tmplLink(d Data, s string) string {
+	switch(s) {
+		case ""
+	}
 }
