@@ -119,10 +119,3 @@ func tmplMarked(s string) string {
 	s = regexp.MustCompile(`(?:\[\[)(.*?)(?:\]\])`).FindAllStringSubmatch(s, -1)[0][1]
 	return s
 }
-
-//
-func tmplLink(d Data, s string) string {
-	switch(s) {
-		case ""
-	}
-}
