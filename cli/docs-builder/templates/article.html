@@ -122,14 +122,12 @@
 
                     <!-- 內容索引 -->
                     <content-indexes>
-                        <indexes-header>索引標題</indexes-header>
-                        <a href="#!">浮動 <span>.fluid</span></a>
-                        <a href="#!">浮動 <span>.fluid</span></a>
-                        <a href="#!">浮動 <span>.fluid</span></a>
-                        <indexes-header>索引標題</indexes-header>
-                        <a href="#!">浮動 <span>.fluid</span></a>
-                        <a href="#!">浮動 <span>.fluid</span></a>
-                        <a href="#!">浮動 <span>.fluid</span></a>
+                        {{ range .Article.Definitions }}
+                            <indexes-header>{{ .Title }}</indexes-header>
+                            {{ range .Sections }}
+                            <a href="#!">{{ .Title }} <span>.{{ .HTML | marked }}</span></a>
+                            {{ end }}
+                        {{ end }}
                     </content-indexes>
                     <!-- / 內容索引 -->
                 </screen-container>
@@ -154,7 +152,7 @@
                         </footer-translators>
                     </footer-content>
                     <footer-brand>
-                        <img src="./assets/images/logo.svg" alt="Logo">
+                        <img src="/assets/images/logo.svg" alt="Logo">
                     </footer-brand>
                 </screen-container>
             </main-footer>
