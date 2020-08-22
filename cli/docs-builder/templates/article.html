@@ -33,7 +33,7 @@
                     <!-- 標題與副標題 -->
                     <slate-header>{{ .Article.Title }}</slate-header>
                     <slate-description
-                        >{{ .Article.Description }}</slate-description
+                        >{{ .Article.Description | markdown }}</slate-description
                     >
                     <!-- / 標題與副標題 -->
                 </screen-container>
@@ -70,7 +70,7 @@
                         {{ if ne .Article.Intro "" }}
                             <!-- 大綱 -->
                             <content-header>說明</content-header>
-                            <content-description>{{ .Article.Intro }}</content-description>
+                            <content-description>{{ .Article.Intro | markdown }}</content-description>
                             <!-- / 大綱 -->
                         {{ end }}
 
@@ -78,7 +78,7 @@
                         {{ range .Article.Definitions }}
                             <content-header data-dividing>{{ .Title }}</content-header>
                             {{ if ne .Description "" }}
-                                <content-description>{{ .Description }}</content-description>
+                                <content-description>{{ .Description | markdown }}</content-description>
                             {{ end }}
 
 
