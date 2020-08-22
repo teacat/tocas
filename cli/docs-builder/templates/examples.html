@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/assets/styles/global.css" />
+        <link rel="stylesheet" href="/assets/styles/examples.css" />
+        <script src="https://kit.fontawesome.com/535a1ce640.js" crossorigin="anonymous"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <application-main>
+            <!-- 開頭矚目看板 -->
+            <main-slate>
+                <screen-container>
+                    <!-- 導航連結 -->
+                    <slate-nav>
+                        <nav-left>
+                            <a href="/{{ index .Meta.Information.Path }}">Tocas UI</a>
+                            <a href="/{{ index .Meta.Information.Path }}/getting-started">{{ index .Meta.UI.Navigation "GettingStarted" }}</a>
+                            <a href="/{{ index .Meta.Information.Path }}/components/button">{{ index .Meta.UI.Navigation "Components" }}</a>
+                            <a href="/{{ index .Meta.Information.Path }}/examples">{{ index .Meta.UI.Navigation "Examples" }}</a>
+                            <a href="/{{ index .Meta.Information.Path }}/playground">{{ index .Meta.UI.Navigation "Playground" }}</a>
+                        </nav-left>
+                        <nav-right>
+                            <a href="#!"><i class="fas fa-language"></i> 台灣正體</a>
+                            <a href="https://github.com/teacat/tocas" target="_blank">GitHub</a>
+                        </nav-right>
+                    </slate-nav>
+                    <!-- / 導航連結 -->
+
+                    <!-- 標題與副標題 -->
+                    <slate-header>{{ .Examples.Title }}</slate-header>
+                    <slate-description
+                        >{{ .Examples.Description }}</slate-description
+                    >
+                    <!-- / 標題與副標題 -->
+                </screen-container>
+            </main-slate>
+            <!-- / 開頭矚目看板 -->
+
+            <!-- 文件內容 -->
+            <main-content>
+                <screen-container data-row>
+                    <example-items>
+                        {{ range .Examples.Items }}
+                        <items-section>
+                            <section-header>{{ .Title }}</section-header>
+                            <section-description>{{ .Description }}</section-description>
+                            <section-items>
+                                {{ range .Items }}
+                                    <a href="{{ .Link }}" target="_blank">
+                                        <img src="{{ .Image }}" alt="">
+                                        <item-header>{{ .Title }}</item-header>
+                                        <item-description>{{ .Description }}</item-description>
+                                        <i class="fas fa-{{ .Symbol }}"></i>
+                                    </a>
+                                {{ end }}
+                            </section-items>
+                        </items-section>
+                        {{ end }}
+                    </example-items>
+                </screen-container>
+            </main-content>
+            <!-- / 文件內容 -->
+
+            <!-- 頁腳 -->
+            <main-footer>
+                <screen-container data-row>
+                    <footer-content>
+                        <footer-nav>
+                            <a href="#!"><i class="fas fa-arrow-up"></i> {{ index .Meta.UI.Navigation "BackToTop" }}</a>
+                            <a href="#!">GitHub</a>
+                            <a href="#!">{{ index .Meta.UI.Navigation "Examples" }}</a>
+                            <a href="#!">{{ index .Meta.UI.Navigation "About" }}</a>
+                        </footer-nav>
+                        <footer-paragraph>
+                            {{ index .Meta.UI.Paragraph "Footer" | html }}
+                        </footer-paragraph>
+                        <footer-translators>
+                            {{ index .Meta.UI.Paragraph "Translators" | translators }}
+                        </footer-translators>
+                    </footer-content>
+                    <footer-brand>
+                        <img src="/assets/images/logo.svg" alt="Logo">
+                    </footer-brand>
+                </screen-container>
+            </main-footer>
+            <!-- / 頁腳 -->
+        </application-main>
+
+        <!-- -->
+        <font-preload></font-preload>
+        <!-- / -->
+    </body>
+</html>
