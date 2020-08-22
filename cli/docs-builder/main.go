@@ -92,6 +92,16 @@ func serve(c *cli.Context) error {
 		}
 		t.Execute(w, d)
 	}).AddPriority(100)
+	d.Get("/{language}/examples", func(w http.ResponseWriter, r *http.Request) {
+		//
+		d := loadLanguage(davai.Vars(r)["language"], "examples")
+		fm["translators"] = tmplTranslators(d.Meta)
+		t, err := template.New("examples.html").Funcs(fm).ParseFiles(pathx.Join(pathTemplate, "examples.html"))
+		if err != nil {
+			panic(err)
+		}
+		t.Execute(w, d)
+	})
 	d.Get("/{language}/{*:path}", func(w http.ResponseWriter, r *http.Request) {
 		//
 		d := loadLanguage(davai.Vars(r)["language"], davai.Vars(r)["path"])
@@ -102,7 +112,11 @@ func serve(c *cli.Context) error {
 		}
 		t.Execute(w, d)
 	})
-	d.Run()
+	log.Println("Running...")
+	err := d.Run(":80")
+	if err != nil {
+		panic(err)
+	}
 	return nil
 }
 
