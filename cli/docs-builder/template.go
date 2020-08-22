@@ -99,7 +99,11 @@ func tmplHighlight(s string) template.HTML {
 func tmplTranslators(meta Meta) func(string) template.HTML {
 	var ss string
 	for _, v := range meta.Contributors {
-		ss += fmt.Sprintf(`<a href="%s" target="_blank">%s</a>%s`, v.Website, v.Name, meta.UI.Paragraph["TranslatorSeperator"])
+		if v.Website != "" {
+			ss += fmt.Sprintf(`<a href="%s" target="_blank">%s</a>%s`, v.Website, v.Name, meta.UI.Paragraph["TranslatorSeperator"])
+		} else {
+			ss += fmt.Sprintf(`%s%s`, v.Name, meta.UI.Paragraph["TranslatorSeperator"])
+		}
 	}
 	return func(s string) template.HTML {
 		return template.HTML(fmt.Sprintf(s, strings.TrimRight(ss, meta.UI.Paragraph["TranslatorSeperator"])))
