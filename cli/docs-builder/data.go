@@ -2,9 +2,10 @@ package main
 
 // Data
 type Data struct {
-	Meta    Meta
-	Article Article
-	Type    string
+	Meta     Meta
+	Article  Article
+	Examples Examples
+	Type     string
 }
 
 // Meta
@@ -132,4 +133,27 @@ type ArticleDefinitionSection struct {
 	HTML        string   `yaml:"HTML"`
 	Responsive  bool     `yaml:"Responsive"`
 	Remove      []string `yaml:"Remove"`
+}
+
+// Examples
+type Examples struct {
+	Title       string         `yaml:"Title"`
+	Description string         `yaml:"Description"`
+	Items       []ExamplesItem `yaml:"Items"`
+}
+
+// ExamplesItem
+type ExamplesItem struct {
+	Title       string             `yaml:"Title"`
+	Description string             `yaml:"Description"`
+	Items       []ExamplesItemItem `yaml:"Items"`
+}
+
+// ExamplesItemItem
+type ExamplesItemItem struct {
+	Title       string `yaml:"Title"`
+	Image       string `yaml:"Image"`
+	Link        string `yaml:"Link"`
+	Description string `yaml:"Description"`
+	Symbol      string `yaml:"Symbol"`
 }
