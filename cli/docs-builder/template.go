@@ -68,6 +68,14 @@ func loadLanguage(lang string, path string) (d Data) {
 		}
 		d.Article = a
 		return d
+	case "Examples":
+		var e Examples
+		err = yaml.Unmarshal(b, &e)
+		if err != nil {
+			panic(err)
+		}
+		d.Examples = e
+		return d
 	}
 	return d
 }
