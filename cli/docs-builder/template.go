@@ -7,6 +7,7 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/iancoleman/strcase"
 	"github.com/teacat/pathx"
 	"gopkg.in/yaml.v2"
 )
@@ -88,6 +89,11 @@ func tmplHTML(html string) template.HTML {
 // tmplCapitalize 會將指定文字的地一個字母開頭大寫。
 func tmplCapitalize(s string) string {
 	return strings.Title(s)
+}
+
+//
+func tmplKebablize(s string) string {
+	return strcase.ToKebab(s)
 }
 
 // tmplHighlight 會將傳入的文字以螢光標記的方式呈現。

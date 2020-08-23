@@ -79,6 +79,7 @@ func serve(c *cli.Context) error {
 		"markdown":   tmplMarkdown,
 		"preview":    tmplPreview,
 		"marked":     tmplMarked,
+		"kebablize":  tmplKebablize,
 	}
 	d.ServeFiles("/assets", pathAssets)
 
