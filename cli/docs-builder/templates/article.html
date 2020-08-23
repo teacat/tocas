@@ -36,6 +36,12 @@
                         >{{ .Article.Description | markdown }}</slate-description
                     >
                     <!-- / 標題與副標題 -->
+
+                    <slate-tab>
+                        <tab-item data-active>基本樣式</tab-item>
+                        <tab-item>模組功能</tab-item>
+                        <tab-item>屬性設置</tab-item>
+                    </slate-tab>
                 </screen-container>
             </main-slate>
             <!-- / 開頭矚目看板 -->
@@ -46,18 +52,18 @@
                     <!-- 側邊索引 -->
                     <content-sidebar>
                         <sidebar-header>{{ index .Meta.UI.Navigation "GettingStarted" }}</sidebar-header>
-                            <a href="#!">{{ index .Meta.UI.Navigation "Introduction" }}<span>Introduction</span></a>
-                            <a href="#!">{{ index .Meta.UI.Navigation "Responsive" }}<span>Responsive</span></a>
-                            <a href="#!">{{ index .Meta.UI.Navigation "Emphasises" }}<span>Emphasises</span></a>
+                            <a href="/{{ index .Meta.Information.Path }}/introduction"><span>{{ index .Meta.UI.Navigation "Introduction" }}</span><small>Introduction</small></a>
+                            <a href="/{{ index .Meta.Information.Path }}/responsive"><span>{{ index .Meta.UI.Navigation "Responsive" }}</span><small>Responsive</small></a>
+                            <a href="/{{ index .Meta.Information.Path }}/emphasises"><span>{{ index .Meta.UI.Navigation "Emphasises" }}</span><small>Emphasises</small></a>
 
 
                     {{ range $key, $value := .Meta.Components }}
                         <sidebar-header>{{ index $.Meta.UI.ComponentsCategories $key }}</sidebar-header>
                         {{ range $value }}
-                            <a href="#!">
-                                {{ index $.Meta.UI.Components . }}
+                            <a href="/{{ index $.Meta.Information.Path }}/components/{{ . | kebablize }}">
+                                <span>{{ index $.Meta.UI.Components . }}</span>
                                 {{ if ne (index $.Meta.UI.Components .) (. | capitalize) }}
-                                <span>{{ . | capitalize }}</span>
+                                <small>{{ . | capitalize }}</small>
                                 {{ end }}
                             </a>
                         {{ end }}
@@ -73,6 +79,61 @@
                             <content-description>{{ .Article.Intro | markdown }}</content-description>
                             <!-- / 大綱 -->
                         {{ end }}
+
+                        <content-header data-dividing>設定屬性</content-header>
+                        <content-description>此模組有下列設定可供使用。欲更改已初始化的模組設定，請透過 setting 方法並傳入欲覆蓋的設定。</content-description>
+
+                        <table data-specification>
+                            <thead>
+                                <tr>
+                                    <th><!--屬性名稱--></th>
+                                    <th>預設值</th>
+                                    <th>註釋</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>exclusive<small>Boolean</small></td>
+                                    <td><code>true</code></td>
+                                    <td>是否僅允許單個手風琴只有一個分頁能被打開。</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <content-header data-dividing>回呼函式</content-header>
+                        <content-description>透過設置回呼函式來在模組的特定時機執行指定的程式內容，回呼函式中的 this 本體物件會因為時機不同而有所異動。回呼函式需要被放置在設定裡一同傳入模組。</content-description>
+
+                        <table data-specification>
+                            <thead>
+                                <tr>
+                                    <th><!--行為名稱--></th>
+                                    <th>觸發時機與參數</th>
+                                    <th>本體物件</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>onOpening</td>
+                                    <td>
+                                        當手風琴正在展開時所會呼叫的函式。
+                                        <hr/>
+                                        <code>onOpening (<em>index</em>)</code>
+                                        <ul>
+                                            <li>
+                                                index <small>Interger</small>
+                                                <br>
+                                                <span>欲開啟的手風琴項目索引編號。</span>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        是否僅允許單個手風琴只有一個分頁能被打開。
+                                        <hr/>
+                                        <code>true</code>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
                         <!-- 單個使用章節 -->
                         {{ range .Article.Definitions }}
@@ -125,7 +186,7 @@
                         {{ range .Article.Definitions }}
                             <indexes-header>{{ .Title }}</indexes-header>
                             {{ range .Sections }}
-                            <a href="#!">{{ .Title }} <span>.{{ .HTML | marked }}</span></a>
+                            <a href="#!"><span>{{ .Title }}</span> <small>.{{ .HTML | marked }}</small></a>
                             {{ end }}
                         {{ end }}
                     </content-indexes>
