@@ -96,6 +96,13 @@ func tmplKebablize(s string) string {
 	return strcase.ToKebab(s)
 }
 
+//
+func tmplType(meta Meta) func(string) string {
+	return func(s string) string {
+		return meta.UI.Types[s]
+	}
+}
+
 // tmplHighlight 會將傳入的文字以螢光標記的方式呈現。
 func tmplHighlight(s string) template.HTML {
 	return template.HTML(highlight(s))

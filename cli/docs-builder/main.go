@@ -87,6 +87,7 @@ func serve(c *cli.Context) error {
 		//
 		d := loadLanguage(davai.Vars(r)["language"], "")
 		fm["translators"] = tmplTranslators(d.Meta)
+		fm["type"] = tmplType(d.Meta)
 		t, err := template.New("index.html").Funcs(fm).ParseFiles(pathx.Join(pathTemplate, "index.html"))
 		if err != nil {
 			panic(err)
@@ -97,6 +98,7 @@ func serve(c *cli.Context) error {
 		//
 		d := loadLanguage(davai.Vars(r)["language"], davai.Vars(r)["path"])
 		fm["translators"] = tmplTranslators(d.Meta)
+		fm["type"] = tmplType(d.Meta)
 		var t *template.Template
 		var err error
 		if davai.Vars(r)["path"] == "examples" {
