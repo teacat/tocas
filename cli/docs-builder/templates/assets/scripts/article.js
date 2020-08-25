@@ -4,4 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
             v.closest("content-component").toggleAttribute("data-active");
         });
     });
+
+    document
+        .querySelector("a[data-backtotop]")
+        .addEventListener("click", () => {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        });
 });
