@@ -44,6 +44,7 @@ type MetaUI struct {
 	Navigation           map[string]string `yaml:"Navigation"`
 	ComponentsCategories map[string]string `yaml:"ComponentsCategories"`
 	Components           map[string]string `yaml:"Components"`
+	Types                map[string]string `yaml:"Types"`
 }
 
 // Article
@@ -58,8 +59,8 @@ type Article struct {
 
 // ArticleSettings
 type ArticleSettings struct {
-	Properties []ArticleSettingsPropertie
-	Callbacks  []ArticleSettingsCallback
+	Properties []ArticleSettingsPropertie `yaml:"Properties"`
+	Callbacks  []ArticleSettingsCallback  `yaml:"Callbacks"`
 }
 
 // ArticleSettingsPropertie
