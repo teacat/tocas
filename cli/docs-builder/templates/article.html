@@ -92,11 +92,13 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {{ range .Article.Settings.Properties }}
                                 <tr>
-                                    <td>exclusive<small>Boolean</small></td>
-                                    <td><code>true</code></td>
-                                    <td>是否僅允許單個手風琴只有一個分頁能被打開。</td>
+                                    <td>{{ .Key }}<small>{{ .Type | type }}</small></td>
+                                    <td><code>{{ .Default }}</code></td>
+                                    <td>{{ .Description }}</td>
                                 </tr>
+                                {{ end }}
                             </tbody>
                         </table>
 
@@ -112,26 +114,32 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {{ range .Article.Settings.Callbacks }}
                                 <tr>
-                                    <td>onOpening</td>
+                                    <td>{{ .Name }}</td>
                                     <td>
-                                        當手風琴正在展開時所會呼叫的函式。
-                                        <hr/>
-                                        <code>onOpening (<em>index</em>)</code>
-                                        <ul>
-                                            <li>
-                                                index <small>Interger</small>
-                                                <br>
-                                                <span>欲開啟的手風琴項目索引編號。</span>
-                                            </li>
-                                        </ul>
+                                        {{ .Description }}
+                                        {{ if .Arguments }}
+                                            <hr/>
+                                            <code>{{ .Name }} ({{ range $i, $e := .Arguments }}{{ if $i }}, {{ end }}<em>{{ .Name }}</em>{{ end }})</code>
+                                            <ul>
+                                                {{ range .Arguments }}
+                                                <li>
+                                                    {{ .Name }} <small>{{ .Type | type }}</small>
+                                                    <br>
+                                                    <span>{{ .Description }}</span>
+                                                </li>
+                                                {{ end }}
+                                            </ul>
+                                        {{ end }}
                                     </td>
                                     <td>
-                                        是否僅允許單個手風琴只有一個分頁能被打開。
+                                        {{ .Context.Description }}
                                         <hr/>
-                                        <code>true</code>
+                                        <code>{{ .Context.Type | type }}</code>
                                     </td>
                                 </tr>
+                                {{ end }}
                             </tbody>
                         </table>
 
