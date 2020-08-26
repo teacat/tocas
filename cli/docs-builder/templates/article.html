@@ -71,15 +71,8 @@
                     </content-sidebar>
                     <!-- / 側邊索引 -->
 
-                    <!-- 主要內容 -->
-                    <content-content>
-                        {{ if ne .Article.Intro "" }}
-                            <!-- 大綱 -->
-                            <content-header>說明</content-header>
-                            <content-description>{{ .Article.Intro | markdown }}</content-description>
-                            <!-- / 大綱 -->
-                        {{ end }}
 
+                    <content-content data-settings>
                         <content-header data-dividing>設定屬性</content-header>
                         <content-description>此模組有下列設定可供使用。欲更改已初始化的模組設定，請透過 setting 方法並傳入欲覆蓋的設定。</content-description>
 
@@ -142,6 +135,63 @@
                                 {{ end }}
                             </tbody>
                         </table>
+                    </content-content>
+
+                    <content-content data-usage>
+                         <content-header data-dividing>可用行為</content-header>
+                        <content-description>一個模組中有不少可用方法能夠呼叫並用以執行特定動作。欲執行一個模組的動作，透過下列用法即可。</content-description>
+
+                        <table data-specification>
+                            <thead>
+                                <tr>
+                                    <th><!--行為名稱--></th>
+                                    <th>說明與參數</th>
+                                    <th>回傳內容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{ range .Article.Usages.Behaviors }}
+                                <tr>
+                                    <td>{{ .Name }}</td>
+                                    <td>
+                                        {{ .Description }}
+                                        {{ if .Arguments }}
+                                            <hr/>
+                                            <code>{{ .Name }} ({{ range $i, $e := .Arguments }}{{ if $i }}, {{ end }}<em>{{ .Name }}{{ if not .Required }}?{{end}}</em>{{ end }})</code>
+                                            <ul>
+                                                {{ range .Arguments }}
+                                                <li>
+                                                    {{ .Name }} <small>{{ .Type | type }}</small><!--{{ if .Required }}<small data-required>*必填</small>{{ end }}-->
+                                                    <br>
+                                                    <span>{{ .Description }}</span>
+                                                </li>
+                                                {{ end }}
+                                            </ul>
+                                        {{ end }}
+                                    </td>
+                                    <td>
+                                        {{ .Return.Description }}
+                                        <hr/>
+                                        <code>{{ .Return.Type | type }}</code>
+                                    </td>
+                                </tr>
+                                {{ end }}
+                            </tbody>
+                        </table>
+                    </content-content>
+
+                    <!-- 主要內容 -->
+                    <content-content data-article>
+                        {{ if ne .Article.Intro "" }}
+                            <!-- 大綱 -->
+                            <content-header>說明</content-header>
+                            <content-description>{{ .Article.Intro | markdown }}</content-description>
+                            <!-- / 大綱 -->
+                        {{ end }}
+
+
+
+
 
                         <!-- 單個使用章節 -->
                         {{ range .Article.Definitions }}
@@ -209,9 +259,9 @@
                     <footer-content>
                         <footer-nav>
                             <a href="#!" data-backtotop><i class="fas fa-arrow-up"></i> {{ index .Meta.UI.Navigation "BackToTop" }}</a>
-                            <a href="#!">GitHub</a>
-                            <a href="#!">{{ index .Meta.UI.Navigation "Examples" }}</a>
-                            <a href="#!">{{ index .Meta.UI.Navigation "About" }}</a>
+                            <a href="https://github.com/teacat/tocas" target="_blank">GitHub</a>
+                            <a href="/{{ index .Meta.Information.Path }}/examples">{{ index .Meta.UI.Navigation "Examples" }}</a>
+                            <a href="/{{ index .Meta.Information.Path }}/about">{{ index .Meta.UI.Navigation "About" }}</a>
                         </footer-nav>
                         <footer-paragraph>
                             {{ index .Meta.UI.Paragraph "Footer" | html }}
