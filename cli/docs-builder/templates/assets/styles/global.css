@@ -9,34 +9,31 @@ html {
 body {
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
-font-preload {
+#字型預載 {
     font-family: "Ubuntu Mono";
 }
 
-screen-container {
+.界限容器 {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
     max-width: 1360px;
 }
 
-screen-container[data-row] {
+.界限容器_行排列 {
     flex-direction: row;
-}
-
-application-main {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
 }
 
 /**
  * 開頭矚目看板
  */
 
-main-slate {
+#矚目看板 {
     display: block;
     background: #f7f7f7;
     padding: 2rem 2rem 4rem;
@@ -44,43 +41,43 @@ main-slate {
 }
 
 /** 導航連結 */
-main-slate slate-nav {
+#矚目看板-導航列 {
     display: flex;
 }
 
-main-slate slate-nav > nav-left {
+#矚目看板-導航列-主要欄位 {
     display: block;
 }
 
-main-slate slate-nav > nav-right {
+#矚目看板-導航列-次要欄位 {
     display: block;
     margin-left: auto;
 }
 
-main-slate slate-nav > nav-right i.fas {
+#矚目看板-導航列-項目-語系圖示 {
     margin-right: 0.25rem;
 }
 
-main-slate slate-nav a {
+.矚目看板-導航列-項目 {
     text-decoration: none;
     color: #777;
 }
 
-main-slate slate-nav a:not(:first-child) {
+.矚目看板-導航列-項目:not(:first-child) {
     padding: 0 0.85rem;
 }
 
-main-slate slate-nav a:first-child {
+.矚目看板-導航列-項目:first-child {
     padding: 0 0.85rem 0 0;
 }
 
-main-slate slate-nav > nav-left a:first-child {
+.矚目看板-導航列-項目_商標 {
     color: #333;
     font-weight: 500;
 }
 
 /** 標題與副標題 */
-main-slate slate-header {
+#矚目看板-標題 {
     display: block;
     font-size: 2rem;
     font-weight: 500;
@@ -88,30 +85,31 @@ main-slate slate-header {
     margin-top: 3rem;
 }
 
-main-slate slate-description {
+#矚目看板-說明 {
     display: block;
     color: #777;
     font-size: 1.1rem;
     margin-top: 1rem;
 }
 
-main-slate slate-description > p:only-child {
+#矚目看板-說明 p:only-child {
     margin: 0;
 }
 
-main-slate slate-description > p:last-child {
+#矚目看板-說明 p:last-child {
     margin-bottom: 0;
 }
 
-main-slate slate-tab {
+#矚目看板-分頁籤 {
     display: flex;
     margin-bottom: calc(-4rem + -1px);
     margin-top: 4rem;
     width: 51rem;
     margin-left: 17.5rem;
+    text-decoration: none;
 }
 
-main-slate slate-tab tab-item {
+.矚目看板-分頁籤-項目 {
     display: block;
     padding: 0.5rem 1rem;
     flex: 1;
@@ -121,7 +119,7 @@ main-slate slate-tab tab-item {
     color: #333;
 }
 
-main-slate slate-tab tab-item[data-active] {
+.矚目看板-分頁籤-項目_啟用的 {
     background: #fff;
     border: 1px solid #e9e9e9;
     border-bottom: 0;
@@ -131,13 +129,13 @@ main-slate slate-tab tab-item[data-active] {
  *
  */
 
-main-content {
+#文件內容 {
     display: block;
     padding: 4rem 2rem;
     flex: 1;
 }
 
-main-content content-sidebar {
+#文件內容-側邊索引 {
     display: block;
     margin-right: 4rem;
     border-right: 2px solid #e8e8e8;
@@ -145,7 +143,7 @@ main-content content-sidebar {
     max-width: 13rem;
 }
 
-main-content content-sidebar > sidebar-header {
+.文件內容-側邊索引-標題 {
     display: block;
     font-weight: 500;
     color: #777;
@@ -153,28 +151,28 @@ main-content content-sidebar > sidebar-header {
     font-size: 1.2rem;
 }
 
-main-content content-sidebar > sidebar-header:not(:first-child) {
+.文件內容-側邊索引-標題:not(:first-child) {
     margin-top: 3rem;
 }
 
-main-content content-sidebar > a {
+.文件內容-側邊索引-項目 {
     display: block;
     text-decoration: none;
     color: #333;
     padding: 0.5rem 0 0.5rem 0;
 }
 
-main-content content-sidebar > a:hover span {
+.文件內容-側邊索引-項目:hover .文件內容-側邊索引-項目-文字 {
     text-decoration: underline;
 }
 
-main-content content-sidebar > a > small {
+.文件內容-側邊索引-項目-英文 {
     color: #777;
     font-size: 0.9rem;
     margin-left: 0.45rem;
 }
 
-main-content content-content table[data-specification] {
+.文件內容-主要欄位-規格表格 {
     border-radius: 0.4rem;
     border-collapse: collapse;
     border-style: hidden;
@@ -183,10 +181,7 @@ main-content content-content table[data-specification] {
     margin-top: 4rem;
 }
 
-main-content content-content table[data-specification] thead {
-}
-
-main-content content-content table[data-specification] thead tr th {
+.文件內容-主要欄位-規格表格 thead tr th {
     font-weight: normal;
     padding: 0.5rem 1rem;
     border: 1px solid #e8e8e8;
@@ -196,13 +191,13 @@ main-content content-content table[data-specification] thead tr th {
     color: #333;
 }
 
-main-content content-content table[data-specification] thead tr th:first-child {
+.文件內容-主要欄位-規格表格 thead tr th:first-child {
     background: transparent;
     color: #777;
     font-weight: 500;
 }
 
-main-content content-content table[data-specification] tbody tr td {
+.文件內容-主要欄位-規格表格 tbody tr td {
     padding: 1rem 1rem;
     border: 1px solid #e8e8e8;
     text-align: left;
@@ -210,20 +205,20 @@ main-content content-content table[data-specification] tbody tr td {
     vertical-align: top;
 }
 
-main-content content-content table[data-specification] tbody tr td:first-child {
+.文件內容-主要欄位-規格表格 tbody tr td:first-child {
     background: #f7f7f7;
     color: #333;
     font-weight: 500;
     vertical-align: top;
 }
 
-main-content content-content table[data-specification] tbody tr td hr {
+.文件內容-主要欄位-規格表格-分隔線 {
     border: 0;
     border-top: 1px solid #e8e8e8;
     margin: 1rem 0;
 }
 
-main-content content-content table[data-specification] tbody tr td ul {
+.文件內容-主要欄位-規格表格-參數清單 {
     font-size: 0.9rem;
     color: #333;
     margin: 1rem 0 0;
@@ -231,22 +226,16 @@ main-content content-content table[data-specification] tbody tr td ul {
     padding: 0;
 }
 
-main-content content-content table[data-specification] tbody tr td ul li {
+.文件內容-主要欄位-規格表格-參數清單-項目 {
     padding-left: 1rem;
 }
 
-main-content content-content table[data-specification] tbody tr td ul li + li {
+.文件內容-主要欄位-規格表格-參數清單-項目
+    + .文件內容-主要欄位-規格表格-參數清單-項目 {
     margin-top: 0.5rem;
 }
 
-main-content
-    content-content
-    table[data-specification]
-    tbody
-    tr
-    td
-    ul
-    li::before {
+.文件內容-主要欄位-規格表格-參數清單-項目::before {
     content: "•";
     font-family: "Lato";
     color: #333;
@@ -254,11 +243,12 @@ main-content
     margin-right: 0.4rem;
 }
 
-main-content content-content table[data-specification] tbody tr td ul span {
+.文件內容-主要欄位-規格表格-參數清單-項目-說明 {
     color: #777;
 }
 
-main-content content-content table[data-specification] tbody tr td small {
+.文件內容-主要欄位-規格表格-型態,
+.文件內容-主要欄位-規格表格-參數清單-項目-型態 {
     margin-left: 0.4rem;
     font-size: 0.8rem;
     position: relative;
@@ -266,29 +256,12 @@ main-content content-content table[data-specification] tbody tr td small {
     color: #777;
 }
 
-main-content
-    content-content
-    table[data-specification]
-    tbody
-    tr
-    td
-    small[data-required] {
+.文件內容-主要欄位-規格表格-參數清單-項目-型態_必要的 {
     color: red;
     margin-left: 0.2rem;
 }
 
-main-content
-    content-content
-    table[data-specification]
-    tbody
-    tr
-    td
-    return-description {
-    margin-top: 0.5rem;
-    display: block;
-}
-
-main-content content-content table[data-specification] tbody tr td code {
+.文件內容-主要欄位-規格表格-函式碼 {
     font-size: 0.9rem;
     background: #f7f7f7;
     color: #777;
@@ -297,17 +270,17 @@ main-content content-content table[data-specification] tbody tr td code {
     font-family: "Fira Code";
 }
 
-main-content content-content table[data-specification] tbody tr td code em {
+.文件內容-主要欄位-規格表格-函式碼-參數 {
     font-size: 0.85rem;
 }
 
-main-content content-content {
+#文件內容-主要欄位 {
     flex: 1;
     display: block;
     margin-top: -0.5rem;
 }
 
-main-content content-content > content-header {
+.文件內容-主要欄位-標題 {
     display: block;
     color: #333;
     font-weight: 500;
@@ -315,37 +288,33 @@ main-content content-content > content-header {
     margin-bottom: 0.8rem;
 }
 
-main-content content-content > content-header:not(:first-child) {
+.文件內容-主要欄位-標題:not(:first-child) {
     margin-top: 6rem;
 }
 
-main-content content-content > content-header[data-dividing] {
+.文件內容-主要欄位-標題_分隔的 {
     border-bottom: 2px solid #e8e8e8;
     padding-bottom: 0.8rem;
 }
 
-main-content content-content > content-description {
+.文件內容-主要欄位-說明 {
     display: block;
     line-height: 2;
     color: #333;
 }
 
-main-content content-content > content-component {
+.文件內容-主要欄位-元件 {
     display: block;
     margin-top: 4rem;
 }
 
-main-content content-content > content-component > component-info {
+.文件內容-主要欄位-元件-資訊標頭 {
     display: flex;
     align-items: center;
     margin-bottom: 1rem;
 }
 
-main-content
-    content-content
-    > content-component
-    > component-info
-    > info-header {
+.文件內容-主要欄位-元件-資訊標頭-標題欄位 {
     flex: 1;
     font-size: 1.4rem;
     font-weight: 500;
@@ -353,12 +322,7 @@ main-content
     position: relative;
 }
 
-main-content
-    content-content
-    > content-component
-    > component-info
-    > info-header
-    > a {
+.文件內容-主要欄位-元件-資訊標頭-標題欄位-錨點 {
     display: block;
     height: 128%;
     position: absolute;
@@ -373,21 +337,11 @@ main-content
     transform: translateY(-50%);
 }
 
-main-content
-    content-content
-    > content-component
-    > component-info
-    > info-header
-    > a:hover {
+.文件內容-主要欄位-元件-資訊標頭-標題欄位-錨點:hover {
     background: transparent;
 }
 
-main-content
-    content-content
-    > content-component
-    > component-info
-    > info-header
-    > a:hover::before {
+.文件內容-主要欄位-元件-資訊標頭-標題欄位-錨點:hover::before {
     text-shadow: 1px 1px 0 #fff, -1px 1px 0 #fff, 1px -1px 0 #fff,
         -1px -1px 0 #fff, 0px 1px 0 #fff, 0px -1px 0 #fff, -1px 0px 0 #fff,
         1px 0px 0 #fff, 2px 2px 0 #fff, -2px 2px 0 #fff, 2px -2px 0 #fff,
@@ -403,19 +357,7 @@ main-content
     position: absolute;
 }
 
-main-content
-    content-content
-    > content-component
-    > component-info
-    > info-actions {
-}
-
-main-content
-    content-content
-    > content-component
-    > component-info
-    > info-actions
-    button {
+.文件內容-主要欄位-元件-資訊標頭-動作欄位-項目 {
     appearance: none;
     border: 2px solid #e8e8e8;
     background: #fff;
@@ -429,72 +371,46 @@ main-content
     cursor: pointer;
 }
 
-main-content
-    content-content
-    > content-component:not([data-active])
-    > component-info
-    > info-actions
-    button:hover {
+.文件內容-主要欄位-元件:not(.文件內容-主要欄位-元件_檢視原始碼中)
+    .文件內容-主要欄位-元件-資訊標頭-動作欄位-項目:hover {
     border-color: #dddcdc;
 }
 
-main-content
-    content-content
-    > content-component
-    > component-info
-    > info-actions
-    button
-    > i.fas {
+.文件內容-主要欄位-元件-資訊標頭-動作欄位-項目-圖示 {
     color: #777;
     margin-right: 0.25rem;
 }
 
-main-content
-    content-content
-    > content-component[data-active]
-    > component-info
-    > info-actions
-    button
-    > i.fas {
+.文件內容-主要欄位-元件_檢視原始碼中
+    .文件內容-主要欄位-元件-資訊標頭-動作欄位-項目-圖示 {
     color: #ccc;
 }
 
-main-content
-    content-content
-    > content-component[data-active]
-    > component-info
-    > info-actions
-    button {
+.文件內容-主要欄位-元件_檢視原始碼中
+    .文件內容-主要欄位-元件-資訊標頭-動作欄位-項目 {
     background: #333;
     color: #fff;
     border-color: #333;
 }
 
-main-content content-content > content-component > component-description {
+.文件內容-主要欄位-元件-說明 {
     display: block;
     line-height: 2;
     color: #333;
     margin-bottom: 2rem;
 }
 
-main-content
-    content-content
-    > content-component[data-active]
-    component-showcase {
+.文件內容-主要欄位-元件-展示區域 {
+    display: block;
+}
+
+.文件內容-主要欄位-元件_檢視原始碼中 .文件內容-主要欄位-元件-展示區域 {
     padding: 1.5rem;
     border: 1px solid #e8e8e8;
     border-radius: 0.4rem 0.4rem 0 0;
 }
 
-main-content content-content > content-component[data-active] component-html {
-    display: block;
-}
-
-main-content content-content > content-component > component-showcase {
-    display: block;
-}
-
-main-content content-content > content-component > component-html {
+.文件內容-主要欄位-元件-HTML原始碼 {
     display: none;
     padding: 1.5rem;
     border: 1px solid #e8e8e8;
@@ -504,31 +420,32 @@ main-content content-content > content-component > component-html {
     color: #333;
 }
 
-main-content content-content > content-component > component-html pre {
+.文件內容-主要欄位-元件_檢視原始碼中 .文件內容-主要欄位-元件-HTML原始碼 {
+    display: block;
+}
+
+.文件內容-主要欄位-元件_檢視原始碼中 .文件內容-主要欄位-元件-HTML原始碼 pre {
     margin: 0;
 }
 
 /** */
-main-content content-indexes {
+#文件內容-內容索引 {
     margin-left: 4rem;
     min-width: 200px;
 }
 
-main-content content-indexes > indexes-title {
-}
-
-main-content content-indexes > indexes-header {
+.文件內容-內容索引-標題 {
     display: block;
     font-weight: 500;
     color: #777;
     margin-bottom: 1rem;
 }
 
-main-content content-indexes > indexes-header:not(:first-child) {
+.文件內容-內容索引-標題:not(:first-child) {
     margin-top: 3rem;
 }
 
-main-content content-indexes > a {
+.文件內容-內容索引-項目 {
     display: block;
     text-decoration: none;
     color: #333;
@@ -537,11 +454,11 @@ main-content content-indexes > a {
     border-left: 1px solid #e8e8e8;
 }
 
-main-content content-indexes > a:hover span {
+.文件內容-內容索引-項目:hover .文件內容-內容索引-項目-文字 {
     text-decoration: underline;
 }
 
-main-content content-indexes > a > small {
+.文件內容-內容索引-項目-重點 {
     color: #777;
     font-size: 0.9rem;
     margin-left: 0.45rem;
@@ -551,36 +468,36 @@ main-content content-indexes > a > small {
  *
  */
 
-main-footer {
+#頁腳 {
     padding: 3rem 2rem 5rem;
     background: #fbfbfb;
     display: block;
 }
 
-main-footer screen-container {
+#頁腳 .界限容器 {
     align-items: flex-start;
 }
 
-main-footer footer-content {
+#頁腳-主要內容 {
     flex: 1;
 }
 
-main-footer footer-content footer-nav > a {
+.頁腳-主要內容-導航列-項目 {
     text-decoration: none;
     color: #333;
     padding: 0 0.8rem;
 }
 
-main-footer footer-content footer-nav > a:first-child {
+.頁腳-主要內容-導航列-項目:first-child {
     color: #777;
     padding-left: 0;
 }
 
-main-footer footer-content footer-nav i.fas {
+.頁腳-主要內容-導航列-項目-圖示 {
     margin-right: 0.25rem;
 }
 
-main-footer footer-content footer-paragraph {
+#頁腳-主要內容-文字 {
     display: block;
     color: #777;
     margin-top: 2rem;
@@ -589,12 +506,12 @@ main-footer footer-content footer-paragraph {
     max-width: 50rem;
 }
 
-main-footer footer-content footer-paragraph a {
+#頁腳-主要內容-文字 a {
     color: #333; /* 108ee9*/
     text-decoration: underline;
 }
 
-main-footer footer-content footer-translators {
+#頁腳-主要內容-翻譯者 {
     display: block;
     margin-top: 3rem;
     font-size: 0.95rem;
@@ -603,15 +520,15 @@ main-footer footer-content footer-translators {
     max-width: 50rem;
 }
 
-main-footer footer-content footer-translators a {
+#頁腳-主要內容-翻譯者 a {
     color: #333; /* 108ee9*/
     text-decoration: underline;
 }
 
-main-footer footer-brand {
+#頁腳-商標 {
     margin-left: 3rem;
 }
 
-main-footer footer-brand img {
+#頁腳-商標-圖片 {
     width: 150px;
 }
