@@ -11,10 +11,10 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/russross/blackfriday/v2"
+	blackfriday "github.com/russross/blackfriday/v2"
 	"github.com/teacat/davai"
 	"github.com/teacat/pathx"
-	"github.com/urfave/cli/v2"
+	cli "github.com/urfave/cli/v2"
 	"golang.org/x/net/html"
 )
 
@@ -65,6 +65,8 @@ var (
 	pathTemplate = "./templates/"
 	// pathAssets 是靜態多媒體檔案的路徑。
 	pathAssets = pathTemplate + "assets"
+	//
+	pathSrc = pathTemplate + "../../../src"
 )
 
 // serve 會執行網頁伺服器服務文件內容。
@@ -80,8 +82,10 @@ func serve(c *cli.Context) error {
 		"preview":    tmplPreview,
 		"marked":     tmplMarked,
 		"kebablize":  tmplKebablize,
+		"trim":       tmplTrim,
 	}
 	d.ServeFiles("/assets", pathAssets)
+	d.ServeFiles("/src", pathSrc)
 
 	d.Get("/{language}", func(w http.ResponseWriter, r *http.Request) {
 		//
@@ -109,10 +113,13 @@ func serve(c *cli.Context) error {
 		if err != nil {
 			panic(err)
 		}
-		t.Execute(w, d)
+		err = t.Execute(w, d)
+		if err != nil {
+			panic(err)
+		}
 	})
 	log.Println("Running...")
-	err := d.Run(":80")
+	err := d.Run(":8080")
 	if err != nil {
 		panic(err)
 	}

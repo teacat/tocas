@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="/assets/styles/global.css" />
         <link rel="stylesheet" href="/assets/styles/highlight.css" />
         <link rel="stylesheet" href="/assets/styles/article.css" />
+        <link rel="stylesheet" href="/src/tocas.css" />
         <script src="/assets/scripts/article.js"></script>
         <script src="https://kit.fontawesome.com/535a1ce640.js" crossorigin="anonymous"></script>
         <title>{{ .Article.Title }} | Tocas UI</title>
@@ -200,7 +201,7 @@
                                 </div>
                                 <div class="文件內容-主要欄位-元件-說明">{{ .Description | markdown }}</div>
                                 <div class="文件內容-主要欄位-元件-展示區域">{{ .HTML | preview }}</div>
-                                <div class="文件內容-主要欄位-元件-HTML原始碼">{{ .HTML | code }}</div>
+                                <div class="文件內容-主要欄位-元件-HTML原始碼">{{ code (trim .HTML .Remove) }}</div>
                             </div>
                         {{ end }}
                     {{ end }}
