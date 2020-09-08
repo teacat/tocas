@@ -103,6 +103,11 @@ func tmplType(meta Meta) func(string) string {
 	}
 }
 
+//
+func tmplTrim(s string, r []string) string {
+	return trim(s, r)
+}
+
 // tmplHighlight 會將傳入的文字以螢光標記的方式呈現。
 func tmplHighlight(s string) template.HTML {
 	return template.HTML(highlight(s))
