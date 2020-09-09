@@ -83,6 +83,7 @@ func loadLanguage(lang string, path string) (d Data) {
 
 // tmplHTML 會將指定文字以非脫逸字元輸出。
 func tmplHTML(html string) template.HTML {
+
 	return template.HTML(html)
 }
 
@@ -139,9 +140,17 @@ func tmplCode(s string) template.HTML {
 	// return template.HTML(decodePlaceholder(highlight(beautify(placeholder(s), typ))))
 }
 
+func fillLink(s string) string {
+	r, err := regexp.Compile(`<a class="([a-zA-Z0-9 -]*)">`)
+	if err != nil {
+		panic(err)
+	}
+	return r.ReplaceAllString(s, "<a class=\"$1\" href=\"#!\">")
+}
+
 // tmplPreview 會將傳入的 HTML 純文字移除相關的模板字元然後輸出純淨的 HTML。
 func tmplPreview(s string) template.HTML {
-	return template.HTML(clean(s))
+	return template.HTML(fillLink(clean(s)))
 }
 
 // tmplMarked
