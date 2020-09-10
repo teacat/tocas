@@ -1,5 +1,7 @@
 package main
 
+import "html/template"
+
 // Data
 type Data struct {
 	Meta     Meta
@@ -134,6 +136,8 @@ type ArticleDefinitionSection struct {
 	HTML        string   `yaml:"HTML"`
 	Responsive  bool     `yaml:"Responsive"`
 	Remove      []string `yaml:"Remove"`
+	// FormattedHTML 是程式會自動進行段落掃描並整理的 HTML 程式碼，這不在 YAML 之中。
+	FormattedHTML template.HTML
 }
 
 // Examples
