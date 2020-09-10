@@ -207,7 +207,7 @@
                             <div class="文件內容-主要欄位-元件">
                                 <div class="文件內容-主要欄位-元件-資訊標頭">
                                     <div class="文件內容-主要欄位-元件-資訊標頭-標題欄位">
-                                        <a href="#!" class="文件內容-主要欄位-元件-資訊標頭-標題欄位-錨點"></a> {{ .Title }}
+                                        <a id="{{ .Title | anchor }}" href="#{{ .Title | anchor }}" class="文件內容-主要欄位-元件-資訊標頭-標題欄位-錨點"></a> {{ .Title }}
                                     </div>
                                     <div class="文件內容-主要欄位-元件-資訊標頭-動作欄位">
                                         <button class="文件內容-主要欄位-元件-資訊標頭-動作欄位-項目 文件內容-主要欄位-元件-資訊標頭-動作欄位-項目_切換原始碼">
@@ -228,7 +228,7 @@
                     {{ range .Article.Definitions }}
                         <div class="文件內容-內容索引-標題">{{ .Title }}</div>
                         {{ range .Sections }}
-                            <a href="#!" class="文件內容-內容索引-項目">
+                            <a href="#{{ .Title | anchor }}" class="文件內容-內容索引-項目">
                                 <span class="文件內容-內容索引-項目-文字">{{ .Title }}</span>
                                 <span class="文件內容-內容索引-項目-重點">.{{ .HTML | marked }}</span>
                             </a>
