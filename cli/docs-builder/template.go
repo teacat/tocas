@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"regexp"
 	"strings"
+	"sync"
 
 	"github.com/iancoleman/strcase"
 	"github.com/teacat/pathx"
@@ -67,6 +68,18 @@ func loadLanguage(lang string, path string) (d Data) {
 		if err != nil {
 			panic(err)
 		}
+		var wg sync.WaitGroup
+		for k, v := range a.Definitions {
+			for i, j := range v.Sections {
+				wg.Add(1)
+				go func(k, i int, j ArticleDefinitionSection) {
+					a.Definitions[k].Sections[i].FormattedHTML = tmplCode(trim(j.HTML, j.Remove))
+					wg.Done()
+				}(k, i, j)
+			}
+		}
+		wg.Wait()
+
 		d.Article = a
 		return d
 	case "Examples":
