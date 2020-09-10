@@ -31,11 +31,22 @@
                 <div id="矚目看板-標題">{{ .Article.Title }}</div>
                 <div id="矚目看板-說明">{{ .Article.Description | markdown }}</div>
 
-                <div id="矚目看板-分頁籤">
-                    <a href="#!" class="矚目看板-分頁籤-項目 矚目看板-分頁籤-項目_啟用的">基本樣式</a>
-                    <a href="#!" class="矚目看板-分頁籤-項目">模組功能</a>
-                    <a href="#!" class="矚目看板-分頁籤-項目">屬性設置</a>
-                </div>
+                {{ if or .Article.Usages.Behaviors .Article.Settings.Properties .Article.Settings.Callbacks }}
+                    <div id="矚目看板-分頁籤">
+                        {{ if .Article.Definitions }}
+                            <a href="#!" class="矚目看板-分頁籤-項目 矚目看板-分頁籤-項目_啟用的">基本樣式</a>
+                        {{ end }}
+                        {{ if .Article.Settings.Properties }}
+                            <a href="#!" class="矚目看板-分頁籤-項目">設定屬性</a>
+                        {{ end }}
+                        {{ if .Article.Settings.Callbacks }}
+                            <a href="#!" class="矚目看板-分頁籤-項目">回呼函式</a>
+                        {{ end }}
+                        {{ if .Article.Usages.Behaviors }}
+                            <a href="#!" class="矚目看板-分頁籤-項目">可用行為</a>
+                        {{ end }}
+                    </div>
+                {{ end }}
             </div>
         </div>
 
@@ -207,7 +218,7 @@
                                 </div>
                                 <div class="文件內容-主要欄位-元件-說明">{{ .Description | markdown }}</div>
                                 <div class="文件內容-主要欄位-元件-展示區域">{{ .HTML | preview }}</div>
-                                <div class="文件內容-主要欄位-元件-HTML原始碼">{{ code (trim .HTML .Remove) }}</div>
+                                <div class="文件內容-主要欄位-元件-HTML原始碼">{{ .FormattedHTML }}</div>
                             </div>
                         {{ end }}
                     {{ end }}
