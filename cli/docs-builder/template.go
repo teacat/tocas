@@ -122,6 +122,10 @@ func tmplTrim(s string, r []string) string {
 	return trim(s, r)
 }
 
+func tmplAnchor(s string) string {
+	return strcase.ToKebab(s)
+}
+
 // tmplHighlight 會將傳入的文字以螢光標記的方式呈現。
 func tmplHighlight(s string) template.HTML {
 	return template.HTML(highlight(s))

@@ -83,6 +83,7 @@ func serve(c *cli.Context) error {
 		"marked":     tmplMarked,
 		"kebablize":  tmplKebablize,
 		"trim":       tmplTrim,
+		"anchor":     tmplAnchor,
 	}
 	d.ServeFiles("/assets", pathAssets)
 	d.ServeFiles("/src", pathSrc)
