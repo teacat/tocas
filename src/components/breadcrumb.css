@@ -24,9 +24,9 @@
     --color: var(--default__color);
     --symbol-color: var(--default__symbol-color);
     --disabled-color: var(--default__disabled-color);
+    --stepped-color: var(--default__stepped-color);
     --active-color: var(--default__active-color);
-    --link-color: var(--default__link-color);
-    --link-hover-color: var(--default__link-hover-color);
+    --link-color: var(--default__color);
 }
 
 /* ==========================================================================
@@ -64,6 +64,17 @@
 .ts.breadcrumb .item {
     display: inline-block;
     vertical-align: baseline;
+}
+
+.ts.breadcrumb a.item,
+.ts.breadcrumb .item a {
+    color: rgb(var(--link-color));
+    text-decoration: none;
+}
+
+.ts.breadcrumb a.item:hover,
+.ts.breadcrumb .item a:hover {
+    text-decoration: underline;
 }
 
 /* ==========================================================================
@@ -135,7 +146,17 @@
 
 .ts.breadcrumb .item.-active {
     color: rgb(var(--active-color));
-    font-weight: bold;
+    font-weight: 500;
+}
+
+/**
+ * Stepped
+ */
+
+.ts.breadcrumb.-stepped {
+    --link-color: rgb(var(--stepped-color));
+
+    color: rgb(var(--stepped-color));
 }
 
 /**
@@ -143,10 +164,11 @@
  */
 
 .ts.breadcrumb.-block {
-    background: #f6f6f6;
+    background: rgb(250, 250, 250);
     padding: 0.5rem 1rem;
     border-radius: 0.4rem;
     border: 1px solid #e9e9e9;
+    box-sizing: border-box;
 }
 
 /**
@@ -202,7 +224,8 @@
     --distance-divider: 0.8rem;
 }
 
-.ts.breadcrumb.-relaxed .item:not(:last-child) {
+.ts.breadcrumb.-relaxed .item:not(:last-child),
+.ts.breadcrumb.-relaxed .divider:not(:last-child) {
     margin-right: calc(var(--distance-divider) - 0.2rem);
 }
 
