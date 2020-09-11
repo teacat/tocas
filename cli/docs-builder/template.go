@@ -71,6 +71,9 @@ func loadLanguage(lang string, path string) (d Data) {
 		var wg sync.WaitGroup
 		for k, v := range a.Definitions {
 			for i, j := range v.Sections {
+				if j.HTML == "" {
+					continue
+				}
 				wg.Add(1)
 				go func(k, i int, j ArticleDefinitionSection) {
 					a.Definitions[k].Sections[i].FormattedHTML = tmplCode(trim(j.HTML, j.Remove))
@@ -81,6 +84,30 @@ func loadLanguage(lang string, path string) (d Data) {
 		wg.Wait()
 
 		d.Article = a
+
+		if strings.Contains(path, "icon") {
+			b, err := ioutil.ReadFile(pathIconCategories)
+			if err != nil {
+				panic(err)
+			}
+			var t map[string]interface{}
+			err = yaml.Unmarshal(b, &t)
+			if err != nil {
+				panic(err)
+			}
+			for k, v := range d.Article.Definitions {
+				for l, j := range v.Sections {
+					if j.Icon == "" || t[j.Icon] == nil {
+						continue
+					}
+					for _, m := range t[j.Icon].(map[interface{}]interface{})["icons"].([]interface{}) {
+						d.Article.Definitions[k].Sections[l].Icons = append(d.Article.Definitions[k].Sections[l].Icons, m.(string))
+					}
+
+				}
+			}
+		}
+
 		return d
 	case "Examples":
 		var e Examples
@@ -148,6 +175,7 @@ func tmplTranslators(meta Meta) func(string) template.HTML {
 
 // tmplMarkdown 會將 Markdown 純文字轉譯為 HTML 標籤。
 func tmplMarkdown(s string) template.HTML {
+	// TODO: LINK EXTERNAL ICON AND _BLANK
 	return template.HTML(markdown(s))
 }
 
@@ -172,6 +200,9 @@ func tmplPreview(s string) template.HTML {
 
 // tmplMarked
 func tmplMarked(s string) string {
+	if s == "" {
+		return s
+	}
 	s = regexp.MustCompile(`(?:\[\[)(.*?)(?:\]\])`).FindAllStringSubmatch(s, -1)[0][1]
 	return s
 }
