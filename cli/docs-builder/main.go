@@ -68,7 +68,7 @@ var (
 	//
 	pathSrc = pathTemplate + "../../../src"
 	//
-	pathIconCategories = pathAssets + "/icon-categories.yml"
+	pathIcons = pathAssets + "/icons.yml"
 )
 
 // serve 會執行網頁伺服器服務文件內容。

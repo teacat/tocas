@@ -86,7 +86,7 @@ func loadLanguage(lang string, path string) (d Data) {
 		d.Article = a
 
 		if strings.Contains(path, "icon") {
-			b, err := ioutil.ReadFile(pathIconCategories)
+			b, err := ioutil.ReadFile(pathIcons)
 			if err != nil {
 				panic(err)
 			}
@@ -100,7 +100,7 @@ func loadLanguage(lang string, path string) (d Data) {
 					if j.Icon == "" || t[j.Icon] == nil {
 						continue
 					}
-					for _, m := range t[j.Icon].(map[interface{}]interface{})["icons"].([]interface{}) {
+					for _, m := range t[j.Icon].([]interface{}) {
 						d.Article.Definitions[k].Sections[l].Icons = append(d.Article.Definitions[k].Sections[l].Icons, m.(string))
 					}
 
