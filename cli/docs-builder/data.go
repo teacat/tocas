@@ -135,7 +135,11 @@ type ArticleDefinitionSection struct {
 	Version     string   `yaml:"Version"`
 	HTML        string   `yaml:"HTML"`
 	Responsive  bool     `yaml:"Responsive"`
+	Since       string   `yaml:"Since"`
+	Icon        string   `yaml:"Icon"`
 	Remove      []string `yaml:"Remove"`
+	//
+	Icons []string
 	// FormattedHTML 是程式會自動進行段落掃描並整理的 HTML 程式碼，這不在 YAML 之中。
 	FormattedHTML template.HTML
 }
