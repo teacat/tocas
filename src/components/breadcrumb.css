@@ -7,8 +7,12 @@
      * Distance
      */
 
+    --border-radius: var(--global__border-radius);
+    --vertical-padding: 0.5rem;
+    --horizontal-padding: calc(var(--global__block_padding));
     --distance-block: var(--global__distance-block);
     --distance-divider: 0.25rem;
+    --distance-icon: 0.4rem;
 
     /**
      * Typography
@@ -27,6 +31,8 @@
     --stepped-color: var(--default__stepped-color);
     --active-color: var(--default__active-color);
     --link-color: var(--default__color);
+    --border-color: var(--default__border-color);
+    --background-secondary-color: var(--default__background-secondary-color);
 }
 
 /* ==========================================================================
@@ -80,6 +86,14 @@
 /* ==========================================================================
    Variations
    ========================================================================== */
+
+/**
+ * Icon
+ */
+
+.ts.breadcrumb .item .ts.icon:not(:last-child) {
+    margin-right: var(--distance-icon);
+}
 
 /**
  * Divider
@@ -164,44 +178,41 @@
  */
 
 .ts.breadcrumb.-block {
-    background: rgb(250, 250, 250);
-    padding: 0.5rem 1rem;
-    border-radius: 0.4rem;
-    border: 1px solid #e9e9e9;
-    box-sizing: border-box;
+    background: rgb(var(--background-secondary-color));
 }
 
 /**
  * Attached
  */
 
-.ts.breadcrumb.-top-attached {
-    display: block;
-    padding: 0.5rem 1rem;
-    border-radius: 0.4rem;
-    border: 1px solid #e9e9e9;
+.ts.breadcrumb.-block,
+.ts.breadcrumb.-top-attached,
+.ts.breadcrumb.-attached,
+.ts.breadcrumb.-bottom-attached {
+    padding: var(--vertical-padding) var(--horizontal-padding);
+    border-radius: var(--border-radius);
+    border: 1px solid rgb(var(--border-color));
+    box-sizing: border-box;
+}
 
+.ts.breadcrumb.-top-attached,
+.ts.breadcrumb.-attached,
+.ts.breadcrumb.-bottom-attached {
+    display: block;
+}
+
+.ts.breadcrumb.-top-attached {
     margin-bottom: 0;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
 .ts.breadcrumb.-attached {
-    display: block;
-    padding: 0.5rem 1rem;
-    border-radius: 0.4rem;
-    border: 1px solid #e9e9e9;
-
     margin-top: 0;
     margin-bottom: 0;
     border-top: 0;
     border-radius: 0;
 }
 .ts.breadcrumb.-bottom-attached {
-    display: block;
-    padding: 0.5rem 1rem;
-    border-radius: 0.4rem;
-    border: 1px solid #e9e9e9;
-
     margin-top: 0;
     border-top: 0;
     border-top-right-radius: 0;
