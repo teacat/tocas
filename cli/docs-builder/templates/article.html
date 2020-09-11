@@ -209,16 +209,30 @@
                                     <div class="文件內容-主要欄位-元件-資訊標頭-標題欄位">
                                         <a id="{{ .Title | anchor }}" href="#{{ .Title | anchor }}" class="文件內容-主要欄位-元件-資訊標頭-標題欄位-錨點"></a> {{ .Title }}
                                     </div>
-                                    <div class="文件內容-主要欄位-元件-資訊標頭-動作欄位">
-                                        <button class="文件內容-主要欄位-元件-資訊標頭-動作欄位-項目 文件內容-主要欄位-元件-資訊標頭-動作欄位-項目_切換原始碼">
-                                            <i class="fas fa-code 文件內容-主要欄位-元件-資訊標頭-動作欄位-項目-圖示"></i>
-                                            原始碼
-                                        </button>
-                                    </div>
+                                    {{ if .HTML }}
+                                        <div class="文件內容-主要欄位-元件-資訊標頭-動作欄位">
+                                            <button class="文件內容-主要欄位-元件-資訊標頭-動作欄位-項目 文件內容-主要欄位-元件-資訊標頭-動作欄位-項目_切換原始碼">
+                                                <i class="fas fa-code 文件內容-主要欄位-元件-資訊標頭-動作欄位-項目-圖示"></i>
+                                                原始碼
+                                            </button>
+                                        </div>
+                                    {{ end }}
                                 </div>
                                 <div class="文件內容-主要欄位-元件-說明">{{ .Description | markdown }}</div>
-                                <div class="文件內容-主要欄位-元件-展示區域">{{ .HTML | preview }}</div>
-                                <div class="文件內容-主要欄位-元件-HTML原始碼">{{ .FormattedHTML }}</div>
+                                {{ if .HTML }}
+                                    <div class="文件內容-主要欄位-元件-展示區域">{{ .HTML | preview }}</div>
+                                    <div class="文件內容-主要欄位-元件-HTML原始碼">{{ .FormattedHTML }}</div>
+                                {{ end }}
+                                {{ if .Icons }}
+                                    <div class="文件內容-主要欄位-元件-圖示組">
+                                        {{ range .Icons }}
+                                            <div class="文件內容-主要欄位-元件-圖示組-單個圖示">
+                                                <i class="ts icon 文件內容-主要欄位-元件-圖示組-單個圖示-圖示" data-icon="{{ . }}"></i>
+                                                <span class="文件內容-主要欄位-元件-圖示組-單個圖示-標籤">{{ . }}</span>
+                                            </div>
+                                        {{ end }}
+                                    </div>
+                                {{ end }}
                             </div>
                         {{ end }}
                     {{ end }}
