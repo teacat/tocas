@@ -10,6 +10,14 @@ document.addEventListener("DOMContentLoaded", () => {
         document.documentElement.scrollTop = 0;
     });
 
+    /*document.querySelectorAll(".文件內容-主要欄位-元件-圖示組-單個圖示").forEach(v => {
+        v.addEventListener("click", () => {
+            window.getSelection().selectAllChildren(v.querySelector(".文件內容-主要欄位-元件-圖示組-單個圖示-標籤"));
+            document.execCommand("copy");
+            window.getSelection().empty();
+        });
+    });*/
+
     window.addEventListener("hashchange", rescanAnchor);
 
     rescanAnchor();
