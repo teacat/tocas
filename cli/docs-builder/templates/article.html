@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="/assets/styles/global.css" />
         <link rel="stylesheet" href="/assets/styles/highlight.css" />
-        <link rel="stylesheet" href="/assets/styles/article.css" />
         <link rel="stylesheet" href="/src/tocas.css" />
+        <link rel="stylesheet" href="/assets/styles/article.css" />
         <script src="/assets/scripts/article.js"></script>
         <script src="https://kit.fontawesome.com/535a1ce640.js" crossorigin="anonymous"></script>
         <title>{{ .Article.Title }} | Tocas UI</title>
@@ -201,6 +201,29 @@
                         <div class="文件內容-主要欄位-標題 文件內容-主要欄位-標題_分隔的">{{ .Title }}</div>
                         {{ if .Description }}
                             <div class="文件內容-主要欄位-說明">{{ .Description | markdown }}</div>
+                        {{ end }}
+
+                        {{ if .Flags }}
+                            <table class="文件內容-主要欄位-規格表格">
+                                <thead>
+                                    <tr>
+                                        <th><!--行為名稱--></th>
+                                        <th>ISO 3166-2</th>
+                                        <th>別名</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{ range $k, $alias := .Flags }}
+                                    <tr>
+                                        <td><i class="ts flag" data-flag="{{ $k }}"></i></td>
+                                        <td><code class="文件內容-主要欄位-規格表格-函式碼">{{$k}}</code></td>
+                                        <td>
+                                            {{ range $i, $e := $alias }}{{ if $i }}, {{ end }}<code class="文件內容-主要欄位-規格表格-函式碼">{{ . }}</code>{{ end }}
+                                        </td>
+                                    </tr>
+                                    {{ end }}
+                                </tbody>
+                            </table>
                         {{ end }}
 
                         {{ range .Sections }}
