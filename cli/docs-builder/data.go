@@ -126,6 +126,8 @@ type ArticleDefinition struct {
 	Title       string                     `yaml:"Title"`
 	Description string                     `yaml:"Description"`
 	Sections    []ArticleDefinitionSection `yaml:"Sections"`
+	Type        string                     `yaml:"Type"`
+	Flags       map[string][]string        `yaml:"Flags"`
 }
 
 // ArticleDefinitionSection
