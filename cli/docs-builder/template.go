@@ -108,6 +108,23 @@ func loadLanguage(lang string, path string) (d Data) {
 			}
 		}
 
+		if strings.Contains(path, "flag") {
+			b, err := ioutil.ReadFile(pathFlags)
+			if err != nil {
+				panic(err)
+			}
+			var t map[string][]string
+			err = yaml.Unmarshal(b, &t)
+			if err != nil {
+				panic(err)
+			}
+			for k, v := range d.Article.Definitions {
+				if v.Type == "Flags" {
+					d.Article.Definitions[k].Flags = t
+				}
+			}
+		}
+
 		return d
 	case "Examples":
 		var e Examples
