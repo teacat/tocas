@@ -66,6 +66,8 @@ var (
 	// pathAssets 是靜態多媒體檔案的路徑。
 	pathAssets = pathTemplate + "assets"
 	//
+	pathGlobalAssets = "/assets"
+	//
 	pathSrc = pathTemplate + "../../../src"
 	//
 	pathIcons = pathAssets + "/icons.yml"
@@ -124,7 +126,7 @@ func serve(c *cli.Context) error {
 		}
 	})
 	log.Println("Running...")
-	err := d.Run(":8080")
+	err := d.Run(":8081")
 	if err != nil {
 		panic(err)
 	}
@@ -242,7 +244,7 @@ func asset(s string, real bool) string {
 	case "embed:video":
 		s = "videos/video.mp4"
 	}
-	return pathx.Join(pathAssets, s)
+	return pathx.Join(pathGlobalAssets, s)
 }
 
 // trim 會依照指定的清除詞彙清單，將傳入的字串做清理。
