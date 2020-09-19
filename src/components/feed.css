@@ -15,7 +15,7 @@
 
     --distance-block: var(--global__distance-block);
     --distance-structure: 0.5rem;
-    --distance-item: 1rem;
+    --distance-item: 1.1rem;
     --distance-item-relaxed: 1.6rem;
 
     /**
@@ -35,6 +35,7 @@
     --description-hover-color: var(--default__description-hover-color);
     --divider-color: var(--default__divider-color);
     --line-color: var(--default__line-color);
+    --link-color: var(--default__link-color);
 }
 
 /* ==========================================================================
@@ -82,6 +83,7 @@
 .ts.feed > .event > .label {
     margin-right: 0.8rem;
     min-width: 2.375em;
+    text-align: center;
 }
 
 .ts.feed > .event > .label > img {
@@ -96,6 +98,8 @@
     background: #fff;
     line-height: 1;
     width: calc(1.8rem);
+    font-size: 0.9rem;
+    margin: 0;
 }
 
 .ts.feed > .event > .label > i.icon::before {
@@ -110,6 +114,19 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+/**
+ * Link
+ */
+
+.ts.feed > .event > .content a {
+    color: rgb(var(--link-color));
+    text-decoration: none;
+}
+
+.ts.feed > .event > .content a:hover {
+    text-decoration: underline;
 }
 
 /**
@@ -180,7 +197,6 @@
 
 .ts.feed > .event > .content > .meta {
     font-size: 0.9375em;
-    line-height: 1;
     margin-top: var(--distance-structure);
 }
 
@@ -195,7 +211,6 @@
 
 .ts.feed > .event > .content > .meta > a.item:hover {
     color: rgb(var(--description-hover-color));
-    text-decoration: underline;
 }
 
 .ts.feed > .event > .content > .meta > .item:not(:first-child)::before {
@@ -281,6 +296,10 @@
     left: 50%;
     transform: translateX(-50%);
     width: auto;
+}
+
+.ts.feed.-timelined > .event > .label > i.icon {
+    padding-bottom: 0.5rem;
 }
 
 .ts.feed.-timelined > .event > .content {
