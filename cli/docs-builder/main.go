@@ -209,16 +209,11 @@ func decodePlaceholder(s string) string {
 func asset(s string, real bool) string {
 	if !real {
 		switch s {
-		case "16:9":
-		case "1:1":
-		case "4:3":
+		case "16:9", "1:1", "4:3":
 			return "image.png"
-		case "user":
-		case "user2":
-		case "user3":
+		case "user", "user2", "user3":
 			return "user.png"
-		case "embed:karen":
-		case "embed:vimeo":
+		case "embed:karen", "embed:vimeo":
 			return "placeholder.png"
 		case "embed:video":
 			return "video.mp4"
