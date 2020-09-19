@@ -7,8 +7,18 @@
      * Block
      */
 
+    --border-radius-circular: var(--global__border-radius-circular);
     --border-radius: var(--global__border-radius);
     --padding: var(--global__block_padding);
+
+    /**
+     * Loader
+     */
+
+    --loader-size: var(--global__loader-size);
+    --loader-line-width: var(--global__loader-line-width);
+    --loader-background-color: var(--default__loader-background-color);
+    --loader-line-color: var(--default__loader-line-color);
 
     /**
      * Distance
@@ -72,15 +82,6 @@
 /* ==========================================================================
    Variations
    ========================================================================== */
-
-/**
- * Indicated
- */
-
-.ts.segment.-indicated {
-    border-top-width: 2px;
-    border-top-color: rgb(var(--border-indicated-color));
-}
 
 /**
  * Raised
@@ -147,6 +148,60 @@
 .ts.segment.-compact {
     width: fit-content;
     /**display: table;  使用 `table` 才能夠套用 `.-centered` 而 `inline-block` 則無法。 */
+}
+
+/**
+ * Loading
+ */
+
+@keyframes segment-spin {
+    from {
+        transform: rotate(0deg) translate(-50%, -50%);
+    }
+    to {
+        transform: rotate(360deg) translate(-50%, -50%);
+    }
+}
+
+.ts.segment.-loading {
+    position: relative;
+    cursor: default;
+    pointer-events: none;
+    user-select: none;
+    color: transparent !important;
+    min-height: var(--loader-size);
+}
+
+.ts.segment.-loading::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(var(--background-color), 0.8);
+    border-radius: var(--border-radius);
+    z-index: var(--z_segment_loading-mask);
+}
+
+.ts.segment.-loading::after {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 50%;
+    transform-origin: top left;
+    width: var(--loader-size);
+    height: var(--loader-size);
+    animation: segment-spin 0.5s linear;
+    animation-iteration-count: infinite;
+    border-radius: var(--border-radius-circular);
+    border-color: rgb(var(--loader-line-color)) rgb(var(--loader-background-color)) rgb(var(--loader-background-color))
+        rgb(var(--loader-background-color));
+    border-style: solid;
+    border-width: var(--loader-line-width);
+    /** box-shadow: 0px 0px 0px 1px #0000001c, 0px 0px 0px 1px #0000001c inset;**/
+    visibility: visible;
+    z-index: var(--z_segment_loader);
 }
 
 /**
@@ -278,7 +333,12 @@
  */
 
 .ts.segment.-disabled {
+    user-select: none;
     color: rgb(var(--disabled-color));
+}
+
+.ts.segment.-disabled * {
+    opacity: 0.45;
 }
 
 /**
@@ -301,6 +361,15 @@
     border-top: 0;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
+}
+
+/**
+ * Indicated
+ */
+
+/** override attached border-top */
+.ts.segment.-indicated {
+    border-top: 2px solid rgb(var(--indicated-border-color));
 }
 
 /**
