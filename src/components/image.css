@@ -1,0 +1,503 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts.image,
+.ts.images {
+    /**
+     * Block
+     */
+
+    --border-radius: var(--global__border-radius);
+    --border-radius-circular: var(--global__border-radius-circular);
+    --image-size: 100%;
+    --disabled-opacity: var(--global__disabled-opacity);
+
+    /**
+     * Distance
+     */
+
+    --distance-block: var(--global__distance-block);
+    --distance-divider: 0.25rem;
+
+    /**
+     * Typography
+     */
+
+    --font-size: 1rem;
+    --line-height: var(--global__line-height);
+
+    /**
+     * Color
+     */
+
+    --color: var(--default__color);
+    --symbol-color: var(--default__symbol-color);
+    --disabled-color: var(--default__disabled-color);
+    --description-color: var(--default__description-color);
+    --border-color: var(--default__border-color);
+    --border-selected-color: var(--default__border-selected-color);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+img.ts.image,
+.ts.image img,
+.ts.images img {
+    width: var(--image-size);
+    font-size: 1rem;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+.ts.image,
+.ts.images {
+    max-width: 100%;
+    max-height: 100%;
+    position: relative;
+    display: inline-block;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+/**
+ * Content
+ */
+
+.ts.image > .content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-rendering: optimizelegibility;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+    user-select: none;
+    color: #fff;
+}
+
+/**
+ * Header
+ */
+
+.ts.image > .content > .header {
+    font-size: 1rem;
+}
+
+/**
+ * Description
+ */
+
+.ts.image > .description {
+    font-size: 1rem;
+    color: rgb(var(--description-color));
+}
+.ts.image > .description + img {
+    margin-top: 1rem;
+}
+.ts.image > img + .description {
+    margin-top: 1rem;
+}
+
+/**
+ * Content Icon
+ */
+
+.ts.image > .content > i.ts.icon {
+    margin: 0;
+    font-size: calc(var(--image-size) / 3);
+}
+
+/**
+ * Corner Icon
+ */
+
+.ts.image > i.ts.icon {
+    position: absolute;
+    right: 0.5rem;
+    z-index: 1;
+    font-size: calc(var(--image-size) / 2);
+    bottom: 0;
+    transform: translateX(0.4em) translateY(0.1em);
+    -webkit-text-stroke: 0.07em #fff;
+    text-stroke: 0.07em #fff;
+    margin: 0;
+}
+
+/**
+ * Initial
+ */
+
+.ts.image[data-initial] {
+    width: var(--image-size);
+    height: var(--image-size);
+    background: #f4f4f4;
+}
+
+.ts.image[data-initial]::before {
+    color: #333;
+    content: attr(data-initial);
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    font-size: calc(var(--image-size) / 2.5);
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Stacked
+ */
+
+.ts.image.-stacked,
+.ts.images.-stacked img {
+    margin-bottom: 5px;
+    box-shadow: 0px 1px 0 white, 0px 4px 0 -2px rgb(0 0 0 / 0.15), 0px 3px 0 white, 0px 7px 0 -3px rgb(0 0 0 / 0.15) !important;
+}
+.ts.image.-tall-stacked,
+.ts.images.-tall-stacked img {
+    margin-bottom: 10px;
+    box-shadow: 0px 1px 0 white, 0px 4px 0 -2px rgb(0 0 0 / 0.15), 0px 3px 0 white, 0px 7px 0 -3px rgb(0 0 0 / 0.15),
+        0px 5px 0 white, 0px 10px 0 -4px rgb(0 0 0 / 0.15) !important;
+}
+
+/**
+ * Floated
+ */
+
+.ts.image.-left-floated:not(img) {
+    display: contents;
+}
+.ts.image.-left-floated img,
+img.ts.image.-left-floated {
+    float: left;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}
+.ts.image.-right-floated:not(img) {
+    display: contents;
+}
+.ts.image.-right-floated img,
+img.ts.image.-right-floated {
+    float: right;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+/**
+ * Disabled
+ */
+
+.ts.image.-disabled,
+.ts.images.-disabled {
+    opacity: var(--disabled-opacity);
+}
+
+/**
+ * Hidden
+ */
+
+.ts.image.-hidden,
+.ts.images.-hidden {
+    display: none;
+}
+
+/**
+ * Centered
+ */
+
+.ts.image.-centered,
+.ts.images.-centered {
+    margin: 0 auto;
+    display: block;
+}
+
+/**
+ * Aligns
+ */
+
+.ts.image.-left-aligned {
+    text-align: left;
+}
+.ts.image.-center-aligned {
+    text-align: center;
+}
+.ts.image.-right-aligned {
+    text-align: right;
+}
+
+/**
+ * Collapsed
+ */
+
+.ts.images.-collapsed:hover img:not(:first-child) {
+    margin-left: 0.25rem;
+}
+
+.ts.images.-collapsed:hover::after {
+    opacity: 0;
+}
+
+.ts.images.-collapsed:hover img:nth-child(3) ~ img {
+    display: inline-block;
+}
+
+.ts.images.-collapsed img {
+    position: relative;
+    transition: margin 0.1s ease-in-out;
+    box-sizing: initial;
+    border-right: 0;
+}
+
+.ts.images.-collapsed img:not(:last-child) {
+    border-right: 1px solid #fff;
+}
+
+.ts.images.-collapsed img:not(:first-child) {
+    margin-left: calc(var(--image-size) / 1.5 * -1);
+}
+
+.ts.images.-collapsed img:nth-child(1) {
+    z-index: 4;
+}
+.ts.images.-collapsed img:nth-child(2) {
+    z-index: 3;
+}
+
+.ts.images.-collapsed img:nth-child(3) {
+    z-index: 2;
+}
+
+.ts.images.-collapsed::after {
+    content: " ";
+    position: absolute;
+    height: var(--image-size);
+    width: var(--image-size);
+    background: rgb(0 0 0 / 0.05);
+    display: block;
+    top: 0;
+    right: -0.25rem;
+    right: calc(var(--image-size) / 7 * -1);
+    z-index: 1;
+    opacity: 1;
+    transition: opacity 0.1s ease-in-out;
+}
+.ts.images.-collapsed img:nth-child(3) ~ img {
+    display: none;
+}
+
+/**
+ * Related
+ */
+
+.ts.images.-related {
+    display: inline-block;
+    overflow: visible;
+}
+
+.ts.images.-related img:last-child {
+    position: absolute;
+    max-width: 60%;
+    max-height: 60%;
+    bottom: calc(var(--image-size) / 20 * -1);
+    right: calc(var(--image-size) / 20 * -1);
+    border: calc(var(--image-size) / 20) solid #fff;
+}
+
+/**
+ * Vertical Aligns
+ */
+
+.ts.image.-top-aligned {
+    vertical-align: top;
+}
+.ts.image.-middle-aligned {
+    vertical-align: middle;
+}
+.ts.image.-bottom-aligned {
+    vertical-align: bottom;
+}
+
+/**
+ * Avatar
+ */
+
+.ts.image.-avatar,
+.ts.image.-avatar img,
+.ts.images.-avatar img {
+    --image-size: 2em;
+
+    margin-right: 0.4rem;
+    display: inline-block;
+    height: var(--image-size);
+}
+
+/**
+ * Fluid
+ */
+
+.ts.image.-fluid,
+.ts.image.-fluid img,
+.ts.images.-fluid img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/**
+ * Link
+ */
+
+.ts.image.-link,
+.ts.images.-link img {
+    transform: none;
+    transition: box-shadow 0.1s ease, transform 0.1s ease;
+    vertical-align: top;
+}
+
+.ts.image.-link:hover,
+.ts.images.-link img:hover {
+    cursor: pointer;
+    z-index: 3;
+    box-shadow: 0px 1px 3px 0px rgb(0 0 0 / 15%);
+    transform: translateY(-3px);
+}
+
+/**
+ * Circular
+ */
+
+.ts.image.-circular,
+.ts.image.-circular img,
+.ts.images.-circular img {
+    border-radius: var(--border-radius-circular);
+}
+
+/**
+ * Spaced
+ */
+
+.ts.image.-spaced {
+    display: inline-block !important;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+.ts.image.-left-spaced {
+    display: inline-block !important;
+    margin-left: 0.5rem;
+}
+.ts.image.-right-spaced {
+    display: inline-block !important;
+    margin-right: 0.5rem;
+}
+
+/**
+ * Cropped
+ */
+
+.ts.image.-cropped,
+.ts.image.-cropped img,
+.ts.images.-cropped img {
+    object-fit: cover;
+}
+
+/**
+ * Bordered
+ */
+
+img.ts.image.-bordered,
+.ts.image.-bordered img,
+.ts.images.-bordered img {
+    border: 1px solid rgb(var(--border-color));
+}
+
+/**
+ * Polaroid
+ */
+
+img.ts.image.-polaroid,
+.ts.image.-polaroid img,
+.ts.images.-polaroid img {
+    border: 1px solid rgb(var(--border-color));
+    padding: 0.5rem;
+}
+
+/**
+ * Selected
+ */
+
+img.ts.image.-selected,
+.ts.image.-selected img,
+.ts.images.-selected img {
+    border: 3px solid rgb(var(--border-selected-color));
+}
+
+/**
+ * Rounded
+ */
+
+.ts.image.-rounded,
+.ts.images.-rounded {
+    border-radius: var(--border-radius);
+}
+
+/**
+ * Squared
+ */
+
+.ts.image.-squared,
+.ts.image.-squared img,
+.ts.images.-squared img {
+    width: var(--image-size);
+    height: var(--image-size);
+    object-fit: cover;
+}
+
+/**
+ * Sizes
+ */
+
+.ts.image.-mini,
+.ts.images.-mini {
+    --image-size: 16px;
+}
+.ts.image.-tiny,
+.ts.images.-tiny {
+    --image-size: 32px;
+}
+.ts.image.-small,
+.ts.images.-small {
+    --image-size: 64px;
+}
+.ts.image.-medium,
+.ts.images.-medium {
+    --image-size: 128px;
+}
+.ts.image.-large,
+.ts.images.-large {
+    --image-size: 178px;
+}
+.ts.image.-big,
+.ts.images.-big {
+    --image-size: 256px;
+}
+.ts.image.-huge,
+.ts.images.-huge {
+    --image-size: 512px;
+}
+.ts.image.-massive,
+.ts.images.-massive {
+    --image-size: 768px;
+}
