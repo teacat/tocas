@@ -209,7 +209,7 @@ func decodePlaceholder(s string) string {
 func asset(s string, real bool) string {
 	if !real {
 		switch s {
-		case "16:9", "1:1", "4:3":
+		case "16:9", "1:1", "1:1_white", "4:3":
 			return "image.png"
 		case "user", "user2", "user3":
 			return "user.png"
@@ -224,6 +224,8 @@ func asset(s string, real bool) string {
 		s = "images/16-9.png"
 	case "1:1":
 		s = "images/1-1.png"
+	case "1:1_white":
+		s = "images/1-1_white.png"
 	case "4:3":
 		s = "images/4-3.png"
 	case "user":
