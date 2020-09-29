@@ -18,6 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });*/
 
+    document.querySelector("#文件內容-內容索引-回到頂部").addEventListener("click", () => {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    });
+
     window.addEventListener("hashchange", rescanAnchor);
 
     rescanAnchor();
