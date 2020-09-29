@@ -198,8 +198,12 @@ func tmplMarkdown(s string) template.HTML {
 
 // tmplCode 會將純文字程式碼螢光標記並整理，解析之後轉為 HTML 標籤。
 func tmplCode(s string) template.HTML {
-	return template.HTML(decodePlaceholder(highlight(beautify(placeholder(s), "html"))))
+	return template.HTML(decodePlaceholder(highlight(beautify(placeholder(trimLink(s)), "html"))))
 	// return template.HTML(decodePlaceholder(highlight(beautify(placeholder(s), typ))))
+}
+
+func trimLink(s string) string {
+	return strings.Replace(s, `href="#!"`, "", -1)
 }
 
 func fillLink(s string) string {
