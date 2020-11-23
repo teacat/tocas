@@ -214,6 +214,8 @@ Tocas UI 在設計元件名稱與用法時所該遵循的注意事項和風格�
 <button class="ts -warning button"></button>
 ```
 
+為什麼特別指定一個 `data-emphasis` 的屬性標籤？因為這能夠令我們在檢查是否有套用顏色或語意的時候更加方便，只需要透過 `:not([data-emphasis])` 即可。
+
 #### 響應式可見詞
 
 在 Tocas UI 中，響應式可見詞就和圖示、語意一樣都擁有自己的 HTML 屬性標籤（`[data-responsive]`）。這能夠切換某個元件出現的實機（例如：僅在手機出現），而這也被稱作為響應式設計（Responsive Design）。響應式名稱已經不再以裝置作為稱呼，這部份請參閱[響應式文件](./responsive.md)。
