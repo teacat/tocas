@@ -259,6 +259,19 @@
                             </div>
                         {{ end }}
                     {{ end }}
+
+                    {{ if .Article.Relatives }}
+                    <div class="文件內容-主要欄位-相似元件提示">
+                        <div class="文件內容-主要欄位-相似元件提示-標題">在尋找相似的元件嗎？</div>
+                        <ul class="文件內容-主要欄位-相似元件提示-清單">
+                            {{ range $value := .Article.Relatives }}
+                                <li class="文件內容-主要欄位-相似元件提示-清單-單個項目">
+                                    <a class="文件內容-主要欄位-相似元件提示-清單-單個項目-連結" href="/{{ index $.Meta.Information.Path }}/components/{{ . | kebablize }}">{{ index $.Meta.UI.Components . }}</a>
+                                </li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                    {{ end }}
                 </div>
 
                 <div id="文件內容-內容索引">
