@@ -54,6 +54,7 @@ type Article struct {
 	Title       string              `yaml:"Title"`
 	Description string              `yaml:"Description"`
 	Intro       string              `yaml:"Intro"`
+	Relatives   []string            `yaml:"Relatives"`
 	Settings    ArticleSettings     `yaml:"Settings"`
 	Usages      ArticleUsages       `yaml:"Usages"`
 	Definitions []ArticleDefinition `yaml:"Definitions"`
