@@ -7,6 +7,9 @@ Title      : 片段
 Description: 用以包覆基本文字章節與段落的簡易元素。
 Type       : Article
 Intro      : 片段與卡片元件看起來近乎相同，但片段的功能更少更適合用於純文字段落的應用場景。倘若需要更複雜的排版呈現方式，則需要用上卡片。
+Relatives  :
+  - Card
+  - Message
 
 #=======================================================
 # 基本樣式
@@ -30,11 +33,14 @@ Definitions:
           </div>
 
       - Title      : 指示的
-        Description: 帶有語意指示的卡片會看起來更令人矚目。
+        Description: 帶有指示的片段會看起來更令人矚目，而指示的顏色主要由該片段的語意定義。
         Since      : 4.0.0
         HTML       : |
           <div class="ts segment [[-indicated]]">
               <p>在最糟糕的事情發生之前，我儘可能地想找出原因；原來是——自己。</p>
+          </div>
+          <div class="ts segment [[-indicated]]" data-emphasis="primary">
+              <p>現在與未來之中還有個我們觸手可及的空間。</p>
           </div>
 
       - Title      : 基本的
@@ -58,7 +64,50 @@ Definitions:
         Since      : 4.0.0
         HTML       : |
           <div class="ts segment [[-tertiary]]">
-              <p>就快要在聲音中沈溺，但周遭卻是一片寂靜。剎那間——眼前就像有道閃光照亮一切，而我不再能夠照著時間前進；那段一去不返的時間。</p>
+              <p>就快要在聲音中沈溺，但周遭的眼光卻是一片冷漠。剎那間——就像有道閃光照亮一切，令我不再能夠照著時間前進；那段一去不返的時間。</p>
+          </div>
+
+  - Title      : 語意
+    Description: 片段能夠以不同的語意呈現。
+    Sections   :
+
+      - Title      : 主要的
+        Description: 一個帶有主要視覺訊息的語意。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts segment" data-emphasis="[[primary]]">
+              <div class="ts header">
+                  已有新版本可供下載！
+                  <div class="description">你目前使用的版本為 1.0.0，現已可以在官方網站下載 1.2.3。</div>
+              </div>
+              <button class="ts button">前往檢視</button>
+          </div>
+
+      - Title      : 警告的
+        Description: 含有警告或提醒意味的片段。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts segment" data-emphasis="[[warning]]">
+              <p>看似最重要的東西卻沒能被妥善利用，沒有人能發現這一點，因為他們早已活在過去。才剛開始的序章卻被放在頁尾。</p>
+          </div>
+
+      - Title      : 正面與負面的
+        Description: 具有肯定、否定或是成功與失敗涵義的片段。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts segment" data-emphasis="[[positive]]">
+              <p>看似最重要的東西卻沒能被妥善利用，沒有人能發現這一點，因為他們早已活在過去。才剛開始的序章卻被放在頁尾。</p>
+          </div>
+          <div class="ts segment" data-emphasis="[[negative]]">
+              <p>看似最重要的東西卻沒能被妥善利用，沒有人能發現這一點，因為他們早已活在過去。才剛開始的序章卻被放在頁尾。</p>
+          </div>
+
+      - Title      : 反色的
+        Description: 反色語意是一個動態色彩而非固定顏色。在亮色主題下這會呈現深色，而深色主題下這會呈現亮色。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts segment" data-emphasis="[[inverted]]">
+              <p>看似最重要的東西卻沒能被妥善利用，沒有人能發現這一點，因為他們早已活在過去。才剛開始的序章卻被放在頁尾。</p>
           </div>
 
   - Title      : 狀態
