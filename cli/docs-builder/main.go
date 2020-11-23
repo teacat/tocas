@@ -2,8 +2,10 @@ package main
 
 import (
 	"bytes"
+	"crypto/md5"
 	"fmt"
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -140,17 +142,36 @@ func build(c *cli.Context) error {
 
 // highlight 會將純文字透過 Node 版本的 Highlight.js 來轉化為格式化後的螢光程式碼。
 func highlight(s string) string {
+	hash := fmt.Sprintf("%x", md5.Sum([]byte(s)))
+	b, err := ioutil.ReadFile(pathx.Join("caches", "hljs", hash))
+	if err != nil {
+		os.MkdirAll(pathx.Join("caches", "hljs"), 0777)
+	}
+	if len(b) != 0 {
+		return string(b)
+	}
 	cmd := exec.Command("hljs", "html")
 	cmd.Stdin = bytes.NewBuffer([]byte(fmt.Sprintf("<pre><code>%s</code></pre>", html.EscapeString(s))))
 	output, err := cmd.CombinedOutput()
 	if err != nil {
 		panic(err.Error() + string(output))
 	}
+	err = ioutil.WriteFile(pathx.Join("caches", "hljs", hash), output, 0777)
+	if err != nil {
+	}
 	return string(output)
 }
 
 // beautify 會透過 js-beautify 美化程式碼。
 func beautify(s string, typ string) string {
+	hash := fmt.Sprintf("%x", md5.Sum([]byte(s)))
+	b, err := ioutil.ReadFile(pathx.Join("caches", "beautify", hash))
+	if err != nil {
+		os.MkdirAll(pathx.Join("caches", "beautify"), 0777)
+	}
+	if len(b) != 0 {
+		return string(b)
+	}
 	var cmd *exec.Cmd
 	switch typ {
 	case "css":
@@ -164,6 +185,9 @@ func beautify(s string, typ string) string {
 	output, err := cmd.CombinedOutput()
 	if err != nil {
 		panic(err.Error() + string(output))
+	}
+	err = ioutil.WriteFile(pathx.Join("caches", "beautify", hash), output, 0777)
+	if err != nil {
 	}
 	return string(output)
 }
