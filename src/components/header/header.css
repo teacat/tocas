@@ -1,0 +1,253 @@
+@import "./header.variables.css";
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts.header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: var(--ts-header-alias_font-size, var(--ts-header_font-size));
+    color: rgb(var(--ts-header_color));
+    line-height: var(--ts-header_line-height);
+    font-weight: 500;
+}
+
+.ts.header:first-child {
+    margin-block-start: 0;
+}
+
+.ts.header:last-child {
+    margin-block-end: 0;
+}
+
+.ts.header:not(:first-child) {
+    margin-block-start: var(--ts-header_distance-block);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+/**
+ * Icon
+ */
+
+.ts.header .ts.icon {
+    opacity: 1;
+    font-size: 1.5em;
+    line-height: 1;
+}
+
+/**
+ * Content
+ */
+
+.ts.header .content {
+    margin-left: 0.7rem;
+}
+
+/**
+ * Description
+ */
+
+.ts.header .description {
+    width: 100%;
+    font-size: var(--ts-header-alias_description-font-size, var(--ts-header_description-font-size));
+    font-weight: normal;
+    color: rgb(var(--ts-header_description-color));
+}
+
+/**
+ * Image
+ */
+
+.ts.header > img:not(.ts) {
+    width: 1.5em;
+    height: 1.5em;
+    margin-right: 0.7rem;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Icon
+ */
+
+.ts.header.-icon {
+    display: block;
+    text-align: center;
+}
+
+.ts.header.-icon > .ts.icon {
+    display: block;
+    text-align: center;
+    margin: 0 auto 0.7rem;
+    font-size: 3em;
+}
+
+/**
+ * Disabled
+ */
+
+.ts.header.-disabled {
+    opacity: var(--ts-header_disabled-opacity);
+}
+
+/**
+ * Sizes
+ */
+
+.ts.header.-tiny {
+    --ts-header-alias_description-font-size: 0.9375rem;
+    --ts-header-alias_font-size: 1rem;
+}
+.ts.header.-small {
+    --ts-header-alias_description-font-size: 1rem;
+    --ts-header-alias_font-size: 1.125rem;
+}
+.ts.header.-large {
+    --ts-header-alias_description-font-size: 1rem;
+    --ts-header-alias_font-size: 1.625rem;
+}
+.ts.header.-big {
+    --ts-header-alias_description-font-size: 1.125rem;
+    --ts-header-alias_font-size: 1.875rem;
+}
+.ts.header.-huge {
+    --ts-header-alias_description-font-size: 1.125rem;
+    --ts-header-alias_font-size: 2.125rem;
+}
+.ts.header.-massive {
+    --ts-header-alias_description-font-size: 1.125rem;
+    --ts-header-alias_font-size: 2.375rem;
+}
+
+/**
+ * Inline
+ */
+
+.ts.header.-inline .description {
+    width: auto;
+    flex: 1;
+    margin-left: 0.7rem;
+}
+
+/**
+ * Text Aligns
+ */
+
+.ts.header.-left-aligned {
+    text-align: left;
+    justify-content: flex-start;
+}
+.ts.header.-center-aligned {
+    text-align: center;
+    justify-content: center;
+}
+.ts.header.-right-aligned {
+    text-align: right;
+    justify-content: flex-end;
+}
+/** override inline */
+.ts.header.-left-aligned .description,
+.ts.header.-center-aligned .description,
+.ts.header.-right-aligned .description {
+    flex: initial;
+}
+
+/**
+ * Vertical Aligns
+ */
+
+.ts.header.-top-aligned {
+    align-items: flex-start;
+}
+.ts.header.-middle-aligned {
+    align-items: center;
+}
+.ts.header.-bottom-aligned {
+    align-items: flex-end;
+}
+
+/**
+ * Single Line
+ */
+
+.ts.header.-single-line,
+.ts.header.-single-line .description {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    display: block;
+}
+
+/**
+ * Block
+ */
+
+.ts.header.-block {
+    background: rgb(var(--ts-header_background-block-color));
+}
+
+/**
+ * Dividing
+ */
+
+.ts.header.-dividing {
+    border-bottom: 1px solid rgb(var(--ts-header_divider-color));
+}
+
+/**
+ * Floated
+ */
+
+.ts.header.-right-floated {
+    float: right;
+}
+
+.ts.header.-left-floated {
+    float: left;
+}
+
+/**
+ * Attached
+ */
+
+.ts.header.-block,
+.ts.header.-top-attached,
+.ts.header.-attached,
+.ts.header.-bottom-attached {
+    padding: var(--ts-header_vertical-padding) var(--ts-header_horizontal-padding);
+    border-radius: var(--ts-header_border-radius);
+    border: 1px solid rgb(var(--ts-header_border-color));
+    box-sizing: border-box;
+}
+
+.ts.header.-top-attached,
+.ts.header.-attached,
+.ts.header.-bottom-attached {
+    display: block;
+}
+
+.ts.header.-top-attached {
+    margin-bottom: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.ts.header.-attached {
+    margin-top: 0;
+    margin-bottom: 0;
+    border-top: 0;
+    border-radius: 0;
+}
+.ts.header.-bottom-attached {
+    margin-top: 0;
+    border-top: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
