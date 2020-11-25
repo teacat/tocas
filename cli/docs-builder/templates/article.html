@@ -312,5 +312,17 @@
         </div>
 
         <div id="字型預載"></div>
+
+        <script type="text/javascript">
+            var mySocket = new WebSocket("ws://localhost:8081/ws");
+            mySocket.onmessage = function(e) {
+                console.log("reload: " + new Date().getTime())
+                var queryString = '?reload=' + new Date().getTime()
+
+                document.querySelectorAll('link[rel="stylesheet"]').forEach((e) => {
+                    e.href = e.href.replace(/\?.*|$/, queryString);
+                })
+            }
+        </script>
     </body>
 </html>
