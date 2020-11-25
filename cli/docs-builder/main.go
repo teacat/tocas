@@ -12,9 +12,12 @@ import (
 	"os/exec"
 	"regexp"
 	"strings"
+	"time"
 
+	"github.com/radovskyb/watcher"
 	blackfriday "github.com/russross/blackfriday/v2"
 	"github.com/teacat/davai"
+	"github.com/teacat/maxim"
 	"github.com/teacat/pathx"
 	cli "github.com/urfave/cli/v2"
 	"golang.org/x/net/html"
@@ -77,8 +80,43 @@ var (
 	pathFlags = pathAssets + "/flags.yml"
 )
 
+func fileWatch(m *maxim.Engine) {
+	w := watcher.New()
+	w.SetMaxEvents(1)
+
+	go func() {
+		for {
+			select {
+			case <-w.Event:
+				m.Write("update")
+			case <-w.Error:
+				return
+			case <-w.Closed:
+				return
+			}
+		}
+	}()
+
+	if err := w.AddRecursive("./../../src"); err != nil {
+		log.Fatalln(err)
+	}
+
+	if err := w.Start(time.Millisecond * 100); err != nil {
+		log.Fatalln(err)
+	}
+}
+
 // serve 會執行網頁伺服器服務文件內容。
 func serve(c *cli.Context) error {
+	mC := maxim.DefaultConfig()
+	mC.Upgrader.CheckOrigin = func(_ *http.Request) bool {
+		return true
+	}
+	m := maxim.New(mC)
+	m.HandleError(func(s *maxim.Session, e error) {
+		panic(e)
+	})
+
 	d := davai.New()
 	//
 	fm := template.FuncMap{
@@ -95,6 +133,10 @@ func serve(c *cli.Context) error {
 	}
 	d.ServeFiles("/assets", pathAssets)
 	d.ServeFiles("/src", pathSrc)
+
+	go fileWatch(m)
+
+	d.Get("/ws", m.HandleRequest)
 
 	d.Get("/{language}", func(w http.ResponseWriter, r *http.Request) {
 		//
