@@ -33,6 +33,15 @@ Definitions:
               <div class="description">為你的女朋友，喔不，你沒有女朋友。</div>
           </div>
 
+      - Title      : 描述的
+        Description: 註釋本身可以用來作為描述標題的本體。這會讓標題的大小與註釋相符且不會太過突兀。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts header [[-descriptor]]">
+              <div class="description">我們推薦你閱讀…</div>
+              PHP 是這個世界上最好的程式語言！
+          </div>
+
   - Title      : 語意
     Description: 標題能夠以不同的語意呈現。
     Sections   :
@@ -68,30 +77,6 @@ Definitions:
               <div class="description">送出資料表單時發生不可預期的錯誤，請稍後重試。</div>
           </div>
 
-      ## - Title      : 動態反色的
-      ##   Description: 反色語意是一個動態色彩而非固定顏色。當使用者系統主題為亮色時，元件會呈現暗色時的狀態；反之亦然，如果使用者偏## 好暗色主題，那麼他就會看見亮色元件。如果你只是想要一個固定的白、黑色元件，請使用「固色語意」。
-      ##   Since      : 4.0.0
-      ##   HTML       : |
-      ##     <div class="ts header" data-emphasis="[[inverted]]">
-      ##         我是反色
-      ##         <div class="description">所謂的反色語意就是與目前的系統主題色系相反色調。</div>
-      ##     </div>
-      ##
-      ## - Title      : 固色的
-      ##   Description: 元件的色系可以固定是亮色或暗色的。使用 `light` 會令元件呈現亮色主題，而 `dark` 則以暗色主題為主。
-      ##   Since      : 4.0.0
-      ##   HTML       : |
-      ##     <div class="ts header" data-emphasis="[[light]]">
-      ##         我是反色
-      ##         <div class="description">所謂的反色語意就是與目前的系統主題色系相反色調。</div>
-      ##     </div>
-      ##     <div class="ts segment" data-emphasis="dark">
-      ##     <div class="ts header" data-emphasis="[[dark]]">
-      ##         我是反色
-      ##         <div class="description">所謂的反色語意就是與目前的系統主題色系相反色調。</div>
-      ##     </div>
-      ##     </div>
-
   - Title      : 內容
     Description: 標題由多個不同內容組成。
     Sections   :
@@ -106,17 +91,23 @@ Definitions:
           </div>
 
       - Title      : 圖示
-        Description: 標題中也可以帶有圖示。
+        Description: 透過 `-left-icon` 和 `-right-icon` 來表明圖示在標題的哪一側。
         Since      : 4.0.0
         HTML       : |
-          <div class="ts header">
-              <i class="ts [[icon]]" data-icon="plug"></i>
+          <div class="ts header [[-left-icon]]">
+              <i class="ts {{icon}}" data-icon="plug"></i>
               <div class="content">
                   99.9% 上線時間保證
               </div>
           </div>
-          <div class="ts header">
-              <i class="ts [[icon]]" data-icon="cogs"></i>
+          <div class="ts header [[-right-icon]]">
+              <div class="content">
+                  超多合作夥伴
+              </div>
+              <i class="ts {{icon}}" data-icon="users"></i>
+          </div>
+          <div class="ts header [[-left-icon]]">
+              <i class="ts {{icon}}" data-icon="lock"></i>
               <div class="content">
                   安全性設定
                   <div class="description">管理好您的洨洨安，確保不受任何人詐騙。</div>
@@ -124,11 +115,25 @@ Definitions:
           </div>
 
       - Title      : 圖片
-        Description: 標題中可以帶有圖片。
+        Description: 標題中可以帶有圖片，透過 `-left-image` 與 `-right-image` 來決定要將圖片放置於標題的左還是右側。
         Since      : 4.0.0
         HTML       : |
-          <div class="ts header">
-              <[[img]] src="!-user-!"> 帳號設定
+          <div class="ts header [[-left-image]]">
+              <img src="!-user-!"> 帳號設定
+          </div>
+          <div class="ts header [[-right-image]]">
+              個人資料 <img class="ts {{image}} -small -circular" src="!-user2-!">
+          </div>
+
+      - Title      : 標籤
+        Description: 標題裡可以在左、右側安插標籤元件，透過 `-left-label` 和 `-right-label` 指定。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts header [[-left-label]]">
+              <span class="ts {{label}}">21</span> 最新通知
+          </div>
+          <div class="ts header [[-right-label]]">
+              國際新聞 <span class="ts {{label}}">21</span>
           </div>
 
   - Title      : 狀態
@@ -239,13 +244,8 @@ Definitions:
         Description: 每個標題都可以在底下新增分隔線。
         Since      : 4.0.0
         HTML       : |
-          <div class="ts header -tiny [[-dividing]]">微小</div>
-          <div class="ts header -small [[-dividing]]">小型</div>
-          <div class="ts header [[-dividing]]">中等</div>
-          <div class="ts header -large [[-dividing]]">大型</div>
-          <div class="ts header -big [[-dividing]]">大的</div>
-          <div class="ts header -huge [[-dividing]]">巨大</div>
-          <div class="ts header -massive [[-dividing]]">重量級</div>
+          <div class="ts header [[-dividing]]">分隔標題</div>
+          <div class="ts header [[-thick]] [[-dividing]]">厚分隔標題</div>
 
       - Title      : 附著的
         Description: 標題能夠吸附在其他的元件上。
