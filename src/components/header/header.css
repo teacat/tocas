@@ -45,7 +45,7 @@
  */
 
 .ts.header .content {
-    margin-left: 0.7rem;
+    margin-top: -0.25rem;
 }
 
 /**
@@ -70,7 +70,7 @@
 }
 
 /* ==========================================================================
-   Variations
+   Type
    ========================================================================== */
 
 /**
@@ -83,10 +83,66 @@
 }
 
 .ts.header.-icon > .ts.icon {
-    display: block;
+    display: flex;
     text-align: center;
-    margin: 0 auto 0.7rem;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--ts-header_distance-element);
     font-size: 3em;
+}
+
+.ts.header.-icon > .ts.icon.-circular {
+    font-size: 2.25em;
+}
+
+/**
+ * Descriptor
+ */
+
+.ts.header.-descriptor {
+    --ts-header-alias_font-size: var(--ts-header-alias_description-font-size, var(--ts-header_description-font-size));
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Icon Side
+ */
+
+.ts.header.-left-icon .ts.icon {
+    margin-right: var(--ts-header_distance-element);
+}
+
+.ts.header.-right-icon .ts.icon {
+    margin-left: var(--ts-header_distance-element);
+}
+
+/**
+ * Image Side
+ */
+
+.ts.header.-left-image img,
+.ts.header.-left-image .ts.image {
+    margin-right: var(--ts-header_distance-element);
+}
+
+.ts.header.-right-image img,
+.ts.header.-right-image .ts.image {
+    margin-left: var(--ts-header_distance-element);
+}
+
+/**
+ * Label Side
+ */
+
+.ts.header.-left-label .ts.label {
+    margin-right: var(--ts-header_distance-element);
+}
+
+.ts.header.-right-label .ts.label {
+    margin-left: var(--ts-header_distance-element);
 }
 
 /**
@@ -133,7 +189,7 @@
 .ts.header.-inline .description {
     width: auto;
     flex: 1;
-    margin-left: 0.7rem;
+    margin-left: var(--ts-header_distance-element);
 }
 
 /**
@@ -199,7 +255,11 @@
  */
 
 .ts.header.-dividing {
-    border-bottom: 1px solid rgb(var(--ts-header_divider-color));
+    border-bottom: var(--ts-header-alias_dividing-line-width, var(--ts-header_dividing-line-width)) solid
+        rgb(var(--ts-header_divider-color));
+}
+.ts.header.-thick.-dividing {
+    --ts-header-alias_dividing-line-width: var(--ts-header_dividing-line-width-thick);
 }
 
 /**
