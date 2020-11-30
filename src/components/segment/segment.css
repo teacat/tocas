@@ -5,15 +5,15 @@
    ========================================================================== */
 
 .ts.segment {
-    position: relative;
-    border: 1px solid rgb(var(--ts-segment-alias_border-color, var(--ts-segment_border-color)));
-    padding: var(--ts-segment_padding);
+    position     : relative;
+    border       : 1px solid rgb(var(--ts-segment-alias_border-color, var(--ts-segment_border-color)));
+    padding      : var(--ts-segment_padding);
     border-radius: var(--ts-segment_border-radius);
-    background: rgb(var(--ts-segment-alias_background-color, var(--ts-segment_background-color)));
-    font-size: var(--ts-segment_font-size);
-    color: rgb(var(--ts-segment_color));
-    line-height: var(--ts-segment_line-height);
-    word-break: break-all;
+    background   : rgb(var(--ts-segment-alias_background-color, var(--ts-segment_background-color)));
+    font-size    : var(--ts-segment_font-size);
+    color        : rgb(var(--ts-segment_color));
+    line-height  : var(--ts-segment_line-height);
+    word-break   : break-all;
 }
 
 .ts.segment:first-child {
@@ -53,11 +53,11 @@
     padding: 0;
 }
 .ts.segment.-horizontally-fitted {
-    padding-left: 0;
+    padding-left : 0;
     padding-right: 0;
 }
 .ts.segment.-vertically-fitted {
-    padding-top: 0;
+    padding-top   : 0;
     padding-bottom: 0;
 }
 
@@ -66,7 +66,7 @@
  */
 
 .ts.segment.-centered {
-    width: fit-content;
+    width : fit-content;
     margin: 0 auto;
 }
 
@@ -100,7 +100,7 @@
  */
 
 .ts.segment.-compact {
-    width: fit-content;
+    width     : fit-content;
     /**display: table;  使用 `table` 才能夠套用 `.-centered` 而 `inline-block` 則無法。 */
 }
 
@@ -118,44 +118,43 @@
 }
 
 .ts.segment.-loading {
-    position: relative;
-    cursor: default;
+    position      : relative;
+    cursor        : default;
     pointer-events: none;
-    user-select: none;
-    color: transparent !important;
-    min-height: var(--ts-segment_loader-size);
+    user-select   : none;
+    color         : transparent !important;
+    min-height    : var(--ts-segment_loader-size);
 }
 
 .ts.segment.-loading::before {
-    position: absolute;
-    content: "";
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: rgba(var(--ts-segment-alias_background-color, var(--ts-segment_background-color)), 0.8);
+    position     : absolute;
+    content      : "";
+    top          : 0;
+    left         : 0;
+    bottom       : 0;
+    right        : 0;
+    background   : rgba(var(--ts-segment-alias_background-color, var(--ts-segment_background-color)), 0.8);
     border-radius: var(--ts-segment_border-radius);
-    z-index: var(--z_segment_loading-mask);
+    z-index      : var(--z_segment_loading-mask);
 }
 
 .ts.segment.-loading::after {
-    position: absolute;
-    content: "";
-    top: 50%;
-    left: 50%;
-    transform-origin: top left;
-    width: var(--ts-segment_loader-size);
-    height: var(--ts-segment_loader-size);
-    animation: segment-spin 0.5s linear;
+    position                 : absolute;
+    content                  : "";
+    top                      : 50%;
+    left                     : 50%;
+    transform-origin         : top left;
+    width                    : var(--ts-segment_loader-size);
+    height                   : var(--ts-segment_loader-size);
+    animation                : segment-spin 0.5s linear;
     animation-iteration-count: infinite;
-    border-radius: var(--ts-segment_border-radius-circular);
-    border-color: rgb(var(--ts-segment_loader-line-color)) rgb(var(--ts-segment_loader-background-color))
+    border-radius            : var(--ts-segment_border-radius-circular);
+    border-color             : rgb(var(--ts-segment_loader-line-color)) rgb(var(--ts-segment_loader-background-color))
         rgb(var(--ts-segment_loader-background-color)) rgb(var(--ts-segment_loader-background-color));
     border-style: solid;
     border-width: var(--ts-segment_loader-line-width);
-    /** box-shadow: 0px 0px 0px 1px #0000001c, 0px 0px 0px 1px #0000001c inset;**/
-    visibility: visible;
-    z-index: var(--z_segment_loader);
+    visibility  : visible;
+    z-index     : var(--z_segment_loader);
 }
 
 /**
@@ -163,10 +162,10 @@
  */
 
 .ts.segment.-clearing::after {
-    display: block;
-    content: "\00a0";
-    height: 0;
-    clear: both;
+    display   : block;
+    content   : "\00a0";
+    height    : 0;
+    clear     : both;
     visibility: hidden;
 }
 
@@ -189,11 +188,11 @@
  */
 
 .ts.segment.-left-floated {
-    float: left;
+    float       : left;
     margin-right: var(--ts-segment_distance-block);
 }
 .ts.segment.-right-floated {
-    float: right;
+    float      : right;
     margin-left: var(--ts-segment_distance-block);
 }
 
@@ -209,28 +208,28 @@
 .ts.segment.-piled::after,
 .ts.segments.-piled::after {
     transform: rotate(1.1deg);
-    top: 0;
-    z-index: var(--z_segment_piled-after);
+    top      : 0;
+    z-index  : var(--z_segment_piled-after);
 }
 
 .ts.segment.-piled::before,
 .ts.segments.-piled::before {
     transform: rotate(-1.1deg);
-    top: 0;
-    z-index: var(--z_segment_piled-before);
+    top      : 0;
+    z-index  : var(--z_segment_piled-before);
 }
 
 .ts.segment.-piled::after,
 .ts.segment.-piled::before,
 .ts.segments.-piled::after,
 .ts.segments.-piled::before {
-    content: "";
-    position: absolute;
-    display: block;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    border: 1px solid rgb(var(--ts-segment-alias_border-color, var(--ts-segment_border-color)));
+    content   : "";
+    position  : absolute;
+    display   : block;
+    left      : 0;
+    height    : 100%;
+    width     : 100%;
+    border    : 1px solid rgb(var(--ts-segment-alias_border-color, var(--ts-segment_border-color)));
     visibility: visible;
     background: rgb(var(--ts-segment-alias_background-color, var(--ts-segment_background-color)));
 }
@@ -248,12 +247,12 @@
 
 .ts.segment.-stacked::after,
 .ts.segments.-stacked::after {
-    position: absolute;
-    content: "";
-    bottom: -3px;
-    left: 0;
-    width: 100%;
-    height: 6px;
+    position  : absolute;
+    content   : "";
+    bottom    : -3px;
+    left      : 0;
+    width     : 100%;
+    height    : 6px;
     border-top: 1px solid rgb(var(--ts-segment-alias_border-color, var(--ts-segment_border-color)));
     visibility: visible;
     background: rgba(0, 0, 0, 0.03);
@@ -265,21 +264,21 @@
 .ts.segments.-tall-stacked::after,
 .ts.segment.-tall-stacked::before,
 .ts.segments.-tall-stacked::before {
-    content: "";
-    position: absolute;
-    bottom: -3px;
-    left: 0;
+    content   : "";
+    position  : absolute;
+    bottom    : -3px;
+    left      : 0;
     border-top: 1px solid rgb(var(--ts-segment-alias_border-color, var(--ts-segment_border-color)));
     background: rgba(0, 0, 0, 0.03);
-    width: 100%;
-    height: 6px;
+    width     : 100%;
+    height    : 6px;
     visibility: visible;
 }
 
 .ts.segment.-tall-stacked::before,
 .ts.segments.-tall-stacked::before {
     display: block;
-    bottom: 0;
+    bottom : 0;
 }
 
 /**
@@ -288,7 +287,7 @@
 
 .ts.segment.-disabled {
     user-select: none;
-    color: rgb(var(--ts-segment_disabled-color));
+    color      : rgb(var(--ts-segment_disabled-color));
 }
 
 .ts.segment.-disabled * {
@@ -300,21 +299,21 @@
  */
 
 .ts.segment.-top-attached {
-    margin-bottom: 0;
+    margin-bottom             : 0;
     border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+    border-bottom-left-radius : 0;
 }
 .ts.segment.-attached {
-    margin-top: 0;
+    margin-top   : 0;
     margin-bottom: 0;
-    border-top: 0;
+    border-top   : 0;
     border-radius: 0;
 }
 .ts.segment.-bottom-attached {
-    margin-top: 0;
-    border-top: 0;
+    margin-top             : 0;
+    border-top             : 0;
     border-top-right-radius: 0;
-    border-top-left-radius: 0;
+    border-top-left-radius : 0;
 }
 
 /**
@@ -331,8 +330,8 @@
  */
 
 .ts.segment.-basic {
-    border: 0;
-    background: none;
+    border       : 0;
+    background   : none;
     border-radius: 0;
 }
 
@@ -342,9 +341,9 @@
 
 .ts.segment.-secondary {
     --ts-segment-alias_background-color: var(--ts-segment_background-secondary-color);
-    --ts-segment-alias_border-color: var(--ts-segment_border-secondary-color);
+    --ts-segment-alias_border-color    : var(--ts-segment_border-secondary-color);
 }
 .ts.segment.-tertiary {
     --ts-segment-alias_background-color: var(--ts-segment_background-tertiary-color);
-    --ts-segment-alias_border-color: var(--ts-segment_border-tertiary-color);
+    --ts-segment-alias_border-color    : var(--ts-segment_border-tertiary-color);
 }
