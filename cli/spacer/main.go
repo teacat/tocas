@@ -64,6 +64,10 @@ func scan(f *os.File) []Group {
 		}
 
 		for k, v := range l {
+			if k == 0 && (string(v) == ":" || string(v) == ".") {
+
+				break
+			}
 			if string(v) == ":" {
 				if k > maxColonIndex {
 					maxColonIndex = k
