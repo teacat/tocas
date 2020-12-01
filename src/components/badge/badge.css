@@ -8,13 +8,13 @@
     box-sizing   : border-box;
     position     : relative;
     display      : inline-block;
-    font-size    : var(--ts-badge_font-size);
+    font-size    : var(--ts-badge-alias_font-size, var(--ts-badge_font-size));
     font-weight  : var(--ts-badge_font-weight);
     color        : rgb(var(--ts-badge-alias_color, var(--ts-badge_color)));
-    line-height  : var(--ts-badge_line-height);
+    line-height  : var(--ts-badge-alias_line-height, var(--ts-badge_line-height));
     background   : rgba(var(--ts-badge-alias_background-color, var(--ts-badge_background-color)));
     border-radius: var(--ts-badge_border-radius);
-    padding      : var(--ts-badge_vertical-padding) var(--ts-badge_horizontal-padding);
+    padding      : var(--ts-badge-alias_vertical-padding, var(--ts-badge_vertical-padding)) var(--ts-badge-alias_horizontal-padding, var(--ts-badge_horizontal-padding));
     border       : var(--ts-badge_border-width) solid rgb(var(--ts-badge-alias_border-color, var(--ts-badge_border-color)));
 }
 
@@ -66,6 +66,9 @@
  */
 
 .ts.badge.-empty {
+    padding: 0;
+    height : 1em;
+    width  : 1em;
 }
 
 /**
@@ -81,6 +84,9 @@
  */
 
 .ts.badge.-compact {
+    --ts-badge-alias_line-height       : var(--ts-badge_compact-line-height);
+    --ts-badge-alias_vertical-padding  : var(--ts-badge_compact-vertical-padding);
+    --ts-badge-alias_horizontal-padding: var(--ts-badge_compact-horizontal-padding);
 }
 
 /**
@@ -132,8 +138,25 @@
  */
 
 .ts.badge.-left-floated {
+    float: left;
 }
 .ts.badge.-right-floated {
+    float: right;
+}
+
+/**
+ * Spaced
+ */
+
+.ts.badge.-spaced {
+    margin-left : var(--ts-badge_distance-side);
+    margin-right: var(--ts-badge_distance-side);
+}
+.ts.badge.-left-spaced {
+    margin-left: var(--ts-badge_distance-side);
+}
+.ts.badge.-right-spaced {
+    margin-right: var(--ts-badge_distance-side);
 }
 
 /**
@@ -141,16 +164,23 @@
  */
 
 .ts.badge.-mini {
+    --ts-badge-alias_font-size: .75rem;
 }
 .ts.badge.-tiny {
+    --ts-badge-alias_font-size: .75rem;
 }
 .ts.badge.-small {
+    --ts-badge-alias_font-size: .8125rem;
 }
 .ts.badge.-large {
+    --ts-badge-alias_font-size: .9375rem;
 }
 .ts.badge.-big {
+    --ts-badge-alias_font-size: 1rem;
 }
 .ts.badge.-huge {
+    --ts-badge-alias_font-size: 1.1875rem;
 }
 .ts.badge.-massive {
+    --ts-badge-alias_font-size: 1.5rem;
 }

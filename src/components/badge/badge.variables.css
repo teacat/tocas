@@ -7,14 +7,16 @@
      * Block
      */
 
-    --ts-badge_border-radius         : var(--ts-global_border-radius);
-    --ts-badge_border-radius-circular: var(--ts-global_border-radius-circular);
-    --ts-badge_vertical-padding      : 0rem;
-    --ts-badge_horizontal-padding    : 0.5rem;
-    --ts-badge_border-width          : 1px;
-    --ts-badge_font-weight           : 500;
-    --ts-badge_disabled-opacity      : var(--ts-global_disabled-opacity);
-    --ts-badge_corner-floated-offset : 50%;
+    --ts-badge_border-radius             : var(--ts-global_border-radius);
+    --ts-badge_border-radius-circular    : var(--ts-global_border-radius-circular);
+    --ts-badge_vertical-padding          : 0rem;
+    --ts-badge_horizontal-padding        : 0.5rem;
+    --ts-badge_border-width              : 1px;
+    --ts-badge_font-weight               : 500;
+    --ts-badge_disabled-opacity          : var(--ts-global_disabled-opacity);
+    --ts-badge_corner-floated-offset     : 50%;
+
+    --ts-badge_distance-side: .5rem;
 
     /**
      * Typography
@@ -22,6 +24,11 @@
 
     --ts-badge_font-size  : 0.875rem;
     --ts-badge_line-height: var(--ts-global_line-height);
+
+    /** Compact */
+    --ts-badge_compact-vertical-padding  : 0rem;
+    --ts-badge_compact-horizontal-padding: 0.25rem;
+    --ts-badge_compact-line-height: calc(var(--ts-badge_line-height) * 0.8);
 }
 
 /* ==========================================================================
@@ -29,12 +36,11 @@
    ========================================================================== */
 
 .ts.badge {
-    --ts-badge_color                   : var(--ts-global_gray-900);
-    --ts-badge-default_background-color: var(--ts-global_gray-100);
-    --ts-badge_background-color        : var(--ts-badge-default_background-color);
-    --ts-badge_basic-color             : var(--ts-global_gray-800);
-    --ts-badge_outlined-color          : var(--ts-global_gray-800);
-    --ts-badge_outlined-border-color   : var(--ts-global_gray-500);
+    --ts-badge-default_color                : var(--ts-global_gray-900);
+    --ts-badge-default_background-color     : var(--ts-global_gray-100);
+    --ts-badge-default_basic-color          : var(--ts-global_gray-800);
+    --ts-badge-default_outlined-color       : var(--ts-global_gray-800);
+    --ts-badge-default_outlined-border-color: var(--ts-global_gray-500);
 }
 
 /* ==========================================================================
@@ -42,20 +48,32 @@
    ========================================================================== */
 
 /**
+ * Default
+ */
+
+.ts.badge {
+    --ts-badge_color                   : var(--ts-badge-alias_color, var(--ts-badge-default_color));
+    --ts-badge_background-color        : var(--ts-badge-alias_background-color, var(--ts-badge-default_background-color));
+    --ts-badge_basic-color             : var(--ts-badge-alias_basic-color, var(--ts-badge-default_basic-color));
+    --ts-badge_outlined-color          : var(--ts-badge-alias_outlined-color, var(--ts-badge-default_outlined-color));
+    --ts-badge_outlined-border-color   : var(--ts-badge-alias_outlined-border-color, var(--ts-badge-default_outlined-border-color));
+}
+
+/**
  * Primary
  */
 
 .ts.badge[data-emphasis="primary"] {
-    --ts-badge_color                : var(--ts-global_static-gray-50);
-    --ts-badge_background-color     : var(--ts-global_primary-500);
-    --ts-badge_basic-color          : var(--ts-global_primary-500);
-    --ts-badge_outlined-color       : var(--ts-global_primary-500);
-    --ts-badge_outlined-border-color: var(--ts-global_primary-500);
+    --ts-badge-alias_color                : var(--ts-global_static-gray-50);
+    --ts-badge-alias_background-color     : var(--ts-global_primary-500);
+    --ts-badge-alias_basic-color          : var(--ts-global_primary-500);
+    --ts-badge-alias_outlined-color       : var(--ts-global_primary-500);
+    --ts-badge-alias_outlined-border-color: var(--ts-global_primary-500);
 }
-
+/** Quiet */
 .ts.badge[data-emphasis="primary"].-quiet {
-    --ts-badge_color           : var(--ts-global_primary-900);
-    --ts-badge_background-color: var(--ts-global_primary-100);
+    --ts-badge-alias_color           : var(--ts-global_primary-900);
+    --ts-badge-alias_background-color: var(--ts-global_primary-100);
 }
 
 /**
@@ -63,16 +81,16 @@
  */
 
 .ts.badge[data-emphasis="warning"] {
-    --ts-badge_color                : var(--ts-global_static-gray-800);
-    --ts-badge_background-color     : var(--ts-global_warning-500);
-    --ts-badge_basic-color          : var(--ts-global_warning-700);
-    --ts-badge_outlined-color       : var(--ts-global_warning-700);
-    --ts-badge_outlined-border-color: var(--ts-global_warning-700);
+    --ts-badge-alias_color                : var(--ts-global_static-gray-800);
+    --ts-badge-alias_background-color     : var(--ts-global_warning-500);
+    --ts-badge-alias_basic-color          : var(--ts-global_warning-700);
+    --ts-badge-alias_outlined-color       : var(--ts-global_warning-700);
+    --ts-badge-alias_outlined-border-color: var(--ts-global_warning-700);
 }
-
+/** Quiet */
 .ts.badge[data-emphasis="warning"].-quiet {
-    --ts-badge_color           : var(--ts-global_warning-900);
-    --ts-badge_background-color: var(--ts-global_warning-100);
+    --ts-badge-alias_color           : var(--ts-global_warning-900);
+    --ts-badge-alias_background-color: var(--ts-global_warning-100);
 }
 
 /**
@@ -80,16 +98,16 @@
  */
 
 .ts.badge[data-emphasis="positive"] {
-    --ts-badge_color                : var(--ts-global_static-gray-50);
-    --ts-badge_background-color     : var(--ts-global_positive-500);
-    --ts-badge_basic-color          : var(--ts-global_positive-500);
-    --ts-badge_outlined-color       : var(--ts-global_positive-500);
-    --ts-badge_outlined-border-color: var(--ts-global_positive-500);
+    --ts-badge-alias_color                : var(--ts-global_static-gray-50);
+    --ts-badge-alias_background-color     : var(--ts-global_positive-500);
+    --ts-badge-alias_basic-color          : var(--ts-global_positive-500);
+    --ts-badge-alias_outlined-color       : var(--ts-global_positive-500);
+    --ts-badge-alias_outlined-border-color: var(--ts-global_positive-500);
 }
-
+/** Quiet */
 .ts.badge[data-emphasis="positive"].-quiet {
-    --ts-badge_color           : var(--ts-global_positive-900);
-    --ts-badge_background-color: var(--ts-global_positive-100);
+    --ts-badge-alias_color           : var(--ts-global_positive-900);
+    --ts-badge-alias_background-color: var(--ts-global_positive-100);
 }
 
 /**
@@ -97,14 +115,14 @@
  */
 
 .ts.badge[data-emphasis="negative"] {
-    --ts-badge_color                : var(--ts-global_static-gray-50);
-    --ts-badge_background-color     : var(--ts-global_negative-500);
-    --ts-badge_basic-color          : var(--ts-global_negative-500);
-    --ts-badge_outlined-color       : var(--ts-global_negative-500);
-    --ts-badge_outlined-border-color: var(--ts-global_negative-500);
+    --ts-badge-alias_color                : var(--ts-global_static-gray-50);
+    --ts-badge-alias_background-color     : var(--ts-global_negative-500);
+    --ts-badge-alias_basic-color          : var(--ts-global_negative-500);
+    --ts-badge-alias_outlined-color       : var(--ts-global_negative-500);
+    --ts-badge-alias_outlined-border-color: var(--ts-global_negative-500);
 }
-
+/** Quiet */
 .ts.badge[data-emphasis="negative"].-quiet {
-    --ts-badge_color           : var(--ts-global_negative-900);
-    --ts-badge_background-color: var(--ts-global_negative-100);
+    --ts-badge-alias_color           : var(--ts-global_negative-900);
+    --ts-badge-alias_background-color: var(--ts-global_negative-100);
 }
