@@ -5,17 +5,18 @@
    ========================================================================== */
 
 .ts.badge {
-    box-sizing   : border-box;
-    position     : relative;
-    display      : inline-block;
-    font-size    : var(--ts-badge-alias_font-size, var(--ts-badge_font-size));
-    font-weight  : var(--ts-badge_font-weight);
-    color        : rgb(var(--ts-badge-alias_color, var(--ts-badge_color)));
-    line-height  : var(--ts-badge-alias_line-height, var(--ts-badge_line-height));
-    background   : rgba(var(--ts-badge-alias_background-color, var(--ts-badge_background-color)));
-    border-radius: var(--ts-badge_border-radius);
-    padding      : var(--ts-badge-alias_vertical-padding, var(--ts-badge_vertical-padding)) var(--ts-badge-alias_horizontal-padding, var(--ts-badge_horizontal-padding));
-    border       : var(--ts-badge_border-width) solid rgb(var(--ts-badge-alias_border-color, var(--ts-badge_border-color)));
+    box-sizing     : border-box;
+    position       : relative;
+    display        : inline-block;
+    text-decoration: none;
+    font-size      : var(--ts-badge-alias_font-size, var(--ts-badge_font-size));
+    font-weight    : var(--ts-badge_font-weight);
+    color          : rgb(var(--ts-badge-alias_color, var(--ts-badge_color)));
+    line-height    : var(--ts-badge-alias_line-height, var(--ts-badge_line-height));
+    background     : rgba(var(--ts-badge-alias_background-color, var(--ts-badge_background-color)));
+    border-radius  : var(--ts-badge_border-radius);
+    padding        : var(--ts-badge-alias_vertical-padding, var(--ts-badge_vertical-padding)) var(--ts-badge-alias_horizontal-padding, var(--ts-badge_horizontal-padding));
+    border         : var(--ts-badge_border-width) solid rgb(var(--ts-badge-alias_border-color, var(--ts-badge_border-color)));
 }
 
 /* ==========================================================================
@@ -35,7 +36,9 @@
  */
 
 .ts.badge.-disabled {
-    opacity: var(--ts-badge_disabled-opacity);
+    pointer-events: none;
+    user-select   : none;
+    opacity       : var(--ts-badge_disabled-opacity);
 }
 
 /* ==========================================================================
@@ -59,6 +62,38 @@
     --ts-badge-alias_background-color: 0, 0, 0, 0;
     --ts-badge-alias_color           : var(--ts-badge_outlined-color);
     --ts-badge-alias_border-color    : var(--ts-badge_outlined-border-color);
+}
+
+/**
+ * Link
+ */
+
+.ts.badge.-link:hover {
+    cursor: pointer;
+
+    --ts-badge-alias_background-color: var(--ts-badge_hover-background-color);
+}
+
+/**
+ * Underlined
+ */
+
+.ts.badge.-underlined {
+    text-decoration: underline;
+}
+
+/**
+ * Icon
+ */
+
+.ts.badge.-left-icon .ts.icon {
+    margin-right: var(--ts-badge_distance-icon);
+    margin-left : 0;
+}
+
+.ts.badge.-right-icon .ts.icon {
+    margin-right: 0;
+    margin-left : var(--ts-badge_distance-icon);
 }
 
 /**
