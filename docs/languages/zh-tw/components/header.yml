@@ -91,23 +91,23 @@ Definitions:
           </div>
 
       - Title      : 圖示
-        Description: 透過 `-left-icon` 和 `-right-icon` 來表明圖示在標題的哪一側。
+        Description: 標題的左、右其中一側可以擺放圖示。
         Since      : 4.0.0
         HTML       : |
-          <div class="ts header [[-left-icon]]">
-              <i class="ts {{icon}}" data-icon="plug"></i>
+          <div class="ts header">
+              ((<i class="ts {{icon}} -right-spaced" data-icon="plug"></i>))
               <div class="content">
                   99.9% 上線時間保證
               </div>
           </div>
-          <div class="ts header [[-right-icon]]">
+          <div class="ts header">
               <div class="content">
                   超多合作夥伴
               </div>
-              <i class="ts {{icon}}" data-icon="users"></i>
+              ((<i class="ts {{icon}} -left-spaced" data-icon="users"></i>))
           </div>
-          <div class="ts header [[-left-icon]]">
-              <i class="ts {{icon}}" data-icon="lock"></i>
+          <div class="ts header">
+              ((<i class="ts {{icon}} -right-spaced" data-icon="lock"></i>))
               <div class="content">
                   安全性設定
                   <div class="description">管理好您的洨洨安，確保不受任何人詐騙。</div>
@@ -115,25 +115,29 @@ Definitions:
           </div>
 
       - Title      : 圖片
-        Description: 標題中可以帶有圖片，透過 `-left-image` 與 `-right-image` 來決定要將圖片放置於標題的左還是右側。
+        Description: 圖片可以放置於標題的左、右側。
         Since      : 4.0.0
         HTML       : |
-          <div class="ts header [[-left-image]]">
-              <img src="!-user-!"> 帳號設定
+          <div class="ts header">
+              ((<img class="ts {{image}} -tiny -right-spaced" src="!-user-!">))
+              帳號設定
           </div>
-          <div class="ts header [[-right-image]]">
-              個人資料 <img class="ts {{image}} -small -circular" src="!-user2-!">
+          <div class="ts header">
+              個人資料
+              ((<img class="ts {{image}} -small -circular -left-spaced" src="!-user2-!">))
           </div>
 
-      - Title      : 標籤
-        Description: 標題裡可以在左、右側安插標籤元件，透過 `-left-label` 和 `-right-label` 指定。
+      - Title      : 計數徽章
+        Description: 標題裡可以在左、右側安插計數徽章。
         Since      : 4.0.0
         HTML       : |
-          <div class="ts header [[-left-label]]">
-              <span class="ts {{label}}">21</span> 最新通知
+          <div class="ts header">
+              ((<span class="ts {{badge}} -right-spaced" data-emphasis="primary">21</span>))
+              最新通知
           </div>
-          <div class="ts header [[-right-label]]">
-              國際新聞 <span class="ts {{label}}">21</span>
+          <div class="ts header">
+              國際新聞
+              ((<span class="ts {{badge}} -left-spaced">21</span>))
           </div>
 
   - Title      : 狀態
@@ -219,21 +223,21 @@ Definitions:
         Since      : 4.0.0
         HTML       : |
           <div class="ts header [[-top-aligned]]">
-              <i class="ts {{icon}}" data-icon="bullhorn"></i>
+              <i class="ts {{icon}} -right-spaced" data-icon="bullhorn"></i>
               <div class="content">
                   置頂對齊
                   <div class="description">旁邊的圖示會貼齊頂部。</div>
               </div>
           </div>
           <div class="ts header [[-middle-aligned]]">
-              <i class="ts {{icon}}" data-icon="comment"></i>
+              <i class="ts {{icon}} -right-spaced" data-icon="comment"></i>
               <div class="content">
                   置中對齊
                   <div class="description">你看到的圖示會盡可能地對齊垂直中間。</div>
               </div>
           </div>
           <div class="ts header [[-bottom-aligned]]">
-              <i class="ts {{icon}}" data-icon="clock"></i>
+              <i class="ts {{icon}} -right-spaced" data-icon="clock"></i>
               <div class="content">
                   置底對齊
                   <div class="description">這個圖示會貼齊標題的底部。</div>
@@ -271,7 +275,25 @@ Definitions:
         Description: 標題能夠看起來像是一個獨立的區塊。
         Since      : 4.0.0
         HTML       : |
-          <div class="ts header [[-block]]">我是個區塊標題！</div>
+          <div class="ts header [[-block]]">區塊標題</div>
+          <div class="ts header [[-block]]" data-emphasis="primary">語意區塊</div>
+
+      - Title      : 基本的
+        Description: 標題為區塊且套用語意時，呈現一個沒有那麼沈重的色調。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts header -block [[-basic]]" data-emphasis="primary">主要語意</div>
+
+      - Title      : 緊緻的
+        Description: 標題以區塊或是附著方式呈現的時候，其內距的密度可以更為緊緻。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts header -small -top-attached [[-compact]]" data-emphasis="positive">
+              噓寒問暖
+          </div>
+          <div class="ts {{segment}} -bottom-attached">
+              我真的好喜歡妳！
+          </div>
 
       - Title      : 浮動的
         Description: 標題可以置中、置左或者置右。
