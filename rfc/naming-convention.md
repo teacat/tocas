@@ -51,7 +51,16 @@
 3. [Word Order Dependency ](https://github.com/Semantic-Org/Semantic-UI/issues/396)
 4. [Class name order shouldn’t matter ](https://github.com/Semantic-Org/Semantic-UI/issues/5484)
 
-在撰寫 CSS 時，也會為了避免衝突而增加許多不必要的累贅 `:not` 選擇器。
+另一個問題則是會與現有圖示或語意產生衝突，例如：一個名為「圖片」的圖示。
+
+```html
+<!-- Tocas 圖片 圖示 -->
+<i class="ts image icon"></i>
+```
+
+這個問題在「[[Icon] - "image icon", in some cases is replaced by image element](https://github.com/Semantic-Org/Semantic-UI/issues/4549)」被提出，這會讓圖示被套用到圖片元件的相關樣式，甚至可能導致圖示被誤認成一個圖片。
+
+此外；在撰寫 CSS 時，也會為了避免衝突而增加許多不必要的累贅 `:not` 選擇器。
 
 ```css
 /** 避免與 .horizontally.padded 或 .vertically.padded 衝突 */
@@ -201,7 +210,9 @@ Tocas UI 在設計元件名稱與用法時所該遵循的注意事項和風格�
 
 頁面上不應該充滿一堆顏色，請記住一點：「當所有事情都被凸顯，所有事情都將顯得不重要」，為此 Tocas UI 中也沒有顏色樣式，因為語意才是最重要的。將顏色以語意命名能夠限制你所使用的方式、避免濫用且導向正軌。
 
-透過「負面的」、「警告的」來命名顏色，而不是「紅色」、「黃色」，這令你能夠替換樣式佈景的時候而不會因為改了顏色卻繼續使用像「黃色」這種制式名稱而有所不符。命名的方式不再是透過 `class` 而是使用 HTML 屬性標籤（`[data-emphasis]`）來定義。如此一來更能夠支援 Tocas 4.0 所新增的自訂動態主題。
+透過「負面的」、「警告的」來命名顏色，而不是「紅色」、「黃色」，這令你能夠替換樣式佈景的時候而不會因為改了顏色卻繼續使用像「黃色」這種制式名稱而有所不符。
+
+命名的方式不再是透過 `class` 而是使用 HTML 屬性標籤（`[data-emphasis]`）來定義。如此一來更能夠支援 Tocas 4.0 所新增的自訂動態主題。
 
 ```html
 <!-- ✓ 請這麼做 -->
@@ -227,15 +238,16 @@ Tocas UI 在設計元件名稱與用法時所該遵循的注意事項和風格�
 <!-- ✖ 別這樣 -->
 <button class="ts -large _mobile-only button"></button>
 <button class="ts -large -maximal button"></button>
+<button class="ts -large mobile only button"></button>
 ```
 
 #### 圖示
 
-在 Tocas UI 4.0 中，圖示將不再繼續透過類別樣式名稱進行圖示更改，而是透過 HTML 標籤屬性（`[data-icon]`）。
+在 Tocas UI 4.0 中，圖示將不再繼續透過類別樣式名稱進行圖示更改，而是透過 HTML 標籤屬性（`[data-icon]`）。因為這樣才能夠避免與點綴符混淆。
 
 ```html
 <!-- ✓ 請這麼做 -->
-<i class="icon" data-icon="arrow-right">
+<i class="ts icon" data-icon="arrow-right">
 
 <!-- ✖ 別這樣 -->
 <i class="-arrow-right icon">
