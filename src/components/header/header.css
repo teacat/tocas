@@ -8,8 +8,9 @@
     display    : flex;
     flex-wrap  : wrap;
     align-items: center;
-    font-size  : var(--ts-header-alias_font-size, var(--ts-header_font-size));
+    font-size  : var(--ts-header_font-size);
     color      : rgb(var(--ts-header_color));
+    background : rgb(var(--ts-header_background-color));
     line-height: var(--ts-header_line-height);
     font-weight: 500;
 }
@@ -54,7 +55,7 @@
 
 .ts.header .description {
     width      : 100%;
-    font-size  : var(--ts-header-alias_description-font-size, var(--ts-header_description-font-size));
+    font-size  : var(--ts-header_description-font-size);
     font-weight: normal;
     color      : rgb(var(--ts-header_description-color));
 }
@@ -76,6 +77,10 @@
 /**
  * Icon
  */
+
+.ts.header .ts.icon {
+    --ts-icon-alias_distance-icon: var(--ts-header_distance-icon);
+}
 
 .ts.header.-icon {
     display   : block;
@@ -100,58 +105,26 @@
  */
 
 .ts.header.-descriptor {
-    --ts-header-alias_font-size: var(--ts-header-alias_description-font-size, var(--ts-header_description-font-size));
+    --ts-header-alias_font-size: var(--ts-header_description-font-size);
 }
 
 /* ==========================================================================
-   Variations
+   States
    ========================================================================== */
-
-/**
- * Icon Side
- */
-
-.ts.header.-left-icon .ts.icon {
-    margin-right: var(--ts-header_distance-element);
-}
-
-.ts.header.-right-icon .ts.icon {
-    margin-left: var(--ts-header_distance-element);
-}
-
-/**
- * Image Side
- */
-
-.ts.header.-left-image img,
-.ts.header.-left-image .ts.image {
-    margin-right: var(--ts-header_distance-element);
-}
-
-.ts.header.-right-image img,
-.ts.header.-right-image .ts.image {
-    margin-left: var(--ts-header_distance-element);
-}
-
-/**
- * Label Side
- */
-
-.ts.header.-left-label .ts.label {
-    margin-right: var(--ts-header_distance-element);
-}
-
-.ts.header.-right-label .ts.label {
-    margin-left: var(--ts-header_distance-element);
-}
 
 /**
  * Disabled
  */
 
 .ts.header.-disabled {
-    opacity: var(--ts-header_disabled-opacity);
+    pointer-events: none;
+    user-select   : none;
+    opacity       : var(--ts-header_disabled-opacity);
 }
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
 
 /**
  * Sizes
@@ -247,7 +220,19 @@
  */
 
 .ts.header.-block {
-    background: rgb(var(--ts-header_background-block-color));
+    --ts-header-alias_background-color: var(--ts-header_background-block-color);
+    --ts-header-alias_border-color    : var(--ts-header_block-border-color);
+    --ts-header-alias_color           : var(--ts-header-alias_block-color);
+}
+
+/**
+ * Basic
+ */
+
+.ts.header.-basic {
+    --ts-header-alias_background-color: var(--ts-header-default_background-block-color);
+    --ts-header-alias_color           : var(--ts-header-alias_basic-color);
+    --ts-header-alias_border-color    : var(--ts-header-default_border-color);
 }
 
 /**
@@ -255,11 +240,20 @@
  */
 
 .ts.header.-dividing {
-    border-bottom: var(--ts-header-alias_dividing-line-width, var(--ts-header_dividing-line-width)) solid
+    border-bottom: var(--ts-header_dividing-line-width) solid
         rgb(var(--ts-header_divider-color));
 }
 .ts.header.-thick.-dividing {
     --ts-header-alias_dividing-line-width: var(--ts-header_dividing-line-width-thick);
+}
+
+/**
+ * Compact
+ */
+
+.ts.header.-compact {
+    --ts-header-alias_vertical-padding  : var(--ts-header_compact-vertical-padding);
+    --ts-header-alias_horizontal-padding: var(--ts-header_compact-horizontal-padding);
 }
 
 /**
