@@ -224,6 +224,9 @@ func tmplMarked(s string) string {
 	if s == "" {
 		return s
 	}
-	s = regexp.MustCompile(`(?:\[\[)(.*?)(?:\]\])`).FindAllStringSubmatch(s, -1)[0][1]
-	return s
+	r := regexp.MustCompile(`(?:\[\[)(.*?)(?:\]\])`).FindAllStringSubmatch(s, -1)
+	if len(r) == 0 {
+		return ""
+	}
+	return r[0][1]
 }

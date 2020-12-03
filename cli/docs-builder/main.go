@@ -241,6 +241,8 @@ func markdown(s string) string {
 
 // placeholder 會將預置標籤轉為純文字，避免被 Beautifier 或 Highlight JS 誤認。
 func placeholder(s string) string {
+	// 大標籤標籤。
+	s = regexp.MustCompile(`\(\((.*?)\)\)`).ReplaceAllString(s, `BARK${1}BARKEND`)
 	// 螢光標籤。
 	s = regexp.MustCompile(`\[\[(.*?)\]\]`).ReplaceAllString(s, `MARK${1}MARKEND`)
 	// 元件連結。
@@ -252,6 +254,8 @@ func placeholder(s string) string {
 
 // decodePlaceholder 會將預置標籤轉為實際可呈現的 HTML 標籤。
 func decodePlaceholder(s string) string {
+	//
+	s = regexp.MustCompile(`BARK(.*?)BARKEND`).ReplaceAllString(s, "<mark class=\"tag\">$1</mark>")
 	// 將螢光標記模板符號轉換回 `<mark>` 的 HTML 標記程式碼。
 	s = regexp.MustCompile(`MARK(.*?)MARKEND`).ReplaceAllString(s, "<mark>$1</mark>")
 	// 將圖片模板符號轉換成真正的預置圖片路徑。
@@ -320,6 +324,7 @@ func trim(s string, r []string) string {
 
 // clean 會清除傳入字串的模板字元。
 func clean(s string) string {
+	s = regexp.MustCompile(`\(\((.*?)\)\)`).ReplaceAllString(s, "$1")
 	s = regexp.MustCompile(`\[\[(.*?)\]\]`).ReplaceAllString(s, "$1")
 	s = regexp.MustCompile(`{{(.*?)}}`).ReplaceAllString(s, "$1")
 	s = replaceAllStringSubmatchFunc(regexp.MustCompile(`!-(.*?)-!`), s, func(groups []string) string {
