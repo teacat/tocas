@@ -1,0 +1,382 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts.list {
+    /**
+     * Block
+     */
+
+    /**
+     * Distance
+     */
+
+    --distance-block              : var(--global__distance-block);
+    --distance-item               : 0.25rem;
+    --distance-item-relaxed       : 0.55rem;
+    --distance-item-horizontal    : 0.6rem;
+    --distance-item-bullet        : 0.5rem;
+    --distance-nested-list        : 2rem;
+    --distance-nested-list-compact: 1rem;
+    --distance-item-description   : 1rem;
+
+    /**
+     * Typography
+     */
+
+    --font-size  : 1rem;
+    --line-height: var(--global__line-height);
+
+    /**
+     * Color
+     */
+
+    --color: var(--default__color);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts.list {
+    position      : relative;
+    font-size     : var(--font-size);
+    color         : rgb(var(--color));
+    line-height   : var(--line-height);
+    display       : flex;
+    flex-direction: column;
+}
+
+.ts.list:first-child {
+    margin-block-start: 0;
+}
+
+.ts.list:last-child {
+    margin-block-end: 0;
+}
+
+.ts.list:not(:first-child) {
+    margin-block-start: var(--distance-block);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts.list > .item:first-child {
+    padding-top: var(--distance-item);
+}
+
+.ts.list > .item:not(:first-child) {
+    margin-top : var(--distance-item);
+    padding-top: var(--distance-item);
+}
+
+.ts.list > .item:last-child {
+    padding-bottom: var(--distance-item);
+}
+
+/**
+ * Header
+ */
+
+.ts.list > .item > .header,
+.ts.list > .item > .content > .header {
+    font-weight: 500;
+}
+
+/**
+ * Section header
+ */
+
+.ts.list > .header {
+    font-weight: 500;
+    font-size  : 1.125rem;
+    margin-top : var(--distance-item);
+}
+
+/**
+ * Section Divider
+ */
+
+.ts.list > .divider {
+    border-top: 1px solid #777;
+    margin-top: var(--distance-item);
+}
+
+/**
+ * Section Text
+ */
+
+.ts.list > .text {
+    color     : #777;
+    margin-top: var(--distance-item);
+}
+
+/**
+ * Meta
+ */
+
+.ts.list > .item .meta {
+    display: flex;
+}
+
+.ts.list > .item .meta > .item {
+    margin-right: 0.5rem;
+    color       : #777;
+    font-size   : 0.9375rem;
+}
+
+.ts.list > .item .meta.-bulleted > .item {
+    margin-right: 0.25rem;
+}
+
+.ts.list > .item .meta.-bulleted > .item:not(:first-child)::before {
+    margin-right  : 0.25rem;
+    font-family   : Tocas-Lato, Arial, sans-serif;
+    content       : "·";
+    pointer-events: none;
+    user-select   : none;
+}
+
+/**
+ * Description
+ */
+
+.ts.list > .item .description.-extra {
+    color: #777;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Basic
+ */
+
+/**
+ * Compact
+ */
+
+.ts.list.-compact,
+.ts.list.-compact .item > .ts.list {
+    --distance-nested-list: var(--distance-nested-list-compact);
+}
+
+.ts.list.-compact {
+    --distance-item: 0;
+}
+
+/**
+ * Relaxed
+ */
+
+.ts.list.-relaxed {
+    --distance-item: var(--distance-item-relaxed);
+}
+
+/**
+ * Indented
+ */
+
+.ts.list.-indented {
+    margin-left: 1rem;
+}
+
+/**
+ * Horizontal
+ */
+
+.ts.list.-horizontal {
+    display       : inline-flex;
+    flex-direction: row;
+}
+
+.ts.list.-horizontal > .item {
+    margin-top: 0;
+}
+
+.ts.list.-horizontal > .item:not(:last-child) {
+    /** NOTE    : 使用 `margin-right` 這樣才不會在項目換行的時候有奇怪的留左空白 */
+    margin-right: var(--distance-item-horizontal);
+}
+
+/** Bulleted */
+.ts.list.-horizontal.-bulleted > .item {
+    margin-right: calc(var(--distance-item-horizontal) / 2);
+}
+
+.ts.list.-bulleted > .item::before {
+    margin-right: calc(var(--distance-item-horizontal) / 2);
+}
+
+.ts.list.-horizontal.-bulleted > .item:first-child::before {
+    display: none;
+}
+
+/**
+ * Nested
+ */
+
+.ts.list > .item > .ts.list {
+    margin-left       : var(--distance-nested-list);
+    margin-block-start: 0;
+}
+
+/**
+ * Bulleted
+ */
+
+.ts.list.-bulleted > .item::before,
+.ts.list.-bulleted > .item > .ts.list > .item::before,
+.ts.list.-bulleted > .item > .ts.list > .item .ts.list > .item::before {
+    font-family : Tocas-Lato, Arial, sans-serif;
+    font-weight : 400;
+    margin-right: var(--distance-item-bullet);
+}
+
+/** Level 1，優先順序高 */
+.ts.list.-bulleted > .item.item.item.item.item.item.item.item::before,
+.ts.list.-ordered .ts.list.-bulleted > .item.item.item.item.item.item.item.item.item.item.item.item::before {
+    content: "•";
+}
+
+/** Level 2，優先順序中 */
+.ts.list.-bulleted > .item > .ts.list > .item.item.item.item.item::before,
+.ts.list.-ordered .ts.list.-bulleted > .item > .ts.list > .item.item.item.item.item.item.item.item.item::before {
+    content: "○";
+}
+
+/** Level 3 and deep，優先順序低 */
+.ts.list.-bulleted > .item > .ts.list > .item .ts.list > .item::before,
+.ts.list.-ordered .ts.list.-bulleted > .item > .ts.list > .item .ts.list > .item.item.item.item.item::before {
+    content: "◾";
+}
+
+/**
+ * Ordered
+ */
+
+.ts.list.-ordered,
+.ts.list.-ordered .ts.list {
+    counter-reset: item;
+}
+
+.ts.list.-ordered .ts.list.-ordered,
+.ts.list.-ordered .ts.list.-ordered .ts.list {
+    counter-reset: item2;
+}
+
+.ts.list.-ordered .ts.list.-ordered .item.item.item.item.item.item.item.item::before,
+.ts.list.-ordered .ts.list.-ordered .ts.list .item.item.item.item.item.item.item.item::before {
+    content          : counters(item2, ".") ".";
+    counter-increment: item2;
+}
+
+.ts.list.-ordered > .item::before,
+.ts.list.-ordered .ts.list .item::before {
+    font-weight : 400;
+    margin-right: var(--distance-item-bullet);
+}
+
+.ts.list.-ordered .item.item.item.item.item.item.item.item::before {
+    content          : counters(item, ".") ".";
+    counter-increment: item;
+}
+
+/**
+ * Celled
+ */
+
+.ts.list.-celled > .item:first-child,
+.ts.list.-celled > .item:not(:first-child) {
+    border-top: 1px solid #777;
+}
+
+.ts.list.-celled > .item:last-child {
+    border-bottom: 1px solid #777;
+}
+
+/** Horizontal */
+.ts.list.-celled.-horizontal > .item:first-child,
+.ts.list.-celled.-horizontal > .item:not(:first-child) {
+    border-top  : 0;
+    border-left : 1px solid #777;
+    padding-left: var(--distance-item-horizontal);
+}
+
+.ts.list.-celled.-horizontal > .item:last-child {
+    border-bottom: 0;
+    border-right : 1px solid #777;
+    padding-right: var(--distance-item-horizontal);
+}
+
+/**
+ * Divided
+ */
+
+.ts.list.-divided > .item:not(:first-child) {
+    border-top: 1px solid #777;
+}
+
+/** Horizontal */
+.ts.list.-divided.-horizontal > .item:not(:first-child) {
+    border-top  : 0;
+    border-left : 1px solid #777;
+    padding-left: var(--distance-item-horizontal);
+}
+
+/**
+ * Description
+ */
+
+.ts.list.-description .description {
+    padding-left: var(--distance-item-description);
+}
+
+/**
+ * Specification
+ */
+
+.ts.list.-specification .header {
+    font-size: 0.875rem;
+}
+
+/**
+ * Icon Header
+ */
+
+.ts.list.-icon .item {
+    display: flex;
+}
+
+.ts.list.-icon .item i.icon {
+    margin-right: 0.5rem;
+}
+
+.ts.list.-icon .item i.icon + .content {
+}
+
+/**
+ * Floated
+ */
+
+.ts.list .meta.-left-floated {
+    float: left;
+}
+
+.ts.list .meta.-right-floated {
+    float: right;
+}
+
+/**
+ * Single Line
+ */
+
+.ts.list.-single-line .description,
+.ts.list.-single-line .header {
+    white-space  : nowrap;
+    text-overflow: ellipsis;
+    overflow     : hidden;
+}

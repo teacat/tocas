@@ -1,0 +1,422 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts.statistic {
+    /**
+     * Block
+     */
+
+    /**
+     * Distance
+     */
+
+    /**
+     * Typography
+     */
+
+    --font-size  : 1rem;
+    --line-height: var(--global__line-height);
+
+    /**
+     * Color
+     */
+
+    --color            : var(--default__color);
+    --description-color: var(--default__description-color);
+    --divider-color    : var(--default__divider-color);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts.statistic {
+    display       : inline-flex;
+    flex-direction: column;
+    position      : relative;
+    font-size     : var(--font-size);
+    color         : rgb(var(--color));
+    line-height   : var(--line-height);
+    vertical-align: top;
+}
+
+.ts.statistic + .ts.statistic {
+    margin-left: 1.5rem;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+/**
+ * Value
+ */
+
+.ts.statistic > .value {
+    display    : inline-flex;
+    font-size  : 2.125em;
+    font-weight: 500;
+    line-height: 1.15;
+    align-items: center;
+}
+
+/**
+ * Image
+ */
+
+.ts.statistic > .value > img:not(.ts) {
+    width       : 1em;
+    height      : 1em;
+    margin-right: 0.4rem;
+}
+
+/**
+ * Label
+ */
+
+.ts.statistic > .label {
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Horizontal Aligns
+ */
+
+.ts.statistics.-left-aligned > .ts.statistic > .label,
+.ts.statistic.-left-aligned > .label {
+    text-align: left;
+}
+.ts.statistics.-left-aligned > .ts.statistic > .value,
+.ts.statistic.-left-aligned > .value {
+    justify-content: flex-start;
+}
+
+.ts.statistics.-center-aligned > .ts.statistic > .label,
+.ts.statistic.-center-aligned > .label {
+    text-align: center;
+}
+.ts.statistics.-center-aligned > .ts.statistic > .value,
+.ts.statistic.-center-aligned > .value {
+    justify-content: center;
+}
+
+.ts.statistics.-right-aligned > .ts.statistic > .label,
+.ts.statistic.-right-aligned > .label {
+    text-align: right;
+}
+.ts.statistics.-right-aligned > .ts.statistic > .value,
+.ts.statistic.-right-aligned > .value {
+    justify-content: flex-end;
+}
+
+/**
+ * Vertical Aligns
+ */
+
+.ts.statistic.-top-aligned > .label {
+    align-self: flex-start;
+}
+
+.ts.statistic.-middle-aligned > .label {
+    align-self: center;
+}
+
+.ts.statistic.-bottom-aligned > .label {
+    align-self: flex-end;
+}
+
+/**
+ * Centered
+ */
+
+.ts.statistics.-centered {
+    justify-content: center;
+}
+
+.ts.statistic.-centered {
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+}
+
+/**
+ * Horizontal
+ */
+
+.ts.statistic.-horizontal,
+.ts.statistics.-horizontal .ts.statistic {
+    flex-direction: row;
+    align-items   : center;
+}
+
+.ts.statistic.-horizontal > .value + .label,
+.ts.statistics.-horizontal .ts.statistic > .value + .label {
+    margin-left : 0.5rem;
+    margin-right: 0;
+}
+
+.ts.statistic.-horizontal > .label,
+.ts.statistics.-horizontal .ts.statistic > .label {
+    margin-right: 0.5rem;
+}
+
+/**
+ * Text Value
+ */
+
+.ts.statistic > .value.-text {
+    font-size : 1em;
+    min-height: calc(2.125rem + 0.3rem);
+}
+
+/**
+ * Unit
+ */
+
+.ts.statistic > .value > .unit:first-child {
+    margin-right: 0.5rem;
+}
+
+.ts.statistic > .value > .unit:last-child {
+    margin-left: 0.5rem;
+}
+
+.ts.statistic > .value > .unit {
+    font-size      : 0.5em;
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+}
+
+/**
+ * Flucuation
+ */
+
+.ts.statistic > .value > .increment,
+.ts.statistic > .value > .decrement,
+.ts.statistic > .value > .fluctuation {
+    font-size      : 0.5em;
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+    margin         : 0 0.5rem;
+    color          : rgb(var(--description-color));
+}
+
+.ts.statistic > .value > .increment::after,
+.ts.statistic > .value > .decrement::after,
+.ts.statistic > .value > .fluctuation::after {
+    margin-left: 0.25rem;
+}
+
+.ts.statistic > .value > .increment::after,
+.ts.statistic > .value > .decrement::after {
+    font-family: "Icons";
+}
+
+.ts.statistic > .value > .increment::after {
+    content: "";
+}
+
+.ts.statistic > .value > .decrement::after {
+    content: "";
+}
+
+/**
+ * Flucuated
+ */
+
+.ts.statistic.-increased > .value::before,
+.ts.statistic.-decreased > .value::before {
+    font-family : "Icons";
+    margin-right: 0.5rem;
+}
+
+.ts.statistic.-increased > .value::before {
+    content: "";
+}
+
+.ts.statistic.-decreased > .value::before {
+    content: "";
+}
+
+/**
+ * Icon
+ */
+
+.ts.statistic > .value > i.icon {
+    margin-right: 0.5rem;
+}
+
+/**
+ * Floated
+ */
+
+.ts.statistic.-left-floated {
+    float       : left;
+    margin-right: 0.5rem;
+}
+
+.ts.statistic.-right-floated {
+    float      : right;
+    margin-left: 0.5rem;
+}
+
+/**
+ * Fluid
+ */
+
+.ts.statistics.-fluid,
+.ts.statistics.-fluid.-horizontal > .ts.statistic,
+.ts.statistic.-fluid {
+    width: 100%;
+}
+
+.ts.statistics.-fluid > .ts.statistic {
+    flex: 1;
+}
+
+/**
+ * Sizes
+ */
+
+.ts.statistics.-mini .ts.statistic,
+.ts.statistic.-mini.-mini.-mini {
+    font-size: 0.8125rem;
+}
+
+.ts.statistics.-tiny .ts.statistic,
+.ts.statistic.-tiny.-tiny.-tiny {
+    font-size: 0.875rem;
+}
+
+.ts.statistics.-small .ts.statistic,
+.ts.statistic.-small.-small.-small {
+    font-size: 0.9375rem;
+}
+
+.ts.statistics.-large .ts.statistic,
+.ts.statistic.-large.-large.-large {
+    font-size: 1.125rem;
+}
+
+.ts.statistics.-big .ts.statistic,
+.ts.statistic.-big.-big.-big {
+    font-size: 1.375rem;
+}
+
+.ts.statistics.-huge .ts.statistic,
+.ts.statistic.-huge.-huge.-huge {
+    font-size: 1.75rem;
+}
+
+.ts.statistics.-massive .ts.statistic,
+.ts.statistic.-massive.-massive.-massive {
+    font-size: 2rem;
+}
+
+/* ==========================================================================
+   Statistics
+   ========================================================================== */
+
+.ts.statistics {
+    display    : flex;
+    align-items: flex-start;
+    flex-wrap  : wrap;
+}
+
+.ts.statistics > .ts.statistic {
+    display       : inline-flex;
+    flex          : 0 1 auto;
+    flex-direction: column;
+    margin        : 0 3rem 0 0;
+    max-width     : none;
+}
+
+.ts.statistics > .ts.statistic > .value {
+    display    : flex;
+    align-items: center;
+}
+
+/**
+ * Divided
+ */
+
+.ts.statistics.-divided {
+}
+
+.ts.statistics.-divided > .ts.statistic {
+    border-right : 1px solid rgb(var(--divider-color));
+    padding-right: 1.5rem;
+    margin-right : 1.5rem;
+}
+
+.ts.statistics.-divided > .ts.statistic:last-child {
+    border-right : 0;
+    padding-right: 0;
+    margin-right : 0;
+}
+
+/** Horizontal */
+.ts.statistics.-divided.-horizontal {
+    flex-direction: column;
+}
+
+.ts.statistics.-divided.-horizontal > .ts.statistic {
+    border-right  : 0;
+    padding-right : 0;
+    margin-right  : 0;
+    border-bottom : 1px solid rgb(var(--divider-color));
+    margin-bottom : 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.ts.statistics.-divided.-horizontal > .ts.statistic:last-child {
+    border-bottom : 0;
+    margin-bottom : 0;
+    padding-bottom: 0;
+}
+
+/**
+ * Amount
+ */
+
+.ts.statistics.-two .ts.statistic {
+    flex: calc(1 / 2);
+}
+
+.ts.statistics.-three .ts.statistic {
+    flex: calc(1 / 3);
+}
+
+.ts.statistics.-four .ts.statistic {
+    flex: calc(1 / 4);
+}
+
+.ts.statistics.-five .ts.statistic {
+    flex: calc(1 / 5);
+}
+
+.ts.statistics.-six .ts.statistic {
+    flex: calc(1 / 6);
+}
+
+.ts.statistics.-seven .ts.statistic {
+    flex: calc(1 / 7);
+}
+
+.ts.statistics.-eight .ts.statistic {
+    flex: calc(1 / 8);
+}
+
+.ts.statistics.-nine .ts.statistic {
+    flex: calc(1 / 9);
+}
+
+.ts.statistics.-ten .ts.statistic {
+    flex: calc(1 / 10);
+}

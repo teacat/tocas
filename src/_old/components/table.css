@@ -1,0 +1,412 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts.table {
+    /**
+     * Block
+     */
+
+    --border-radius: var(--global__border-radius);
+
+    /**
+     * Distance
+     */
+
+    --distance-block: var(--global__distance-block);
+    --distance-text : var(--global__distance-text);
+
+    /**
+     * Typography
+     */
+
+    --font-size  : 1rem;
+    --line-height: var(--global__line-height);
+
+    /**
+     * Color
+     */
+
+    --color                     : var(--default__color);
+    --border-color              : var(--default__border-color);
+    --disabled-color            : var(--default__disabled-color);
+    --description-color         : var(--default__description-color);
+    --background-color          : var(--default__background-color);
+    --background-secondary-color: var(--default__background-secondary-color);
+    --background-tertiary-color : var(--default__background-tertiary-color);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts.table {
+    width          : 100%;
+    background     : rgb(var(--background-color));
+    border         : 1px solid rgb(var(--border-color));
+    border-radius  : var(--border-radius);
+    text-align     : left;
+    border-collapse: separate;
+    border-spacing : 0;
+    font-size      : var(--font-size);
+    color          : rgb(var(--color));
+    line-height    : var(--line-height);
+}
+
+.ts.table:first-child {
+    margin-block-start: 0;
+}
+
+.ts.table:last-child {
+    margin-block-end: 0;
+}
+
+.ts.table:not(:first-child) {
+    margin-block-start: var(--distance-block);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts.table tfoot th,
+.ts.table thead th {
+    cursor        : auto;
+    text-align    : inherit;
+    vertical-align: middle;
+}
+
+.ts.table tfoot th,
+.ts.table thead th,
+.ts.table td {
+    padding: 0.5em 1rem;
+}
+
+/**
+ * Head
+ */
+
+.ts.table thead th {
+    background   : rgb(var(--background-secondary-color));
+    font-weight  : 500;
+    border-bottom: 1px solid rgb(var(--border-color));
+    border-left  : none;
+}
+
+/**
+ * Column
+ */
+
+.ts.table td {
+}
+
+.ts.table tr:first-child td {
+    border-top: none;
+}
+
+.ts.table tr td {
+    border-top: 1px solid rgb(var(--border-color));
+}
+
+/**
+ * Foot
+ */
+
+.ts.table tfoot th {
+    border-top : 1px solid rgb(var(--border-color));
+    background : rgb(var(--background-secondary-color));
+    font-weight: normal;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Attached
+ */
+
+.ts.table.-top-attached {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius : 0;
+    margin-bottom             : 0;
+    margin-block-end          : 0;
+}
+
+.ts.table.-attached {
+    border-radius     : 0;
+    margin-top        : 0;
+    margin-bottom     : 0;
+    margin-block-start: 0;
+    margin-block-end  : 0;
+    border-top        : 0;
+}
+
+.ts.table.-bottom-attached {
+    border-top-right-radius: 0;
+    border-top-left-radius : 0;
+    margin-top             : 0;
+    margin-block-start     : 0;
+    border-top             : 0;
+}
+
+/**
+ * Celled
+ */
+
+.ts.table.-celled tr th,
+.ts.table.-celled tr td {
+    border-left: 1px solid rgb(var(--border-color));
+}
+
+.ts.table.-celled tr th:first-child,
+.ts.table.-celled tr td:first-child {
+    border-left: 0;
+}
+
+/**
+ * Basic
+ */
+
+.ts.table.-basic thead tr th,
+.ts.table.-basic tfoot tr th,
+.ts.table.-very-basic thead tr th,
+.ts.table.-very-basic tfoot tr th {
+    background: rgb(var(--background-color));
+}
+
+.ts.table.-very-basic {
+    border: 0;
+}
+
+.ts.table.-very-basic thead tr th,
+.ts.table.-basic thead tr th {
+    border-bottom-width: 2px;
+}
+
+/** Definition */
+.ts.table.-basic.-definition thead tr th,
+.ts.table.-very-basic.-definition thead tr th {
+    border-bottom-width: 1px;
+    background         : rgb(var(--background-color));
+}
+
+/*.ts.table.-basic.-definition tfoot th:first-child,
+.ts.table.-very-basic.-definition tfoot th:first-child {
+    box-shadow                         : -.1em 0 0 0 var(--block_background-color);
+}*/
+
+/**
+ * Aligns
+ */
+
+.ts.table.-left-aligned td,
+.ts.table.-left-aligned th,
+.ts.table tr th.-left-aligned,
+.ts.table tr.-left-aligned td,
+.ts.table tr td.-left-aligned {
+    text-align: left;
+}
+
+.ts.table.-center-aligned td,
+.ts.table.-center-aligned th,
+.ts.table tr th.-center-aligned,
+.ts.table tr.-center-aligned td,
+.ts.table tr td.-center-aligned {
+    text-align: center;
+}
+
+.ts.table.-right-aligned td,
+.ts.table.-right-aligned th,
+.ts.table tr th.-right-aligned,
+.ts.table tr.-right-aligned td,
+.ts.table tr td.-right-aligned {
+    text-align: right;
+}
+
+/**
+ * Definition
+ */
+
+.ts.table.-definition thead th:first-child {
+    background    : transparent;
+    font-weight   : normal;
+    color         : rgb(var(--disabled-color));
+    pointer-events: none;
+    user-select   : none;
+    box-shadow    : -0.1em -0.2em 0 0.1em rgb(var(--background-color));
+}
+
+.ts.table.-definition tr td:first-child:not(.-ignored),
+.ts.table.-definition tr td.-definition {
+    background : rgb(var(--background-secondary-color));
+    font-weight: 500;
+    width      : 1px;
+    white-space: nowrap;
+}
+
+/** .ts.table.-definition tfoot th:nth-child(2), */
+.ts.table.-definition thead th:nth-child(2),
+.ts.table.-definition td:nth-child(2) {
+    border-left                   : 1px solid rgb(var(--border-color));
+}
+
+/**
+ * Vertical Aligns
+ */
+
+.ts.table.-top-aligned td,
+.ts.table.-top-aligned th,
+.ts.table tr th.-top-aligned,
+.ts.table tr.-top-aligned td,
+.ts.table tr td.-top-aligned {
+    vertical-align: top;
+}
+
+.ts.table.-middle-aligned td,
+.ts.table.-middle-aligned th,
+.ts.table tr th.-middle-aligned,
+.ts.table tr.-middle-aligned td,
+.ts.table tr td.-middle-aligned {
+    vertical-align: middle;
+}
+
+.ts.table.-bottom-aligned td,
+.ts.table.-bottom-aligned th,
+.ts.table tr th.-bottom-aligned,
+.ts.table tr.-bottom-aligned td,
+.ts.table tr td.-bottom-aligned {
+    vertical-align: bottom;
+}
+
+/**
+ * Padded
+ */
+
+.ts.table.-padded td {
+    padding-top   : 0.7em;
+    padding-bottom: 0.7em;
+}
+
+.ts.table.-very-padded td {
+    padding-top   : 0.9em;
+    padding-bottom: 0.9em;
+}
+
+/**
+ * Compact
+ */
+
+.ts.table.-compact td {
+    padding-top   : 0.3em;
+    padding-bottom: 0.3em;
+}
+
+.ts.table.-very-compact td {
+    padding-top   : 0.1em;
+    padding-bottom: 0.1em;
+}
+
+/**
+ * Borderless
+ */
+
+.ts.table.-borderless,
+.ts.table.-borderless tr th,
+.ts.table.-borderless tr td {
+    border: 0;
+}
+
+/**
+ * Fixed
+ */
+
+.ts.table.-fixed {
+    table-layout: fixed;
+}
+
+.ts.table.-fixed th,
+.ts.table.-fixed td {
+    overflow     : hidden;
+    text-overflow: ellipsis;
+}
+
+/**
+ * Single Line
+ */
+
+.ts.table.-single-line td,
+.ts.table.-single-line th,
+.ts.table tr th.-single-line,
+.ts.table tr.-single-line td,
+.ts.table tr td.-single-line {
+    white-space: nowrap;
+}
+
+/**
+ * Striped
+ */
+
+.ts.table.-striped > tr:nth-child(2n),
+.ts.table.-striped tbody tr:nth-child(2n) {
+    background: rgb(var(--background-secondary-color));
+}
+
+/**
+ * Caption
+ */
+
+.ts.table caption {
+    margin-top   : var(--distance-text);
+    margin-bottom: var(--distance-text);
+    color        : rgb(var(--description-color));
+    text-align   : left;
+    caption-side : bottom;
+}
+
+/**
+ * Empty
+ */
+
+.ts.table td.-empty::after {
+    user-select   : none;
+    pointer-events: none;
+    content       : "－";
+    color         : rgb(var(--description-color));
+}
+
+/**
+ * Disabled
+ */
+
+.ts.table tr.-disabled td,
+.ts.table tr td.-disabled,
+.ts.table tr.-disabled:hover,
+.ts.table tr:hover td.-disabled {
+    pointer-events: none;
+    color         : rgb(var(--disabled-color));
+}
+
+/**
+ * Structured
+ */
+
+.ts.table.-structured {
+    border-collapse: collapse;
+}
+
+.ts.table.-structured thead th {
+    border-left : 1px solid rgb(var(--border-color));
+    border-right: 1px solid rgb(var(--border-color));
+}
+
+.ts.table.-structured.-basic th {
+    border-left : 1px solid rgb(var(--border-color));
+    border-right: 1px solid rgb(var(--border-color));
+}
+
+.ts.table.-structured.-celled tr th,
+.ts.table.-structured.-celled tr td {
+    border-left : 1px solid rgb(var(--border-color));
+    border-right: 1px solid rgb(var(--border-color));
+}
