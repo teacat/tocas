@@ -1,4 +1,7 @@
 
+sudo sass --watch ./src/tocas.sass:./src/tocas.css
+cd ./cli/docs-builder/ && go build && ./docs-builder serve
+
 <p align="center">
   <br>
   <img src="./assets/images/logo.png" width="200">
