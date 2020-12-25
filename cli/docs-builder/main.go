@@ -318,6 +318,7 @@ func asset(s string, real bool) string {
 func trim(s string, r []string) string {
 	for _, v := range r {
 		s = strings.Replace(s, v, "", -1)
+		s = strings.Replace(s, "\n", "", -1)
 	}
 	return s
 }
