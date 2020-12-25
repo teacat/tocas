@@ -76,7 +76,7 @@ func loadLanguage(lang string, path string) (d Data) {
 				}
 				wg.Add(1)
 				go func(k, i int, j ArticleDefinitionSection) {
-					a.Definitions[k].Sections[i].FormattedHTML = tmplCode(trim(j.HTML, j.Remove))
+					a.Definitions[k].Sections[i].FormattedHTML = tmplCode(trim(trim(j.HTML, j.Remove), a.Remove))
 					wg.Done()
 				}(k, i, j)
 			}
