@@ -1,0 +1,89 @@
+// ==========================================================================
+// Colors
+// ==========================================================================
+
+.ts.segment
+    @extend %segment-emphasis
+
+    --ts_segment-border_indicated_color: var(--ts-scheme_gray_800)
+    --ts_segment-border_outlined_color : var(--ts-scheme_gray_400)
+
+// ==========================================================================
+// Base
+// ==========================================================================
+
+%segment-emphasis
+    --ts_segment-color           : var(--ts-scheme_gray_800)
+    --ts_segment-border_color    : var(--ts-scheme_gray_200)
+    --ts_segment-background_color: var(--ts-scheme_gray_50)
+
+    --ts_segment-border_secondary_color    : var(--ts-scheme_gray_100)
+    --ts_segment-background_secondary_color: var(--ts-scheme_gray_100)
+
+    --ts_segment-border_tertiary_color    : var(--ts-scheme_gray_200)
+    --ts_segment-background_tertiary_color: var(--ts-scheme_gray_200)
+
+// ==========================================================================
+// Emphasized
+// ==========================================================================
+
+@mixin segment-emphasis($name)
+    @extend %#{$name}
+
+    --ts_segment-border_indicated_color: var(--ts-#{$name}_500)
+    --ts_segment-border_outlined_color : var(--ts-#{$name}_500)
+
+    +not(".-outlined", ".-indicated")
+        --ts_segment-color           : #{if(is-light($name), var(--ts-static_gray_75), var(--ts-static_gray_800))}
+        --ts_segment-border_color    : var(--ts-#{$name}_500)
+        --ts_segment-background_color: var(--ts-#{$name}_500)
+
+        --ts_segment-border_secondary_color    : var(--ts-#{$name}_600)
+        --ts_segment-background_secondary_color: var(--ts-#{$name}_600)
+
+        --ts_segment-border_tertiary_color    : var(--ts-#{$name}_700)
+        --ts_segment-background_tertiary_color: var(--ts-#{$name}_700)
+
+    &.-quiet.-quiet,
+    &.-outlined
+        --ts_segment-color: var(--ts-#{$name}_900)
+
+//-------------------//
+// Primary
+//-------------------//
+
+.ts.segment[data-emphasis="primary"]
+    +segment-emphasis(primary)
+
+//-------------------//
+// Warning
+//-------------------//
+
+.ts.segment[data-emphasis="warning"]
+    +segment-emphasis(warning)
+
+//-------------------//
+// Positive
+//-------------------//
+
+.ts.segment[data-emphasis="positive"]
+    +segment-emphasis(positive)
+
+//-------------------//
+// Negative
+//-------------------//
+
+.ts.segment[data-emphasis="negative"]
+    +segment-emphasis(negative)
+
+//-------------------//
+// Clear
+//-------------------//
+
+.ts.segment.-indicated
+    @extend %reset-foreground
+    @extend %segment-emphasis
+
+.ts.segment.-outlined.-outlined
+    @extend %emphasized-foreground
+    @extend %segment-emphasis

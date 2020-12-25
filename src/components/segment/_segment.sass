@@ -1,0 +1,275 @@
+@import ./segment.variables
+@import ./segment.colors
+
+// ==========================================================================
+// Base
+// ==========================================================================
+
+.ts.segment
+    @extend %component
+    @extend %component-box
+
+    display     : block
+    padding     : $global_box-padding
+    border-color: var(--ts_segment-border_color)
+    background  : var(--ts_segment-background_color)
+    color       : var(--ts_segment-color)
+
+    p:first-child
+        margin-top: 0
+
+    p:last-child
+        margin-bottom: 0
+
+    // ==========================================================================
+    // Structure
+    // ==========================================================================
+
+    // ==========================================================================
+    // Density
+    // ==========================================================================
+
+    // ==========================================================================
+    // Types
+    // ==========================================================================
+
+    //-------------------//
+    // Indicated
+    //-------------------//
+
+    &.-indicated
+        border-top: 2px solid var(--ts_segment-border_indicated_color)
+
+    //-------------------//
+    // Outlined
+    //-------------------//
+
+    &.-outlined
+        border-color: var(--ts_segment-border_outlined_color)
+
+    //-------------------//
+    // Basic
+    //-------------------//
+
+    &.-basic
+        border: 0
+
+    // ==========================================================================
+    // States
+    // ==========================================================================
+
+    //-------------------//
+    // Loading
+    //-------------------//
+
+    &.-loading
+
+    //-------------------//
+    // Disabled
+    //-------------------//
+
+    &.-disabled
+        pointer-events: none
+        user-select   : none
+        opacity       : $global-disabled_opacity
+
+    // ==========================================================================
+    // Variations
+    // ==========================================================================
+
+    //-------------------//
+    // Emphasis
+    //-------------------//
+
+    //-------------------//
+    // Accents
+    //-------------------//
+
+    &.-secondary
+        --ts_segment-background_color: var(--ts_segment-background_secondary_color)
+        --ts_segment-border_color    : var(--ts_segment-border_secondary_color)
+
+    &.-tertiary
+        --ts_segment-background_color: var(--ts_segment-background_tertiary_color)
+        --ts_segment-border_color    : var(--ts_segment-border_tertiary_color)
+
+    //-------------------//
+    // Quiet
+    //-------------------//
+
+    .-quiet
+
+    //-------------------//
+    // Density
+    //-------------------//
+
+    &[data-density='compact']
+        padding: .4rem 1rem
+
+    &[data-density='relaxed']
+        padding: 1.2rem 1rem
+
+    //-------------------//
+    // Floated
+    //-------------------//
+
+    &.-left-floated
+        float       : left
+        margin-right: $global-gap_medium
+    &.-right-floated
+        float      : right
+        margin-left: $global-gap_medium
+
+    //-------------------//
+    // Fitted
+    //-------------------//
+
+    &.-fitted
+        padding: 0
+
+    &.-horizontally-fitted
+        padding-left : 0
+        padding-right: 0
+
+    &.-vertically-fitted
+        padding-top   : 0
+        padding-bottom: 0
+
+    //-------------------//
+    // Padded
+    //-------------------//
+
+    &.-padded
+
+    //-------------------//
+    // Piled
+    //-------------------//
+
+    &.-piled
+        position: relative
+
+        &::after,
+        &::before
+            content      : ""
+            position     : absolute
+            display      : block
+            left         : 0
+            height       : 100%
+            width        : 100%
+            border       : 1px solid var(--ts_segment-border_color)
+            border-radius: $global-border_radius
+            visibility   : visible
+            background   : var(--ts_segment-background_color)
+
+        &::after
+            transform: rotate(1.1deg)
+            top      : 0
+            z-index  : $z_segment-piled_after
+
+        &::before
+            transform: rotate(-1.1deg)
+            top      : 0
+            z-index  : $z_segment-piled_before
+
+    //-------------------//
+    // Stacked
+    //-------------------//
+
+    &.-stacked,
+    &.-tall-stacked
+
+    &.-stacked::after
+        position     : absolute
+        content      : ""
+        bottom       : -3px
+        left         : 0
+        width        : 100%
+        height       : 6px
+        border-top   : 1px solid var(--ts_segment-border_color)
+        border-radius: $global-border_radius
+        visibility   : visible
+        background   : rgba(0, 0, 0, 0.03)
+        // TODO: Stacked 因為 Border 所以 Bottom Padding 要增加
+
+    &.-tall-stacked::after,
+    &.-tall-stacked::before
+        content      : ""
+        position     : absolute
+        bottom       : -3px
+        left         : 0
+        border-top   : 1px solid var(--ts_segment-border_color)
+        border-radius: $global-border_radius
+        background   : rgba(0, 0, 0, 0.03)
+        width        : 100%
+        height       : 6px
+        visibility   : visible
+
+    &.-tall-stacked::before
+        display: block
+        bottom : 0
+
+    //-------------------//
+    // Centered
+    //-------------------//
+
+    &.-centered
+        width : fit-content
+        margin: 0 auto
+
+    //-------------------//
+    // Fluid
+    //-------------------//
+
+    &.-fluid
+        border-radius: 0
+
+    //-------------------//
+    // Compact
+    //-------------------//
+
+    &.-compact
+        width: fit-content
+
+    //-------------------//
+    // Raised
+    //-------------------//
+
+    &.-raised
+        box-shadow: 0 2px 4px 0 rgba(color(gray, 900), 0.05), 0 2px 10px 0 rgba(color(gray, 900), 0.05)
+
+    //-------------------//
+    // Attached
+    //-------------------//
+
+    &.-top-attached
+        @extend %top-attached
+
+    &.-attached
+        @extend %attached
+
+    &.-bottom-attached
+        @extend %bottom-attached
+
+    //-------------------//
+    // Text Align
+    //-------------------//
+
+    &.-left-aligned
+        text-align: left
+
+    &.-center-aligned
+        text-align: center
+
+    &.-right-aligned
+        text-align: right
+
+    //-------------------//
+    // Clearing
+    //-------------------//
+
+    &.-clearing
+        display   : block
+        content   : "\00a0"
+        height    : 0
+        clear     : both
+        visibility: hidden
