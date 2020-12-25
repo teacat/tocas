@@ -6,6 +6,59 @@ html {
     font-family: "Noto Sans TC";
 }
 
+html {
+    --background-color: #FFF;
+    --slate-background-color: #f7f7f7;
+    --secondary-background-color: #fafafa;
+    --header-color: #333;
+    --sub-header-color: #555;
+    --secondary-color: #555;
+    --paragraph-color: #555555;
+    --border-color: #e9e9e9;
+    --description-color: #777;
+}
+
+html[data-scheme="lightest"] {
+    --background-color: #FFF;
+    --slate-background-color: #FFF;
+    --secondary-background-color: #FFF;
+    --header-color: #333;
+    --sub-header-color: #555;
+    --secondary-color: #555;
+    --paragraph-color: #555555;
+    --border-color: #f0f0f0;
+    --description-color: #777;
+}
+
+html[data-scheme="dark"] {
+    --background-color: #333;
+    --slate-background-color: #2f2f2f;
+    --secondary-background-color: #444;
+    --header-color: #FFF;
+    --sub-header-color: #CCC;
+    --secondary-color: #CCC;
+    --paragraph-color: #d1d1d1;
+    --border-color: #424242;
+    --description-color: rgb(145, 145, 145);
+}
+
+
+html[data-scheme="darkest"] {
+    --background-color: #000;
+    --slate-background-color: #111;
+    --secondary-background-color: #222;
+    --header-color: #FFF;
+    --sub-header-color: #CCC;
+    --secondary-color: #CCC;
+    --paragraph-color: #d1d1d1;
+    --border-color: #1c1c1c;
+    --description-color: rgb(145, 145, 145);
+}
+
+html {
+    background: var(--background-color);
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -39,9 +92,9 @@ body {
 
 #矚目看板:not(a) {
     display: block;
-    background: #f7f7f7;
+    background: var(--slate-background-color);
     padding: 2rem 2rem 4rem;
-    border-bottom: 1px solid #e9e9e9;
+    border-bottom: 1px solid var(--border-color);
 }
 
 /** 導航連結 */
@@ -64,7 +117,7 @@ body {
 
 .矚目看板-導航列-項目 {
     text-decoration: none;
-    color: #777;
+    color: var(--description-color);
 }
 
 .矚目看板-導航列-項目:not(:first-child) {
@@ -76,7 +129,7 @@ body {
 }
 
 .矚目看板-導航列-項目_商標 {
-    color: #333;
+    color: var(--header-color);
     font-weight: 500;
 }
 
@@ -85,13 +138,13 @@ body {
     display: block;
     font-size: 2rem;
     font-weight: 500;
-    color: #333;
+    color: var(--header-color);
     margin-top: 3rem;
 }
 
 #矚目看板-說明 {
     display: block;
-    color: #777;
+    color: var(--sub-header-color);
     font-size: 1.1rem;
     margin-top: 1rem;
 }
@@ -154,7 +207,7 @@ body {
 }
 
 .頁腳-主要內容-導航列-項目:first-child {
-    color: #777;
+    color: var(--description-color);
     padding-left: 0;
 }
 
@@ -164,7 +217,7 @@ body {
 
 #頁腳-主要內容-文字 {
     display: block;
-    color: #777;
+    color: var(--description-color);
     margin-top: 2rem;
     font-size: 0.95rem;
     line-height: 2;
@@ -180,7 +233,7 @@ body {
     display: block;
     margin-top: 3rem;
     font-size: 0.95rem;
-    color: #777;
+    color: var(--description-color);
     line-height: 2;
     max-width: 50rem;
 }
