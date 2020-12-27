@@ -33,7 +33,8 @@
     --ts_segment-border_indicated_color: var(--ts-#{$name}_500)
     --ts_segment-border_outlined_color : var(--ts-#{$name}_500)
 
-    +not(".-outlined", ".-indicated")
+    &.-inverted,
+    &.-quiet
         --ts_segment-color           : #{if(is-light($name), var(--ts-static_gray_75), var(--ts-static_gray_800))}
         --ts_segment-border_color    : var(--ts-#{$name}_500)
         --ts_segment-background_color: var(--ts-#{$name}_500)
@@ -44,7 +45,7 @@
         --ts_segment-border_tertiary_color    : var(--ts-#{$name}_700)
         --ts_segment-background_tertiary_color: var(--ts-#{$name}_700)
 
-    &.-quiet.-quiet,
+    &.-quiet,
     &.-outlined
         --ts_segment-color: var(--ts-#{$name}_900)
 
@@ -84,6 +85,6 @@
     @extend %reset-foreground
     @extend %segment-emphasis
 
-.ts.segment.-outlined.-outlined
+.ts.segment.-outlined
     @extend %emphasized-foreground
     @extend %segment-emphasis
