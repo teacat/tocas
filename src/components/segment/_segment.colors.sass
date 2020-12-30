@@ -3,16 +3,9 @@
 // ==========================================================================
 
 .ts.segment
-    @extend %segment-emphasis
-
     --ts_segment-border_indicated_color: var(--ts-scheme_gray_800)
     --ts_segment-border_outlined_color : var(--ts-scheme_gray_400)
 
-// ==========================================================================
-// Base
-// ==========================================================================
-
-%segment-emphasis
     --ts_segment-color           : var(--ts-scheme_gray_800)
     --ts_segment-border_color    : var(--ts-scheme_gray_200)
     --ts_segment-background_color: var(--ts-scheme_gray_50)
@@ -32,6 +25,9 @@
 
     --ts_segment-border_indicated_color: var(--ts-#{$name}_500)
     --ts_segment-border_outlined_color : var(--ts-#{$name}_500)
+
+    &.-inverted
+        @extend %#{$name}-foreground
 
     &.-inverted,
     &.-quiet
@@ -81,10 +77,5 @@
 // Clear
 //-------------------//
 
-.ts.segment.-indicated
-    @extend %reset-foreground
-    @extend %segment-emphasis
-
 .ts.segment.-outlined
     @extend %emphasized-foreground
-    @extend %segment-emphasis
