@@ -1,3 +1,6 @@
+:root
+    +var-scope(segment)
+
 @import ./segment.variables
 @import ./segment.colors
 
@@ -11,9 +14,13 @@
 
     display     : block
     padding     : $global_box-padding
-    border-color: var(--ts_segment-border_color)
-    background  : var(--ts_segment-background_color)
-    color       : var(--ts_segment-color)
+    border-color: get(border_color)
+    background  : get(background_color)
+    color       : get(color)
+
+    // ==========================================================================
+    // Structure
+    // ==========================================================================
 
     p:first-child
         margin-top: 0
@@ -22,18 +29,14 @@
         margin-bottom: 0
 
     // ==========================================================================
-    // Structure
-    // ==========================================================================
-
-    // ==========================================================================
     // Density
     // ==========================================================================
 
     &[data-density='compact']
-        padding: .4rem 1rem
+        padding: $global-box_padding_compact
 
     &[data-density='relaxed']
-        padding: 1.2rem 1rem
+        padding: $global-box_padding_relaxed
 
     // ==========================================================================
     // Types
@@ -44,14 +47,14 @@
     //-------------------//
 
     &.-indicated
-        border-top: 2px solid var(--ts_segment-border_indicated_color)
+        border-top: 2px solid get(border_indicated_color)
 
     //-------------------//
     // Outlined
     //-------------------//
 
     &.-outlined
-        border-color: var(--ts_segment-border_outlined_color)
+        border-color: get(border_outlined_color)
 
     //-------------------//
     // Basic
@@ -82,12 +85,12 @@
     //-------------------//
 
     &.-secondary
-        --ts_segment-background_color: var(--ts_segment-background_secondary_color)
-        --ts_segment-border_color    : var(--ts_segment-border_secondary_color)
+        +override(background_color, get(background_secondary_color))
+        +override(border_color, get(border_secondary_color))
 
     &.-tertiary
-        --ts_segment-background_color: var(--ts_segment-background_tertiary_color)
-        --ts_segment-border_color    : var(--ts_segment-border_tertiary_color)
+        +override(background_color, get(background_tertiary_color))
+        +override(border_color, get(border_tertiary_color))
 
     //-------------------//
     // Floated
@@ -116,10 +119,10 @@
             left         : 0
             height       : 100%
             width        : 100%
-            border       : 1px solid var(--ts_segment-border_color)
+            border       : 1px solid get(border_color)
             border-radius: $global-border_radius
             visibility   : visible
-            background   : var(--ts_segment-background_color)
+            background   : get(background_color)
 
         &::after
             transform: rotate(1.1deg)
@@ -145,7 +148,7 @@
         left         : 0
         width        : 100%
         height       : 6px
-        border-top   : 1px solid var(--ts_segment-border_color)
+        border-top   : 1px solid get(border_color)
         border-radius: $global-border_radius
         visibility   : visible
         background   : rgba(0, 0, 0, 0.03)
@@ -157,7 +160,7 @@
         position     : absolute
         bottom       : -3px
         left         : 0
-        border-top   : 1px solid var(--ts_segment-border_color)
+        border-top   : 1px solid get(border_color)
         border-radius: $global-border_radius
         background   : rgba(0, 0, 0, 0.03)
         width        : 100%

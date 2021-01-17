@@ -3,18 +3,18 @@
 // ==========================================================================
 
 .ts.segment
-    --ts_segment-border_indicated_color: var(--ts-scheme_gray_800)
-    --ts_segment-border_outlined_color : var(--ts-scheme_gray_400)
+    +define(border_indicated_color, var(--ts-scheme_gray_800))
+    +define(border_outlined_color , var(--ts-scheme_gray_400))
 
-    --ts_segment-color           : var(--ts-scheme_gray_800)
-    --ts_segment-border_color    : var(--ts-scheme_gray_200)
-    --ts_segment-background_color: var(--ts-scheme_gray_50)
+    +define(color            , var(--ts-scheme_gray_800))
+    +define(border_color     , var(--ts-scheme_gray_200))
+    +define(background_color , var(--ts-scheme_gray_50))
 
-    --ts_segment-border_secondary_color    : var(--ts-scheme_gray_100)
-    --ts_segment-background_secondary_color: var(--ts-scheme_gray_100)
+    +define(border_secondary_color     , var(--ts-scheme_gray_100))
+    +define(background_secondary_color , var(--ts-scheme_gray_100))
 
-    --ts_segment-border_tertiary_color    : var(--ts-scheme_gray_200)
-    --ts_segment-background_tertiary_color: var(--ts-scheme_gray_200)
+    +define(border_tertiary_color     , var(--ts-scheme_gray_200))
+    +define(background_tertiary_color , var(--ts-scheme_gray_200))
 
 // ==========================================================================
 // Emphasized
@@ -23,27 +23,27 @@
 @mixin segment-emphasis($name)
     @extend %#{$name}
 
-    --ts_segment-border_indicated_color: var(--ts-#{$name}_500)
-    --ts_segment-border_outlined_color : var(--ts-#{$name}_500)
+    +override(border_indicated_color, var(--ts-#{$name}_500))
+    +override(border_outlined_color , var(--ts-#{$name}_500))
 
     &.-inverted
         @extend %#{$name}-foreground
 
     &.-inverted,
     &.-quiet
-        --ts_segment-color           : #{if(is-light($name), var(--ts-static_gray_75), var(--ts-static_gray_800))}
-        --ts_segment-border_color    : var(--ts-#{$name}_500)
-        --ts_segment-background_color: var(--ts-#{$name}_500)
+        +override(color            , #{if(is-light($name), var(--ts-static_gray_75), var(--ts-static_gray_800))})
+        +override(border_color     , var(--ts-#{$name}_500))
+        +override(background_color , var(--ts-#{$name}_500))
 
-        --ts_segment-border_secondary_color    : var(--ts-#{$name}_600)
-        --ts_segment-background_secondary_color: var(--ts-#{$name}_600)
+        +override(border_secondary_color     , var(--ts-#{$name}_600))
+        +override(background_secondary_color , var(--ts-#{$name}_600))
 
-        --ts_segment-border_tertiary_color    : var(--ts-#{$name}_700)
-        --ts_segment-background_tertiary_color: var(--ts-#{$name}_700)
+        +override(border_tertiary_color     , var(--ts-#{$name}_700))
+        +override(background_tertiary_color , var(--ts-#{$name}_700))
 
     &.-quiet,
     &.-outlined
-        --ts_segment-color: var(--ts-#{$name}_900)
+        +override(color, var(--ts-#{$name}_900))
 
 //-------------------//
 // Primary
