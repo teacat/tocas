@@ -2,6 +2,47 @@
 // Schemes
 // ==========================================================================
 
+/*@function get-scheme($base) {
+    $weights_lightest  : 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900;
+    $modifiers_lightest: 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%;
+
+    $weights_light     : 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900;
+    $modifiers_light   : 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%;
+
+    $weights_dark      : 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900;
+    $modifiers_dark    : 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%;
+
+    $weights_darkest   : 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900;
+    $modifiers_darkest : 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%;
+
+    @return (
+        lightest: loop-weights($weights_lightest, $modifiers_lightest),
+        light   : loop-weights($weights_light   , $modifiers_light),
+        dark    : loop-weights($weights_dark    , $modifiers_dark),
+        darkest : loop-weights($weights_darkest , $modifiers_darkest),
+    )
+}
+
+@function loop-weights($weights, $modifiers) {
+    $result: ();
+
+    @for $i from 1 through length($weights) {
+        $weight  : nth($weights, $i);
+        $modifier: nth($modifiers, $i);
+        $result  : map-merge($result, (#{$weight}: tint($base, $modifier)) );
+    }
+
+    @return $result;
+}
+
+$gray    : get-scheme(#b3b3b3);
+$primary : get-scheme(#209cee);
+$warning : get-scheme(#ffdd57);
+$negative: get-scheme(#ff3860);
+$positive: get-scheme(#48c774);*/
+
+
+
 $gray: (
     50 : rgb(255, 255, 255),
     75 : rgb(250, 250, 250),
@@ -252,6 +293,38 @@ $colors: (
     @extend %light-foreground;
 }
 
+$var-scope: none;
+
+@mixin var-scope($component) {
+    $var-scope: $component !global;
+}
+
+@mixin define($var, $value) {
+    --ts_#{$var-scope}_default-#{$var}: #{$value};
+    --ts_#{$var-scope}-#{$var}: var(--ts_#{$var-scope}_alias-#{$var}, var(--ts_#{$var-scope}_default-#{$var}));
+}
+
+
+@mixin override($var, $value) {
+    --ts_#{$var-scope}_alias-#{$var}: #{$value};
+}
+
+@mixin default($var) {
+    --ts_#{$var-scope}_alias-#{$var}: --ts_#{$var-scope}_default-#{$var};
+}
+
+@function get-default($var) {
+    @return var(--ts_#{$var-scope}_default-#{$var});
+}
+
+@function get($var) {
+    @return #{var(--ts_#{$var-scope}-#{$var})};
+}
+
+@function get($var) {
+    @return #{var(--ts_#{$var-scope}_alias-#{$var}, var(--ts_#{$var-scope}-#{$var}))};
+}
+
 // ==========================================================================
 // CSS Variable
 // ==========================================================================
@@ -366,6 +439,30 @@ $colors: (
     --ts-scheme_gray_700: #{color(dark, 700)};
     --ts-scheme_gray_800: #{color(dark, 800)};
     --ts-scheme_gray_900: #{color(dark, 900)};
+
+    --ts-gray_50 : #{color(dark, 50)};
+    --ts-gray_75 : #{color(dark, 75)};
+    --ts-gray_100: #{color(dark, 100)};
+    --ts-gray_200: #{color(dark, 200)};
+    --ts-gray_300: #{color(dark, 300)};
+    --ts-gray_400: #{color(dark, 400)};
+    --ts-gray_500: #{color(dark, 500)};
+    --ts-gray_600: #{color(dark, 600)};
+    --ts-gray_700: #{color(dark, 700)};
+    --ts-gray_800: #{color(dark, 800)};
+    --ts-gray_900: #{color(dark, 900)};
+
+    --ts-positive_50 : #{color(positive, 900)};
+    --ts-positive_75 : #{color(positive, 800)};
+    --ts-positive_100: #{color(positive, 700)};
+    --ts-positive_200: #{color(positive, 600)};
+    --ts-positive_300: #{color(positive, 500)};
+    --ts-positive_400: #{color(positive, 400)};
+    --ts-positive_500: #{color(positive, 300)};
+    --ts-positive_600: #{color(positive, 200)};
+    --ts-positive_700: #{color(positive, 100)};
+    --ts-positive_800: #{color(positive, 75)};
+    --ts-positive_900: #{color(positive, 50)};
 }
 
 [data-scheme="darkest"] {
@@ -380,4 +477,16 @@ $colors: (
     --ts-scheme_gray_700: #{color(darkest, 700)};
     --ts-scheme_gray_800: #{color(darkest, 800)};
     --ts-scheme_gray_900: #{color(darkest, 900)};
+
+    --ts-gray_50 : #{color(darkest, 50)};
+    --ts-gray_75 : #{color(darkest, 75)};
+    --ts-gray_100: #{color(darkest, 100)};
+    --ts-gray_200: #{color(darkest, 200)};
+    --ts-gray_300: #{color(darkest, 300)};
+    --ts-gray_400: #{color(darkest, 400)};
+    --ts-gray_500: #{color(darkest, 500)};
+    --ts-gray_600: #{color(darkest, 600)};
+    --ts-gray_700: #{color(darkest, 700)};
+    --ts-gray_800: #{color(darkest, 800)};
+    --ts-gray_900: #{color(darkest, 900)};
 }
