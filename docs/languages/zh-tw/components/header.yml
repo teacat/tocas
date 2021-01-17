@@ -6,6 +6,8 @@
 Title      : 標題
 Description: 以不同大小表示章節段落或綱要。
 Type       : Article
+Remove     :
+  - <div class="ts space"></div>
 
 #=======================================================
 # 基本樣式
@@ -15,7 +17,7 @@ Type       : Article
 Definitions:
 
   - Title      : 種類
-    Description: 標題具有多個不同的種類。
+    Description:
     Sections   :
 
       - Title      : 標題
@@ -42,43 +44,8 @@ Definitions:
               PHP 是這個世界上最好的程式語言！
           </div>
 
-  - Title      : 語意
-    Description: 標題能夠以不同的語意呈現。
-    Sections   :
-
-      - Title      : 主要的
-        Description: 一個帶有主要視覺訊息的語意。
-        Since      : 4.0.0
-        HTML       : |
-          <div class="ts header" data-emphasis="[[primary]]">
-              狀態正常
-              <div class="description">最後一次的檢查時間是在 2020/11/23 上午 12:47。</div>
-          </div>
-
-      - Title      : 警告的
-        Description: 含有警告或提醒意味的標題。
-        Since      : 4.0.0
-        HTML       : |
-          <div class="ts header" data-emphasis="[[warning]]">
-              尚未檢查更新
-              <div class="description">這可能令你暴露於危險之下，請盡速執行系統軟體更新檢查。</div>
-          </div>
-
-      - Title      : 正面與負面的
-        Description: 具有肯定、否定或是成功與失敗涵義的標題。
-        Since      : 4.0.0
-        HTML       : |
-          <div class="ts header" data-emphasis="[[positive]]">
-              註冊成功
-              <div class="description">你現在已經正式地成為我們的一份子了，歡迎！</div>
-          </div>
-          <div class="ts header" data-emphasis="[[negative]]">
-              發生錯誤
-              <div class="description">送出資料表單時發生不可預期的錯誤，請稍後重試。</div>
-          </div>
-
   - Title      : 內容
-    Description: 標題由多個不同內容組成。
+    Description:
     Sections   :
 
       - Title      : 註釋
@@ -100,12 +67,14 @@ Definitions:
                   99.9% 上線時間保證
               </div>
           </div>
+          <div class="ts space"></div>
           <div class="ts header">
               <div class="content">
                   超多合作夥伴
               </div>
               ((<i class="ts {{icon}} -left-spaced" data-icon="users"></i>))
           </div>
+          <div class="ts space"></div>
           <div class="ts header">
               ((<i class="ts {{icon}} -right-spaced" data-icon="lock"></i>))
               <div class="content">
@@ -154,8 +123,29 @@ Definitions:
           </div>
 
   - Title      : 外觀
-    Description: 你可以點綴標題的樣式。
+    Description:
     Sections   :
+
+      - Title      : 語意
+        Description: 標題能夠以不同的語意呈現。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts header" data-emphasis="[[primary]]">
+              狀態正常
+              <div class="description">最後一次的檢查時間是在 2020/11/23 上午 12:47。</div>
+          </div>
+          <div class="ts header" data-emphasis="[[warning]]">
+              尚未檢查更新
+              <div class="description">這可能令你暴露於危險之下，請盡速執行系統軟體更新檢查。</div>
+          </div>
+          <div class="ts header" data-emphasis="[[positive]]">
+              註冊成功
+              <div class="description">你現在已經正式地成為我們的一份子了，歡迎！</div>
+          </div>
+          <div class="ts header" data-emphasis="[[negative]]">
+              發生錯誤
+              <div class="description">送出資料表單時發生不可預期的錯誤，請稍後重試。</div>
+          </div>
 
       - Title      : 尺寸
         Description: 標題有不同的尺寸來表明不同的事態嚴重性。
@@ -229,6 +219,7 @@ Definitions:
                   <div class="description">旁邊的圖示會貼齊頂部。</div>
               </div>
           </div>
+          <div class="ts space"></div>
           <div class="ts header [[-middle-aligned]]">
               <i class="ts {{icon}} -right-spaced" data-icon="comment"></i>
               <div class="content">
@@ -236,6 +227,7 @@ Definitions:
                   <div class="description">你看到的圖示會盡可能地對齊垂直中間。</div>
               </div>
           </div>
+          <div class="ts space"></div>
           <div class="ts header [[-bottom-aligned]]">
               <i class="ts {{icon}} -right-spaced" data-icon="clock"></i>
               <div class="content">
@@ -276,7 +268,10 @@ Definitions:
         Since      : 4.0.0
         HTML       : |
           <div class="ts header [[-block]]">區塊標題</div>
-          <div class="ts header [[-block]]" data-emphasis="primary">語意區塊</div>
+          <div class="ts space"></div>
+          <div class="ts header [[-block]]" data-emphasis="primary">主要語意</div>
+          <div class="ts space"></div>
+          <div class="ts header [[-block]] -inverted" data-emphasis="warning">警告反色</div>
 
       - Title      : 基本的
         Description: 標題為區塊且套用語意時，呈現一個沒有那麼沈重的色調。
