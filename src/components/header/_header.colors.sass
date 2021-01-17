@@ -1,0 +1,65 @@
+// ==========================================================================
+// Colors
+// ==========================================================================
+
+// $header-block_border_color: var(--ts-gray_200)
+
+.ts.header
+    +define(color            , var(--ts-gray_900))
+    +define(description_color, var(--ts-gray_700))
+    +define(background_color , transparent)
+    +define(border_color     , transparent)
+    +define(divider_color    , var(--ts-gray_200))
+
+    &.-block
+        +override(background_color, var(--ts-gray_100))
+
+    &.-block,
+    &.-basic,
+    &.-top-attached,
+    &.-attached,
+    &.-bottom-attached
+        +override(border_color, var(--ts-gray_200))
+
+// ==========================================================================
+// Emphasized
+// ==========================================================================
+
+@mixin header-emphasis($name)
+    +override(color, var(--ts-#{$name}_700))
+
+    &.-inverted
+        +override(background_color, var(--ts-#{$name}_500))
+        +override(border_color    , var(--ts-#{$name}_500))
+        +override(color           , #{if(is-light($name), var(--ts-static_gray_50), var(--ts-static_gray_900))})
+
+    &.-basic
+        +override(color, var(--ts-#{$name}_700))
+
+//-------------------//
+// Primary
+//-------------------//
+
+.ts.header[data-emphasis="primary"]
+    +header-emphasis(primary)
+
+//-------------------//
+// Warning
+//-------------------//
+
+.ts.header[data-emphasis="warning"]
+    +header-emphasis(warning)
+
+//-------------------//
+// Positive
+//-------------------//
+
+.ts.header[data-emphasis="positive"]
+    +header-emphasis(positive)
+
+//-------------------//
+// Negative
+//-------------------//
+
+.ts.header[data-emphasis="negative"]
+    +header-emphasis(negative)

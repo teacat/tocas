@@ -1,0 +1,265 @@
+:root
+    +var-scope(header)
+
+@import ./header.variables
+@import ./header.colors
+
+// ==========================================================================
+// Base
+// ==========================================================================
+
+.ts.header
+    @extend %component
+
+    display           : flex
+    flex-wrap         : wrap
+    align-items       : center
+    font-size         : get(font_size)
+    color             : get(color)
+    background        : get(background_color)
+    border            : 1px solid get(border_color)
+    font-weight       : 500
+    margin-block-start: 0
+    margin-block-end  : 0
+
+    // ==========================================================================
+    // Structure
+    // ==========================================================================
+
+    //-------------------//
+    // Icon
+    //-------------------//
+
+    .ts.icon
+        opacity    : 1
+        font-size  : 1.5em
+        line-height: 1
+
+    //-------------------//
+    // Content
+    //-------------------//
+
+    .content
+        margin-top: -0.25rem
+
+    //-------------------//
+    // Description
+    //-------------------//
+
+    .description
+        width      : 100%
+        font-size  : get(description_font_size)
+        font-weight: normal
+        color      : get(description_color)
+
+    //-------------------//
+    // Image
+    //-------------------//
+
+    img:not(.ts)
+        width       : 1.5em
+        height      : 1.5em
+        margin-right: 0.7rem
+
+    // ==========================================================================
+    // Density
+    // ==========================================================================
+
+    &[data-density='compact']
+        padding: $global-box_padding_compact
+
+    &[data-density='relaxed']
+        padding: $global-box_padding_relaxed
+
+    // ==========================================================================
+    // Type
+    // ==========================================================================
+
+    //-------------------//
+    // Icon
+    //-------------------//
+
+    .ts.icon
+        margin-right: 1rem
+
+    &.-icon
+        display   : block
+        text-align: center
+
+    &.-icon > .ts.icon
+        display        : flex
+        text-align     : center
+        align-items    : center
+        justify-content: center
+        margin         : 0 auto .7rem
+        font-size      : 3em
+
+    &.-icon > .ts.icon.-circular
+        font-size: 2.25em
+
+    //-------------------//
+    // Descriptor
+    //-------------------//
+
+    &.-descriptor
+        +override(font_size, get(description_font_size))
+
+    // ==========================================================================
+    // States
+    // ==========================================================================
+
+    //-------------------//
+    // Disabled
+    //-------------------//
+
+    &.-disabled
+        pointer-events: none
+        user-select   : none
+        opacity       : $global-disabled_opacity
+
+    // ==========================================================================
+    // Variations
+    // ==========================================================================
+
+    //-------------------//
+    // Size
+    //-------------------//
+
+     &.-tiny
+        +override(font_size            , 1rem)
+        +override(description_font_size, 0.9375rem)
+
+    &.-small
+        +override(font_size            , 1.125rem)
+        +override(description_font_size, 1rem)
+
+    &.-large
+        +override(font_size            , 1.625rem)
+        +override(description_font_size, 1rem)
+
+    &.-big
+        +override(font_size            , 1.875rem)
+        +override(description_font_size, 1.125rem)
+
+    &.-huge
+        +override(font_size            , 2.125rem)
+        +override(description_font_size, 1.125rem)
+
+    &.-massive
+        +override(font_size            , 2.375rem)
+        +override(description_font_size, 1.125rem)
+
+    //-------------------//
+    // Inline
+    //-------------------//
+
+    &.-inline .description
+        width      : auto
+        flex       : 1
+        margin-left: .7rem
+
+    //-------------------//
+    // Text Aligns
+    //-------------------//
+
+    &.-left-aligned
+        text-align     : left
+        justify-content: flex-start
+
+    &.-center-aligned
+        text-align     : center
+        justify-content: center
+
+    &.-right-aligned
+        text-align     : right
+        justify-content: flex-end
+
+    /** override inline */
+    &.-left-aligned .description,
+    &.-center-aligned .description,
+    &.-right-aligned .description
+        flex: initial
+
+    //-------------------//
+    // Vertical Aligns
+    //-------------------//
+
+    &.-top-aligned
+        align-items: flex-start
+
+    &.-middle-aligned
+        align-items: center
+
+    &.-bottom-aligned
+        align-items: flex-end
+
+    //-------------------//
+    // Single Line
+    //-------------------//
+
+    &.-single-line,
+    &.-single-line .description
+        overflow     : hidden
+        white-space  : nowrap
+        text-overflow: ellipsis
+        word-break   : break-all
+        display      : block
+
+    //-------------------//
+    // Block
+    //-------------------//
+
+    &.-block
+
+    //-------------------//
+    // Basic
+    //-------------------//
+
+    &.-basic
+        +override(background_color, get-default(background_color))
+
+    //-------------------//
+    // Dividing
+    //-------------------//
+
+    &.-dividing
+        border-bottom: get(dividing_line_width) solid get(divider_color)
+
+    &.-thick.-dividing
+        +override(dividing_line_width, get(dividing_line_width_thick))
+
+    //-------------------//
+    // Floated
+    //-------------------//
+
+    &.-right-floated
+        float: right
+
+    &.-left-floated
+        float: left
+
+    //-------------------//
+    // Attached
+    //-------------------//
+
+    &.-block,
+    &.-top-attached,
+    &.-attached,
+    &.-bottom-attached
+        @extend %component-box
+
+        padding: $global_box-padding
+
+    &.-top-attached,
+    &.-attached,
+    &.-bottom-attached
+        display: block
+
+    &.-top-attached
+        @extend %top-attached
+
+    &.-attached
+        @extend %attached
+
+    &.-bottom-attached
+        @extend %bottom-attached
