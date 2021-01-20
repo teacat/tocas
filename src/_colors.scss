@@ -1,209 +1,243 @@
 // ==========================================================================
-// Schemes
+// Emphasises
 // ==========================================================================
 
-/*@function get-scheme($base) {
-    $weights_lightest  : 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900;
-    $modifiers_lightest: 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%;
+//
+$colors: ();
+//
+$schemes: lightest, light, dark, darkest;
+//                     Gray                                Light                              Dark
+//          lightest light dark darkest
+$weights: (
+    50 : ((  100%,   100%, -79.5%, -95.5%), (  100%,    100%,    87%,    72%), (  100%,    100%,    93%,    87%)),
+    75 : ((  100%,    93%,   -74%, -85.5%), (   93%,     93%,    72%,    60%), (   93%,     93%,    87%,    72%)),
+    100: ((  100%,    87%,   -72%,   -83%), (   87%,     87%,    60%,    30%), (   87%,     87%,    72%,    60%)),
+    200: ((   86%,    72%, -65.5%, -75.5%), (   72%,     72%,    30%,     0%), (   72%,     72%,    60%,     30%)),
+    300: ((   72%,    60%, -58.5%,   -68%), (   60%,     60%,     0%,    -6%), (   60%,     60%,     30%,    0%)),
+    400: ((   42%,    30%,   -50%,   -59%), (   30%,     30%,    -6%, -20.5%), (   30%,     30%,    0%, -6%)),
+    500: ((   12%,     0%, -38.5%, -48.5%), (   15%,      0%, -20.5%, -38.5%), (   15%,      0%, -6%, -20.5%)),
+    600: ((  -17%, -20.5%, -19.5%,   -31%), (    0%,     -6%, -38.5%,   -58%), (    0%,     -6%, -20.5%,   -38.5%)),
+    700: ((  -35%,   -38%,     8%,  -9.5%), (   -6%,  -20.5%,   -58%, -65.5%), (   -6%,  -20.5%,   -38.5%, -58%)),
+    800: ((-55.5%,   -58%,    63%,    27%), (-20.5%,  -38.5%, -65.5%,   -72%), (-20.5%,  -38.5%, -58%,   -65.5%)),
+    900: ((  -72%, -75.5%,   100%,    79%), (-38.5%,    -58%,   -72%,   -74%), (-38.5%,    -58%,   -65.5%,   -72%)),
+);
 
-    $weights_light     : 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900;
-    $modifiers_light   : 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%;
+//          Light   Dark
+$foreground_modifiers: (
+    "50" : (80%, -30%),
+    "75" : (80%, -30%),
+    "100": (80%, -30%),
+    "200": (80%, -30%),
+    "300": (80%, -30%),
+    "400": (80%, -30%),
+    "500": (80%, -30%),
+    "600": (80%, -30%),
+    "700": (80%, -30%),
+    "800": (80%, -30%),
+    "900": (80%, -30%),
+);
 
-    $weights_dark      : 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900;
-    $modifiers_dark    : 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%;
+// tint
+@function tint($color, $percentage) {
+    @return mix(white, $color, $percentage);
+};
 
-    $weights_darkest   : 50, 75, 100, 200, 300, 400, 500, 600, 700, 800, 900;
-    $modifiers_darkest : 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%, 10%;
+// shade
+@function shade($color, $percentage) {
+    @return mix(black, $color, $percentage);
+};
 
-    @return (
-        lightest: loop-weights($weights_lightest, $modifiers_lightest),
-        light   : loop-weights($weights_light   , $modifiers_light),
-        dark    : loop-weights($weights_dark    , $modifiers_dark),
-        darkest : loop-weights($weights_darkest , $modifiers_darkest),
-    )
-}
+// get-scheme
+@function get-scheme($name) {
+    $is-light     : map-get(map-get($emphasises, $name), "is-light");
+    $base         : map-get(map-get($emphasises, $name), "base");
+    $weights_index: if($name == "gray", 1, if($is-light, 2, 3));
+    $result       : ();
+    $schemes      : lightest, light, dark, darkest;
 
-@function loop-weights($weights, $modifiers) {
-    $result: ();
+    @each $scheme in $schemes {
+        $index         : index($schemes, $scheme);
+        $scheme_weights: ();
 
-    @for $i from 1 through length($weights) {
-        $weight  : nth($weights, $i);
-        $modifier: nth($modifiers, $i);
-        $result  : map-merge($result, (#{$weight}: tint($base, $modifier)) );
+        @each $weight, $map in $weights {
+            $modifier      :nth(nth($map, $weights_index), $index);
+            $scheme_weights: map-merge($scheme_weights, (#{$weight}: if($modifier > 0, tint($base, $modifier), shade($base, abs($modifier)))));
+        }
+
+        $result: map-merge($result, (#{$scheme}: $scheme_weights));
     }
 
     @return $result;
-}
+};
 
-$gray    : get-scheme(#b3b3b3);
-$primary : get-scheme(#209cee);
-$warning : get-scheme(#ffdd57);
-$negative: get-scheme(#ff3860);
-$positive: get-scheme(#48c774);*/
-
-
-
-$gray: (
-    50 : rgb(255, 255, 255),
-    75 : rgb(250, 250, 250),
-    100: rgb(245, 245, 245),
-    200: rgb(234, 234, 234),
-    300: rgb(225, 225, 225),
-    400: rgb(202, 202, 202),
-    500: rgb(179, 179, 179),
-    600: rgb(142, 142, 142),
-    700: rgb(110, 110, 110),
-    800: rgb(75, 75, 75),
-    900: rgb(44, 44, 44)
+$emphasises: (
+    "gray" : (
+        is-light: false,
+        base   : #b3b3b3
+    ),
+    "primary" : (
+        is-light: true,
+        base   : #209cee
+    ),
+    "warning" : (
+        is-light: false,
+        base   : #ffdd57
+    ),
+    "negative" : (
+        is-light: true,
+        base   : #ff3860
+    ),
+    "positive" : (
+        is-light: true,
+        base   : #48c774
+    ),
 );
 
-$dark: (
-    50 : rgb(37, 37, 37),
-    75 : rgb(47, 47, 47),
-    100: rgb(50, 50, 50),
-    200: rgb(62, 62, 62),
-    300: rgb(74, 74, 74),
-    400: rgb(90, 90, 90),
-    500: rgb(110, 110, 110),
-    600: rgb(144, 144, 144),
-    700: rgb(185, 185, 185),
-    800: rgb(227, 227, 227),
-    900: rgb(255, 255, 255)
-);
-
-$darkest: (
-    50 : rgb(8, 8, 8),
-    75 : rgb(26, 26, 26),
-    100: rgb(30, 30, 30),
-    200: rgb(44, 44, 44),
-    300: rgb(57, 57, 57),
-    400: rgb(73, 73, 73),
-    500: rgb(92, 92, 92),
-    600: rgb(124, 124, 124),
-    700: rgb(162, 162, 162),
-    800: rgb(200, 200, 200),
-    900: rgb(239, 239, 239)
-);
-
-$primary: (
-    50 : rgb(255, 255, 255),
-    75 : rgb(239, 248, 254),
-    100: rgb(226, 242, 253),
-    200: rgb(193, 227, 250),
-    300: rgb(166, 215, 248),
-    400: rgb(99, 186, 243),
-    500: rgb(32, 156, 238),
-    600: rgb(29, 140, 214),
-    700: rgb(25, 124, 189),
-    800: rgb(20, 96, 146),
-    900: rgb(13, 66, 100)
-);
-
-$warning: (
-    50 : rgb(255, 255, 255),
-    75 : rgb(255, 253, 243),
-    100: rgb(255, 251, 233),
-    200: rgb(255, 245, 208),
-    300: rgb(255, 241, 188),
-    400: rgb(255, 231, 137),
-    500: rgb(255, 221, 87),
-    600: rgb(240, 208, 82),
-    700: rgb(203, 176, 69),
-    800: rgb(157, 136, 54),
-    900: rgb(107, 93, 37)
-);
-
-$negative: (
-    50 : rgb(255, 255, 255),
-    75 : rgb(255, 241, 244),
-    100: rgb(255, 229, 234),
-    200: rgb(255, 199, 210),
-    300: rgb(255, 175, 191),
-    400: rgb(255, 116, 144),
-    500: rgb(255, 56, 96),
-    600: rgb(230, 50, 86),
-    700: rgb(203, 45, 76),
-    800: rgb(157, 34, 59),
-    900: rgb(107, 24, 40)
-);
-
-$positive: (
-    50 : rgb(255, 255, 255),
-    75 : rgb(242, 251, 245),
-    100: rgb(231, 248, 237),
-    200: rgb(204, 239, 216),
-    300: rgb(182, 233, 199),
-    400: rgb(127, 216, 158),
-    500: rgb(72, 199, 116),
-    600: rgb(65, 179, 104),
-    700: rgb(57, 158, 92),
-    800: rgb(44, 122, 71),
-    900: rgb(30, 84, 49)
-);
+@each $emphasis, $values in $emphasises {
+    $colors: map-merge($colors, (#{$emphasis}: get-scheme($emphasis)));
+};
 
 
-$colors: (
-    gray    : $gray,
-    primary : $primary,
-    warning : $warning,
-    negative: $negative,
-    positive: $positive,
-    dark    : $dark,
-    darkest : $darkest
-);
+
+// ==========================================================================
+// Getters
+// ==========================================================================
+
+// get-color-by-scheme
+@function get-color-by-scheme($name, $scheme, $weight) {
+    @return #{var(--ts-#{$scheme}_#{$name}_#{$weight})};
+};
+
+// get-color
+@function get-color($name, $weight) {
+    @return #{var(--ts-#{$name}_#{$weight})};
+};
+
+// get-foreground-color
+@function get-foreground-color($name, $weight) {
+    @return #{var(--ts-foreground_#{$name}_#{$weight})};
+};
+
+// get-static-color
+@function get-static-color($name, $weight) {
+    @return #{var(--ts-static_#{$name}_#{$weight})};
+};
 
 // ==========================================================================
 // Function
 // ==========================================================================
 
-@mixin not($classes...) {
-    $selector: "";
+// is-light
+@function is-light($name) {
+    @return map-get(map-get($emphasises, $name), "is-light");
+};
 
-    @each $class in $classes {
-        $selector: "#{$selector}:not(#{$class})";
-    }
-
-    &#{$selector} {
-        @content;
-    }
-}
-
-@function color($color, $weight) {
-    @return map-get(map-get($colors, $color), $weight);
-}
-
-@function is-light($color) {
-    @if $color == "primary" or $color == "negative" or $color == "positive" {
-        @return true;
-    }
-    @return false;
-}
-
-%reset-foreground {
-    @each $weight, $value in $gray {
-        --ts-gray_#{$weight}: initial;
-    }
-}
-
+// emphasized
 @mixin emphasized($name) {
-    --ts-emphazied_50 : #{color($name, 50)};
-    --ts-emphazied_75 : #{color($name, 75)};
-    --ts-emphazied_100: #{color($name, 100)};
-    --ts-emphazied_200: #{color($name, 200)};
-    --ts-emphazied_300: #{color($name, 300)};
-    --ts-emphazied_400: #{color($name, 400)};
-    --ts-emphazied_500: #{color($name, 500)};
-    --ts-emphazied_600: #{color($name, 600)};
-    --ts-emphazied_700: #{color($name, 700)};
-    --ts-emphazied_800: #{color($name, 800)};
-    --ts-emphazied_900: #{color($name, 900)};
+    @extend %#{$name};
+};
 
-    &.-quiet {
-        @include quiet($name);
-    }
-}
+// emphasized-foreground
+@mixin emphasized-foreground($name) {
+    @include each-weight using ($weight) {
+        --ts-gray_#{$weight}: #{get-foreground-color($name, $weight)};
+    };
+};
 
-%emphasized-foreground {
+:root {
+    @each $theme, $value in $colors {
+        @each $scheme, $weights in $value {
+            @each $weight, $color in $weights {
+                --ts-#{$scheme}_#{$theme}_#{$weight}: #{$color};
+
+                @if ($theme != "gray") {
+                    @at-root {
+                        [data-scheme="#{$scheme}"] {
+                            $modifier  : nth(map-get($foreground_modifiers, $weight), if(is-light($theme), 1, 2));
+                            $foreground: "";
+
+                            @if (is-light($theme)) {
+                                $foreground: map-get(map-get(map-get($colors, "gray"), "dark"), $weight);
+                            } @else {
+                                $foreground: map-get(map-get(map-get($colors, "gray"), "light"), $weight);
+                            }
+
+                            $foreground: if($modifier > 0, tint($foreground, $modifier), shade($foreground, abs($modifier)));
+
+                            --ts-foreground_#{$theme}_#{$weight}: #{$foreground};
+                        };
+                    };
+                };
+            };
+        };
+    };
+};
+
+// ==========================================================================
+// Helpers
+// ==========================================================================
+
+$var-scope: none;
+
+// var-scope
+@mixin var-scope($component) {
+    $var-scope: $component !global;
+};
+
+// define
+@mixin define($var, $value) {
+    --ts_#{$var-scope}_default-#{$var}: #{$value};
+    --ts_#{$var-scope}-#{$var}: var(--ts_#{$var-scope}_alias-#{$var}, var(--ts_#{$var-scope}_default-#{$var}));
+};
+
+// override
+@mixin override($var, $value) {
+    --ts_#{$var-scope}_alias-#{$var}: #{$value};
+};
+
+// default
+@mixin default($var) {
+    --ts_#{$var-scope}_alias-#{$var}: --ts_#{$var-scope}_default-#{$var};
+};
+
+// get-default
+@function get-default($var) {
+    @return var(--ts_#{$var-scope}_default-#{$var});
+};
+
+// get
+@function get($var) {
+    @return #{var(--ts_#{$var-scope}_alias-#{$var}, var(--ts_#{$var-scope}-#{$var}))};
+};
+
+// each-color
+@mixin each-color {
+    @each $color, $_ in $colors {
+        @if $color != "gray" {
+            @content($color);
+        };
+    };
+};
+
+// each-weight
+@mixin each-weight {
+    @each $weight, $_ in $weights {
+        @content($weight);
+    };
+};
+
+// each-scheme
+@mixin each-scheme {
+    @each $scheme in $schemes {
+        @content($scheme);
+    };
+};
+
+// ==========================================================================
+// Extends
+// ==========================================================================
+
+%emphasized-gray {
     --ts-gray_50 : var(--ts-emphazied_50);
     --ts-gray_75 : var(--ts-emphazied_75);
     --ts-gray_100: var(--ts-emphazied_100);
@@ -215,278 +249,89 @@ $colors: (
     --ts-gray_700: var(--ts-emphazied_700);
     --ts-gray_800: var(--ts-emphazied_800);
     --ts-gray_900: var(--ts-emphazied_900);
-}
-
-@mixin quiet($name) {
-    @extend %emphasized-foreground;
-    --ts-#{$name}_50 : #{color($name, 50)};
-    --ts-#{$name}_75 : #{color($name, 50)};
-    --ts-#{$name}_100: #{color($name, 50)};
-    --ts-#{$name}_200: #{color($name, 50)};
-    --ts-#{$name}_300: #{color($name, 50)};
-    --ts-#{$name}_400: #{color($name, 75)};
-    --ts-#{$name}_500: #{color($name, 100)};
-    --ts-#{$name}_600: #{color($name, 200)};
-    --ts-#{$name}_700: #{color($name, 300)};
-    --ts-#{$name}_800: #{color($name, 400)};
-    --ts-#{$name}_900: #{color($name, 900)};
-}
-
-%light-foreground {
-    --ts-gray_50 : #{color(gray, 900)};
-    --ts-gray_75 : #{color(gray, 800)};
-    --ts-gray_100: #{color(gray, 700)};
-    --ts-gray_200: #{color(gray, 600)};
-    --ts-gray_300: #{color(gray, 500)};
-    --ts-gray_400: #{color(gray, 400)};
-    --ts-gray_500: #{color(gray, 300)};
-    --ts-gray_600: #{color(gray, 200)};
-    --ts-gray_700: #{color(gray, 100)};
-    --ts-gray_800: #{color(gray, 75)};
-    --ts-gray_900: #{color(gray, 50)};
-}
-
-%dark-foreground {
-    --ts-gray_50 : #{color(gray, 50)};
-    --ts-gray_75 : #{color(gray, 75)};
-    --ts-gray_100: #{color(gray, 100)};
-    --ts-gray_200: #{color(gray, 200)};
-    --ts-gray_300: #{color(gray, 300)};
-    --ts-gray_400: #{color(gray, 400)};
-    --ts-gray_500: #{color(gray, 500)};
-    --ts-gray_600: #{color(gray, 600)};
-    --ts-gray_700: #{color(gray, 700)};
-    --ts-gray_800: #{color(gray, 800)};
-    --ts-gray_900: #{color(gray, 900)};
-}
-
-%primary {
-    @include emphasized(primary);
-
-}
-
-%primary-foreground {
-    @extend %light-foreground;
-}
-
-%warning {
-    @include emphasized(warning);
-}
-
-%warning-foreground {
-    @extend %dark-foreground;
-}
-
-%negative {
-    @include emphasized(negative);
-}
-
-%negative-foreground {
-    @extend %light-foreground;
-}
-
-%positive {
-    @include emphasized(positive);
-}
-
-%positive-foreground {
-    @extend %light-foreground;
-}
-
-$var-scope: none;
-
-@mixin var-scope($component) {
-    $var-scope: $component !global;
-}
-
-@mixin define($var, $value) {
-    --ts_#{$var-scope}_default-#{$var}: #{$value};
-    --ts_#{$var-scope}-#{$var}: var(--ts_#{$var-scope}_alias-#{$var}, var(--ts_#{$var-scope}_default-#{$var}));
-}
-
-
-@mixin override($var, $value) {
-    --ts_#{$var-scope}_alias-#{$var}: #{$value};
-}
-
-@mixin default($var) {
-    --ts_#{$var-scope}_alias-#{$var}: --ts_#{$var-scope}_default-#{$var};
-}
-
-@function get-default($var) {
-    @return var(--ts_#{$var-scope}_default-#{$var});
-}
-
-@function get($var) {
-    @return #{var(--ts_#{$var-scope}-#{$var})};
-}
-
-@function get($var) {
-    @return #{var(--ts_#{$var-scope}_alias-#{$var}, var(--ts_#{$var-scope}-#{$var}))};
-}
+};
 
 // ==========================================================================
 // CSS Variable
 // ==========================================================================
 
-:root {
-    --ts-static_gray_50 : #{color(gray, 50)};
-    --ts-static_gray_75 : #{color(gray, 75)};
-    --ts-static_gray_100: #{color(gray, 100)};
-    --ts-static_gray_200: #{color(gray, 200)};
-    --ts-static_gray_300: #{color(gray, 300)};
-    --ts-static_gray_400: #{color(gray, 400)};
-    --ts-static_gray_500: #{color(gray, 500)};
-    --ts-static_gray_600: #{color(gray, 600)};
-    --ts-static_gray_700: #{color(gray, 700)};
-    --ts-static_gray_800: #{color(gray, 800)};
-    --ts-static_gray_900: #{color(gray, 900)};
+@each $theme, $schemes in $colors {
+    @each $scheme, $weights in $schemes {
+        [data-scheme="#{$scheme}"] {
+            @each $weight, $color in $weights {
+                @if $theme == "gray" {
+                    --ts-static_#{$theme}_#{$weight}: #{$color};
+                }
+                --ts-#{$theme}_#{$weight}: #{$color};
+            };
+        };
+    };
 
-    --ts-scheme_gray_50 : #{color(gray, 50)};
-    --ts-scheme_gray_75 : #{color(gray, 75)};
-    --ts-scheme_gray_100: #{color(gray, 100)};
-    --ts-scheme_gray_200: #{color(gray, 200)};
-    --ts-scheme_gray_300: #{color(gray, 300)};
-    --ts-scheme_gray_400: #{color(gray, 400)};
-    --ts-scheme_gray_500: #{color(gray, 500)};
-    --ts-scheme_gray_600: #{color(gray, 600)};
-    --ts-scheme_gray_700: #{color(gray, 700)};
-    --ts-scheme_gray_800: #{color(gray, 800)};
-    --ts-scheme_gray_900: #{color(gray, 900)};
+    %#{$theme} {
+        --ts-emphazied_50 : #{get-color($theme, 50)};
+        --ts-emphazied_75 : #{get-color($theme, 75)};
+        --ts-emphazied_100: #{get-color($theme, 100)};
+        --ts-emphazied_200: #{get-color($theme, 200)};
+        --ts-emphazied_300: #{get-color($theme, 300)};
+        --ts-emphazied_400: #{get-color($theme, 400)};
+        --ts-emphazied_500: #{get-color($theme, 500)};
+        --ts-emphazied_600: #{get-color($theme, 600)};
+        --ts-emphazied_700: #{get-color($theme, 700)};
+        --ts-emphazied_800: #{get-color($theme, 800)};
+        --ts-emphazied_900: #{get-color($theme, 900)};
 
-    --ts-gray_50 : #{color(gray, 50)};
-    --ts-gray_75 : #{color(gray, 75)};
-    --ts-gray_100: #{color(gray, 100)};
-    --ts-gray_200: #{color(gray, 200)};
-    --ts-gray_300: #{color(gray, 300)};
-    --ts-gray_400: #{color(gray, 400)};
-    --ts-gray_500: #{color(gray, 500)};
-    --ts-gray_600: #{color(gray, 600)};
-    --ts-gray_700: #{color(gray, 700)};
-    --ts-gray_800: #{color(gray, 800)};
-    --ts-gray_900: #{color(gray, 900)};
+        &.-outlined {
+            @extend %emphasized-gray;
+        };
 
-    --ts-primary_50 : #{color(primary, 50)};
-    --ts-primary_75 : #{color(primary, 75)};
-    --ts-primary_100: #{color(primary, 100)};
-    --ts-primary_200: #{color(primary, 200)};
-    --ts-primary_300: #{color(primary, 300)};
-    --ts-primary_400: #{color(primary, 400)};
-    --ts-primary_500: #{color(primary, 500)};
-    --ts-primary_600: #{color(primary, 600)};
-    --ts-primary_700: #{color(primary, 700)};
-    --ts-primary_800: #{color(primary, 800)};
-    --ts-primary_900: #{color(primary, 900)};
+        --spectrum-global-color-red-400: rgb(236, 91, 98);
+        --spectrum-global-color-red-500: rgb(227, 72, 80);
+        --spectrum-global-color-red-600: rgb(215, 55, 63);
+        --spectrum-global-color-red-700: rgb(201, 37, 45);
 
-    --ts-negative_50 : #{color(negative, 50)};
-    --ts-negative_75 : #{color(negative, 75)};
-    --ts-negative_100: #{color(negative, 100)};
-    --ts-negative_200: #{color(negative, 200)};
-    --ts-negative_300: #{color(negative, 300)};
-    --ts-negative_400: #{color(negative, 400)};
-    --ts-negative_500: #{color(negative, 500)};
-    --ts-negative_600: #{color(negative, 600)};
-    --ts-negative_700: #{color(negative, 700)};
-    --ts-negative_800: #{color(negative, 800)};
-    --ts-negative_900: #{color(negative, 900)};
+        --spectrum-global-color-red-400: rgb(227, 72, 80);
+        --spectrum-global-color-red-500: rgb(215, 55, 63);
+        --spectrum-global-color-red-600: rgb(201, 37, 45);
+        --spectrum-global-color-red-700: rgb(187, 18, 26);
 
-    --ts-warning_50 : #{color(warning, 50)};
-    --ts-warning_75 : #{color(warning, 75)};
-    --ts-warning_100: #{color(warning, 100)};
-    --ts-warning_200: #{color(warning, 200)};
-    --ts-warning_300: #{color(warning, 300)};
-    --ts-warning_400: #{color(warning, 400)};
-    --ts-warning_500: #{color(warning, 500)};
-    --ts-warning_600: #{color(warning, 600)};
-    --ts-warning_700: #{color(warning, 700)};
-    --ts-warning_800: #{color(warning, 800)};
-    --ts-warning_900: #{color(warning, 900)};
+        --spectrum-global-color-red-400: rgb(227, 72, 80);
+        --spectrum-global-color-red-500: rgb(236, 91, 98);
+        --spectrum-global-color-red-600: rgb(247, 109, 116);
+        --spectrum-global-color-red-700: rgb(255, 123, 130);
 
-    --ts-positive_50 : #{color(positive, 50)};
-    --ts-positive_75 : #{color(positive, 75)};
-    --ts-positive_100: #{color(positive, 100)};
-    --ts-positive_200: #{color(positive, 200)};
-    --ts-positive_300: #{color(positive, 300)};
-    --ts-positive_400: #{color(positive, 400)};
-    --ts-positive_500: #{color(positive, 500)};
-    --ts-positive_600: #{color(positive, 600)};
-    --ts-positive_700: #{color(positive, 700)};
-    --ts-positive_800: #{color(positive, 800)};
-    --ts-positive_900: #{color(positive, 900)};
+        --spectrum-global-color-red-400: rgb(215, 55, 63);
+        --spectrum-global-color-red-500: rgb(227, 72, 80);
+        --spectrum-global-color-red-600: rgb(236, 91, 98);
+        --spectrum-global-color-red-700: rgb(247, 109, 116);
+
+        &.-quiet {
+            @extend %emphasized-gray;
+
+            @include each-scheme using ($scheme) {
+                @at-root [data-scheme="#{$scheme}"] & {
+                    // @include each-weight using ($weight) {
+                    //     $color: "";
+                    //     @if $weight >= 0 {
+                    //         $color: 50;
+                    //     } @else if $weight >=
+                    // };
+                    --ts-#{$theme}_50 : #{get-color-by-scheme($theme, $scheme, 50)};
+                    --ts-#{$theme}_75 : #{get-color-by-scheme($theme, $scheme, 50)};
+                    --ts-#{$theme}_100: #{get-color-by-scheme($theme, $scheme, 50)};
+                    --ts-#{$theme}_200: #{get-color-by-scheme($theme, $scheme, 50)};
+                    --ts-#{$theme}_300: #{get-color-by-scheme($theme, $scheme, 50)};
+                    --ts-#{$theme}_400: #{get-color-by-scheme($theme, $scheme, 75)};
+                    --ts-#{$theme}_500: #{get-color-by-scheme($theme, $scheme, 100)};
+                    --ts-#{$theme}_600: #{get-color-by-scheme($theme, $scheme, 200)};
+                    --ts-#{$theme}_700: #{get-color-by-scheme($theme, $scheme, 300)};
+                    --ts-#{$theme}_800: #{get-color-by-scheme($theme, $scheme, 400)};
+                    --ts-#{$theme}_900: #{get-color-by-scheme($theme, $scheme, 900)};
+                };
+            };
 
 
 
 
-}
-
-[data-scheme="lightest"] {
-
-}
-
-[data-scheme="light"] {
-
-}
-
-[data-scheme="dark"] {
-    --ts-scheme_gray_50 : #{color(dark, 50)};
-    --ts-scheme_gray_75 : #{color(dark, 75)};
-    --ts-scheme_gray_100: #{color(dark, 100)};
-    --ts-scheme_gray_200: #{color(dark, 200)};
-    --ts-scheme_gray_300: #{color(dark, 300)};
-    --ts-scheme_gray_400: #{color(dark, 400)};
-    --ts-scheme_gray_500: #{color(dark, 500)};
-    --ts-scheme_gray_600: #{color(dark, 600)};
-    --ts-scheme_gray_700: #{color(dark, 700)};
-    --ts-scheme_gray_800: #{color(dark, 800)};
-    --ts-scheme_gray_900: #{color(dark, 900)};
-
-    --ts-gray_50 : #{color(dark, 50)};
-    --ts-gray_75 : #{color(dark, 75)};
-    --ts-gray_100: #{color(dark, 100)};
-    --ts-gray_200: #{color(dark, 200)};
-    --ts-gray_300: #{color(dark, 300)};
-    --ts-gray_400: #{color(dark, 400)};
-    --ts-gray_500: #{color(dark, 500)};
-    --ts-gray_600: #{color(dark, 600)};
-    --ts-gray_700: #{color(dark, 700)};
-    --ts-gray_800: #{color(dark, 800)};
-    --ts-gray_900: #{color(dark, 900)};
-
-    --ts-positive_50 : #{color(positive, 900)};
-    --ts-positive_75 : #{color(positive, 800)};
-    --ts-positive_100: #{color(positive, 700)};
-    --ts-positive_200: #{color(positive, 600)};
-    --ts-positive_300: #{color(positive, 500)};
-    --ts-positive_400: #{color(positive, 400)};
-    --ts-positive_500: #{color(positive, 300)};
-    --ts-positive_600: #{color(positive, 200)};
-    --ts-positive_700: #{color(positive, 100)};
-    --ts-positive_800: #{color(positive, 75)};
-    --ts-positive_900: #{color(positive, 50)};
-}
-
-[data-scheme="darkest"] {
-    --ts-scheme_gray_50 : #{color(darkest, 50)};
-    --ts-scheme_gray_75 : #{color(darkest, 75)};
-    --ts-scheme_gray_100: #{color(darkest, 100)};
-    --ts-scheme_gray_200: #{color(darkest, 200)};
-    --ts-scheme_gray_300: #{color(darkest, 300)};
-    --ts-scheme_gray_400: #{color(darkest, 400)};
-    --ts-scheme_gray_500: #{color(darkest, 500)};
-    --ts-scheme_gray_600: #{color(darkest, 600)};
-    --ts-scheme_gray_700: #{color(darkest, 700)};
-    --ts-scheme_gray_800: #{color(darkest, 800)};
-    --ts-scheme_gray_900: #{color(darkest, 900)};
-
-    --ts-gray_50 : #{color(darkest, 50)};
-    --ts-gray_75 : #{color(darkest, 75)};
-    --ts-gray_100: #{color(darkest, 100)};
-    --ts-gray_200: #{color(darkest, 200)};
-    --ts-gray_300: #{color(darkest, 300)};
-    --ts-gray_400: #{color(darkest, 400)};
-    --ts-gray_500: #{color(darkest, 500)};
-    --ts-gray_600: #{color(darkest, 600)};
-    --ts-gray_700: #{color(darkest, 700)};
-    --ts-gray_800: #{color(darkest, 800)};
-    --ts-gray_900: #{color(darkest, 900)};
-}
+        };
+    };
+};
