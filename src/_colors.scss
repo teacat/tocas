@@ -1,9 +1,9 @@
+@use "sass:map";
+
 // ==========================================================================
 // Emphasises
 // ==========================================================================
 
-//
-$colors: ();
 //
 $schemes: lightest, light, dark, darkest;
 //                     Gray                                Light                              Dark
@@ -12,92 +12,44 @@ $weights: (
     50 : ((  100%,   100%, -79.5%, -95.5%), (  100%,    100%,    87%,    72%), (  100%,    100%,    93%,    87%)),
     75 : ((  100%,    93%,   -74%, -85.5%), (   93%,     93%,    72%,    60%), (   93%,     93%,    87%,    72%)),
     100: ((  100%,    87%,   -72%,   -83%), (   87%,     87%,    60%,    30%), (   87%,     87%,    72%,    60%)),
-    200: ((   86%,    72%, -65.5%, -75.5%), (   72%,     72%,    30%,     0%), (   72%,     72%,    60%,     30%)),
-    300: ((   72%,    60%, -58.5%,   -68%), (   60%,     60%,     0%,    -6%), (   60%,     60%,     30%,    0%)),
-    400: ((   42%,    30%,   -50%,   -59%), (   30%,     30%,    -6%, -20.5%), (   30%,     30%,    0%, -6%)),
-    500: ((   12%,     0%, -38.5%, -48.5%), (   15%,      0%, -20.5%, -38.5%), (   15%,      0%, -6%, -20.5%)),
-    600: ((  -17%, -20.5%, -19.5%,   -31%), (    0%,     -6%, -38.5%,   -58%), (    0%,     -6%, -20.5%,   -38.5%)),
-    700: ((  -35%,   -38%,     8%,  -9.5%), (   -6%,  -20.5%,   -58%, -65.5%), (   -6%,  -20.5%,   -38.5%, -58%)),
-    800: ((-55.5%,   -58%,    63%,    27%), (-20.5%,  -38.5%, -65.5%,   -72%), (-20.5%,  -38.5%, -58%,   -65.5%)),
-    900: ((  -72%, -75.5%,   100%,    79%), (-38.5%,    -58%,   -72%,   -74%), (-38.5%,    -58%,   -65.5%,   -72%)),
+    200: ((   86%,    72%, -65.5%, -75.5%), (   72%,     72%,    30%,     0%), (   72%,     72%,    60%,    30%)),
+    300: ((   72%,    60%, -58.5%,   -68%), (   60%,     60%,     0%,    -6%), (   60%,     60%,    30%,     0%)),
+    400: ((   42%,    30%,   -50%,   -59%), (   30%,     30%,    -6%, -20.5%), (   30%,     30%,     0%,    -6%)),
+    500: ((   12%,     0%, -38.5%, -48.5%), (   15%,      0%, -20.5%, -38.5%), (   15%,      0%,    -6%, -20.5%)),
+    600: ((  -17%, -20.5%, -19.5%,   -31%), (    0%,     -6%, -38.5%,   -58%), (    0%,     -6%, -20.5%, -38.5%)),
+    700: ((  -35%,   -38%,     8%,  -9.5%), (   -6%,  -20.5%,   -58%, -65.5%), (   -6%,  -20.5%, -38.5%,   -58%)),
+    800: ((-55.5%,   -58%,    63%,    27%), (-20.5%,  -38.5%, -65.5%,   -72%), (-20.5%,  -38.5%,   -58%, -65.5%)),
+    900: ((  -72%, -75.5%,   100%,    79%), (-38.5%,    -58%,   -72%,   -74%), (-38.5%,    -58%, -65.5%,   -72%)),
 );
 
-//          Light   Dark
-$foreground_modifiers: (
-    "50" : (80%, -30%),
-    "75" : (80%, -30%),
-    "100": (80%, -30%),
-    "200": (80%, -30%),
-    "300": (80%, -30%),
-    "400": (80%, -30%),
-    "500": (80%, -30%),
-    "600": (80%, -30%),
-    "700": (80%, -30%),
-    "800": (80%, -30%),
-    "900": (80%, -30%),
-);
-
-// tint
-@function tint($color, $percentage) {
-    @return mix(white, $color, $percentage);
-};
-
-// shade
-@function shade($color, $percentage) {
-    @return mix(black, $color, $percentage);
-};
-
-// get-scheme
-@function get-scheme($name) {
-    $is-light     : map-get(map-get($emphasises, $name), "is-light");
-    $base         : map-get(map-get($emphasises, $name), "base");
-    $weights_index: if($name == "gray", 1, if($is-light, 2, 3));
-    $result       : ();
-    $schemes      : lightest, light, dark, darkest;
-
-    @each $scheme in $schemes {
-        $index         : index($schemes, $scheme);
-        $scheme_weights: ();
-
-        @each $weight, $map in $weights {
-            $modifier      :nth(nth($map, $weights_index), $index);
-            $scheme_weights: map-merge($scheme_weights, (#{$weight}: if($modifier > 0, tint($base, $modifier), shade($base, abs($modifier)))));
-        }
-
-        $result: map-merge($result, (#{$scheme}: $scheme_weights));
-    }
-
-    @return $result;
-};
-
+//
 $emphasises: (
     "gray" : (
         is-light: false,
-        base   : #b3b3b3
+        base   : #b3b3b3,
+        // colors: (),
     ),
     "primary" : (
         is-light: true,
-        base   : #209cee
+        base   : #209cee,
+        // colors: (),
     ),
     "warning" : (
         is-light: false,
-        base   : #ffdd57
+        base   : #ffdd57,
+        // colors: (),
     ),
     "negative" : (
         is-light: true,
-        base   : #ff3860
+        base   : #ff3860,
+        // colors: (),
     ),
     "positive" : (
         is-light: true,
-        base   : #48c774
+        base   : #48c774,
+        // colors: (),
     ),
 );
-
-@each $emphasis, $values in $emphasises {
-    $colors: map-merge($colors, (#{$emphasis}: get-scheme($emphasis)));
-};
-
-
 
 // ==========================================================================
 // Getters
@@ -123,6 +75,16 @@ $emphasises: (
     @return #{var(--ts-static_#{$name}_#{$weight})};
 };
 
+// get-current-foreground-color
+@function get-current-foreground-color($weight) {
+    @return #{var(--ts-foreground_#{$weight})};
+}
+
+// get-real-color
+@function get-real-color($scheme, $theme, $weight) {
+    @return map-get(map-get(map-get(map-get($emphasises, $theme), "colors"), $scheme), $weight);
+}
+
 // ==========================================================================
 // Function
 // ==========================================================================
@@ -134,43 +96,30 @@ $emphasises: (
 
 // emphasized
 @mixin emphasized($name) {
-    @extend %#{$name};
+
 };
 
-// emphasized-foreground
-@mixin emphasized-foreground($name) {
-    @include each-weight using ($weight) {
-        --ts-gray_#{$weight}: #{get-foreground-color($name, $weight)};
-    };
-};
+// get-scheme
+@function get-scheme($name) {
+    $is-light     : map-get(map-get($emphasises, $name), "is-light");
+    $base         : map-get(map-get($emphasises, $name), "base");
+    $weights_index: if($name == "gray", 1, if($is-light, 2, 3));
+    $result       : ();
+    $schemes      : lightest, light, dark, darkest;
 
-:root {
-    @each $theme, $value in $colors {
-        @each $scheme, $weights in $value {
-            @each $weight, $color in $weights {
-                --ts-#{$scheme}_#{$theme}_#{$weight}: #{$color};
+    @each $scheme in $schemes {
+        $index         : index($schemes, $scheme);
+        $scheme_weights: ();
 
-                @if ($theme != "gray") {
-                    @at-root {
-                        [data-scheme="#{$scheme}"] {
-                            $modifier  : nth(map-get($foreground_modifiers, $weight), if(is-light($theme), 1, 2));
-                            $foreground: "";
+        @each $weight, $map in $weights {
+            $modifier      :nth(nth($map, $weights_index), $index);
+            $scheme_weights: map-merge($scheme_weights, (#{$weight}: if($modifier > 0, tint($base, $modifier), shade($base, abs($modifier)))));
+        }
 
-                            @if (is-light($theme)) {
-                                $foreground: map-get(map-get(map-get($colors, "gray"), "dark"), $weight);
-                            } @else {
-                                $foreground: map-get(map-get(map-get($colors, "gray"), "light"), $weight);
-                            }
+        $result: map-merge($result, (#{$scheme}: $scheme_weights));
+    }
 
-                            $foreground: if($modifier > 0, tint($foreground, $modifier), shade($foreground, abs($modifier)));
-
-                            --ts-foreground_#{$theme}_#{$weight}: #{$foreground};
-                        };
-                    };
-                };
-            };
-        };
-    };
+    @return $result;
 };
 
 // ==========================================================================
@@ -210,11 +159,11 @@ $var-scope: none;
     @return #{var(--ts_#{$var-scope}_alias-#{$var}, var(--ts_#{$var-scope}-#{$var}))};
 };
 
-// each-color
-@mixin each-color {
-    @each $color, $_ in $colors {
-        @if $color != "gray" {
-            @content($color);
+// each-emphasis
+@mixin each-emphasis {
+    @each $emphasis, $_ in $emphasises {
+        @if $emphasis != "gray" {
+            @content($emphasis);
         };
     };
 };
@@ -233,105 +182,106 @@ $var-scope: none;
     };
 };
 
-// ==========================================================================
-// Extends
-// ==========================================================================
+// tint
+@function tint($color, $percentage) {
+    @return mix(white, $color, $percentage);
+};
 
-%emphasized-gray {
-    --ts-gray_50 : var(--ts-emphazied_50);
-    --ts-gray_75 : var(--ts-emphazied_75);
-    --ts-gray_100: var(--ts-emphazied_100);
-    --ts-gray_200: var(--ts-emphazied_200);
-    --ts-gray_300: var(--ts-emphazied_300);
-    --ts-gray_400: var(--ts-emphazied_400);
-    --ts-gray_500: var(--ts-emphazied_500);
-    --ts-gray_600: var(--ts-emphazied_600);
-    --ts-gray_700: var(--ts-emphazied_700);
-    --ts-gray_800: var(--ts-emphazied_800);
-    --ts-gray_900: var(--ts-emphazied_900);
+// shade
+@function shade($color, $percentage) {
+    @return mix(black, $color, $percentage);
 };
 
 // ==========================================================================
-// CSS Variable
+// Export
 // ==========================================================================
 
-@each $theme, $schemes in $colors {
-    @each $scheme, $weights in $schemes {
-        [data-scheme="#{$scheme}"] {
+//
+@each $emphasis, $map in $emphasises {
+    $emphasises: map.set($emphasises, $emphasis, map-merge($map, ("colors": get-scheme($emphasis))));
+};
+
+//
+@each $theme, $_ in $emphasises {
+    $colors: map-get(map-get($emphasises, $theme), "colors");
+
+    @each $scheme, $weights in $colors {
+        //
+        @at-root :root {
             @each $weight, $color in $weights {
-                @if $theme == "gray" {
-                    --ts-static_#{$theme}_#{$weight}: #{$color};
-                }
-                --ts-#{$theme}_#{$weight}: #{$color};
+                --ts-#{$scheme}_#{$theme}_#{$weight}: #{$color};
             };
         };
-    };
 
-    %#{$theme} {
-        --ts-emphazied_50 : #{get-color($theme, 50)};
-        --ts-emphazied_75 : #{get-color($theme, 75)};
-        --ts-emphazied_100: #{get-color($theme, 100)};
-        --ts-emphazied_200: #{get-color($theme, 200)};
-        --ts-emphazied_300: #{get-color($theme, 300)};
-        --ts-emphazied_400: #{get-color($theme, 400)};
-        --ts-emphazied_500: #{get-color($theme, 500)};
-        --ts-emphazied_600: #{get-color($theme, 600)};
-        --ts-emphazied_700: #{get-color($theme, 700)};
-        --ts-emphazied_800: #{get-color($theme, 800)};
-        --ts-emphazied_900: #{get-color($theme, 900)};
+        //
+        [data-scheme="#{$scheme}"] {
+            @if $theme == "gray" {
+                //
+                @each $weight, $color in $weights {
+                    --ts-static_#{$theme}_#{$weight}: #{$color};
+                };
+            } @else {
+                //
+                @each $weight, $color in $weights {
+                    --ts-#{$theme}_#{$weight} : #{$color};
+                };
+                //
+                @each $weight, $color in $weights {
+                    --ts-foreground_#{$weight}: #{get-color(gray, $weight)};
+                };
+                //
+                @each $weight, $color in $weights {
+                    --ts-emphazied_#{$weight} : #{get-color($theme, $weight)};
+                };
+                //
+                .-quiet {
+                    //
+                    @each $weight, $color in $weights {
+                        $foreground: get-real-color($scheme, $theme, $weight);
 
-        &.-outlined {
-            @extend %emphasized-gray;
-        };
+                        @if ($scheme == "dark" or $scheme == "darkest") {
+                            --ts-foreground_#{$theme}_#{$weight}: #{tint($foreground, 80%)};
+                        } @else {
+                            --ts-foreground_#{$theme}_#{$weight}: #{$foreground};
+                        };
+                    };
+                    //
+                    @each $weight, $color in $weights {
+                        $background: get-real-color($scheme, $theme, $weight);
 
-        --spectrum-global-color-red-400: rgb(236, 91, 98);
-        --spectrum-global-color-red-500: rgb(227, 72, 80);
-        --spectrum-global-color-red-600: rgb(215, 55, 63);
-        --spectrum-global-color-red-700: rgb(201, 37, 45);
-
-        --spectrum-global-color-red-400: rgb(227, 72, 80);
-        --spectrum-global-color-red-500: rgb(215, 55, 63);
-        --spectrum-global-color-red-600: rgb(201, 37, 45);
-        --spectrum-global-color-red-700: rgb(187, 18, 26);
-
-        --spectrum-global-color-red-400: rgb(227, 72, 80);
-        --spectrum-global-color-red-500: rgb(236, 91, 98);
-        --spectrum-global-color-red-600: rgb(247, 109, 116);
-        --spectrum-global-color-red-700: rgb(255, 123, 130);
-
-        --spectrum-global-color-red-400: rgb(215, 55, 63);
-        --spectrum-global-color-red-500: rgb(227, 72, 80);
-        --spectrum-global-color-red-600: rgb(236, 91, 98);
-        --spectrum-global-color-red-700: rgb(247, 109, 116);
-
-        &.-quiet {
-            @extend %emphasized-gray;
-
-            @include each-scheme using ($scheme) {
-                @at-root [data-scheme="#{$scheme}"] & {
-                    // @include each-weight using ($weight) {
-                    //     $color: "";
-                    //     @if $weight >= 0 {
-                    //         $color: 50;
-                    //     } @else if $weight >=
-                    // };
-                    --ts-#{$theme}_50 : #{get-color-by-scheme($theme, $scheme, 50)};
-                    --ts-#{$theme}_75 : #{get-color-by-scheme($theme, $scheme, 50)};
-                    --ts-#{$theme}_100: #{get-color-by-scheme($theme, $scheme, 50)};
-                    --ts-#{$theme}_200: #{get-color-by-scheme($theme, $scheme, 50)};
-                    --ts-#{$theme}_300: #{get-color-by-scheme($theme, $scheme, 50)};
-                    --ts-#{$theme}_400: #{get-color-by-scheme($theme, $scheme, 75)};
-                    --ts-#{$theme}_500: #{get-color-by-scheme($theme, $scheme, 100)};
-                    --ts-#{$theme}_600: #{get-color-by-scheme($theme, $scheme, 200)};
-                    --ts-#{$theme}_700: #{get-color-by-scheme($theme, $scheme, 300)};
-                    --ts-#{$theme}_800: #{get-color-by-scheme($theme, $scheme, 400)};
-                    --ts-#{$theme}_900: #{get-color-by-scheme($theme, $scheme, 900)};
+                        @if ($scheme == "dark" or $scheme == "darkest") {
+                            --ts-#{$theme}_#{$weight}: #{shade($background, 40%)};
+                        } @else {
+                            --ts-#{$theme}_#{$weight}: #{tint($background, 73%)};
+                        };
+                    };
+                    //
+                    &[data-emphasis="#{$theme}"] {
+                        @each $weight, $color in $weights {
+                        --ts-foreground_#{$weight}: var(--ts-foreground_#{$theme}_#{$weight});
+                        };
+                    };
+                };
+                //
+                @each $weight, $color in $weights {
+                    $foreground                         : get-real-color(if(is-light($theme), "dark", "light"), "gray", $weight);
+                    --ts-foreground_#{$theme}_#{$weight}: #{if(is-light($theme), tint($foreground, 80%), shade($foreground, 30%))};
+                };
+                //
+                [data-emphasis="#{$theme}"].-inverted {
+                    @each $weight, $color in $weights {
+                        --ts-foreground_#{$weight}: var(#{--ts-foreground_#{$theme}_#{$weight}});
+                    };
+                };
+                //
+                [data-emphasis="#{$theme}"].-inverted,
+                [data-emphasis="#{$theme}"].-outlined,
+                [data-emphasis="#{$theme}"].-quiet {
+                    @each $weight, $color in $weights {
+                        --ts-gray_#{$weight}: #{get-foreground-color($theme, $weight)};
+                    };
                 };
             };
-
-
-
-
         };
     };
 };
