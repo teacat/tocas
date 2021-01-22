@@ -26,9 +26,6 @@
     +override(border_indicated_color, get-color($name, 500))
     +override(border_outlined_color , get-color($name, 500))
 
-    &.-inverted
-        +emphasized-foreground($name)
-
     &.-inverted,
     &.-quiet
         +override(color            , get-foreground-color($name, 800))
@@ -43,12 +40,12 @@
 
     &.-quiet,
     &.-outlined
-        +override(color, get-color($name, 900))
+    //    +override(color, get-color($name, 900))
 
 //-------------------//
 // Colors
 //-------------------//
 
-+each-color using ($color)
-    .ts.segment[data-emphasis="#{$color}"]
-        +segment-emphasis($color)
++each-emphasis using ($emphasis)
+    .ts.segment[data-emphasis="#{$emphasis}"]
+        +segment-emphasis($emphasis)
