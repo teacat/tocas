@@ -220,6 +220,10 @@ $var-scope: none;
                 @each $weight, $color in $weights {
                     --ts-static_#{$theme}_#{$weight}: #{$color};
                 };
+                //
+                @each $weight, $color in $weights {
+                    --ts-#{$theme}_#{$weight} : #{$color};
+                };
             } @else {
                 //
                 @each $weight, $color in $weights {
@@ -258,7 +262,7 @@ $var-scope: none;
                     //
                     &[data-emphasis="#{$theme}"] {
                         @each $weight, $color in $weights {
-                        --ts-foreground_#{$weight}: var(--ts-foreground_#{$theme}_#{$weight});
+                            --ts-foreground_#{$weight}: var(--ts-foreground_#{$theme}_#{$weight});
                         };
                     };
                 };
