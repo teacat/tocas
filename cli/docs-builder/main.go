@@ -317,8 +317,9 @@ func asset(s string, real bool) string {
 // trim 會依照指定的清除詞彙清單，將傳入的字串做清理。
 func trim(s string, r []string) string {
 	for _, v := range r {
+		s = strings.Replace(s, v+"\n", "", -1)
 		s = strings.Replace(s, v, "", -1)
-		s = strings.Replace(s, "\n", "", -1)
+		//s = strings.Replace(s, "\n", "", -1)
 	}
 	return s
 }
