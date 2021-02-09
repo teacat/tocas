@@ -85,6 +85,10 @@ $emphasises: (
     @return map-get(map-get(map-get(map-get($emphasises, $theme), "colors"), $scheme), $weight);
 }
 
+@function get-shadow($weight) {
+    @return #{var(--ts-gray-shadow_#{$weight})};
+}
+
 // ==========================================================================
 // Function
 // ==========================================================================
@@ -223,6 +227,9 @@ $var-scope: none;
                 //
                 @each $weight, $color in $weights {
                     --ts-#{$theme}_#{$weight} : #{$color};
+                };
+                @each $weight, $color in $weights {
+                    --ts-#{$theme}-shadow_#{$weight} : #{rgba($color, 0.5)};
                 };
             } @else {
                 //
