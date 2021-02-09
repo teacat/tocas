@@ -1,0 +1,208 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title      : 計數徽章
+Description: 顯示數值、未讀數量的基本呈現標記。
+Type       : Article
+Intro      : |
+  這是一個簡化過後的[標籤](./label)元件，通常用以呈現單純的數字。若需要一個能夠呈現圖片或圖示的元件，則使用標籤會更為恰當。
+Relatives  :
+  - Label
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Definitions:
+
+  - Title      : 種類
+    Description: 計數徽章有不同的種類。
+    Sections   :
+
+      - Title      : 計數徽章
+        Description: 一個最基本的計數徽章。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts [[badge]]">42,689</span>
+
+  - Title      : 語意
+    Description: 計數徽章能夠以不同的語意呈現。
+    Sections   :
+
+      - Title      : 主要的
+        Description: 一個帶有主要視覺訊息的語意。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts badge" data-emphasis="[[primary]]">2,314</span>
+
+      - Title      : 警告的
+        Description: 含有警告或提醒意味的計數標籤。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts badge" data-emphasis="[[warning]]">812</span>
+
+      - Title      : 正面與負面的
+        Description: 具有肯定、否定或是成功與失敗涵義的計數標籤。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts badge" data-emphasis="[[positive]]">64,129</span>
+          <span class="ts badge" data-emphasis="[[negative]]">4,189</span>
+
+      - Title      : 安靜的
+        Description: 套用語意的時候以更不顯眼的方式呈現，通常這會呈現一個淡色系語意。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts badge [[-quiet]]" data-emphasis="primary">2,314</span>
+          <span class="ts badge [[-quiet]]" data-emphasis="warning">812</span>
+          <span class="ts badge [[-quiet]]" data-emphasis="positive">64,129</span>
+          <span class="ts badge [[-quiet]]" data-emphasis="negative">4,189</span>
+
+  - Title      : 內容
+    Description: 計數徽章可以由多個不同內容組成。
+    Sections   :
+
+      - Title      : 圖示
+        Description: 在左右其中一側帶有圖示的計數徽章。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts badge">
+              ((<i class="ts {{icon}} -right-spaced" data-icon="heart"></i>))
+              圖示在左
+          </span>
+          <span class="ts badge">
+              圖示在右
+              ((<i class="ts {{icon}} -left-spaced" data-icon="home"></i>))
+          </span>
+
+  - Title      : 狀態
+    Description: 計數徽章有不同的狀態。
+    Sections   :
+
+      - Title      : 停用的
+        Description: 一個計數徽章能夠呈現不可用的狀態，告知使用者這個計數徽章不再可信。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts badge [[-disabled]]">53,219</span>
+
+  - Title      : 外觀
+    Description: 計數徽章有著不同的外觀點綴。
+    Sections   :
+
+      - Title      : 基本的
+        Description: 令計數徽章套用語意時，呈現一個沒有那麼沈重的色調。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts badge">192</span>
+          <span class="ts badge [[-basic]]" data-emphasis="primary">9,238</span>
+          <span class="ts badge [[-basic]]" data-emphasis="positive">630</span>
+
+      - Title      : 外框的
+        Description: 僅有外框線的計數徽章。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts badge [[-outlined]]">817</span>
+          <span class="ts badge [[-outlined]]" data-emphasis="warning">500</span>
+          <span class="ts badge [[-outlined]]" data-emphasis="negative">8,964</span>
+
+      - Title      : 連結的
+        Description: 計數徽章能夠呈現一個有轉跳動作的連結樣式，這會讓顏色與游標有所互動。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts badge [[-link]]">
+              <i class="ts {{icon}} -right-spaced" data-icon="eye"></i>
+              1,382
+          </span>
+          <span class="ts badge [[-link]]" data-emphasis="primary">163</span>
+
+      - Title      : 底線的
+        Description: 讓計數徽章的文字或數值看起來有底線，有時候這很適合搭配一個超連結元素。
+        Since      : 4.0.0
+        HTML       : |
+          <a class="ts badge [[-underlined]]">
+              <i class="ts {{icon}} -right-spaced" data-icon="star"></i>1,245
+          </a>
+
+      - Title      : 空的
+        Description: 當不需要內容時，計數徽章能夠以一個空的方式呈現。這很適合用在上線狀態或是未讀標記。但我們建議不要透過顏色區分狀態，而是形狀；這會對色盲使用者更加地友善。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts badge -circular [[-empty]]"></span>
+          <span class="ts badge -circular [[-empty]]" data-emphasis="negative"></span>
+          <span class="ts badge -circular [[-empty]]" data-emphasis="warning"></span>
+          <span class="ts badge -circular [[-empty]]" data-emphasis="primary"></span>
+          <span class="ts badge -circular [[-empty]]" data-emphasis="positive"></span>
+
+      - Title      : 圓形的
+        Description: 將計數徽章變成圓形。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts badge [[-circular]]">1,376</span>
+          <span class="ts badge [[-circular]]" data-emphasis="primary">245</span>
+
+      - Title      : 緊緻的
+        Description: 計數徽章能夠以密度更小的方式呈現。
+        Since      : 4.0.0
+        HTML       : |
+          <p>
+              最新公告
+              <span class="ts badge [[-compact]]" data-emphasis="negative">99+</span>
+          </p>
+
+      - Title      : 角落浮動的
+        Description: 浮動附著在父容器的某個角落，這很適合作為某個元素的計數通知。
+        Since      : 4.0.0
+        HTML       : |
+
+          <div class="ts {{image}} -small">
+              <span class="ts badge [[-top-left-floated]]" data-emphasis="negative">4</span>
+              <img src="!-1:1-!">
+          </div>
+          <div class="ts {{image}} -small -circular">
+              <span class="ts badge [[-top-right-floated]]">12</span>
+              <img src="!-1:1-!">
+          </div>
+          <div class="ts {{image}} -small -circular">
+              <span class="ts badge [[-bottom-left-floated]]">99+</span>
+              <img src="!-1:1-!">
+          </div>
+          <div class="ts {{image}} -small -circular">
+              <span class="ts badge -circular [[-bottom-right-floated]]" data-emphasis="primary">68</span>
+              <img src="!-1:1-!">
+          </div>
+
+      - Title      : 間隔的
+        Description: 新增一些空白在計數徽章的左右旁。
+        Since      : 4.0.0
+        HTML       : |
+          <p>
+              神奇 <span class="ts badge [[-spaced]]">99+</span> 蹦蹦
+          </p>
+          <p>
+              未讀訊息 <span class="ts badge [[-left-spaced]]">13</span>
+          </p>
+          <p>
+              <span class="ts badge [[-right-spaced]]">3</span> 檔案傳輸
+          </p>
+
+      - Title      : 浮動的
+        Description: 計數徽章可以靠左或靠右浮動。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts badge [[-left-floated]]">靠左浮動</span>
+          <span class="ts badge [[-right-floated]]">靠右浮動</span>
+
+      - Title      : 尺寸
+        Description: 不同的尺寸可應用於不同情境。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts badge [[-mini]]">迷你</span>
+          <span class="ts badge [[-tiny]]">微小</span>
+          <span class="ts badge [[-small]]">小型</span>
+          <span class="ts badge">中等</span>
+          <span class="ts badge [[-large]]">大型</span>
+          <span class="ts badge [[-big]]">大的</span>
+          <span class="ts badge [[-huge]]">巨大</span>
+          <span class="ts badge [[-massive]]">重量級</span>

@@ -1,0 +1,506 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts.image,
+.ts.images {
+    /**
+     * Block
+     */
+
+    --border-radius         : var(--global__border-radius);
+    --border-radius-circular: var(--global__border-radius-circular);
+    --image-size            : 100%;
+    --disabled-opacity      : var(--global__disabled-opacity);
+
+    /**
+     * Distance
+     */
+
+    --distance-block      : var(--global__distance-block);
+    --distance-description: 1rem;
+    --distance-avatar     : 0.4rem;
+
+    /**
+     * Typography
+     */
+
+    --font-size  : 1rem;
+    --line-height: var(--global__line-height);
+
+    /**
+     * Color
+     */
+
+    --color                   : var(--default__color);
+    --symbol-color            : var(--default__symbol-color);
+    --disabled-color          : var(--default__disabled-color);
+    --description-color       : var(--default__description-color);
+    --border-color            : var(--default__border-color);
+    --border-selected-color   : var(--default__border-selected-color);
+    --mask-color              : 255, 255, 255;
+    --mask-shadow-color       : 0, 0, 0, 0.8;
+    --icon-stroke-color       : 255, 255, 255;
+    --initial-background-color: var(--default__background-secondary-color);
+    --stacked-shadow-color    : 0, 0, 0, 0.15;
+    --link-shadow-color       : 0, 0, 0, 0.15;
+    --collapsed-shadow-color  : 0, 0, 0, 0.05;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+img.ts.image,
+.ts.image img,
+.ts.images img {
+    width         : var(--image-size);
+    font-size     : var(--font-size);
+    box-sizing    : border-box;
+    vertical-align: middle;
+}
+
+.ts.image,
+.ts.images {
+    max-width : 100%;
+    max-height: 100%;
+    position  : relative;
+    display   : inline-block;
+    color     : rgb(var(--color));
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+/**
+ * Content
+ */
+
+.ts.image > .content {
+    position       : absolute;
+    top            : 0;
+    bottom         : 0;
+    right          : 0;
+    left           : 0;
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+    flex-direction : column;
+    text-rendering : optimizelegibility;
+    text-shadow    : 0 0 3px rgba(var(--mask-shadow-color));
+    user-select    : none;
+    color          : rgb(var(--mask-color));
+}
+
+/**
+ * Description
+ */
+
+.ts.image > .description {
+    font-size: 1rem;
+    color    : rgb(var(--description-color));
+}
+.ts.image > .description + img {
+    margin-top: var(--distance-description);
+}
+.ts.image > img + .description {
+    margin-top: var(--distance-description);
+}
+
+/**
+ * Content Icon
+ */
+
+.ts.image > .content > i.ts.icon {
+    margin   : 0;
+    font-size: calc(var(--image-size) / 3);
+}
+
+/**
+ * Corner Icon
+ */
+
+.ts.image > i.ts.icon {
+    position           : absolute;
+    right              : 0.5rem;
+    z-index            : 1;
+    font-size          : calc(var(--image-size) / 2);
+    bottom             : 0;
+    transform          : translateX(0.4em) translateY(0.1em);
+    -webkit-text-stroke: 0.07em rgb(var(--icon-stroke-color));
+    text-stroke        : 0.07em rgb(var(--icon-stroke-color));
+    margin             : 0;
+}
+
+/**
+ * Initial
+ */
+
+.ts.image[data-initial] {
+    width     : var(--image-size);
+    height    : var(--image-size);
+    background: rgb(var(--initial-background-color));
+}
+
+.ts.image[data-initial]::before {
+    content  : attr(data-initial);
+    left     : 50%;
+    position : absolute;
+    top      : 50%;
+    transform: translate(-50%, -50%);
+    z-index  : 1;
+    font-size: calc(var(--image-size) / 2.5);
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Stacked
+ */
+
+.ts.image.-stacked,
+.ts.images.-stacked img {
+    margin-bottom: 5px;
+    box-shadow   : 0px 1px 0 white, 0px 4px 0 -2px rgba(var(--stacked-shadow-color)), 0px 3px 0 white,
+        0px 7px 0 -3px rgba(var(--stacked-shadow-color)) !important;
+}
+.ts.image.-tall-stacked,
+.ts.images.-tall-stacked img {
+    margin-bottom: 10px;
+    box-shadow   : 0px 1px 0 white, 0px 4px 0 -2px rgba(var(--stacked-shadow-color)), 0px 3px 0 white,
+        0px 7px 0 -3px rgba(var(--stacked-shadow-color)), 0px 5px 0 white,
+        0px 10px 0 -4px rgba(var(--stacked-shadow-color)) !important;
+}
+
+/**
+ * Floated
+ */
+
+.ts.image.-left-floated:not(img) {
+    display: contents;
+}
+.ts.image.-left-floated img,
+img.ts.image.-left-floated {
+    float        : left;
+    margin-right : var(--distance-block);
+    margin-bottom: var(--distance-block);
+}
+.ts.image.-right-floated:not(img) {
+    display: contents;
+}
+.ts.image.-right-floated img,
+img.ts.image.-right-floated {
+    float        : right;
+    margin-left  : var(--distance-block);
+    margin-bottom: var(--distance-block);
+}
+
+/**
+ * Disabled
+ */
+
+.ts.image.-disabled,
+.ts.images.-disabled {
+    opacity: var(--disabled-opacity);
+}
+
+/**
+ * Hidden
+ */
+
+.ts.image.-hidden,
+.ts.images.-hidden {
+    display: none;
+}
+
+/**
+ * Centered
+ */
+
+.ts.image.-centered,
+.ts.images.-centered {
+    margin    : 0 auto;
+    display   : block;
+    text-align: center;
+}
+
+/**
+ * Aligns
+ */
+
+.ts.image.-left-aligned {
+    text-align: left;
+}
+.ts.image.-center-aligned {
+    text-align: center;
+}
+.ts.image.-right-aligned {
+    text-align: right;
+}
+
+/**
+ * Collapsed
+ */
+
+.ts.images.-collapsed:hover img:not(:first-child) {
+    margin-left: 0.25rem;
+}
+
+.ts.images.-collapsed:hover::after {
+    opacity: 0;
+}
+
+.ts.images.-collapsed:hover img:nth-child(3) ~ img {
+    display: inline-block;
+}
+
+.ts.images.-collapsed img {
+    position    : relative;
+    transition  : margin 0.1s ease-in-out;
+    box-sizing  : initial;
+    border-right: 0;
+}
+
+.ts.images.-collapsed img:not(:last-child) {
+    border-right: 1px solid white;
+}
+
+.ts.images.-collapsed img:not(:first-child) {
+    margin-left: calc(var(--image-size) / 1.5 * -1);
+}
+
+.ts.images.-collapsed img:nth-child(1) {
+    z-index: 4;
+}
+.ts.images.-collapsed img:nth-child(2) {
+    z-index: 3;
+}
+
+.ts.images.-collapsed img:nth-child(3) {
+    z-index: 2;
+}
+
+.ts.images.-collapsed::after {
+    content   : " ";
+    position  : absolute;
+    height    : var(--image-size);
+    width     : var(--image-size);
+    background: rgba(var(--collapsed-shadow-color));
+    display   : block;
+    top       : 0;
+    right     : -0.25rem;
+    right     : calc(var(--image-size) / 7 * -1);
+    z-index   : 1;
+    opacity   : 1;
+    transition: opacity 0.1s ease-in-out;
+}
+.ts.images.-collapsed img:nth-child(3) ~ img {
+    display: none;
+}
+
+/**
+ * Related
+ */
+
+.ts.images.-related {
+    display : inline-block;
+    overflow: visible;
+}
+
+.ts.images.-related img:last-child {
+    position  : absolute;
+    max-width : calc(var(--image-size) / 1.9);
+    max-height: calc(var(--image-size) / 1.9);
+    bottom    : calc(var(--image-size) / 20 * -1);
+    right     : calc(var(--image-size) / 20 * -1);
+    border    : calc(var(--image-size) / 20) solid white;
+}
+
+/**
+ * Vertical Aligns
+ */
+
+.ts.image.-top-aligned {
+    vertical-align: top;
+}
+.ts.image.-middle-aligned {
+    vertical-align: middle;
+}
+.ts.image.-bottom-aligned {
+    vertical-align: bottom;
+}
+
+/**
+ * Avatar
+ */
+
+.ts.image.-avatar,
+.ts.image.-avatar img,
+.ts.images.-avatar img {
+    --image-size: 2em;
+
+    margin-right: var(--distance-avatar);
+    display     : inline-block;
+    height      : var(--image-size);
+}
+
+/**
+ * Fluid
+ */
+
+.ts.image.-fluid,
+.ts.image.-fluid img,
+.ts.images.-fluid img {
+    display: block;
+    width  : 100%;
+    height : auto;
+}
+
+/**
+ * Link
+ */
+
+.ts.image.-link,
+.ts.images.-link img {
+    transform     : none;
+    transition    : box-shadow 0.1s ease, transform 0.1s ease;
+    vertical-align: top;
+}
+
+.ts.image.-link:hover,
+.ts.images.-link img:hover {
+    cursor    : pointer;
+    z-index   : 3;
+    box-shadow: 0px 1px 3px 0px rgba(var(--link-shadow-color));
+    transform : translateY(-3px);
+}
+
+/**
+ * Circular
+ */
+
+.ts.image.-circular,
+.ts.image.-circular img,
+.ts.images.-circular img {
+    border-radius: var(--border-radius-circular);
+}
+
+/**
+ * Spaced
+ */
+
+.ts.image.-spaced {
+    display     : inline-block !important;
+    margin-left : var(--distance-block);
+    margin-right: var(--distance-block);
+}
+.ts.image.-left-spaced {
+    display    : inline-block !important;
+    margin-left: var(--distance-block);
+}
+.ts.image.-right-spaced {
+    display     : inline-block !important;
+    margin-right: var(--distance-block);
+}
+
+/**
+ * Cropped
+ */
+
+.ts.image.-cropped,
+.ts.image.-cropped img,
+.ts.images.-cropped img {
+    object-fit: cover;
+}
+
+/**
+ * Bordered
+ */
+
+img.ts.image.-bordered,
+.ts.image.-bordered img,
+.ts.images.-bordered img {
+    border: 1px solid rgb(var(--border-color));
+}
+
+/**
+ * Polaroid
+ */
+
+img.ts.image.-polaroid,
+.ts.image.-polaroid img,
+.ts.images.-polaroid img {
+    border : 1px solid rgb(var(--border-color));
+    padding: 0.5rem;
+}
+
+/**
+ * Selected
+ */
+
+img.ts.image.-selected,
+.ts.image.-selected img,
+.ts.images.-selected img {
+    border: 3px solid rgb(var(--border-selected-color));
+}
+
+/**
+ * Rounded
+ */
+
+.ts.image.-rounded,
+.ts.images.-rounded {
+    border-radius: var(--border-radius);
+}
+
+/**
+ * Squared
+ */
+
+.ts.image.-squared,
+.ts.image.-squared img,
+.ts.images.-squared img {
+    width     : var(--image-size);
+    height    : var(--image-size);
+    object-fit: cover;
+}
+
+/**
+ * Sizes
+ */
+
+.ts.image.-mini,
+.ts.images.-mini {
+    --image-size: 16px;
+}
+.ts.image.-tiny,
+.ts.images.-tiny {
+    --image-size: 32px;
+}
+.ts.image.-small,
+.ts.images.-small {
+    --image-size: 64px;
+}
+.ts.image.-medium,
+.ts.images.-medium {
+    --image-size: 128px;
+}
+.ts.image.-large,
+.ts.images.-large {
+    --image-size: 178px;
+}
+.ts.image.-big,
+.ts.images.-big {
+    --image-size: 256px;
+}
+.ts.image.-huge,
+.ts.images.-huge {
+    --image-size: 512px;
+}
+.ts.image.-massive,
+.ts.images.-massive {
+    --image-size: 768px;
+}

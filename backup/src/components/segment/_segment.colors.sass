@@ -1,0 +1,51 @@
+// ==========================================================================
+// Colors
+// ==========================================================================
+
+.ts.segment
+    +define(border_indicated_color, get-static-color(gray, 800))
+    +define(border_outlined_color , get-static-color(gray, 400))
+
+    +define(color            , get-static-color(gray, 800))
+    +define(border_color     , get-static-color(gray, 200))
+    +define(background_color , get-static-color(gray, 50))
+
+    +define(border_secondary_color     , get-static-color(gray, 100))
+    +define(background_secondary_color , get-static-color(gray, 100))
+
+    +define(border_tertiary_color     , get-static-color(gray, 200))
+    +define(background_tertiary_color , get-static-color(gray, 200))
+
+// ==========================================================================
+// Emphasized
+// ==========================================================================
+
+@mixin segment-emphasis($name)
+    +emphasized($name)
+
+    +override(border_indicated_color, get-color($name, 500))
+    +override(border_outlined_color , get-color($name, 500))
+
+    &.-inverted,
+    &.-quiet
+        +override(color            , get-foreground-color($name, 800))
+        +override(border_color     , get-color($name, 500))
+        +override(background_color , get-color($name, 500))
+
+        +override(border_secondary_color     , get-color($name, 600))
+        +override(background_secondary_color , get-color($name, 600))
+
+        +override(border_tertiary_color     , get-color($name, 700))
+        +override(background_tertiary_color , get-color($name, 700))
+
+    &.-quiet,
+    &.-outlined
+    //    +override(color, get-color($name, 900))
+
+//-------------------//
+// Colors
+//-------------------//
+
++each-emphasis using ($emphasis)
+    .ts.segment[data-emphasis="#{$emphasis}"]
+        +segment-emphasis($emphasis)

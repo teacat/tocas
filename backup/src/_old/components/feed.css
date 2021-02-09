@@ -1,0 +1,307 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts.feed {
+    /**
+     * Block
+     */
+
+    --border-radius: var(--global__border-radius);
+
+    /**
+     * Distance
+     */
+
+    --distance-block       : var(--global__distance-block);
+    --distance-structure   : 0.5rem;
+    --distance-item        : 1.1rem;
+    --distance-item-relaxed: 1.7rem;
+
+    /**
+     * Typography
+     */
+
+    --font-size  : 1rem;
+    --line-height: var(--global__line-height);
+
+    /**
+     * Color
+     */
+
+    --color                  : var(--default__color);
+    --border-color           : var(--default__border-color);
+    --description-color      : var(--default__description-color);
+    --description-hover-color: var(--default__description-hover-color);
+    --divider-color          : var(--default__divider-color);
+    --line-color             : var(--default__line-color);
+    --link-color             : var(--default__link-color);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts.feed {
+    font-size  : var(--font-size);
+    color      : rgb(var(--color));
+    line-height: var(--line-height);
+}
+
+.ts.feed:first-child {
+    margin-block-start: 0;
+}
+
+.ts.feed:last-child {
+    margin-block-end: 0;
+}
+
+.ts.feed:not(:first-child) {
+    margin-block-start: var(--distance-block);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+/**
+ * Event
+ */
+
+.ts.feed > .event {
+    display: flex;
+}
+
+.ts.feed > .event:not(:last-child) {
+    margin-bottom: var(--distance-item);
+}
+
+/**
+ * Label
+ */
+
+.ts.feed > .event > .label {
+    margin-right: 0.8rem;
+    min-width   : 2.375em;
+    text-align  : center;
+}
+
+.ts.feed > .event > .label > img {
+    width         : 2.375em;
+    height        : 2.375em;
+    border-radius : var(--border-radius);
+    vertical-align: top;
+    margin-top    : 5px;
+}
+
+.ts.feed > .event > .label > i.icon {
+    background : #fff;
+    line-height: 1;
+    width      : calc(1.8rem);
+    font-size  : 0.9rem;
+    margin     : 0;
+}
+
+.ts.feed > .event > .label > i.icon::before {
+    font-size: 1.8em;
+}
+
+/**
+ * Content
+ */
+
+.ts.feed > .event > .content {
+    display        : flex;
+    flex-direction : column;
+    justify-content: center;
+}
+
+/**
+ * Link
+ */
+
+.ts.feed > .event > .content a {
+    color          : rgb(var(--link-color));
+    text-decoration: none;
+}
+
+.ts.feed > .event > .content a:hover {
+    text-decoration: underline;
+}
+
+/**
+ * Summary
+ */
+
+.ts.feed > .event > .content > .summary {
+    font-weight: 500;
+}
+
+/**
+ * Time
+ */
+
+.ts.feed > .event > .content > .summary > .time {
+    font-size  : 0.9375em;
+    line-height: 1;
+    color      : rgb(var(--description-color));
+    display    : inline;
+    margin-left: 0.25rem;
+}
+
+.ts.feed > .event > .content > .time {
+    font-size: 0.9375em;
+    color    : rgb(var(--description-color));
+}
+
+.ts.feed > .event > .content > .time:first-child {
+    margin-top: 0;
+}
+
+.ts.feed > .event > .content > .images + .time {
+    margin-top: var(--distance-structure);
+}
+
+/**
+ * Images
+ */
+
+.ts.feed > .event > .content > .images {
+    margin-top : var(--distance-structure);
+    display    : flex;
+    flex-wrap  : wrap;
+    align-items: flex-start;
+}
+
+.ts.feed > .event > .content > .images img {
+    display       : inline-block;
+    width         : 84px;
+    margin-right  : 0.25rem;
+    vertical-align: top;
+}
+
+/**
+ * Description
+ */
+
+.ts.feed > .event > .content > .images + .description {
+    margin-top: var(--distance-structure);
+}
+
+/**
+ * Meta
+ */
+
+.ts.feed > .event > .content > .meta {
+    font-size: 0.9375em;
+}
+
+.ts.feed > .event > .content > .images + .meta {
+    margin-top: var(--distance-structure);
+}
+
+/**
+ * Item
+ */
+
+.ts.feed > .event > .content > .meta > .item {
+    color          : rgb(var(--description-color));
+    text-decoration: none;
+}
+
+.ts.feed > .event > .content > .meta > a.item:hover {
+    color: rgb(var(--description-hover-color));
+}
+
+.ts.feed > .event > .content > .meta > .item:not(:first-child)::before {
+    margin        : 0 0.25rem;
+    font-family   : Tocas-Lato, Arial, sans-serif;
+    content       : "·";
+    pointer-events: none;
+    user-select   : none;
+    display       : inline-block; /** Remove underline */
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Relaxed
+ */
+
+.ts.feed.-relaxed {
+    --distance-item: var(--distance-item-relaxed);
+}
+
+/**
+ * Sizes
+ */
+
+.ts.feed.-mini {
+    font-size: 0.8125rem;
+}
+
+.ts.feed.-tiny {
+    font-size: 0.875rem;
+}
+
+.ts.feed.-small {
+    font-size: 0.9375rem;
+}
+
+.ts.feed.-large {
+    font-size: 1.0625rem;
+}
+
+.ts.feed.-big {
+    font-size: 1.125rem;
+}
+
+.ts.feed.-huge {
+    font-size: 1.1875rem;
+}
+
+.ts.feed.-massive {
+    font-size: 1.25rem;
+}
+
+/**
+ * Divided
+ */
+
+.ts.feed.-divided > .event:not(:last-child) {
+    padding-bottom: var(--distance-item);
+    border-bottom : 1px solid rgb(var(--divider-color));
+}
+
+/**
+ * Timelined
+ */
+
+.ts.feed.-timelined {
+    margin-left: 1.2em;
+}
+
+.ts.feed.-timelined > .event > .label {
+    position   : relative;
+    border-left: 3px solid rgb(var(--line-color));
+    min-width  : auto;
+}
+
+.ts.feed.-timelined > .event > .label > img,
+.ts.feed.-timelined > .event > .label > i.icon {
+    margin-top: 0;
+    position  : absolute;
+    left      : 50%;
+    transform : translateX(-50%);
+    width     : auto;
+}
+
+.ts.feed.-timelined > .event > .label > i.icon {
+    padding-bottom: 0.5rem;
+}
+
+.ts.feed.-timelined > .event > .content {
+    padding-left: 1.2em;
+}

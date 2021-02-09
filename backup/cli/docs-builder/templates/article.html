@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html data-scheme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/assets/styles/global.css" />
+        <link rel="stylesheet" href="/assets/styles/highlight.css" />
+        <link rel="stylesheet" href="/src/tocas.css" />
+        <link rel="stylesheet" href="/assets/styles/article.css" />
+        <script src="/assets/scripts/article.js"></script>
+        <script src="https://kit.fontawesome.com/535a1ce640.js" crossorigin="anonymous"></script>
+        <title>{{ .Article.Title }} | Tocas UI</title>
+    </head>
+    <body>
+        <div id="矚目看板">
+            <div class="界限容器">
+                <div id="矚目看板-導航列">
+                    <div id="矚目看板-導航列-主要欄位">
+                        <a href="/{{ index .Meta.Information.Path }}" class="矚目看板-導航列-項目 矚目看板-導航列-項目_商標">Tocas UI</a>
+                        <a href="/{{ index .Meta.Information.Path }}/getting-started" class="矚目看板-導航列-項目">{{ index .Meta.UI.Navigation "GettingStarted" }}</a>
+                        <a href="/{{ index .Meta.Information.Path }}/components/button" class="矚目看板-導航列-項目">{{ index .Meta.UI.Navigation "Components" }}</a>
+                        <a href="/{{ index .Meta.Information.Path }}/examples" class="矚目看板-導航列-項目">{{ index .Meta.UI.Navigation "Examples" }}</a>
+                        <a href="/{{ index .Meta.Information.Path }}/playground" class="矚目看板-導航列-項目">{{ index .Meta.UI.Navigation "Playground" }}</a>
+                    </div>
+                    <div id="矚目看板-導航列-次要欄位">
+                        <a href="#!" class="矚目看板-導航列-項目"><i id="矚目看板-導航列-項目-語系圖示" class="fas fa-language"></i> 台灣正體</a>
+                        <a href="https://github.com/teacat/tocas" target="_blank" class="矚目看板-導航列-項目">GitHub</a>
+                    </div>
+                </div>
+
+                <div id="矚目看板-標題">{{ .Article.Title }}</div>
+                <div id="矚目看板-說明">{{ .Article.Description | markdown }}</div>
+
+                {{ if or .Article.Usages.Behaviors .Article.Settings.Properties .Article.Settings.Callbacks }}
+                    <div id="矚目看板-分頁籤">
+                        {{ if .Article.Definitions }}
+                            <a href="#!" class="矚目看板-分頁籤-項目 矚目看板-分頁籤-項目_啟用的">基本樣式</a>
+                        {{ end }}
+                        {{ if .Article.Settings.Properties }}
+                            <a href="#!" class="矚目看板-分頁籤-項目">設定屬性</a>
+                        {{ end }}
+                        {{ if .Article.Settings.Callbacks }}
+                            <a href="#!" class="矚目看板-分頁籤-項目">回呼函式</a>
+                        {{ end }}
+                        {{ if .Article.Usages.Behaviors }}
+                            <a href="#!" class="矚目看板-分頁籤-項目">可用行為</a>
+                        {{ end }}
+                    </div>
+                {{ end }}
+            </div>
+        </div>
+
+        <div id="文件內容">
+            <div class="界限容器 界限容器_行排列">
+                <div id="文件內容-側邊索引">
+                    <div class="文件內容-側邊索引-標題">{{ index .Meta.UI.Navigation "GettingStarted" }}</div>
+                    <a href="/{{ index .Meta.Information.Path }}/introduction" class="文件內容-側邊索引-項目">
+                        <span class="文件內容-側邊索引-項目-文字">{{ index .Meta.UI.Navigation "Introduction" }}</span>
+                        <span class="文件內容-側邊索引-項目-英文">Introduction</span>
+                    </a>
+                    <a href="/{{ index .Meta.Information.Path }}/responsive" class="文件內容-側邊索引-項目">
+                        <span class="文件內容-側邊索引-項目-文字">{{ index .Meta.UI.Navigation "Responsive" }}</span>
+                        <span class="文件內容-側邊索引-項目-英文">Responsive</span>
+                    </a>
+                    <a href="/{{ index .Meta.Information.Path }}/emphasises" class="文件內容-側邊索引-項目">
+                        <span class="文件內容-側邊索引-項目-文字">{{ index .Meta.UI.Navigation "Emphasises" }}</span>
+                        <span class="文件內容-側邊索引-項目-英文">Emphasises</span>
+                    </a>
+
+                    {{ range $key, $value := .Meta.Components }}
+                        <div class="文件內容-側邊索引-標題">{{ index $.Meta.UI.ComponentsCategories $key }}</div>
+                        {{ range $value }}
+                            <a href="/{{ index $.Meta.Information.Path }}/components/{{ . | kebablize }}" class="文件內容-側邊索引-項目">
+                                <span class="文件內容-側邊索引-項目-文字">{{ index $.Meta.UI.Components . }}</span>
+                                {{ if ne (index $.Meta.UI.Components .) (. | capitalize) }}
+                                    <span class="文件內容-側邊索引-項目-英文">{{ . | capitalize }}</span>
+                                {{ end }}
+                            </a>
+                        {{ end }}
+                    {{ end }}
+                </div>
+
+                <div id="文件內容-主要欄位">
+
+                    <div id="文件內容-主要欄位-工具列">
+                        <div class="文件內容-主要欄位-工具列-項目">展開所有範例</div>
+                        <div class="文件內容-主要欄位-工具列-項目">
+                            <div class="文件內容-主要欄位-工具列-項目-標籤">
+                                明暗色系
+                            </div>
+                            <div class="文件內容-主要欄位-工具列-項目-下拉式選單">
+                                <div class="文件內容-主要欄位-工具列-項目-下拉式選單-文字">
+                                    <span class="文件內容-主要欄位-工具列-項目-下拉式選單-文字-標籤">
+                                        亮色
+                                    </span>
+                                    <i class="文件內容-主要欄位-工具列-項目-下拉式選單-文字-圖示 fas fa-chevron-down"></i>
+                                </div>
+                                <div class="文件內容-主要欄位-工具列-項目-下拉式選單-群組">
+                                    <div data-value="scheme,lightest" class="文件內容-主要欄位-工具列-項目-下拉式選單-群組-項目">
+                                        最亮的
+                                    </div>
+                                    <div data-value="scheme,light" class="文件內容-主要欄位-工具列-項目-下拉式選單-群組-項目 文件內容-主要欄位-工具列-項目-下拉式選單-群組-項目_啟用的">
+                                        亮色
+                                    </div>
+                                    <div data-value="scheme,dark" class="文件內容-主要欄位-工具列-項目-下拉式選單-群組-項目">
+                                        暗色
+                                    </div>
+                                    <div data-value="scheme,darkest" class="文件內容-主要欄位-工具列-項目-下拉式選單-群組-項目">
+                                        最暗的
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="文件內容-主要欄位-工具列-項目">
+                            <div class="文件內容-主要欄位-工具列-項目-標籤">
+                                縮放
+                            </div>
+                            <div class="文件內容-主要欄位-工具列-項目-下拉式選單">
+                                <div class="文件內容-主要欄位-工具列-項目-下拉式選單-文字">
+                                    <span class="文件內容-主要欄位-工具列-項目-下拉式選單-文字-標籤">
+                                        標準
+                                    </span>
+                                    <i class="文件內容-主要欄位-工具列-項目-下拉式選單-文字-圖示 fas fa-chevron-down"></i>
+                                </div>
+                                <div class="文件內容-主要欄位-工具列-項目-下拉式選單-群組">
+                                    <div data-value="scale,large" class="文件內容-主要欄位-工具列-項目-下拉式選單-群組-項目">
+                                        放大
+                                    </div>
+                                    <div data-value="scheme,medium" class="文件內容-主要欄位-工具列-項目-下拉式選單-群組-項目 文件內容-主要欄位-工具列-項目-下拉式選單-群組-項目_啟用的">
+                                        標準
+                                    </div>
+                                    <div data-value="scheme,small" class="文件內容-主要欄位-工具列-項目-下拉式選單-群組-項目">
+                                        縮小
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="文件內容-主要欄位-工具列-項目">
+                            <div class="文件內容-主要欄位-工具列-項目-標籤">
+                                密度
+                            </div>
+                            <div class="文件內容-主要欄位-工具列-項目-下拉式選單">
+                                <div class="文件內容-主要欄位-工具列-項目-下拉式選單-文字">
+                                    <span class="文件內容-主要欄位-工具列-項目-下拉式選單-文字-標籤">
+                                        標準
+                                    </span>
+                                    <i class="文件內容-主要欄位-工具列-項目-下拉式選單-文字-圖示 fas fa-chevron-down"></i>
+                                </div>
+                                <div class="文件內容-主要欄位-工具列-項目-下拉式選單-群組">
+                                    <div data-value="density,relaxed" class="文件內容-主要欄位-工具列-項目-下拉式選單-群組-項目">
+                                        寬鬆
+                                    </div>
+                                    <div data-value="density,medium" class="文件內容-主要欄位-工具列-項目-下拉式選單-群組-項目 文件內容-主要欄位-工具列-項目-下拉式選單-群組-項目_啟用的">
+                                        標準
+                                    </div>
+                                    <div data-value="density,compact" class="文件內容-主要欄位-工具列-項目-下拉式選單-群組-項目">
+                                        擁擠
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ if .Article.Settings.Properties }}
+                        <div class="文件內容-主要欄位-標題 文件內容-主要欄位-標題_分隔的">設定屬性</div>
+                        <div class="文件內容-主要欄位-說明">此模組有下列設定可供使用。欲更改已初始化的模組設定，請透過 setting 方法並傳入欲覆蓋的設定。</div>
+
+                        <table class="文件內容-主要欄位-規格表格">
+                            <thead>
+                                <tr>
+                                    <th><!--屬性名稱--></th>
+                                    <th>預設值</th>
+                                    <th>註釋</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{ range .Article.Settings.Properties }}
+                                    <tr>
+                                        <td>{{ .Key }}<span class="文件內容-主要欄位-規格表格-型態">{{ .Type | type }}</span></td>
+                                        <td><code class="文件內容-主要欄位-規格表格-函式碼">{{ .Default }}</code></td>
+                                        <td>{{ .Description }}</td>
+                                    </tr>
+                                {{ end }}
+                            </tbody>
+                        </table>
+                    {{ end }}
+
+                    {{ if .Article.Settings.Callbacks }}
+                        <div class="文件內容-主要欄位-標題 文件內容-主要欄位-標題_分隔的">回呼函式</div>
+                        <div class="文件內容-主要欄位-說明">透過設置回呼函式來在模組的特定時機執行指定的程式內容，回呼函式中的 this 本體物件會因為時機不同而有所異動。回呼函式需要被放置在設定裡一同傳入模組。</div>
+
+                        <table class="文件內容-主要欄位-規格表格">
+                            <thead>
+                                <tr>
+                                    <th><!--行為名稱--></th>
+                                    <th>觸發時機與參數</th>
+                                    <th>本體物件</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{ range .Article.Settings.Callbacks }}
+                                    <tr>
+                                        <td>{{ .Name }}</td>
+                                        <td>
+                                            {{ .Description }}
+                                            {{ if .Arguments }}
+                                                <hr class="文件內容-主要欄位-規格表格-分隔線"/>
+                                                <code class="文件內容-主要欄位-規格表格-函式碼">{{ .Name }} ({{ range $i, $e := .Arguments }}{{ if $i }}, {{ end }}<em class="文件內容-主要欄位-規格表格-函式碼-參數">{{ .Name }}</em>{{ end }})</code>
+                                                <ul class="文件內容-主要欄位-規格表格-參數清單">
+                                                    {{ range .Arguments }}
+                                                    <li class="文件內容-主要欄位-規格表格-參數清單-項目">
+                                                        {{ .Name }} <span class="文件內容-主要欄位-規格表格-型態">{{ .Type | type }}</span>
+                                                        <br>
+                                                        <span class="文件內容-主要欄位-規格表格-參數清單-項目-說明">{{ .Description }}</span>
+                                                    </li>
+                                                    {{ end }}
+                                                </ul>
+                                            {{ end }}
+                                        </td>
+                                        <td>
+                                            {{ .Context.Description }}
+                                            <hr class="文件內容-主要欄位-規格表格-分隔線"/>
+                                            <code class="文件內容-主要欄位-規格表格-函式碼">{{ .Context.Type | type }}</code>
+                                        </td>
+                                    </tr>
+                                {{ end }}
+                            </tbody>
+                        </table>
+                    {{ end }}
+
+                    {{ if .Article.Usages.Behaviors }}
+                        <div class="文件內容-主要欄位-標題 文件內容-主要欄位-標題_分隔的">可用行為</div>
+                        <div class="文件內容-主要欄位-說明">一個模組中有不少可用方法能夠呼叫並用以執行特定動作。欲執行一個模組的動作，透過下列用法即可。</div>
+
+                        <table class="文件內容-主要欄位-規格表格">
+                            <thead>
+                                <tr>
+                                    <th><!--行為名稱--></th>
+                                    <th>說明與參數</th>
+                                    <th>回傳內容</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{ range .Article.Usages.Behaviors }}
+                                <tr>
+                                    <td>{{ .Name }}</td>
+                                    <td>
+                                        {{ .Description }}
+                                        {{ if .Arguments }}
+                                            <hr class="文件內容-主要欄位-規格表格-分隔線"/>
+                                            <code class="文件內容-主要欄位-規格表格-函式碼">{{ .Name }} ({{ range $i, $e := .Arguments }}{{ if $i }}, {{ end }}<em class="文件內容-主要欄位-規格表格-函式碼-參數">{{ .Name }}{{ if not .Required }}?{{end}}</em>{{ end }})</code>
+                                            <ul class="文件內容-主要欄位-規格表格-參數清單">
+                                                {{ range .Arguments }}
+                                                <li class="文件內容-主要欄位-規格表格-參數清單-項目">
+                                                    {{ .Name }} <span class="文件內容-主要欄位-規格表格-型態">{{ .Type | type }}</span><!--{{ if .Required }}<small data-required>*必填</small>{{ end }}-->
+                                                    <br>
+                                                    <span class="文件內容-主要欄位-規格表格-參數清單-項目-說明">{{ .Description }}</span>
+                                                </li>
+                                                {{ end }}
+                                            </ul>
+                                        {{ end }}
+                                    </td>
+                                    <td>
+                                        {{ .Return.Description }}
+                                        <hr class="文件內容-主要欄位-規格表格-分隔線"/>
+                                        <code class="文件內容-主要欄位-規格表格-函式碼">{{ .Return.Type | type }}</code>
+                                    </td>
+                                </tr>
+                                {{ end }}
+                            </tbody>
+                        </table>
+                    {{ end }}
+
+                    {{ if .Article.Intro }}
+                        <div class="文件內容-主要欄位-標題">說明</div>
+                        <div class="文件內容-主要欄位-說明">{{ .Article.Intro | markdown }}</div>
+                    {{ end }}
+
+                    {{ range .Article.Definitions }}
+                        <div class="文件內容-主要欄位-標題 文件內容-主要欄位-標題_分隔的">{{ .Title }}</div>
+                        {{ if .Description }}
+                            <div class="文件內容-主要欄位-說明">{{ .Description | markdown }}</div>
+                        {{ end }}
+
+                        {{ if .Flags }}
+                            <table class="文件內容-主要欄位-規格表格">
+                                <thead>
+                                    <tr>
+                                        <th><!--行為名稱--></th>
+                                        <th>ISO 3166-2</th>
+                                        <th>別名</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{ range $k, $alias := .Flags }}
+                                    <tr>
+                                        <td><i class="ts flag" data-flag="{{ $k }}"></i></td>
+                                        <td><code class="文件內容-主要欄位-規格表格-函式碼">{{$k}}</code></td>
+                                        <td>
+                                            {{ range $i, $e := $alias }}{{ if $i }}, {{ end }}<code class="文件內容-主要欄位-規格表格-函式碼">{{ . }}</code>{{ end }}
+                                        </td>
+                                    </tr>
+                                    {{ end }}
+                                </tbody>
+                            </table>
+                        {{ end }}
+
+                        {{ range .Sections }}
+                            <div class="文件內容-主要欄位-元件">
+                                <div class="文件內容-主要欄位-元件-資訊標頭">
+                                    <div class="文件內容-主要欄位-元件-資訊標頭-標題欄位">
+                                        <a id="{{ .Title | anchor }}" href="#{{ .Title | anchor }}" class="文件內容-主要欄位-元件-資訊標頭-標題欄位-錨點"></a> {{ .Title }}
+                                    </div>
+                                    {{ if .HTML }}
+                                        <div class="文件內容-主要欄位-元件-資訊標頭-動作欄位">
+                                            <button class="文件內容-主要欄位-元件-資訊標頭-動作欄位-項目 文件內容-主要欄位-元件-資訊標頭-動作欄位-項目_切換原始碼">
+                                                <i class="fas fa-code 文件內容-主要欄位-元件-資訊標頭-動作欄位-項目-圖示"></i>
+                                                原始碼
+                                            </button>
+                                        </div>
+                                    {{ end }}
+                                </div>
+                                <div class="文件內容-主要欄位-元件-說明">{{ .Description | markdown }}</div>
+                                {{ if .HTML }}
+                                    <div class="文件內容-主要欄位-元件-展示區域">{{ .HTML | preview }}</div>
+                                    <div class="文件內容-主要欄位-元件-HTML原始碼">{{ .FormattedHTML }}</div>
+                                {{ end }}
+                                {{ if .Icons }}
+                                    <div class="文件內容-主要欄位-元件-圖示組">
+                                        {{ range .Icons }}
+                                            <div class="文件內容-主要欄位-元件-圖示組-單個圖示">
+                                                <i class="ts icon 文件內容-主要欄位-元件-圖示組-單個圖示-圖示" data-icon="{{ . }}"></i>
+                                                <span class="文件內容-主要欄位-元件-圖示組-單個圖示-標籤">{{ . }}</span>
+                                            </div>
+                                        {{ end }}
+                                    </div>
+                                {{ end }}
+                            </div>
+                        {{ end }}
+                    {{ end }}
+
+                    {{ if .Article.Relatives }}
+                    <div class="文件內容-主要欄位-相似元件提示">
+                        <div class="文件內容-主要欄位-相似元件提示-標題">在尋找相似的元件嗎？</div>
+                        <ul class="文件內容-主要欄位-相似元件提示-清單">
+                            {{ range $value := .Article.Relatives }}
+                                <li class="文件內容-主要欄位-相似元件提示-清單-單個項目">
+                                    <a class="文件內容-主要欄位-相似元件提示-清單-單個項目-連結" href="/{{ index $.Meta.Information.Path }}/components/{{ . | kebablize }}">{{ index $.Meta.UI.Components . }}</a>
+                                </li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                    {{ end }}
+                </div>
+
+                <div id="文件內容-內容索引">
+                    {{ range .Article.Definitions }}
+                        <div class="文件內容-內容索引-標題">{{ .Title }}</div>
+                        {{ range .Sections }}
+                            <a href="#{{ .Title | anchor }}" class="文件內容-內容索引-項目">
+                                <span class="文件內容-內容索引-項目-文字">{{ .Title }}</span>
+                                <span class="文件內容-內容索引-項目-重點">{{ .HTML | marked }}</span>
+                            </a>
+                        {{ end }}
+                    {{ end }}
+                    <button id="文件內容-內容索引-回到頂部">回到頂部</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="頁腳">
+            <div class="界限容器 界限容器_行排列">
+                <div id="頁腳-主要內容">
+                    <div id="頁腳-主要內容-導航列">
+                        <a href="#!" class="頁腳-主要內容-導航列-項目 頁腳-主要內容-導航列-項目_回到頂部" data-backtotop><i class="fas fa-arrow-up 頁腳-主要內容-導航列-項目-圖示"></i> {{ index .Meta.UI.Navigation "BackToTop" }}</a>
+                        <a href="https://github.com/teacat/tocas" target="_blank" class="頁腳-主要內容-導航列-項目" >GitHub</a>
+                        <a href="/{{ index .Meta.Information.Path }}/examples" class="頁腳-主要內容-導航列-項目" >{{ index .Meta.UI.Navigation "Examples" }}</a>
+                        <a href="/{{ index .Meta.Information.Path }}/about" class="頁腳-主要內容-導航列-項目" >{{ index .Meta.UI.Navigation "About" }}</a>
+                    </div>
+                    <div id="頁腳-主要內容-文字">
+                        {{ index .Meta.UI.Paragraph "Footer" | html }}
+                    </div>
+                    <div id="頁腳-主要內容-翻譯者">
+                        {{ index .Meta.UI.Paragraph "Translators" | translators }}
+                    </div>
+                </div>
+                <div id="頁腳-商標">
+                    <img id="頁腳-商標-圖片" src="/assets/images/logo.svg">
+                </div>
+            </div>
+        </div>
+
+        <div id="字型預載"></div>
+
+        <script type="text/javascript">
+            var mySocket = new WebSocket("ws://localhost:8081/ws");
+            mySocket.onmessage = function(e) {
+                console.log("reload: " + new Date().getTime())
+                var queryString = '?reload=' + new Date().getTime()
+
+                document.querySelectorAll('link[rel="stylesheet"]').forEach((e) => {
+                    e.href = e.href.replace(/\?.*|$/, queryString);
+                })
+            }
+        </script>
+    </body>
+</html>

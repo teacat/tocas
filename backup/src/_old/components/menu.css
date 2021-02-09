@@ -1,0 +1,840 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts.menu {
+    /**
+     * Typography
+     */
+
+    --font-size       : 1rem;
+    --line-height     : var(--global__line-height);
+    --disabled-opacity: var(--global__disabled-opacity);
+
+    /**
+     * Color
+     */
+
+    --color         : #333;
+    --border-color  : #f0f0f0;
+    --active-color  : #333;
+    --section-color : #777;
+    --selected-color: #01f;
+    --unread-color  : #777;
+
+    --item-background-hover-color   : #f8f8f8;
+    --item-background-active-color  : #ededed;
+    --item-background-selected-color: #d9d4ff;
+
+    --item-border-color: var(--border-color);
+
+    --indicating-active-border-color: #333;
+    --indicating-hover-border-color : #dbdbdb;
+
+    --section-horizontal-padding: calc(var(--item-horizontal-padding) / 2);
+    --section-vertical-padding  : calc(var(--item-vertical-padding) / 2);
+
+    /**
+     * Block
+     */
+
+    --border-radius: var(--global__border-radius);
+    --divider-color: var(--border-color);
+
+    /**
+     * Distance
+     */
+
+    --distance-secondary-item: 0.5rem;
+    --distance-section       : 1rem;
+    --distance-command-item  : 0.5rem;
+    --distance-text-item     : 1rem;
+
+    /**
+     * Command
+     */
+
+    --command-vertical-padding  : calc(var(--item-vertical-padding) / 2);
+    --command-horizontal-padding: calc(var(--item-horizontal-padding) / 2);
+    --command-background-color  : #f0f0f0;
+    --command-divider-color     : #333;
+
+    --command-item-vertical-padding  : calc(var(--item-vertical-padding) / 3);
+    --command-item-horizontal-padding: calc(var(--item-horizontal-padding) / 2);
+
+    /**
+     * Item
+     */
+
+    --item-vertical-padding  : 0.4rem;
+    --item-horizontal-padding: 1rem;
+
+    --item-relaxed-horizontal-padding     : 1.4rem;
+    --item-very-relaxed-horizontal-padding: 1.8rem;
+
+    --sub-item-color         : #777;
+    --sub-item-hover-color   : #666;
+    --sub-item-active-color  : #333;
+    --sub-item-selected-color: #01f;
+
+    --distance-sub-menu: 0.25rem;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts.menu {
+    display      : flex;
+    position     : relative;
+    box-sizing   : border-box;
+    font-size    : var(--font-size);
+    color        : var(--color);
+    line-height  : var(--line-height);
+    border-radius: var(--border-radius);
+    border       : 1px solid var(--border-color);
+}
+
+.ts.menu:first-child {
+    margin-block-start: 0;
+}
+
+.ts.menu:last-child {
+    margin-block-end: 0;
+}
+
+.ts.menu:not(:first-child) {
+    margin-block-start: var(--distance-block);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+/**
+ * Item
+ */
+
+.ts.menu .item {
+    padding        : var(--item-vertical-padding) var(--item-horizontal-padding);
+    text-decoration: none;
+    color          : inherit;
+    position       : relative;
+}
+
+.ts.menu a.item {
+    user-select: none;
+}
+
+.ts.menu a.item:hover {
+    background: var(--item-background-hover-color);
+}
+
+.ts.menu .item:first-child {
+    border-top-left-radius   : var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+}
+
+.ts.menu .item {
+    border-right: 1px solid var(--item-border-color);
+}
+
+/**
+ * Header
+ */
+
+.ts.menu .item.-header {
+    font-weight: 500;
+}
+
+/**
+ * Divider
+ */
+
+.ts.menu .divider {
+    border-right: 1px solid var(--divider-color);
+}
+
+.ts.menu.-vertical .divider {
+    border-right: 0;
+    border-top  : 1px solid var(--divider-color);
+}
+
+.ts.menu.-command.-vertical .divider {
+    --divider-color: var(--command-divider-color);
+
+    margin-bottom: var(--distance-command-item);
+}
+
+/**
+ * Section
+ */
+
+.ts.menu .item.-section {
+    font-weight: 500;
+    font-size  : 0.95em;
+    color      : var(--section-color);
+}
+
+.ts.menu:not(.-vertical) .item.-section {
+    padding-left : var(--section-horizontal-padding);
+    padding-right: var(--section-horizontal-padding);
+    margin-left  : var(--distance-section);
+}
+
+.ts.menu.-vertical .item.-section {
+    padding-top   : var(--section-vertical-padding);
+    padding-bottom: var(--section-vertical-padding);
+    margin-top    : var(--distance-section);
+}
+
+/**
+ * Menu
+ */
+
+.ts.menu .menu {
+    display: flex;
+}
+
+.ts.menu.-vertical .menu {
+    flex-direction: column;
+}
+
+.ts.menu .menu:not(.-right):not(.-bottom) {
+    font-size : 0.9375em;
+    margin-top: var(--distance-sub-menu);
+}
+
+.ts.menu .menu:not(.-right):not(.-bottom) .item {
+    --item-background-hover-color   : initial;
+    --item-background-active-color  : initial;
+    --item-background-selected-color: initial;
+    --item-border-color             : initial;
+    --item-vertical-padding         : 0;
+    --item-horizontal-padding       : 0;
+
+    color: var(--sub-item-color);
+}
+
+.ts.menu .menu:not(.-right):not(.-bottom) .item:not(:last-child) {
+    margin-bottom: 0.25rem;
+}
+
+.ts.menu .menu:not(.-right):not(.-bottom) .item:hover {
+    color: var(--sub-item-hover-color);
+}
+
+.ts.menu .menu:not(.-right):not(.-bottom) .item.-active,
+.ts.menu .menu:not(.-right):not(.-bottom) .item.-active:hover {
+    color: var(--sub-item-active-color);
+}
+
+.ts.menu .menu:not(.-right):not(.-bottom) .item.-disabled,
+.ts.menu .menu:not(.-right):not(.-bottom) .item.-disabled:hover {
+    opacity       : var(--disabled-opacity);
+    pointer-events: none;
+}
+
+/**
+ * Image
+ */
+
+.ts.menu .item.-image {
+    padding: 0;
+}
+
+.ts.menu .item.-image img:not(.ts) {
+    display   : block;
+    width     : 100%;
+    object-fit: cover;
+}
+
+/**
+ * Icon
+ */
+
+.ts.menu .item.-icon i.ts.icon {
+    margin-right: 0;
+    font-size   : 1.1em;
+    line-height : 1;
+}
+
+/* ==========================================================================
+   Item
+   ========================================================================== */
+
+/**
+ * Right Item
+ */
+
+.ts.menu .item.-right {
+    margin-right              : 0;
+    margin-left               : auto !important;
+    border-right              : none;
+    border-left               : 1px solid var(--item-border-color);
+    border-top-right-radius   : var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+/**
+ * Bottom Item
+ */
+
+.ts.menu .item.-bottom {
+    margin-top                : auto !important;
+    border-top                : 1px solid var(--item-border-color);
+    border-bottom-right-radius: var(--border-radius);
+    border-bottom-left-radius : var(--border-radius);
+}
+
+/**
+ * Centered Item
+ */
+
+.ts.menu .item.-centered {
+    margin     : 0 auto;
+    border-left: 1px solid var(--item-border-color);
+}
+
+.ts.menu .item.-centered + .item.-right {
+    margin-left: 0 !important;
+}
+
+.ts.menu.-vertical .item.-centered {
+    margin: auto 0;
+}
+
+/**
+ * Active
+ */
+
+.ts.menu .item.-active,
+.ts.menu .item.-active:hover {
+    background : var(--item-background-active-color);
+    color      : var(--active-color);
+    font-weight: 500;
+}
+
+/**
+ * Selected
+ */
+
+.ts.menu .item.-selected,
+.ts.menu .item.-selected:hover {
+    background : var(--item-background-selected-color);
+    color      : var(--selected-color);
+    font-weight: 500;
+}
+
+/**
+ * Dsiabled
+ */
+
+.ts.menu .item.-disabled,
+.ts.menu .item.-disabled:hover {
+    opacity       : var(--disabled-opacity);
+    pointer-events: none;
+}
+
+/**
+ * Unread
+ */
+
+.ts.menu .item.-unread::after {
+    content      : "";
+    background   : var(--unread-color);
+    border-radius: 50%;
+    font-size    : 0;
+    height       : 6px;
+    position     : absolute;
+    margin-left  : 2px;
+    top          : 25%;
+    width        : 6px;
+    z-index      : 2;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Vertical
+ */
+
+.ts.menu.-vertical {
+    flex-direction: column;
+}
+.ts.menu.-vertical .item {
+    border-right: 0;
+}
+.ts.menu.-vertical .item:not(:last-child) {
+    border-bottom: 1px solid var(--item-border-color);
+}
+
+.ts.menu.-vertical .item:first-child {
+    border-radius          : 0;
+    border-top-left-radius : var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
+
+.ts.menu.-vertical .item:last-child {
+    border-bottom-left-radius : var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+/**
+ * Secondary
+ */
+
+.ts.menu.-secondary {
+    --item-border-color: initial;
+
+    border: 0;
+}
+
+.ts.menu.-secondary .item.item.item.item {
+    border       : 0;
+    border-radius: var(--border-radius);
+}
+
+.ts.menu.-secondary .item:not(:last-child) {
+    margin-right: var(--distance-secondary-item);
+}
+
+.ts.menu.-secondary .menu.-right .item:first-child {
+    border-radius: var(--border-radius);
+}
+
+.ts.menu.-secondary.-vertical .item:not(:last-child) {
+    margin-right : 0;
+    margin-bottom: var(--distance-secondary-item);
+}
+
+/**
+ * Indicating
+ */
+
+.ts.menu.-indicating {
+    --item-background-hover-color : initial;
+    --item-background-active-color: initial;
+    --border-radius               : 0;
+
+    border       : 0;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.ts.menu.-indicating .item {
+    border  : 0;
+    position: relative;
+}
+
+.ts.menu.-indicating .item.-active::before {
+    position  : absolute;
+    content   : "";
+    bottom    : -2px;
+    right     : 0;
+    left      : 0;
+    height    : 2px;
+    z-index   : 1;
+    background: var(--indicating-active-border-color);
+}
+
+.ts.menu.-indicating .item:not(.-active):hover::before {
+    position  : absolute;
+    content   : "";
+    bottom    : -2px;
+    right     : 0;
+    left      : 0;
+    height    : 2px;
+    z-index   : 1;
+    background: var(--indicating-hover-border-color);
+}
+
+.ts.menu.-indicating.-vertical {
+    border-right : 2px solid var(--border-color);
+    border-bottom: 0;
+}
+
+.ts.menu.-indicating.-vertical .item::before,
+.ts.menu.-indicating.-vertical .item:not(.-active):hover::before {
+    bottom: 0;
+    top   : 0;
+    right : -2px;
+    left  : initial;
+    width : 2px;
+    height: auto;
+}
+
+.ts.menu.-indicating.-vertical .item {
+    border-bottom: 0;
+}
+
+/**
+ * Command
+ */
+
+.ts.menu.-command {
+    padding   : var(--command-vertical-padding) var(--command-horizontal-padding);
+    background: var(--command-background-color);
+}
+
+.ts.menu.-command .item {
+    --item-border-color: initial;
+
+    padding      : var(--command-item-vertical-padding) var(--command-item-horizontal-padding);
+    border-radius: var(--border-radius);
+}
+
+.ts.menu.-command .item.item.item.item {
+    border       : 0;
+    border-radius: var(--border-radius);
+}
+
+.ts.menu.-command .item:not(:last-child) {
+    margin-right: var(--distance-command-item);
+}
+
+.ts.menu.-command.-vertical .item:not(:last-child) {
+    margin-right : 0;
+    margin-bottom: var(--distance-command-item);
+}
+
+/**
+ * Right Menu
+ */
+
+.ts.menu .menu.-right {
+    margin-left: auto !important;
+}
+
+.ts.menu .menu.-right .item:first-child {
+    border-left              : 1px solid var(--item-border-color);
+    border-top-left-radius   : 0;
+    border-bottom-left-radius: 0;
+}
+
+.ts.menu.-indicating .menu.-right .item:first-child {
+    border-left: 0;
+}
+
+.ts.menu .menu.-right .item:last-child {
+    border-right              : none;
+    border-top-right-radius   : var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+/**
+ * Bottom Menu
+ */
+
+.ts.menu .menu.-bottom {
+    margin-top: auto !important;
+}
+
+.ts.menu .menu.-bottom .item:first-child {
+    border-top                : 1px solid var(--item-border-color);
+    border-radius             : 0;
+    border-bottom-left-radius : 0;
+    border-bottom-right-radius: 0;
+}
+
+.ts.menu .menu.-bottom.-indicating .item:first-child {
+    border-top: 0;
+}
+
+.ts.menu .menu.-bottom .item:last-child {
+    border-bottom-left-radius : var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+/**
+ * Icon
+ */
+
+.ts.menu.-icon .item i.ts.icon {
+    margin-right: 0;
+    font-size   : 1.1em;
+    line-height : 1;
+}
+
+/**
+ * Labeled Icon
+ */
+
+.ts.menu.-labeled-icon .item {
+    font-size : 0.9em;
+    min-width : 2.8rem;
+    text-align: center;
+}
+
+.ts.menu.-labeled-icon .item i.ts.icon {
+    margin-right: 0;
+    display     : block;
+    width       : auto;
+    font-size   : 1.6em;
+    line-height : 1.1;
+    margin-top  : 0.25rem;
+}
+
+/**
+ * Compact
+ */
+
+.ts.menu.-compact {
+    display: inline-flex;
+    margin : 0;
+}
+
+.ts.menu.-compact .item:last-child {
+    border-right              : 0;
+    border-top-right-radius   : var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+.ts.menu.-compact.-vertical .item:last-child {
+    border-right              : 0;
+    border-top-right-radius   : 0;
+    border-bottom-right-radius: var(--border-radius);
+}
+
+/**
+ * Fluid
+ */
+
+.ts.menu.-fluid {
+    border-radius: 0;
+    margin       : 0;
+}
+
+.ts.menu.-fluid .item,
+.ts.menu.fluid .menu.-right .item {
+    --border-radius: 0;
+}
+
+/**
+ * Fitted
+ */
+
+.ts.menu .item.-horizontally-fitted {
+    padding-left : 0;
+    padding-right: 0;
+}
+.ts.menu .item.-vertically-fitted {
+    padding-top   : 0;
+    padding-bottom: 0;
+}
+.ts.menu .item.-fitted {
+    padding: 0;
+}
+
+/**
+ * Aligns
+ */
+
+.ts.menu.-left-aligned,
+.ts.menu .item.-left-aligned {
+    text-align     : left;
+    justify-content: flex-start;
+}
+.ts.menu.-center-aligned,
+.ts.menu .item.-center-aligned {
+    text-align     : center;
+    justify-content: center;
+}
+.ts.menu.-right-aligned,
+.ts.menu .item.-right-aligned {
+    text-align     : right;
+    justify-content: flex-end;
+}
+
+/**
+ * Centered
+ */
+
+.ts.menu.-centered {
+    justify-content: center;
+}
+.ts.menu.-centered .item {
+    --border-radius: 0;
+}
+.ts.menu.-centered .item:first-child {
+    border-left: 1px solid var(--item-border-color);
+}
+.ts.menu.-centered .menu.-right {
+    position: absolute;
+    right   : 0;
+}
+
+/**
+ * Borderless
+ */
+
+.ts.menu.-borderless {
+    --item-border-color: initial;
+}
+
+/**
+ * Count
+ */
+
+.ts.menu.-one-item .item,
+.ts.menu.-two-item .item,
+.ts.menu.-three-item .item,
+.ts.menu.-four-item .item,
+.ts.menu.-five-item .item,
+.ts.menu.-six-item .item,
+.ts.menu.-seven-item .item,
+.ts.menu.-eight-item .item,
+.ts.menu.-nine-item .item,
+.ts.menu.-ten-item .item {
+    align-items    : center;
+    justify-content: center;
+    text-align     : center;
+}
+
+.ts.menu.-one-item .item {
+    flex: calc(1 / 1);
+}
+.ts.menu.-two-item .item {
+    flex: calc(1 / 2);
+}
+.ts.menu.-three-item .item {
+    flex: calc(1 / 3);
+}
+.ts.menu.-four-item .item {
+    flex: calc(1 / 4);
+}
+.ts.menu.-five-item .item {
+    flex: calc(1 / 5);
+}
+.ts.menu.-six-item .item {
+    flex: calc(1 / 6);
+}
+.ts.menu.-seven-item .item {
+    flex: calc(1 / 7);
+}
+.ts.menu.-eight-item .item {
+    flex: calc(1 / 8);
+}
+.ts.menu.-nine-item .item {
+    flex: calc(1 / 9);
+}
+.ts.menu.-ten-item .item {
+    flex: calc(1 / 10);
+}
+
+/**
+ * Stretched
+ */
+
+.ts.menu .item.-stretched {
+    flex: 1;
+}
+
+.ts.menu .item.-stretched + .item:last-child {
+    border-right: 0;
+}
+
+/**
+ * Evenly Divided
+ */
+
+.ts.menu.-evenly-divided .item {
+    flex           : 1;
+    align-items    : center;
+    justify-content: center;
+    text-align     : center;
+}
+
+.ts.menu.-evenly-divided .item:last-child {
+    --item-border-color: initial;
+}
+
+/**
+ * Sizes
+ */
+
+.ts.menu.-mini {
+    font-size: 0.8125rem;
+}
+
+.ts.menu.-tiny {
+    font-size: 0.875rem;
+}
+
+.ts.menu.-small {
+    font-size: 0.9375rem;
+}
+
+.ts.menu.-large {
+    font-size: 1.125rem;
+}
+
+.ts.menu.-big {
+    font-size: 1.25rem;
+}
+
+.ts.menu.-huge {
+    font-size: 1.5rem;
+}
+
+.ts.menu.-massive {
+    font-size: 1.75rem;
+}
+
+/**
+ * Attached
+ */
+
+.ts.menu.-top-attached {
+    margin-bottom             : 0;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius : 0;
+}
+.ts.menu.-attached {
+    margin-top   : 0;
+    margin-bottom: 0;
+    border-top   : 0;
+    border-radius: 0;
+}
+.ts.menu.-bottom-attached {
+    margin-top             : 0;
+    border-top             : 0;
+    border-top-right-radius: 0;
+    border-top-left-radius : 0;
+}
+
+/**
+ * Text
+ */
+
+.ts.menu.-text {
+    --item-border-color             : initial;
+    --item-vertical-padding         : 0;
+    --item-horizontal-padding       : 0;
+    --item-background-active-color  : initial;
+    --item-background-hover-color   : initial;
+    --item-background-selected-color: initial;
+
+    border: 0;
+}
+
+.ts.menu.-text .item {
+    user-select: text;
+}
+
+.ts.menu.-text .item:not(:last-child) {
+    margin-right: var(--distance-text-item);
+}
+
+/**
+ * Relaxed
+ */
+
+.ts.menu.-relaxed {
+    --item-horizontal-padding: var(--item-relaxed-horizontal-padding);
+}
+
+.ts.menu.-very-relaxed {
+    --item-horizontal-padding: var(--item-very-relaxed-horizontal-padding);
+}

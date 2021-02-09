@@ -1,0 +1,237 @@
+:root
+    +var-scope(image)
+
+@import ./image.variables
+@import ./image.colors
+
+// ==========================================================================
+// Base
+// ==========================================================================
+
+.ts.image
+    @extend %component
+
+    max-width : 100%
+    max-height: 100%
+    position  : relative
+    display   : inline-block
+
+    img
+        width         : get(image_size)
+        vertical-align: middle
+
+    // ==========================================================================
+    // Structure
+    // ==========================================================================
+
+    //-------------------//
+    // Content
+    //-------------------//
+
+    > .content
+        position       : absolute
+        top            : 0
+        bottom         : 0
+        right          : 0
+        left           : 0
+        display        : flex
+        align-items    : center
+        justify-content: center
+        flex-direction : column
+        text-rendering : optimizelegibility
+        text-shadow    : 0 0 3px get-shadow(600)
+        user-select    : none
+        color          : #FFF
+
+    //-------------------//
+    // Description
+    //-------------------//
+
+    > .description
+        color: get(description_color)
+
+    > .description + img
+        margin-top: 1rem
+
+    > img + .description
+        margin-top: 1rem
+
+    // ==========================================================================
+    // Types
+    // ==========================================================================
+
+    //-------------------//
+    // Initial
+    //-------------------//
+
+    &[data-initial]
+
+
+    //-------------------//
+    // Stacked
+    //-------------------//
+
+    &.-stacked
+
+    &.-tall-stacked
+
+    //-------------------//
+    // Floated
+    //-------------------//
+
+    &.-left-floated
+
+    &.-right-floated
+
+    //-------------------//
+    // Disabled
+    //-------------------//
+
+    &.-disabled
+
+    //-------------------//
+    // Hidden
+    //-------------------//
+
+    &.-hidden
+
+    //-------------------//
+    // Centered
+    //-------------------//
+
+    &.-centered
+
+    //-------------------//
+    // Aligns
+    //-------------------//
+
+    &.-left-aligned
+
+    &.-center-aligned
+
+    &.-right-aligned
+
+    //-------------------//
+    // Collapsed
+    //-------------------//
+
+    &.-collapsed
+
+    //-------------------//
+    // Related
+    //-------------------//
+
+    &.-related
+
+    //-------------------//
+    // Vertical Aligns
+    //-------------------//
+
+    &.-top-aligned
+
+    &.-middle-aligned
+
+    &.-bottom-aligned
+
+    //-------------------//
+    // Avatar
+    //-------------------//
+
+    &.-avatar
+
+    //-------------------//
+    // Fluid
+    //-------------------//
+
+    &.-fluid
+
+    //-------------------//
+    // Link
+    //-------------------//
+
+    &.-link
+
+    //-------------------//
+    // Circular
+    //-------------------//
+
+    &.-circular
+
+    //-------------------//
+    // Spaced
+    //-------------------//
+
+    &.-spaced
+
+    &.-left-spaced
+
+    &.-right-spaced
+
+    //-------------------//
+    // Cropped
+    //-------------------//
+
+    &.-cropped
+        object-fit: cover
+
+    //-------------------//
+    // Bordered
+    //-------------------//
+
+    &.-bordered
+
+    //-------------------//
+    // Polaroid
+    //-------------------//
+
+    &.-polaroid
+
+    //-------------------//
+    // Selected
+    //-------------------//
+
+    &.-selected
+
+    //-------------------//
+    // Rounded
+    //-------------------//
+
+    &.-rounded
+        border-radius: $global-border_radius
+
+    //-------------------//
+    // Squared
+    //-------------------//
+
+    &.-squared
+        width     : get(image_size)
+        height    : get(image_size)
+        object-fit: cover
+
+    //-------------------//
+    // Sizes
+    //-------------------//
+
+    &.-mini
+        +override(image_size, 16px)
+
+    &.-tiny
+        +override(image_size, 32px)
+
+    &.-small
+        +override(image_size, 64px)
+
+    &.-medium
+        +override(image_size, 128px)
+
+    &.-large
+        +override(image_size, 178px)
+
+    &.-big
+        +override(image_size, 256px)
+
+    &.-huge
+        +override(image_size, 512px)
+
+    &.-massive
+        +override(image_size, 768px)
