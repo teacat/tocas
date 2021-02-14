@@ -1,0 +1,268 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title      : 標籤
+Description: 帶有複雜內容的人名、物品或圖示標記。
+Type       : Article
+Intro      : |
+  標籤通常用來呈現使用者名稱或者與圖示、圖片搭配，如果你只是單純想要呈現一個數字（如：未讀數量）則可以考慮使用[計數徽章](./badge)元件。
+Relatives  :
+  - Badge
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Definitions:
+
+  - Title      : 種類
+    Description: 標籤有不同的種類。
+    Sections   :
+
+      - Title      : 標籤
+        Description: 一個最基本的標籤。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts [[label]]">標籤</div>
+
+      - Title      : 基本的
+        Description: 標籤可以只留下基本的結構。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts label [[-basic]]">高畫質影片</span>
+          <div class="ts label [[-basic]]">
+              大神ミオ
+              <div class="detail">Ōokami Mio</div>
+          </div>
+          <div class="ts label -left-image [[-basic]]">
+              <img src="!-user-!"> 宮風夕梨
+              <div class="detail">青梅竹馬</div>
+          </div>
+
+      - Title      : 連結的
+        Description: 就算一個標籤不是連結也能夠透過此樣式呈現出可互動的連結樣式。
+        Since      : 4.0.0
+        HTML       : |
+          <span class="ts label [[-link]]">T恤</span>
+          <a href="#!" class="ts label [[-link]]">短褲</a>
+
+      - Title      : 圖片的
+        Description: 圖片可以顯示在標籤的左、右側。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label [[-left-image]]">
+              <img src="!-user-!"> Yami Odymel
+          </div>
+          <div class="ts label [[-right-image]]">
+              Xiaoan <img src="!-user2-!">
+          </div>
+          <div class="ts label [[-left-image]]">
+              <img src="!-user3-!"> Karisu
+              <div class="detail">主持人</div>
+          </div>
+
+      - Title      : 圓形的
+        Description: 將標籤變成圓形。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label [[-circular]]">1</div>
+          <div class="ts label [[-circular]]">99+</div>
+          <div class="ts label -left-image [[-circular]]">
+              <img src="!-user3-!"> 卡莉絲
+          </div>
+
+      - Title      : 緊緻的
+        Description: 標籤內距可以縮減。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label [[-compact]]">1,624</div>
+
+      - Title      : 指向的
+        Description: 標籤可以看起來像是指向某個元素。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label [[-left-pointing]]">左邊</div>
+          <div class="ts label [[-right-pointing]]">右邊</div>
+          <div class="ts label [[-top-pointing]]">上面</div>
+          <div class="ts label [[-bottom-pointing]]">下面</div>
+
+      - Title      : 圖示的
+        Description: 在標籤內放置一些點綴或是具有功能的圖示。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label [[-left-icon]]">
+              <i class="ts icon" data-icon="envelope"></i> 未讀郵件
+              <div class="detail">142</div>
+          </div>
+          <div class="ts label [[-right-icon]]">
+              吳雨藍
+              <i class="ts icon" data-icon="user"></i>
+          </div>
+
+      - Title      : 水平的
+        Description: 水平的標籤可以用來符合附近文字間距。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label [[-horizontal]]">這個標籤</div> 很適合和文字放在一起。
+
+  - Title      : 內容
+    Description: 標籤的內容具有不同的性質。
+    Sections   :
+
+      - Title      : 關閉按鈕
+        Description: 你可以在標籤內擺置一個關閉按鈕，使這個標籤看起來可供關閉或移除。依照不同的標籤種類，關閉按鈕也會有不同的樣式。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label -left-image">
+              <img src="!-user-!"> Yami Odymel
+              <button class="[[close]]"></button>
+          </div>
+          <div class="ts label -basic">
+              衣服
+              <button class="[[close]]"></button>
+          </div>
+
+      - Title      : 詳情
+        Description: 用以詮釋標籤的內容。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label">
+              新郵件
+              <div class="[[detail]]">689</div>
+          </div>
+
+  - Title      : 狀態
+    Description: 標籤有不同的狀態。
+    Sections   :
+
+      - Title      : 已選取的
+        Description: 被選取的標籤會看起來特別顯眼。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label">柔軟</div>
+          <div class="ts label [[-selected]]">適中</div>
+          <div class="ts label">較硬</div>
+          <br>
+          <div class="ts label -basic">S</div>
+          <div class="ts label -basic">M</div>
+          <div class="ts label -basic [[-selected]]">L</div>
+
+      - Title      : 停用的
+        Description: 表示一個標籤已經不再可用。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label">白色</div>
+          <div class="ts label [[-disabled]]">黑色（缺貨中）</div>
+
+  - Title      : 外觀
+    Description: 標籤有著不同的外觀點綴。
+    Sections   :
+
+      - Title      : 尺寸
+        Description: 標籤可以有不同的大小尺寸。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label">預設</div>
+          <div class="ts label [[-large]]">大型</div>
+          <div class="ts label [[-big]]">巨大</div>
+          <div class="ts label [[-huge]]">超大</div>
+          <div class="ts label [[-massive]]">重量級</div>
+
+      - Title      : 附著的
+        Description: 標籤可以附著在其他元素的上、中或是下部分。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label [[-top-attached]]">吸附在上部</div>
+          <div class="ts {{segment}} -attached">
+              像這樣逆轉時間，我們此刻身在此處——
+          </div>
+          <div class="ts label [[-attached]]">吸附於中間</div>
+          <div class="ts {{segment}} -attached">
+              豈不代表從未發生？
+          </div>
+          <div class="ts label [[-bottom-attached]]">吸附於底部</div>
+
+      - Title      : 流動的
+        Description: 標籤的寬度可以填滿整個父容器。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label [[-fluid]]">初始版本</div>
+
+      - Title      : 角落浮動的
+        Description: 標籤可以浮起並附著在某個元素的角落，類似未讀計數那樣。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts {{segment}}">
+              <span>我曾經一統世界，只要一聲下令周遭便清晰可見。但現在每當夜晚來臨時，卻只能藏匿在暗影中躲避著那些年我曾屠殺的怪物們。每當我正視著它們的眼神，能夠看見的只有畏懼的心。村民們歡呼著我的歸來，而這正是我被稱呼為英雄的原因。上一秒還有說有笑，轉眼間——世界卻開始墮落；就像是原本平靜的生活要在眼前逃離一般，而我卻只能站在原地毫無作為。</span>
+              <div class="ts label [[-top-right-floated]]">右上標籤</div>
+              <div class="ts label [[-top-left-floated]]">左上標籤</div>
+              <div class="ts label [[-bottom-right-floated]]">右下標籤</div>
+              <div class="ts label [[-bottom-left-floated]]">左下標籤</div>
+          </div>
+
+      - Title      : 文字對齊
+        Description: 內容文字可以選擇靠左、中間或是右邊對齊。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label -fluid [[-left-aligned]]">靠左對齊</div>
+          <div class="ts label -fluid [[-center-aligned]]">置中對齊</div>
+          <div class="ts label -fluid [[-right-aligned]]">靠右對齊</div>
+
+      - Title      : 浮動的
+        Description: 標籤可以靠左或靠右浮動。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label [[-left-floated]]">靠左浮動</div>
+          <div class="ts label [[-right-floated]]">靠右浮動</div>
+
+      - Title      : 空垂直緞帶的
+        Description: 沒有任何文字的垂直緞帶很適合用來當作書籤或是特別標記。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts {{segment}}">
+              <a href="#!" class="ts label [[-left-vertical-ribbon]]"></a>
+              <p>從高空一躍而下潛入冰冷的海浪中，好似又回到以前那樣。只為戰勝恐懼而選擇了自私的結果，卻每次都奏效。在世界結束之前讓我們好好握緊雙手，因為結局早就清晰可見。</p>
+              <a href="#!" class="ts label [[-right-vertical-ribbon]]"></a>
+              <p>每秒鐘的滴答迴響都讓我更沉浸於妳，就這樣直到整點那刻玻璃才應聲破碎。零散的碎片映射出了我們的每個部份。窮追不捨地挺身而戰，卻一直看不到盡頭。如果我們的愛情是場悲劇，那為什麼你還在奮鬥？如果我們的愛情已經模糊不清，為什麼你還在試圖保持清澈？</p>
+          </div>
+
+      - Title      : 垂直緞帶的
+        Description: 緞帶標籤可以是垂直的。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts {{segment}}">
+              <a href="#!" class="ts label [[-left-vertical-ribbon]]">靠左</a>
+              <span>神奇標題</span>
+              <p>接到訊息後馬上放下手邊的工作，但卻遲遲無法得到你的回應。這麼長遠的距離總是會挑起爭端，但我願全心全意投注於妳。這個城鎮充滿了愚蠢的提示「祝妳幸福」這種話語充斥在任何地方。</p>
+              <a href="#!" class="ts label [[-right-vertical-ribbon]]">靠右</a>
+              <span>蹦蹦標題</span>
+              <p>掛掉電話的那瞬間，我就立刻出現在妳眼前；但現在情況不同，卻只能祝福妳過得一切安好。我常常等著那熟悉的聲音，但看不見妳的臉龐卻又讓我感到寂寞。喝醉酒大鬧了一番，只想好好找個床單慢慢地在角落消逝，但妳讓我放棄了這個念頭。</p>
+          </div>
+
+      - Title      : 緞帶的
+        Description: 標籤能夠以緞帶的方式呈現。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts {{segment}}">
+              <a href="#!" class="ts label [[-left-ribbon]]">靠左緞帶</a>
+              <span>神奇標題</span>
+              <p>從高空一躍而下潛入冰冷的海浪中，好似又回到以前那樣。只為戰勝恐懼而選擇了自私的結果，卻每次都奏效。在世界結束之前讓我們好好握緊雙手，因為結局早就清晰可見。</p>
+              <a href="#!" class="ts label [[-right-ribbon]]">靠右緞帶</a>
+              <span>蹦蹦標題</span>
+              <p>每秒鐘的滴答迴響都讓我更沉浸於妳，就這樣直到整點那刻玻璃才應聲破碎。零散的碎片映射出了我們的每個部份。窮追不捨地挺身而戰，卻一直看不到盡頭。如果我們的愛情是場悲劇，那為什麼你還在奮鬥？如果我們的愛情已經模糊不清，為什麼你還在試圖保持清澈？</p>
+          </div>
+
+      - Title      : 角落的
+        Description: 吸附在某個角落或是內容中，而且不會超出父容器。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts {{segment}}">
+              <span>我不會讓你就這樣在黑暗中消逝，何必未雨綢繆？你會過得很安全，所以牽起我的手吧。這個世界看起來無情又灰暗，但我和你依然存在，而我不會讓你就這樣消逝在黑暗中。不需要感到恐懼，只需保持信仰，正確的道路就在前方。</span>
+              <div class="ts label [[-top-right-attached]]">右上標籤</div>
+              <div class="ts label [[-top-left-attached]]">左上標籤</div>
+              <div class="ts label [[-bottom-right-attached]]">右下標籤</div>
+              <div class="ts label [[-bottom-left-attached]]">左下標籤</div>
+          </div>

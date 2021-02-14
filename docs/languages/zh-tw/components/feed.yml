@@ -1,0 +1,471 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title      : 動態消息
+Description: 呈現在某個時間範圍內所發生的所有事件。
+Type       : Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Definitions:
+
+  - Title      : 種類
+    Description: 動態消息具有不同的種類。
+    Sections   :
+
+      - Title      : 動態消息
+        Description: 一個最基本的動態消息。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts [[feed]]">
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a href="#!">箒木日向子</a> 剛剛建立了一個新的相簿。
+                          <div class="time">1 個小時前</div>
+                      </div>
+                      <div class="meta">
+                          <a href="#!" class="item">
+                              <i class="ts {{icon}}" data-icon="heart"></i> 4 個讚
+                          </a>
+                      </div>
+                  </div>
+              </div>
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user2-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a href="#!">アイ</a> 在她牆上分享了 2 張照片。
+                          <div class="time">1 個小時前</div>
+                      </div>
+                      <div class="images">
+                          <a href="#!"><img src="!-4:3-!"></a>
+                          <a href="#!"><img src="!-4:3-!"></a>
+                      </div>
+                      <div class="meta">
+                          <a href="#!" class="item">
+                              <i class="ts {{icon}}" data-icon="heart"></i> 1 個讚
+                          </a>
+                      </div>
+                  </div>
+              </div>
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a href="#!">ユウ</a> 在她牆上分享了這則貼文。
+                          <div class="time">1 天前</div>
+                      </div>
+                      <div class="description">
+                          <p>そんなに警戒しないでください。ただの、通りすがりですから</p>
+                      </div>
+                      <div class="meta">
+                          <a href="#!" class="item">
+                              <i class="ts {{icon}}" data-icon="heart"></i> 成為第一個讚的人
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+  - Title      : 內容
+    Description: 動態消息內可安插多個不同性質的內容。
+    Sections   :
+
+      - Title      : 事件
+        Description: 一個事件是組成動態消息的基本元件。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts feed">
+              <div class="[[event]]">
+                  <div class="content">
+                      今天什麼事情也都沒有發生。
+                  </div>
+              </div>
+          </div>
+
+      - Title      : 概要
+        Description: 用以加強詮釋事件的經過。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts feed">
+              <div class="event">
+                  <div class="content">
+                      <div class="[[summary]]">
+                          <a href="#!">大舘流花</a> 追蹤了 <a href="#!">海蔵もも</a>。
+                      </div>
+                  </div>
+              </div>
+              <div class="event">
+                  <div class="content">
+                      <div class="[[summary]]">
+                          <a href="#!">海蔵もも</a> 和 <a href="#!">大舘流花</a> 目前是朋友了。
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      - Title      : 標籤
+        Description: 一個事件可以帶有圖片或是圖示。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts feed">
+              <div class="event">
+                  <div class="[[label]]">
+                      <img src="!-user-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          你將 <a href="#!">Yami Odymel</a> 加入了 <a href="#!!">員工</a> 群組。
+                      </div>
+                  </div>
+              </div>
+              <div class="event">
+                  <div class="[[label]]">
+                      <i class="ts {{icon}}" data-icon="pencil-alt"></i>
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          你將該貼文發布至 <a href="#!">Yami Odymel</a> 的牆上。
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      - Title      : 時間
+        Description: 事件或者是其概要中可以帶有發生時間，且時間可以擺放在不同位置。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts feed">
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user-!">
+                  </div>
+                  <div class="content">
+                      <div class="[[time]]">
+                          51 分鐘前
+                      </div>
+                      <div class="summary">
+                          你追蹤了 <a href="#!">ミリャ・ブランコ</a>。
+                      </div>
+                  </div>
+              </div>
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          你和 <a href="#!">新田司</a> 成為朋友了。
+                          <div class="[[time]]">3 小時前</div>
+                      </div>
+                  </div>
+              </div>
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user2-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a href="#!">栗宮希実</a> 和 <a href="#!">伊波咲</a> 成為朋友了。
+                      </div>
+                      <div class="[[time]]">8 天前</div>
+                  </div>
+              </div>
+          </div>
+
+      - Title      : 註解
+        Description: 事件中可以插入額外的資訊。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts feed">
+              <div class="event">
+                  <div class="content">
+                      <div class="summary">
+                          <a href="#!">Yami Odymel</a> 在他牆上分享了這則貼文。
+                      </div>
+                      <div class="[[description]]">
+                          <p>「虛擬 YouTuber」是在 2016 年後期所出現的詞彙，拜絆愛（Kizuna Ai）所賜，這股潮流就這樣掀起了。你不需要真實地在實況前露臉，透過扮演 2D 虛擬角色，你就能夠成為一個虛擬 YouTuber。</p>
+                      </div>
+                      <div class="time">
+                          1 天前
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      - Title      : 圖片
+        Description: 事件中可以插入額外的圖片。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts feed">
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a href="#!">紬木沙羅</a> 新增了 2 張照片。
+                          <div class="time">4 個小時前</div>
+                      </div>
+                      <div class="[[images]]">
+                          <a href="#!"><img src="!-4:3-!"></a>
+                          <a href="#!"><img src="!-4:3-!"></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      - Title      : 中繼資料
+        Description: 帶有中繼資料的事件可以輔助呈現其數據資訊、功能動作。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts feed">
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a href="#!">Yami Odymel</a> 戳了你一下
+                      </div>
+                      <div class="[[meta]]">
+                          <a href="#!" class="item">
+                              <i class="ts {{icon}}" data-icon="heart"></i> 4 個讚
+                          </a>
+                          <a href="#!" class="item">
+                              <i class="ts {{icon}}" data-icon="comments"></i> 32 個回應
+                          </a>
+                          <a href="#!" class="item">
+                              清除
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+  - Title      : 外觀
+    Description: 動態消息有不同的外觀點綴。
+    Sections   :
+
+      - Title      : 寬鬆的
+        Description: 動態消息事件之間的空隙可以更加寬鬆。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts feed [[-relaxed]]">
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user-!">
+                  </div>
+                  <div class="content">
+                      <div class="time">
+                          51 分鐘前
+                      </div>
+                      <div class="summary">
+                          你追蹤了 <a href="#!">吳雨藍</a>。
+                      </div>
+                  </div>
+              </div>
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          你和 <a href="#!">吳雨藍</a> 成為朋友了。
+                          <div class="time">今天</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      - Title      : 分隔的
+        Description: 事件之間可以透過水平分隔線進行區隔。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts feed [[-divided]]">
+              <div class="event">
+                  <div class="content">
+                      <div class="summary">
+                          太陽出來了…
+                          <div class="time">4 分鐘前</div>
+                      </div>
+                  </div>
+              </div>
+              <div class="event">
+                  <div class="content">
+                      <div class="summary">
+                          天線寶寶要說你好了。
+                          <div class="time">剛剛</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      - Title      : 時間軸的
+        Description: 動態消息可以看起來像是透過時間串連起來的一樣。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts feed [[-timelined]]">
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a href="#!">佐藤理人</a> 剛剛成立了「<a href="#!">早安！我的朋友</a>」社團。
+                          <div class="time">3 分鐘前</div>
+                      </div>
+                      <div class="description">
+                          <p>各位快來加入我的超棒社團，你會擁有一個非常美妙且充實的人生！在這裡你可以學習到如何什麼事情都不做就可以度過一天的秘訣，而且這是你在網路上絕對找不到的方式。</p>
+                      </div>
+                  </div>
+              </div>
+              <div class="event">
+                  <div class="label">
+                      <i class="ts icon" data-icon="pencil-alt"></i>
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a href="#!">羽田白音</a> 剛剛編輯了 2 張照片。
+                          <div class="time">5 個小時前</div>
+                      </div>
+                      <div class="images">
+                          <a href="#!"><img src="!-4:3-!"></a>
+                          <a href="#!"><img src="!-4:3-!"></a>
+                      </div>
+                      <div class="meta">
+                          <a href="#!" class="item">
+                              <i class="ts icon" data-icon="heart"></i> 4 個讚
+                          </a>
+                      </div>
+                  </div>
+              </div>
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user2-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a href="#!">Yami Odymel</a> 在他牆上分享了這則貼文。
+                          <div class="time">3 天前</div>
+                      </div>
+                      <div class="description">
+                          <p>準備向令一個平行世界的你道歉，因為你將在這個世界有所作為。</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      - Title      : 尺寸
+        Description: 動態消息有提供不同的尺寸。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts feed [[-mini]]">
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a>Yami Odymel</a> 戳了你一下
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="ts feed [[-tiny]]">
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user2-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a>Yami Odymel</a> 戳了你一下
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="ts feed [[-small]]">
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user3-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a>Yami Odymel</a> 戳了你一下
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="ts feed">
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a>Yami Odymel</a> 戳了你一下
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="ts feed [[-large]]">
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user2-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a>Yami Odymel</a> 戳了你一下
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="ts feed [[-big]]">
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user3-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a>Yami Odymel</a> 戳了你一下
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="ts feed [[-huge]]">
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a>Yami Odymel</a> 戳了你一下
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="ts feed [[-massive]]">
+              <div class="event">
+                  <div class="label">
+                      <img src="!-user2-!">
+                  </div>
+                  <div class="content">
+                      <div class="summary">
+                          <a>Yami Odymel</a> 戳了你一下
+                      </div>
+                  </div>
+              </div>
+          </div>

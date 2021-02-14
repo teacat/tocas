@@ -5,6 +5,8 @@ import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 import multiInput from "rollup-plugin-multi-input";
 import css from "rollup-plugin-css-only";
+import path from "path";
+import sveltePreprocess from "svelte-preprocess";
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -36,15 +38,29 @@ export default {
         format: "iife",
         name: "app",
         file: "public/build/bundle.js",
-	},*/
+    },*/
     output: {
+        sourcemap: true,
+        format: "iife",
+        dir: "dist",
+    },
+    /*output: {
         dir: "dist",
         format: "es",
         sourcemap: true,
-    },
+    },*/
     plugins: [
-        multiInput(),
+        multiInput({
+            relative: "components/",
+            transformOutputPath: (output, input) => `${path.basename(output)}`,
+        }),
         svelte({
+            preprocess: sveltePreprocess({
+                sourceMap: !production,
+                defaults: {
+                    style: "sass",
+                },
+            }),
             compilerOptions: {
                 // enable run-time checks when not in production
                 dev: !production,

@@ -1,0 +1,387 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title      : 統計數據
+Description: 用來顯示某個數據的統計數字並新增闡述該數值含義的標籤。
+Type       : Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Definitions:
+
+  - Title      : 種類
+    Description: 統計數據具有不同的種類。
+    Sections   :
+
+      - Title      : 統計數據
+        Description: 一個最基本的統計數據。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts [[statistic]]">
+              <div class="value">42,689</div>
+              <div class="label">拜訪次數</div>
+          </div>
+
+  - Title      : 內容
+    Description: 統計數據中包有不同性質的內容。
+    Sections   :
+
+      - Title      : 數值
+        Description: 包含主要統計數據的數字、數值，其中也可以帶有圖示、文字或圖片。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts statistic">
+              <div class="[[value]]">724</div>
+              <div class="label">下載次數</div>
+          </div>
+          <div class="ts statistic">
+              <div class="[[value]] -text">
+                  三千六百<br>
+                  八十萬
+              </div>
+              <div class="label">檢視次數</div>
+          </div>
+          <div class="ts statistic">
+              <div class="[[value]]">
+                  <i class="ts {{icon}}" data-icon="flag"></i> 32
+              </div>
+              <div class="label">已佔據</div>
+          </div>
+          <div class="ts statistic">
+              <div class="[[value]]">
+                  <img src="!-user-!"> Infinity-S
+              </div>
+              <div class="label">人氣最高</div>
+          </div>
+
+      - Title      : 標籤
+        Description: 用來告訴使用者這個數據的含義，標籤也可以放在數值的上方。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts statistic">
+              <div class="value">315</div>
+              <div class="[[label]]">點擊次數</div>
+          </div>
+          <div class="ts statistic">
+              <div class="[[label]]">會員總數</div>
+              <div class="value">3,591</div>
+          </div>
+
+      - Title      : 圖示
+        Description: 你可以在數值中增加圖示來輔助說明。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts statistic">
+              <div class="value">
+                  <i class="ts [[icon]]" data-icon="eye"></i> 1,234 次
+              </div>
+              <div class="label">觀看次數</div>
+          </div>
+          <div class="ts statistic">
+              <div class="value">
+                  <i class="ts [[icon]]" data-icon="clock"></i> 3 小時前
+              </div>
+              <div class="label">最後更新日期</div>
+          </div>
+
+      - Title      : 文字數值
+        Description: 數值可以是文字而非數字且適用於多國語系。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts statistic">
+              <div class="value [[-text]]">
+                  三千六百<br>
+                  八十萬
+              </div>
+              <div class="label">下載次數</div>
+          </div>
+          <div class="ts statistic">
+              <div class="value [[-text]]">
+                  あなたの始まりは<br>
+                  私の終わりです。
+              </div>
+              <div class="label">日文語句</div>
+          </div>
+          <div class="ts statistic">
+              <div class="value [[-text]]">
+                  Thirty-six<br>
+                  hundred
+              </div>
+              <div class="label">英文數值</div>
+          </div>
+
+      - Title      : 圖片
+        Description: 數值中可以擺放圖片來輔助標示，例如：呈現誰屬於第一名…等。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts statistic">
+              <div class="value">
+                  <[[img]] src="!-user-!"> 羽田白音
+              </div>
+              <div class="label">穿越傳送門最多數</div>
+          </div>
+          <div class="ts statistic">
+              <div class="value">
+                  <[[img]] src="!-user2-!"> 卡莉絲
+              </div>
+              <div class="label">最高光能擊殺數</div>
+          </div>
+
+      - Title      : 單位
+        Description: 數值裡可以擺放單位用以呈現更精準的內容。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts statistic">
+              <div class="value">
+                  <div class="[[unit]]">售價</div>
+                  1,583
+                  <div class="[[unit]]">元</div>
+              </div>
+          </div>
+
+      - Title      : 異動數值
+        Description: 顯示與上次的差距數值，這可以是增加、減少或是自訂異動值。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts statistic">
+              <div class="value">
+                  892
+                  <div class="[[increment]]">32</div>
+              </div>
+              <div class="label">觀看次數</div>
+          </div>
+          <div class="ts statistic">
+              <div class="value">
+                  18
+                  <div class="[[decrement]]">32</div>
+              </div>
+              <div class="label">收藏次數</div>
+          </div>
+          <div class="ts statistic">
+              <div class="value">
+                  1,725
+                  <div class="[[fluctuation]]">163+</div>
+              </div>
+              <div class="label">購買次數</div>
+          </div>
+
+  - Title      : 外觀
+    Description: 你也可以更改統計數據的外觀。
+    Sections   :
+
+      - Title      : 異動的
+        Description: 統計數據本身可以直接被標明異動值為新增或是減少。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts statistic [[-increased]]">
+              <div class="value">
+                  53.7
+              </div>
+              <div class="label">本日開盤</div>
+          </div>
+          <div class="ts statistic [[-decreased]]">
+              <div class="value">
+                  8.4
+              </div>
+              <div class="label">昨日數量</div>
+          </div>
+
+      - Title      : 水平的
+        Description: 統計數據的內容排列方式能以水平呈現。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts statistic [[-horizontal]]">
+              <div class="value">42,689</div>
+              <div class="label">拜訪次數</div>
+          </div>
+
+      - Title      : 置中的
+        Description: 你可以絕對置中一個統計數據的位置。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts statistic [[-centered]]">
+              <div class="value">1,450</div>
+              <div class="label">便當訂餐數</div>
+          </div>
+
+      - Title      : 文字對齊
+        Description: 統計數據的文字對齊是可以變更的，例如對齊左邊而不是中間。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts statistic [[-left-aligned]]">
+              <div class="value">4,329</div>
+              <div class="label">安裝次數</div>
+          </div>
+          <div class="ts statistic [[-center-aligned]]">
+              <div class="value">32,487</div>
+              <div class="label">移除次數</div>
+          </div>
+          <div class="ts statistic [[-right-aligned]]">
+              <div class="value">2,847</div>
+              <div class="label">推薦次數</div>
+          </div>
+
+      - Title      : 垂直對齊
+        Description: 在水平統計數據中，文字可以更改垂直對齊方式。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts statistic -horizontal [[-top-aligned]]">
+              <div class="value">418</div>
+              <div class="label">下載次數</div>
+          </div>
+          <div class="ts statistic -horizontal [[-middle-aligned]]">
+              <div class="value">293</div>
+              <div class="label">更新次數</div>
+          </div>
+          <div class="ts statistic -horizontal [[-bottom-aligned]]">
+              <div class="value">742</div>
+              <div class="label">留言次數</div>
+          </div>
+
+      - Title      : 數量寬度
+        Description: 統計數據的寬度可以從 `one` 到 `ten` 依照預定好的數量去劃分。這意味著當設置在 `three` 時，就算統計數據只有兩個，寬度依然會是三分之一而非自動調整為二分之一。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts statistics -center-aligned [[-three]]">
+              <div class="ts statistic">
+                  <div class="value">1,463</div>
+                  <div class="label">下載次數</div>
+              </div>
+              <div class="ts statistic">
+                  <div class="value">361</div>
+                  <div class="label">觀看次數</div>
+              </div>
+          </div>
+
+      - Title      : 分隔的
+        Description: 統計數據群組可以有分隔線劃分開每個統計項目。
+        Since      : 4.0.0
+        Remove     :
+          - <br><br>
+        HTML       : |
+          <div class="ts statistics [[-divided]]">
+              <div class="ts statistic">
+                  <div class="value">163</div>
+                  <div class="label">點擊次數</div>
+              </div>
+              <div class="ts statistic">
+                  <div class="value">12</div>
+                  <div class="label">購買次數</div>
+              </div>
+              <div class="ts statistic">
+                  <div class="value">2,847</div>
+                  <div class="label">評價次數</div>
+              </div>
+          </div>
+          <br><br>
+          <div class="ts statistics -horizontal [[-divided]]">
+              <div class="ts statistic">
+                  <div class="value">163</div>
+                  <div class="label">點擊次數</div>
+              </div>
+              <div class="ts statistic">
+                  <div class="value">12</div>
+                  <div class="label">購買次數</div>
+              </div>
+              <div class="ts statistic">
+                  <div class="value">2,847</div>
+                  <div class="label">評價次數</div>
+              </div>
+          </div>
+
+      - Title      : 流動的
+        Description: 如果你不想手動指定統計數據的寬度，你可以讓統計數據群組變成流動寬度。這會直接貼滿父容器的寬度並自動均分。
+        Since      : 4.0.0
+        Remove     :
+          - <br><br>
+        HTML       : |
+          <div class="ts statistics -divided -center-aligned [[-fluid]]">
+              <div class="ts statistic">
+                  <div class="value">4,712</div>
+                  <div class="label">註冊人數</div>
+              </div>
+              <div class="ts statistic">
+                  <div class="value">1,394</div>
+                  <div class="label">昨日登入</div>
+              </div>
+          </div>
+          <br><br>
+          <div class="ts statistics -horizontal -divided [[-fluid]]">
+              <div class="ts statistic">
+                  <div class="value">4,712</div>
+                  <div class="label">註冊人數</div>
+              </div>
+              <div class="ts statistic">
+                  <div class="value">1,394</div>
+                  <div class="label">昨日登入</div>
+              </div>
+          </div>
+
+      - Title      : 浮動的
+        Description: 統計數據可以是浮動靠左或靠右。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts {{segment}}">
+              <div class="ts statistic [[-right-floated]]">
+                  <div class="value">
+                      2,204
+                  </div>
+                  <div class="label">
+                      觀看次數
+                  </div>
+              </div>
+              <p>Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos choro alterum definiebas in.
+                  Vim dolorum definiebas an. Mei ex natum rebum iisque.</p>
+              <div class="ts statistic [[-left-floated]]">
+                  <div class="value">
+                      2,204
+                  </div>
+                  <div class="label">
+                      觀看次數
+                  </div>
+              </div>
+              <p>Eu quo homero blandit intellegebat. Incorrupte consequuntur mei id. Mei ut facer dolores adolescens, no illum aperiri quo, usu odio brute at. Qui te porro electram, ea dico facete utroque quo. Populo quodsi te eam, wisi everti eos ex, eum elitr altera
+                  utamur at. Quodsi convenire mnesarchum eu per, quas minimum postulant per id.</p>
+          </div>
+
+      - Title      : 尺寸
+        Description: 統計數據有不同的尺寸可供選擇。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts statistic [[-mini]]">
+              <div class="value">42,689</div>
+              <div class="label">迷你尺寸</div>
+          </div>
+          <div class="ts statistic [[-tiny]]">
+              <div class="value">42,689</div>
+              <div class="label">微小尺寸</div>
+          </div>
+          <div class="ts statistic [[-small]]">
+              <div class="value">42,689</div>
+              <div class="label">小型尺寸</div>
+          </div>
+          <div class="ts statistic">
+              <div class="value">42,689</div>
+              <div class="label">一般尺寸</div>
+          </div>
+          <div class="ts statistic [[-large]]">
+              <div class="value">42,689</div>
+              <div class="label">稍大尺寸</div>
+          </div>
+          <div class="ts statistic [[-big]]">
+              <div class="value">42,689</div>
+              <div class="label">大型尺寸</div>
+          </div>
+          <div class="ts statistic [[-huge]]">
+              <div class="value">42,689</div>
+              <div class="label">巨大尺寸</div>
+          </div>
+          <div class="ts statistic [[-massive]]">
+              <div class="value">42,689</div>
+              <div class="label">重量級尺寸</div>
+          </div>

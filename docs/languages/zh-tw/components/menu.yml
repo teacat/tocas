@@ -1,0 +1,628 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title      : 選單
+Description: 一個能夠提供網頁導覽或是功能的選單。
+Type       : Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Definitions:
+
+  - Title      : 種類
+    Description: 選單具有不同的種類。
+    Sections   :
+
+      - Title      : 選單
+        Description: 一個原生選單。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts [[menu]]">
+              <a href="#!" class="item">首頁</a>
+              <a href="#!" class="item">關於</a>
+              <a href="#!" class="item">文件</a>
+          </div>
+
+      - Title      : 垂直的
+        Description: 選單的項目排序方式可以是垂直上下的。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-vertical]]">
+              <a href="#!" class="item">檔案總管</a>
+              <a href="#!" class="item -active">搜尋</a>
+              <a href="#!" class="item">擴充套件</a>
+          </div>
+
+      - Title      : 次要的
+        Description: 一個比較不重要的選單，這個選單沒有背景顏色和框線。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-secondary]]">
+              <a href="#!" class="item -active">環保</a>
+              <a href="#!" class="item">產品</a>
+              <a href="#!" class="item">報表</a>
+          </div>
+
+      - Title      : 指向的
+        Description: 指向的選單會讓被啟用的項目會看起來指向某個地方。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-pointing]]">
+              <a href="#!" class="item">新聞</a>
+              <a href="#!" class="item -active">關於</a>
+              <a href="#!" class="item">規範</a>
+          </div>
+
+      - Title      : 指示的
+        Description: 被啟用的項目會看起來像是有一個指示標記的樣子。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-indicating]]">
+              <a href="#!" class="item -active">好友</a>
+              <a href="#!" class="item">訊息</a>
+              <a href="#!" class="item">推薦</a>
+          </div>
+          <div class="ts menu -vertical [[-indicating]]">
+              <a href="#!" class="item -active">好友</a>
+              <a href="#!" class="item">訊息</a>
+              <a href="#!" class="item">推薦</a>
+          </div>
+
+      - Title      : 動作的
+        Description: 動作選單呈現了一個比較陰沉的顏色，讓人能夠意識到這與導覽選單不同。且功能按鈕皆會往內收縮呈現出一個工作列的感覺。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-command]]">
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="print"></i> 列印
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="redo"></i> 重新整理
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="plus"></i> 建立
+              </a>
+          </div>
+
+      - Title      : 圖示的
+        Description: 選單的項目可以都僅有圖示而沒有其他元素或文字。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-icon]]">
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="search"></i>
+              </a>
+              <a href="#!" class="item -active">
+                  <i class="ts {{icon}}" data-icon="envelope"></i>
+              </a>
+              <a href="#!" class="item -disabled">
+                  <i class="ts {{icon}}" data-icon="user"></i>
+              </a>
+          </div>
+
+      - Title      : 圖示標籤的
+        Description: 你還可以在圖示選單中擺放帶有文字作為輔助的項目。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-labeled-icon]]">
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="search"></i> 搜尋
+              </a>
+              <a href="#!" class="item -active">
+                  <i class="ts {{icon}}" data-icon="envelope"></i> 電子郵件
+              </a>
+              <a href="#!" class="item -disabled">
+                  <i class="ts {{icon}}" data-icon="user"></i> 使用者
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="times"></i> 刪除
+              </a>
+          </div>
+          <div class="ts menu -vertical -compact [[-labeled-icon]]">
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="search"></i> 搜尋
+              </a>
+              <a href="#!" class="item -active">
+                  <i class="ts {{icon}}" data-icon="envelope"></i> 電子郵件
+              </a>
+              <a href="#!" class="item -disabled">
+                  <i class="ts {{icon}}" data-icon="user"></i> 使用者
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="times"></i> 刪除
+              </a>
+          </div>
+
+      - Title      : 文字的
+        Description: 選單也可以是僅擺放文字的。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-text]]">
+              <a href="#!" class="item -header">排序優先</a>
+              <a href="#!" class="item -active">最新的</a>
+              <a href="#!" class="item">最多留言</a>
+              <a href="#!" class="item">最熱門</a>
+          </div>
+
+      - Title      : 展開式選單
+        Description: 水平的標籤可以用來符合附近文字間距。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label [[-horizontal]]">這個標籤</div> 很適合和文字放在一起。
+
+  - Title      : 內容
+    Description: 一個選單具有不同內容。
+    Sections   :
+
+      - Title      : 圖示
+        Description: 項目裡可以放置圖示。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu -vertical -compact">
+              <a href="#!" class="item">
+                  <i class="ts [[icon]]" data-icon="search"></i> 搜尋
+              </a>
+              <a href="#!" class="item -active">
+                  <i class="ts [[icon]]" data-icon="envelope"></i> 電子郵件
+              </a>
+              <a href="#!" class="item -disabled">
+                  <i class="ts [[icon]]" data-icon="user"></i> 使用者
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts [[icon]]" data-icon="times"></i> 刪除
+              </a>
+          </div>
+
+      - Title      : 標籤
+        Description: 選單內可以擺放計數標籤。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu">
+              <a href="#!" class="item">
+                  <div class="ts [[label]]">99+</div>
+                  動態軸
+              </a>
+              <a href="#!" class="item -active">
+                  <div class="ts [[label]]">12</div>
+                  電子郵件
+              </a>
+              <a href="#!" class="item -disabled">
+                  <div class="ts [[label]]">3</div>
+                  訊息
+              </a>
+          </div>
+          <div class="ts menu -vertical -compact">
+              <a href="#!" class="item">
+                  <div class="ts [[label]]">84</div>
+                  好友通知
+              </a>
+              <a href="#!" class="item -active">
+                  <div class="ts [[label]]">2</div>
+                  附近的店家
+              </a>
+          </div>
+
+      - Title      : 分隔線
+        Description: 你可以在選單中放置分隔線用以區隔項目。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu -vertical -compact -borderless">
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="image"></i> 相簿
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="music"></i> 音樂
+              </a>
+              <div class="[[divider]]"></div>
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="sign-out-alt"></i> 登出
+              </a>
+          </div>
+
+      - Title      : 子選單
+        Description: 選單的項目內還可以再有一層選單。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu -vertical -compact" style="width: 280px">
+              <div class="item">
+                  首頁功能
+                  <div class="[[menu]]">
+                      <a href="#!" class="item -active">搜尋</a>
+                      <a href="#!" class="item -disabled">新增</a>
+                      <a href="#!" class="item">移除</a>
+                  </div>
+              </div>
+              <a href="#!" class="item">瀏覽</a>
+              <a href="#!" class="item">訊息</a>
+          </div>
+
+      - Title      : 選單對齊
+        Description: 選單裡可以有某些群組項目是特別置右或是置底的。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu">
+              <a href="#!" class="item">首頁</a>
+              <div class="menu [[-right]]">
+                  <a class="item">貼文</a>
+                  <a class="item">照片</a>
+              </div>
+          </div>
+          <div class="ts menu -vertical -compact" style="height: 200px">
+              <a href="#!" class="item">個人檔案</a>
+              <div class="menu [[-bottom]]">
+                  <a href="#!" class="item">偏好設定</a>
+                  <a href="#!" class="item">登出</a>
+              </div>
+          </div>
+
+  - Title      : 項目
+    Description: 選單裡的項目各別擁有自己的點綴樣式。
+    Sections   :
+
+      - Title      : 標題項目
+        Description: 項目也可以含有標誌性文字，這會讓某個選項特別顯眼或粗體。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu -borderless">
+              <a href="#!" class="item [[-header]]">首頁</a>
+              <a href="#!" class="item">關於</a>
+              <a href="#!" class="item">文件</a>
+          </div>
+
+      - Title      : 區段項目
+        Description: 一個區段項目可以安插在項目之間作個段落區分。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu -vertical -borderless">
+              <a href="#!" class="item">首頁</a>
+              <a href="#!" class="item">探索</a>
+              <div class="item [[-section]]">個人功能</div>
+              <a href="#!" class="item">相簿</a>
+              <a href="#!" class="item">影片</a>
+          </div>
+
+      - Title      : 圖示項目
+        Description: 某個指定的項目可以只包含圖示。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu">
+              <a href="#!" class="item [[-icon]]">
+                  <i class="ts {{icon}}" data-icon="home"></i>
+              </a>
+              <a href="#!" class="item">新聞</a>
+              <a href="#!" class="item -right">GitHub</a>
+          </div>
+
+      - Title      : 圖片項目
+        Description: 選單內的項目也可以擺放單張圖片。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu -vertical -compact">
+              <a href="#!" class="item [[-image]]">
+                  <img class="ts {{image}} -medium" src="!-user-!">
+              </a>
+              <div class="item">
+                  個人檔案
+                  <div class="menu">
+                      <a href="#!" class="item">編輯</a>
+                      <a href="#!" class="item">隱私</a>
+                  </div>
+              </div>
+          </div>
+
+      - Title      : 置右項目
+        Description: 選單內的單個項目可以置右。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu">
+              <a href="#!" class="item">儀表板</a>
+              <a href="#!" class="item">彙整</a>
+              <a href="#!" class="item [[-right]]">登出</a>
+          </div>
+
+      - Title      : 置中項目
+        Description: 某個特定的項目可以在其他項目之間置中。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu">
+              <a href="#!" class="item">首頁</a>
+              <a href="#!" class="item [[-centered]]">收藏</a>
+              <a href="#!" class="item -right">
+                  <i class="ts {{icon}}" data-icon="download"></i> 下載
+              </a>
+          </div>
+
+      - Title      : 置底項目
+        Description: 在垂直選單中，某個項目可以特別置底。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu -vertical" style="height: 200px">
+              <a href="#!" class="item">首頁</a>
+              <a href="#!" class="item">項目</a>
+              <a href="#!" class="item [[-bottom]]">登出</a>
+          </div>
+
+      - Title      : 拉伸項目
+        Description: 單個或多個項目可以被拉伸到填滿整個選單，並將其他項目縮短至它們的內容寬度。這很適合用在排版上。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu">
+              <div class="item [[-stretched]]">
+                  <div class="ts {{input}} -fluid">
+                      <input type="text" placeholder="在此輸入您想尋找的資料⋯">
+                  </div>
+              </div>
+              <div class="item">
+                  <button class="ts {{button}}">搜尋</button>
+              </div>
+          </div>
+
+  - Title      : 狀態
+    Description: 項目或選單有不同的狀態。
+    Sections   :
+
+      - Title      : 啟用的
+        Description: 顯示這個項目正在使用或被啟用。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu">
+              <a href="#!" class="item">首頁</a>
+              <a href="#!" class="item [[-active]]">關於</a>
+              <a href="#!" class="item">文件</a>
+          </div>
+
+      - Title      : 已選取的
+        Description: 被選取的項目會看起來較為亮眼。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu">
+              <a href="#!" class="item">由此開始</a>
+              <a href="#!" class="item [[-selected]]">文件</a>
+              <a href="#!" class="item">說明</a>
+          </div>
+
+      - Title      : 停用的
+        Description: 顯示一個項目已經被停用、不可使用。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu">
+              <a href="#!" class="item">部落格</a>
+              <a href="#!" class="item [[-disabled]]">註冊</a>
+              <a href="#!" class="item">登入</a>
+          </div>
+
+      - Title      : 未讀的
+        Description: 項目可以有一個新通知、未讀標記。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu -borderless">
+              <a href="#!" class="item">首頁</a>
+              <a href="#!" class="item [[-unread]]">動態軸</a>
+              <a href="#!" class="item">好友</a>
+          </div>
+          <div class="ts menu -icon">
+              <a href="#!" class="item">
+                  <i class="ts icon" data-icon="user"></i>
+              </a>
+              <a href="#!" class="item [[-unread]]">
+                  <i class="ts icon" data-icon="comment"></i>
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts icon" data-icon="star"></i>
+              </a>
+          </div>
+
+  - Title      : 外觀
+    Description: 選單有著不同的外觀點綴。
+    Sections   :
+
+      - Title      : 寬鬆的
+        Description: 項目之間的間隔可以更大，看起來更為寬敞。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-relaxed]]">
+              <a href="#!" class="item">科幻</a>
+              <a href="#!" class="item">愛情</a>
+              <a href="#!" class="item">驚悚</a>
+          </div>
+          <div class="ts menu -indicating [[-very-relaxed]]">
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="guitar"></i> 搖滾
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="drum"></i> 浩瀚
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="random"></i> 隨機
+              </a>
+          </div>
+
+      - Title      : 尺寸
+        Description: 選單提供了多種不同的大小可以應用在不同場景。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-mini]]">
+              <a href="#!" class="item">執行</a>
+              <a href="#!" class="item">工具</a>
+              <a href="#!" class="item">視窗</a>
+          </div>
+          <div class="ts menu [[-tiny]]">
+              <a href="#!" class="item">執行</a>
+              <a href="#!" class="item">工具</a>
+              <a href="#!" class="item">視窗</a>
+          </div>
+          <div class="ts menu [[-small]]">
+              <a href="#!" class="item">執行</a>
+              <a href="#!" class="item">工具</a>
+              <a href="#!" class="item">視窗</a>
+          </div>
+          <div class="ts menu">
+              <a href="#!" class="item">執行</a>
+              <a href="#!" class="item">工具</a>
+              <a href="#!" class="item">視窗</a>
+          </div>
+          <div class="ts menu [[-large]]">
+              <a href="#!" class="item">執行</a>
+              <a href="#!" class="item">工具</a>
+              <a href="#!" class="item">視窗</a>
+          </div>
+          <div class="ts menu [[-big]]">
+              <a href="#!" class="item">執行</a>
+              <a href="#!" class="item">工具</a>
+              <a href="#!" class="item">視窗</a>
+          </div>
+          <div class="ts menu [[-huge]]">
+              <a href="#!" class="item">執行</a>
+              <a href="#!" class="item">工具</a>
+              <a href="#!" class="item">視窗</a>
+          </div>
+          <div class="ts menu [[-massive]]">
+              <a href="#!" class="item">執行</a>
+              <a href="#!" class="item">工具</a>
+              <a href="#!" class="item">視窗</a>
+          </div>
+
+      - Title      : 無框線的
+        Description: 選單也可以選擇不要有內部框線。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-borderless]]">
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="home"></i> 首頁
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="heart"></i> 最愛
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="star"></i> 標記
+              </a>
+          </div>
+
+      - Title      : 自動層疊的
+        Description: 選單可以在行動裝置上自動層疊，而不是繼續保持一排。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-stackable]]">
+              <a href="#!" class="item">項目</a>
+              <a href="#!" class="item">項目</a>
+              <a href="#!" class="item">項目</a>
+              <a href="#!" class="item">項目</a>
+          </div>
+
+      - Title      : 流動的
+        Description: 選單的寬度可以是流動的，用來貼齊容器左右邊並且移除邊角。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu -vertical [[-fluid]]">
+              <a href="#!" class="item">使用者</a>
+              <a href="#!" class="item">系統</a>
+              <a href="#!" class="item">除錯面板</a>
+          </div>
+
+      - Title      : 緊緻的
+        Description: 選單的寬度能夠以選單的內容作為基準並自動延展，而非一開始就填滿父容器的寬度。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-compact]]">
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="gamepad"></i> 遊戲
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="video"></i> 頻道
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="play-circle"></i> 影片
+              </a>
+          </div>
+
+      - Title      : 無內距的
+        Description: 項目可以不要有垂直或是水平內距。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu">
+              <a href="#!" class="item [[-horizontally-fitted]]">水平縮減</a>
+              <a href="#!" class="item [[-vertically-fitted]]">垂直縮減</a>
+              <a href="#!" class="item [[-fitted]]">完全無內距</a>
+          </div>
+
+      - Title      : 附著的
+        Description: 選單可以附著在其他元件上。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-top-attached]]">
+              <a href="#!" class="item">資料</a>
+              <a href="#!" class="item">隱私</a>
+              <a href="#!" class="item">權限</a>
+          </div>
+          <div class="ts {{segment}} -attached">
+              根據你眼睛所看到的，這是個被附著選單團團包圍的片段。
+          </div>
+          <div class="ts menu [[-attached]]">
+              <a href="#!" class="item">首頁</a>
+              <a href="#!" class="item">影片</a>
+          </div>
+          <div class="ts {{segment}} -attached">
+              這個片段⋯⋯十分地難過、悲傷、無奈，覺得被選單霸凌了。
+          </div>
+          <div class="ts menu [[-bottom-attached]]">
+              <a href="#!" class="item">音樂</a>
+              <a href="#!" class="item">程式</a>
+              <a href="#!" class="item">運動</a>
+          </div>
+
+      - Title      : 均分寬度的
+        Description: 項目寬度可以平均劃分並填滿整個選單。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-evenly-divided]]">
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="file-alt"></i> 檔案總管
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="cloud-download-alt"></i> 下載
+              </a>
+              <a href="#!" class="item">
+                  <i class="ts {{icon}}" data-icon="redo"></i> 重新整理
+              </a>
+          </div>
+
+      - Title      : 數量的
+        Description: 項目的寬度可以從 `one` 到 `ten` 依照預定好的數量去劃分。這意味著當設置在 `three` 時，就算項目只有兩個，寬度依然會是三分之一而非自動調整為二分之一。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-four-item]]">
+              <a href="#!" class="item">鐘錶</a>
+              <a href="#!" class="item">電子產品</a>
+              <a href="#!" class="item">家具</a>
+          </div>
+
+      - Title      : 文字對齊
+        Description: 你可以改變項目中的水平對齊，可以是置左、置右或者置中。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu -vertical">
+              <a href="#!" class="item [[-left-aligned]]">置左對齊</a>
+              <a href="#!" class="item [[-center-aligned]]">置中對齊</a>
+              <a href="#!" class="item [[-right-aligned]]">置右對齊</a>
+          </div>
+
+      - Title      : 置中的
+        Description: 選單的項目可以從中間開始。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts menu [[-centered]]">
+              <a href="#!" class="item">首頁</a>
+              <a href="#!" class="item">貼文</a>
+              <a href="#!" class="item">照片</a>
+          </div>
+
+      - Title      : 固定的
+        Description: 水平的標籤可以用來符合附近文字間距。
+        Since      : 4.0.0
+        HTML       : |
+          <div class="ts label [[-horizontal]]">這個標籤</div> 很適合和文字放在一起。
