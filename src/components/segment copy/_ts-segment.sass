@@ -1,0 +1,233 @@
+@import ../../tocas
+
+:root
+    +var-scope(segment)
+
+@import ./ts-segment.variables
+@import ./ts-segment.colors
+
+// ==========================================================================
+// Base
+// ==========================================================================
+
+.ts.segment
+    @extend %component
+    @extend %component-box
+
+    display     : block
+    padding     : $global_box-padding
+    border-color: get(border_color)
+    background  : get(background_color)
+    color       : get(color)
+
+    // ==========================================================================
+    // Structure
+    // ==========================================================================
+
+    p:first-child
+        margin-top: 0
+
+    p:last-child
+        margin-bottom: 0
+
+    // ==========================================================================
+    // Density
+    // ==========================================================================
+
+    &[data-density='compact']
+        padding: $global-box_padding_compact
+
+    &[data-density='relaxed']
+        padding: $global-box_padding_relaxed
+
+    // ==========================================================================
+    // Types
+    // ==========================================================================
+
+    //-------------------//
+    // Indicated
+    //-------------------//
+
+    &.-indicated
+        border-top: 2px solid get(border_indicated_color)
+
+    //-------------------//
+    // Outlined
+    //-------------------//
+
+    &.-outlined
+        border-color: get(border_outlined_color)
+
+    //-------------------//
+    // Basic
+    //-------------------//
+
+    &.-basic
+        border: 0
+
+    // ==========================================================================
+    // States
+    // ==========================================================================
+
+    //-------------------//
+    // Disabled
+    //-------------------//
+
+    &.-disabled
+        pointer-events: none
+        user-select   : none
+        opacity       : $global-disabled_opacity
+
+    // ==========================================================================
+    // Variations
+    // ==========================================================================
+
+    //-------------------//
+    // Accents
+    //-------------------//
+
+    &.-secondary
+        +override(background_color, get(background_secondary_color))
+        +override(border_color, get(border_secondary_color))
+
+    &.-tertiary
+        +override(background_color, get(background_tertiary_color))
+        +override(border_color, get(border_tertiary_color))
+
+    //-------------------//
+    // Floated
+    //-------------------//
+
+    &.-left-floated
+        float       : left
+        margin-right: $global-gap_medium
+
+    &.-right-floated
+        float      : right
+        margin-left: $global-gap_medium
+
+    //-------------------//
+    // Piled
+    //-------------------//
+
+    &.-piled
+        position: relative
+
+        &::after,
+        &::before
+            content      : ""
+            position     : absolute
+            display      : block
+            left         : 0
+            height       : 100%
+            width        : 100%
+            border       : 1px solid get(border_color)
+            border-radius: $global-border_radius
+            visibility   : visible
+            background   : get(background_color)
+
+        &::after
+            transform: rotate(1.1deg)
+            top      : 0
+            z-index  : $z_segment-piled_after
+
+        &::before
+            transform: rotate(-1.1deg)
+            top      : 0
+            z-index  : $z_segment-piled_before
+
+    //-------------------//
+    // Stacked
+    //-------------------//
+
+    &.-stacked,
+    &.-tall-stacked
+
+    &.-stacked::after
+        position     : absolute
+        content      : ""
+        bottom       : -3px
+        left         : 0
+        width        : 100%
+        height       : 6px
+        border-top   : 1px solid get(border_color)
+        border-radius: $global-border_radius
+        visibility   : visible
+        background   : rgba(0, 0, 0, 0.03)
+        // TODO: Stacked 因為 Border 所以 Bottom Padding 要增加
+
+    &.-tall-stacked::after,
+    &.-tall-stacked::before
+        content      : ""
+        position     : absolute
+        bottom       : -3px
+        left         : 0
+        border-top   : 1px solid get(border_color)
+        border-radius: $global-border_radius
+        background   : rgba(0, 0, 0, 0.03)
+        width        : 100%
+        height       : 6px
+        visibility   : visible
+
+    &.-tall-stacked::before
+        display: block
+        bottom : 0
+
+    //-------------------//
+    // Centered
+    //-------------------//
+
+    &.-centered
+        width : fit-content
+        margin: 0 auto
+
+    //-------------------//
+    // Compact
+    //-------------------//
+
+    &.-compact
+        width: fit-content
+
+    //-------------------//
+    // Raised
+    //-------------------//
+
+    &.-raised
+        box-shadow: 0 0 15px 0 get-shadow(500)
+
+    //-------------------//
+    // Attached
+    //-------------------//
+
+    &.-top-attached
+        @extend %top-attached
+
+    &.-attached
+        @extend %attached
+
+    &.-bottom-attached
+        @extend %bottom-attached
+
+    //-------------------//
+    // Text Align
+    //-------------------//
+
+    &.-left-aligned
+        text-align: left
+
+    &.-center-aligned
+        text-align: center
+
+    &.-right-aligned
+        text-align: right
+
+    //-------------------//
+    // Clearing
+    //-------------------//
+
+    &.-clearing
+        display   : block
+        content   : "\00a0"
+        height    : 0
+        clear     : both
+        visibility: hidden
