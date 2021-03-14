@@ -5,7 +5,10 @@ import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
 import multiInput from "rollup-plugin-multi-input";
 import css from "rollup-plugin-css-only";
+import scssPlugin from "rollup-plugin-scss";
+import sass from "sass";
 import path from "path";
+import fg from "fast-glob";
 import sveltePreprocess from "svelte-preprocess";
 
 const production = !process.env.ROLLUP_WATCH;
@@ -32,28 +35,28 @@ function serve() {
 }
 
 export default {
-    input: ["./components/**/*.js"],
-    /*output: {
-        sourcemap: true,
-        format: "iife",
-        name: "app",
-        file: "public/build/bundle.js",
-    },*/
+    //input: "./src/components/**/*.js",
+    input: "./src/components/index.js",
     output: {
         sourcemap: true,
         format: "iife",
-        dir: "dist",
+        file: "dist/tocas.js",
     },
+    /*output: {
+        sourcemap: true,
+        format: "es",
+        dir: "dist",
+    },*/
     /*output: {
         dir: "dist",
         format: "es",
         sourcemap: true,
     },*/
     plugins: [
-        multiInput({
+        /*multiInput({
             relative: "components/",
             transformOutputPath: (output, input) => `${path.basename(output)}`,
-        }),
+        }),*/
         svelte({
             preprocess: sveltePreprocess({
                 sourceMap: !production,
@@ -70,6 +73,25 @@ export default {
         // we'll extract any component CSS out into
         // a separate file - better for performance
         css({ output: "bundle.css" }),
+
+        //{
+        //   name: 'watch-external',
+        //   async buildStart(){
+        //       const files = await fg('src/**/*');
+        //       for(let file of files){
+        //           this.addWatchFile(file);
+        //       }
+        //   }
+        // },
+
+        //
+        scssPlugin({
+            sass: sass,
+            indentedSyntax: true,
+            output: 'dist/tocas.css',
+            sourceMap: true,
+            sourceMapEmbed: true,
+        }),
 
         // If you have external dependencies installed from
         // npm, you'll most likely need these plugins. In
