@@ -8,6 +8,27 @@ Description: 以不同大小表示章節段落或綱要。
 Type       : Article
 Remove     :
   - <div class="ts space"></div>
+Slots      :
+  - Name       : title
+    Attribute  : title
+    Title      : 標題
+    Description: 用以擺放最主要的標題文字。
+  - Name       : description
+    Attribute  : description
+    Title      : 註釋
+    Description: 用來詮釋主標題的註釋。
+  - Name       : icon
+    Attribute  : icon
+    Title      : 主要圖示
+    Description: 用以擺放主要圖示。
+  - Name       : start
+    Attribute  : start
+    Title      : 起始區域
+    Description: 可以在標題的起頭擺放元素，起始區域是左右側取決於瀏覽器的偏好書寫方式。
+  - Name       : end
+    Attribute  : end
+    Title      : 結尾區域
+    Description: 可以在標題的結尾擺放元素，結尾區域是左右側取決於瀏覽器的偏好書寫方式。
 
 #=======================================================
 # 基本樣式
@@ -57,82 +78,21 @@ Definitions:
               <span slot="description">為你的女朋友——喔等等，你沒有女朋友。</span>
           </ts-header>
 
-      - Title      : 圖示
-        Description: 標題的左、右其中一側可以擺放圖示。
+      - Title      : 起始與結束側
+        Description: 標題的開頭與結尾左、右側可以安插額外的元件或元素。
         Since      : 4.0.0
-        HTML       : |
-          <ts-space>
-              <ts-header [[end-icon]]="plug" title="99.9% 上線時間保證"></ts-header>
-              <ts-header [[start-icon]]="users" title="超多合作夥伴"></ts-header>
-              <ts-header [[start-icon]]="lock" title="安全性設定" description="管理好您的洨洨安，確保不受任何人詐騙。"></ts-header>
-          </ts-space>
-        Slotted  : |
-          <ts-space>
-              <ts-header>
-                  <span slot="title">99.9% 上線時間保證</span>
-                  <{{ts-icon}} slot="[[end-icon]]" icon="plug"></{{ts-icon}}>
-              </ts-header>
-              <ts-header>
-                  <span slot="title">超多合作夥伴</span>
-                  <{{ts-icon}} slot="[[start-icon]]" icon="users"></{{ts-icon}}>
-              </ts-header>
-              <ts-header>
-                  <{{ts-icon}} slot="[[start-icon]]" icon="lock"></{{ts-icon}}>
-                  <span slot="title">安全性設定</span>
-                  <span slot="description">管理好您的洨洨安，確保不受任何人詐騙。</span>
-              </ts-header>
-          </ts-space>
-
-      - Title      : 圖片
-        Description: 圖片可以放置於標題的左、右側。
-        Since      : 4.0.0
-        HTML       : |
-          <ts-space>
-              <ts-header [[start-image]]="!-user-!" title="帳號設定"></ts-header>
-              <ts-header [[end-image]]="!-user2-!" title="個人資料"></ts-header>
-          </ts-space>
-        Slotted    : |
-          <ts-space>
-              <ts-header>
-                  <ts-image slot="[[start-image]]" src="!-user-!"></ts-image>
-                  <span slot="title">帳號設定</span>
-              </ts-header>
-              <ts-header>
-                  <span slot="title">個人資料</span>
-                  <ts-image slot="[[end-image]]" src="!-user2-!"></ts-image>
-              </ts-header>
-          </ts-space>
-
-      - Title      : 計數徽章
-        Description: 標題裡可以在左、右側安插計數徽章。
-        Since      : 4.0.0
-        HTML       : |
-          <ts-header title="最新通知" [[start-badge]]="21"></ts-header>
-          <ts-header title="國際新聞" [[end-badge]]="43"></ts-header>
         Slotted    : |
           <ts-header>
-              <{{ts-badge}} slot="[[start-badge]]" emphasis="primary">21</{{ts-badge}}>
-              <span slot="title">個人資料</span>
+              <span slot="title">99.9% 上線時間保證</span>
+              <{{ts-icon}} slot="[[start]]" icon="plug"></{{ts-icon}}>
           </ts-header>
           <ts-header>
               <span slot="title">個人資料</span>
-              <{{ts-badge}} slot="[[end-badge]]">43</{{ts-badge}}>
-          </ts-header>
-
-      - Title      : 左右側
-        Description: 標題裡可以在左、右側安插額外的元件或元素。
-        Since      : 4.0.0
-        HTML       : |
-          <ts-header title="最新通知" [[start]]="21"></ts-header>
-          <ts-header title="國際新聞" [[end-badge]]="43"></ts-header>
-        Slotted    : |
-          <ts-header>
-              <{{ts-badge}} slot="[[start-badge]]" emphasis="primary">21</{{ts-badge}}>
-              <span slot="title">個人資料</span>
+              <{{ts-image}} slot="[[end]]" src="!-user-!"></{{ts-image}}>
           </ts-header>
           <ts-header>
-              <span slot="title">個人資料</span>
-              <{{ts-badge}} slot="[[end-badge]]">43</{{ts-badge}}>
+              <{{ts-badge}} slot="[[start]]" emphasis="primary">21</{{ts-badge}}>
+              <span slot="title">最新通知</span>
           </ts-header>
 
   - Title      : 狀態
@@ -280,22 +240,28 @@ Definitions:
         Description: 倘若標題裡有圖示，可以透過垂直對齊更改圖示應該貼齊上部、中間或底部。
         Since      : 4.0.0
         HTML       : |
-          <ts-header [[top-aligned]] start-icon="bullhorn" title="置頂對齊" description="旁邊的圖示會貼齊頂部。"></ts-header>
-          <ts-header [[middle-aligned]] start-icon="comment" title="置中對齊" description="你看到的圖示會盡可能地對齊垂直中間。"></ts-header>
-          <ts-header [[bottom-aligned]] start-icon="clock" title="置底對齊" description="這個圖示會貼齊標題的底部。"></ts-header>
+          <ts-header [[top-aligned]] title="置頂對齊" description="旁邊的圖示會貼齊頂部。">
+              <{{ts-icon}} slot="start" icon="bullhorn"></{{ts-icon}}>
+          </ts-header>
+          <ts-header [[middle-aligned]] title="置中對齊" description="你看到的圖示會盡可能地對齊垂直中間。">
+              <{{ts-icon}} slot="start" icon="comment"></{{ts-icon}}>
+          </ts-header>
+          <ts-header [[bottom-aligned]] title="置底對齊" description="這個圖示會貼齊標題的底部。">
+              <{{ts-icon}} slot="start" icon="clock"></{{ts-icon}}>
+          </ts-header>
         Slotted    : |
           <ts-header [[top-aligned]]>
-              <{{ts-icon}} slot="start-icon" icon="bullhorn"></{{ts-icon}}>
+              <{{ts-icon}} slot="start" icon="bullhorn"></{{ts-icon}}>
               <span slot="title">置頂對齊</span>
               <span slot="description">旁邊的圖示會貼齊頂部。</span>
           </ts-header>
           <ts-header [[middle-aligned]]>
-              <{{ts-icon}} slot="[[start-icon]]" icon="comment"></{{ts-icon}}>
+              <{{ts-icon}} slot="start" icon="comment"></{{ts-icon}}>
               <span slot="title">置中對齊</span>
               <span slot="description">你看到的圖示會盡可能地對齊垂直中間。</span>
           </ts-header>
           <ts-header [[bottom-aligned]]>
-              <{{ts-icon}} slot="[[start-icon]]" icon="clock"></{{ts-icon}}>
+              <{{ts-icon}} slot="start" icon="clock"></{{ts-icon}}>
               <span slot="title">置底對齊</span>
               <span slot="description">這個圖示會貼齊標題的底部。</span>
           </ts-header>
@@ -372,21 +338,25 @@ Definitions:
               <span slot="title">主要語意</span>
           </ts-header>
 
-      - Title      : 緊緻的
-        Description: 標題以區塊或是附著方式呈現的時候，其內距的密度可以更為緊緻。
+      - Title      : 密度
+        Description: 標題以區塊或是附著方式呈現的時候，其內距的密度可以調整。
         Since      : 4.0.0
         HTML       : |
-          <ts-header small top-attached [[compact]] emphasis="positive" title="噓寒問暖"></ts-header>
-          <{{ts-segment}} bottom-attached>
-              <p>我真的好喜歡妳！</p>
+          <ts-header density="[[relaxed]]" small top-attached emphasis="positive" title="寬鬆的標題"></ts-header>
+          <{{ts-segment}} attached>
+              <p>早安，我的朋友！</p>
           </{{ts-segment}}>
+          <ts-header density="[[compact]]" small bottom-attached emphasis="positive" title="緊密的標題"></ts-header>
         Slotted    : |
-          <ts-header small top-attached [[compact]] emphasis="positive">
-              <span slot="title">噓寒問暖</span>
+          <ts-header density="[[relaxed]]" small top-attached emphasis="positive">
+              <span slot="title">寬鬆的標題</span>
           </ts-header>
-          <{{ts-segment}} bottom-attached>
-              <p>我真的好喜歡妳！</p>
+          <{{ts-segment}} attached>
+              <p>早安，我的朋友！</p>
           </{{ts-segment}}>
+          <ts-header density="[[compact]]" small bottom-attached emphasis="positive">
+              <span slot="title">緊密的標題</span>
+          </ts-header>
 
       - Title      : 浮動的
         Description: 標題可以置中、置左或者置右。
