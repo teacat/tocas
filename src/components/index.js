@@ -1,5 +1,2 @@
-import "./block"
-import "./content"
-import "./divider"
-import "./header"
+import "./ts-divider"
 import "./../tocas.sass"

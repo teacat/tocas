@@ -1,0 +1,148 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title      : 折疊選單
+Description: 將內容以群組區分並讓使用者可以折疊、展開。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type       : Article
+Relatives  :
+  - Expander
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+  HTML: |
+    <ts-accordion>
+        <ts-accordion-item>
+            <span slot="header">什麼是夏希？</span>
+            <p slot="description">夏希是一個基於 PHP 的時間類別，用以取得現在的時間，或者是數天後的現在時刻。</p>
+        </ts-accordion-item>
+        <ts-accordion-item>
+            <span slot="header">什麼是風紀委員？</span>
+            <p slot="description">Jajjimento（ジャッジメント）中文涵意是風紀委員，這是用來驗證表單的 PHP 類別。</p>
+        </ts-accordion-item>
+        <ts-accordion-item>
+            <span slot="header">什麼是依可諾爾？</span>
+            <p slot="description">Iknore 是一個分散是的檔案網路，可以在不穩定的網路中提供良好且穩定的檔案系統。</p>
+        </ts-accordion-item>
+    </ts-accordion>
+
+Definitions:
+
+  - Title      : 內容
+    Description:
+    Sections   :
+
+      - Title      : 標題
+        Anchor     : Header
+        Description: 章節的概要標題。
+        Since      : 4.0.0
+        HTML       : |
+          <ts-accordion>
+              <ts-accordion-item>
+                  <span slot="[[header]]">營業時間為何？</span>
+                  <p slot="description">每日的早上九點至晚上八點。</p>
+              </ts-accordion-item>
+              <ts-accordion-item>
+                  <span slot="[[header]]">是否提供內用選項？</span>
+                  <p slot="description">否，所有餐點都必須外帶。</p>
+              </ts-accordion-item>
+          </ts-accordion>
+
+      - Title      : 註釋
+        Anchor     : Description
+        Description: 章節的主要內容區塊。
+        Since      : 4.0.0
+        HTML       : |
+          <ts-accordion>
+              <ts-accordion-item>
+                  <span slot="header">當我使用 API 的時候，是否有提供 SSL 加密傳輸協定？</span>
+                  <p slot="[[description]]">無，本銀行全面採用非加密的 HTTP 傳統標準通訊協定。</p>
+              </ts-accordion-item>
+              <ts-accordion-item>
+                  <span slot="header">需要自行簽署金鑰以防中間人攻擊嗎？</span>
+                  <p slot="[[description]]">不需要，因為這只是運氣問題。</p>
+              </ts-accordion-item>
+          </ts-accordion>
+
+  - Title      : 外觀
+    Description:
+    Sections   :
+
+      # - Title      : 片段的
+      #   Anchor     : Segmented
+      #   Description:
+      #   Since      : 4.0.0
+      #   HTML       : |
+
+      # - Title      : 附著的
+      #   Anchor     : Attached
+      #   Description:
+      #   Since      : 4.0.0
+      #   HTML       : |
+
+      - Title      : 分隔的
+        Anchor     : Divided
+        Description: 在章節之間透過分隔線進行區隔。
+        Since      : 4.0.0
+        HTML       : |
+          <ts-accordion [[divided]]>
+              <ts-accordion-item>
+                  <span slot="header">貨運約需要多久的時間？</span>
+                  <p slot="description">通常來說，約一至兩天即會將包裹送達至您手上，倘若遇上例假日則會延後一天。</p>
+              </ts-accordion-item>
+              <ts-accordion-item>
+                  <span slot="header">可否冷凍寄送？</span>
+                  <p slot="description">可以，但運費將會多出一百元新台幣。</p>
+              </ts-accordion-item>
+              <ts-accordion-item>
+                  <span slot="header">我可以加收費用，要求在假日運送嗎？</span>
+                  <p slot="description">不好意思，目前尚無提供此服務。</p>
+              </ts-accordion-item>
+          </ts-accordion>
+
+      - Title      : 密度
+        Anchor     : Density
+        Description: 更改項目之間的間距密度。
+        Since      : 4.0.0
+        HTML       : |
+          <ts-accordion density="[[compact]]" divided>
+              <ts-accordion-item>
+                  <span slot="header">客服專線是否 24 小時全年無休？</span>
+                  <p slot="description">若需要在假日時聯繫客服，請透過網路客服進行聯繫。</p>
+              </ts-accordion-item>
+              <ts-accordion-item>
+                  <span slot="header">在哪裡可以下載數位遊戲？</span>
+                  <p slot="description">數位資產在您購買之後會出現於資源庫中便可下載。</p>
+              </ts-accordion-item>
+          </ts-accordion>
+          <ts-accordion divided>
+              <ts-accordion-item>
+                  <span slot="header">是否提供偏遠地區運送服務？</span>
+                  <p slot="description">目前暫不運送於本島東部、外島地區。</p>
+              </ts-accordion-item>
+              <ts-accordion-item>
+                  <span slot="header">能夠運送到海外嗎？</span>
+                  <p slot="description">暫不提供海外運送服務。</p>
+              </ts-accordion-item>
+          </ts-accordion>
+          <ts-accordion density="[[relaxed]]" divided>
+              <ts-accordion-item>
+                  <span slot="header">食物於常溫下擺放超過七天，我還能吃嗎？</span>
+                  <p slot="description">拜託不要，出事了不要找我們。</p>
+              </ts-accordion-item>
+              <ts-accordion-item>
+                  <span slot="header">星期五是否提供回收服務？</span>
+                  <p slot="description">是，但物品限定於三公斤以下。</p>
+              </ts-accordion-item>
+          </ts-accordion>

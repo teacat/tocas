@@ -1,0 +1,192 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title      : 核取方塊
+Description: 依群組分別的選擇項目並支援同時多選。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type       : Article
+Relatives  :
+  - Radio
+  - Toggle
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+  HTML: |
+    <ts-checkbox checked="checked">
+        <span slot="label">我已經同意上列所有規範。</span>
+    </ts-checkbox>
+
+Definitions:
+
+  - Title      : 內容
+    Description:
+    Sections   :
+
+      - Title      : 標籤
+        Anchor     : Label
+        Description: 描述作用。
+        Since      : 4.0.0
+        HTML       : |
+          <ts-checkbox>
+              <span slot="[[label]]">神奇蹦蹦庫標籤</span>
+          </ts-checkbox>
+
+  - Title      : 狀態
+    Description:
+    Sections   :
+
+      - Title      : 停用的
+        Anchor     : Disabled
+        Description: 顯示出淡化且不可用、無法互動的模樣。
+        Since      : 4.0.0
+        HTML       : |
+          <ts-checkbox [[disabled]]>
+              <span slot="label">被停用的方塊</span>
+          </ts-checkbox>
+
+      - Title      : 唯讀的
+        Anchor     : Read Only
+        Description: 與一般的樣貌相同但使用者無法更改其核取狀態僅能檢視。
+        Since      : 4.0.0
+        HTML       : |
+          <ts-checkbox [[read-only]]>
+              <span slot="label">你改變不了我</span>
+          </ts-checkbox>
+
+      # - Title      : 必要的
+      #   Anchor     : required
+      #   Description:
+      #   Since      : 4.0.0
+      #   HTML       : |
+
+      # - Title      : 指撥的
+      #   Anchor     : toggle
+      #   Description:
+      #   Since      : 4.0.0
+      #   HTML       : |
+
+      # - Title      : 標籤
+      #   Anchor     : label
+      #   Description:
+      #   Since      : 4.0.0
+      #   HTML       : |
+
+      # - Title      : 反色的
+      #   Anchor     : inverted
+      #   Description:
+      #   Since      : 4.0.0
+      #   HTML       : |
+
+      # - Title      : 片段的
+      #   Anchor     : segmented
+      #   Description:
+      #   Since      : 4.0.0
+      #   HTML       : |
+
+      # - Title      : 緊縮的 (?)
+      #   Anchor     : compact
+      #   Description:
+      #   Since      : 4.0.0
+      #   HTML       : |
+
+  - Title      : 群組
+    Description:
+    Sections   :
+
+      - Title      : 藥丸式
+        Anchor     : Pill
+        Description: 將所有的選項以藥丸狀的方式呈現，令使用者更易於點擊與檢視。
+        Since      : 4.0.0
+        HTML       : |
+          <ts-checkboxes [[pill]] name="categories">
+              <ts-checkbox checked="checked">
+                  <span slot="label">T-Shirt</span>
+              </ts-checkbox>
+              <ts-checkbox>
+                  <span slot="label">護唇膏</span>
+              </ts-checkbox>
+              <ts-checkbox>
+                  <span slot="label">項鍊</span>
+              </ts-checkbox>
+          </ts-checkboxes>
+
+      - Title      : 水平排列的
+        Anchor     : Horizontal
+        Description: 以左右水平的方式陳列選項。
+        Since      : 4.0.0
+        HTML       : |
+          <ts-checkboxes [[horizontal]] name="hobbies">
+              <ts-checkbox checked="checked">
+                  <span slot="label">動漫</span>
+              </ts-checkbox>
+              <ts-checkbox>
+                  <span slot="label">科技</span>
+              </ts-checkbox>
+              <ts-checkbox>
+                  <span slot="label">旅遊</span>
+              </ts-checkbox>
+          </ts-checkboxes>
+
+      - Title      : 對齊
+        Anchor     : Aligns
+        Description: 更改水平排列時的對齊起始位置。
+        Since      : 4.0.0
+        HTML       : |
+          <ts-checkboxes align="[[start]]" name="characters-1">
+              <ts-checkbox value="Lelia">
+                  <span slot="label">雷莉亞</span>
+              </ts-checkbox>
+              <ts-checkbox value="Avane">
+                  <span slot="label">亞凡芽</span>
+              </ts-checkbox>
+          </ts-checkboxes>
+          <ts-checkboxes align="[[center]]" name="characters-2">
+              <ts-checkbox value="Aoi">
+                  <span slot="label">吳雨藍</span>
+              </ts-checkbox>
+              <ts-checkbox value="Shirone">
+                  <span slot="label">羽田白音</span>
+              </ts-checkbox>
+          </ts-checkboxes>
+          <ts-checkboxes align="[[end]]" name="characters-3">
+              <ts-checkbox value="Caris">
+                  <span slot="label">卡莉絲</span>
+              </ts-checkbox>
+              <ts-checkbox value="Iknore">
+                  <span slot="label">依可諾爾</span>
+              </ts-checkbox>
+          </ts-checkboxes>
+
+      - Title      : 流動的
+        Anchor     : Fluid
+        Description: 讓核取群組的寬度與容器相符，這會令選項的寬度變成對分。
+        Since      : 4.0.0
+        HTML       : |
+          <ts-checkboxes [[fluid]] name="fruits">
+              <ts-checkbox value="Apple">
+                  <span slot="label">蘋果</span>
+              </ts-checkbox>
+              <ts-checkbox value="Pollo">
+                  <span slot="label">波羅</span>
+              </ts-checkbox>
+              <ts-checkbox value="Pavone">
+                  <span slot="label">拔鳳梨</span>
+              </ts-checkbox>
+          </ts-checkboxes>
+
+      # - Title      : 自動層疊的
+      #   Anchor     : stackable
+      #   Description:
+      #   Since      : 4.0.0
+      #   HTML       : |

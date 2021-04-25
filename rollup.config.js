@@ -3,12 +3,10 @@ import commonjs from "@rollup/plugin-commonjs";
 import resolve from "@rollup/plugin-node-resolve";
 import livereload from "rollup-plugin-livereload";
 import { terser } from "rollup-plugin-terser";
-import multiInput from "rollup-plugin-multi-input";
 import css from "rollup-plugin-css-only";
 import scssPlugin from "rollup-plugin-scss";
 import sass from "sass";
-import path from "path";
-import fg from "fast-glob";
+import json from "@rollup/plugin-json";
 import sveltePreprocess from "svelte-preprocess";
 
 const production = !process.env.ROLLUP_WATCH;
@@ -34,8 +32,7 @@ function serve() {
     };
 }
 
-export default {
-    //input: "./src/components/**/*.js",
+export default [{
     input: "./src/components/index.js",
     output: {
         sourcemap: true,
@@ -47,16 +44,12 @@ export default {
         format: "es",
         dir: "dist",
     },*/
-    /*output: {
-        dir: "dist",
-        format: "es",
-        sourcemap: true,
-    },*/
     plugins: [
         /*multiInput({
             relative: "components/",
             transformOutputPath: (output, input) => `${path.basename(output)}`,
         }),*/
+
         svelte({
             preprocess: sveltePreprocess({
                 sourceMap: !production,
@@ -65,26 +58,20 @@ export default {
                 },
             }),
             compilerOptions: {
-                // enable run-time checks when not in production
                 dev: !production,
                 customElement: true,
             },
         }),
-        // we'll extract any component CSS out into
-        // a separate file - better for performance
         css({ output: "bundle.css" }),
-
-        //{
-        //   name: 'watch-external',
-        //   async buildStart(){
-        //       const files = await fg('src/**/*');
-        //       for(let file of files){
-        //           this.addWatchFile(file);
-        //       }
-        //   }
+        // {
+        //    name: 'watch-external',
+        //    async buildStart(){
+        //        const files = await fg('src/**/*');
+        //        for(let file of files){
+        //            this.addWatchFile(file);
+        //        }
+        //    }
         // },
-
-        //
         scssPlugin({
             sass: sass,
             indentedSyntax: true,
@@ -92,31 +79,58 @@ export default {
             sourceMap: true,
             sourceMapEmbed: true,
         }),
-
-        // If you have external dependencies installed from
-        // npm, you'll most likely need these plugins. In
-        // some cases you'll need additional configuration -
-        // consult the documentation for details:
-        // https://github.com/rollup/plugins/tree/master/packages/commonjs
         resolve({
             browser: true,
             dedupe: ["svelte"],
         }),
         commonjs(),
-
-        // In dev mode, call `npm run start` once
-        // the bundle has been generated
         !production && serve(),
-
-        // Watch the `public` directory and refresh the
-        // browser on changes when not in production
         !production && livereload("public"),
-
-        // If we're building for production (npm run build
-        // instead of npm run dev), minify
         production && terser(),
     ],
     watch: {
         clearScreen: false,
     },
-};
+},
+{
+    input: "./src/components/index.js",
+    output: {
+        sourcemap: true,
+        format: "iife",
+        file: "public/dist/tocas.js",
+    },
+    plugins: [
+
+        svelte({
+            preprocess: sveltePreprocess({
+                sourceMap: !production,
+                defaults: {
+                    style: "sass",
+                },
+            }),
+            compilerOptions: {
+                dev: !production,
+                customElement: true,
+            },
+        }),
+        css({ output: "bundle.css" }),
+        scssPlugin({
+            sass: sass,
+            indentedSyntax: true,
+            output: 'public/dist/tocas.css',
+            sourceMap: true,
+            sourceMapEmbed: true,
+        }),
+        resolve({
+            browser: true,
+            dedupe: ["svelte"],
+        }),
+        commonjs(),
+        !production && serve(),
+        !production && livereload("public"),
+        production && terser(),
+    ],
+    watch: {
+        clearScreen: false,
+    },
+}]
