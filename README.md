@@ -1,5 +1,12 @@
 # ts-divider
 
+```
+sass src/styles/tocas.scss:dist/tocas.css
+vue-cli-service build --target wc --name accordion ./src/main.js
+
+vue-cli-service build --target wc --name accordion ./src/components/Accordion.vue --inline-vue
+```
+
 ## Project setup
 ```
 npm install
@@ -22,3 +29,29 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+<meta charset="utf-8">
+<title>ts demo</title>
+<script src="https://unpkg.com/vue"></script>
+<script src="./ts.js"></script>
+
+
+
+<ts-accordion>
+    <ts-accordion-item>
+        <div slot="header">Header 1</div>
+        <div slot="description">Description 1</div>
+        <div slot="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </div>
+    </ts-accordion-item>
+    <ts-accordion-item expanded>
+        <div slot="header">Header 2</div>
+        <div slot="description">Description 2</div>
+        <div slot="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </div>
+    </ts-accordion-item>
+</ts-accordion>

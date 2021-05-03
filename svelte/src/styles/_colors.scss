@@ -1,0 +1,197 @@
+@use "sass:map";
+
+// ==========================================================================
+// Emphasises
+// ==========================================================================
+
+//
+$schemes: lightest, light, dark, darkest;
+//                     Gray                                Light                              Dark
+//          lightest light dark darkest
+$weights: (
+    50 : ((  100%,   100%, -79.5%, -95.5%), (  100%,   100%,   -36%,   -37%), (  100%,    100%, -32.7%,   -36%)),
+    75 : ((  100%,    93%,   -74%, -85.5%), (   93%,    93%, -32.7%,   -36%), (   93%,     93%,   -29%, -32.7%)),
+    100: ((  100%,    87%,   -72%,   -83%), (   87%,    87%,   -29%, -32.7%), (   87%,     87%, -19.2%,   -29%)),
+    200: ((   86%,    72%, -65.5%, -75.5%), (   72%,    72%, -19.2%,   -29%), (   72%,     72%, -10.2%, -19.2%)),
+    300: ((   72%,    60%, -58.5%,   -68%), (   60%,    60%, -10.2%, -19.2%), (   60%,     60%,    -3%, -10.2%)),
+    400: ((   42%,    30%,   -50%,   -59%), (   30%,    30%,    -3%, -10.2%), (   30%,     30%,     0%,    -3%)),
+    500: ((   12%,     0%, -38.5%, -48.5%), (   15%,     0%,     0%,    -3%), (   15%,      0%,    15%,     0%)),
+    600: ((  -17%, -20.5%, -19.5%,   -31%), (    0%,    -6%,    15%,     0%), (    0%,     -6%,    30%,    15%)),
+    700: ((  -35%,   -38%,     8%,  -9.5%), (   -6%, -20.5%,    30%,    15%), (   -6%,  -20.5%,    36%,    30%)),
+    800: ((-55.5%,   -58%,    63%,    27%), (-20.5%, -38.5%,    36%,    30%), (-20.5%,  -38.5%,  43.5%,    36%)),
+    900: ((  -72%, -75.5%,   100%,    79%), (-38.5%,   -58%,  43.5%,    36%), (-38.5%,    -58%,  46.5%,    43.5%)),
+);
+
+//
+$emphasises: (
+    "gray" : (
+        is-light: false,
+        base   : #b3b3b3,
+        // colors: (),
+    ),
+    "primary" : (
+        is-light: true,
+        base   : #209cee,
+        // colors: (),
+    ),
+    "warning" : (
+        is-light: false,
+        base   : #ffdd57,
+        // colors: (),
+    ),
+    "negative" : (
+        is-light: true,
+        base   : #ff3860,
+        // colors: (),
+    ),
+    "positive" : (
+        is-light: true,
+        base   : #48c774,
+        // colors: (),
+    ),
+);
+
+// ==========================================================================
+// Getters
+// ==========================================================================
+
+// get-color-by-scheme
+@function get-color-by-scheme($name, $scheme, $weight) {
+    @return #{var(--ts-#{$scheme}_#{$name}_#{$weight})};
+};
+
+// get-color
+@function get-color($name, $weight) {
+    @return #{var(--ts-#{$name}_#{$weight})};
+};
+
+// get-foreground-color
+@function get-foreground-color($name, $weight) {
+    @return #{var(--ts-foreground_#{$name}_#{$weight})};
+};
+
+// get-static-color
+@function get-static-color($name, $weight) {
+    @return #{var(--ts-static_#{$name}_#{$weight})};
+};
+
+// get-current-foreground-color
+@function get-current-foreground-color($weight) {
+    @return #{var(--ts-foreground_#{$weight})};
+}
+
+// get-real-color
+@function get-real-color($scheme, $theme, $weight) {
+    @return map-get(map-get(map-get(map-get($emphasises, $theme), "colors"), $scheme), $weight);
+}
+
+@function get-shadow($weight) {
+    @return #{var(--ts-gray-shadow_#{$weight})};
+}
+
+// ==========================================================================
+// Function
+// ==========================================================================
+
+// is-light
+@function is-light($name) {
+    @return map-get(map-get($emphasises, $name), "is-light");
+};
+
+// emphasized
+@mixin emphasized($name) {
+
+};
+
+// get-scheme
+@function get-scheme($name) {
+    $is-light     : map-get(map-get($emphasises, $name), "is-light");
+    $base         : map-get(map-get($emphasises, $name), "base");
+    $weights_index: if($name == "gray", 1, if($is-light, 2, 3));
+    $result       : ();
+    $schemes      : lightest, light, dark, darkest;
+
+    @each $scheme in $schemes {
+        $index         : index($schemes, $scheme);
+        $scheme_weights: ();
+
+        @each $weight, $map in $weights {
+            $modifier      :nth(nth($map, $weights_index), $index);
+            $scheme_weights: map-merge($scheme_weights, (#{$weight}: if($modifier > 0, tint($base, $modifier), shade($base, abs($modifier)))));
+        }
+
+        $result: map-merge($result, (#{$scheme}: $scheme_weights));
+    }
+
+    @return $result;
+};
+
+// ==========================================================================
+// Helpers
+// ==========================================================================
+
+$var-scope: none;
+
+// var-scope
+@mixin var-scope($component) {
+    $var-scope: $component !global;
+};
+
+// define
+@mixin define($var, $value) {
+    --ts_#{$var-scope}_default-#{$var}: #{$value};
+    --ts_#{$var-scope}-#{$var}: var(--ts_#{$var-scope}_alias-#{$var}, var(--ts_#{$var-scope}_default-#{$var}));
+};
+
+// override
+@mixin override($var, $value) {
+    --ts_#{$var-scope}_alias-#{$var}: #{$value};
+};
+
+// default
+@mixin default($var) {
+    --ts_#{$var-scope}_alias-#{$var}: --ts_#{$var-scope}_default-#{$var};
+};
+
+// get-default
+@function get-default($var) {
+    @return var(--ts_#{$var-scope}_default-#{$var});
+};
+
+// get
+@function get($var) {
+    @return #{var(--ts_#{$var-scope}_alias-#{$var}, var(--ts_#{$var-scope}-#{$var}))};
+};
+
+// each-emphasis
+@mixin each-emphasis {
+    @each $emphasis, $_ in $emphasises {
+        @if $emphasis != "gray" {
+            @content($emphasis);
+        };
+    };
+};
+
+// each-weight
+@mixin each-weight {
+    @each $weight, $_ in $weights {
+        @content($weight);
+    };
+};
+
+// each-scheme
+@mixin each-scheme {
+    @each $scheme in $schemes {
+        @content($scheme);
+    };
+};
+
+// tint
+@function tint($color, $percentage) {
+    @return mix(white, $color, $percentage);
+};
+
+// shade
+@function shade($color, $percentage) {
+    @return mix(black, $color, $percentage);
+};
