@@ -1,0 +1,141 @@
+@use "sass:map";
+@use "./libraries/colors" as *;
+@use "./libraries/icons" as *;
+
+// ==========================================================================
+// Export
+// ==========================================================================
+
+html {
+    --ts-mini   : .75;
+    --ts-tiny   : .8125;
+    --ts-small  : .875;
+    --ts-medium : 1;
+    --ts-large  : 1.125;
+    --ts-big    : 1.25;
+    --ts-huge   : 1.5;
+    --ts-massive: 1.625;
+
+    --ts-absolute_mini   : calc(var(--ts-mini)    * 1rem);
+    --ts-absolute_tiny   : calc(var(--ts-tiny)    * 1rem);
+    --ts-absolute_small  : calc(var(--ts-small)   * 1rem);
+    --ts-absolute_medium : calc(var(--ts-medium)  * 1rem);
+    --ts-absolute_large  : calc(var(--ts-large)   * 1rem);
+    --ts-absolute_big    : calc(var(--ts-big)     * 1rem);
+    --ts-absolute_huge   : calc(var(--ts-huge)    * 1rem);
+    --ts-absolute_massive: calc(var(--ts-massive) * 1rem);
+
+    --ts-relative_mini   : calc(var(--ts-mini)    * 1em);
+    --ts-relative_tiny   : calc(var(--ts-tiny)    * 1em);
+    --ts-relative_small  : calc(var(--ts-small)   * 1em);
+    --ts-relative_medium : calc(var(--ts-medium)  * 1em);
+    --ts-relative_large  : calc(var(--ts-large)   * 1em);
+    --ts-relative_big    : calc(var(--ts-big)     * 1em);
+    --ts-relative_huge   : calc(var(--ts-huge)    * 1em);
+    --ts-relative_massive: calc(var(--ts-massive) * 1em);
+}
+
+// ==========================================================================
+// Scheme
+// ==========================================================================
+
+//
+@each $theme, $_ in $emphasises {
+    $colors: map-get(map-get($emphasises, $theme), "colors");
+
+    @each $scheme, $weights in $colors {
+        //
+        @at-root :root {
+            @each $weight, $color in $weights {
+                --ts-#{$scheme}_#{$theme}_#{$weight}: #{$color};
+            }
+        }
+
+        //
+        [data-scheme="#{$scheme}"] {
+            @if $theme == "gray" {
+                //
+                @each $weight, $color in $weights {
+                    --ts-static_#{$theme}_#{$weight}: #{$color};
+                }
+                //
+                @each $weight, $color in $weights {
+                    --ts-#{$theme}_#{$weight}: #{$color};
+                }
+                //
+                @each $weight, $color in $weights {
+                    --ts-#{$theme}-shadow_#{$weight}: #{rgba($color, 0.5)};
+                }
+            } @else {
+                //
+                @each $weight, $color in $weights {
+                    --ts-#{$theme}_#{$weight}: #{$color};
+                }
+                //
+                @each $weight, $color in $weights {
+                    --ts-foreground_#{$weight}: #{get-color(gray, $weight)};
+                }
+                //
+                @each $weight, $color in $weights {
+                    --ts-emphazied_#{$weight}: #{get-color($theme, $weight)};
+                }
+
+                //
+                .-quiet {
+                    //
+                    @each $weight, $color in $weights {
+                        $foreground: get-real-color($scheme, $theme, $weight);
+
+                        @if ($scheme == "dark" or $scheme == "darkest") {
+                            --ts-foreground_#{$theme}_#{$weight}: #{tint($foreground, 20%)};
+                            //--ts-foreground_#{$theme}_#{$weight}: #{$foreground};
+                        } @else {
+                            --ts-foreground_#{$theme}_#{$weight}: #{$foreground};
+                        }
+                    }
+
+                    //
+                    @each $weight, $color in $weights {
+                        $background: get-real-color($scheme, $theme, $weight);
+
+                        @if ($scheme == "dark" or $scheme == "darkest") {
+                            --ts-#{$theme}_#{$weight}: #{shade($background, 40%)};
+                        } @else {
+                            --ts-#{$theme}_#{$weight}: #{tint($background, 73%)};
+                        }
+                    }
+
+                    //
+                    &[data-emphasis="#{$theme}"] {
+                        @each $weight, $color in $weights {
+                            --ts-foreground_#{$weight}: var(--ts-foreground_#{$theme}_#{$weight});
+                        }
+                    }
+                }
+
+
+                //
+                @each $weight, $color in $weights {
+                    $foreground                         : get-real-color(if(is-light($theme), "dark", "light"), "gray", $weight);
+                    --ts-foreground_#{$theme}_#{$weight}: #{if(is-light($theme), tint($foreground, 80%), shade($foreground, 30%))};
+                }
+
+                //
+                [data-emphasis="#{$theme}"].-inverted {
+                    @each $weight, $color in $weights {
+                        --ts-foreground_#{$weight}: var(#{--ts-foreground_#{$theme}_#{$weight}});
+                    }
+                }
+
+                //
+                [data-emphasis="#{$theme}"].-inverted,
+                [data-emphasis="#{$theme}"].-outlined,
+                [data-emphasis="#{$theme}"].-quiet {
+                    @each $weight, $color in $weights {
+                        --ts-gray_#{$weight}: #{get-foreground-color($theme, $weight)};
+                    }
+                }
+            }
+        }
+    }
+}
