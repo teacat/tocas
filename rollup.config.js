@@ -76,4 +76,45 @@ export default [{
     watch: {
         clearScreen: false,
     },
+},
+{
+    input: "./src/components/index.js",
+    output: {
+        sourcemap: true,
+        format: "iife",
+        file: "public/tocas.js",
+    },
+    plugins: [
+        svelte({
+            preprocess: sveltePreprocess({
+                sourceMap: !production,
+                defaults: {
+                    style: "sass",
+                },
+            }),
+            compilerOptions: {
+                dev: !production,
+                customElement: true,
+            },
+        }),
+        css({ output: "bundle.css" }),
+        scssPlugin({
+            sass: sass,
+            indentedSyntax: true,
+            output: 'public/tocas.css',
+            sourceMap: true,
+            sourceMapEmbed: true,
+        }),
+        resolve({
+            browser: true,
+            dedupe: ["svelte"],
+        }),
+        commonjs(),
+        !production && serve(),
+        !production && livereload("public"),
+        production && terser(),
+    ],
+    watch: {
+        clearScreen: false,
+    },
 }]

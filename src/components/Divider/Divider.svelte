@@ -11,10 +11,10 @@
     export let hidden    = null
     export let fitted    = null
     export let clearing  = null
-    export let align     = ""
+    export let align     = ''
     export let section   = null
-    export let thickness = ""
-    export let size      = ""
+    export let thickness = ''
+    export let size      = ''
     export let heading   = null
 </script>
 
@@ -24,16 +24,16 @@
     class:ts-divider--hidden        ="{hidden    !== null}"
     class:ts-divider--fitted        ="{fitted    !== null}"
     class:ts-divider--clearing      ="{clearing  !== null}"
-    class:ts-divider--start-aligned ="{align     === "start"}"
-    class:ts-divider--center-aligned="{align     === "center"}"
-    class:ts-divider--end-aligned   ="{align     === "end"}"
+    class:ts-divider--start-aligned ="{align     === 'start'}"
+    class:ts-divider--center-aligned="{align     === 'center'}"
+    class:ts-divider--end-aligned   ="{align     === 'end'}"
     class:ts-divider--section       ="{section   !== null}"
-    class:ts-divider--thick         ="{thickness === "thick"}"
-    class:ts-divider--thicker       ="{thickness === "thicker"}"
-    class:ts-divider--tiny          ="{size      === "tiny"}"
-    class:ts-divider--small         ="{size      === "small"}"
-    class:ts-divider--large         ="{size      === "large"}"
-    class:ts-divider--big           ="{size      === "big"}"
+    class:ts-divider--thick         ="{thickness === 'thick'}"
+    class:ts-divider--thicker       ="{thickness === 'thicker'}"
+    class:ts-divider--tiny          ="{size      === 'tiny'}"
+    class:ts-divider--small         ="{size      === 'small'}"
+    class:ts-divider--large         ="{size      === 'large'}"
+    class:ts-divider--big           ="{size      === 'big'}"
     class:ts-divider--heading       ="{heading   !== null}"
 >
     <!-- Text -->

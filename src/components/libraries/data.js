@@ -1,7 +1,7 @@
-export function isWanted(value) {
-    return value !== null && value !== false
+export function isFalse(value) {
+    return value === null || value === false
 }
 
-export function notWanted(value) {
-    return value === null
+export function isTrue(value) {
+    return value !== null && value !== false
 }

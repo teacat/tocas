@@ -6,22 +6,20 @@
 
 <script>
     import { dispatchEvent } from './../libraries/event'
+    import { isTrue }        from './../libraries/data'
 
     export let expanded = false
+
     let accordionItem = null
 
-    function callCollapse() {
-        dispatchEvent(accordionItem, "itemcollapse", {
+    export function collapse() {
+       dispatchEvent(accordionItem, "itemcollapse", {
             item: accordionItem.getRootNode().host
         })
     }
 
-    function collapse() {
-        expanded = false
-    }
-
     function toggle() {
-        if (expanded) {
+        if (isTrue(expanded)) {
             collapse()
         } else {
             expand()
@@ -34,27 +32,22 @@
         })
     }
 
-    function factory(element, x) {
+    function factory(element) {
         accordionItem = element
-
-        expanded = x === true || (x !== false && x !== null)
 
         dispatchEvent(element, "registeritem", {
             item: element.getRootNode().host
         })
 
         return {
-            update(x) {
-                console.log(x)
-                expanded = x === true || (x !== false && x !== null)
-                if (expanded) {
-                    console.log(element.getRootNode().host.setAttribute("expanded", ""))
+            update(expandedValue) {
+                if (isTrue(expandedValue)) {
+                    expanded = ""
+                    element.getRootNode().host.setAttribute("expanded", "")
                 } else {
-                    console.log(element.getRootNode().host.removeAttribute("expanded"))
+                    element.getRootNode().host.removeAttribute("expanded")
                 }
-
             },
-
             destroy() {
                 dispatchEvent(element, "unregisteritem", {
                     item: element.getRootNode().host
@@ -66,12 +59,12 @@
 
 <div
     class="ts-accordion-item"
-    class:ts-accordion-item--expanded="{expanded}"
+    class:ts-accordion-item--expanded={isTrue(expanded)}
     use:factory={expanded}
 >
     <div class="ts-accordion-item__title" on:click={toggle}>
         <div class="ts-accordion-item__title__icon">
-            <ts-icon icon="{expanded ? 'chevron-down' : 'chevron-up'}"></ts-icon>
+            <ts-icon icon={isTrue(expanded) ? 'chevron-down' : 'chevron-up'}></ts-icon>
         </div>
         <div class="ts-accordion-item__title__main">
             {#if $$slots.header}
@@ -87,7 +80,7 @@
         </div>
     </div>
 
-    {#if $$slots.content && expanded}
+    {#if $$slots.content && isTrue(expanded)}
     <div class="ts-accordion-item__content">
         <slot name="content"></slot>
     </div>
