@@ -12,6 +12,10 @@ Description: 彙整圖文資訊並能夠以分組呈現。
 #=======================================================
 
 Type       : Article
+Features   :
+    - Depth
+    - Density
+    - Emphasis
 Relatives  :
     - Segment
 
@@ -23,62 +27,95 @@ Relatives  :
 Example:
     HTML: |
         <ts-card>
-            <{{ts-image}} slot="image" src="!-16:9-!"></{{ts-image}}>
-            <div slot="header">事件匯流排</div>
-            <div slot="content">
-                <p>在同個屋簷下，做著那一成不變的事情，</p>
-                <p>就算沒有外星人來襲擊，</p>
-                <p>偶爾也會發生一些意想之外的事情。</p>
-            </div>
+            <ts-card-embed>
+                <{{ts-image}} slot="image" src="!-16:9-!"></{{ts-image}}>
+            </ts-card-embed>
+            <ts-card-content>
+                <{{ts-header}}>好吃的千層蛋糕！</{{ts-header}}>
+                <p>在 5 月之前於線上網路門市訂購，現在還特別加贈限量環保袋。</p>
+            </ts-card-content>
         </ts-card>
-
 
 Definitions:
 
-    -   Title      : 內容
+    -   Title      : 區塊
         Description:
         Sections   :
+
+        -   Title      : 內容
+            Anchor     : Content
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+                <ts-card>
+                    <[[ts-card-content]]>
+
+                    </[[ts-card-content]]>
+                </ts-card>
+
+        -   Title      : 嵌入物件
+            Anchor     : Content
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+                <ts-card>
+                    <ts-card-content>
+
+                    </ts-card-content>
+                    <[[ts-card-embed]]>
+
+                    </[[ts-card-embed]]>
+                    <ts-card-content>
+
+                    </ts-card-content>
+                </ts-card>
+
+    -   Title      : 內容外觀
+        Description:
+        Sections   :
+
+        -   Title      : 次要的
+            Anchor     : Secondary
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+                <ts-card>
+                    <ts-card-content>
+
+                    </ts-card-content>
+                    <ts-card-content [[secondary]]>
+
+                    </ts-card-content>
+                </ts-card>
 
     -   Title      : 外觀
         Description:
         Sections   :
-
-        # - Title      : 無框線的
-        #   Anchor     : Borderless
-        #   Description:
-        #   Since      : 4.0.0
-        #   HTML       : |
-        #     <ts-card>
-        #     </ts-card>
 
         -   Title      : 抬舉的
             Anchor     : Raised
             Description:
             Since      : 4.0.0
             HTML       : |
-            <ts-card [[raised]]>
-                <{{ts-image}} slot="image" src="!-4:3-!"></{{ts-image}}>
-                <div slot="header">Yami Odymel</div>
-                <div slot="content">
-                    <p>噢！嘿！你看外面有鳥在飛耶！</p>
-                </div>
-            </ts-card>
+                <ts-card raised>
+
+                </ts-card>
 
         -   Title      : 基本的
             Anchor     : Basic
             Description:
             Since      : 4.0.0
             HTML       : |
-            <ts-card [[basic]]>
-                <div slot="header">Yami Odymel</div>
-                <div slot="content">
-                    <p>然後這裡是文字註釋，</p>
-                    <p>很重要的文字註釋。</p>
-                </div>
-                <div slot="extra-content">
+                <ts-card [[basic]]>
+                    <div slot="header">Yami Odymel</div>
+                    <div slot="content">
+                        <p>然後這裡是文字註釋，</p>
+                        <p>很重要的文字註釋。</p>
+                    </div>
+                    <div slot="extra-content">
 
-                </div>
-            </ts-card>
+                    </div>
+                </ts-card>
 
         -   Title      : 水平呈現的
             Anchor     : Horizontal
@@ -155,41 +192,6 @@ Definitions:
 
     **Structure**
 
-        -   Title      : 內容
-            Anchor     : Content
-            Description:
-            Since      : 4.0.0
-            HTML       : |
-
-        -   Title      : 額外內容
-            Anchor     : Extra Content
-            Description:
-            Since      : 4.0.0
-            HTML       : |
-
-        -   Title      : 次要內容
-            Anchor     : Secondary Content
-            Description:
-            Since      : 4.0.0
-            HTML       : |
-
-        -   Title      : 標題
-            Anchor     : Header
-            Description:
-            Since      : 4.0.0
-            HTML       : |
-
-        -   Title      : 註釋
-            Anchor     : Description
-            Description:
-            Since      : 4.0.0
-            HTML       : |
-
-        -   Title      : 動作按鈕
-            Anchor     : Actions
-            Description:
-            Since      : 4.0.0
-            HTML       : |
 
         -   Title      : 圖片
             Anchor     : Image
