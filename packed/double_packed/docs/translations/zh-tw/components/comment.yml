@@ -1,0 +1,218 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title      : 留言
+Description: 針對單一主題的多人參與討論。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type       : Article
+Features   :
+    - Density
+Relatives  :
+    - Feed
+    - Conversation
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <ts-comments>
+            <ts-comment>
+                <{{ts-image}} slot="avatar" src="!-user-!"></{{ts-image}}>
+                <a href="#!" slot="author">Yami Odymel</a>
+                <{{ts-meta}} slot="meta">
+                    <span slot="item">2 天前</span>
+                    <span slot="item">
+                        <{{ts-icon}} icon="star"></{{ts-icon}}> 4 次收藏
+                    </span>
+                </{{ts-meta}}>
+                <div slot="content">
+                    <p>你的思想不應該只屬於現在這個時間。</p>
+                </div>
+            </ts-comment>
+            <ts-comment>
+                <{{ts-image}} slot="avatar" src="!-user2-!"></{{ts-image}}>
+                <a href="#!" slot="author">Karisu</a>
+                <{{ts-meta}} slot="meta">
+                    <span slot="item">42 分鐘前</span>
+                </{{ts-meta}}>
+                <div slot="content">
+                    <p>有反對的聲音，世界才能中立。</p>
+                </div>
+            </ts-comment>
+        </ts-comments>
+
+Definitions:
+
+    -   Title      : 內容
+        Description:
+        Sections   :
+
+        -   Title      : 大頭貼
+            Anchor     : Avatar
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+                <ts-comment>
+                    <{{ts-image}} slot="[[avatar]]" src="!-user-!"></{{ts-image}}>
+                </ts-comment>
+
+        -   Title      : 作者名稱
+            Anchor     : Author
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+                <ts-comment>
+                    <{{ts-image}} slot="avatar" src="!-user-!"></{{ts-image}}>
+                    <a href="#!" slot="[[author]]">Yami Odymel</a>
+                </ts-comment>
+
+        -   Title      : 內容
+            Anchor     : Content
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+                <ts-comment>
+                    <{{ts-image}} slot="avatar" src="!-user2-!"></{{ts-image}}>
+                    <a href="#!" slot="author">Yami Odymel</a>
+                    <div slot="[[content]]">
+                        <p>發現自己做不到是進步過程中的一環。</p>
+                    </div>
+                </ts-comment>
+
+        -   Title      : 中繼資料
+            Anchor     : Meta
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+                <ts-comment>
+                    <{{ts-image}} slot="avatar" src="!-user2-!"></{{ts-image}}>
+                    <a href="#!" slot="author">Yami Odymel</a>
+                    <{{ts-meta}} slot="[[meta]]">
+                        <span slot="item">42 分鐘前</span>
+                        <span slot="item">42 分鐘前</span>
+                    </{{ts-meta}}>
+                    <div slot="content">
+                        <p>發現自己做不到是進步過程中的一環。</p>
+                    </div>
+                </ts-comment>
+
+        -   Title      : 巢狀留言
+            Anchor     : Nested Comment
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+                <ts-comment>
+                    <{{ts-image}} slot="avatar" src="!-user2-!"></{{ts-image}}>
+                    <a href="#!" slot="author">Yami Odymel</a>
+                    <{{ts-meta}} slot="meta">
+                        <span slot="item">42 分鐘前</span>
+                        <span slot="item">42 分鐘前</span>
+                    </{{ts-meta}}>
+                    <div slot="content">
+                        <p>發現自己做不到是進步過程中的一環。</p>
+                    </div>
+                    <ts-comment slot="[[comment]]">
+                        <{{ts-image}} slot="avatar" src="!-user2-!"></{{ts-image}}>
+                        <a href="#!" slot="author">Yami Odymel</a>
+                        <{{ts-meta}} slot="[[meta]]">
+                            <span slot="item">42 分鐘前</span>
+                            <span slot="item">42 分鐘前</span>
+                        </{{ts-meta}}>
+                        <div slot="content">
+                            <p>發現自己做不到是進步過程中的一環。</p>
+                        </div>
+                    </ts-comment>
+                </ts-comment>
+
+        # - Title      : 文字
+        #   Anchor     : Text
+        #   Description:
+        #   Since      : 4.0.0
+        #   HTML       : |
+
+        -   Title      : 動作按鈕
+            Anchor     : Actions
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+
+
+        -   Title      : 回覆表單
+            Anchor     : Reply Form
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+
+
+
+    Comments（留言）
+
+        -   Title      : 帶點中繼資料
+            Anchor     : Dotted Meta
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+
+        -   Title      : 同行文字
+            Anchor     : Inline Text
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+
+        -   Title      : 被折疊的
+            Anchor     : Collapsed
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+
+        -   Title      : 被忽略的
+            Anchor     : Ignored
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+
+        -   Title      :  被隱藏的
+            Anchor     : Hidden
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+
+        -   Title      : 具主題性質的
+            Anchor     : Threaded
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+
+        -   Title      : 簡化的
+            Anchor     : Minimal
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+
+        -   Title      : 尺寸
+            Anchor     : Sizes
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+
+        -   Title      : 分隔的
+            Anchor     : Divided
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+
+        -   Title      : 對話式的
+            Anchor     : Conversational
+            Description:
+            Since      : 4.0.0
+            HTML       : |

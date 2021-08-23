@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/assets/styles/global.css" />
+        <link rel="stylesheet" href="/assets/styles/examples.css" />
+        <script src="https://kit.fontawesome.com/535a1ce640.js" crossorigin="anonymous"></script>
+        <title>{{ .Examples.Title }} | Tocas UI</title>
+    </head>
+    <body>
+        <div id="矚目看板">
+            <div class="界限容器">
+                <div id="矚目看板-導航列">
+                    <div id="矚目看板-導航列-主要欄位">
+                        <a href="/{{ index .Meta.Information.Path }}" class="矚目看板-導航列-項目 矚目看板-導航列-項目_商標">Tocas UI</a>
+                        <a href="/{{ index .Meta.Information.Path }}/getting-started" class="矚目看板-導航列-項目">{{ index .Meta.UI.Navigation "GettingStarted" }}</a>
+                        <a href="/{{ index .Meta.Information.Path }}/components/button" class="矚目看板-導航列-項目">{{ index .Meta.UI.Navigation "Components" }}</a>
+                        <a href="/{{ index .Meta.Information.Path }}/examples" class="矚目看板-導航列-項目">{{ index .Meta.UI.Navigation "Examples" }}</a>
+                        <a href="/{{ index .Meta.Information.Path }}/playground" class="矚目看板-導航列-項目">{{ index .Meta.UI.Navigation "Playground" }}</a>
+                    </div>
+                    <div id="矚目看板-導航列-次要欄位">
+                        <a href="#!" class="矚目看板-導航列-項目"><i id="矚目看板-導航列-項目-語系圖示" class="fas fa-language"></i> 台灣正體</a>
+                        <a href="https://github.com/teacat/tocas" target="_blank" class="矚目看板-導航列-項目">GitHub</a>
+                    </div>
+                </div>
+
+                <div id="矚目看板-標題">{{ .Examples.Title }}</div>
+                <div id="矚目看板-說明">{{ .Examples.Description }}</div>
+            </div>
+        </div>
+
+        <div id="文件內容">
+            <div class="界限容器 界限容器_行排列">
+                <div id="文件內容-範例清單">
+                    {{ range .Examples.Items }}
+                        <div class="文件內容-範例清單-段落">
+                            <div class="文件內容-範例清單-段落-標題">{{ .Title }}</div>
+                            <div class="文件內容-範例清單-段落-說明">{{ .Description }}</div>
+                            <div class="文件內容-範例清單-段落-項目清單">
+                                {{ range .Items }}
+                                    <a href="{{ .Link }}" target="_blank" class="文件內容-範例清單-段落-項目清單-項目">
+                                        <img src="{{ .Image }}" class="文件內容-範例清單-段落-項目清單-項目-螢幕截圖">
+                                        <div class="文件內容-範例清單-段落-項目清單-項目-標題">{{ .Title }}</div>
+                                        <div class="文件內容-範例清單-段落-項目清單-項目-說明">{{ .Description }}</div>
+                                        <i class="fas fa-{{ .Symbol }} 文件內容-範例清單-段落-項目清單-項目-圖示"></i>
+                                    </a>
+                                {{ end }}
+                            </div>
+                        </div>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+
+        <div id="頁腳">
+            <div class="界限容器 界限容器_行排列">
+                <div id="頁腳-主要內容">
+                    <div id="頁腳-主要內容-導航列">
+                        <a href="#!" class="頁腳-主要內容-導航列-項目 頁腳-主要內容-導航列-項目_回到頂部" data-backtotop><i class="fas fa-arrow-up 頁腳-主要內容-導航列-項目-圖示"></i> {{ index .Meta.UI.Navigation "BackToTop" }}</a>
+                        <a href="https://github.com/teacat/tocas" target="_blank" class="頁腳-主要內容-導航列-項目" >GitHub</a>
+                        <a href="/{{ index .Meta.Information.Path }}/examples" class="頁腳-主要內容-導航列-項目" >{{ index .Meta.UI.Navigation "Examples" }}</a>
+                        <a href="/{{ index .Meta.Information.Path }}/about" class="頁腳-主要內容-導航列-項目" >{{ index .Meta.UI.Navigation "About" }}</a>
+                    </div>
+                    <div id="頁腳-主要內容-文字">
+                        {{ index .Meta.UI.Paragraph "Footer" | html }}
+                    </div>
+                    <div id="頁腳-主要內容-翻譯者">
+                        {{ index .Meta.UI.Paragraph "Translators" | translators }}
+                    </div>
+                </div>
+                <div id="頁腳-商標">
+                    <img id="頁腳-商標-圖片" src="/assets/images/logo.svg">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

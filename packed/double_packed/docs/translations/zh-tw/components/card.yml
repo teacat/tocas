@@ -1,0 +1,247 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title      : 卡片
+Description: 彙整圖文資訊並能夠以分組呈現。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type       : Article
+Features   :
+    - Depth
+    - Density
+    - Emphasis
+Relatives  :
+    - Segment
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <ts-card>
+            <ts-card-embed>
+                <{{ts-image}} slot="image" src="!-16:9-!"></{{ts-image}}>
+            </ts-card-embed>
+            <ts-card-content>
+                <{{ts-header}}>好吃的千層蛋糕！</{{ts-header}}>
+                <p>在 5 月之前於線上網路門市訂購，現在還特別加贈限量環保袋。</p>
+            </ts-card-content>
+        </ts-card>
+
+Definitions:
+
+    -   Title      : 區塊
+        Description:
+        Sections   :
+
+        -   Title      : 內容
+            Anchor     : Content
+            Description: 在卡片裡的內容區塊除了有內距以外，還會相互以分隔線隔開。
+            Since      : 4.0.0
+            HTML       : |
+                <ts-card>
+                    <[[ts-card-content]]>
+                        <{{ts-header}}>自從你上次離開後…</{{ts-header}}>
+                    </[[ts-card-content]]>
+                    <[[ts-card-content]]>
+                        <p>這裡有超過 10 則最新消息都發生在你上次暫離之後，欲閱讀這些內容請打開手機應用程式並解鎖。</p>
+                    </[[ts-card-content]]>
+                </ts-card>
+
+        -   Title      : 嵌入物件
+            Anchor     : Embed
+            Description: 欲在卡片之中插入多媒體物件（如：圖片、影片）則需要額外透過一個嵌入物件區塊擺放其內容。
+            Since      : 4.0.0
+            HTML       : |
+                <ts-card>
+                    <ts-card-content>
+                        Tocas Collection
+                    </ts-card-content>
+                    <[[ts-card-embed]]>
+                        <{{ts-image}} slot="image" src="!-16:9-!"></{{ts-image}}>
+                    </[[ts-card-embed]]>
+                    <ts-card-content>
+                        <p>在同個屋簷下，做著那一成不變的事情，</p>
+                        <p>就算沒有外星人來襲擊，</p>
+                        <p>偶爾也會發生一些意想之外的事情。</p>
+                    </ts-card-content>
+                </ts-card>
+
+    -   Title      : 內容外觀
+        Description:
+        Sections   :
+
+        -   Title      : 次要的
+            Anchor     : Secondary
+            Description: 這能讓一個內容區塊以更不顯眼的方式呈現，通常可作為資訊頁尾或是輔助功能區域。
+            Since      : 4.0.0
+            HTML       : |
+                <ts-card>
+                    <ts-card-content>
+                        <{{ts-header}}>Jajjimento</{{ts-header}}>
+                        <p>Jajjimento（ジャッジメント）中文涵意是風紀委員，這是用來驗證表單的 PHP 類別。</p>
+                    </ts-card-content>
+                    <ts-card-content [[secondary]]>
+                        發表於 2021/06/13
+                    </ts-card-content>
+                </ts-card>
+
+        -   Title      : 文字對齊
+            Anchor     : Aligns
+            Description: 令文字內容置起始、中間、結尾，文字對齊的方式會依據使用者電腦的偏好書寫方式而有所不同。
+            Since      : 4.0.0
+            HTML       : |
+                <ts-card>
+                    <ts-card-content align="[[start]]">
+                        <p>起始對齊</p>
+                    </ts-card-content>
+                    <ts-card-content align="[[center]]">
+                        <p>置中對齊</p>
+                    </ts-card-content>
+                    <ts-card-content align="[[end]]">
+                        <p>結尾對齊</p>
+                    </ts-card-content>
+                </ts-card>
+
+    -   Title      : 外觀
+        Description:
+        Sections   :
+
+        -   Title      : 基本的
+            Anchor     : Basic
+            Description:
+            Since      : 4.0.0
+            HTML       : |
+                <ts-card [[basic]]>
+                    <ts-card-content>
+                        <{{ts-header}}>Yami Odymel</{{ts-header}}>
+                        <p>然後這裡是文字註釋，</p>
+                        <p>很重要的文字註釋。</p>
+                    </ts-card-content>
+                </ts-card>
+
+        -   Title      : 水平呈現的
+            Anchor     : Horizontal
+            Description: 這會讓卡片的內容區塊從原本的上下垂直改以左右水平的方式排列。
+            Since      : 4.0.0
+            HTML       : |
+                <ts-card [[horizontal]]>
+                    <ts-card-embed>
+                        <{{ts-image}} slot="image" src="!-16:9-!"></{{ts-image}}>
+                    </ts-card-embed>
+                    <ts-card-content>
+                        <{{ts-header}}>小安網站</{{ts-header}}>
+                        <p>你將會在這裡看見一個魔法師的日常生活。沒錯，只要你能夠單身三十年，你也可以跟我一樣成為魔法師。</p>
+                    </ts-card-content>
+                </ts-card>
+
+        -   Title      : 語意
+            Anchor     : Emphasis
+            Description: 以不同的語意呈現卡片的重要程度，如：負面的卡片通常是最高級訊息，用來警示使用者這是個危險的行為。
+            Since      : 4.0.0
+            HTML       : |
+                <ts-card emphasis="[[primary]]">
+                    <ts-card-content>
+                        <{{ts-header}}>主要</{{ts-header}}>
+                        <p>所有系統目前正在啟動中，這可能需要一點時間…。</p>
+                    </ts-card-content>
+                </ts-card>
+                <ts-card emphasis="[[warning]]">
+                    <ts-card-content>
+                        <{{ts-header}}>警告</{{ts-header}}>
+                        <p>目前伺服器負載已經超過 50%，建議啟動平衡器與分流器以自動擴展伺服器架構設施。</p>
+                    </ts-card-content>
+                </ts-card>
+                <ts-card emphasis="[[positive]]">
+                    <ts-card-content>
+                        <{{ts-header}}>正面</{{ts-header}}>
+                        <p>一切事情都過得再好不過了。</p>
+                    </ts-card-content>
+                </ts-card>
+                <ts-card emphasis="[[negative]]">
+                    <ts-card-content>
+                        <{{ts-header}}>負面</{{ts-header}}>
+                        <p>噢不！有錯誤發生了！多啦 A 夢快用用你那超級聰明的腦袋想想辦法啊！</p>
+                    </ts-card-content>
+                </ts-card>
+
+        -   Title      : 指示的
+            Anchor     : Indicated
+            Description: 以稍做提示的方式點醒這個卡片的語意為何，這會讓卡片上方呈現其語意卻又不會太過度。
+            Since      : 4.0.0
+            HTML       : |
+                <ts-card emphasis="primary" [[indicated]]>
+                    <ts-card-content>
+                        <{{ts-header}}>主要</{{ts-header}}>
+                        <p>所有系統目前正在啟動中，這可能需要一點時間…。</p>
+                    </ts-card-content>
+                </ts-card>
+                <ts-card emphasis="warning" [[indicated]]>
+                    <ts-card-content>
+                        <{{ts-header}}>警告</{{ts-header}}>
+                        <p>目前伺服器負載已經超過 50%，建議啟動平衡器與分流器以自動擴展伺服器架構設施。</p>
+                    </ts-card-content>
+                </ts-card>
+                <ts-card emphasis="positive" [[indicated]]>
+                    <ts-card-content>
+                        <{{ts-header}}>正面</{{ts-header}}>
+                        <p>一切事情都過得再好不過了。</p>
+                    </ts-card-content>
+                </ts-card>
+                <ts-card emphasis="negative" [[indicated]]>
+                    <ts-card-content>
+                        <{{ts-header}}>負面</{{ts-header}}>
+                        <p>噢不！有錯誤發生了！多啦 A 夢快用用你那超級聰明的腦袋想想辦法啊！</p>
+                    </ts-card-content>
+                </ts-card>
+
+        -   Title      : 置中的
+            Anchor     : Centered
+            Description: 讓卡片置中於某個容器的中間，在某些時候可能會因為容器的影響而無法生效。
+            Since      : 4.0.0
+            HTML       : |
+                <ts-card [[centered]]>
+                    <ts-card-embed>
+                        <{{ts-image}} slot="image" src="!-16:9-!"></{{ts-image}}>
+                    </ts-card-embed>
+                    <ts-card-content>
+                        <{{ts-header}}>Yami Odymel</{{ts-header}}>
+                    </ts-card-content>
+                </ts-card>
+
+        -   Title      : 連結
+            Anchor     : Link
+            Description: 整張卡片可以是一個連結。
+            Since      : 4.0.0
+            HTML       : |
+                <a>
+                    <ts-card [[link]]>
+                        <ts-card-content>
+                            <{{ts-header}}>關於我</{{ts-header}}>
+                            <{{ts-metadata}}>
+                                <ts-metadata-item>@YamiOdymel</ts-metadata-item>
+                                <ts-metadata-item>三天前</ts-metadata-item>
+                            </{{ts-metadata}}>
+                            <p>你將會在這裡看見一個魔法師的日常生活。沒錯，只要你能夠單身三十年，你也可以跟我一樣成為魔法師。</p>
+                        </ts-card-content>
+                    </ts-card>
+                </a>
+
+        -   Title      : 代表性圖示
+            Anchor     : Symbol
+            Description: 卡片可以有一個代表性的象徵圖示呈現在其角落。
+            Since      : 4.0.0
+            HTML       : |
+                <ts-card symbol="[[exclamation-circle]]">
+                    <ts-card-content>
+                        <p>任何已發布或是計畫中之產品及服務，皆不得用來刻意偏頗大眾想法、喜好、甚至混淆視聽，且該產品及服務必須將自我立場縮放到最小限度。</p>
+                    </ts-card-content>
+                </ts-card>
