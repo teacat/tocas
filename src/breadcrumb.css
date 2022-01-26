@@ -1,0 +1,102 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-breadcrumb {
+    display: flex;
+    gap: 0.5rem;
+    color: var(--gray-800);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-breadcrumb .item {
+    text-decoration: none;
+    color: var(--gray-800);
+}
+
+.ts-breadcrumb .item .ts-icon {
+    display: inline-block;
+    text-decoration: none;
+    margin-right: 0.25rem;
+}
+
+.ts-breadcrumb .item:hover {
+    text-decoration: underline;
+}
+
+.ts-breadcrumb .item::after {
+    user-select: none;
+    margin-left: 0.5rem;
+    display: inline-block;
+    pointer-events: none;
+}
+
+.ts-breadcrumb .item:last-child::after {
+    display: none;
+}
+
+.ts-breadcrumb .divider.ts-icon {
+    font-size: 12px;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Stepped
+ */
+
+.ts-breadcrumb.is-stepped .item {
+    color: var(--gray-500);
+}
+
+/**
+ * Active
+ */
+
+.ts-breadcrumb .item.is-active {
+    color: var(--gray-900);
+    font-weight: 500;
+}
+
+/**
+ * Divided
+ */
+
+.ts-breadcrumb.is-divided .item::after {
+    content: "/";
+}
+
+/**
+ * Chevroned
+ */
+
+.ts-breadcrumb.is-chevroned .item::after {
+    content: "\f054";
+    font-size: 12px;
+}
+
+/**
+ * Hyphenated
+ */
+
+.ts-breadcrumb.is-hyphenated .item::after {
+    content: "-";
+}
+
+.ts-breadcrumb:is(.is-chevroned, .is-hyphenated) .item::after {
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+}

@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-switch {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-switch input {
+    position: relative;
+    appearance: none;
+    cursor: pointer;
+}
+
+.ts-switch input::after {
+    display: block;
+    content: "";
+    height: 22px;
+    width: 38px;
+    border-radius: 500rem;
+    background: var(--gray-300);
+    transition: background 0.1s ease;
+}
+
+.ts-switch input::before {
+    position: absolute;
+    display: block;
+    content: "";
+    height: 15px;
+    width: 15px;
+    border-radius: 500rem;
+    top: 3.5px;
+    left: 4px;
+    background: var(--gray-50);
+    transition: left 0.1s ease;
+}
+
+.ts-switch input:checked::after {
+    background: var(--primary-700);
+}
+
+.ts-switch input:checked::before {
+    left: 18px;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Disabled
+ */
+
+.ts-switch.is-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}

@@ -1,0 +1,167 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+@keyframes progress-active {
+    from {
+        opacity: 0.8;
+        width: 0%;
+    }
+    to {
+        opacity: 0;
+        width: 100%;
+    }
+}
+
+@keyframes progress-bar-animation {
+    from {
+        background-position: 0px;
+    }
+    to {
+        background-position: 40px;
+    }
+}
+
+@keyframes indeterminate-bar-animation {
+    0% {
+        margin-left: -10%;
+        margin-right: 100%;
+    }
+    40% {
+        margin-left: 25%;
+        margin-right: 0%;
+    }
+    100% {
+        margin-left: 100%;
+        margin-right: 0;
+    }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-progress {
+    display: flex;
+    border-radius: 0.4rem;
+    background: var(--gray-300);
+    overflow: hidden;
+    position: relative;
+    min-height: 1.6rem;
+    line-height: 1;
+}
+
+.ts-progress .bar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    background: var(--gray-900);
+    color: var(--gray-50);
+    padding: 0rem 0.5rem;
+    font-size: var(--relative-small);
+    border-radius: 0.4rem;
+    min-width: fit-content;
+    text-align: right;
+    transition: width 1s ease-out;
+
+    z-index: 1;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Active
+ */
+
+.ts-progress.is-active .bar {
+    position: relative;
+}
+
+.ts-progress.is-active .bar::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    content: "";
+    background: #5a5a5a;
+    border-radius: 0.4rem;
+    animation: progress-active 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/**
+ * Processing
+ */
+
+.ts-progress.is-processing {
+    background-size: 40px 40px;
+    background-image: linear-gradient(135deg, #9e9e9e 25%, #949494 25%, #949494 50%, #9e9e9e 50%, #9e9e9e 75%, #949494 75%, #949494 100%);
+    animation: progress-bar-animation 2s linear 0s infinite;
+}
+
+/**
+ * Indeterminate
+ */
+
+.ts-progress.is-indeterminate .bar {
+    animation: indeterminate-bar-animation 2s cubic-bezier(0.4, 0, 0.2, 1) 0s infinite;
+    width: 100% !important;
+    min-width: 0;
+}
+
+.ts-progress.is-indeterminate .bar .text {
+    visibility: hidden;
+}
+
+/**
+ * Queried
+ */
+
+.ts-progress.is-queried .bar {
+    animation: indeterminate-bar-animation 2s cubic-bezier(0.4, 0, 0.2, 1) 0s infinite;
+    animation-direction: reverse;
+    width: 100% !important;
+    min-width: 0;
+}
+
+.ts-progress.is-queried .bar .text {
+    visibility: hidden;
+}
+
+/**
+ * Secondary
+ */
+
+.ts-progress .bar.is-secondary {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 0;
+    background: var(--gray-400);
+    color: var(--gray-900);
+}
+
+/**
+ * Sizes
+ */
+
+.ts-progress.is-tiny {
+    min-height: 0.7rem;
+}
+
+.ts-progress.is-tiny .bar .text {
+    font-size: 0.8em;
+}
+
+.ts-progress.is-small {
+    min-height: 1.2rem;
+}
+
+.ts-progress.is-small .bar .text {
+    font-size: 0.85em;
+}
+
+.ts-progress.is-large .bar {
+    min-height: calc(1.75rem + 1.75rem / 4);
+}
