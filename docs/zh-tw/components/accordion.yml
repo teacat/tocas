@@ -1,0 +1,76 @@
+#=======================================================
+# Header
+#=======================================================
+
+Title: 可折疊內容
+Description: 將內容以群組區分並讓使用者可以折疊、展開。
+
+#=======================================================
+# Settings
+#=======================================================
+
+Type: Article
+Intro: 使用時可自行搭配 JavaScript 操控元件的啟用狀態以呈現開啟或閉合狀態。
+Features:
+    - Density
+
+#=======================================================
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="[[ts-accordion]] is-active">
+            <div class="title">什麼是夏希？</div>
+            <div class="content">夏希是一個基於 PHP 的時間類別，用以取得現在的時間或是數天後的現在時刻。</div>
+        </div>
+
+Definitions:
+    - Title: 內容
+      Description:
+      Sections:
+          - Title: 標題
+            Anchor: Title
+            Description:
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-accordion is-active">
+                    <div class="[[title]]">營業時間為何？</div>
+                    <div class="content">每日的早上九點至晚上八點。</div>
+                </div>
+                <div class="{{ts-divider}}"></div>
+                <div class="ts-accordion">
+                    <div class="[[title]]">是否提供內用選項？</div>
+                    <div class="content">否，所有餐點都必須外帶。</div>
+                </div>
+
+          - Title: 內容
+            Anchor: Content
+            Description:
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-accordion is-active">
+                    <div class="title">貨運約需要多久的時間？</div>
+                    <div class="[[content]]">通常來說，約一至兩天即會將包裹送達至您手上，倘若遇上例假日則會延後一天。</div>
+                </div>
+                <div class="ts-accordion">
+                    <div class="title">可否冷凍寄送？</div>
+                    <div class="[[content]]">可以，但運費將會多出一百元新台幣。</div>
+                </div>
+
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 啟用的
+            Anchor: Active
+            Description:
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-accordion [[is-active]]">
+                    <div class="title">當我使用 API 的時候，是否有提供 SSL 加密傳輸協定？</div>
+                    <div class="content">無，本銀行全面採用非加密的 HTTP 傳統標準通訊協定。</div>
+                </div>
+                <div class="ts-accordion [[is-active]]">
+                    <div class="title">需要自行簽署金鑰以防中間人攻擊嗎？</div>
+                    <div class="content">不需要，因為這只是運氣問題。</div>
+                </div>
