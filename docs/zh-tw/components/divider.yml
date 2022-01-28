@@ -5,6 +5,7 @@
 
 Title: 分隔線
 Description: 區隔主題或段落的分隔線段。
+Intro: 分隔線預設情況下並沒有外距，因為除了用以區隔文字段落之外，分隔線的設計初衷是希望其能單獨作為線條使用。相關搭配方式請參閱底部的組合應用章節。
 
 #=======================================================
 # 設定
@@ -23,32 +24,69 @@ Example:
         <div class="[[ts-divider]]"></div>
 
 Definitions:
-    - Title: 內容
-      Description:
-      Sections:
-          - Title: 分隔線
-            Anchor: Divider
-            Description:
-            Since: 4.0.0
-            HTML: |
-                <p>我是微笑小安安，歡迎來到小安網站。</p>
-                <div class="[[ts-divider]]"></div>
-                <p>你將會在這裡看見一個魔法師的日常生活。沒錯，只要你能夠單身三十年，你也可以跟我一樣成為魔法師。</p>
-
     - Title: 外觀
       Description:
       Sections:
+          - Title: 區段的
+            Anchor: Section
+            Description: 區段的分隔線會有空白間隔相隔上下內容。
+            Since: 4.0.0
+            HTML: |
+                <p>我是微笑小安安，歡迎來到小安網站。</p>
+                <div class="[[ts-divider]] [[is-section]]"></div>
+                <p>你將會在這裡看見一個魔法師的日常生活。沒錯，只要你能夠單身三十年，你也可以跟我一樣成為魔法師。</p>
+
           - Title: 垂直的
             Anchor: Vertical
-            Description:
+            Description: 在一個水平的[箱型容器](./box.html)裡擺放垂直的分隔線可以劃分兩個區塊。
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-box}} is-horizontal" style="height: 100px;">
-                    <div class="ts-content">
-                        嗶嗶嗶。
-                    </div>
+                    <div class="{{ts-content}}">嗶嗶嗶。</div>
                     <div class="ts-divider [[is-vertical]]"></div>
-                    <div class="ts-content">
-                        早安阿！各位，看看這旁邊的國際換日線。
+                    <div class="{{ts-content}}">旁邊是國際換日線。</div>
+                </div>
+
+          - Title: 文字的
+            Anchor: Text
+            Description: 分隔線中間能夠插入文字。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-divider [[is-text]]">你可能會喜歡這些商品</div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 第三方登入
+            Anchor: Composition Form
+            Description: 通常會在登入或註冊表單下方會有個支援第三方登入的功能，透過分隔線可以明確地告訴使用者有額外方式能進行登入。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-bullseye}}">
+                    <div class="{{ts-segment}}" style="width: 280px">
+                        <div class="{{ts-stack}}">
+                            <div class="{{ts-text}} is-label">電子信箱地址</div>
+                            <div class="{{ts-input}} is-start-icon">
+                                <span class="{{ts-icon}} is-envelope-icon"></span>
+                                <input type="text" />
+                            </div>
+                            <div class="{{ts-text}} is-label">密碼</div>
+                            <div class="{{ts-input}} is-start-icon">
+                                <span class="{{ts-icon}} is-lock-icon"></span>
+                                <input type="text" />
+                            </div>
+                            <button class="{{ts-button}} is-fluid">註冊</button>
+                            <div class="[[ts-divider]] is-text">
+                                <div class="{{ts-text}} is-description">或是透過下列方式登入</div>
+                            </div>
+                            <div class="{{ts-row}}">
+                                <button class="{{ts-button}} is-fluid is-start-icon is-outlined">
+                                    <span class="{{ts-icon}} is-google-icon"></span> Google
+                                </button>
+                                <button class="{{ts-button}} is-fluid is-start-icon is-outlined">
+                                    <span class="{{ts-icon}} is-twitter-icon"></span> Twitter
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
