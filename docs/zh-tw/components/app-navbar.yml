@@ -5,6 +5,12 @@
 
 Title: 應用程式導航列
 Description: 近似於分頁籤但作為應用程式的功能切換列。
+Intro: |
+    這是一個專為應用程式設計的元件。
+
+    通常用於擺放在應用程式下方，如果項目過多就應該將多餘的功能收納至側邊欄、媒體庫而不是全數列出在導航列中。
+
+    使用此元件時一定會有個被啟用的項目，沒有被啟用的項目會淡化呈現。
 
 #=======================================================
 # 設定
@@ -24,45 +30,30 @@ Relatives:
 
 Example:
     HTML: |
-        <div class="[[ts-app-navbar]] is-fluid">
-            <a href="#!" class="item">
-                <div class="{{ts-icon}} is-user-icon"></div>
-                <div class="label">使用者</div>
-            </a>
-            <a href="#!" class="item">
-                <div class="{{ts-icon}} is-home-icon"></div>
-                <div class="label">首頁</div>
-            </a>
-            <a href="#!" class="item is-active">
-                <div class="{{ts-icon}} is-newspaper-icon"></div>
-                <div class="label">新聞</div>
-            </a>
+        <div class="{{ts-segment}}">
+            <div class="[[ts-app-navbar]] is-fluid">
+                <a href="#!" class="item">
+                    <div class="{{ts-icon}} is-user-icon"></div>
+                    <div class="label">使用者</div>
+                </a>
+                <a href="#!" class="item">
+                    <div class="{{ts-icon}} is-home-icon"></div>
+                    <div class="label">首頁</div>
+                </a>
+                <a href="#!" class="item is-active">
+                    <div class="{{ts-icon}} is-newspaper-icon"></div>
+                    <div class="label">新聞</div>
+                </a>
+            </div>
         </div>
 
 Definitions:
     - Title: 內容
       Description:
       Sections:
-          - Title: 項目
-            Anchor: Item
-            Description:
-            Since: 4.0.0
-            HTML: |
-                <div class="ts-app-navbar">
-                    <a href="#!" class="[[item]]">
-                        <div class="{{ts-icon}} is-download-icon"></div>
-                    </a>
-                    <a href="#!" class="[[item]]">
-                        <div class="{{ts-icon}} is-cloud-icon"></div>
-                    </a>
-                    <a href="#!" class="[[item]]">
-                        <div class="{{ts-icon}} is-video-icon"></div>
-                    </a>
-                </div>
-
           - Title: 標籤
             Anchor: Label
-            Description:
+            Description: 圖示下方也可以擺放標籤，但這個標籤文字必須簡化且為單行。如：「我的音樂」應該作為「音樂」。
             Since: 4.0.0
             HTML: |
                 <div class="ts-app-navbar">
@@ -70,7 +61,7 @@ Definitions:
                         <div class="{{ts-icon}} is-search-icon"></div>
                         <div class="[[label]]">搜尋</div>
                     </a>
-                    <a href="#!" class="item">
+                    <a href="#!" class="item is-active">
                         <div class="{{ts-icon}} is-vials-icon"></div>
                         <div class="[[label]]">實驗區</div>
                     </a>
@@ -85,7 +76,7 @@ Definitions:
       Sections:
           - Title: 啟用的
             Anchor: Active
-            Description:
+            Description: 表現出目前頁面正處於的位置項目。
             Since: 4.0.0
             HTML: |
                 <div class="ts-app-navbar">
@@ -108,7 +99,7 @@ Definitions:
       Sections:
           - Title: 流動
             Anchor: Fluid
-            Description:
+            Description: 導航列的寬度可以與父容器相同。
             Since: 4.0.0
             HTML: |
                 <div class="ts-app-navbar [[is-fluid]]">
@@ -128,7 +119,7 @@ Definitions:
 
           - Title: 無標籤
             Anchor: Unlabeled
-            Description:
+            Description: 在這個模式下，所有沒被啟用的項目其標籤都會被隱藏。這可以有效地減短導航列的寬度。
             Since: 4.0.0
             HTML: |
                 <div class="ts-app-navbar [[is-unlabeled]]">
@@ -152,7 +143,7 @@ Definitions:
 
           - Title: 標記的
             Anchor: Indicated
-            Description:
+            Description: 令啟用的項目以較醒目的方式呈現，而這會讓沒被啟用的項目以正常方式呈現而不會被淡化。
             Since: 4.0.0
             HTML: |
                 <div class="ts-app-navbar [[is-indicated]]">
