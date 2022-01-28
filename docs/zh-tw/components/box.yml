@@ -4,7 +4,11 @@
 #=======================================================
 
 Title: 箱型容器
-Description: 帶有邊框的容器且可包覆多數元素。
+Description: 帶有邊框的基礎架構容器並可與其他元素混搭使用。
+Intro: |
+    箱型容器看起來有點像是一張卡片，但箱型容器並沒有內距。這就是為什麼通常箱型容器會與[內容區塊](./content.html)、[表格](./table.html)、[圖片](./image.html)這種貼邊元素一起使用。
+
+    由於容器沒有預設內距，這讓多個元件搭配上使用更容易。如果元件只有純文字，正常情況下則可以直接使用[敘述卡片](./segment.html)則會讓結構較為單純。
 
 #=======================================================
 # 設定
@@ -14,6 +18,7 @@ Description: 帶有邊框的容器且可包覆多數元素。
 Type: Article
 Relatives:
     - Segment
+    - Content
 
 #=======================================================
 # 基本樣式
@@ -36,7 +41,7 @@ Definitions:
       Sections:
           - Title: 象徵圖示
             Anchor: Symbol
-            Description:
+            Description: 箱型容器裡可以在其角落擺放一個圖示作為其象徵。當容器的高度太矮時，其象徵圖示會被裁切。
             Since: 4.0.0
             HTML: |
                 <div class="ts-box">
@@ -53,7 +58,7 @@ Definitions:
       Sections:
           - Title: 水平的
             Anchor: Horizontal
-            Description:
+            Description: 容器裡的元素排列預設為上下垂直，但若排版需要則可以將其改為左右水平排列。
             Since: 4.0.0
             HTML: |
                 <div class="ts-box [[is-horizontal]]">
@@ -62,13 +67,13 @@ Definitions:
                         <div class="{{ts-header}}">
                             Zedd - Papercut (Audio) ft. Troye Sivan
                         </div>
-                        <p>Get “True Colors” on iTunes: http://smarturl.it/ZeddTrueColors</p>
+                        <p>Get "True Colors" on iTunes: http://smarturl.it/ZeddTrueColors</p>
                     </div>
                 </div>
 
           - Title: 最小寬度的
             Anchor: Collapsed
-            Description:
+            Description: 由於此元件預設為流動寬度，若希望寬度以內容為主，則可以將其設為最小寬度。
             Since: 4.0.0
             HTML: |
                 <div class="ts-box [[is-collapsed]]">
@@ -79,7 +84,7 @@ Definitions:
 
           - Title: 標記的
             Anchor: Indicated
-            Description:
+            Description: 讓容器的某個邊緣有特別標記的樣式。
             Since: 4.0.0
             HTML: |
                 <div class="ts-box [[is-top-indicated]]">
@@ -87,16 +92,19 @@ Definitions:
                         <p>上部標記</p>
                     </div>
                 </div>
+                <br>
                 <div class="ts-box [[is-bottom-indicated]]">
                     <div class="{{ts-content}}">
                         <p>下部標記</p>
                     </div>
                 </div>
+                <br>
                 <div class="ts-box [[is-left-indicated]]">
                     <div class="{{ts-content}}">
                         <p>左邊標記</p>
                     </div>
                 </div>
+                <br>
                 <div class="ts-box [[is-right-indicated]]">
                     <div class="{{ts-content}}">
                         <p>右部標記</p>
@@ -105,7 +113,7 @@ Definitions:
 
           - Title: 語意
             Anchor: Emphasises
-            Description:
+            Description: 讓容器擁有邊緣標記的同時，更改其標記顏色語意。這可以用來強調這個容器呈現的內容是否危險、安全或是需讓人注意的。
             Since: 4.0.0
             HTML: |
                 <div class="ts-box [[is-negative]] is-top-indicated">
@@ -113,11 +121,13 @@ Definitions:
                         <p>負面的</p>
                     </div>
                 </div>
+                <br>
                 <div class="ts-box [[is-positive]] is-top-indicated">
                     <div class="{{ts-content}}">
                         <p>正面的</p>
                     </div>
                 </div>
+                <br>
                 <div class="ts-box [[is-warning]] is-top-indicated">
                     <div class="{{ts-content}}">
                         <p>警告的</p>
@@ -126,7 +136,7 @@ Definitions:
 
           - Title: 抬升的
             Anchor: Elevated
-            Description:
+            Description: 透過陰影讓容器看起來有浮起的感覺，如果有一個需要備受矚目的中心內容（如：登入表單）這會是個好選擇。
             Since: 4.0.0
             HTML: |
                 <div class="ts-box [[is-elevated]]">
@@ -134,6 +144,7 @@ Definitions:
                         <p>抬升的</p>
                     </div>
                 </div>
+                <br>
                 <div class="ts-box [[is-very-elevated]]">
                     <div class="{{ts-content}}">
                         <p>非常抬升的</p>
@@ -142,7 +153,7 @@ Definitions:
 
           - Title: 直角的
             Anchor: Squared
-            Description:
+            Description: 讓邊角以直角呈現而不再圓潤。
             Since: 4.0.0
             HTML: |
                 <div class="ts-box [[is-squared]]">
@@ -150,8 +161,60 @@ Definitions:
                         <p>直角箱型容器</p>
                     </div>
                 </div>
-                <div class="ts-box">
-                    <div class="{{ts-content}}">
-                        <p>預設箱型容器</p>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 資訊概要
+            Anchor: Composition Information
+            Description: 透過搭配網格系統、象徵圖示可以營造出系統儀表板頂部常有的統計數據概要資訊。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-grid}} is-2-columns">
+                    <div class="column">
+                        <div class="[[ts-box]]">
+                            <div class="{{ts-content}} is-padded">
+                                <div class="{{ts-statistic}}">
+                                    <div class="value">
+                                        42,689
+                                        <div class="comparison is-increased">32</div>
+                                    </div>
+                                    <div class="label">本月拜訪次數</div>
+                                </div>
+                            </div>
+                            <div class="symbol">
+                                <span class="{{ts-icon}} is-eye-icon"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="[[ts-box]]">
+                            <div class="{{ts-content}} is-padded">
+                                <div class="{{ts-statistic}}">
+                                    <div class="value">
+                                        8,652
+                                        <div class="comparison is-increased">351</div>
+                                    </div>
+                                    <div class="label">總會員數</div>
+                                </div>
+                            </div>
+                            <div class="symbol">
+                                <span class="{{ts-icon}} is-users-icon"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Open Graph 連結預覽
+            Anchor: Composition OG
+            Description: 在箱型容器裡擺放貼邊圖片和文字與標題就可以達成像 Facebook、Twitter 那樣的連結預覽卡片。
+            Since: 4.0.0
+            HTML: |
+                <div class="[[ts-box]]" style="max-width: 360px">
+                    <img class="{{ts-image}}" src="!-16:9-!">
+                    <div class="{{ts-content}} is-secondary">
+                        <div class="{{ts-text}} is-description">yami.io/rog-and-hololive/</div>
+                        <div class="{{ts-header}} is-truncated">華碩自稱「中國公司」，中國分部發言誓死阻撓日本工商</div>
+                        <div class="{{ts-text}} is-description">在微博上的《ROG玩家国度》小編便發文了，誓死也會阻止這次日本華碩與 Hololive 的工商互動。多數中國網友表示期待且「買不買華碩就看這次了」。</div>
                     </div>
                 </div>
