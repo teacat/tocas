@@ -11,13 +11,15 @@ type Article struct {
 	Remove      []string            `yaml:"Remove"`
 	Relatives   []string            `yaml:"Relatives"`
 	Definitions []ArticleDefinition `yaml:"Definitions"`
-
-	Meta Meta
+	Flags       map[string][]string `yaml:"Flags"`
+	Meta        Meta
+	Grid        bool `yaml:"Grid"`
 }
 
 // ArticleDefinition
 type ArticleExample struct {
-	HTML string `yaml:"HTML"`
+	Centered bool   `yaml:"Centered"`
+	HTML     string `yaml:"HTML"`
 	// FormattedHTML 是程式會自動進行段落掃描並整理的 HTML 程式碼，這不在 YAML 之中。
 	FormattedHTML template.HTML
 }
