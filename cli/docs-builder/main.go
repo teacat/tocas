@@ -255,7 +255,7 @@ func decodePlaceholder(s string) string {
 		if len(groups) == 0 {
 			return ""
 		}
-		return fmt.Sprintf("<a href='./components/%s'>%s</a>", groups[1], groups[1])
+		return fmt.Sprintf(`<a href="./%s.html">%s</a>`, strings.ReplaceAll(groups[1], "ts-", ""), groups[1])
 	})
 	return s
 }
