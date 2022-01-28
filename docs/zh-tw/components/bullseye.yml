@@ -5,6 +5,8 @@
 
 Title: 置中靶心
 Description: 絕對置中其子元素。
+Intro: |
+    由於置中靶心是透過 `display: flex` 將元素絕對置中，這會導致子元素的排列方式變異。為了解決這個問題，請再多透過一層 `<div>` 等元素包覆真正的內容。
 
 #=======================================================
 # 設定
@@ -18,33 +20,37 @@ Type: Article
 # Definitions
 #=======================================================
 
+Example:
+    HTML: |
+        <div class="[[ts-bullseye]]">
+            你看，這段文字絕對置中了！
+        </div>
+
 Definitions:
-    - Title: 內容
+    - Title: 組合應用
       Description:
       Sections:
-          - Title: 置中靶心
-            Anchor: Bullseye
-            Description:
+          - Title: 置中表單
+            Anchor: Composition Form
+            Description: 登入頁面經常會有一個絕對置中的表單與輸入欄位，透過置中靶心可以讓一個容器在頁面上絕對置中。
             Since: 4.0.0
             HTML: |
                 <div class="[[ts-bullseye]]">
-                    <div class="{{ts-box}}" style="width: 280px">
-                        <div class="{{ts-content}} is-padded">
-                            <div class="{{ts-stack}}">
-                                <div class="{{ts-text}} is-label">使用者帳號</div>
-                                <div class="{{ts-input}} is-start-icon">
-                                    <span class="{{ts-icon}} is-user-icon"></span>
-                                    <input type="text" />
-                                </div>
-                                <div class="{{ts-space}}"></div>
-                                <div class="{{ts-text}} is-label">密碼</div>
-                                <div class="{{ts-input}} is-start-icon">
-                                    <span class="{{ts-icon}} is-lock-icon"></span>
-                                    <input type="password" />
-                                </div>
-                                <div class="ts-space"></div>
-                                <button class="{{ts-button}} is-fluid">登入</button>
+                    <div class="{{ts-segment}}" style="width: 280px">
+                        <div class="{{ts-stack}}">
+                            <div class="{{ts-text}} is-label">使用者帳號</div>
+                            <div class="{{ts-input}} is-start-icon">
+                                <span class="{{ts-icon}} is-user-icon"></span>
+                                <input type="text" />
                             </div>
+                            <div class="{{ts-space}}"></div>
+                            <div class="{{ts-text}} is-label">密碼</div>
+                            <div class="{{ts-input}} is-start-icon">
+                                <span class="{{ts-icon}} is-lock-icon"></span>
+                                <input type="password" />
+                            </div>
+                            <div class="{{ts-space}}"></div>
+                            <button class="{{ts-button}} is-fluid">登入</button>
                         </div>
                     </div>
                 </div>
