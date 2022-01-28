@@ -5,6 +5,7 @@
 
 Title: 計數徽章
 Description: 最基礎的數字、文字標記或是未讀計數。
+Intro: 這個元件非常基本且僅用於呈現文字、數字用的徽章（如：下載人數、等級），如果希望帶有關閉按鈕或是圖示、多媒體頭像，應該使用[關聯選項](./chip.html)元件。
 
 #=======================================================
 # 設定
@@ -24,6 +25,7 @@ Relatives:
 #=======================================================
 
 Example:
+    Centered: true
     HTML: |
         <span class="[[ts-badge]]">689</span>
 
@@ -36,7 +38,6 @@ Definitions:
             Description:
             Since: 4.0.0
             HTML: |
-                <span class="ts-badge">8,964</span>
                 <span class="ts-badge [[is-secondary]]">16,226</span>
 
           - Title: 外框線的
@@ -44,7 +45,6 @@ Definitions:
             Description:
             Since: 4.0.0
             HTML: |
-                <span class="ts-badge">203</span>
                 <span class="ts-badge [[is-outlined]]">1,386</span>
 
           - Title: 負面的
@@ -62,3 +62,62 @@ Definitions:
                 <span class="ts-badge [[is-small]]">小的</span>
                 <span class="ts-badge">預設</span>
                 <span class="ts-badge [[is-large]]">大的</span>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 表格
+            Anchor: Composition Table
+            Description: 有時候表格裡可以加上計數徽章用以襯托相關標籤資訊。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <table class="{{ts-table}}">
+                        <thead>
+                            <tr>
+                                <th>主機名稱</th>
+                                <th>狀態</th>
+                                <th>標籤</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>主要網站</td>
+                                <td>正常</td>
+                                <td>
+                                    <span class="[[ts-badge]]">台灣</span>
+                                    <span class="[[ts-badge]] is-secondary">已啟用資料備援</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>使用者資料庫</td>
+                                <td>正常</td>
+                                <td>
+                                    <span class="[[ts-badge]]">美國</span>
+                                    <span class="[[ts-badge]] is-secondary">已啟用資料備援</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>影片儲存伺服器</td>
+                                <td>正常</td>
+                                <td>
+                                    <span class="[[ts-badge]]">美國</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+          - Title: 標題與文字
+            Anchor: Composition Header
+            Description: 想要強調某些最新消息就可以在標題裡使用計數徽章。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-segment}}">
+                    <div class="{{ts-header}}">
+                        星際效應
+                        <span class="[[ts-badge]]">新上映</span>
+                    </div>
+                    <p>《星際效應》是一部2014年上映的科幻電影，由克里斯多福·諾蘭執導和監製，馬修·麥康納、安·海瑟薇、潔西卡·崔絲坦和米高·肯恩主演。電影講述一組太空人通過穿越蟲洞為人類尋找新家園的冒險故事。</p>
+                    <div class="{{ts-text}} is-secondary">— 維基百科</div>
+                </div>
