@@ -4,7 +4,11 @@
 #=======================================================
 
 Title: 水平排列
-Description: 以左右水平的方式排列元素並可自由延展其寬度。
+Description: 以左右水平的方式排列元素並自由延展其寬度。
+Intro: |
+    這個元素有點近似於[網格系統](./grid.html)，但水平排列可以特別令某個欄位填滿剩餘空間。
+
+    和[間隔容器](./wrap.html)不同的是：水平排列的項目絕對不會換行。
 
 #=======================================================
 # 設定
@@ -13,7 +17,8 @@ Description: 以左右水平的方式排列元素並可自由延展其寬度。
 
 Type: Article
 Relatives:
-    - Stack
+    - Grid
+    - Wrap
 
 #=======================================================
 # 基本樣式
@@ -25,7 +30,7 @@ Example:
         <div class="[[ts-row]]">
             <div class="column is-fluid">
                 <div class="{{ts-input}} is-outlined">
-                    <input type="text" class="input" />
+                    <input type="text" class="input" placeholder="搜尋文章…"/>
                 </div>
             </div>
             <div class="column">
@@ -39,117 +44,176 @@ Definitions:
       Sections:
           - Title: 欄位
             Anchor: Column
-            Description:
+            Description: 排列裡的每個元素都必須要以欄位包覆。
             Since: 4.0.0
             HTML: |
-                <div class="ts-row is-evenly-divided">
-                    <div class="column">
-                        <button class="{{ts-button}}">確定</button>
+                <div class="ts-row">
+                    <div class="[[column]]">
+                        <div class="{{ts-segment}}">項目</div>
                     </div>
-                    <div class="column ">
-                        <button class="{{ts-button}} is-secondary">取消</button>
+                    <div class="[[column]]">
+                        <div class="{{ts-segment}}">項目</div>
+                    </div>
+                </div>
+
+    - Title: 欄位外觀
+      Description:
+      Sections:
+          - Title: 流動的
+            Anchor: Fluid
+            Description: 使某個欄位的寬度填滿剩餘空白位置，這會令其他欄位空間被壓縮到最小。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-row">
+                    <div class="column [[is-fluid]]">
+                        <div class="{{ts-input}} is-outlined">
+                            <input type="text" class="input" placeholder="搜尋文章…"/>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <button class="{{ts-button}}">送出</button>
                     </div>
                 </div>
 
     - Title: 外觀
       Description:
       Sections:
-          - Title: 對齊
-            Anchor: Aligns
-            Description:
-            Since: 4.0.0
-            HTML: |
-                <div class="ts-row [[is-start-aligned]]">
-                    <div class="column">
-                        <div class="{{ts-box}}">
-                            <div class="{{ts-content}}">
-                                烈日高照，前方的道路什麼都看不見。「很高興能和你見面」一個細微的聲音好似那邊傳來；明明不清楚前方的事物，卻感覺自己正在邁向的是一個新世界。
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="{{ts-box}}">
-                            <div class="{{ts-content}}">
-                                哈囉！
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ts-row [[is-middle-aligned]]">
-                    <div class="column">
-                        <div class="{{ts-box}}">
-                            <div class="{{ts-content}}">
-                                烈日高照，前方的道路什麼都看不見。「很高興能和你見面」一個細微的聲音好似那邊傳來；明明不清楚前方的事物，卻感覺自己正在邁向的是一個新世界。
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="{{ts-box}}">
-                            <div class="{{ts-content}}">
-                                哈囉！
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ts-row [[is-end-aligned]]">
-                    <div class="column">
-                        <div class="{{ts-box}}">
-                            <div class="{{ts-content}}">
-                                烈日高照，前方的道路什麼都看不見。「很高興能和你見面」一個細微的聲音好似那邊傳來；明明不清楚前方的事物，卻感覺自己正在邁向的是一個新世界。
-                            </div>
-                        </div>
-                    </div>
-                    <div class="column">
-                        <div class="{{ts-box}}">
-                            <div class="{{ts-content}}">
-                                哈囉！
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
           - Title: 均分寬度
             Anchor: Evenly Divided
-            Description:
+            Description: 每個項目的寬度可以被平均分配，若有兩個則是 50%，三個則為 100% ÷ 3…等以此類推。
             Since: 4.0.0
             HTML: |
                 <div class="ts-row [[is-evenly-divided]]">
                     <div class="column">
-                        <button class="{{ts-button}}">確定</button>
+                        <div class="{{ts-segment}}">這個項目 50% 寬度</div>
                     </div>
-                    <div class="column ">
-                        <button class="{{ts-button}} is-secondary">取消</button>
+                    <div class="column">
+                        <div class="{{ts-segment}}">這個項目 50% 寬度</div>
+                    </div>
+                </div>
+                <br>
+                <div class="ts-row [[is-evenly-divided]]">
+                    <div class="column">
+                        <div class="{{ts-segment}}">這個項目 33% 寬度</div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-segment}}">這個項目 33% 寬度</div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-segment}}">這個項目 33% 寬度</div>
                     </div>
                 </div>
 
-          - Title: 流動的
-            Anchor: Fluid
-            Description:
+          - Title: 水平對齊
+            Anchor: Horizontal Aligns
+            Description: 項目可以選擇靠左、中或右對齊。
             Since: 4.0.0
             HTML: |
-                <div class="ts-row">
-                    <div class="column [[is-fluid]]">
-                        <div class="{{ts-input}} is-outlined">
-                            <input type="text" class="input" />
+                <div class="ts-row [[is-start-aligned]]">
+                    <div class="column">
+                        <div class="{{ts-segment}}" style="width: 160px;">
+                            置左對齊
                         </div>
                     </div>
+                </div>
+                <br>
+                <div class="ts-row [[is-center-aligned]]">
                     <div class="column">
-                        <button class="{{ts-button}}">送出</button>
+                        <div class="{{ts-segment}}" style="width: 160px;">
+                            置中對齊
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="ts-row [[is-end-aligned]]">
+                    <div class="column">
+                        <div class="{{ts-segment}}" style="width: 160px;">
+                            置右對齊
+                        </div>
                     </div>
                 </div>
 
-          - Title: 無縫隙的
-            Anchor: Gapless
-            Description:
+          - Title: 垂直對齊
+            Anchor: Vertical Aligns
+            Description: 根據項目之間的高度，可以更改其上、中或下對齊方式。
             Since: 4.0.0
             HTML: |
-                <div class="ts-row [[is-gapless]]">
-                    <div class="column is-fluid">
-                        <div class="{{ts-input}} is-outlined">
-                            <input type="text" class="input" />
+                <div class="ts-row [[is-top-aligned]]">
+                    <div class="column">
+                        <div class="{{ts-segment}}">
+                            Consectetur adipiscing elit.
+                            <br>
+                            In fermentum metus dolor.
                         </div>
                     </div>
                     <div class="column">
-                        <button class="{{ts-button}}">送出</button>
+                        <div class="{{ts-segment}}">
+                            置上對齊
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-segment}}">
+                            Consectetur adipiscing elit.
+                            <br>
+                            In fermentum metus dolor.
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="ts-row [[is-middle-aligned]]">
+                    <div class="column">
+                        <div class="{{ts-segment}}">
+                            Consectetur adipiscing elit.
+                            <br>
+                            In fermentum metus dolor.
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-segment}}">
+                            置中對齊
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-segment}}">
+                            Consectetur adipiscing elit.
+                            <br>
+                            In fermentum metus dolor.
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="ts-row [[is-bottom-aligned]]">
+                    <div class="column">
+                        <div class="{{ts-segment}}">
+                            Consectetur adipiscing elit.
+                            <br>
+                            In fermentum metus dolor.
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-segment}}">
+                            置下對齊
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-segment}}">
+                            Consectetur adipiscing elit.
+                            <br>
+                            In fermentum metus dolor.
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 緊緻的
+            Anchor: Compact
+            Description: 減少空白間距，令項目之間更加緊密。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-row [[is-compact]] is-evenly-divided">
+                    <div class="column">
+                        <div class="{{ts-segment}}">項目</div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-segment}}">項目</div>
                     </div>
                 </div>
