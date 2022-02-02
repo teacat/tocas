@@ -3,7 +3,7 @@
 # Header
 #=======================================================
 
-Title: 下拉選擇欄位
+Title: 下拉式選擇
 Description: 基礎的下拉式項目輸入欄位。
 
 #=======================================================
@@ -19,40 +19,23 @@ Type: Article
 #=======================================================
 
 Example:
+    Centered: true
     HTML: |
         <div class="[[ts-select]]">
             <select>
                 <option>蘋果</option>
                 <option>西瓜</option>
                 <option>香蕉</option>
-                <option>菠蘿</option>
-                <option>拔鳳梨</option>
             </select>
         </div>
 
 Definitions:
-    - Title: 內容
-      Description:
-      Sections:
-          - Title: 下拉式選擇欄位
-            Anchor: Select
-            Description:
-            Since: 4.0.0
-            HTML: |
-                <div class="ts-select">
-                    <[[select]]>
-                        <option>巫師聯盟總部</option>
-                        <option>YSITD</option>
-                        <option>HentaiDB</option>
-                    </[[select]]>
-                </div>
-
     - Title: 狀態
       Description:
       Sections:
           - Title: 停用的
             Anchor: Disabled
-            Description:
+            Description: 使下拉選擇欄位呈現無法互動、點擊的模樣。若你希望真正地停用選取行為，請在該下拉選擇欄位增加 `disabled` 標籤以符合 HTML 規範。
             Since: 4.0.0
             HTML: |
                 <div class="ts-select [[is-disabled]]">
@@ -66,9 +49,21 @@ Definitions:
     - Title: 外觀
       Description:
       Sections:
+          - Title: 基本的
+            Anchor: Basic
+            Description: 移除所有多餘的結構，僅呈現下拉文字與輔助圖示。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-select [[is-basic]]">
+                    <select>
+                        <option>AMD</option>
+                        <option>Intel</option>
+                    </select>
+                </div>
+
           - Title: 外框線的
             Anchor: Outlined
-            Description:
+            Description: 僅描繪欄位的外框線使整體結構看起來更簡單。
             Since: 4.0.0
             HTML: |
                 <div class="ts-select [[is-outlined]]">
@@ -81,7 +76,7 @@ Definitions:
 
           - Title: 負面的
             Anchor: Negative
-            Description:
+            Description: 令一個欄位看起來帶有負面或危險的狀態，通常可能是指這個欄位沒有被選擇。
             Since: 4.0.0
             HTML: |
                 <div class="ts-select [[is-negative]]">
@@ -94,7 +89,7 @@ Definitions:
 
           - Title: 流動的
             Anchor: Fluid
-            Description:
+            Description: 使欄位的寬度符合父容器的寬度。
             Since: 4.0.0
             HTML: |
                 <div class="ts-select [[is-fluid]]">

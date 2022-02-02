@@ -19,36 +19,24 @@ Type: Article
 #=======================================================
 
 Example:
+    Centered: true
     HTML: |
         <div class="[[ts-pagination]]">
             <a class="item is-back" href="#!"></a>
             <a class="item" href="#!">1</a>
             <a class="item is-active" href="#!">2</a>
             <a class="item" href="#!">3</a>
+            <a class="item" href="#!">4</a>
             <a class="item is-next" href="#!"></a>
         </div>
 
 Definitions:
-    - Title: 內容
-      Description:
-      Sections:
-          - Title: 項目
-            Anchor: Item
-            Description:
-            Since: 4.0.0
-            HTML: |
-                <div class="ts-pagination">
-                    <a class="[[item]]" href="#!">1</a>
-                    <a class="[[item]]" href="#!">2</a>
-                    <a class="[[item]]" href="#!">3</a>
-                </div>
-
     - Title: 項目
       Description:
       Sections:
           - Title: 啟用的
             Anchor: Active
-            Description:
+            Description: 表示目前檢視的頁數。
             Since: 4.0.0
             HTML: |
                 <div class="ts-pagination">
@@ -59,23 +47,40 @@ Definitions:
 
           - Title: 上、下一頁
             Anchor: Back And Next
-            Description:
+            Description: 帶有前、後圖示的項目，能夠同時在裡面擺放文字。
             Since: 4.0.0
             HTML: |
                 <div class="ts-pagination">
-                    <a class="item [[is-back]]" href="#!"></a>
+                    <a class="item [[is-back]]" href="#!">上一頁</a>
                     <a class="item" href="#!">1</a>
                     <a class="item" href="#!">2</a>
                     <a class="item" href="#!">3</a>
-                    <a class="item [[is-next]]" href="#!"></a>
+                    <a class="item [[is-next]]" href="#!">下一頁</a>
                 </div>
 
     - Title: 外觀
       Description:
       Sections:
+          - Title: 次要的
+            Anchor: Secondary
+            Description: 讓整個導覽列沒那麼顯眼。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-pagination [[is-secondary]]">
+                    <a class="item is-back" href="#!"></a>
+                    <a class="item" href="#!">1</a>
+                    <a class="item" href="#!">...</a>
+                    <a class="item" href="#!">4</a>
+                    <a class="item is-active" href="#!">5</a>
+                    <a class="item" href="#!">6</a>
+                    <a class="item" href="#!">...</a>
+                    <a class="item" href="#!">10</a>
+                    <a class="item is-next" href="#!"></a>
+                </div>
+
           - Title: 流動的
             Anchor: Fluid
-            Description:
+            Description: 令整個頁數導覽列和父容器有相同的寬度。
             Since: 4.0.0
             HTML: |
                 <div class="ts-pagination [[is-fluid]]">
@@ -84,4 +89,70 @@ Definitions:
                     <a class="item" href="#!">2</a>
                     <a class="item" href="#!">3</a>
                     <a class="item is-next" href="#!"></a>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 詳細分頁列
+            Anchor: Composition Detail
+            Description: 在資料的上、下方通常會有一個換頁用的導覽列，有時會包含筆數資訊。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <table class="{{ts-table}} is-basic">
+                        <thead>
+                            <tr>
+                                <th>醫院種類</th>
+                                <th>名稱</th>
+                                <th class="is-collapsed">建立於</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="is-collapsed">東京 AH 綜合醫院</td>
+                                <td>醫學藥品</td>
+                                <td>2021/08/01</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">東京 AH 綜合醫院</td>
+                                <td>常規心電圖</td>
+                                <td>2021/08/01</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="{{ts-divider}}"></div>
+                    <div class="{{ts-content}} is-secondary">
+                        <div class="{{ts-row}} is-compact is-middle-aligned">
+                            <div class="column">單頁筆數：</div>
+                            <div class="column is-fluid">
+                                <div class="{{ts-select}} is-basic">
+                                    <select>
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option selected>30</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="column">第</div>
+                            <div class="column">
+                                <div class="{{ts-select}} is-basic">
+                                    <select>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option selected>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="column">頁，共 50 頁</div>
+                            <div class="column">
+                                <div class="[[ts-pagination]] is-secondary">
+                                    <a class="item is-back" href="#!"></a>
+                                    <a class="item is-next" href="#!"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>

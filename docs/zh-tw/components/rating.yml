@@ -19,6 +19,7 @@ Type: Article
 #=======================================================
 
 Example:
+    Centered: true
     HTML: |
         <div class="[[ts-rating]] is-yellow">
             <div class="star is-active"></div>
@@ -32,18 +33,18 @@ Definitions:
       Sections:
           - Title: 星號
             Anchor: Star
-            Description:
+            Description: 以星星的方式呈現評分。
             Since: 4.0.0
             HTML: |
                 <div class="ts-rating">
-                    <div class="[[star]]"></div>
+                    <div class="[[star]] is-active"></div>
                     <div class="[[star]]"></div>
                     <div class="[[star]]"></div>
                 </div>
 
           - Title: 愛心
             Anchor: Heart
-            Description:
+            Description: 以愛心的方式呈現評分。
             Since: 4.0.0
             HTML: |
                 <div class="ts-rating">
@@ -57,7 +58,7 @@ Definitions:
       Sections:
           - Title: 啟用的
             Anchor: Active
-            Description:
+            Description: 啟用指定的項目讓使用者得知目前評分為何。
             Since: 4.0.0
             HTML: |
                 <div class="ts-rating">
@@ -68,7 +69,7 @@ Definitions:
 
           - Title: 半星的
             Anchor: Half
-            Description:
+            Description: 使某個啟用的星號項目以一半呈現，通常用於帶有小數點的評分。
             Since: 4.0.0
             HTML: |
                 <div class="ts-rating">
@@ -82,7 +83,7 @@ Definitions:
       Sections:
           - Title: 顏色
             Anchor: Colors
-            Description:
+            Description: 評分的星星通常會是黃色，愛心則是紅色。
             Since: 4.0.0
             HTML: |
                 <div class="ts-rating [[is-yellow]]">
@@ -90,21 +91,22 @@ Definitions:
                     <div class="star is-active"></div>
                     <div class="star"></div>
                 </div>
+                <br>
                 <div class="ts-rating [[is-red]]">
                     <div class="heart is-active"></div>
                     <div class="heart"></div>
                     <div class="heart"></div>
                 </div>
 
-          - Title: 可供輸入的
-            Anchor: Input
-            Description:
-            Since: 4.0.0
-            HTML: |
-                <div class="ts-rating [[is-input]] is-yellow">
-                    <input class="star" type="radio" name="rating" value="5" />
-                    <input class="star" type="radio" name="rating" value="4" checked />
-                    <input class="star" type="radio" name="rating" value="3" />
-                    <input class="star" type="radio" name="rating" value="2" />
-                    <input class="star" type="radio" name="rating" value="1" />
-                </div>
+          # - Title: 可供輸入的
+          #   Anchor: Input
+          #   Description: 可讓使用者以點擊的方式輸入評分數值。需要注意的是由於 CSS 技術問題，數值必須從大排序到小（反向排序）。
+          #   Since: 4.0.0
+          #   HTML: |
+          #       <div class="ts-rating [[is-input]] is-yellow">
+          #           <input class="star" type="radio" name="rating" value="5" />
+          #           <input class="star" type="radio" name="rating" value="4" checked/>
+          #           <input class="star" type="radio" name="rating" value="3" />
+          #           <input class="star" type="radio" name="rating" value="2" />
+          #           <input class="star" type="radio" name="rating" value="1" />
+          #       </div>

@@ -3,8 +3,12 @@
 # Header
 #=======================================================
 
-Title: 項目選擇欄位
+Title: 項目切換
 Description: 以近似開關的外觀方式在提供的選項之間來回切換。
+Intro: |
+    在使用這個元件的時候，我們建議至少預設要有一個被啟用的項目以避免使用者不知道這是一個可供互動的表單控制元件。
+
+    這個元件是用來在不同模式或選項中來回切換，如果希望以此來切換內容請使用[分頁籤](./tab.html)。
 
 #=======================================================
 # 設定
@@ -12,6 +16,11 @@ Description: 以近似開關的外觀方式在提供的選項之間來回切換�
 #=======================================================
 
 Type: Article
+Relatives:
+    - Checkbox
+    - Chip
+    - Radio
+    - Tab
 
 #=======================================================
 # 基本樣式
@@ -19,10 +28,11 @@ Type: Article
 #=======================================================
 
 Example:
+    Centered: true
     HTML: |
         <div class="[[ts-selection]]">
             <label class="item">
-                <input type="radio" name="aircon" />
+                <input type="radio" name="aircon" checked/>
                 <div class="text">冷氣</div>
             </label>
             <label class="item">
@@ -36,35 +46,12 @@ Example:
         </div>
 
 Definitions:
-    - Title: 內容
-      Description:
-      Sections:
-          - Title: 項目
-            Anchor: Select
-            Description:
-            Since: 4.0.0
-            HTML: |
-                <div class="ts-selection">
-                    <label class="[[item]]">
-                        <input type="radio" name="mode" />
-                        <div class="text">關閉</div>
-                    </label>
-                    <label class="[[item]]">
-                        <input type="radio" name="mode" />
-                        <div class="text">自動</div>
-                    </label>
-                    <label class="[[item]]">
-                        <input type="radio" name="mode" />
-                        <div class="text">強制開啟</div>
-                    </label>
-                </div>
-
     - Title: 狀態
       Description:
       Sections:
           - Title: 停用的
             Anchor: Disabled
-            Description:
+            Description: 使項目選擇呈現無法互動、點擊的模樣。若你希望真正地停用核取行為，請在該項目選擇增加 `disabled` 標籤以符合 HTML 規範。
             Since: 4.0.0
             HTML: |
                 <div class="ts-selection">
@@ -73,7 +60,7 @@ Definitions:
                         <div class="text">標準</div>
                     </label>
                     <label class="item">
-                        <input type="radio" name="version" />
+                        <input type="radio" name="version" checked/>
                         <div class="text">進階</div>
                     </label>
                     <label class="item">
@@ -87,12 +74,12 @@ Definitions:
       Sections:
           - Title: 圓角的
             Anchor: Circular
-            Description:
+            Description: 將邊緣角落以圓角處理。
             Since: 4.0.0
             HTML: |
                 <div class="ts-selection [[is-circular]]">
                     <label class="item">
-                        <input type="radio" name="audio" />
+                        <input type="radio" name="audio" checked/>
                         <div class="text">低音</div>
                     </label>
                     <label class="item">
@@ -107,7 +94,7 @@ Definitions:
 
           - Title: 流動的
             Anchor: Fluid
-            Description:
+            Description: 欄位本身的寬度可以是最大的直至與父容器相等。
             Since: 4.0.0
             HTML: |
                 <div class="ts-selection [[is-fluid]]">
@@ -116,7 +103,7 @@ Definitions:
                         <div class="text">台灣正體</div>
                     </label>
                     <label class="item">
-                        <input type="radio" name="language" />
+                        <input type="radio" name="language" checked/>
                         <div class="text">英文</div>
                     </label>
                     <label class="item">

@@ -3,7 +3,7 @@
 # Header
 #=======================================================
 
-Title: 單選方塊
+Title: 選項按鈕
 Description: 在多個選項中僅可單選作為答案的項目。
 
 #=======================================================
@@ -12,6 +12,9 @@ Description: 在多個選項中僅可單選作為答案的項目。
 #=======================================================
 
 Type: Article
+Relatives:
+    - Checkbox
+    - Selection
 
 #=======================================================
 # 基本樣式
@@ -19,48 +22,20 @@ Type: Article
 #=======================================================
 
 Example:
+    Centered: true
     HTML: |
         <label class="[[ts-radio]]">
-            <input name="gender" type="radio" />
-            男性
-        </label>
-        <label class="[[ts-radio]]">
-            <input name="gender" type="radio" />
-            女性
-        </label>
-        <label class="[[ts-radio]]">
-            <input name="gender" type="radio" />
-            其他
+            <input name="eat" type="radio" checked/>
+            早餐
         </label>
 
 Definitions:
-    - Title: 內容
-      Description:
-      Sections:
-          - Title: 單選方塊
-            Anchor: Radio
-            Description:
-            Since: 4.0.0
-            HTML: |
-                <label class="[[ts-radio]]">
-                    <input name="os" type="radio" />
-                    Windows
-                </label>
-                <label class="[[ts-radio]]">
-                    <input name="os" type="radio" />
-                    Linux
-                </label>
-                <label class="[[ts-radio]]">
-                    <input name="os" type="radio" />
-                    macOS
-                </label>
-
     - Title: 狀態
       Description:
       Sections:
           - Title: 停用的
             Anchor: Disabled
-            Description:
+            Description: 使單選方塊呈現無法互動、點擊的模樣。若你希望真正地停用單選行為，請在該單選方塊增加 `disabled` 標籤以符合 HTML 規範。
             Since: 4.0.0
             HTML: |
                 <label class="ts-radio [[is-disabled]]">
@@ -73,10 +48,63 @@ Definitions:
       Sections:
           - Title: 負面的
             Anchor: Negative
-            Description:
+            Description: 表示一個單選方塊可能沒有被選取。
             Since: 4.0.0
             HTML: |
                 <label class="ts-radio [[is-negative]]">
-                    <input name="os" type="radio" />
-                    高雄市
+                    <input name="love" type="radio" />
+                    愛情摩天輪
                 </label>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 垂直群組
+            Anchor: Composition Stack
+            Description: 若希望將多個單選方塊層疊在一起，可以考慮使用[層疊排列](./stack.html)元件。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-text}} is-label">性別</div>
+                <div class="{{ts-space}}"></div>
+                <div class="[[{{ts-stack}}]]">
+                    <label class="ts-radio">
+                        <input name="gender" type="radio" checked/>
+                        男性
+                    </label>
+                    <label class="ts-radio">
+                        <input name="gender" type="radio" />
+                        女性
+                    </label>
+                    <label class="ts-radio">
+                        <input name="gender" type="radio" />
+                        其它
+                    </label>
+                </div>
+
+          - Title: 水平群組
+            Anchor: Composition Row
+            Description: 透過[水平排列](./row.html)元件能讓單選方塊以左右水平排列並保持一定的間距。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-text}} is-label">來電狀態</div>
+                <div class="{{ts-space}}"></div>
+                <div class="[[{{ts-row}}]]">
+                    <div class="column">
+                        <label class="ts-radio">
+                            <input name="ring" type="radio" />
+                            響鈴
+                        </label>
+                    </div>
+                    <div class="column">
+                        <label class="ts-radio">
+                            <input name="ring" type="radio" checked/>
+                            震動
+                        </label>
+                    </div>
+                    <div class="column">
+                        <label class="ts-radio">
+                            <input name="ring" type="radio" />
+                            靜音
+                        </label>
+                    </div>
+                </div>

@@ -5,6 +5,7 @@
 
 Title: 內容遮罩
 Description: 可淡化背景並強調特定主體的遮蔽元素。
+Intro: 遮罩預設會是覆蓋整個父容器的大小，但也可以指定只遮蔽某半部份。妥善地與[內容區塊](./content.html)搭配可以更改內容文字的對齊位置。
 
 #=======================================================
 # 設定
@@ -20,31 +21,103 @@ Type: Article
 
 Example:
     HTML: |
-        <div class="ts-mask">
-            <img class="{{ts-image}}" src="!-16:9-!">
-            <div class="[[mask]]">
-                <div class="{{ts-content}}">
-                    <div class="{{ts-header}}">Tocas UI</div>
-                    Tocas UI 是一個能夠在短時間內建立出可用介面的網頁樣式與元件庫，淺顯易懂的文件令學習門檻變得更低。已經可供正式使用的版本非常適合用於建立大型商業專案。
+        <div class="{{ts-image}}">
+            <img src="!-16:9-!">
+            <div class="[[ts-mask]]">
+                <div class="{{ts-center}}">
+                    <div class="{{ts-loading}}"></div>
                 </div>
             </div>
         </div>
 
 Definitions:
-    - Title: 內容
+    - Title: 外觀
       Description:
       Sections:
-          - Title: 遮罩
-            Anchor: Mask
-            Description:
+          - Title: 次要的
+            Anchor: Secondary
+            Description: 沒有背景的遮罩會顯得不重要，但可以用來呈現內容在某些物件上。
             Since: 4.0.0
             HTML: |
-                <div class="ts-mask">
-                    <img class="{{ts-image}}" src="!-16:9-!">
-                    <div class="[[mask]]">
-                        <div class="{{ts-content}}">
-                            <div class="{{ts-header}}">HentaiDB</div>
-                            Official supergroup of @HentaiDB project.
+                <div class="{{ts-image}}">
+                    <img src="!-1:1-!" style="width: 400px;">
+                    <div class="ts-mask [[is-secondary]] is-bottom">
+                        早安，我的朋友！
+                    </div>
+                </div>
+
+          - Title: 半部的
+            Anchor: Partially
+            Description: 遮罩可以處於父容器的上、中、下部份。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-image}}">
+                    <img src="!-16:9-!" style="width: 400px;">
+                    <div class="ts-mask [[is-top]]">
+                        <div class="{{ts-typography}}">
+                            <div class="{{ts-header}}">置上遮罩</div>
+                            研發硬體並整合相關驅動程式與軟體以開發裝置。
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+                <div class="{{ts-image}}">
+                    <img src="!-16:9-!" style="width: 400px;">
+                    <div class="ts-mask [[is-middle]]">
+                        <div class="{{ts-typography}}">
+                            <div class="{{ts-header}}">置中遮罩</div>
+                            替整體營運規劃做出妥善決策並構思全新道路。
+                        </div>
+                    </div>
+                </div>
+                <br><br>
+                <div class="{{ts-image}}">
+                    <img src="!-16:9-!" style="width: 400px;">
+                    <div class="ts-mask [[is-bottom]]">
+                        <div class="{{ts-typography}}">
+                            <div class="{{ts-header}}">置底遮罩</div>
+                            建置伺服器與雲端系統並維護、管理服務的運行。
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 模糊的
+            Anchor: Blurring
+            Description: 被遮蔽的內容能夠以模糊化處理。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-image}}">
+                    <img src="!-16:9-!" style="width: 400px;">
+                    <div class="ts-mask [[is-blurring]]"></div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 關閉按鈕
+            Anchor: Composition Close
+            Description: 透過搭配遮罩與關閉按鈕可以讓圖片的右上角有個常見的移除、關閉動作。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-image}}">
+                    <img src="!-1:1-!" style="width: 100px;">
+                    <div class="ts-mask is-secondary is-top">
+                        <div class="{{ts-content}} is-compact is-end-aligned">
+                            <button class="[[{{ts-close}}]]"></button>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 附屬資訊
+            Anchor: Composition Close
+            Description: 透過搭配遮罩與關閉按鈕可以讓圖片的右上角有個常見的移除、關閉動作。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-image}}">
+                    <img src="!-16:9-!" style="width: 200px;">
+                    <div class="ts-mask is-secondary is-bottom">
+                        <div class="{{ts-content}} is-compact is-end-aligned">
+                            <div class="[[{{ts-badge}}]]">32 KB</div>
                         </div>
                     </div>
                 </div>

@@ -12,6 +12,8 @@ Description: 用以標示某個主體的時間、作者或統計資料和附屬�
 #=======================================================
 
 Type: Article
+Relatives:
+    - List
 
 #=======================================================
 # 基本樣式
@@ -19,6 +21,7 @@ Type: Article
 #=======================================================
 
 Example:
+    Centered: true
     HTML: |
         <div class="[[ts-meta]]">
             <a class="item" href="#!">使用者條約</a>
@@ -27,30 +30,36 @@ Example:
         </div>
 
 Definitions:
-    - Title: 內容
-      Description:
-      Sections:
-          - Title: 項目
-            Anchor: Item
-            Description:
-            Since: 4.0.0
-            HTML: |
-                <div class="ts-meta">
-                    <a class="[[item]]" href="#!">飛鳥湊</a>
-                    <a class="[[item]]" href="#!">西園寺風莉</a>
-                    <a class="[[item]]" href="#!">大垣日向</a>
-                </div>
-
     - Title: 外觀
       Description:
       Sections:
           - Title: 次要的
             Anchor: Secondary
-            Description:
+            Description: 使其文字顏色變得更不顯眼。
             Since: 4.0.0
             HTML: |
                 <div class="ts-meta [[is-secondary]]">
                     <a class="item" href="#!">天野望</a>
                     <a class="item" href="#!">火井向百合</a>
                     <a class="item" href="#!">成海遙香</a>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 標題與資料
+            Anchor: Composition Header
+            Description: 在部落格或是一些文章列表中，經常能看到其標題底下會有一個中繼資料的區塊。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-header}}">野心更大的虛擬 YouTuber 團體邁向偶像化，而距離感也與日俱增</div>
+                <div class="[[ts-meta]] is-secondary">
+                    <a class="item" href="#!">Yami Odymel</a>
+                    <a class="item" href="#!">2020 年 02 月 14 日</a>
+                </div>
+                <div class="{{ts-divider}} is-section"></div>
+                <div class="{{ts-header}}">圖像複用、反轉、鏡射：怎麼將遊戲壓縮在 40 KB 以下還同時保持關卡獨特性？</div>
+                <div class="[[ts-meta]] is-secondary">
+                    <a class="item" href="#!">Yami Odymel</a>
+                    <a class="item" href="#!">2020 年 01 月 18 日</a>
                 </div>

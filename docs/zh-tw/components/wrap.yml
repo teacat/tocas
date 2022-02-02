@@ -1,0 +1,200 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 間隔容器
+Description: 在項目之間自動以空白區隔。
+Intro: |
+    被擺置在這個元件裡的所有項目都會自動以空白區隔，可以說是一個非常無腦的元件。
+
+    項目會在過寬的時候自動換行，如果希望有個項目可以填滿剩餘空間，請使用[水平排列](./row.html)。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Stack
+    - Row
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-wrap]]">
+            <button class="{{ts-button}}">按鈕</button>
+            <button class="{{ts-button}}">按鈕</button>
+            <button class="{{ts-button}}">按鈕</button>
+        </div>
+
+Definitions:
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 垂直的
+            Anchor: Vertical
+            Description: 將排列的方向改為上下垂直。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-wrap [[is-vertical]]">
+                    <label class="ts-radio">
+                        <input type="radio" name="radio" checked/>
+                        項目
+                    </label>
+                    <label class="ts-radio">
+                        <input type="radio" name="radio"/>
+                        項目
+                    </label>
+                    <label class="ts-radio">
+                        <input type="radio" name="radio"/>
+                        項目
+                    </label>
+                </div>
+
+          - Title: 緊緻的
+            Anchor: Compact
+            Description: 減少空白間距，令項目之間更加緊密。很適合用來擺放[核取方塊](./checkbox.html)等元件群組。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-wrap [[is-compact]] is-vertical">
+                    <label class="ts-checkbox">
+                        <input type="checkbox" checked/>
+                        項目
+                    </label>
+                    <label class="ts-checkbox">
+                        <input type="checkbox"/>
+                        項目
+                    </label>
+                    <label class="ts-checkbox">
+                        <input type="checkbox"/>
+                        項目
+                    </label>
+                </div>
+
+          - Title: 水平對齊
+            Anchor: Horizontal Aligns
+            Description: 項目可以選擇靠左、中或右對齊。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-wrap [[is-start-aligned]]">
+                    <div class="{{ts-segment}}" style="width: 160px;">
+                        置左對齊
+                    </div>
+                </div>
+                <br>
+                <div class="ts-wrap [[is-center-aligned]]">
+                    <div class="{{ts-segment}}" style="width: 160px;">
+                        置中對齊
+                    </div>
+                </div>
+                <br>
+                <div class="ts-wrap [[is-end-aligned]]">
+                    <div class="{{ts-segment}}" style="width: 160px;">
+                        置右對齊
+                    </div>
+                </div>
+
+          - Title: 垂直對齊
+            Anchor: Vertical Aligns
+            Description: 根據項目之間的高度，可以更改其上、中或下對齊方式。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-wrap [[is-top-aligned]]">
+                    <div class="{{ts-segment}}" style="width: 30%;">
+                        Consectetur adipiscing elit. In fermentum metus dolor.
+                    </div>
+                    <div class="{{ts-segment}}" style="width: 30%;">
+                        置上對齊
+                    </div>
+                    <div class="{{ts-segment}}" style="width: 30%;">
+                        Consectetur adipiscing elit. In fermentum metus dolor.
+                    </div>
+                </div>
+                <br>
+                <div class="ts-wrap [[is-middle-aligned]]">
+                    <div class="{{ts-segment}}" style="width: 30%;">
+                        Consectetur adipiscing elit. In fermentum metus dolor.
+                    </div>
+                    <div class="{{ts-segment}}" style="width: 30%;">
+                        置中對齊
+                    </div>
+                    <div class="{{ts-segment}}" style="width: 30%;">
+                        Consectetur adipiscing elit. In fermentum metus dolor.
+                    </div>
+                </div>
+                <br>
+                <div class="ts-wrap [[is-bottom-aligned]]">
+                    <div class="{{ts-segment}}" style="width: 30%;">
+                        Consectetur adipiscing elit. In fermentum metus dolor.
+                    </div>
+                    <div class="{{ts-segment}}" style="width: 30%;">
+                        置下對齊
+                    </div>
+                    <div class="{{ts-segment}}" style="width: 30%;">
+                        Consectetur adipiscing elit. In fermentum metus dolor.
+                    </div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 關聯標籤
+            Anchor: Composition Chip
+            Description: 擺放一些可能會換行的元件（如：[關聯標籤](./chip.html)）可以讓他們仍然保持完美的空白間隙。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-wrap is-compact">
+                    <div class="[[{{ts-chip}}]]">
+                        <img src="!-user-!" />
+                        Yami Odymel
+                    </div>
+                    <div class="[[{{ts-chip}}]]">
+                        <img src="!-user2-!" />
+                        Jasper Yu
+                    </div>
+                    <div class="[[{{ts-chip}}]]">
+                        <img src="!-user-!" />
+                        Henry Wu
+                    </div>
+                    <div class="[[{{ts-chip}}]]">
+                        <img src="!-user-!" />
+                        Sean
+                    </div>
+                    <div class="[[{{ts-chip}}]]">
+                        <img src="!-user3-!" />
+                        Choukai
+                    </div>
+                    <div class="[[{{ts-chip}}]]">
+                        <img src="!-user2-!" />
+                        Tsundere Chen
+                    </div>
+                    <div class="[[{{ts-chip}}]]">
+                        <img src="!-user3-!" />
+                        Hiram Huang
+                    </div>
+                </div>
+
+          - Title: 表單欄位
+            Anchor: Composition Form
+            Description: 表單的欄位通常會是垂直排列，若希望每個欄位之間都能有空白則間隔容器就會是最佳首選。
+            Since: 4.0.0
+            HTML: |
+                <div class="[[{{ts-wrap}}]] is-vertical">
+                    <div class="{{ts-text}} is-label">使用者帳號</div>
+                    <div class="{{ts-input}} is-start-icon">
+                        <span class="{{ts-icon}} is-user-icon"></span>
+                        <input type="text" />
+                    </div>
+                    <div class="{{ts-text}} is-label">密碼</div>
+                    <div class="{{ts-input}} is-start-icon">
+                        <span class="{{ts-icon}} is-lock-icon"></span>
+                        <input type="password" />
+                    </div>
+                </div>
