@@ -107,6 +107,7 @@ func build(c *cli.Context) error {
 					return err
 				}
 				article := Article{
+					This: strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())),
 					Meta: meta,
 				}
 				if err = yaml.Unmarshal(b, &article); err != nil {
@@ -176,7 +177,7 @@ func beautify(s string, typ string) string {
 	cmd.Stdin = bytes.NewBuffer([]byte(s))
 	output, err := cmd.CombinedOutput()
 	if err != nil {
-		panic(err.Error() + string(output))
+		log.Println(err.Error() + string(output))
 	}
 	err = ioutil.WriteFile("./caches/beautify/"+hash, output, 0777)
 	if err != nil {
