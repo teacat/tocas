@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -15,6 +16,7 @@ import (
 	"github.com/google/go-github/github"
 	"github.com/mholt/archiver"
 	"github.com/teacat/pathx"
+	"gopkg.in/yaml.v3"
 )
 
 //
@@ -30,6 +32,8 @@ func path(typ string) string {
 		return pathx.JoinDir(r, "src")
 	case "icon":
 		return pathx.Join(r, "src/icons.css")
+	case "list":
+		return pathx.Join(r, "list.yml")
 	case "icons":
 		return pathx.JoinDir(r, "dist/fonts/icons")
 	case "/":
@@ -44,6 +48,14 @@ type Icon struct {
 	Label   string   `json:"label"`
 	Styles  []string `json:"styles"`
 	Unicode string   `json:"unicode"`
+}
+
+type ArticleDefinitionSection struct {
+	Title  string `yaml:"Title"`
+	Since  string `yaml:"Since"`
+	Anchor string `yaml:"Anchor"`
+	//
+	Icons []string `yaml:"Icons"`
 }
 
 func main() {
@@ -104,13 +116,13 @@ func main() {
 		}
 
 		// 取得解壓縮後的所有網頁圖示字型檔案。
-		log.Printf("正在將最新的圖示字體複製至 Reed UI 資料夾…")
+		log.Printf("正在將最新的圖示字體複製至 Tocas UI 資料夾…")
 		fontsPath, err := filepath.Glob(fmt.Sprintf("%s/%s/webfonts/*", os.TempDir(), fileprefix))
 		if err != nil {
 			panic(err)
 		}
 
-		// 複製圖示字型檔案到 Reed 資料夾中，並且取代相對應的舊圖示字型檔案。
+		// 複製圖示字型檔案到 Tocas 資料夾中，並且取代相對應的舊圖示字型檔案。
 		for _, v := range fontsPath {
 			dat, err := ioutil.ReadFile(v)
 			if err != nil {
@@ -124,7 +136,7 @@ func main() {
 		}
 
 		// 讀取剛下載的 Font Awesome 圖示索引資料。
-		log.Printf("正在轉譯 Font Awesome 圖示至 Reed UI 格式…")
+		log.Printf("正在轉譯 Font Awesome 圖示至 Tocas UI 格式…")
 		iconList, err := ioutil.ReadFile(fmt.Sprintf("%s/%s/metadata/icons.json", os.TempDir(), fileprefix))
 		if err != nil {
 			panic(err)
@@ -137,15 +149,74 @@ func main() {
 			panic(err)
 		}
 
-		// newContent 是新的 Reed 圖示原始碼內容，會取代舊有機器產生的圖示原始碼。
+		//
+		b, err := ioutil.ReadFile(fmt.Sprintf("%s/%s/metadata/categories.yml", os.TempDir(), fileprefix))
+		if err != nil {
+			panic(err)
+		}
+		var categories map[string]interface{}
+		err = yaml.Unmarshal(b, &categories)
+		if err != nil {
+			panic(err)
+		}
+
+		b, err = ioutil.ReadFile(fmt.Sprintf("%s/%s/metadata/icons.yml", os.TempDir(), fileprefix))
+		if err != nil {
+			panic(err)
+		}
+		var iconsx map[string]interface{}
+		err = yaml.Unmarshal(b, &iconsx)
+		if err != nil {
+			panic(err)
+		}
+
+		final := make(map[string][]string)
+		final["brands"] = []string{}
+
+		var sorted []ArticleDefinitionSection
+
+		for k, v := range categories {
+			final[k] = []string{}
+
+			section := ArticleDefinitionSection{
+				Title: k,
+			}
+
+			for _, j := range v.(map[string]interface{})["icons"].([]interface{}) {
+				final[k] = append(final[k], j.(string))
+
+				section.Icons = append(section.Icons, j.(string))
+			}
+
+			sorted = append(sorted, section)
+		}
+		for k, v := range iconsx {
+			if v.(map[string]interface{})["styles"].([]interface{})[0].(string) != "brands" {
+				continue
+			}
+
+			final["brands"] = append(final["brands"], k)
+		}
+
+		var bb bytes.Buffer
+
+		yamlEncoder := yaml.NewEncoder(&bb)
+		yamlEncoder.SetIndent(6)
+		yamlEncoder.Encode(&sorted)
+
+		err = ioutil.WriteFile("dist.yml", bb.Bytes(), 0777)
+		if err != nil {
+			panic(err)
+		}
+
+		// newContent 是新的 Tocas UI 圖示原始碼內容，會取代舊有機器產生的圖示原始碼。
 		var newContent string
 
 		// 遞迴每個圖示。
 		for k, v := range icons {
 			className := k
 			// 替這次修改的樣式名稱建立一個 CSS 樣式選擇器。
-			selector := fmt.Sprintf(`.t-icon.-%s-icon::before {`, className)
-
+			selector := fmt.Sprintf(`.ts-icon.is-%s-icon::before {`, className)
 			// 將這個圖示組合成一個 Sass 語法，稍會會收集所有語法且一次存入 Reed 圖示原始碼中。
 			newContent += fmt.Sprintf("%s\n", selector)
 			// 如果這個圖示是 Logo 商標的話，那麼就額外追加商標的樣式。
@@ -155,11 +226,11 @@ func main() {
 			newContent += fmt.Sprintf("    content: \"\\%s\";\n}\n\n", v.Unicode)
 		}
 
-		// 將機器自動修改後的結果存入 Reed 的圖示原始碼內，完成本次的自動升級。
+		// 將機器自動修改後的結果存入 Tocas UI 的圖示原始碼內，完成本次的自動升級。
 		err = ioutil.WriteFile(path("icon"), []byte(newContent), 0777)
 		if err != nil {
 			panic(err)
 		}
-		log.Printf("已將 Font Awesome 圖示轉譯並存入 Reed UI 原始碼")
+		log.Printf("已將 Font Awesome 圖示轉譯並存入 Tocas UI 原始碼")
 	}
 }
