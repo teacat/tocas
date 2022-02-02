@@ -4,6 +4,7 @@ import "html/template"
 
 // Article
 type Article struct {
+	This        string
 	Title       string              `yaml:"Title"`
 	Description string              `yaml:"Description"`
 	Intro       string              `yaml:"Intro"`
@@ -45,7 +46,7 @@ type ArticleDefinitionSection struct {
 	Remove      []string `yaml:"Remove"`
 	Anchor      string   `yaml:"Anchor"`
 	//
-	Icons []string
+	Icons []string `yaml:"Icons"`
 	// FormattedHTML 是程式會自動進行段落掃描並整理的 HTML 程式碼，這不在 YAML 之中。
 	FormattedHTML template.HTML
 }
