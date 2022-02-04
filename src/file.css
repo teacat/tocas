@@ -7,7 +7,7 @@
    ========================================================================== */
 
 .ts-file {
-    width: 100%;
+    display: inline-flex;
 }
 
 /* ==========================================================================
@@ -16,7 +16,7 @@
 
 .ts-file input {
     line-height: 1.5;
-    font-size: var(--ts-relative-small);
+    font-size: var(--ts-font-size-14px);
     color: var(--ts-gray-700);
     padding: 0.35rem 1rem;
     padding-left: 0.6rem;
@@ -24,14 +24,13 @@
     border: 2px solid transparent;
     background: var(--ts-gray-100);
     border-bottom: 2px solid var(--ts-gray-400);
-    width: 100%;
 }
 
 .ts-file input::file-selector-button,
 .ts-file input::-webkit-file-upload-button {
     border: 0;
     min-width: 75px;
-    font-size: var(--ts-relative-small);
+    font-size: var(--ts-font-size-14px);
     line-height: 1.5;
     font-weight: bold;
     color: var(--ts-gray-50);
@@ -70,4 +69,28 @@
     cursor: not-allowed;
     pointer-events: none;
     opacity: 0.5;
+}
+
+/**
+ * Fluid
+ */
+
+.ts-file.is-fluid {
+    display: flex;
+}
+
+.ts-file.is-fluid input,
+.ts-file.is-fluid textarea {
+    width: 100%;
+}
+
+/**
+ * Sizes
+ */
+
+.ts-file.is-small :is(input, input::file-selector-button, input::-webkit-file-upload-button) {
+    font-size: var(--ts-font-size-13px);
+}
+.ts-file.is-large :is(input, input::file-selector-button, input::-webkit-file-upload-button) {
+    font-size: var(--ts-font-size-17px);
 }

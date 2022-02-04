@@ -5,6 +5,7 @@
 
 Title: 多媒體圖片
 Description: 呈現照片、圖片的基本元素。
+Intro: 在沒有指定寬度的情況下，圖片預設會以最寬填滿其父容器為優先。
 
 #=======================================================
 # 設定
@@ -21,33 +22,122 @@ Relatives:
 #=======================================================
 
 Example:
+    Centered: true
     HTML: |
-        <img class="[[ts-image]]" src="!-16:9-!">
+        <div class="[[ts-image]] is-small">
+            <img src="!-4:3-!">
+        </div>
 
 Definitions:
-    - Title: 內容
+    - Title: 狀態
       Description:
       Sections:
-          - Title: 圖片
-            Anchor: Image
-            Description:
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 表示這個圖片已經無法互動、不再可用了。
             Since: 4.0.0
             HTML: |
-                <img class="[[ts-image]]" src="!-16:9-!">
+                <div class="ts-image [[is-disabled]] is-small">
+                    <img src="!-16:9-!">
+                </div>
 
     - Title: 外觀
       Description:
       Sections:
           - Title: 圓角的
             Anchor: Rounded
-            Description:
+            Description: 使四個角落都變得稍微有點圓角修飾。
             Since: 4.0.0
             HTML: |
-                <img class="ts-image [[is-rounded]]" src="!-16:9-!">
+                <div class="ts-image [[is-rounded]] is-small">
+                    <img src="!-16:9-!">
+                </div>
 
           - Title: 圓形的
             Anchor: Circular
-            Description:
+            Description: 將整張圖片變為圓形，只有在圖片是正方形的情況下才會生效。
             Since: 4.0.0
             HTML: |
-                <img class="ts-image [[is-circular]]" src="!-16:9-!">
+                <div class="ts-image [[is-circular]] is-small">
+                    <img src="!-1:1-!">
+                </div>
+
+          - Title: 邊框的
+            Anchor: Bordered
+            Description: 使圖片帶有邊框，適合用於白底圖片讓使用者知道其邊界在哪。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-image [[is-bordered]] is-small">
+                    <img src="!-16:9-!">
+                </div>
+
+          - Title: 置中的
+            Anchor: Centered
+            Description: 水平左右置中一張圖片。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-image [[is-centered]] is-small">
+                    <img src="!-16:9-!">
+                </div>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: |
+                圖片比起其他元件有更多的尺寸可供使用，但因為在設計上這些大小並不會剛好符合所有人的需求，若真遇上尺寸不符預期的情況時，請別拘謹地直接手動覆寫其大小吧。
+                <div class="ts-box">
+                    <table class="ts-table is-definition is-celled">
+                        <thead>
+                            <tr>
+                                <th class="is-collapsed"></th>
+                                <th>尺寸</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="is-collapsed">is-mini</td>
+                                <td>35px</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">is-tiny</td>
+                                <td>80px</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">is-small</td>
+                                <td>150px</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">is-medium</td>
+                                <td>300px</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">is-large</td>
+                                <td>450px</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">is-big</td>
+                                <td>600px</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">is-huge</td>
+                                <td>800px</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">is-massive</td>
+                                <td>960px</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-image [[is-tiny]]">
+                    <img src="!-16:9-!">
+                </div>
+                <br>
+                <div class="ts-image [[is-small]]">
+                    <img src="!-16:9-!">
+                </div>
+                <br>
+                <div class="ts-image [[is-medium]]">
+                    <img src="!-16:9-!">
+                </div>

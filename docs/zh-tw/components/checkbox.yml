@@ -55,7 +55,7 @@ Definitions:
                     所有檔案
                 </label>
                 <div class="{{ts-content}}">
-                    <div class="{{ts-stack}}">
+                    <div class="{{ts-wrap}} is-vertical is-compact">
                         <label class="ts-checkbox">
                             <input type="checkbox" checked/>
                             影片
@@ -84,55 +84,63 @@ Definitions:
                     我同意使用者規範。
                 </label>
 
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改核取方塊的大小。
+            Since: 4.0.0
+            HTML: |
+                <label class="ts-checkbox [[is-small]]">
+                    <input type="checkbox" checked/>
+                    小型選項
+                </label>
+                <br>
+                <label class="ts-checkbox">
+                    <input type="checkbox"/>
+                    預設選項
+                </label>
+                <br>
+                <label class="ts-checkbox [[is-large]]">
+                    <input type="checkbox"/>
+                    大型選項
+                </label>
+
     - Title: 組合應用
       Description:
       Sections:
-          - Title: 垂直群組
-            Anchor: Composition Stack
-            Description: 若希望將多個核取方塊層疊在一起，可以考慮使用[層疊排列](./stack.html)元件。
+          - Title: 鄰近核取方塊
+            Anchor: Composition Checkboxes
+            Description: 透過[間隔容器](./wrap.html)元件能讓核取方塊以左右、上下排列並保持一定的間距。
             Since: 4.0.0
             HTML: |
-                <div class="{{ts-text}} is-label">寵物屬性</div>
-                <div class="{{ts-space}}"></div>
-                <div class="[[{{ts-stack}}]]">
-                    <label class="ts-checkbox">
-                        <input type="checkbox" checked/>
-                        火
-                    </label>
-                    <label class="ts-checkbox">
-                        <input type="checkbox"/>
-                        水
-                    </label>
-                    <label class="ts-checkbox">
-                        <input type="checkbox"/>
-                        土
-                    </label>
-                </div>
-
-          - Title: 水平群組
-            Anchor: Composition Row
-            Description: 透過[水平排列](./row.html)元件能讓核取方塊以左右水平排列並保持一定的間距。
-            Since: 4.0.0
-            HTML: |
-                <div class="{{ts-text}} is-label">持有狀態</div>
-                <div class="{{ts-space}}"></div>
-                <div class="[[{{ts-row}}]]">
-                    <div class="column">
+                <div class="{{ts-wrap}} is-vertical">
+                    <div class="{{ts-text}} is-label">持有狀態</div>
+                    <div class="[[{{ts-wrap}}]] is-compact">
                         <label class="ts-checkbox">
                             <input type="checkbox" checked/>
                             已售出
                         </label>
-                    </div>
-                    <div class="column">
                         <label class="ts-checkbox">
                             <input type="checkbox"/>
                             未販售
                         </label>
-                    </div>
-                    <div class="column">
                         <label class="ts-checkbox">
                             <input type="checkbox"/>
                             空投限定
+                        </label>
+                    </div>
+                    <div class="{{ts-text}} is-label">寵物屬性</div>
+                    <div class="[[{{ts-wrap}}]] is-vertical is-compact">
+                        <label class="ts-checkbox">
+                            <input type="checkbox" checked/>
+                            火
+                        </label>
+                        <label class="ts-checkbox">
+                            <input type="checkbox"/>
+                            水
+                        </label>
+                        <label class="ts-checkbox">
+                            <input type="checkbox"/>
+                            土
                         </label>
                     </div>
                 </div>

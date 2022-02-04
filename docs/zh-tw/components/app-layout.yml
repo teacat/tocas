@@ -4,8 +4,13 @@
 #=======================================================
 
 Title: 格局劃分
-Description:
-Intro:
+Description: 切分應用程式畫面的格局外框。
+Intro: |
+    這是一個專為應用程式設計的元件。
+
+    通常會被擺放在應用程式的最外圍並先將側邊、上下和主要內容區塊切分出來後再於其中擺放重要內容。
+
+    [側邊欄](./app-sidebar.html)和[導航列](./app-navbar.html)會很常與這個元件一同使用。
 
 #=======================================================
 # 設定
@@ -13,6 +18,8 @@ Intro:
 #=======================================================
 
 Type: Article
+Relatives:
+    - Grid
 
 #=======================================================
 # 基本樣式
@@ -22,125 +29,253 @@ Type: Article
 Example:
     HTML: |
         <div class="{{ts-box}}">
-            <div class="[[ts-app-layout]] is-column">
-                <div class="cell">側邊欄</div>
-                <div class="cell is-row">
-                    <div class="cell">頂部欄</div>
-                    <div class="cell">內容欄</div>
+            <div class="[[ts-app-layout]] is-horizontal">
+                <div class="cell">
+                    <div class="{{ts-content}}">側邊欄</div>
+                </div>
+                <div class="cell is-vertical">
+                    <div class="cell">
+                        <div class="{{ts-content}}">頂部欄</div>
+                    </div>
+                    <div class="cell">
+                        <div class="{{ts-content}}">內容欄</div>
+                    </div>
                 </div>
             </div>
         </div>
 
 Definitions:
-    - Title: 內容
-      Description:
-      Sections:
-          - Title: 標籤
-            Anchor: Label
-            Description: 圖示下方也可以擺放標籤，但這個標籤文字必須簡化且為單行。如：「我的音樂」應該作為「音樂」。
-            Since: 4.0.0
-            HTML: |
-                <div class="ts-app-navbar">
-                    <a href="#!" class="item">
-                        <div class="{{ts-icon}} is-search-icon"></div>
-                        <div class="[[label]]">搜尋</div>
-                    </a>
-                    <a href="#!" class="item is-active">
-                        <div class="{{ts-icon}} is-vials-icon"></div>
-                        <div class="[[label]]">實驗區</div>
-                    </a>
-                    <a href="#!" class="item">
-                        <div class="{{ts-icon}} is-atom-icon"></div>
-                        <div class="[[label]]">原子測試</div>
-                    </a>
-                </div>
-
-    - Title: 狀態
-      Description:
-      Sections:
-          - Title: 啟用的
-            Anchor: Active
-            Description: 表現出目前頁面正處於的位置項目。
-            Since: 4.0.0
-            HTML: |
-                <div class="ts-app-navbar">
-                    <a href="#!" class="item">
-                        <div class="{{ts-icon}} is-star-icon"></div>
-                        <div class="label">常用聯絡人</div>
-                    </a>
-                    <a href="#!" class="item [[is-active]]">
-                        <div class="{{ts-icon}} is-clock-icon"></div>
-                        <div class="label">近期通話</div>
-                    </a>
-                    <a href="#!" class="item">
-                        <div class="{{ts-icon}} is-users-icon"></div>
-                        <div class="label">聯絡人</div>
-                    </a>
-                </div>
-
     - Title: 外觀
       Description:
       Sections:
-          - Title: 流動
-            Anchor: Fluid
-            Description: 導航列的寬度可以與父容器相同。
+          - Title: 水平排列的
+            Anchor: Horizontal
+            Description: 格局內的子欄位會依照左右排列。
             Since: 4.0.0
             HTML: |
-                <div class="ts-app-navbar [[is-fluid]]">
-                    <a href="#!" class="item">
-                        <div class="{{ts-icon}} is-home-icon"></div>
-                        <div class="label">首頁</div>
-                    </a>
-                    <a href="#!" class="item is-active">
-                        <div class="{{ts-icon}} is-flag-icon"></div>
-                        <div class="label">粉絲專頁</div>
-                    </a>
-                    <a href="#!" class="item">
-                        <div class="{{ts-icon}} is-bell-icon"></div>
-                        <div class="label">通知</div>
-                    </a>
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout [[is-horizontal]]">
+                        <div class="cell">
+                            <div class="{{ts-content}}">左</div>
+                        </div>
+                        <div class="cell">
+                            <div class="{{ts-content}}">中</div>
+                        </div>
+                        <div class="cell">
+                            <div class="{{ts-content}}">右</div>
+                        </div>
+                    </div>
                 </div>
 
-          - Title: 無標籤
-            Anchor: Unlabeled
-            Description: 在這個模式下，所有沒被啟用的項目其標籤都會被隱藏。這可以有效地減短導航列的寬度。
+          - Title: 垂直排列的
+            Anchor: Vertical
+            Description: 格局內的子欄位會依照上下排列。
             Since: 4.0.0
             HTML: |
-                <div class="ts-app-navbar [[is-unlabeled]]">
-                    <a href="#!" class="item">
-                        <div class="{{ts-icon}} is-image-icon"></div>
-                        <div class="label">相片</div>
-                    </a>
-                    <a href="#!" class="item is-active">
-                        <div class="{{ts-icon}} is-search-icon"></div>
-                        <div class="label">搜尋</div>
-                    </a>
-                    <a href="#!" class="item">
-                        <div class="{{ts-icon}} is-users-icon"></div>
-                        <div class="label">共享</div>
-                    </a>
-                    <a href="#!" class="item">
-                        <div class="{{ts-icon}} is-archive-icon"></div>
-                        <div class="label">彙整</div>
-                    </a>
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout [[is-vertical]]">
+                        <div class="cell">
+                            <div class="{{ts-content}}">上</div>
+                        </div>
+                        <div class="cell">
+                            <div class="{{ts-content}}">中</div>
+                        </div>
+                        <div class="cell">
+                            <div class="{{ts-content}}">下</div>
+                        </div>
+                    </div>
                 </div>
 
-          - Title: 標記的
-            Anchor: Indicated
-            Description: 令啟用的項目以較醒目的方式呈現，而這會讓沒被啟用的項目以正常方式呈現而不會被淡化。
+          - Title: 全滿的
+            Anchor: Full
+            Description: 使整個格局高度與寬度全滿貼合父容器，通常用於格局想要覆蓋整個頁面大小的時候。
             Since: 4.0.0
             HTML: |
-                <div class="ts-app-navbar [[is-indicated]]">
-                    <a href="#!" class="item">
-                        <div class="{{ts-icon}} is-shoe-prints-icon"></div>
-                        <div class="label">步數</div>
-                    </a>
-                    <a href="#!" class="item is-active">
-                        <div class="{{ts-icon}} is-stopwatch-icon"></div>
-                        <div class="label">活動分鐘</div>
-                    </a>
-                    <a href="#!" class="item">
-                        <div class="{{ts-icon}} is-heart-icon"></div>
-                        <div class="label">心律</div>
-                    </a>
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout [[is-full]] is-horizontal">
+                        <div class="cell">
+                            <div class="{{ts-content}}">欄位</div>
+                        </div>
+                    </div>
+                </div>
+
+    - Title: 欄位外觀
+      Description:
+      Sections:
+          - Title: 水平排列的
+            Anchor: Horizontal Cell
+            Description: 欄位裡的巢狀子欄位會依照左右排列。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout is-vertical">
+                        <div class="cell">
+                            <div class="{{ts-content}}">上</div>
+                        </div>
+                        <div class="cell [[is-horizontal]]">
+                            <div class="cell">
+                                <div class="{{ts-content}}">左</div>
+                            </div>
+                            <div class="cell">
+                                <div class="{{ts-content}}">中</div>
+                            </div>
+                            <div class="cell">
+                                <div class="{{ts-content}}">右</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 垂直排列的
+            Anchor: Vertical Cell
+            Description: 欄位裡的巢狀子欄位會依照上下排列。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout is-horizontal">
+                        <div class="cell">
+                            <div class="{{ts-content}}">左</div>
+                        </div>
+                        <div class="cell [[is-vertical]]">
+                            <div class="cell">
+                                <div class="{{ts-content}}">上</div>
+                            </div>
+                            <div class="cell">
+                                <div class="{{ts-content}}">中</div>
+                            </div>
+                            <div class="cell">
+                                <div class="{{ts-content}}">下</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 可捲動的
+            Anchor: Scrollable Cell
+            Description: 使其中一個欄位在內容過長時可以上下捲動其捲軸。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout is-vertical" style="max-height: 260px;">
+                        <div class="cell">
+                            <div class="{{ts-content}}">頁頭</div>
+                        </div>
+                        <div class="cell [[is-scrollable]]">
+                            <div class="{{ts-content}}">
+                                <p>Sed dapibus ac tortor vel porta. Aenean pharetra vehicula nulla eu pretium.</p>
+                                <p>Fusce non enim egestas, lobortis diam et, congue felis.</p>
+                                <p>Quisque eleifend dolor mi, nec vehicula ipsum maximus non.</p>
+                                <p>Rhoncus est sed laoreet facilisis. Suspendisse ante odio,</p>
+                                <p>pulvinar non nulla sed, consequat lacinia risus.</p>
+                                <p>Aliquam mollis pulvinar lorem sed efficitur.</p>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="{{ts-content}}">頁腳</div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 流動的
+            Anchor: Fluid Cell
+            Description: 某個欄位可以填滿剩餘空間並將其餘欄位壓縮至最小寬度。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout is-horizontal">
+                        <div class="cell [[is-fluid]]">
+                            <div class="{{ts-content}}">流動欄位</div>
+                        </div>
+                        <div class="cell">
+                            <div class="{{ts-content}}">一般欄位</div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 次要的
+            Anchor: Secondary Cell
+            Description: 較不重要的背景色調令使用者知道這不是內容主體。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout is-horizontal">
+                        <div class="cell [[is-secondary]]">
+                            <div class="{{ts-content}}">側邊欄</div>
+                        </div>
+                        <div class="cell is-fluid">
+                            <div class="{{ts-content}}">內容欄</div>
+                        </div>
+                    </div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 單頁應用程式
+            Anchor: Composition App
+            Description: 透過搭配[側邊欄](./app-sidebar.html)和[導航列](./app-navbar.html)就能夠很輕鬆地做出一個單頁應用程式的框架。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="{{ts-app-layout}} is-horizontal">
+                        <div class="cell" style="width: 355px;">
+                            <div class="{{ts-content}}">
+                                <div class="{{ts-header}} is-big">
+                                    TEACAT DEVELOPERS
+                                </div>
+                                <div class="{{ts-text}} is-description is-bold">
+                                    VERSION 1.3.4
+                                </div>
+                            </div>
+                            <div class="[[{{ts-app-sidebar}}]]">
+                                <div class="header">
+                                    啟動
+                                </div>
+                                <a href="#!" class="item">
+                                    <span class="{{ts-icon}} is-home-icon"></span> 首頁
+                                </a>
+                                <div class="header">
+                                    管理
+                                </div>
+                                <a href="#!" class="item is-active">
+                                    <span class="{{ts-icon}} is-user-icon"></span> 使用者
+                                </a>
+                                <a href="#!" class="item">
+                                    <span class="{{ts-icon}} is-download-icon"></span> 下載檔案
+                                </a>
+                                <div class="header">
+                                    系統
+                                </div>
+                                <a href="#!" class="item">
+                                    <span class="{{ts-icon}} is-cogs-icon"></span> 偏好設定
+                                </a>
+                            </div>
+                            <div class="{{ts-content}}">
+                                <button class="{{ts-button}} is-outlined is-fluid">
+                                    登出
+                                </button>
+                            </div>
+                        </div>
+                        <div class="cell is-vertical">
+                            <div class="cell is-fluid is-secondary"></div>
+                            <div class="cell">
+                                <div class="{{ts-content}}">
+                                    <div class="[[{{ts-app-navbar}}]] is-fluid">
+                                        <a href="#!" class="item">
+                                            <div class="{{ts-icon}} is-user-icon"></div>
+                                            <div class="label">使用者</div>
+                                        </a>
+                                        <a href="#!" class="item">
+                                            <div class="{{ts-icon}} is-home-icon"></div>
+                                            <div class="label">首頁</div>
+                                        </a>
+                                        <a href="#!" class="item is-active">
+                                            <div class="{{ts-icon}} is-newspaper-icon"></div>
+                                            <div class="label">新聞</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>

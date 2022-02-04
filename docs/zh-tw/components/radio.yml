@@ -56,52 +56,60 @@ Definitions:
                     愛情摩天輪
                 </label>
 
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改選項按鈕的大小。
+            Since: 4.0.0
+            HTML: |
+                <label class="ts-radio [[is-small]]">
+                    <input name="size" type="radio" checked/>
+                    小型選項
+                </label>
+                <br>
+                <label class="ts-radio">
+                    <input name="size" type="radio"/>
+                    預設選項
+                </label>
+                <br>
+                <label class="ts-radio [[is-large]]">
+                    <input name="size" type="radio"/>
+                    大型選項
+                </label>
+
     - Title: 組合應用
       Description:
       Sections:
-          - Title: 垂直群組
-            Anchor: Composition Stack
-            Description: 若希望將多個單選方塊層疊在一起，可以考慮使用[層疊排列](./stack.html)元件。
+          - Title: 鄰近選項按鈕
+            Anchor: Composition Radios
+            Description: 透過[間隔容器](./wrap.html)元件能讓核取方塊以左右、上下排列並保持一定的間距。
             Since: 4.0.0
             HTML: |
-                <div class="{{ts-text}} is-label">性別</div>
-                <div class="{{ts-space}}"></div>
-                <div class="[[{{ts-stack}}]]">
-                    <label class="ts-radio">
-                        <input name="gender" type="radio" checked/>
-                        男性
-                    </label>
-                    <label class="ts-radio">
-                        <input name="gender" type="radio" />
-                        女性
-                    </label>
-                    <label class="ts-radio">
-                        <input name="gender" type="radio" />
-                        其它
-                    </label>
-                </div>
-
-          - Title: 水平群組
-            Anchor: Composition Row
-            Description: 透過[水平排列](./row.html)元件能讓單選方塊以左右水平排列並保持一定的間距。
-            Since: 4.0.0
-            HTML: |
-                <div class="{{ts-text}} is-label">來電狀態</div>
-                <div class="{{ts-space}}"></div>
-                <div class="[[{{ts-row}}]]">
-                    <div class="column">
+                <div class="{{ts-wrap}} is-vertical">
+                    <div class="{{ts-text}} is-label">性別</div>
+                    <div class="[[{{ts-wrap}}]] is-compact">
                         <label class="ts-radio">
-                            <input name="ring" type="radio" />
-                            響鈴
+                            <input name="gender" type="radio" checked/>
+                            男性
+                        </label>
+                        <label class="ts-radio">
+                            <input name="gender" type="radio" />
+                            女性
+                        </label>
+                        <label class="ts-radio">
+                            <input name="gender" type="radio" />
+                            其它
                         </label>
                     </div>
-                    <div class="column">
+                    <div class="{{ts-text}} is-label">來電狀態</div>
+                    <div class="[[{{ts-wrap}}]] is-vertical is-compact">
                         <label class="ts-radio">
                             <input name="ring" type="radio" checked/>
+                            響鈴
+                        </label>
+                        <label class="ts-radio">
+                            <input name="ring" type="radio" />
                             震動
                         </label>
-                    </div>
-                    <div class="column">
                         <label class="ts-radio">
                             <input name="ring" type="radio" />
                             靜音
