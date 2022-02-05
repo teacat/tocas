@@ -187,31 +187,55 @@ func beautify(s string, typ string) string {
 
 // asset
 func asset(s string, real bool) string {
+	if real {
+		switch s {
+		case "16:9":
+			s = "16-9.png"
+		case "1:1":
+			s = "1-1.png"
+		case "1:1_white":
+			s = "1-1_white.png"
+		case "4:3":
+			s = "4-3.png"
+		case "user":
+			s = "user.png"
+		case "user2":
+			s = "user2.png"
+		case "user3":
+			s = "user3.png"
+		case "embed:karen":
+			s = "karen.png"
+		case "embed:vimeo":
+			s = "vimeo.png"
+		case "embed:video":
+			s = "video.mp4"
+		}
+		return "./assets/images/" + s
+	}
+
 	switch s {
 	case "16:9":
-		s = "16-9.png"
+		s = "image.png"
 	case "1:1":
-		s = "1-1.png"
+		s = "image.png"
 	case "1:1_white":
-		s = "1-1_white.png"
+		s = "image.png"
 	case "4:3":
-		s = "4-3.png"
+		s = "image.png"
 	case "user":
 		s = "user.png"
 	case "user2":
-		s = "user2.png"
+		s = "user.png"
 	case "user3":
-		s = "user3.png"
+		s = "user.png"
 	case "embed:karen":
-		s = "karen.png"
+		s = "image.png"
 	case "embed:vimeo":
-		s = "vimeo.png"
+		s = "image.png"
 	case "embed:video":
 		s = "video.mp4"
 	}
-	if real {
-		return "./assets/images/" + s
-	}
+
 	return s
 }
 
