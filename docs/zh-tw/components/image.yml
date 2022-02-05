@@ -68,7 +68,7 @@ Definitions:
             Since: 4.0.0
             HTML: |
                 <div class="ts-image [[is-bordered]] is-small">
-                    <img src="!-16:9-!">
+                    <img src="!-1:1_white-!">
                 </div>
 
           - Title: 置中的
@@ -79,6 +79,50 @@ Definitions:
                 <div class="ts-image [[is-centered]] is-small">
                     <img src="!-16:9-!">
                 </div>
+
+          #- Title: 全尺寸的
+          #  Anchor: Full
+          #  Description: 圖片的寬度或高度能以 100% 來填滿父容器，這可能會讓圖片變形，通常會建議與「裁切的」樣式一同使用。
+          #  Since: 4.0.0
+          #  HTML: |
+          #      <div style="width: 100px; height: 100px">
+          #          <div class="ts-image [[is-full-width]]">
+          #              <img src="!-16:9-!">
+          #          </div>
+          #      </div>
+          #      <div style="width: 100px; height: 100px">
+          #          <div class="ts-image [[is-full-height]]">
+          #              <img src="!-16:9-!">
+          #          </div>
+          #      </div>
+
+          - Title: 裁切的
+            Anchor: Covered
+            Description: 不論是什麼長寬比都不會變形而會自動裁切其內容。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-image [[is-covered]]">
+                    <img src="!-16:9-!" style="height: 100px; width: 110px;">
+                </div>
+
+          - Title: 間隔的
+            Anchor: Spaced
+            Description: 在前或後新增間隔以避免與其他元件相鄰太近。
+            Since: 4.0.0
+            HTML: |
+                相較於稱呼自己是間「科技公司」，我們
+                <div class="ts-image [[is-start-spaced]] is-mini">
+                    <img src="!-1:1-!">
+                </div>
+                的運作模式更像是所「學校」。雖然卡莉絲伊繁星提供網際網路服務與電子科技產業的相關產品，但我們更注重人們是否能在開發的過程
+                <div class="ts-image [[is-end-spaced]] is-mini">
+                    <img src="!-1:1-!">
+                </div>
+                中有所收穫並學以致用，而我們也十分地重視一項產品是否能夠達成社會的期許並希望能藉此改變某些人的生活，協助大眾
+                <div class="ts-image [[is-spaced]] is-mini">
+                    <img src="!-1:1-!">
+                </div>
+                更向自己的目標邁進；這也正是伊繁星最高協議被創造的原因。
 
           - Title: 尺寸
             Anchor: Sizes
@@ -129,15 +173,17 @@ Definitions:
                     </table>
                 </div>
             Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
             HTML: |
                 <div class="ts-image [[is-tiny]]">
                     <img src="!-16:9-!">
                 </div>
-                <br>
+                <div class="ts-space"></div>
                 <div class="ts-image [[is-small]]">
                     <img src="!-16:9-!">
                 </div>
-                <br>
+                <div class="ts-space"></div>
                 <div class="ts-image [[is-medium]]">
                     <img src="!-16:9-!">
                 </div>

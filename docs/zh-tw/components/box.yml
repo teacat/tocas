@@ -62,7 +62,9 @@ Definitions:
             Since: 4.0.0
             HTML: |
                 <div class="ts-box [[is-horizontal]]">
-                    <img class="{{ts-image}}" style="width: 100px;" src="!-1:1-!">
+                    <div class="{{ts-image}} is-covered">
+                        <img style="width: 90px; height: 100%;" src="!-1:1-!">
+                    </div>
                     <div class="{{ts-content}}">
                         <div class="{{ts-header}}">
                             Zedd - Papercut (Audio) ft. Troye Sivan
@@ -86,69 +88,57 @@ Definitions:
             Anchor: Indicated
             Description: 讓容器的某個邊緣有特別標記的樣式。
             Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
             HTML: |
                 <div class="ts-box [[is-top-indicated]]">
-                    <div class="{{ts-content}}">
-                        <p>上部標記</p>
-                    </div>
+                    <div class="{{ts-content}}">上部標記</div>
                 </div>
-                <br>
+                <div class="ts-space"></div>
                 <div class="ts-box [[is-bottom-indicated]]">
-                    <div class="{{ts-content}}">
-                        <p>下部標記</p>
-                    </div>
+                    <div class="{{ts-content}}">下部標記</div>
                 </div>
-                <br>
+                <div class="ts-space"></div>
                 <div class="ts-box [[is-left-indicated]]">
-                    <div class="{{ts-content}}">
-                        <p>左邊標記</p>
-                    </div>
+                    <div class="{{ts-content}}">左邊標記</div>
                 </div>
-                <br>
+                <div class="ts-space"></div>
                 <div class="ts-box [[is-right-indicated]]">
-                    <div class="{{ts-content}}">
-                        <p>右部標記</p>
-                    </div>
+                    <div class="{{ts-content}}">右部標記</div>
                 </div>
 
           - Title: 語意
             Anchor: Emphasises
             Description: 讓容器擁有邊緣標記的同時，更改其標記顏色語意。這可以用來強調這個容器呈現的內容是否危險、安全或是需讓人注意的。
             Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
             HTML: |
                 <div class="ts-box [[is-negative]] is-top-indicated">
-                    <div class="{{ts-content}}">
-                        <p>負面的</p>
-                    </div>
+                    <div class="{{ts-content}}">負面的</div>
                 </div>
-                <br>
+                <div class="ts-space"></div>
                 <div class="ts-box [[is-positive]] is-top-indicated">
-                    <div class="{{ts-content}}">
-                        <p>正面的</p>
-                    </div>
+                    <div class="{{ts-content}}">正面的</div>
                 </div>
-                <br>
+                <div class="ts-space"></div>
                 <div class="ts-box [[is-warning]] is-top-indicated">
-                    <div class="{{ts-content}}">
-                        <p>警告的</p>
-                    </div>
+                    <div class="{{ts-content}}">警告的</div>
                 </div>
 
           - Title: 抬升的
             Anchor: Elevated
             Description: 透過陰影讓容器看起來有浮起的感覺，如果有一個需要備受矚目的中心內容（如：登入表單）這會是個好選擇。
             Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
             HTML: |
                 <div class="ts-box [[is-elevated]]">
-                    <div class="{{ts-content}}">
-                        <p>抬升的</p>
-                    </div>
+                    <div class="{{ts-content}}">抬升的</div>
                 </div>
-                <br>
+                <div class="ts-space"></div>
                 <div class="ts-box [[is-very-elevated]]">
-                    <div class="{{ts-content}}">
-                        <p>非常抬升的</p>
-                    </div>
+                    <div class="{{ts-content}}">非常抬升的</div>
                 </div>
 
           - Title: 直角的
@@ -157,8 +147,20 @@ Definitions:
             Since: 4.0.0
             HTML: |
                 <div class="ts-box [[is-squared]]">
-                    <div class="{{ts-content}}">
-                        <p>直角箱型容器</p>
+                    <div class="{{ts-content}}">直角箱型容器</div>
+                </div>
+
+          - Title: 空虛的
+            Anchor: Dashed
+            Description: 透過加粗虛線描繪外框，通常用以呈現空的區塊。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-box [[is-hollowed]]">
+                    <div class="{{ts-content}} is-vertically-padded">
+                        <div class="{{ts-center}}">
+                            <div class="{{ts-header}}">上傳圖片或影音</div>
+                            <div class="{{ts-text}} is-secondary">將圖片拖拉至此處進行上傳</div>
+                        </div>
                     </div>
                 </div>
 
@@ -173,7 +175,7 @@ Definitions:
                 <div class="{{ts-grid}} is-2-columns">
                     <div class="column">
                         <div class="[[ts-box]]">
-                            <div class="{{ts-content}} is-padded">
+                            <div class="{{ts-content}}">
                                 <div class="{{ts-statistic}}">
                                     <div class="value">
                                         42,689
@@ -189,7 +191,7 @@ Definitions:
                     </div>
                     <div class="column">
                         <div class="[[ts-box]]">
-                            <div class="{{ts-content}} is-padded">
+                            <div class="{{ts-content}}">
                                 <div class="{{ts-statistic}}">
                                     <div class="value">
                                         8,652
@@ -205,8 +207,8 @@ Definitions:
                     </div>
                 </div>
 
-          - Title: Open Graph 連結預覽
-            Anchor: Composition OG
+          - Title: 連結預覽卡片
+            Anchor: Composition Link Preview
             Description: 在箱型容器裡擺放貼邊圖片和文字與標題就可以達成像 Facebook、Twitter 那樣的連結預覽卡片。
             Since: 4.0.0
             HTML: |
