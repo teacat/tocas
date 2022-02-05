@@ -42,9 +42,9 @@
                         <a class="主體-格局-導覽-項目" href="#!">安裝方式 <span class="主體-格局-導覽-項目-英文">Getting Started</span></a>
                         <a class="主體-格局-導覽-項目" href="#!">響應式設計 <span class="主體-格局-導覽-項目-英文">Responsive</span></a>
 
-                        {{ range $key, $value := .Meta.Components }}
-                        <div class="主體-格局-導覽-標題">{{ index $.Meta.UI.ComponentsCategories $key }}</div>
-                        {{ range $value }}
+                        {{ range .Meta.Components }}
+                        <div class="主體-格局-導覽-標題">{{ index $.Meta.UI.ComponentsCategories .Name }}</div>
+                        {{ range .Items }}
                         <a href="./{{ . | kebablize }}.html" class="主體-格局-導覽-項目{{ if eq $.This (kebablize .) }} 主體-格局-導覽-項目_啟用的{{ end }}">
                             {{ index $.Meta.UI.Components . }} <span class="主體-格局-導覽-項目-英文">{{ . | capitalize }}</span>
                         </a>

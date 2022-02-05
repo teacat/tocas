@@ -53,10 +53,15 @@ type ArticleDefinitionSection struct {
 
 // Meta
 type Meta struct {
-	UI           MetaUI              `yaml:"UI"`
-	Components   map[string][]string `yaml:"Components"`
-	Contributors []MetaContributor   `yaml:"Contributors"`
-	Information  MetaInformation     `yaml:"Information"`
+	UI           MetaUI            `yaml:"UI"`
+	Components   []MetaComponent   `yaml:"Components"`
+	Contributors []MetaContributor `yaml:"Contributors"`
+	Information  MetaInformation   `yaml:"Information"`
+}
+
+type MetaComponent struct {
+	Name  string   `yaml:"Name"`
+	Items []string `yaml:"Items"`
 }
 
 // MetaInformation
