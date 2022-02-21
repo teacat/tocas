@@ -76,6 +76,39 @@ func build(c *cli.Context) error {
 		return err
 	}
 
+	indexTmpl, err := template.New("index.html").Funcs(template.FuncMap{
+		"html":        tmplHTML,
+		"capitalize":  tmplCapitalize,
+		"highlight":   tmplHighlight,
+		"code":        tmplCode,
+		"markdown":    tmplMarkdown,
+		"preview":     tmplPreview,
+		"marked":      tmplMarked,
+		"kebablize":   tmplKebablize,
+		"trim":        tmplTrim,
+		"anchor":      tmplAnchor,
+		"translators": tmplTranslators(meta),
+	}).ParseFiles("./templates/index.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	file, err := os.Create("./output/" + c.String("lang") + "/index.html")
+	if err != nil {
+		return err
+	}
+
+	article := Article{
+		Meta: meta,
+	}
+	if err = yaml.Unmarshal(b, &article); err != nil {
+		return err
+	}
+	if err = indexTmpl.Execute(file, article); err != nil {
+		return err
+	}
+	log.Printf("index Finished!")
+
 	tmpl, err := template.New("article.html").Funcs(template.FuncMap{
 		"html":        tmplHTML,
 		"capitalize":  tmplCapitalize,
@@ -119,7 +152,13 @@ func build(c *cli.Context) error {
 
 				for vi, v := range article.Definitions {
 					for ji, j := range v.Sections {
-						article.Definitions[vi].Sections[ji].FormattedHTML = tmplCode(trim(trim(j.HTML, j.Remove), article.Remove))
+						if j.AttachedHTML != "" {
+							article.Definitions[vi].Sections[ji].FormattedHTML = tmplCode(trim(trim(j.AttachedHTML, j.Remove), article.Remove))
+						}
+						if j.HTML != "" {
+							article.Definitions[vi].Sections[ji].FormattedHTML = tmplCode(trim(trim(j.HTML, j.Remove), article.Remove))
+						}
+
 					}
 				}
 				if err = tmpl.Execute(file, article); err != nil {

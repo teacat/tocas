@@ -15,15 +15,14 @@
             <div class="界限容器">
                 <div class="穹頂-導航列">
                     <div class="穹頂-導航列-左側">
-                        <a class="穹頂-導航列-項目 穹頂-導航列-項目_主要" href="#!">Tocas UI</a>
-                        <a class="穹頂-導航列-項目" href="#!">初入上手</a>
-                        <a class="穹頂-導航列-項目" href="#!">元件樣式</a>
-                        <a class="穹頂-導航列-項目" href="#!">實際範例</a>
-                        <a class="穹頂-導航列-項目" href="#!">即時測試</a>
+                        <a class="穹頂-導航列-項目 穹頂-導航列-項目_主要" href="./index.html">Tocas UI</a>
+                        <a class="穹頂-導航列-項目" href="./getting-started.html">開始使用</a>
+                        <a class="穹頂-導航列-項目" href="./button.html">元件樣式</a>
+                        <a class="穹頂-導航列-項目" href="./examples.html">實際範例</a>
                     </div>
                     <div class="穹頂-導航列-右側">
                         <a class="穹頂-導航列-項目" href="#!"><span class="ts-flag is-taiwan-flag"></span> 台灣正體</a>
-                        <a class="穹頂-導航列-項目" href="#!"><span class="ts-icon is-github-icon"></span> GitHub</a>
+                        <a class="穹頂-導航列-項目" href="https://github.com/teacat/tocas" target="_blank"><span class="ts-icon is-github-icon"></span> GitHub</a>
                     </div>
                 </div>
 
@@ -38,10 +37,6 @@
             <div class="界限容器">
                 <div class="主體-格局">
                     <div class="主體-格局-導覽">
-                        <div class="主體-格局-導覽-標題">初入上手</div>
-                        <a class="主體-格局-導覽-項目" href="#!">安裝方式 <span class="主體-格局-導覽-項目-英文">Getting Started</span></a>
-                        <a class="主體-格局-導覽-項目" href="#!">響應式設計 <span class="主體-格局-導覽-項目-英文">Responsive</span></a>
-
                         {{ range .Meta.Components }}
                         <div class="主體-格局-導覽-標題">{{ index $.Meta.UI.ComponentsCategories .Name }}</div>
                         {{ range .Items }}
@@ -51,6 +46,7 @@
                         {{ end }} {{ end }}
                     </div>
                     <div class="主體-格局-內容{{ if .Grid }} 主體-格局-內容_網格範例的{{ end }}">
+                        {{if ne .Type "Paragraphy" }}
                         <div class="主體-格局-內容-工具列">
                             <div class="主體-格局-內容-工具列-項目 主體-格局-內容-工具列-項目_標題">範例</div>
                             <div class="主體-格局-內容-工具列-項目">
@@ -84,12 +80,12 @@
                                     <div class="主體-格局-內容-工具列-項目-下拉式選單-群組">
                                         <div data-value="scale,large" class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目">放大</div>
                                         <div
-                                            data-value="scheme,medium"
+                                            data-value="scale,medium"
                                             class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目 主體-格局-內容-工具列-項目-下拉式選單-群組-項目_啟用的"
                                         >
                                             標準
                                         </div>
-                                        <div data-value="scheme,small" class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目">縮小</div>
+                                        <div data-value="scale,small" class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目">縮小</div>
                                     </div>
                                 </div>
                             </div>
@@ -121,6 +117,9 @@
                             </div>
                             <div class="主體-格局-內容-主要範例-程式碼">{{ .Example.FormattedHTML }}</div>
                         </div>
+
+                        {{ end }}
+                        <!-- -->
 
                         {{ if .Intro }}
                         <div class="主體-格局-內容-標題 主體-格局-內容-標題_章節">概要</div>
@@ -164,8 +163,13 @@
                             <a class="主體-格局-內容-單個範例-錨點" id="{{ .Anchor | kebablize }}"></a>
                             <!-- 單個範例 -->
                             <div class="主體-格局-內容-單個範例-文字-標題 主體-格局-內容-單個範例-文字-標題_段落">
-                                {{ .Title }}
+                                <a href="#{{ .Anchor | kebablize }}" class="主體-格局-內容-單個範例-文字-標題-連結">{{ .Title }}</a>
+
+                                <!-- -->
+                                {{ if ne .HTML "" }}
                                 <button class="主體-格局-內容-單個範例-文字-標題-切換原始碼"><span class="ts-icon is-code-icon"></span> 原始碼</button>
+                                {{ end }}
+                                <!-- -->
                             </div>
                             <div class="主體-格局-內容-單個範例-文字">{{ .Description | markdown }}</div>
 
@@ -175,6 +179,12 @@
                                 <div class="主體-格局-內容-單個範例-範例-實際效果">{{ .HTML | preview }}</div>
                                 <div class="主體-格局-內容-單個範例-範例-程式碼">{{ .FormattedHTML }}</div>
                             </div>
+                            {{ end }}
+                            <!-- -->
+
+                            <!-- -->
+                            {{ if .AttachedHTML }}
+                            <div class="主體-格局-內容-單個範例-附帶程式碼">{{ .FormattedHTML }}</div>
                             {{ end }}
                             <!-- -->
 
@@ -209,6 +219,8 @@
                         </div>
                         {{ end }}
                     </div>
+
+                    {{if ne .Type "Paragraphy" }}
                     <div class="主體-格局-索引">
                         {{ range .Definitions }}
                         <div class="主體-格局-索引-標題">{{ .Title }}</div>
@@ -222,6 +234,7 @@
                         {{ end }}
                         <button class="主體-格局-索引-回到頂部"><span class="ts-icon is-arrow-up-icon"></span> 回到頂部</button>
                     </div>
+                    {{ end }}
                 </div>
             </div>
         </div>
@@ -230,9 +243,10 @@
             <div class="界限容器">
                 <div class="頁腳-導航列">
                     <a class="頁腳-導航列-項目 頁腳-導航列-項目_回到頂部" href="#!"><span class="ts-icon is-arrow-up-icon"></span> 回到頂部</a>
-                    <a class="頁腳-導航列-項目" href="#!">GitHub</a>
-                    <a class="頁腳-導航列-項目" href="#!">實際範例</a>
-                    <a class="頁腳-導航列-項目" href="#!">關於</a>
+                    <a class="頁腳-導航列-項目" href="https://github.com/teacat/tocas" target="_blank">GitHub</a>
+                    <a class="頁腳-導航列-項目" href="./getting-started.html">開始使用</a>
+                    <a class="頁腳-導航列-項目" href="./button.html">元件樣式</a>
+                    <a class="頁腳-導航列-項目" href="./examples.html">實際範例</a>
                 </div>
                 <div class="頁腳-格局">
                     <div class="頁腳-格局-資訊">

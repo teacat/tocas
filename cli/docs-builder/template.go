@@ -1,10 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"html/template"
 	"regexp"
 	"strings"
+	"unicode"
 
 	"github.com/iancoleman/strcase"
 )
@@ -16,7 +18,18 @@ func tmplHTML(html string) template.HTML {
 
 // tmplCapitalize
 func tmplCapitalize(s string) string {
-	return strings.Title(s)
+	return addSpace(strings.Title(s))
+}
+
+func addSpace(s string) string {
+	buf := &bytes.Buffer{}
+	for i, rune := range s {
+		if unicode.IsUpper(rune) && i > 0 {
+			buf.WriteRune(' ')
+		}
+		buf.WriteRune(rune)
+	}
+	return buf.String()
 }
 
 // tmplKebablize

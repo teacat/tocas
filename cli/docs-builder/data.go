@@ -7,6 +7,7 @@ type Article struct {
 	This        string
 	Title       string              `yaml:"Title"`
 	Description string              `yaml:"Description"`
+	Type        string              `yaml:"Type"`
 	Intro       string              `yaml:"Intro"`
 	Example     ArticleExample      `yaml:"Example"`
 	Remove      []string            `yaml:"Remove"`
@@ -45,6 +46,8 @@ type ArticleDefinitionSection struct {
 	Icon        string   `yaml:"Icon"`
 	Remove      []string `yaml:"Remove"`
 	Anchor      string   `yaml:"Anchor"`
+	//
+	AttachedHTML string `yaml:"AttachedHTML"`
 	//
 	Icons []string `yaml:"Icons"`
 	// FormattedHTML 是程式會自動進行段落掃描並整理的 HTML 程式碼，這不在 YAML 之中。
