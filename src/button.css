@@ -2,6 +2,15 @@
    Variables
    ========================================================================== */
 
+@keyframes ts-button-loading {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -81,7 +90,7 @@
  */
 
 .ts-button.is-negative {
-    color: var(--ts-gray-50);
+    color: var(--ts-white);
     border-color: var(--ts-negative-500);
     background: var(--ts-negative-500);
 }
@@ -100,6 +109,41 @@
     background: transparent;
     color: var(--ts-gray-800);
     border: 2px solid transparent;
+}
+
+/**
+ * Loading
+ */
+
+.ts-button.is-loading,
+.ts-button.is-loading.is-negative {
+    color: transparent;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.ts-button.is-loading::after {
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+    display: inline;
+    text-decoration: inherit;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+    display: inline-block;
+    animation: ts-button-loading 2s linear infinite;
+    color: var(--ts-gray-50);
+    font-size: var(--ts-font-size-18px);
+    position: relative;
+    content: "\f110";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.ts-button.is-loading:is(.is-outlined, .is-secondary)::after {
+    color: var(--ts-gray-800);
 }
 
 /**
@@ -137,7 +181,7 @@
 .ts-button.is-disabled {
     cursor: not-allowed;
     pointer-events: none;
-    opacity: 0.3;
+    opacity: 0.5;
     user-select: none;
 }
 
@@ -197,7 +241,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 3rem;
+    width: 1.2rem;
 }
 
 .ts-button.is-start-labeled-icon {
