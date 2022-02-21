@@ -1,0 +1,180 @@
+#=======================================================
+# Header
+#=======================================================
+
+Title: 開始使用
+Description: 人生已經很無聊了，別讓你的網頁也再無聊下去。
+
+#=======================================================
+# Settings
+#=======================================================
+
+Type: Paragraphy
+
+#=======================================================
+# Definitions
+#=======================================================
+
+Definitions:
+    - Title: 安裝與使用
+      Description: 引用 Tocas UI 的檔案才能夠開始使用，你可以直接複製貼上或是下載原始碼供離線、自行使用。
+      Sections:
+          - Title: 立即使用的免安裝線上 CDN 來源
+            Anchor: CDN
+            Since: 4.0.0
+            Description: |
+                這是由一家知名 CDN 公司 CloudFlare 所提供的免費服務並且提供夠快的服務速度，這使你不需要下載 Tocas UI，只需要將下列標籤放置於 HTML 中的 `<head> .. </head>` 處即可，該公司提供可靠的上線時間令你毋須擔心。
+            AttachedHTML: |
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/2.3.3/tocas.css">
+
+          - Title: 自行下載 Tocas UI
+            Anchor: CDN
+            Since: 4.0.0
+            Description: |
+                到 [Tocas UI 的官方 Github](https://github.com/teacat/tocas) 下載樣式然後取出其中的 `/dist` 資料夾並像下面這樣引用 Tocas UI 檔案。使用此安裝方式的好處是可以確保樣式不會因為遠端的伺服器離線而遺失。
+            AttachedHTML: |
+                <link rel="stylesheet" href="tocas.css">
+
+    - Title: 使用須知
+      Description: 需要注意 HTML 和設計上是否有達到這些要求。
+      Sections:
+          - Title: HTML5 宣告
+            Anchor: HTML5
+            Description: |
+                請確定有透過 `<!DOCTYPE HTML>` 將網頁宣告成 HTML5。
+            AttachedHTML: |
+                <!DOCTYPE HTML>
+                <html>
+                </html>
+
+          - Title: 響應式設計標籤
+            Anchor: Meta Tag
+            Description: |
+                Tocas UI 支援響應式設計，為此需要新增下列一段的標籤在 HTML 來告訴行動裝置此網頁支援響應式設計。利用這個標籤還可以降低並解決行動裝置對於網頁的點擊延遲，請將這段放置於 HTML 中的 `<head> .. </head>` 處。
+            AttachedHTML: |
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+          - Title: 動態字體縮放
+            Anchor: Scales
+            Description: |
+                Tocas UI 的所有元件字體大小是依賴著網頁基底而定。當網頁字型太小時，不需要變更每個元件的字型，可以直接變更 `<html>` 中的 `font-size` 大小設定，但 Tocas UI 也內建了 `[data-scale]` 屬性標籤能夠更改縮放級距。
+
+                <div class="ts-box">
+                    <table class="ts-table is-definition is-celled">
+                        <thead>
+                            <tr>
+                                <th class="is-collapsed"></th>
+                                <th class="is-collapsed">字體大小</th>
+                                <th class="is-collapsed">適用情境</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="is-collapsed">small</td>
+                                <td class="is-collapsed">14px</td>
+                                <td>手機或是行動裝置應用程式。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">medium</td>
+                                <td class="is-collapsed">15px</td>
+                                <td>基本的網頁和桌上型電腦的軟體介面。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">large</td>
+                                <td class="is-collapsed">16px</td>
+                                <td>專注在文字的部落格、商業推廣情境。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            AttachedHTML: |
+                <html [[data-scale]]="large">
+
+          - Title: 停用樣式重設
+            Anchor: Reset
+            Description: |
+                有時候 Tocas UI 會為了美化樣式而重設頁面上原先存在的樣式，如果這會破壞現有的外觀，請在 `<html>` 標籤中加上 `[data-ts-reset="false"]` 的停用屬性標籤。
+            AttachedHTML: |
+                <html [[data-ts-reset]]="false">
+
+          - Title: 網頁字型
+            Anchor: Fonts
+            Description: |
+                目前 Tocas UI 使用下列字型在各個系統（如：Ubuntu、macOS、Windows）。
+            AttachedHTML: |
+                "Noto Sans CJK TC", "Noto Sans TC", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue", "Helvetica", "Arial", "Microsoft JhengHei",
+                wf_SegoeUI, "Segoe UI", Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, 微軟正黑體, "LiHei Pro", "WenQuanYi Micro Hei",
+                "Droid Sans Fallback", "AR PL UMing TW", Roboto, "Helvetica Neue", "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif
+
+    - Title: 與其他框架比較
+      Description: |
+          當我們在打造 Tocas UI 時，我們參考了許多現有框架的設計，同時我們也依據以往的經驗而避免了不少的問題。這裡簡略分析 Tocas UI 與其他現今的元件框架的不同之處。
+      Sections:
+          - Title: Bootstrap
+            Anchor: Bootstrap
+            Since: 4.0.0
+            Description: |
+                Bootstrap 是個常見但使用率已經逐漸降低的框架，過多雜亂的樣式名稱（如：`m-l-1`、`p-x-2`、`m-x-auto`）並不能夠一眼就看出這些樣式所具備的意義、過於鬆散的元件使得無法適用於一個更緊緻的視覺設計需求（如：行動版網站）。
+
+                相較之下 Tocas UI 的元件命名（如：`is-large`、`is-spaced`）更有意義。針對不同的設計情境時，Tocas UI 元件亦提供了密度樣式可減少元件多餘的空白與間隙。
+
+                在 HTML 結構與命名部分，Bootstrap 常為了要補足某些缺陷、排列而新增過多不必要的結構（如：`carousel-inner`、`navbar-nav`）這些過度仰賴特定元件的子元素令使用者在開發時不利於記憶。
+
+                Bootstrap 所提供的元件數量過少已不符合現今設計的需求，其排版、格局多數情況下並沒有辦法湊合使用，導致設計時須不斷地覆蓋其樣式才能達成目的。在 Bootstrap 推出可供使用者自訂 SASS 變數後，其建置過程也變得更加煩躁令專案在剛入手時有一定的困難。
+
+                Tocas UI 的使用方式十分簡單，僅須複製貼上其 CSS 引用網址便能直接使用；元件數量也眾多，較能符合在設計現代應用程式與網頁的需求。
+
+                * 元件間隙過大而不適合用於設計行動裝置介面。
+                * 樣式命名過於簡化而難以辨識，結構過於複雜。
+                * 缺少符合現代設計應用情境的元件。
+                * 網格與排版系統較不像 Tocas UI 那樣地彈性。
+
+          - Title: Semantic UI / Fomantic UI
+            Anchor: Semantic UI
+            Since: 4.0.0
+            Description: |
+                Semantic UI 的維護已不再活躍且多數的問題無法得到修正。鑑於此事，開源社群自行衍生了名為 Fomantic UI 的第三方框架，但仍受到 Semantic UI 早期架構而在後期更新有所限制。
+
+                為了迎合不同大眾的設計需求，Semantic UI 擁有自訂主題的功能，但後續的更新破壞了這些樣式且無人修繕。相反地，Tocas UI 起初就假設框架無法適用於所有人，我們便能在設計時省略過多不必要的功能並著重在真正重要的部份。
+
+                Semantic UI 的樣式命名是最大的特色但問題也隨之而來，例如一個 `large button` 大型按鈕套用響應式設計時的 `large device only` 其 `large` 樣式便會導致樣式衝突而發生預期以外的問題。
+
+                Semantic UI 基於 jQuery 的 JavaScript 模組在設計時能近乎涵蓋所有需求，但隨著現今 JavaScript 的框架崛起（如：Svelte、Vue、React）這些功能在結合上則衍生了不小問題，如：資料雙向綁定、事件監聽。
+
+                舉例來說，Vue 的資料變更時並沒有辦法直接映射到 Semantic UI 的元件內容值上，必須重新呼叫 Semantic UI 的重新渲染機制才能讓整個頁面的資料同步。相反地，使用者在 Semantic UI 做出的資料變更（如：下拉式選單）也沒有辦法觸發在 Vue 裡已經寫好的函式。
+
+                為了解決這個問題，Tocas UI 決定最小化 JavaScript 的干涉並盡量地沿用系統原生元素而不是自己另外打造出一個狀態管理系統。
+
+                * 社群已經不再提供維護。
+                * 命名方式導致樣式衝突且無法修正。
+                * 無法移除的 jQuery 相依性。
+                * JavaScript 模組無法與現今的前端框架妥善搭配。
+
+          - Title: Foundation
+            Anchor: Foundation
+            Since: 4.0.0
+            Description: |
+                Foundation 在設計上較為生硬且缺少了許多可供點綴的樣式（如：圓角按鈕），其部份帶有陰影的設計趨近於以往的 Bootstrap 版本，這可能給予使用者一種沈重感。相較之下，Tocas UI 提供許多個性化的樣式並移除了多數的陰影設計，讓使用者在瀏覽時不會感到壓力。
+
+                * 可供點綴的裝飾樣式過少。
+                * 沈重的陰影設計可能帶給使用者壓力感。
+                * 設計採用直角且略帶生硬。
+
+          - Title: Tailwind CSS / Tachyons
+            Anchor: Taildwind CSS And Tachyons
+            Since: 4.0.0
+            Description: |
+                Tailwind CSS 是近幾年來前端開發容易被採用的設計方式，比起框架這更像是設計的輔助工具。Tailwind CSS 與 Tachyons 的理念相近，這兩個框架並沒有元件觀念。這意味著你將需要透過 Tailwind CSS 內建的輔助樣式自行建立需要的元件。
+
+                通常使用 Tailwind CSS 會搭配 Node.js 預處理器（Preprocessor）來輔助（如：移除無用的多餘樣式），這令使用 Tailwind CSS 的專案都無法避免使用 Node.js 和其龐大且沈重的 npm 相依性套件。
+
+                無論是 Tailwind CSS 還是 Tachyons 在樣式命名上有著與 Bootstrap 一樣厭垢並且更難以令人捉摸的問題，如：`mr4` 其實是 `margin-right: 1rem;`。在設計時，元素上會有過多的樣式如：`fw6 f3 f2-ns lh-title mt0 mb3`，這些都將導致未來整合有所困難。重複使用元件時須不斷地複製貼上其樣式而導致專案原始碼大小急劇增加。
+
+                為了解決這個問題，Tailwind CSS 通常僅用於已經有 Vue、React 或 Svelte 這樣的 JavaScript 框架的專案。
+
+                Tailwind CSS 像是讓開發者能夠自行設計一套元件庫而提供的輔助樣式；Tocas UI 則是已經為網頁、應用程式所設計數個可立即應用的元件且不須額外安裝任何 Node.js 相依性套件，更適用於非設計師專職的一般開發者、初心者。
+
+                * 開發者須自行從頭打造，沒有現成元件可供使用。
+                * 無法避免的 Node.js 相依性使專案需要大量前置作業。
+                * 樣式名稱眾多且不直覺，開發時須翻閱說明文件。
+                * 開發者須具備進階的 CSS 知識。
