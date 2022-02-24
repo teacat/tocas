@@ -6,7 +6,6 @@ import (
 	"crypto/md5"
 	"fmt"
 	"html"
-	"html/template"
 	"io/fs"
 	"io/ioutil"
 	"log"
@@ -15,6 +14,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"text/template"
 
 	blackfriday "github.com/russross/blackfriday/v2"
 	"golang.org/x/sync/errgroup"
@@ -67,6 +67,10 @@ func build(c *cli.Context) error {
 		log.Fatal(err)
 	}
 
+	if err := exec.Command("cp", "--recursive", "./../../src", "./output/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
+		log.Fatal(err)
+	}
+
 	b, err := os.ReadFile("./../../docs/" + c.String("lang") + "/meta.yml")
 	if err != nil {
 		return err
@@ -101,6 +105,10 @@ func build(c *cli.Context) error {
 	article := Article{
 		Meta: meta,
 	}
+	b, err = os.ReadFile("./../../docs/" + c.String("lang") + "/components/examples.yml")
+	if err != nil {
+		return err
+	}
 	if err = yaml.Unmarshal(b, &article); err != nil {
 		return err
 	}
@@ -108,6 +116,39 @@ func build(c *cli.Context) error {
 		return err
 	}
 	log.Printf("index Finished!")
+
+	exampleTmpl, err := template.New("examples.html").Funcs(template.FuncMap{
+		"html":        tmplHTML,
+		"capitalize":  tmplCapitalize,
+		"highlight":   tmplHighlight,
+		"code":        tmplCode,
+		"markdown":    tmplMarkdown,
+		"preview":     tmplPreview,
+		"marked":      tmplMarked,
+		"kebablize":   tmplKebablize,
+		"trim":        tmplTrim,
+		"anchor":      tmplAnchor,
+		"translators": tmplTranslators(meta),
+	}).ParseFiles("./templates/examples.html")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	file, err = os.Create("./output/" + c.String("lang") + "/examples.html")
+	if err != nil {
+		return err
+	}
+
+	article = Article{
+		Meta: meta,
+	}
+	if err = yaml.Unmarshal(b, &article); err != nil {
+		return err
+	}
+	if err = exampleTmpl.Execute(file, article); err != nil {
+		return err
+	}
+	log.Printf("example Finished!")
 
 	tmpl, err := template.New("article.html").Funcs(template.FuncMap{
 		"html":        tmplHTML,
@@ -130,6 +171,9 @@ func build(c *cli.Context) error {
 
 	for _, f := range files {
 		func(f fs.FileInfo) {
+			if f.Name() == "examples.yml" {
+				return
+			}
 			group.Go(func() error {
 				file, err := os.Create("./output/" + c.String("lang") + "/" + strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())) + ".html")
 				if err != nil {
