@@ -6,11 +6,43 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="./assets/style.css" />
         <link rel="stylesheet" href="./assets/highlight.css" />
-        <link rel="stylesheet" href="./../../../../src/tocas.css" />
+        <link rel="stylesheet" href="./assets/tocas/tocas.css" />
         <script src="./assets/script.js"></script>
-        <title>{{ .Title }} | Tocas UI</title>
+        <title>{{ .Title }} - Tocas UI</title>
+        <!-- Metadata -->
+        <meta name="description" content="{{ .Description }}" />
+        <!-- / Metadata -->
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="{{ .Title }} - Tocas UI" />
+        <meta name="twitter:description" content="{{ .Description }}" />
+        <meta name="twitter:image" content="https://v4.tocas-ui.com/zh-tw/assets/images/og.png" />
+        <!-- / Twitter -->
+        <!-- Facebook -->
+        <meta property="og:title" content="{{ .Title }} - Tocas UI" />
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content="https://v4.tocas-ui.com/zh-tw/assets/images/og.png" />
+        <meta property="og:url" content="https://v4.tocas-ui.com/zh-tw/index.html" />
+        <meta property="og:image:width" content="1280" />
+        <meta property="og:image:height" content="720" />
+        <meta property="og:description" content="{{ .Description }}" />
+        <!-- / Facebook -->
     </head>
     <body>
+        <!--
+        ▄▄▄        ▄▄████▄
+      ▄█████▄    ▄██▀    ██
+      ▀█▄   ██▄ ██▀      ██
+       ▀██▄▄▄████   ▄▄▄██▀
+          ▀▀▀████▀▀▀▀▀
+             ██
+            ██          ▄█████▄       █████████████          ▄█             █▄
+           ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+           ██        ██         ██    ██         ██        ██  ▀██       ██▀
+           ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+           ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+            ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄███       █▀
+    -->
         <div class="穹頂">
             <div class="界限容器">
                 <div class="穹頂-導航列">
@@ -25,7 +57,16 @@
                         <a class="穹頂-導航列-項目" href="https://github.com/teacat/tocas" target="_blank"><span class="ts-icon is-github-icon"></span> GitHub</a>
                     </div>
                 </div>
-
+                <div class="穹頂-導航列 穹頂-導航列_手機的">
+                    <div class="穹頂-導航列-左側">
+                        <a class="穹頂-導航列-項目 穹頂-導航列-項目_主要" href="./index.html">Tocas UI</a>
+                    </div>
+                    <div class="穹頂-導航列-右側">
+                        <a class="穹頂-導航列-項目 穹頂-導航列-項目_選單按鈕" href="#!">
+                            <span class="ts-icon is-bars-icon"></span>
+                        </a>
+                    </div>
+                </div>
                 <div class="穹頂-標題">
                     <div class="穹頂-標題-主要">{{ .Title }}</div>
                     <div class="穹頂-標題-說明">{{ .Description }}</div>
@@ -44,7 +85,11 @@
                             {{ index $.Meta.UI.Components . }} <span class="主體-格局-導覽-項目-英文">{{ . | capitalize }}</span>
                         </a>
                         {{ end }} {{ end }}
+                        <div class="主體-格局-導覽-關閉按鈕">
+                            <span class="ts-icon is-times-circle-icon"></span>
+                        </div>
                     </div>
+                    <div class="主體-格局-遮罩"></div>
                     <div class="主體-格局-內容{{ if .Grid }} 主體-格局-內容_網格範例的{{ end }}">
                         {{if ne .Type "Paragraphy" }}
                         <div class="主體-格局-內容-工具列">
@@ -86,25 +131,6 @@
                                             標準
                                         </div>
                                         <div data-value="scale,small" class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目">縮小</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="主體-格局-內容-工具列-項目">
-                                <div class="主體-格局-內容-工具列-項目-標籤">密度</div>
-                                <div class="主體-格局-內容-工具列-項目-下拉式選單">
-                                    <div class="主體-格局-內容-工具列-項目-下拉式選單-文字">
-                                        <span class="主體-格局-內容-工具列-項目-下拉式選單-文字-標籤"> 標準 </span>
-                                        <span class="主體-格局-內容-工具列-項目-下拉式選單-文字-圖示 ts-icon is-chevron-down-icon"></span>
-                                    </div>
-                                    <div class="主體-格局-內容-工具列-項目-下拉式選單-群組">
-                                        <div data-value="density,relaxed" class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目">寬鬆</div>
-                                        <div
-                                            data-value="density,medium"
-                                            class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目 主體-格局-內容-工具列-項目-下拉式選單-群組-項目_啟用的"
-                                        >
-                                            標準
-                                        </div>
-                                        <div data-value="density,compact" class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目">擁擠</div>
                                     </div>
                                 </div>
                             </div>
