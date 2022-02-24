@@ -5,15 +5,16 @@ import "html/template"
 // Article
 type Article struct {
 	This        string
-	Title       string              `yaml:"Title"`
-	Description string              `yaml:"Description"`
-	Type        string              `yaml:"Type"`
-	Intro       string              `yaml:"Intro"`
-	Example     ArticleExample      `yaml:"Example"`
-	Remove      []string            `yaml:"Remove"`
-	Relatives   []string            `yaml:"Relatives"`
-	Definitions []ArticleDefinition `yaml:"Definitions"`
-	Flags       map[string][]string `yaml:"Flags"`
+	Title       string                  `yaml:"Title"`
+	Description string                  `yaml:"Description"`
+	Type        string                  `yaml:"Type"`
+	Intro       string                  `yaml:"Intro"`
+	Example     ArticleExample          `yaml:"Example"`
+	Examples    []ArticleExampleSection `yaml:"Examples"`
+	Remove      []string                `yaml:"Remove"`
+	Relatives   []string                `yaml:"Relatives"`
+	Definitions []ArticleDefinition     `yaml:"Definitions"`
+	Flags       map[string][]string     `yaml:"Flags"`
 	Meta        Meta
 	Grid        bool `yaml:"Grid"`
 }
@@ -52,6 +53,22 @@ type ArticleDefinitionSection struct {
 	Icons []string `yaml:"Icons"`
 	// FormattedHTML 是程式會自動進行段落掃描並整理的 HTML 程式碼，這不在 YAML 之中。
 	FormattedHTML template.HTML
+}
+
+// ArticleExampleSection
+type ArticleExampleSection struct {
+	Title       string                      `yaml:"Title"`
+	Description string                      `yaml:"Description"`
+	Items       []ArticleExampleSectionItem `yaml:"Items"`
+}
+
+// ArticleExampleSectionItem
+type ArticleExampleSectionItem struct {
+	Title       string `yaml:"Title"`
+	Image       string `yaml:"Image"`
+	Link        string `yaml:"Link"`
+	Description string `yaml:"Description"`
+	Symbol      string `yaml:"Symbol"`
 }
 
 // Meta
