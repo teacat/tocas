@@ -91,6 +91,7 @@ func build(c *cli.Context) error {
 		"kebablize":   tmplKebablize,
 		"trim":        tmplTrim,
 		"anchor":      tmplAnchor,
+		"i18n":        tmplI18N(meta),
 		"translators": tmplTranslators(meta),
 	}).ParseFiles("./templates/index.html")
 	if err != nil {
@@ -128,6 +129,7 @@ func build(c *cli.Context) error {
 		"kebablize":   tmplKebablize,
 		"trim":        tmplTrim,
 		"anchor":      tmplAnchor,
+		"i18n":        tmplI18N(meta),
 		"translators": tmplTranslators(meta),
 	}).ParseFiles("./templates/examples.html")
 	if err != nil {
@@ -161,6 +163,7 @@ func build(c *cli.Context) error {
 		"kebablize":   tmplKebablize,
 		"trim":        tmplTrim,
 		"anchor":      tmplAnchor,
+		"i18n":        tmplI18N(meta),
 		"translators": tmplTranslators(meta),
 	}).ParseFiles("./templates/article.html")
 	if err != nil {

@@ -109,7 +109,6 @@ type MetaComponents struct {
 // MetaUI
 type MetaUI struct {
 	Paragraph            map[string]string `yaml:"Paragraph"`
-	Navigation           map[string]string `yaml:"Navigation"`
 	ComponentsCategories map[string]string `yaml:"ComponentsCategories"`
 	Components           map[string]string `yaml:"Components"`
 }

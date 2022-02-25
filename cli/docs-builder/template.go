@@ -47,6 +47,13 @@ func tmplAnchor(s string) string {
 	return strcase.ToKebab(s)
 }
 
+// tmplI18N
+func tmplI18N(meta Meta) func(string) string {
+	return func(key string) string {
+		return meta.UI.Paragraph[key]
+	}
+}
+
 // tmplHighlight
 func tmplHighlight(s string) template.HTML {
 	return template.HTML(highlight(s))
