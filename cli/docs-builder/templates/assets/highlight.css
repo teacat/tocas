@@ -12,12 +12,16 @@
         "AR PL UMing TW", Roboto, "Helvetica Neue", "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif;
     word-spacing: 2px;
     letter-spacing: 0em;
+
+    --hljs-link-color: #503efc;
+    --hljs-mark-background-color: #096dd9;
+    --hljs-semantic-color: #503efc;
 }
 
 .hljs a {
     padding: 0 0.1rem;
-    border-bottom: 1px dashed #503efc;
-    color: #503efc;
+    border-bottom: 1px dashed var(--hljs-link-color);
+    color: var(--hljs-link-color);
     text-decoration: none;
 }
 
@@ -38,7 +42,7 @@
 }
 
 .hljs mark:not(.tag) {
-    background: #096dd9;
+    background: var(--hljs-mark-background-color);
     color: #fff;
 }
 
@@ -62,11 +66,10 @@
 .hljs .hljs-symbol,
 .hljs .hljs-bullet,
 .hljs .hljs-addition {
-    color: #503efc;
+    color: var(--hljs-semantic-color);
 }
 
 .hljs .hljs-attribute {
-    /*color: #b58e00; too light*/
     margin-right: 0.2em;
 }
 
@@ -90,22 +93,18 @@ code.hljs.javascript {
 }
 
 @media (prefers-color-scheme: dark) {
-    .hljs mark:not(.tag) {
-        background: #096dd9;
-    }
-
-    .hljs .hljs-string,
-    .hljs .hljs-symbol,
-    .hljs .hljs-bullet,
-    .hljs .hljs-addition {
-        color: #5ca5ff;
+    .hljs {
+        --hljs-link-color: #5ca5ff;
+        --hljs-semantic-color: #5ca5ff;
     }
 }
 
-*:is([data-scheme="dark"], [data-scheme="darkest"]) .hljs mark:not(.tag) {
-    background: #096dd9;
+*:is([data-scheme="dark"], [data-scheme="darkest"]) .hljs {
+    --hljs-link-color: #5ca5ff;
+    --hljs-semantic-color: #5ca5ff;
 }
 
-*:is([data-scheme="dark"], [data-scheme="darkest"]) .hljs *:is(.hljs-string, .hljs-symbol, .hljs-bullet, .hljs-addition) {
-    color: #5ca5ff;
+*:is([data-scheme="light"], [data-scheme="lightest"]) .hljs {
+    --hljs-link-color: #503efc;
+    --hljs-semantic-color: #503efc;
 }
