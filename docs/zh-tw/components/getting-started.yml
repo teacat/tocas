@@ -44,8 +44,7 @@ Definitions:
                 請確定有透過 `<!DOCTYPE HTML>` 將網頁宣告成 HTML5。
             AttachedHTML: |
                 <!DOCTYPE HTML>
-                <html>
-                </html>
+                <html><!-- ... --></html>
 
           - Title: 響應式設計標籤
             Anchor: Meta Tag
@@ -178,3 +177,26 @@ Definitions:
                 * 無法避免的 Node.js 相依性使專案需要大量前置作業。
                 * 樣式名稱眾多且不直覺，開發時須翻閱說明文件。
                 * 開發者須具備進階的 CSS 知識。
+
+    - Title: 雜談
+      Description: 一些和 Tocas UI 相關的開發歷程，還有其中瑣碎的事物。
+      Sections:
+          - Title: 勇敢地使用行內樣式
+            Anchor: Brave
+            Since: 4.0.0
+            Description: |
+                Tocas UI 並不是萬靈丹，這更像是一個元件庫。設計應用程式介面時十分地方便，但作為自由發揮的設計而言，一定沒有辦法從頭到尾都只使用 Tocas UI。
+
+                在這種情況下我們鼓勵你直接透過 HTML 的 `style` 標籤，直接對該容器、元素進行樣式的修改。就像 Tailwind UI 那樣，不需要特別花費時間整理出一個 `my-style.css` 來好好地規劃樣式，直接在 HTML 中修改樣式令其影響一目了然。
+
+          - Title: 減少 JavaScript 模組的干涉
+            Anchor: Modules
+            Since: 4.0.0
+            Description: |
+                現今的應用程式或是網頁都有許多輔助框架可以選擇，例如：Vue、React、Svelte…甚至是 Web Components。
+
+                我們曾在 Tocas UI 花費數年的時間替不同輔助框架打造對應的元件，但最終的維護過於繁雜而作罷。每個框架對於 Web Components 的支援度和實作方式都有所不同，令資料綁定（Data Binding）上有非常大的困難。
+
+                這些問題到目前都還沒能被解決，而我們也決定不再這個地方花費過多的時間琢磨，最終 Tocas UI 的設計不再以 JavaScript 為主。
+
+                猶如 Tailwind UI 那樣，Tocas UI 未來僅會單純提供基本的 JavaScript 輔助函式用來協助使用者更快速地將自己正在使用的框架能夠與 Tocas UI 結合，而不是呼叫 Tocas UI 的 JavaScript 模組來達成資料綁定、元件功能，因為這些事情都應該交由框架執行。
