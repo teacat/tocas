@@ -1,0 +1,192 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-conversation {
+}
+
+.ts-conversation > .item {
+    display: flex;
+    gap: 1rem;
+
+    --brand-color: var(--ts-primary-600);
+}
+
+.ts-conversation > .item > .avatar {
+}
+
+.ts-conversation > .item > .avatar > img {
+    width: 40px;
+    border-radius: 0.4rem;
+}
+
+.ts-conversation > .item > .message {
+    background: var(--ts-gray-100);
+    border-radius: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.45rem 0;
+    line-height: 1.5;
+    font-size: var(--ts-font-size-14px);
+}
+
+.ts-conversation > .item > .message > .author {
+    padding: 0 0.8rem;
+    font-weight: 500;
+    color: var(--brand-color);
+}
+
+.ts-conversation > .item > .message > .content {
+    padding: 0 0.8rem;
+}
+
+.ts-conversation > .item > .message > .object {
+    margin: 0.5rem 0;
+}
+
+.ts-conversation > .item > .message > .author:first-child,
+.ts-conversation > .item > .message > .content:first-child {
+    /*padding-top: 0.6rem;*/
+}
+
+.ts-conversation > .item > .message > .author:last-child,
+.ts-conversation > .item > .message > .content:last-child {
+    /*padding-bottom: 0.6rem;*/
+}
+
+.ts-conversation > .item > .message .meta {
+    float: right;
+    line-height: 1.5;
+    bottom: -3px;
+    margin-left: 0.6rem;
+    position: relative;
+    display: inline-flex;
+    gap: 0.65rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.ts-conversation > .item > .message .meta .item {
+    font-size: var(--ts-font-size-14px);
+    color: var(--ts-gray-500);
+}
+
+.ts-conversation > .item:is(.is-sent, .is-sending, .is-error, .is-read, .is-warning) > .message .meta::after {
+    color: var(--ts-gray-500);
+
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+
+    text-decoration: inherit;
+    text-align: center;
+    width: 1.18em;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+
+    font-size: var(--ts-font-size-13px);
+}
+
+.ts-conversation > .item.is-sent > .message .meta::after {
+    content: "\f00c";
+}
+
+.ts-conversation > .item.is-sending > .message .meta::after {
+    content: "\f017";
+}
+
+.ts-conversation > .item.is-read > .message .meta::after {
+    content: "\f560";
+}
+
+.ts-conversation > .item.is-error > .message .meta::after {
+    content: "\f071";
+    color: var(--ts-negative-400);
+}
+
+/**
+ * Quote
+ */
+
+.ts-conversation > .item.is-warning > .message > .quote {
+    padding: 0rem 0.8rem;
+    border-left: 2px solid var(--brand-color);
+    margin: 0.25rem 0.8rem;
+
+    --brand-color: var(--ts-positive-600);
+}
+
+.ts-conversation > .item.is-warning > .message > .quote > .author {
+    font-weight: 500;
+
+    color: var(--brand-color);
+}
+
+/**
+ * Preview
+ */
+
+.ts-conversation > .item > .message > .preview {
+    padding-left: 0.8rem;
+    border-left: 2px solid var(--brand-color);
+    margin: 0.25rem 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    --brand-color: var(--ts-primary-400);
+}
+
+.ts-conversation > .item > .message > .preview > .site {
+    font-weight: 500;
+    color: var(--brand-color);
+}
+
+.ts-conversation > .item > .message > .preview > .title {
+    font-weight: 500;
+}
+
+.ts-conversation > .item > .message > .preview > .embed {
+    overflow: hidden;
+    border-radius: 0.4rem;
+}
+
+.ts-conversation > .item > .message > .preview > .embed > * {
+    width: 100%;
+    object-fit: cover;
+}
+
+/**
+ * Actions
+ */
+
+.ts-conversation > .item > .actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.ts-conversation > .item > .actions > .item {
+    appearance: none;
+    background: var(--ts-gray-75);
+    font-size: var(--ts-font-size-14px);
+    border: 0;
+    border-radius: 0.4rem;
+    text-align: center;
+    padding: 0.45rem 1rem;
+    font-family: "Noto Sans CJK TC";
+    color: var(--ts-primary-500);
+    user-select: none;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Active
+ */
