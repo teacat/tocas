@@ -18,6 +18,21 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     })
 
+    document.querySelector(".穹頂-導航列-項目_選單按鈕").addEventListener("click", () => {
+        document.querySelector(".主體-格局-導覽").classList.add("主體-格局-導覽_啟用的")
+        document.querySelector(".主體-格局-遮罩").classList.add("主體-格局-遮罩_啟用的")
+
+    })
+
+    document.querySelector(".主體-格局-導覽-關閉按鈕").addEventListener("click", () => {
+        document.querySelector(".主體-格局-導覽").classList.remove("主體-格局-導覽_啟用的")
+        document.querySelector(".主體-格局-遮罩").classList.remove("主體-格局-遮罩_啟用的")
+    })
+
+
+
+
+
 
      document.querySelectorAll(".主體-格局-內容-工具列-項目-下拉式選單").forEach((e) => {
         e.addEventListener("click", (e) => {
