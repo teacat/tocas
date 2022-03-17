@@ -1,0 +1,225 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 資訊列
+Description: 某個物件的相關狀態、資訊列。
+Intro: |
+    這是一個專為應用程式設計的元件。
+
+    通常用於擺放在輸入欄位或是某個物件下，就像 VSCode 或是一些文字編輯器那樣的狀態列。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Tab
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="{{ts-box}}">
+            <div class="[[ts-app-statusbar]] is-fluid">
+                <a href="#!" class="item">
+                    第 36 行，第 2 欄
+                </a>
+                <a href="#!" class="item">
+                    <div class="{{ts-icon}} is-check-icon"></div>
+                    拼字正確
+                </a>
+                <a href="#!" class="item is-active">
+                    <div class="{{ts-icon}} is-bell-icon"></div>
+                </a>
+            </div>
+        </div>
+
+Definitions:
+    - Title: 內容
+      Description:
+      Sections:
+          - Title: 標籤
+            Anchor: Label
+            Description: 圖示下方也可以擺放標籤，但這個標籤文字必須簡化且為單行。如：「我的音樂」應該作為「音樂」。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-app-navbar">
+                    <a href="#!" class="item">
+                        <div class="{{ts-icon}} is-search-icon"></div>
+                        <div class="[[label]]">搜尋</div>
+                    </a>
+                    <a href="#!" class="item is-active">
+                        <div class="{{ts-icon}} is-vials-icon"></div>
+                        <div class="[[label]]">實驗區</div>
+                    </a>
+                    <a href="#!" class="item">
+                        <div class="{{ts-icon}} is-atom-icon"></div>
+                        <div class="[[label]]">原子測試</div>
+                    </a>
+                </div>
+
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 啟用的
+            Anchor: Active
+            Description: 表現出目前頁面正處於的位置項目。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-app-navbar">
+                    <a href="#!" class="item">
+                        <div class="{{ts-icon}} is-star-icon"></div>
+                        <div class="label">常用聯絡人</div>
+                    </a>
+                    <a href="#!" class="item [[is-active]]">
+                        <div class="{{ts-icon}} is-clock-icon"></div>
+                        <div class="label">近期通話</div>
+                    </a>
+                    <a href="#!" class="item">
+                        <div class="{{ts-icon}} is-users-icon"></div>
+                        <div class="label">聯絡人</div>
+                    </a>
+                </div>
+
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 淡化某個項目讓使用者無法與其互動。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-app-navbar is-indicated">
+                    <a href="#!" class="item">
+                        <div class="{{ts-icon}} is-newspaper-icon"></div>
+                        <div class="label">刊登啟示</div>
+                    </a>
+                    <a href="#!" class="item is-active">
+                        <div class="{{ts-icon}} is-tasks-icon"></div>
+                        <div class="label">未完成項目</div>
+                    </a>
+                    <a href="#!" class="item [[is-disabled]]">
+                        <div class="{{ts-icon}} is-hands-helping-icon"></div>
+                        <div class="label">請求協助</div>
+                    </a>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 標記的
+            Anchor: Indicated
+            Description: 令啟用的項目以較醒目的方式呈現，而這會讓沒被啟用的項目以正常方式呈現而不會被淡化。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-app-navbar [[is-indicated]]">
+                    <a href="#!" class="item">
+                        <div class="{{ts-icon}} is-shoe-prints-icon"></div>
+                        <div class="label">步數</div>
+                    </a>
+                    <a href="#!" class="item is-active">
+                        <div class="{{ts-icon}} is-stopwatch-icon"></div>
+                        <div class="label">活動分鐘</div>
+                    </a>
+                    <a href="#!" class="item">
+                        <div class="{{ts-icon}} is-heart-icon"></div>
+                        <div class="label">心律</div>
+                    </a>
+                </div>
+
+          - Title: 無標籤
+            Anchor: Unlabeled
+            Description: 在這個模式下，所有沒被啟用的項目其標籤都會被隱藏。這可以有效地減短導航列的寬度。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-app-navbar [[is-unlabeled]]">
+                    <a href="#!" class="item">
+                        <div class="{{ts-icon}} is-image-icon"></div>
+                        <div class="label">相片</div>
+                    </a>
+                    <a href="#!" class="item is-active">
+                        <div class="{{ts-icon}} is-search-icon"></div>
+                        <div class="label">搜尋</div>
+                    </a>
+                    <a href="#!" class="item">
+                        <div class="{{ts-icon}} is-users-icon"></div>
+                        <div class="label">共享</div>
+                    </a>
+                    <a href="#!" class="item">
+                        <div class="{{ts-icon}} is-archive-icon"></div>
+                        <div class="label">彙整</div>
+                    </a>
+                </div>
+
+          - Title: 流動
+            Anchor: Fluid
+            Description: 導航列的寬度可以與父容器相同。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-app-navbar [[is-fluid]]">
+                    <a href="#!" class="item">
+                        <div class="{{ts-icon}} is-home-icon"></div>
+                        <div class="label">首頁</div>
+                    </a>
+                    <a href="#!" class="item is-active">
+                        <div class="{{ts-icon}} is-flag-icon"></div>
+                        <div class="label">粉絲專頁</div>
+                    </a>
+                    <a href="#!" class="item">
+                        <div class="{{ts-icon}} is-bell-icon"></div>
+                        <div class="label">通知</div>
+                    </a>
+                </div>
+
+          - Title: 較密的
+            Anchor: Dense
+            Description: 變更元件的內距，令元素之間看起來更密集。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-app-navbar [[is-dense]] is-indicated">
+                    <a href="#!" class="item">
+                        <div class="{{ts-icon}} is-envelope-icon"></div>
+                        <div class="label">信件</div>
+                    </a>
+                    <a href="#!" class="item is-active">
+                        <div class="{{ts-icon}} is-comment-icon"></div>
+                        <div class="label">聊天</div>
+                    </a>
+                    <a href="#!" class="item">
+                        <div class="{{ts-icon}} is-users-icon"></div>
+                        <div class="label">社群</div>
+                    </a>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 側邊選單
+            Anchor: Composition Sidebar
+            Description: 透過結合[輸入欄位](./input.html)和[內容區塊](./content.html)可以打造出一個輕便的側邊選單。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="{{ts-content}}">
+                        <div class="{{ts-input}} is-fluid is-outlined">
+                            <textarea placeholder="輸入文字…"></textarea>
+                        </div>
+                    </div>
+                    <div class="{{ts-divider}}"></div>
+                    <div class="[[ts-app-statusbar]] is-fluid">
+                        <a href="#!" class="item">
+                            第 36 行，第 2 欄
+                        </a>
+                        <a href="#!" class="item">
+                            <div class="{{ts-icon}} is-check-icon"></div>
+                            拼字正確
+                        </a>
+                        <a href="#!" class="item is-active">
+                            <div class="{{ts-icon}} is-bell-icon"></div>
+                        </a>
+                    </div>
+                </div>
