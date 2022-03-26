@@ -9,10 +9,11 @@
 .ts-select {
     position: relative;
     display: inline-flex;
-    border-radius: 0.4rem 0.4rem 0 0;
-    border: 2px solid transparent;
-    background: var(--ts-gray-100);
-    border-bottom: 2px solid var(--ts-gray-400);
+
+    background: var(--ts-gray-50);
+    border: 1px solid var(--ts-gray-300);
+    border-radius: 0.4rem;
+
     /*min-height: 2.5rem;*/
     /*width: 100%;*/
     cursor: pointer;
@@ -62,10 +63,6 @@
     background: var(--ts-gray-50);
 }
 
-.ts-select:focus-within {
-    border-bottom-color: var(--ts-primary-600);
-}
-
 .ts-select::after {
     pointer-events: none;
     position: absolute;
@@ -95,17 +92,36 @@
    ========================================================================== */
 
 /**
- * Outlined
+ * Solid
  */
 
-.ts-select.is-outlined {
-    background: var(--ts-gray-50);
-    border: 1px solid var(--ts-gray-300);
-    border-radius: 0.4rem;
+.ts-select.is-solid {
+    background: var(--ts-gray-100);
+    border-color: transparent;
 }
 
-.ts-select.is-outlined:focus-within {
+/** Focus */
+.ts-select:focus-within {
     border-color: var(--ts-primary-600);
+}
+
+/**
+ * Underlined
+ */
+
+.ts-select.is-underlined {
+    border-radius: 0.4rem 0.4rem 0 0;
+    border: 2px solid transparent;
+    background: var(--ts-gray-100);
+    border-bottom: 2px solid var(--ts-gray-400);
+}
+
+.ts-select.is-underlined select option {
+    background: var(--ts-gray-50);
+}
+
+.ts-select.is-underlined:focus-within {
+    border-bottom-color: var(--ts-primary-600);
 }
 
 /**
@@ -153,7 +169,7 @@
  */
 
 .ts-select.is-negative {
-    border-bottom-color: var(--ts-negative-400);
+    border-color: var(--ts-negative-400);
 }
 
 .ts-select.is-negative select {
@@ -161,8 +177,9 @@
     font-weight: 500;
 }
 
-.ts-select.is-negative.is-outlined {
-    border-color: var(--ts-negative-400);
+.ts-select.is-negative.is-underlined {
+    border-color: transparent;
+    border-bottom-color: var(--ts-negative-400);
 }
 
 /**

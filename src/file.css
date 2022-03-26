@@ -21,10 +21,9 @@
     color: var(--ts-gray-800);
     padding: 0.35rem 1rem;
     padding-left: 0.6rem;
-    border-radius: 0.4rem 0.4rem 0 0;
-    border: 2px solid transparent;
-    background: var(--ts-gray-100);
-    border-bottom: 2px solid var(--ts-gray-400);
+    background: var(--ts-gray-50);
+    border: 1px solid var(--ts-gray-300);
+    border-radius: 0.4rem;
 }
 
 .ts-file input::file-selector-button,
@@ -43,7 +42,7 @@
     margin-right: 0.5rem;
 
     color: var(--ts-gray-800);
-    background: var(--ts-gray-300);
+    background: var(--ts-gray-200);
 }
 
 /* ==========================================================================
@@ -51,13 +50,28 @@
    ========================================================================== */
 
 /**
- * Outlined
+ * Underlined
  */
 
-.ts-file.is-outlined input {
-    background: var(--ts-gray-50);
-    border: 1px solid var(--ts-gray-300);
-    border-radius: 0.4rem;
+.ts-file.is-underlined input {
+    border-radius: 0.4rem 0.4rem 0 0;
+    border: 2px solid transparent;
+    background: var(--ts-gray-100);
+    border-bottom: 2px solid var(--ts-gray-400);
+}
+
+/**
+ * Solid
+ */
+
+.ts-file.is-solid input {
+    background: var(--ts-gray-100);
+    border-color: transparent;
+}
+
+.ts-file:is(.is-solid, .is-underlined) input::file-selector-button,
+.ts-file:is(.is-solid, .is-underlined) input::-webkit-file-upload-button {
+    background: var(--ts-gray-300);
 }
 
 /**
@@ -69,6 +83,21 @@
     pointer-events: none;
     opacity: 0.5;
     user-select: none;
+}
+
+/**
+ * Negative
+ */
+
+.ts-file.is-negative input {
+    border-color: var(--ts-negative-400);
+    color: var(--ts-negative-600);
+    font-weight: 500;
+}
+
+.ts-file.is-negative.is-underlined input {
+    border-color: transparent;
+    border-bottom-color: var(--ts-negative-400);
 }
 
 /**

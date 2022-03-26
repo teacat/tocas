@@ -31,6 +31,12 @@
     outline: none;
     box-sizing: border-box;
     user-select: none;
+    resize: none;
+    font-size: var(--ts-font-size-14px);
+    line-height: 1.5;
+    color: var(--ts-gray-800);
+    background: var(--ts-gray-50);
+    padding: 0.45rem 1rem;
 
     -webkit-font-smoothing: inherit;
     -moz-osx-font-smoothing: inherit;
@@ -48,20 +54,13 @@
 
 .ts-input input,
 .ts-input textarea {
-    line-height: 1.5;
-    font-size: var(--ts-font-size-14px);
-    color: var(--ts-gray-800);
-    padding: 0.45rem 1rem;
-    border-radius: 0.4rem 0.4rem 0 0;
-    border: 2px solid transparent;
-    background: var(--ts-gray-100);
-    border-bottom: 2px solid var(--ts-gray-400);
-    resize: none;
+    border-radius: 0.4rem;
+    border: 1px solid var(--ts-gray-300);
 }
 
 .ts-input input:focus,
 .ts-input textarea:focus {
-    border-bottom-color: var(--ts-primary-600);
+    border-color: var(--ts-primary-600);
 }
 
 .ts-input input::-webkit-inner-spin-button,
@@ -74,12 +73,37 @@
    ========================================================================== */
 
 /**
- * Outlined
+ * Solid
  */
 
-.ts-input.is-outlined input,
-.ts-input.is-outlined textarea {
+.ts-input.is-solid input,
+.ts-input.is-solid textarea {
     border-radius: 0.4rem;
+    border: 1px solid transparent;
+    background: var(--ts-gray-100);
+}
+
+.ts-input.is-solid input:focus,
+.ts-input.is-solid textarea:focus {
+    background: var(--ts-gray-50);
+    border: 1px solid var(--ts-gray-300);
+}
+
+/**
+ * Underlined
+ */
+
+.ts-input.is-underlined input,
+.ts-input.is-underlined textarea {
+    border-radius: 0.4rem 0.4rem 0 0;
+    border: 2px solid transparent;
+    background: var(--ts-gray-100);
+    border-bottom: 2px solid var(--ts-gray-400);
+}
+
+.ts-input.is-underlined input:focus,
+.ts-input.is-underlined textarea:focus {
+    border-bottom-color: var(--ts-primary-600);
 }
 
 /**
@@ -93,6 +117,16 @@
 }
 
 /**
+ * Basic
+ */
+
+.ts-input.is-basic input {
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+/**
  * Labeled
  */
 
@@ -102,109 +136,87 @@
     /*display: flex;*/
 }
 
-.ts-input.is-start-labeled .label,
-.ts-input.is-end-labeled .label,
-.ts-input.is-labeled .label {
+.ts-input:is(.is-start-labeled, .is-end-labeled, .is-labeled) :is(.input, .label) {
+    border-radius: 0.4rem;
+}
+
+.ts-input:is(.is-start-labeled, .is-end-labeled, .is-labeled) .label {
     line-height: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--ts-gray-200);
-    border: 0;
-    border-bottom: 2px solid var(--ts-gray-400);
+    background: var(--ts-gray-100);
     padding: 0 0.6rem;
     font-size: var(--ts-font-size-14px);
     color: var(--ts-gray-700);
-}
-
-.ts-input.is-start-labeled.is-outlined .label,
-.ts-input.is-end-labeled.is-outlined .label,
-.ts-input.is-labeled.is-outlined .label {
     border: 1px solid var(--ts-gray-300);
-    background: var(--ts-gray-100);
 }
 
-.ts-input.is-end-labeled input,
-.ts-input.is-labeled input {
-    border-right: 0;
-    border-top-right-radius: 0;
-}
-
-.ts-input.is-end-labeled.is-outlined input,
-.ts-input.is-labeled.is-outlined .nput {
+.ts-input:is(.is-start-labeled, .is-labeled) .label {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    border-right-width: 0;
 }
 
-.ts-input.is-end-labeled .label,
-.ts-input.is-labeled .label:last-child {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0.4rem;
-    border-top-left-radius: 0;
-}
-
-.ts-input.is-end-labeled.is-outlined input,
-.ts-input.is-labeled.is-outlined input {
-    border-bottom-right-radius: 0;
-}
-
-.ts-input.is-end-labeled.is-outlined .label,
-.ts-input.is-labeled.is-outlined .label:last-child {
-    border: 1px solid var(--ts-gray-300);
-    border-top-right-radius: 0.4rem;
-    border-bottom-right-radius: 0.4rem;
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
-    border-left-color: transparent;
-}
-
-.ts-input.is-start-labeled input,
-.ts-input.is-labeled input {
-    border-left: 0;
-    border-top-left-radius: 0;
-}
-
-.ts-input.is-start-labeled.is-outlined input,
-.ts-input.is-labeled.is-outlined input {
+.ts-input:is(.is-start-labeled, .is-labeled) input {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
 
-.ts-input.is-start-labeled .label,
+.ts-input:is(.is-end-labeled, .is-labeled) .label {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left-width: 0;
+}
+
+.ts-input:is(.is-end-labeled, .is-labeled) input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
 .ts-input.is-labeled .label:first-child {
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0.4rem;
-    border-top-right-radius: 0;
-}
-
-.ts-input.is-start-labeled.is-outlined input,
-.ts-input.is-labeled.is-outlined input {
-    border-bottom-left-radius: 0;
-}
-
-.ts-input.is-start-labeled.is-outlined .label,
-.ts-input.is-labeled.is-outlined .label:first-child {
-    border: 1px solid var(--ts-gray-300);
+    border-left-width: 1px;
     border-top-left-radius: 0.4rem;
     border-bottom-left-radius: 0.4rem;
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
-    border-right-color: transparent;
 }
 
-/**
- * Outlined
- */
-
-.ts-input.is-outlined input,
-.ts-input.is-outlined textarea {
-    background: var(--ts-gray-50);
-    border: 1px solid var(--ts-gray-300);
+.ts-input.is-labeled .label:last-child {
+    border-right-width: 1px;
+    border-top-right-radius: 0.4rem;
+    border-bottom-right-radius: 0.4rem;
 }
 
-.ts-input.is-outlined input:focus,
-.ts-input.is-outlined textarea:focus {
-    border-color: var(--ts-primary-600);
+/** Underlined */
+.ts-input:is(.is-start-labeled, .is-labeled, .is-end-labeled).is-underlined .label {
+    border: 0;
+    border-bottom: 2px solid var(--ts-gray-400);
+    background: var(--ts-gray-200);
+}
+
+.ts-input:is(.is-start-labeled, .is-labeled).is-underlined .label {
+    border-bottom-left-radius: 0;
+}
+
+.ts-input:is(.is-end-labeled, .is-labeled).is-underlined .label {
+    border-bottom-right-radius: 0;
+}
+
+.ts-input:is(.is-start-labeled, .is-labeled).is-underlined input {
+    border-left: 0;
+}
+
+.ts-input:is(.is-end-labeled, .is-labeled).is-underlined input {
+    border-right: 0;
+}
+
+/** Solid */
+.ts-input:is(.is-start-labeled, .is-labeled, .is-end-labeled).is-solid .label {
+    border-color: transparent;
+    background: var(--ts-gray-200);
+}
+
+.ts-input:is(.is-start-labeled, .is-labeled, .is-end-labeled).is-solid:focus-within .label {
+    border-color: var(--ts-gray-300);
 }
 
 /**
@@ -250,16 +262,31 @@
  * Negative
  */
 
-.ts-input.is-negative input,
-.ts-input.is-negative textarea {
+.ts-input.is-negative :is(input, textarea) {
     color: var(--ts-negative-600);
-    border-bottom-color: var(--ts-negative-400);
+    border-color: var(--ts-negative-400);
     font-weight: 500;
 }
 
-.ts-input.is-negative.is-outlined input,
-.ts-input.is-negative.is-outlined textarea {
+.ts-input.is-negative .label {
     border-color: var(--ts-negative-400);
+}
+
+/** Solid */
+.ts-input.is-negative.is-solid:is(.is-start-labeled, .is-labeled, .is-end-labeled) .label {
+    border-color: var(--ts-negative-400);
+}
+
+.ts-input.is-negative.is-solid input:focus,
+.ts-input.is-negative.is-solid textarea:focus {
+    background: var(--ts-gray-100);
+    border: 1px solid var(--ts-negative-400);
+}
+
+/** Underlined */
+.ts-input.is-negative.is-underlined :is(.label, input, textarea) {
+    border-color: transparent;
+    border-bottom-color: var(--ts-negative-400);
 }
 
 /**
@@ -271,11 +298,10 @@
     cursor: not-allowed;
     pointer-events: none;
     opacity: 0.5;
-    border-bottom-color: var(--ts-gray-300);
 }
 
-.ts-input.is-disabled.is-outlined {
-    border-color: var(--ts-gray-300);
+.ts-input.is-disabled.is-underlined {
+    border-bottom-color: var(--ts-gray-300);
 }
 
 /**
