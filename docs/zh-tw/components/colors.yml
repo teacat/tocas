@@ -20,7 +20,7 @@ Definitions:
       Description: |
           透過 CSS 的 `prefers-color-scheme` 功能，我們現在可以依照使用者裝置的明暗設定（如：黑暗色系）來變更元件的樣式。當使用者啟用夜間黑暗模式時，除了系統會採用暗色主題外，Tocas UI 也會反轉整個色調令背景以暗色為主。
 
-          設計者亦能在頁面直接指定 Tocas UI 的預設明暗色系而不須特別依照使用者的裝置設定。這個色系共有四個階段：Lightest（最亮的）、Light（亮色）、Dark（暗色）、Darkest（最暗的）。
+          設計者亦能在頁面直接指定 Tocas UI 的預設明暗色系而不須特別依照使用者的裝置設定。這個色系共有兩個階段：Light（亮色）、Dark（暗色）。
 
       Sections:
           - Title: 可用色系
@@ -40,11 +40,6 @@ Definitions:
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="is-collapsed">lightest</td>
-                                <td class="is-collapsed is-center-aligned"></td>
-                                <td>最亮的介面，有些不明顯的灰色會直接轉為亮白色。</td>
-                            </tr>
-                            <tr>
                                 <td class="is-collapsed">light</td>
                                 <td class="is-collapsed is-center-aligned">
                                     <div class="ts-badge is-light-only">目前</div>
@@ -58,16 +53,11 @@ Definitions:
                                 </td>
                                 <td>標準暗色，適用於夜間閱讀且對比不會過於明顯。</td>
                             </tr>
-                            <tr>
-                                <td class="is-collapsed">darkest</td>
-                                <td class="is-collapsed is-center-aligned"></td>
-                                <td>最暗的介面，有些地方會變為深黑色使對比更明顯。</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
             AttachedHTML: |
-                <html [[data-scheme]]="darkest">
+                <html [[data-scheme]]="dark">
 
           - Title: 動態顏色
             Anchor: Dynamic Colors
@@ -469,4 +459,34 @@ Definitions:
                             </tr>
                         </tbody>
                     </table>
+                </div>
+
+          - Title: 指定反色
+            Anchor: Inverted
+            Description: 將 `is-inverted` 套用在任何元素上，就能使該元素的色調與目前全域色系完全相反，這可以在亮色主題中呈現出暗色元素。需要注意的是：反色是相對詞，會基於系統的設置而動態更改。例如在亮色主題中的反色會是暗色，反之亦然。如果需要設計一個絕對黑色的元素，則需要參考下方的強制色域用法。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}} [[is-inverted]]" style="color: var(--ts-gray-800)">
+                    <div class="{{ts-content}}">
+                        在亮色主題中，這個元素會是黑色的；在暗色主題中，這個元素會是白色的。
+                    </div>
+                </div>
+
+          - Title: 強制色域
+            Anchor: Force Scheme
+            Description: 透過 `is-dark` 或 `is-light` 強制指定某個元素的色域，可以讓該元素固定色系。例如說：正在打造一個黑色的側邊欄，那麼就可以將該元素指定為 `is-dark`，這樣不論是在亮色或暗色系統中，這個元素都一定是基於暗色調顯示。
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="{{ts-box}} [[is-dark]]" style="color: var(--ts-gray-800)">
+                    <div class="{{ts-content}}">
+                        這個元素不論是在什麼環境，都一定是黑色的。
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="{{ts-box}} [[is-light]]" style="color: var(--ts-gray-800)">
+                    <div class="{{ts-content}}">
+                        這個元素不論是在什麼環境，都一定是白色的。
+                    </div>
                 </div>
