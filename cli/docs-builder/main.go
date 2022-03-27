@@ -63,11 +63,21 @@ func build(c *cli.Context) error {
 	if err := exec.Command("rm", "-rf", "./output/"+c.String("lang")+"/assets").Run(); err != nil {
 		log.Fatal(err)
 	}
-	if err := exec.Command("cp", "--recursive", "./templates/assets", "./output/"+c.String("lang")+"/assets").Run(); err != nil {
+	if err := exec.Command("cp", "-rf", "./templates/assets", "./output/"+c.String("lang")+"/assets").Run(); err != nil {
 		log.Fatal(err)
 	}
 
-	if err := exec.Command("cp", "--recursive", "./../../src", "./output/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
+	if err := exec.Command("rm", "-rf", "./output/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
+		log.Fatal(err)
+	}
+	if err := exec.Command("cp", "-rf", "./../../src", "./output/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := exec.Command("rm", "-rf", "./output/"+c.String("lang")+"/examples").Run(); err != nil {
+		log.Fatal(err)
+	}
+	if err := exec.Command("cp", "-rf", "./../../examples", "./output/"+c.String("lang")+"/examples").Run(); err != nil {
 		log.Fatal(err)
 	}
 
