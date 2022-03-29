@@ -7,68 +7,47 @@
    ========================================================================== */
 
 .ts-statistic {
-    display: inline-flex;
-    flex-direction: column;
+    display: flex;
     position: relative;
     color: inherit;
-    vertical-align: top;
+    gap: 0.5rem;
+    align-items: center;
 }
 
 /* ==========================================================================
    Structure
    ========================================================================== */
 
-.ts-statistic > .value {
+.ts-statistic .value {
     display: inline-flex;
-    font-size: 2.125em;
+    font-size: var(--ts-relative-massive);
     font-weight: 500;
-    line-height: 1.3;
+    line-height: 1.4;
     align-items: center;
 }
 
-.ts-statistic > .value > img:not(.ts) {
-    width: 1em;
-    height: 1em;
-    margin-right: 0.4rem;
-}
-
-.ts-statistic > .value > .unit:first-child {
-    margin-right: 0.5rem;
-}
-
-.ts-statistic > .value > .unit:last-child {
-    margin-left: 0.5rem;
-}
-
-.ts-statistic > .value > .unit {
-    font-size: 0.5em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.ts-statistic .unit {
+    font-size: var(--ts-relative-medium);
+    color: var(--ts-gray-600);
 }
 
 .ts-statistic .comparison {
-    font-size: 0.95rem;
+    font-size: var(--ts-relative-medium);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 0.5rem;
     color: var(--ts-gray-600);
 }
 
 .ts-statistic .comparison::before {
+    font-family: "Icons";
+    margin-right: 0.35rem;
+    margin-top: 2px;
     font-size: 1rem;
 }
 
-.ts-statistic .comparison::before {
-    margin-right: 0.35rem;
-}
-
-.ts-statistic .comparison::before {
-    font-family: "Icons";
-}
-
-.ts-statistic > .value > .ts-icon {
+.ts-statistic .ts-icon {
+    font-size: var(--ts-relative-massive);
     margin-right: 0.5rem;
 }
 
@@ -80,37 +59,12 @@
  * Aligns
  */
 
-.ts-statistic.is-start-aligned > .label {
-    text-align: left;
-}
 .ts-statistic.is-start-aligned > .value {
     justify-content: flex-start;
 }
 
-.ts-statistic.is-center-aligned > .label {
-    text-align: center;
-}
 .ts-statistic.is-center-aligned > .value {
     justify-content: center;
-}
-
-.ts-statistic.is-end-aligned > .label {
-    text-align: right;
-}
-.ts-statistic.is-end-aligned > .value {
-    justify-content: flex-end;
-}
-
-.ts-statistic.is-top-aligned > .label {
-    align-self: flex-start;
-}
-
-.ts-statistic.is-middle-aligned > .label {
-    align-self: center;
-}
-
-.ts-statistic.is-bottom-aligned > .label {
-    align-self: flex-end;
 }
 
 /**
@@ -121,24 +75,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-/**
- * Horizontal
- */
-
-.ts-statistic.is-horizontal {
-    flex-direction: row;
-    align-items: center;
-}
-
-.ts-statistic.is-horizontal > .value + .label {
-    margin-left: 0.5rem;
-    margin-right: 0;
-}
-
-.ts-statistic.is-horizontal > .label {
-    margin-right: 0.5rem;
 }
 
 /**
@@ -162,17 +98,17 @@
     content: "\f0d7";
 }
 
-.ts-statistic.is-increased > .value::before,
-.ts-statistic.is-decreased > .value::before {
+.ts-statistic.is-increased .value::before,
+.ts-statistic.is-decreased .value::before {
     font-family: "Icons";
     margin-right: 0.5rem;
 }
 
-.ts-statistic.is-increased > .value::before {
+.ts-statistic.is-increased .value::before {
     content: "\f0d8";
 }
 
-.ts-statistic.is-decreased > .value::before {
+.ts-statistic.is-decreased .value::before {
     content: "\f0d7";
 }
 
