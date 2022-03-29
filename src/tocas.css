@@ -59,6 +59,7 @@
 @import "./iconset.css";
 @import "./app-statusbar.css";
 @import "./conversation.css";
+@import "./modal.css";
 
 /* ==========================================================================
    Variables
@@ -225,7 +226,7 @@ html {
         --ts-gray-75: rgb(35, 35, 35);
         --ts-gray-100: rgb(42, 42, 42);
         --ts-gray-200: rgb(47, 47, 47);
-        --ts-gray-300: rgb(55, 55, 55);
+        --ts-gray-300: rgb(62, 62, 62);
         --ts-gray-400: rgb(80, 80, 80);
         --ts-gray-500: rgb(180, 180, 180);
         --ts-gray-600: rgb(220, 220, 220);
@@ -258,7 +259,7 @@ html[data-scheme="light"] .is-inverted {
     --ts-gray-75: rgb(35, 35, 35);
     --ts-gray-100: rgb(42, 42, 42);
     --ts-gray-200: rgb(47, 47, 47);
-    --ts-gray-300: rgb(55, 55, 55);
+    --ts-gray-300: rgb(62, 62, 62);
     --ts-gray-400: rgb(80, 80, 80);
     --ts-gray-500: rgb(180, 180, 180);
     --ts-gray-600: rgb(220, 220, 220);
@@ -280,7 +281,7 @@ html[data-scheme="light"] .is-inverted {
         --ts-gray-75: rgb(35, 35, 35);
         --ts-gray-100: rgb(42, 42, 42);
         --ts-gray-200: rgb(47, 47, 47);
-        --ts-gray-300: rgb(55, 55, 55);
+        --ts-gray-300: rgb(62, 62, 62);
         --ts-gray-400: rgb(80, 80, 80);
         --ts-gray-500: rgb(180, 180, 180);
         --ts-gray-600: rgb(220, 220, 220);
@@ -322,7 +323,7 @@ html[data-scheme="dark"] {
     --ts-gray-75: rgb(35, 35, 35);
     --ts-gray-100: rgb(42, 42, 42);
     --ts-gray-200: rgb(47, 47, 47);
-    --ts-gray-300: rgb(55, 55, 55);
+    --ts-gray-300: rgb(62, 62, 62);
     --ts-gray-400: rgb(80, 80, 80);
     --ts-gray-500: rgb(180, 180, 180);
     --ts-gray-600: rgb(220, 220, 220);
@@ -373,7 +374,7 @@ html[data-scheme="dark"] .is-inverted {
     --ts-gray-75: rgb(35, 35, 35);
     --ts-gray-100: rgb(42, 42, 42);
     --ts-gray-200: rgb(47, 47, 47);
-    --ts-gray-300: rgb(55, 55, 55);
+    --ts-gray-300: rgb(62, 62, 62);
     --ts-gray-400: rgb(80, 80, 80);
     --ts-gray-500: rgb(180, 180, 180);
     --ts-gray-600: rgb(220, 220, 220);
@@ -415,4 +416,73 @@ html[data-background="default"] {
 
 html[data-background="secondary"] {
     background-color: var(--ts-gray-75);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+/**
+ * Minimal
+ * (Below 768px)
+ */
+
+@media screen and (max-width: 768px) {
+    .is-standard-only,
+    .is-maximal-only {
+        display: none !important;
+    }
+
+    .is-not-minimal {
+        display: none !important;
+    }
+}
+
+/**
+ * Not Minimal
+ * (Above 768px)
+ */
+
+@media screen and (min-width: 768px) {
+    .is-minimal-only {
+        display: none !important;
+    }
+}
+
+/**
+ * Minimal & Standard
+ * (Below 993px)
+ */
+
+@media screen and (max-width: 993px) {
+    .is-maximal-only {
+        display: none !important;
+    }
+}
+
+/**
+ * Standard
+ * (Above 768px & Below 993px)
+ */
+
+@media screen and (min-width: 768px) and (max-width: 993px) {
+    .is-not-standard {
+        display: none !important;
+    }
+}
+
+/**
+ * Maximal
+ * (Above 993px)
+ */
+
+@media screen and (min-width: 993px) {
+    .is-minimal-only,
+    .is-standard-only {
+        display: none !important;
+    }
+
+    .is-not-maximal {
+        display: none !important;
+    }
 }
