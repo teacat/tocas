@@ -53,7 +53,7 @@
         <meta property="og:title" content="{{ .Title }} - Tocas UI" />
         <meta property="og:type" content="article" />
         <meta property="og:image" content="https://v4.tocas-ui.com/{{ .Meta.Information.Path }}/assets/images/og.png" />
-        <meta property="og:url" content="https://v4.tocas-ui.com/{{ .Meta.Information.Path }}/index.html" />
+        <meta property="og:url" content="https://v4.tocas-ui.com/{{ .Meta.Information.Path }}/{{ kebablize $.This }}.html" />
         <meta property="og:image:width" content="1280" />
         <meta property="og:image:height" content="720" />
         <meta property="og:description" content="{{ .Description }}" />
@@ -92,7 +92,7 @@
 
         <div class="主體">
             <div class="界限容器">
-                <div class="主體-格局">
+                <div class='主體-格局 {{if eq .Type "Container" }}主體-格局_容器範例的{{ end }}'>
                     <!-- 側邊導覽 -->
                     <div class="主體-格局-導覽">
                         {{ range .Meta.Components }}
@@ -114,7 +114,7 @@
 
                     <div class="主體-格局-內容{{ if .Grid }} 主體-格局-內容_網格範例的{{ end }}">
                         <!-- 文章工具列 -->
-                        {{if ne .Type "Paragraphy" }}
+                        {{if eq .Type "Article" }}
                         <div class="主體-格局-內容-工具列">
                             <div class="主體-格局-內容-工具列-項目 主體-格局-內容-工具列-項目_標題">{{ "Article_Example_Title" | i18n }}</div>
 
