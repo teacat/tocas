@@ -1,0 +1,282 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 分頁籤
+Description: 將內容以群組整理，並以分頁的方式同時間只呈現一項內容。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Selection
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-tab]]">
+            <a class="item" href="#!">
+                <span class="{{ts-icon}} is-list-icon"></span>
+                項目
+            </a>
+            <a class="item is-active" href="#!">
+                <span class="{{ts-icon}} is-chart-line-icon"></span>
+                活動
+            </a>
+            <a class="item" href="#!">
+                <span class="{{ts-icon}} is-scroll-icon"></span>
+                合約
+            </a>
+        </div>
+
+Definitions:
+    - Title: 項目
+      Description:
+      Sections:
+          - Title: 啟用的
+            Anchor: Active
+            Description: 指示目前所在的位置項目。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-tab">
+                    <a class="item" href="#!">通話紀錄</a>
+                    <a class="item [[is-active]]" href="#!">簡訊</a>
+                    <a class="item" href="#!">安全防護</a>
+                    <a class="item" href="#!">聯絡人</a>
+                </div>
+
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 讓使用者無法與指定項目或分頁互動。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-tab">
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-compass-icon"></span>
+                        探索
+                    </a>
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-car-icon"></span>
+                        出發
+                    </a>
+                    <a class="item [[is-disabled]]" href="#!">
+                        <span class="{{ts-icon}} is-bell-icon"></span>
+                        最新動態
+                    </a>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 藥丸的
+            Anchor: Pilled
+            Description: 讓分頁項目帶有圓角使其看起來像藥丸。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-tab [[is-pilled]]">
+                    <a class="item" href="#!">詳細資訊</a>
+                    <a class="item is-active" href="#!">擁有者</a>
+                    <a class="item" href="#!">區塊鏈資訊</a>
+                    <a class="item" href="#!">屬性</a>
+                </div>
+
+          - Title: 次要的
+            Anchor: Secondary
+            Description: 使啟用項目的語氣不會那麼沈重。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-tab [[is-secondary]] is-pilled">
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-list-icon"></span>
+                        交易紀錄
+                    </a>
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-money-check-dollar-icon"></span>
+                        內部轉移
+                    </a>
+                    <a class="item is-active" href="#!">
+                        <span class="{{ts-icon}} is-calendar-day-icon"></span>
+                        事件
+                    </a>
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-chart-bar-icon"></span>
+                        分析
+                    </a>
+                </div>
+
+          - Title: 片段的
+            Anchor: Segmented
+            Description: 以區段的方式呈現出一個切換器的效果。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-tab [[is-segmented]]">
+                    <a class="item" href="#!">項目</a>
+                    <a class="item is-active" href="#!">群組</a>
+                    <a class="item" href="#!">資訊</a>
+                </div>
+
+          - Title: 流動的
+            Anchor: Fluid
+            Description: 使整個分頁籤符合父容器的寬度。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-tab [[is-fluid]]">
+                    <a class="item" href="#!">個人檔案</a>
+                    <a class="item is-active" href="#!">裝備</a>
+                    <a class="item" href="#!">道具</a>
+                    <a class="item" href="#!">技能</a>
+                </div>
+
+          # - Title: 均分的
+          #   Anchor: Evenly Divided
+          #   Description: 讓項目以平均寬度呈現，適合用以填滿整個容器。
+          #   Since: 4.0.0
+          #   HTML: |
+          #       <div class="ts-tab [[is-evenly-divided]] is-fluid">
+          #           <a class="item is-active" href="#!">首頁</a>
+          #           <a class="item" href="#!">政治</a>
+          #           <a class="item" href="#!">財經</a>
+          #           <a class="item" href="#!">娛樂</a>
+          #           <a class="item" href="#!">運動</a>
+          #           <a class="item" href="#!">社會</a>
+          #           <a class="item" href="#!">地方</a>
+          #           <a class="item" href="#!">國際</a>
+          #       </div>
+
+          - Title: 項目對齊
+            Anchor: Aligns
+            Description: 更改項目的起始位置。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-tab [[is-start-aligned]]">
+                    <a class="item" href="#!">相片</a>
+                    <a class="item is-active" href="#!">搜尋</a>
+                    <a class="item" href="#!">共享</a>
+                </div>
+                <div class="ts-tab [[is-center-aligned]]">
+                    <a class="item" href="#!">相片</a>
+                    <a class="item is-active" href="#!">搜尋</a>
+                    <a class="item" href="#!">共享</a>
+                </div>
+                <div class="ts-tab [[is-end-aligned]]">
+                    <a class="item" href="#!">相片</a>
+                    <a class="item is-active" href="#!">搜尋</a>
+                    <a class="item" href="#!">共享</a>
+                </div>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改分頁籤的大小。
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-tab [[is-small]] is-pilled">
+                    <a class="item" href="#!">詳細資訊</a>
+                    <a class="item is-active" href="#!">擁有者</a>
+                    <a class="item" href="#!">區塊鏈資訊</a>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-tab is-pilled">
+                    <a class="item" href="#!">詳細資訊</a>
+                    <a class="item is-active" href="#!">擁有者</a>
+                    <a class="item" href="#!">區塊鏈資訊</a>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-tab [[is-large]] is-pilled">
+                    <a class="item" href="#!">詳細資訊</a>
+                    <a class="item is-active" href="#!">擁有者</a>
+                    <a class="item" href="#!">區塊鏈資訊</a>
+                </div>
+
+          - Title: 較密的
+            Anchor: Dense
+            Description: 變更元件的內距，令元素之間看起來更密集。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-tab [[is-dense]] is-segmented">
+                    <a class="item" href="#!">實際效果</a>
+                    <a class="item is-active" href="#!">預覽</a>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 分頁內容
+            Anchor: Composition Tab
+            Description: 擺放在某些區塊的上方，可以就像真的在進行分頁切換一樣。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="{{ts-content}} is-fitted is-secondary">
+                        <div class="[[ts-tab]]">
+                            <a class="item" href="#!">音樂</a>
+                            <a class="item is-active" href="#!">貼文</a>
+                            <a class="item" href="#!">影片</a>
+                        </div>
+                    </div>
+                    <div class="{{ts-divider}}"></div>
+                    <div class="{{ts-content}}">
+                        早安，我的朋友！
+                    </div>
+                </div>
+
+          - Title: 切換面板
+            Anchor: Composition Switch
+            Description: 片段分頁籤和表格放置在一起，可以用來切換項目的檢視狀態。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="{{ts-content}} is-dense">
+                        <div class="{{ts-row}}">
+                            <div class="column is-fluid">
+                                <div class="[[ts-tab]] is-segmented">
+                                    <a class="item" href="#!">項目</a>
+                                    <a class="item is-active" href="#!">分類</a>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <button class="{{ts-button}} is-outlined is-compact is-end-icon">
+                                    編輯
+                                    <span class="{{ts-icon}} is-edit-icon"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="{{ts-divider}}"></div>
+                    <table class="{{ts-table}}">
+                        <thead>
+                            <tr>
+                                <th>名稱</th>
+                                <th class="is-end-aligned">數量</th>
+                                <th class="is-end-aligned">金額</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>磁力共振掃描</td>
+                                <td class="is-end-aligned">1</td>
+                                <td class="is-end-aligned">$ 40,222</td>
+                            </tr>
+                            <tr>
+                                <td>電腦斷層掃描</td>
+                                <td class="is-end-aligned">1</td>
+                                <td class="is-end-aligned">$ 20,000</td>
+                            </tr>
+                            <tr>
+                                <td>正電子發射斷層掃描</td>
+                                <td class="is-end-aligned">1</td>
+                                <td class="is-end-aligned">$ 31,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>

@@ -1,0 +1,218 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: Box
+Description: The base container with borders can be mixed and matched with other elements.
+Intro: |
+    The Box looks a bit like a card, but the Box has no inner spacing. This is why Boxes are usually associated with [Content](./content.html), [Table](./table.html), [Image](./image.html) are used together with padded, edged elements.
+
+    Since Boxes do not have a default padding, this makes it easier to use multiple components together. If the content is just text, normally you can just use [Segment](./segment.html) which makes the structure more simple.
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Segment
+    - Content
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="[[ts-box]]">
+            <img class="{{ts-image}}" src="!-16:9-!">
+            <div class="{{ts-content}}">
+                <div class="{{ts-header}}">Delicious thousand-layer cake!</div>
+                <p>If you order online through May, you will now receive a limited number of free eco bags.</p>
+            </div>
+        </div>
+
+Definitions:
+    - Title: Content
+      Description:
+      Sections:
+          - Title: Symbol
+            Anchor: Symbol
+            Description: A symbol can be placed in the corner of the Box. When the height of the Box is too short, the symbol will be cropped.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-box">
+                    <div class="{{ts-content}}">
+                        <p>No published or planned products or services may be used to deliberately bias public opinion, preferences, or even to confuse, and such products and services must not be self-identified.</p>
+                    </div>
+                    <div class="[[symbol]]">
+                        <span class="{{ts-icon}} is-circle-exclamation-icon"></span>
+                    </div>
+                </div>
+
+    - Title: Variations
+      Description:
+      Sections:
+          - Title: Horizontal
+            Anchor: Horizontal
+            Description: The elements in the Box are arranged vertically by default, but can be changed to horizontally if needed.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-box [[is-horizontal]]">
+                    <div class="{{ts-image}} is-covered">
+                        <img style="width: 90px; height: 100%;" src="!-1:1-!">
+                    </div>
+                    <div class="{{ts-content}}">
+                        <div class="{{ts-header}}">
+                            Zedd - Papercut (Audio) ft. Troye Sivan
+                        </div>
+                        <p>Get "True Colors" on iTunes: http://smarturl.it/ZeddTrueColors</p>
+                    </div>
+                </div>
+
+          - Title: Collapsed
+            Anchor: Collapsed
+            Description: Since Box is default with a fluid width, you can set it to the minimum width to fits its content.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-box [[is-collapsed]]">
+                    <div class="{{ts-content}}">
+                        <p>This is a social platform from Taiwan where we do not have "Like" or "Read".</p>
+                    </div>
+                </div>
+
+          - Title: Indicated
+            Anchor: Indicated
+            Description: A style that allows a Box to be specifically marked on one of its edges.
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-box [[is-top-indicated]]">
+                    <div class="{{ts-content}}">Top Indicated</div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-box [[is-bottom-indicated]]">
+                    <div class="{{ts-content}}">Bottom Indicated</div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-box [[is-left-indicated]]">
+                    <div class="{{ts-content}}">Left Indicated</div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-box [[is-right-indicated]]">
+                    <div class="{{ts-content}}">Right Indicated</div>
+                </div>
+
+          - Title: Emphasises
+            Anchor: Emphasises
+            Description: Let the Box have edge markings while changing the color semantics of its markings. This can be used to emphasize whether the Box presents content that is dangerous, safe, or needs attention.
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-box [[is-negative]] is-top-indicated">
+                    <div class="{{ts-content}}">Negative</div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-box [[is-positive]] is-top-indicated">
+                    <div class="{{ts-content}}">Positive</div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-box [[is-warning]] is-top-indicated">
+                    <div class="{{ts-content}}">Warning</div>
+                </div>
+
+          - Title: Elevated
+            Anchor: Elevated
+            Description: The shadows give the Box a floating appearance, which is a good choice if there is a central element that needs attention (e.g., a login form).
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-box [[is-elevated]]">
+                    <div class="{{ts-content}}">Elevated</div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-box [[is-very-elevated]]">
+                    <div class="{{ts-content}}">Very Elevated</div>
+                </div>
+
+          - Title: Squared
+            Anchor: Squared
+            Description: Let the corners appear at right angles and not rounded.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-box [[is-squared]]">
+                    <div class="{{ts-content}}">Non-rounded Box</div>
+                </div>
+
+          - Title: Dashed
+            Anchor: Dashed
+            Description: The border is drawn by thickening the dashed line, usually to present the empty blocks.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-box [[is-hollowed]]">
+                    <div class="{{ts-content}} is-vertically-padded">
+                        <div class="{{ts-center}}">
+                            <div class="{{ts-header}}">Upload pictures or video</div>
+                            <div class="{{ts-text}} is-secondary">Drag and drop images here for uploading</div>
+                        </div>
+                    </div>
+                </div>
+
+    - Title: Compositions
+      Description:
+      Sections:
+          - Title: Information
+            Anchor: Composition Information
+            Description: Combines with the Grid and symbolic icons to create the statistical summary information that is often found at the top of the system dashboard.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-grid}} is-2-columns">
+                    <div class="column">
+                        <div class="[[ts-box]]">
+                            <div class="{{ts-content}}">
+                                <div class="{{ts-statistic}}">
+                                    <div class="value">42,689</div>
+                                    <div class="comparison is-increased">32</div>
+                                </div>
+                                Number of visits
+                            </div>
+                            <div class="symbol">
+                                <span class="{{ts-icon}} is-eye-icon"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="[[ts-box]]">
+                            <div class="{{ts-content}}">
+                                <div class="{{ts-statistic}}">
+                                    <div class="value">8,652</div>
+                                    <div class="comparison is-increased">351</div>
+                                </div>
+                                Total members
+                            </div>
+                            <div class="symbol">
+                                <span class="{{ts-icon}} is-users-icon"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Link Preview
+            Anchor: Composition Link Preview
+            Description: By placing the image and text with the title in a Box, you can achieve a link preview card like Facebook or Twitter.
+            Since: 4.0.0
+            HTML: |
+                <div class="[[ts-box]]" style="max-width: 360px">
+                    <img class="{{ts-image}}" src="!-16:9-!">
+                    <div class="{{ts-content}} is-secondary">
+                        <div class="{{ts-text}} is-description">yami.io/rog-and-hololive/</div>
+                        <div class="{{ts-header}} is-truncated">ASUS calls itself a "Chinese company" and its Chinese branch speaks out to block Japanese industry and commerce</div>
+                        <div class="{{ts-text}} is-2-lines is-description">The editor of ROG on Weibo posted that he swears he will stop this commercial interaction between ASUS and Hololive in Japan. The majority of Chinese netizens expressed their anticipation and "buy ASUS or not depends on this time".</div>
+                    </div>
+                </div>

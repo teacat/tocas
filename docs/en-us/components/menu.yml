@@ -1,0 +1,459 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 選單
+Description: 可供使用者點擊的功能項目清單。
+Intro: |
+    選單是一個提供垂直可選項目清單的元件，如果希望建立一個左右水平的導覽選單則可以考慮使用[分頁籤](./tab.html)。
+
+    這個元件同時也被設計作為右鍵選單、下拉式選單的基礎設計，如果在網頁或是應用程式裡需要一個右鍵選單則可以考慮使用此選單元件並將其設為「下拉式選單的」來達成。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Tab
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="{{ts-segment}} is-dense" style="width: 250px;">
+            <div class="[[ts-menu]] is-start-icon is-separated">
+                <a class="item" href="#!">
+                    <span class="{{ts-icon}} is-house-icon"></span> 首頁
+                </a>
+                <a class="item is-active" href="#!">
+                    <span class="{{ts-icon}} is-gauge-high-icon"></span> 儀表板
+                </a>
+                <a class="item" href="#!">
+                    <span class="{{ts-icon}} is-table-icon"></span> 訂單
+                </a>
+                <div class="{{ts-divider}}"></div>
+                <a class="item" href="#!">
+                    <span class="{{ts-icon}} is-gears-icon"></span> 設定
+                </a>
+            </div>
+        </div>
+
+Definitions:
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 啟用的
+            Anchor: Active
+            Description: 表示目前已經被啟用或是正在呈現的相關功能。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-menu">
+                    <a class="item" href="#!">個人資料</a>
+                    <a class="item [[is-active]]" href="#!">位置分享</a>
+                    <a class="item" href="#!">設定</a>
+                </div>
+
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 使項目呈現無法互動、點擊的模樣。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-menu">
+                    <a class="item" href="#!">無線通訊</a>
+                    <a class="item [[is-disabled]]" href="#!">地圖紀錄</a>
+                    <a class="item" href="#!">導航設定</a>
+                </div>
+
+          - Title: 已選擇
+            Anchor: Selected
+            Description: 可用於下拉式選單用來表示某個項目被選中，可能是某個欄位目前的內容值。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-menu">
+                    <a class="item" href="#!">蘋果</a>
+                    <a class="item [[is-selected]]" href="#!">鳳梨</a>
+                    <a class="item" href="#!">西瓜</a>
+                </div>
+
+    - Title: 內容
+      Description:
+      Sections:
+          - Title: 註釋
+            Anchor: Description
+            Description: 以較淺的文字說明特定項目。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}} is-collapsed">
+                    <div class="ts-menu is-collapsed">
+                        <a class="item" href="#!">
+                            下載
+                            <span class="[[description]]">Ctrl + D</span>
+                        </a>
+                        <a class="item" href="#!">
+                            儲存圖片
+                            <span class="[[description]]">Ctrl + S</span>
+                        </a>
+                        <a class="item" href="#!">
+                            全選
+                            <span class="[[description]]">Ctrl + A</span>
+                        </a>
+                    </div>
+                </div>
+
+          - Title: 大頭貼
+            Anchor: Avatar
+            Description: 項目前面可以放置大頭貼作為輔助人名使用。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}} is-collapsed">
+                    <div class="ts-menu is-collapsed">
+                        <a class="item" href="#!">
+                            <span class="[[{{ts-avatar}}]] is-circular">
+                                <img src="!-user-!">
+                            </span>
+                            Yami Odymel
+                        </a>
+                        <a class="item" href="#!">
+                            <span class="[[{{ts-avatar}}]] is-circular">
+                                <img src="!-user2-!">
+                            </span>
+                            Xiaoan
+                        </a>
+                        <a class="item" href="#!">
+                            <span class="[[{{ts-avatar}}]] is-circular">
+                                <img src="!-user3-!">
+                            </span>
+                            Kitsune
+                        </a>
+                    </div>
+                </div>
+
+          - Title: 計數徽章
+            Anchor: Badge
+            Description: 在項目裡擺放[計數徽章](./badge.html)會自動移至最尾端。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}} is-collapsed">
+                    <div class="ts-menu is-collapsed is-start-icon">
+                        <a href="#!" class="item is-active">
+                            <span class="{{ts-icon}} is-inbox-icon"></span>
+                            收件匣
+                            <div class="[[{{ts-badge}}]] is-inverted is-small is-dense">3</div>
+                        </a>
+                        <a href="#!" class="item">
+                            <span class="{{ts-icon}} is-bookmark-icon"></span>
+                            重要郵件
+                            </a>
+                        <a href="#!" class="item">
+                            <span class="{{ts-icon}} is-circle-exclamation-icon"></span>
+                            垃圾郵件
+                            <div class="[[{{ts-badge}}]] is-small is-dense">64</div>
+                        </a>
+                    </div>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 分開的
+            Anchor: Separated
+            Description: 使項目之間有空白間隔區分而不會相黏。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-menu [[is-separated]] is-start-icon">
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-user-icon"></span> 使用者
+                    </a>
+                    <a class="item is-active" href="#!">
+                        <span class="{{ts-icon}} is-house-icon"></span> 首頁
+                    </a>
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-newspaper-icon"></span> 新聞
+                    </a>
+                </div>
+
+          - Title: 最小寬度的
+            Anchor: Collapsed
+            Description: 由於此元件預設為流動寬度，若希望寬度以內容為主，則可以將其設為最小寬度。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-menu [[is-collapsed]] is-separated is-start-icon">
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-envelope-icon"></span> 信件
+                    </a>
+                    <a class="item is-active" href="#!">
+                        <span class="{{ts-icon}} is-comment-icon"></span> 聊天
+                    </a>
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-users-icon"></span> 社群
+                    </a>
+                </div>
+
+          - Title: 帶圖示的
+            Anchor: Icon
+            Description: 選單項目的起始或結束位置可以帶有圖示輔助。
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-menu [[is-start-icon]]">
+                        <a class="item" href="#!">
+                            <span class="{{ts-icon}} is-magnifying-glass-icon"></span> 搜尋
+                        </a>
+                        <a class="item" href="#!">
+                            <span class="{{ts-icon}} is-vials-icon"></span> 實驗區
+                        </a>
+                        <a class="item" href="#!">
+                            <span class="{{ts-icon}} is-atom-icon"></span> 原子測試
+                        </a>
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="{{ts-box}}">
+                    <div class="ts-menu [[is-end-icon]]">
+                        <a class="item" href="#!">
+                            我的最愛 <span class="{{ts-icon}} is-heart-icon"></span>
+                        </a>
+                        <a class="item" href="#!">
+                            已讚好內容 <span class="{{ts-icon}} is-thumbs-up-icon"></span>
+                        </a>
+                        <a class="item" href="#!">
+                            封存項目 <span class="{{ts-icon}} is-box-archive-icon"></span>
+                        </a>
+                    </div>
+                </div>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改選單項目的大小。
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-menu [[is-large]] is-start-icon">
+                        <a class="item" href="#!">
+                            <span class="{{ts-icon}} is-star-icon"></span> 常用聯絡人
+                        </a>
+                        <a class="item" href="#!">
+                            <span class="{{ts-icon}} is-users-icon"></span> 聯絡人
+                        </a>
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="{{ts-box}}">
+                    <div class="ts-menu is-start-icon">
+                        <a class="item" href="#!">
+                            <span class="{{ts-icon}} is-star-icon"></span> 常用聯絡人
+                        </a>
+                        <a class="item" href="#!">
+                            <span class="{{ts-icon}} is-users-icon"></span> 聯絡人
+                        </a>
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="{{ts-box}}">
+                    <div class="ts-menu [[is-small]] is-start-icon">
+                        <a class="item" href="#!">
+                            <span class="{{ts-icon}} is-star-icon"></span> 常用聯絡人
+                        </a>
+                        <a class="item" href="#!">
+                            <span class="{{ts-icon}} is-users-icon"></span> 聯絡人
+                        </a>
+                    </div>
+                </div>
+
+          - Title: 密度
+            Anchor: Density
+            Description: 選單裡項目的間距可以更密或是更寬鬆。
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-menu [[is-relaxed]] is-start-icon is-separated">
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-house-icon"></span> 首頁
+                    </a>
+                    <a class="item is-active" href="#!">
+                        <span class="{{ts-icon}} is-gauge-high-icon"></span> 儀表板
+                    </a>
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-table-icon"></span> 訂單
+                    </a>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-menu is-start-icon is-separated">
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-house-icon"></span> 首頁
+                    </a>
+                    <a class="item is-active" href="#!">
+                        <span class="{{ts-icon}} is-gauge-high-icon"></span> 儀表板
+                    </a>
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-table-icon"></span> 訂單
+                    </a>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-menu [[is-dense]] is-start-icon is-separated">
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-house-icon"></span> 首頁
+                    </a>
+                    <a class="item is-active" href="#!">
+                        <span class="{{ts-icon}} is-gauge-high-icon"></span> 儀表板
+                    </a>
+                    <a class="item" href="#!">
+                        <span class="{{ts-icon}} is-table-icon"></span> 訂單
+                    </a>
+                </div>
+
+    - Title: 下拉選單
+      Description:
+      Sections:
+          - Title: 下拉式選單的
+            Anchor: Dropdown
+            Description: 當選單成為下拉式選單時會成為浮動元素並帶有陰影、框線和較小且密集的項目樣式。
+            Since: 4.0.0
+            HTML: |
+                <div style="display: inline-block; margin-bottom: 8rem;">
+                    <button class="{{ts-button}} is-secondary is-icon">
+                        <span class="{{ts-icon}} is-ellipsis-icon"></span>
+                    </button>
+                    <div class="ts-menu [[is-dropdown]] is-visible is-bottom-left">
+                        <button class="item">下載</button>
+                        <button class="item">重新命名</button>
+                        <button class="item">刪除</button>
+                    </div>
+                </div>
+
+          - Title: 可見的
+            Anchor: Dropdown Visible
+            Description: 下拉式選單型態預設是隱藏的，必須指定為「可見的」才會顯示在頁面上。這個設計是為了讓 JavaScript 能夠切換其可見度。
+            Since: 4.0.0
+            HTML: |
+                <div style="display: inline-block; margin-bottom: 8rem;">
+                    <button class="{{ts-button}} is-secondary">選擇表情</button>
+                    <div class="ts-menu is-dropdown [[is-visible]] is-start-icon is-bottom-left">
+                        <button class="item">
+                            <span class="{{ts-icon}} is-face-laugh-icon"></span> 非常滿意
+                        </button>
+                        <button class="item">
+                            <span class="{{ts-icon}} is-face-meh-icon"></span> 一般
+                        </button>
+                        <button class="item">
+                            <span class="{{ts-icon}} is-face-angry-icon"></span> 糟透了
+                        </button>
+                    </div>
+                </div>
+
+          - Title: 貼齊位置
+            Anchor: Dropdown Aligns
+            Description: 選單可以選擇要貼齊父容器的哪個角落，透過 `is-top-left`、`is-top-right`　和 `is-bottom-left`、`is-bottom-right` 指定。
+            Since: 4.0.0
+            HTML: |
+                <div style="display: inline-block; margin-top: 8rem;">
+                    <button class="{{ts-button}} is-secondary is-start-icon">
+                        <span class="ts-icon is-wand-magic-sparkles-icon"></span>
+                        施展魔法
+                    </button>
+                    <div class="ts-menu is-dropdown [[is-top-left]] is-visible">
+                        <button class="item">路摸思</button>
+                        <button class="item">疾疾，護法現身</button>
+                        <div class="{{ts-divider}}"></div>
+                        <button class="item">去去武器走</button>
+                    </div>
+                </div>
+
+          - Title: 流動的
+            Anchor: Dropdown Fluid
+            Description: 下拉式選單的寬度預設會以項目為主，但也能指定為流動的令其與父容器相同寬度。
+            Since: 4.0.0
+            HTML: |
+                <div style="margin-bottom: 11rem;">
+                    <div class="{{ts-input}} is-fluid">
+                        <input type="text" placeholder="輸入使用者名稱…"/>
+                    </div>
+                    <div class="ts-menu is-dropdown [[is-fluid]] is-visible is-bottom-left">
+                        <button class="item">Yami Odymel</button>
+                        <button class="item is-active">Caris Events</button>
+                        <button class="item">Tunalog</button>
+                    </div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 側邊選單
+            Anchor: Composition Sidebar
+            Description: 透過結合[輸入欄位](./input.html)和[內容區塊](./content.html)可以打造出一個輕便的側邊選單。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}" style="width: 250px;">
+                    <div class="[[{{ts-content}}]]">
+                        <div class="{{ts-input}} is-fluid">
+                            <input type="text" placeholder="搜尋…">
+                        </div>
+                    </div>
+                    <div class="{{ts-divider}}"></div>
+                    <div class="ts-menu is-start-icon">
+                        <a class="item" href="#!">
+                            <span class="ts-icon is-house-icon"></span> 首頁
+                        </a>
+                        <a class="item is-active" href="#!">
+                            <span class="ts-icon is-gauge-high-icon"></span> 儀表板
+                        </a>
+                        <a class="item" href="#!">
+                            <span class="ts-icon is-table-icon"></span> 訂單
+                        </a>
+                        <div class="{{ts-divider}}"></div>
+                        <a class="item" href="#!">
+                            <span class="ts-icon is-gears-icon"></span> 設定
+                        </a>
+                    </div>
+                </div>
+
+          - Title: 項目選單
+            Anchor: Composition Rich
+            Description: 選單的項目設計可以容納其他元件，因此可以擺入[標題](./header.html)、[網格系統](./grid.html)或是[圖示](./icon.html)。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}} is-collapsed">
+                    <div class="ts-menu is-collapsed">
+                        <a class="item" href="#!">
+                            <div class="[[{{ts-iconset}}]] is-outlined">
+                                <span class="{{ts-icon}} is-bullhorn-icon"></span>
+                                <div class="content">
+                                    <div class="title">促銷活動</div>
+                                    <div class="text">查看我們最新的促銷商品！</div>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="{{ts-divider}}"></div>
+                        <a class="item" href="#!">
+                            <div class="[[{{ts-iconset}}]] is-outlined">
+                                <span class="{{ts-icon}} is-ticket-simple-icon"></span>
+                                <div class="content">
+                                    <div class="title">優惠券</div>
+                                    <div class="text">看看我們所販售的優惠券。</div>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="{{ts-divider}}"></div>
+                        <a class="item" href="#!">
+                            <div class="[[{{ts-iconset}}]] is-outlined">
+                                <span class="{{ts-icon}} is-truck-icon"></span>
+                                <div class="content">
+                                    <div class="title">退貨</div>
+                                    <div class="text">不滿意商品？查看我們的無條件退貨機制。</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>

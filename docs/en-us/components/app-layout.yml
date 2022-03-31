@@ -1,0 +1,281 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: App Layout
+Description: Divide the screen into separate parts for applications.
+Intro: |
+    This is an application-specific component.
+
+    It is usually placed at the top level of the application and is divided into side, top, bottom and main content blocks before placing the important content in them.
+
+    [App Sidebar](./app-sidebar.html) and [App Navbar](./app-navbar.html) are often used together along with this component.
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Grid
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="{{ts-box}}">
+            <div class="[[ts-app-layout]] is-horizontal">
+                <div class="cell">
+                    <div class="{{ts-content}}">Sidebar</div>
+                </div>
+                <div class="cell is-vertical">
+                    <div class="cell">
+                        <div class="{{ts-content}}">Top</div>
+                    </div>
+                    <div class="cell">
+                        <div class="{{ts-content}}">Content</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+Definitions:
+    - Title: Variations
+      Description:
+      Sections:
+          - Title: Horizontal
+            Anchor: Horizontal
+            Description: The cells in the grid are arranged horizontally.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout [[is-horizontal]]">
+                        <div class="cell">
+                            <div class="{{ts-content}}">Left</div>
+                        </div>
+                        <div class="cell">
+                            <div class="{{ts-content}}">Center</div>
+                        </div>
+                        <div class="cell">
+                            <div class="{{ts-content}}">Right</div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Vertical
+            Anchor: Vertical
+            Description: The cells in the grid are arranged vertically.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout [[is-vertical]]">
+                        <div class="cell">
+                            <div class="{{ts-content}}">Top</div>
+                        </div>
+                        <div class="cell">
+                            <div class="{{ts-content}}">Middle</div>
+                        </div>
+                        <div class="cell">
+                            <div class="{{ts-content}}">Bottom</div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Full
+            Anchor: Full
+            Description: This is usually used if you want the layout to cover the entire page size.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout [[is-full]] is-horizontal">
+                        <div class="cell">
+                            <div class="{{ts-content}}">Cell</div>
+                        </div>
+                    </div>
+                </div>
+
+    - Title: Cell Variations
+      Description:
+      Sections:
+          - Title: Horizontal
+            Anchor: Horizontal Cell
+            Description: The nesting cells in the cell will be arranged horizontally.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout is-vertical">
+                        <div class="cell">
+                            <div class="{{ts-content}}">Top</div>
+                        </div>
+                        <div class="cell [[is-horizontal]]">
+                            <div class="cell">
+                                <div class="{{ts-content}}">Left</div>
+                            </div>
+                            <div class="cell">
+                                <div class="{{ts-content}}">Center</div>
+                            </div>
+                            <div class="cell">
+                                <div class="{{ts-content}}">Right</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Vertical
+            Anchor: Vertical Cell
+            Description: The nesting cells in the cell will be arranged vertically.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout is-horizontal">
+                        <div class="cell">
+                            <div class="{{ts-content}}">Left</div>
+                        </div>
+                        <div class="cell [[is-vertical]]">
+                            <div class="cell">
+                                <div class="{{ts-content}}">Top</div>
+                            </div>
+                            <div class="cell">
+                                <div class="{{ts-content}}">Middle</div>
+                            </div>
+                            <div class="cell">
+                                <div class="{{ts-content}}">Bottom</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Scrollable
+            Anchor: Scrollable Cell
+            Description: Allows the cell content to be scroll up or down when the content is too long.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout is-vertical" style="max-height: 260px;">
+                        <div class="cell">
+                            <div class="{{ts-content}}">Header</div>
+                        </div>
+                        <div class="cell [[is-scrollable]]">
+                            <div class="{{ts-content}}">
+                                <p>Sed dapibus ac tortor vel porta. Aenean pharetra vehicula nulla eu pretium.</p>
+                                <p>Fusce non enim egestas, lobortis diam et, congue felis.</p>
+                                <p>Quisque eleifend dolor mi, nec vehicula ipsum maximus non.</p>
+                                <p>Rhoncus est sed laoreet facilisis. Suspendisse ante odio,</p>
+                                <p>pulvinar non nulla sed, consequat lacinia risus.</p>
+                                <p>Aliquam mollis pulvinar lorem sed efficitur.</p>
+                            </div>
+                        </div>
+                        <div class="cell">
+                            <div class="{{ts-content}}">Footer</div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Fluid
+            Anchor: Fluid Cell
+            Description: One cell can fill up the remaining space and squeeze the rest of the cells to the minimum width. When using this style, it is better to have a fixed width for the other cells to avoid errors in the extended style.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout is-horizontal">
+                        <div class="cell [[is-fluid]]">
+                            <div class="{{ts-content}}">Fluid Cell</div>
+                        </div>
+                        <div class="cell" style="width: 180px;">
+                            <div class="{{ts-content}}">Default Cell</div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Secondary
+            Anchor: Secondary Cell
+            Description: The less important background tones let the user know that this is not the main content.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout is-horizontal">
+                        <div class="cell [[is-secondary]]" style="width: 180px;">
+                            <div class="{{ts-content}}">Sidebar</div>
+                        </div>
+                        <div class="cell">
+                            <div class="{{ts-content}}">Content</div>
+                        </div>
+                    </div>
+                </div>
+
+    - Title: Compositions
+      Description:
+      Sections:
+          - Title: Single Page App
+            Anchor: Composition App
+            Description: By pairing [App Sidebar](./app-sidebar.html) and [App Navbar](./app-navbar.html), you can easily make a single-page application framework.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="{{ts-app-layout}} is-horizontal">
+                        <div class="cell" style="width: 355px;">
+                            <div class="{{ts-content}}">
+                                <div class="{{ts-header}} is-big">
+                                    TEACAT DEVELOPERS
+                                </div>
+                                <div class="{{ts-text}} is-description is-bold">
+                                    VERSION 1.3.4
+                                </div>
+                            </div>
+                            <div class="[[{{ts-app-sidebar}}]]">
+                                <div class="header">
+                                    START
+                                </div>
+                                <a href="#!" class="item">
+                                    <span class="{{ts-icon}} is-house-icon"></span> Home
+                                </a>
+                                <div class="header">
+                                    Management
+                                </div>
+                                <a href="#!" class="item is-active">
+                                    <span class="{{ts-icon}} is-user-icon"></span> Users
+                                </a>
+                                <a href="#!" class="item">
+                                    <span class="{{ts-icon}} is-download-icon"></span> Downloads
+                                </a>
+                                <div class="header">
+                                    SYSTEM
+                                </div>
+                                <a href="#!" class="item">
+                                    <span class="{{ts-icon}} is-gears-icon"></span> Preferences
+                                </a>
+                            </div>
+                            <div class="{{ts-content}}">
+                                <button class="{{ts-button}} is-outlined is-fluid">
+                                    Sign Out
+                                </button>
+                            </div>
+                        </div>
+                        <div class="cell is-vertical">
+                            <div class="cell is-fluid is-secondary"></div>
+                            <div class="cell">
+                                <div class="{{ts-content}}">
+                                    <div class="[[{{ts-app-navbar}}]] is-fluid">
+                                        <a href="#!" class="item">
+                                            <div class="{{ts-icon}} is-user-icon"></div>
+                                            <div class="label">Users</div>
+                                        </a>
+                                        <a href="#!" class="item">
+                                            <div class="{{ts-icon}} is-house-icon"></div>
+                                            <div class="label">Home</div>
+                                        </a>
+                                        <a href="#!" class="item is-active">
+                                            <div class="{{ts-icon}} is-newspaper-icon"></div>
+                                            <div class="label">News</div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>

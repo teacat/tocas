@@ -1,0 +1,135 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 片段
+Description: 含基本邊框與內距的文字內容卡片。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Box
+    - Content
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="[[ts-segment]]">
+            現實生活應該像二次元那樣充滿新鮮的挑戰卻又十分地美好，而計畫這樣的未來正在我們的目標之一。我們正試著找尋多個不同的方式實現這樣的夢想，即便現在不可行，我們也永不放棄。
+        </div>
+
+Definitions:
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 次要的
+            Anchor: Secondary
+            Description: 淡化的片段會以較不顯眼的方式出現，通常用以呈現某個資訊概要或頁腳。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-segment [[is-secondary]]">
+                    TeaCat 是一個針對現代事物所特別設計的社群網站，其特色以具有隱私且沒有任何按讚功能為主。
+                </div>
+
+          - Title: 增加內距
+            Anchor: Padded
+            Description: 加大片段的內距，適合用於排版。
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-segment [[is-padded]]">
+                    這個區塊的內距是原本的 3 倍。
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-segment [[is-horizontally-padded]]">
+                    僅有增加左右水平內距。
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-segment [[is-vertically-padded]]">
+                    僅有增加上下垂直內距。
+                </div>
+
+          - Title: 最小寬度的
+            Anchor: Collapsed
+            Description: 片段的寬度預設會填滿父容器，但也能指定只符合內容寬度。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-segment [[is-collapsed]]">
+                    這是一個來自台灣的社群網站，在這裡我們並沒有「讚」或是「已讀」。
+                </div>
+
+          - Title: 標記的
+            Anchor: Indicated
+            Description: 讓片段的某個邊緣有特別標記的樣式。
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-segment [[is-top-indicated]]">
+                    上部標記
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-segment [[is-bottom-indicated]]">
+                    下部標記
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-segment [[is-left-indicated]]">
+                    左邊標記
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-segment [[is-right-indicated]]">
+                    右部標記
+                </div>
+
+          - Title: 語意
+            Anchor: Emphasises
+            Description: 讓片段擁有邊緣標記的同時，更改其標記顏色語意。這可以用來強調這個片段呈現的內容是否危險、安全或是需讓人注意的。
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-segment [[is-negative]] is-top-indicated">
+                    負面的
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-segment [[is-positive]] is-top-indicated">
+                    正面的
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-segment [[is-warning]] is-top-indicated">
+                    警告的
+                </div>
+
+          - Title: 抬升的
+            Anchor: Elevated
+            Description: 透過陰影讓片段看起來有浮起的感覺，如果有一個需要備受矚目的中心內容（如：登入表單）這會是個好選擇。
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-segment [[is-elevated]]">
+                    <div class="{{ts-content}}">抬升的</div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-segment [[is-very-elevated]]">
+                    <div class="{{ts-content}}">非常抬升的</div>
+                </div>
+
+          - Title: 較密的
+            Anchor: Dense
+            Description: 變更元件的內距，令元素之間看起來更密集。
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-segment [[is-dense]]">
+                    建立人與人之間的聯繫並提供一個良好的內容創作環境是我們的首要目標。任何人都應該有不受拘束的創作自由，這也是我們最致力發展的目標。
+                </div>
