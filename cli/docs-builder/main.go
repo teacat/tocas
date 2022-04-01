@@ -41,6 +41,11 @@ func main() {
 				Usage:  "Build the documentation as static HTML files.",
 				Action: build,
 			},
+			{
+				Name:   "pack",
+				Usage:  "xx",
+				Action: pack,
+			},
 		},
 	}
 	err := app.Run(os.Args)
@@ -49,8 +54,85 @@ func main() {
 	}
 }
 
+func pack(c *cli.Context) error {
+
+	b, err := os.ReadFile("./../../src/tocas.css")
+	if err != nil {
+		log.Fatal(err)
+	}
+	matches := regexp.MustCompile(`@import ".\/(.*?)";`).FindAllStringSubmatch(string(b), -1)
+
+	tocas := string(b)
+	var content string
+
+	for _, v := range matches {
+		b, err := os.ReadFile("./../../src/" + v[1])
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		//es := strings.ReplaceAll(v[0], "/", "\\/")
+		//es = strings.ReplaceAll(es, ".", "\\.")
+		//fmt.Println(fmt.Sprintf("(?m)%s", es))
+		//tocas = regexp.MustCompile(fmt.Sprintf(`(?m)%s`, es)).ReplaceAllString(tocas, "")
+
+		tocas = strings.ReplaceAll(tocas, v[0], "")
+
+		content += string(b) + "\n"
+	}
+
+	content += tocas
+
+	err = os.WriteFile("./../../dist/tocas.css", []byte(content), 0777)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := exec.Command("css-minify", "-f", "./../../dist/tocas.css", "-o", "./../../dist/").Run(); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := exec.Command("rm", "-rf", "./../../dist/fonts").Run(); err != nil {
+		log.Fatal(err)
+	}
+	if err := exec.Command("cp", "-rf", "./../../src/fonts", "./../../dist/fonts").Run(); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := exec.Command("rm", "-rf", "./../../dist/flags").Run(); err != nil {
+		log.Fatal(err)
+	}
+	if err := exec.Command("cp", "-rf", "./../../src/flags", "./../../dist/flags").Run(); err != nil {
+		log.Fatal(err)
+	}
+
+	return nil
+}
+
 // build
 func build(c *cli.Context) error {
+	var globalInfos []MetaInformation
+
+	matches, err := filepath.Glob("./../../docs/*/meta.yml")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, match := range matches {
+
+		b, err := os.ReadFile(match)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		var meta Meta
+		if err = yaml.Unmarshal(b, &meta); err != nil {
+			return err
+		}
+
+		globalInfos = append(globalInfos, meta.Information)
+	}
+
 	files, err := ioutil.ReadDir("./../../docs/" + c.String("lang") + "/components")
 	if err != nil {
 		log.Fatal(err)
@@ -89,6 +171,8 @@ func build(c *cli.Context) error {
 	if err = yaml.Unmarshal(b, &meta); err != nil {
 		return err
 	}
+
+	meta.GlobalInformations = globalInfos
 
 	indexTmpl, err := template.New("index.html").Funcs(template.FuncMap{
 		"html":        tmplHTML,

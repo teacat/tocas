@@ -15,8 +15,9 @@ type Article struct {
 	Relatives   []string                `yaml:"Relatives"`
 	Definitions []ArticleDefinition     `yaml:"Definitions"`
 	Flags       map[string][]string     `yaml:"Flags"`
-	Meta        Meta
-	Grid        bool `yaml:"Grid"`
+
+	Meta Meta
+	Grid bool `yaml:"Grid"`
 }
 
 // ArticleDefinition
@@ -73,10 +74,11 @@ type ArticleExampleSectionItem struct {
 
 // Meta
 type Meta struct {
-	UI           MetaUI            `yaml:"UI"`
-	Components   []MetaComponent   `yaml:"Components"`
-	Contributors []MetaContributor `yaml:"Contributors"`
-	Information  MetaInformation   `yaml:"Information"`
+	UI                 MetaUI `yaml:"UI"`
+	GlobalInformations []MetaInformation
+	Components         []MetaComponent   `yaml:"Components"`
+	Contributors       []MetaContributor `yaml:"Contributors"`
+	Information        MetaInformation   `yaml:"Information"`
 }
 
 type MetaComponent struct {

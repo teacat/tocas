@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -70,7 +70,18 @@
                         <a class="穹頂-導航列-項目" href="./examples.html">{{ "Navbar_Examples" | i18n }}</a>
                     </div>
                     <div class="穹頂-導航列-右側">
-                        <a class="穹頂-導航列-項目" href="#!"><span class="ts-flag is-{{ .Meta.Information.Flag }}-flag"></span> {{ .Meta.Information.Language }}</a>
+                        <div class="穹頂-導航列-項目 穹頂-導航列-項目_語系的">
+                            <span class="ts-flag is-{{ .Meta.Information.Flag }}-flag"></span> {{ .Meta.Information.Language }}
+                            <div class="穹頂-導航列-項目-語系下拉式選單">
+                                {{ range .Meta.GlobalInformations }}
+                                <a
+                                    class="穹頂-導航列-項目-語系下拉式選單-項目 {{ if eq $.Meta.Information.Path .Path }}穹頂-導航列-項目-語系下拉式選單-項目_啟用的{{end}}"
+                                    href="./../{{ .Path }}/examples.html"
+                                    ><span class="ts-flag is-{{ .Flag }}-flag"></span> {{ .Language }}</a
+                                >
+                                {{ end }}
+                            </div>
+                        </div>
                         <a class="穹頂-導航列-項目" href="https://github.com/teacat/tocas" target="_blank"><span class="ts-icon is-github-icon"></span> GitHub</a>
                     </div>
                 </div>
@@ -78,11 +89,23 @@
                     <div class="穹頂-導航列-左側">
                         <a class="穹頂-導航列-項目 穹頂-導航列-項目_主要" href="./index.html">Tocas UI</a>
                     </div>
-                    <!--<div class="穹頂-導航列-右側">
-                        <a class="穹頂-導航列-項目 穹頂-導航列-項目_選單按鈕" href="#!">
+                    <div class="穹頂-導航列-右側">
+                        <div class="穹頂-導航列-項目 穹頂-導航列-項目_語系的">
+                            <span class="ts-flag is-{{ .Meta.Information.Flag }}-flag"></span> {{ .Meta.Information.Language }}
+                            <div class="穹頂-導航列-項目-語系下拉式選單">
+                                {{ range .Meta.GlobalInformations }}
+                                <a
+                                    class="穹頂-導航列-項目-語系下拉式選單-項目 {{ if eq $.Meta.Information.Path .Path }}穹頂-導航列-項目-語系下拉式選單-項目_啟用的{{end}}"
+                                    href="./../{{ .Path }}/examples.html"
+                                    ><span class="ts-flag is-{{ .Flag }}-flag"></span> {{ .Language }}</a
+                                >
+                                {{ end }}
+                            </div>
+                        </div>
+                        <!--<a class="穹頂-導航列-項目 穹頂-導航列-項目_選單按鈕" href="#!">
                             <span class="ts-icon is-bars-icon"></span>
-                        </a>
-                    </div>-->
+                        </a>-->
+                    </div>
                 </div>
                 <div class="穹頂-標題">
                     <div class="穹頂-標題-主要">{{ .Title }}</div>
