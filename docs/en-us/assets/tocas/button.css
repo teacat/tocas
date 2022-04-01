@@ -1,0 +1,309 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+@keyframes ts-button-loading {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: normal;
+    border-radius: 0;
+    outline: none;
+    box-sizing: border-box;
+    user-select: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    -webkit-appearance: none;
+}
+
+.ts-button:focus {
+    outline: 0;
+}
+
+.ts-button {
+    border: 2px solid var(--ts-gray-800);
+    min-width: 75px;
+    font-size: var(--ts-font-size-14px);
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--ts-gray-50);
+    background: var(--ts-gray-800);
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+
+    padding: 0.4rem 1.25rem;
+    border-radius: 0.4rem;
+}
+
+.ts-button:hover {
+    cursor: pointer;
+    opacity: 0.98;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Secondary
+ */
+
+.ts-button.is-secondary {
+    color: var(--ts-gray-800);
+    border-color: var(--ts-gray-100);
+    background: var(--ts-gray-100);
+}
+
+/**
+ * Outlined
+ */
+
+.ts-button.is-outlined {
+    background: transparent;
+    border: 2px solid var(--ts-gray-300);
+    color: var(--ts-gray-800);
+}
+
+/**
+ * Negative
+ */
+
+.ts-button.is-negative {
+    color: var(--ts-white);
+    border-color: var(--ts-negative-500);
+    background: var(--ts-negative-500);
+}
+
+.ts-button.is-negative.is-outlined {
+    color: var(--ts-negative-500);
+    border-color: var(--ts-gray-300);
+    background: transparent;
+}
+
+/**
+ * Ghost
+ */
+
+.ts-button.is-ghost {
+    background: transparent;
+    color: var(--ts-gray-800);
+    border: 2px solid transparent;
+}
+
+.ts-button.is-ghost:hover {
+    background: var(--ts-gray-100);
+}
+
+/**
+ * Button
+ */
+
+.ts-button.is-compact {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    min-width: 65px;
+}
+
+/**
+ * Loading
+ */
+
+.ts-button.is-loading,
+.ts-button.is-loading.is-negative {
+    color: transparent;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.ts-button.is-loading::after {
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+    display: inline;
+    text-decoration: inherit;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+    display: inline-block;
+    animation: ts-button-loading 2s linear infinite;
+    color: var(--ts-gray-50);
+    font-size: var(--ts-font-size-18px);
+    content: "\f110";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.ts-button.is-loading:is(.is-outlined, .is-secondary)::after {
+    color: var(--ts-gray-800);
+}
+
+/**
+ * Tertiary
+ */
+
+/*.ts-button.is-tertiary:hover {
+    background: var(--ts-gray-100);
+    opacity: 1;
+}*/
+
+/**
+ * Sizes
+ */
+
+.ts-button.is-small {
+    font-size: var(--ts-font-size-13px);
+}
+.ts-button.is-large {
+    font-size: var(--ts-font-size-17px);
+}
+
+/**
+ * Compact
+ */
+
+.ts-button.is-compact {
+    padding: 0.25rem 0.75rem;
+}
+
+/**
+ * Disabled
+ */
+
+.ts-button.is-disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
+}
+
+/**
+ * Fluid
+ */
+
+.ts-button.is-fluid {
+    width: 100%;
+}
+
+/**
+ * Circular
+ */
+
+.ts-button.is-circular {
+    border-radius: 100rem;
+}
+
+/**
+ * Icon
+ */
+
+.ts-button.is-icon {
+    min-width: 40px;
+    padding: calc(0.45rem / 1.35) calc(1.25rem / 2);
+}
+
+.ts-button.is-icon .ts-icon {
+    font-size: 1.2em;
+}
+
+/**
+ * Side Icon
+ */
+
+.ts-button:is(.is-start-icon, .is-end-icon) {
+    line-height: 1.4;
+}
+
+.ts-button:is(.is-start-icon, .is-end-icon) .ts-icon {
+    font-size: 1.2em;
+}
+
+.ts-button.is-start-icon .ts-icon {
+    margin-right: 0.5rem;
+}
+
+.ts-button.is-end-icon .ts-icon {
+    margin-left: 0.5rem;
+}
+
+/**
+ * Labeled Icon
+ */
+
+.ts-button:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    width: auto;
+    background: var(--ts-gray-900);
+    padding: 0.4rem 0.8rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.6rem;
+}
+
+.ts-button.is-start-labeled-icon {
+    padding-left: 4rem;
+}
+
+.ts-button.is-start-labeled-icon .ts-icon {
+    left: -2px;
+    border-radius: 0.4rem 0 0 0.4rem;
+}
+
+.ts-button.is-end-labeled-icon {
+    padding-right: 4rem;
+}
+
+.ts-button.is-end-labeled-icon .ts-icon {
+    right: -2px;
+    border-radius: 0 0.4rem 0.4rem 0;
+}
+
+.ts-button.is-negative:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
+    background: var(--ts-negative-400);
+}
+
+.ts-button.is-outlined:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
+    /*background: var(--ts-gray-300);*/
+    background: transparent;
+    border: 2px solid var(--ts-gray-300);
+}
+
+.ts-button.is-secondary:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
+    background: var(--ts-gray-200);
+}
+
+/**
+ * Dense
+ */
+
+.ts-button.is-dense {
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+}

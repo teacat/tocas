@@ -113,7 +113,7 @@ func pack(c *cli.Context) error {
 func build(c *cli.Context) error {
 	var globalInfos []MetaInformation
 
-	matches, err := filepath.Glob("./../../docs/*/meta.yml")
+	matches, err := filepath.Glob("./../../languages/*/meta.yml")
 
 	if err != nil {
 		log.Fatal(err)
@@ -133,37 +133,37 @@ func build(c *cli.Context) error {
 		globalInfos = append(globalInfos, meta.Information)
 	}
 
-	files, err := ioutil.ReadDir("./../../docs/" + c.String("lang") + "/components")
+	files, err := ioutil.ReadDir("./../../languages/" + c.String("lang") + "/components")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	err = os.MkdirAll("./output/"+c.String("lang")+"/", 0777)
+	err = os.MkdirAll("./../../docs/"+c.String("lang")+"/", 0777)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := exec.Command("rm", "-rf", "./output/"+c.String("lang")+"/assets").Run(); err != nil {
+	if err := exec.Command("rm", "-rf", "./../../docs/"+c.String("lang")+"/assets").Run(); err != nil {
 		log.Fatal(err)
 	}
-	if err := exec.Command("cp", "-rf", "./templates/assets", "./output/"+c.String("lang")+"/assets").Run(); err != nil {
-		log.Fatal(err)
-	}
-
-	if err := exec.Command("rm", "-rf", "./output/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
-		log.Fatal(err)
-	}
-	if err := exec.Command("cp", "-rf", "./../../src", "./output/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
+	if err := exec.Command("cp", "-rf", "./templates/assets", "./../../docs/"+c.String("lang")+"/assets").Run(); err != nil {
 		log.Fatal(err)
 	}
 
-	if err := exec.Command("rm", "-rf", "./output/"+c.String("lang")+"/examples").Run(); err != nil {
+	if err := exec.Command("rm", "-rf", "./../../docs/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
 		log.Fatal(err)
 	}
-	if err := exec.Command("cp", "-rf", "./../../examples", "./output/"+c.String("lang")+"/examples").Run(); err != nil {
+	if err := exec.Command("cp", "-rf", "./../../src", "./../../docs/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
 		log.Fatal(err)
 	}
 
-	b, err := os.ReadFile("./../../docs/" + c.String("lang") + "/meta.yml")
+	if err := exec.Command("rm", "-rf", "./../../docs/"+c.String("lang")+"/examples").Run(); err != nil {
+		log.Fatal(err)
+	}
+	if err := exec.Command("cp", "-rf", "./../../examples", "./../../docs/"+c.String("lang")+"/examples").Run(); err != nil {
+		log.Fatal(err)
+	}
+
+	b, err := os.ReadFile("./../../languages/" + c.String("lang") + "/meta.yml")
 	if err != nil {
 		return err
 	}
@@ -192,7 +192,7 @@ func build(c *cli.Context) error {
 		log.Fatal(err)
 	}
 
-	file, err := os.Create("./output/" + c.String("lang") + "/index.html")
+	file, err := os.Create("./../../docs/" + c.String("lang") + "/index.html")
 	if err != nil {
 		return err
 	}
@@ -200,7 +200,7 @@ func build(c *cli.Context) error {
 	article := Article{
 		Meta: meta,
 	}
-	b, err = os.ReadFile("./../../docs/" + c.String("lang") + "/components/examples.yml")
+	b, err = os.ReadFile("./../../languages/" + c.String("lang") + "/components/examples.yml")
 	if err != nil {
 		return err
 	}
@@ -230,7 +230,7 @@ func build(c *cli.Context) error {
 		log.Fatal(err)
 	}
 
-	file, err = os.Create("./output/" + c.String("lang") + "/examples.html")
+	file, err = os.Create("./../../docs/" + c.String("lang") + "/examples.html")
 	if err != nil {
 		return err
 	}
@@ -272,11 +272,11 @@ func build(c *cli.Context) error {
 				return
 			}
 			group.Go(func() error {
-				file, err := os.Create("./output/" + c.String("lang") + "/" + strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())) + ".html")
+				file, err := os.Create("./../../docs/" + c.String("lang") + "/" + strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())) + ".html")
 				if err != nil {
 					return err
 				}
-				b, err := os.ReadFile("./../../docs/" + c.String("lang") + "/components/" + f.Name())
+				b, err := os.ReadFile("./../../languages/" + c.String("lang") + "/components/" + f.Name())
 				if err != nil {
 					return err
 				}

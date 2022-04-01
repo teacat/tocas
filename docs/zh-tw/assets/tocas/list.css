@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-list {
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-list .item {
+    display: inline-block;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+.ts-list:is(.is-ordered, .is-unordered) {
+    margin-left: 1.2rem;
+}
+
+.ts-list:is(.is-unordered, .is-ordered) .item {
+    display: list-item;
+}
+
+/**
+ * Unordered
+ */
+
+.ts-list.is-unordered > .item,
+.ts-list.is-unordered > *:not(.ts-list) > .item {
+    list-style-type: disc;
+}
+
+/**
+ * Ordered
+ */
+
+.ts-list.is-ordered > .item,
+.ts-list.is-ordered > *:not(.ts-list) > .item {
+    list-style-type: decimal;
+}
+
+/**
+ * Sizes
+ */
+
+.ts-list.is-small {
+    font-size: var(--ts-font-size-14px);
+}
+
+.ts-list.is-large {
+    font-size: var(--ts-font-size-17px);
+}
