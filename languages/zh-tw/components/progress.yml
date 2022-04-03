@@ -5,7 +5,10 @@
 
 Title: 進度條
 Description: 呈現物件的讀取以及就緒狀態指示。
-Intro: 這個元件需要自行使用 JavaScript 控制進度列的 `width` 寬度樣式變更其百分比進度。
+Intro: |
+    這個元件需要自行透過 CSS 變數 `--value` 來控制進度列的百分比進度。
+
+    這通常用來指示某項行為的進度，如果想要呈現剩餘額度或是計量則可以參考[圓形量測計](./gauge.html)。
 
 #=======================================================
 # 設定
@@ -14,6 +17,7 @@ Intro: 這個元件需要自行使用 JavaScript 控制進度列的 `width` 寬�
 
 Type: Article
 Relatives:
+    - Gauge
     - Loading
 
 #=======================================================
@@ -24,7 +28,7 @@ Relatives:
 Example:
     HTML: |
         <div class="[[ts-progress]]">
-            <div class="bar" style="width: 50%">
+            <div class="bar" style="--value: 50;">
                 <div class="text">50%</div>
             </div>
         </div>
@@ -39,7 +43,7 @@ Definitions:
             Since: 4.0.0
             HTML: |
                 <div class="ts-progress">
-                    <div class="bar" style="width: 80%">
+                    <div class="bar" style="--value: 80;">
                         <div class="[[text]]">80%</div>
                     </div>
                 </div>
@@ -53,7 +57,7 @@ Definitions:
             Since: 4.0.0
             HTML: |
                 <div class="ts-progress [[is-active]]">
-                    <div class="bar" style="width: 70%"></div>
+                    <div class="bar" style="--value: 70;"></div>
                 </div>
 
           - Title: 處理中
@@ -62,7 +66,7 @@ Definitions:
             Since: 4.0.0
             HTML: |
                 <div class="ts-progress [[is-processing]]">
-                    <div class="bar" style="width: 40%"></div>
+                    <div class="bar" style="--value: 40;"></div>
                 </div>
 
           - Title: 不定的
@@ -71,7 +75,7 @@ Definitions:
             Since: 4.0.0
             HTML: |
                 <div class="ts-progress [[is-indeterminate]]">
-                    <div class="bar" style="width: 50%"></div>
+                    <div class="bar" style="--value: 50;"></div>
                 </div>
 
           - Title: 佇列的
@@ -80,7 +84,7 @@ Definitions:
             Since: 4.0.0
             HTML: |
                 <div class="ts-progress [[is-queried]]">
-                    <div class="bar" style="width: 30%"></div>
+                    <div class="bar" style="--value: 30;"></div>
                 </div>
 
     - Title: 外觀
@@ -92,10 +96,10 @@ Definitions:
             Since: 4.0.0
             HTML: |
                 <div class="ts-progress">
-                    <div class="bar" style="width: 40%">
+                    <div class="bar" style="--value: 40;">
                         <div class="text">40%</div>
                     </div>
-                    <div class="bar [[is-secondary]]" style="width: 60%">
+                    <div class="bar [[is-secondary]]" style="--value: 60;">
                         <div class="text">60%</div>
                     </div>
                 </div>
@@ -108,25 +112,25 @@ Definitions:
                 - <div class="ts-space"></div>
             HTML: |
                 <div class="ts-progress [[is-tiny]]">
-                    <div class="bar" style="width: 50%">
+                    <div class="bar" style="--value: 50;">
                         <div class="text">50%</div>
                     </div>
                 </div>
                 <div class="ts-space"></div>
                 <div class="ts-progress [[is-small]]">
-                    <div class="bar" style="width: 50%">
+                    <div class="bar" style="--value: 50;">
                         <div class="text">50%</div>
                     </div>
                 </div>
                 <div class="ts-space"></div>
                 <div class="ts-progress">
-                    <div class="bar" style="width: 50%">
+                    <div class="bar" style="--value: 50;">
                         <div class="text">50%</div>
                     </div>
                 </div>
                 <div class="ts-space"></div>
                 <div class="ts-progress [[is-large]]">
-                    <div class="bar" style="width: 50%">
+                    <div class="bar" style="--value: 50;">
                         <div class="text">50%</div>
                     </div>
                 </div>
@@ -142,7 +146,7 @@ Definitions:
                 <div class="{{ts-box}}">
                     <div class="{{ts-content}} is-secondary">
                         <div class="[[ts-progress]] is-processing">
-                            <div class="bar" style="width: 70%">
+                            <div class="bar" style="--value: 70;">
                                 <div class="text">70%</div>
                             </div>
                         </div>
