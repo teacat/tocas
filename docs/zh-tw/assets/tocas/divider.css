@@ -36,7 +36,7 @@
  * Text
  */
 
-.ts-divider.is-text {
+.ts-divider:is(.is-center-text, .is-start-text, .is-end-text) {
     display: flex;
     align-items: center;
     border-top: 0;
@@ -44,10 +44,18 @@
     color: var(--ts-gray-800);
 }
 
-.ts-divider.is-text::before,
-.ts-divider.is-text::after {
+.ts-divider:is(.is-center-text, .is-start-text, .is-end-text)::before,
+.ts-divider:is(.is-center-text, .is-start-text, .is-end-text)::after {
     content: "";
     height: 1px;
     background-color: var(--ts-gray-300);
     flex-grow: 1;
+}
+
+.ts-divider.is-start-text::before {
+    display: none;
+}
+
+.ts-divider.is-end-text::after {
+    display: none;
 }

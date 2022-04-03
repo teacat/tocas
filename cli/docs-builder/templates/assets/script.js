@@ -89,7 +89,7 @@ function rescanAnchor() {
     });
     document
         .querySelector(`a[id='${decodeURI(u.substring(u.indexOf("#") + 1))}']`)
-        .closest(".主體-格局-內容-單個範例")
+        ?.closest(".主體-格局-內容-單個範例")
         .querySelector(".主體-格局-內容-單個範例-文字-標題")
         .classList.add("主體-格局-內容-單個範例-文字-標題_被提及的");
     //window.scrollTo(window.scrollX, window.scrollY - 50);

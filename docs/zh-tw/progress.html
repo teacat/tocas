@@ -303,6 +303,12 @@
                          
                         <div class="主體-格局-導覽-標題">視覺回饋</div>
                         
+                        <a href="./gauge.html" class="主體-格局-導覽-項目">
+                            圓形量測計 <span class="主體-格局-導覽-項目-英文"
+                                >Gauge</span
+                            >
+                        </a>
+                        
                         <a href="./loading.html" class="主體-格局-導覽-項目">
                             讀取狀態 <span class="主體-格局-導覽-項目-英文"
                                 >Loading</span
@@ -562,14 +568,14 @@
                         <div class="主體-格局-內容-主要範例">
                             <div class="主體-格局-內容-主要範例-實際效果 ">
                                 <div class="主體-格局-內容-主要範例-實際效果-置中容器"><div class="ts-progress">
-    <div class="bar" style="width: 50%">
+    <div class="bar" style="--value: 50;">
         <div class="text">50%</div>
     </div>
 </div>
 </div>
                             </div>
                             <div class="主體-格局-內容-主要範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>ts-progress</mark>"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"width: 50%"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"--value: 50;"</span>&gt;
         &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;<span class="hljs-number">50</span>%&lt;/<span class="hljs-keyword">div</span>&gt;
     &lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
@@ -582,7 +588,9 @@
                         <!-- 概要 -->
                         
                         <div class="主體-格局-內容-標題 主體-格局-內容-標題_章節">概要</div>
-                        <div class="主體-格局-內容-文字"><p>這個元件需要自行使用 JavaScript 控制進度列的 <code>width</code> 寬度樣式變更其百分比進度。</p>
+                        <div class="主體-格局-內容-文字"><p>這個元件需要自行透過 CSS 變數 <code>--value</code> 來控制進度列的百分比進度。</p>
+
+<p>這通常用來指示某項行為的進度，如果想要呈現剩餘額度或是計量則可以參考<a href="./gauge.html">圓形量測計</a>。</p>
 </div>
                         
                         <!-- / 概要 -->
@@ -614,13 +622,13 @@
                             
                             <div class="主體-格局-內容-單個範例-範例">
                                 <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-progress">
-    <div class="bar" style="width: 80%">
+    <div class="bar" style="--value: 80;">
         <div class="text">80%</div>
     </div>
 </div>
 </div>
                                 <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-progress"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"width: 80%"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"--value: 80;"</span>&gt;
         &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>text</mark>"</span>&gt;<span class="hljs-number">80</span>%&lt;/<span class="hljs-keyword">div</span>&gt;
     &lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
@@ -665,11 +673,11 @@
                             
                             <div class="主體-格局-內容-單個範例-範例">
                                 <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-progress is-active">
-    <div class="bar" style="width: 70%"></div>
+    <div class="bar" style="--value: 70;"></div>
 </div>
 </div>
                                 <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-progress <mark>is-active</mark>"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"width: 70%"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"--value: 70;"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
 </div>
                             </div>
@@ -700,11 +708,11 @@
                             
                             <div class="主體-格局-內容-單個範例-範例">
                                 <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-progress is-processing">
-    <div class="bar" style="width: 40%"></div>
+    <div class="bar" style="--value: 40;"></div>
 </div>
 </div>
                                 <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-progress <mark>is-processing</mark>"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"width: 40%"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"--value: 40;"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
 </div>
                             </div>
@@ -735,11 +743,11 @@
                             
                             <div class="主體-格局-內容-單個範例-範例">
                                 <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-progress is-indeterminate">
-    <div class="bar" style="width: 50%"></div>
+    <div class="bar" style="--value: 50;"></div>
 </div>
 </div>
                                 <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-progress <mark>is-indeterminate</mark>"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"width: 50%"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"--value: 50;"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
 </div>
                             </div>
@@ -770,11 +778,11 @@
                             
                             <div class="主體-格局-內容-單個範例-範例">
                                 <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-progress is-queried">
-    <div class="bar" style="width: 30%"></div>
+    <div class="bar" style="--value: 30;"></div>
 </div>
 </div>
                                 <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-progress <mark>is-queried</mark>"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"width: 30%"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"--value: 30;"</span>&gt;&lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
 </div>
                             </div>
@@ -817,19 +825,19 @@
                             
                             <div class="主體-格局-內容-單個範例-範例">
                                 <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-progress">
-    <div class="bar" style="width: 40%">
+    <div class="bar" style="--value: 40;">
         <div class="text">40%</div>
     </div>
-    <div class="bar is-secondary" style="width: 60%">
+    <div class="bar is-secondary" style="--value: 60;">
         <div class="text">60%</div>
     </div>
 </div>
 </div>
                                 <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-progress"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"width: 40%"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"--value: 40;"</span>&gt;
         &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;<span class="hljs-number">40</span>%&lt;/<span class="hljs-keyword">div</span>&gt;
     &lt;/<span class="hljs-keyword">div</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar <mark>is-secondary</mark>"</span> style=<span class="hljs-string">"width: 60%"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar <mark>is-secondary</mark>"</span> style=<span class="hljs-string">"--value: 60;"</span>&gt;
         &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;<span class="hljs-number">60</span>%&lt;/<span class="hljs-keyword">div</span>&gt;
     &lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
@@ -862,46 +870,46 @@
                             
                             <div class="主體-格局-內容-單個範例-範例">
                                 <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-progress is-tiny">
-    <div class="bar" style="width: 50%">
+    <div class="bar" style="--value: 50;">
         <div class="text">50%</div>
     </div>
 </div>
 <div class="ts-space"></div>
 <div class="ts-progress is-small">
-    <div class="bar" style="width: 50%">
+    <div class="bar" style="--value: 50;">
         <div class="text">50%</div>
     </div>
 </div>
 <div class="ts-space"></div>
 <div class="ts-progress">
-    <div class="bar" style="width: 50%">
+    <div class="bar" style="--value: 50;">
         <div class="text">50%</div>
     </div>
 </div>
 <div class="ts-space"></div>
 <div class="ts-progress is-large">
-    <div class="bar" style="width: 50%">
+    <div class="bar" style="--value: 50;">
         <div class="text">50%</div>
     </div>
 </div>
 </div>
                                 <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-progress <mark>is-tiny</mark>"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"width: 50%"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"--value: 50;"</span>&gt;
         &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;<span class="hljs-number">50</span>%&lt;/<span class="hljs-keyword">div</span>&gt;
     &lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-progress <mark>is-small</mark>"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"width: 50%"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"--value: 50;"</span>&gt;
         &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;<span class="hljs-number">50</span>%&lt;/<span class="hljs-keyword">div</span>&gt;
     &lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-progress"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"width: 50%"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"--value: 50;"</span>&gt;
         &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;<span class="hljs-number">50</span>%&lt;/<span class="hljs-keyword">div</span>&gt;
     &lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-progress <mark>is-large</mark>"</span>&gt;
-    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"width: 50%"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"--value: 50;"</span>&gt;
         &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;<span class="hljs-number">50</span>%&lt;/<span class="hljs-keyword">div</span>&gt;
     &lt;/<span class="hljs-keyword">div</span>&gt;
 &lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
@@ -948,7 +956,7 @@
                                 <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-box">
     <div class="ts-content is-secondary">
         <div class="ts-progress is-processing">
-            <div class="bar" style="width: 70%">
+            <div class="bar" style="--value: 70;">
                 <div class="text">70%</div>
             </div>
         </div>
@@ -986,7 +994,7 @@
                                 <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./box.html">ts-box</a>"</span>&gt;
     &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a> is-secondary"</span>&gt;
         &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>ts-progress</mark> is-processing"</span>&gt;
-            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"width: 70%"</span>&gt;
+            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"bar"</span> style=<span class="hljs-string">"--value: 70;"</span>&gt;
                 &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"text"</span>&gt;<span class="hljs-number">70</span>%&lt;/<span class="hljs-keyword">div</span>&gt;
             &lt;/<span class="hljs-keyword">div</span>&gt;
         &lt;/<span class="hljs-keyword">div</span>&gt;
@@ -1042,6 +1050,10 @@
                         <div class="主體-格局-內容-相關元件">
                             <div class="主體-格局-內容-相關元件-標題">在尋找相似的元件嗎？</div>
                             <ul class="主體-格局-內容-相關元件-清單">
+                                
+                                <li class="主體-格局-內容-相關元件-清單-單個項目">
+                                    <a class="主體-格局-內容-相關元件-清單-單個項目-連結" href="gauge.html">圓形量測計</a>
+                                </li>
                                 
                                 <li class="主體-格局-內容-相關元件-清單-單個項目">
                                     <a class="主體-格局-內容-相關元件-清單-單個項目-連結" href="loading.html">讀取狀態</a>

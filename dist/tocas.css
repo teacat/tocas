@@ -154,7 +154,10 @@ button {
     color: var(--ts-gray-50);
     background: var(--ts-gray-800);
     text-decoration: none;
-    display: inline-block;
+    display: inline-flex;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
     text-align: center;
 
     padding: 0.4rem 1.25rem;
@@ -337,11 +340,16 @@ button {
  */
 
 .ts-button:is(.is-start-icon, .is-end-icon) {
-    line-height: 1.4;
+    line-height: 1.25;
 }
 
 .ts-button:is(.is-start-icon, .is-end-icon) .ts-icon {
     font-size: 1.2em;
+}
+
+.ts-button:is(.is-start-icon, .is-end-icon) .ts-icon::before {
+    display: inline-block;
+    margin-top: 1px;
 }
 
 .ts-button.is-start-icon .ts-icon {
@@ -8481,7 +8489,7 @@ button {
  * Text
  */
 
-.ts-divider.is-text {
+.ts-divider:is(.is-center-text, .is-start-text, .is-end-text) {
     display: flex;
     align-items: center;
     border-top: 0;
@@ -8489,12 +8497,20 @@ button {
     color: var(--ts-gray-800);
 }
 
-.ts-divider.is-text::before,
-.ts-divider.is-text::after {
+.ts-divider:is(.is-center-text, .is-start-text, .is-end-text)::before,
+.ts-divider:is(.is-center-text, .is-start-text, .is-end-text)::after {
     content: "";
     height: 1px;
     background-color: var(--ts-gray-300);
     flex-grow: 1;
+}
+
+.ts-divider.is-start-text::before {
+    display: none;
+}
+
+.ts-divider.is-end-text::after {
+    display: none;
 }
 
 /* ==========================================================================
@@ -9428,6 +9444,8 @@ button {
 }
 
 .ts-progress .bar {
+    --value: 0;
+
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
@@ -9439,7 +9457,7 @@ button {
     min-width: fit-content;
     text-align: right;
     transition: width 1s ease-out;
-
+    width: var(--value);
     z-index: 1;
 }
 
@@ -10919,20 +10937,24 @@ a.ts-box:hover {
     padding: 1.5rem;
 }
 .ts-content.is-horizontally-padded {
-    padding: 1rem 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 }
 .ts-content.is-vertically-padded {
-    padding: 1.5rem 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
 }
 
 .ts-content.is-very-padded {
     padding: 3.5rem;
 }
 .ts-content.is-horizontally-very-padded {
-    padding: 1rem 3.5rem;
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
 }
 .ts-content.is-vertically-very-padded {
-    padding: 3.5rem 1rem;
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
 }
 
 /**
@@ -11117,6 +11139,7 @@ a.ts-box:hover {
 
 .ts-switch input {
     appearance: none;
+    -webkit-appearance: none;
     cursor: pointer;
     margin-right: 0.5rem;
 }
@@ -11592,6 +11615,10 @@ a.ts-box:hover {
 }
 
 .ts-table :is(th, td).is-middle-aligned {
+    vertical-align: middle;
+}
+
+.ts-table tr.is-middle-aligned td {
     vertical-align: middle;
 }
 
@@ -14960,7 +14987,7 @@ a.ts-box:hover {
    ========================================================================== */
 
 .ts-app-sidebar .item {
-    padding: 0.8rem 1.5rem;
+    padding: 0.7rem 1.5rem;
     display: flex;
     font-weight: 500;
     color: var(--ts-gray-800);
@@ -15878,6 +15905,14 @@ a.ts-segment:hover {
 }
 
 /**
+ * Tertiary
+ */
+
+.ts-segment.is-tertiary {
+    background: var(--ts-gray-100);
+}
+
+/**
  * Emphasises
  */
 
@@ -15913,20 +15948,24 @@ a.ts-segment:hover {
     padding: 1.5rem;
 }
 .ts-segment.is-horizontally-padded {
-    padding: 1rem 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
 }
 .ts-segment.is-vertically-padded {
-    padding: 1.5rem 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
 }
 
 .ts-segment.is-very-padded {
     padding: 3.5rem;
 }
 .ts-segment.is-horizontally-very-padded {
-    padding: 1rem 3.5rem;
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
 }
 .ts-segment.is-vertically-very-padded {
-    padding: 3.5rem 1rem;
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
 }
 
 /**
@@ -17591,6 +17630,70 @@ a.ts-segment:hover {
     width: 780px;
 }
 
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-gauge,
+.ts-gauge .bar {
+    position: relative;
+    display: inline-grid;
+    height: var(--size);
+    width: var(--size);
+    place-content: center;
+    border-radius: 9999px;
+    background-color: transparent;
+    vertical-align: middle;
+    box-sizing: content-box;
+    --value: 0;
+    --size: 5rem;
+    --thickness: calc(var(--size) / 10);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-gauge::after,
+.ts-gauge::before,
+.ts-gauge .bar::after,
+.ts-gauge .bar::before {
+    position: absolute;
+    border-radius: 9999px;
+    content: "";
+}
+
+.ts-gauge::before,
+.ts-gauge .bar::before {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: radial-gradient(farthest-side, currentColor 98%, #0000) top/var(--thickness) var(--thickness) no-repeat,
+        conic-gradient(currentColor calc(var(--value) * 1% * 0.8), #0000 0);
+    mask: radial-gradient(farthest-side, #0000 calc(99% - var(--thickness)), #000 calc(100% - var(--thickness)));
+}
+
+.ts-gauge::after,
+.ts-gauge .bar::after {
+    inset: calc(50% - var(--thickness) / 2);
+    transform: rotate(calc(var(--value) * 3.6deg - 90deg)) translate(calc(var(--size) / 2 - 50%));
+    background-color: currentColor;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Negative
+ */
+
+
 
 
 
@@ -17868,9 +17971,14 @@ html[data-scheme="dark"],
 }
 
 html[data-scheme="light"] .is-dark-only,
-.is-dark-only,
 html[data-scheme="dark"] .is-light-only {
     display: none;
+}
+
+@media (prefers-color-scheme: light) {
+    .is-dark-only {
+        display: none;
+    }
 }
 
 /**
