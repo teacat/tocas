@@ -1,0 +1,355 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: Chip
+Description: Used as a supporting element for an element, e.g., suggestion, item selection, secondary behavior.
+Intro: |
+    This component will vary according to its use in different contexts, e.g. for tagging a friend's name in the input field, for recommending a keyword at the bottom of a card, or even for reacting to a message with an emoji, as in Slack or Discord.
+
+    You can see where you can use it by checking out the Compositions section at the bottom.
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Badge
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-chip]]">
+            <div class="{{ts-image}}">
+                <img src="!-user3-!" />
+            </div>
+            Yami Odymel
+            <button class="{{ts-close}}"></button>
+        </div>
+
+Definitions:
+    - Title: Types
+      Description:
+      Sections:
+          - Title: Input
+            Anchor: Input
+            Description: When a Chip becomes an input item, it can be used as a checkbox or a toggle. The checked item will have a check mark aside.
+            Since: 4.0.0
+            HTML: |
+                <label class="ts-chip [[is-input]]">
+                    <input type="checkbox" checked/>
+                    <div class="content">Fitness</div>
+                </label>
+                <label class="ts-chip [[is-input]]">
+                    <input type="checkbox" />
+                    <div class="content">Games</div>
+                </label>
+                <label class="ts-chip [[is-input]]">
+                    <input type="checkbox" />
+                    <div class="content">News</div>
+                </label>
+
+          - Title: Toggle
+            Anchor: Toggle
+            Description: This is somewhat similar to the input Chip, but visually it is more like switching a state on and off.
+            Since: 4.0.0
+            HTML: |
+                <label class="ts-chip [[is-toggle]] is-circular">
+                    <input type="checkbox"/>
+                    <div class="content">Hottest</div>
+                </label>
+                <label class="ts-chip [[is-toggle]] is-circular">
+                    <input type="checkbox" checked/>
+                    <div class="content">Unvisited</div>
+                </label>
+
+    - Title: Contents
+      Description:
+      Sections:
+          - Title: Close
+            Anchor: Close
+            Description: Placing a close button allows the user to delete this Chip.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-chip is-circular">
+                    Sorae & Co., Ltd.
+                    <button class="[[{{ts-close}}]]"></button>
+                </div>
+                <div class="ts-chip is-circular is-outlined">
+                    Yan-K Media Works
+                    <button class="[[{{ts-close}}]] is-secondary"></button>
+                </div>
+
+          - Title: Image
+            Anchor: Image
+            Description: Present the subject of the Chip in picture.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-chip is-circular">
+                    <div class="[[{{ts-image}}]] is-circular">
+                        <img src="!-user-!" />
+                    </div>
+                    Yami Odymel
+                </div>
+
+    - Title: States
+      Description:
+      Sections:
+          - Title: Disabled
+            Anchor: Disabled
+            Description: Makes the Chip appear uninteractive and unclickable. If you want to actually disable the Chip behavior, make sure to add a `disabled` attribute to the Chip.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-chip [[is-disabled]]">
+                    24HR
+                </div>
+
+    - Title: Variations
+      Description:
+      Sections:
+          - Title: Outlined
+            Anchor: Outlined
+            Description: A Chip with simple structure that has an outline only.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-chip [[is-outlined]]">
+                    <span class="{{ts-flag}} is-taiwan-flag is-rounded"></span>
+                    Taiwan
+                </div>
+                <div class="ts-chip [[is-outlined]]">
+                    <span class="{{ts-flag}} is-america-flag is-rounded"></span>
+                    America
+                </div>
+                <div class="ts-chip [[is-outlined]]">
+                    <span class="{{ts-flag}} is-hong-kong-flag is-rounded"></span>
+                    Hong Kong
+                </div>
+
+          - Title: Secondary
+            Anchor: Secondary
+            Description: The secondary Chip looks less heavy in visual.
+            Since: 4.0.0
+            HTML: |
+                <label class="ts-chip is-toggle is-outlined [[is-secondary]]">
+                    <input type="checkbox" checked/>
+                    <div class="content">👀 8</div>
+                </label>
+                <label class="ts-chip is-input is-outlined [[is-secondary]]">
+                    <input type="checkbox" checked/>
+                    <div class="content">Free WiFi</div>
+                </label>
+
+          - Title: Circular
+            Anchor: Circular
+            Description: Make the corners of the components present at rounded corners.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-chip [[is-circular]]">Video</div>
+                <div class="ts-chip [[is-circular]]">Music</div>
+
+          - Title: Fluid
+            Anchor: Fluid
+            Description: The width of the Chip can be the same as the parent container.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-grid}} is-3-columns">
+                    <div class="column">
+                        <label class="ts-chip [[is-fluid]] is-input is-outlined">
+                            <input type="checkbox" checked/>
+                            <div class="content">Small</div>
+                        </label>
+                    </div>
+                    <div class="column">
+                        <label class="ts-chip [[is-fluid]] is-input is-outlined">
+                            <input type="checkbox" />
+                            <div class="content">Medium</div>
+                        </label>
+                    </div>
+                    <div class="column">
+                        <label class="ts-chip [[is-fluid]] is-input is-outlined">
+                            <input type="checkbox" />
+                            <div class="content">Large</div>
+                        </label>
+                    </div>
+                </div>
+
+          - Title: Side Icon
+            Anchor: Side Icon
+            Description: Place icons on both sides to assist with this Chip.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-chip [[is-end-icon]]">
+                    <span class="{{ts-icon}} is-video-icon"></span>
+                    Video
+                </div>
+                <div class="ts-chip [[is-end-icon]]">
+                    Biking
+                    <span class="{{ts-icon}} is-person-biking-icon"></span>
+                </div>
+
+          - Title: Sizes
+            Anchor: Sizes
+            Description: Change the size of the Chip.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-chip [[is-small]]">
+                    <span class="{{ts-icon}} is-heart-icon"></span>
+                    Small
+                </div>
+                <div class="ts-chip">
+                    <span class="{{ts-icon}} is-heart-icon"></span>
+                    Default
+                </div>
+                <div class="ts-chip [[is-large]]">
+                    <span class="{{ts-icon}} is-heart-icon"></span>
+                    Large
+                </div>
+
+          - Title: Dense
+            Anchor: Dense
+            Description: Change the internal spacing of the elements to make them appear more dense.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-chip [[is-dense]] is-outlined">
+                    Caris Events
+                </div>
+
+          - Title: Spaced
+            Anchor: Spaced
+            Description: Add spacing before or after the Chip to avoid too close to other components.
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                The author is <span class="ts-chip [[is-start-spaced]]">
+                    <img src="!-user-!" />
+                    Mac Taylor
+                </span>
+                <div class="ts-space"></div>
+                <span class="ts-chip [[is-end-spaced]]">
+                    <img src="!-user2-!" />
+                    Sciuridae Li
+                </span> is the Moderator of the group.
+                <div class="ts-space"></div>
+                If you see <span class="ts-chip [[is-spaced]]">
+                    <img src="!-user3-!" />
+                    Sean Wei
+                </span> remember to say Hello!
+
+    - Title: Compositions
+      Description:
+      Sections:
+          - Title: Reactions
+            Anchor: Composition Reactions
+            Description: Place Chips below certain elements as a reaction to that message.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-segment}}">
+                    <p>If you go to a fishing tournament, you may be barred from entering: "We don't welcome professional fishermen".</p>
+                    <div class="{{ts-wrap}} is-compact">
+                        <label class="[[ts-chip]] is-toggle is-secondary is-circular is-outlined">
+                            <input type="checkbox" checked/>
+                            <div class="content">👌 21</div>
+                        </label>
+                        <label class="[[ts-chip]] is-toggle is-secondary is-circular is-outlined">
+                            <input type="checkbox"/>
+                            <div class="content">👀 8</div>
+                        </label>
+                        <div class="[[ts-chip]] is-outlined is-circular">
+                            <span class="{{ts-icon}} is-plus-icon"></span>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Headers
+            Anchor: Composition Header
+            Description: Chips can be placed below the title to give users more options.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-header}} is-center-aligned is-large">
+                    Welcome Home
+                </div>
+                <div class="{{ts-text}} is-center-aligned is-description">
+                    Temperature 32°C, Humidity 48%
+                </div>
+                <div class="{{ts-space}}"></div>
+                <div class="{{ts-wrap}} is-center-aligned is-compact">
+                    <button class="[[ts-chip]] is-outlined">
+                        <span class="{{ts-icon}} is-sun-icon"></span>
+                        Turn on all lights
+                    </button>
+                    <button class="[[ts-chip]] is-outlined">
+                        <span class="{{ts-icon}} is-stopwatch-icon"></span>
+                        Set the alarm
+                    </button>
+                </div>
+
+          - Title: Actions
+            Anchor: Composition Actions
+            Description: Sometimes it is too conspicuous to place the Buttons in the card, so you can use the Chips.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}" style="max-width: 360px">
+                    <img class="{{ts-image}}" src="!-16:9-!">
+                    <div class="{{ts-content}}">
+                        <div class="{{ts-header}}">Sushi PLUS</div>
+                        <div class="{{ts-meta}} is-secondary is-small">
+                            <span class="item">Sushi Restaurant</span>
+                            <span class="item">$$</span>
+                            <span class="item">4.5 <span class="{{ts-icon}} is-star-icon"></span></span>
+                        </div>
+                        <div class="{{ts-divider}} is-section"></div>
+                        <div class="{{ts-wrap}} is-compact">
+                            <button class="[[ts-chip]] is-circular">
+                                <span class="{{ts-icon}} is-utensils-icon"></span>
+                                Reserve a table
+                            </button>
+                            <button class="[[ts-chip]] is-circular">
+                                <span class="{{ts-icon}} is-motorcycle-icon"></span>
+                                Delivery
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Suggestions
+            Anchor: Composition Input
+            Description: Similar to the reply suggestions appeared in Google apps below the replying message.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-row}}">
+                    <div class="column" style="width: 46px;">
+                        <div class="{{ts-image}} is-rounded">
+                            <img src="!-user-!">
+                        </div>
+                    </div>
+                    <div class="column is-fluid">
+                        <div class="{{ts-input}} is-fluid">
+                            <textarea placeholder="Reply the mail..."></textarea>
+                        </div>
+                        <div class="{{ts-space}}"></div>
+                        <div class="{{ts-row}} is-compact">
+                            <div class="column">
+                                <div class="{{ts-wrap}} is-compact">
+                                    <button class="[[ts-chip]] is-circular">
+                                        Sure!
+                                    </button>
+                                    <button class="[[ts-chip]] is-circular">
+                                        Sorry, I am busy that day.
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="column is-fluid is-end-aligned">
+                                <button class="ts-button">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>

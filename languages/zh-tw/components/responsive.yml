@@ -1,0 +1,214 @@
+#=======================================================
+# Header
+#=======================================================
+
+Title: 響應式設計
+Description: 協助你能夠在不同裝置上更加地得心應手。
+
+#=======================================================
+# Settings
+#=======================================================
+
+Type: Paragraphy
+
+#=======================================================
+# Definitions
+#=======================================================
+
+Definitions:
+    - Title: 說明
+      Description: |
+          Tocas UI 內建數個響應式輔助樣式，這可以協助你在指定裝置上顯示或是隱藏一些元素。
+
+          現今的瀏覽裝置尺寸變得十分多樣，以往像 Semantic UI 那樣以平板、手機、桌機…等稱呼都已經不合時宜。好比 iPad Pro 的螢幕尺寸已經近似於筆記型電腦，那麼我們就不能再以「平板」來稱呼這個裝置。
+
+          Tocas UI 將響應式設計的輔助樣式命名為三個最重要的尺寸規模：最小化（Minimal）、預設（Standard）、最大化（Maximal）。
+
+          * 最小化介面：通常僅會有最基礎的功能。
+          * 標準化介面：呈現所有基本功能。
+          * 最大化介面：除了基本功能外還會帶有進階功能介面。
+
+      Sections:
+          - Title: 響應式設計標籤
+            Anchor: Tag
+            Description: |
+                Tocas UI 支援響應式設計，為此需要新增下列一段的標籤在 HTML 來告訴行動裝置此網頁支援響應式設計。利用這個標籤還可以降低並解決行動裝置對於網頁的點擊延遲，請將這段放置於 HTML 中的 `<head> .. </head>` 處。
+            AttachedHTML: |
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+          - Title: 動態字體縮放
+            Anchor: Scales
+            Description: |
+                Tocas UI 的所有元件字體大小是依賴著網頁基底而定。當網頁字型太小時，不需要變更每個元件的字型，可以直接變更 `<html>` 中的 `font-size` 大小設定，但 Tocas UI 也內建了 `[data-scale]` 屬性標籤能夠更改縮放級距。
+
+                <div class="ts-box">
+                    <table class="ts-table is-definition is-celled">
+                        <thead>
+                            <tr>
+                                <th class="is-collapsed"></th>
+                                <th class="is-collapsed">字體大小</th>
+                                <th class="is-collapsed">適用情境</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="is-collapsed">small</td>
+                                <td class="is-collapsed">14px</td>
+                                <td>手機或是行動裝置應用程式。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">medium</td>
+                                <td class="is-collapsed">15px</td>
+                                <td>基本的網頁和桌上型電腦的軟體介面。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">large</td>
+                                <td class="is-collapsed">16px</td>
+                                <td>專注在文字的部落格、商業推廣情境。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            AttachedHTML: |
+                <html [[data-scale]]="large">
+
+          - Title: 尺寸與目前狀態
+            Anchor: Devices
+            Since: 4.0.0
+            Description: |
+                在一般情況下，介面會以標準化規模呈現。當使用者的螢幕尺寸過小，僅會顯示最小化、最基礎的功能；當使用者的螢幕尺寸過大，那些多餘的輔助功能便可以出現在螢幕上。
+
+                將應用程式、網頁以這三個規模設計，便能更加簡單地清楚地描述頁面的功能。
+
+                <div class="ts-box">
+                    <table class="ts-table is-definition is-celled">
+                        <thead>
+                            <tr>
+                                <th class="is-collapsed"></th>
+                                <th class="is-collapsed">狀態指示</th>
+                                <th class="is-collapsed">當螢幕尺寸 .. 時</th>
+                                <th>說明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="is-collapsed">Minimal</td>
+                                <td class="is-collapsed is-center-aligned">
+                                    <div class="ts-badge is-minimal-only">目前</div>
+                                </td>
+                                <td class="is-collapsed">&lt; 768px</td>
+                                <td>最小化介面，常出現於手機…等行動裝置。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">Standard</td>
+                                <td class="is-collapsed is-center-aligned">
+                                    <div class="ts-badge is-standard-only">目前</div>
+                                </td>
+                                <td class="is-collapsed">&gt; 768px 和 &lt; 993px</td>
+                                <td>標準化介面，通常是平板電腦或較小筆記型電腦…等。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">Maximal</td>
+                                <td class="is-collapsed is-center-aligned">
+                                    <div class="ts-badge is-maximal-only">目前</div>
+                                </td>
+                                <td class="is-collapsed">&gt; 993px</td>
+                                <td>最大化介面，適用於大部分的桌上型電腦與大型筆記型電腦的使用者。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+          - Title: 只有在 .. 時
+            Anchor: Only
+            Since: 4.0.0
+            Description: |
+                透過 `is-x-only` 的輔助樣式可以讓某個元素在特定的介面尺寸下出現，如果不符合這個尺寸則永遠隱藏。
+
+                <div class="ts-box">
+                    <table class="ts-table is-definition is-celled">
+                        <thead>
+                            <tr>
+                                <th class="is-collapsed"></th>
+                                <th class="is-collapsed">狀態指示</th>
+                                <th class="is-collapsed">當螢幕尺寸 .. 時出現</th>
+                                <th>說明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="is-collapsed">is-minimal-only</td>
+                                <td class="is-collapsed is-center-aligned">
+                                    <div class="ts-badge is-minimal-only">目前</div>
+                                </td>
+                                <td class="is-collapsed">&lt; 768px</td>
+                                <td>只在最小化時出現。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">is-standard-only</td>
+                                <td class="is-collapsed is-center-aligned">
+                                    <div class="ts-badge is-standard-only">目前</div>
+                                </td>
+                                <td class="is-collapsed">&gt; 768px 和 &lt; 993px</td>
+                                <td>只在標準化時出現。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">is-maximal-only</td>
+                                <td class="is-collapsed is-center-aligned">
+                                    <div class="ts-badge is-maximal-only">目前</div>
+                                </td>
+                                <td class="is-collapsed">&gt; 993px</td>
+                                <td>只在最大化時出現。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            AttachedHTML: |
+                <div class="[[is-standard-only]]">把響應式標籤這樣套用在任何元素上！</div>
+
+          - Title: 不是 .. 時
+            Anchor: Not
+            Since: 4.0.0
+            Description: |
+                透過 `is-not-x` 的輔助樣式讓某個元素在不是某個介面尺寸時才出現，與 `is-x-only` 是相反的設計。
+
+                <div class="ts-box">
+                    <table class="ts-table is-definition is-celled">
+                        <thead>
+                            <tr>
+                                <th class="is-collapsed"></th>
+                                <th class="is-collapsed">狀態指示</th>
+                                <th class="is-collapsed">當螢幕尺寸 .. 時出現</th>
+                                <th>說明</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="is-collapsed">is-not-minimal</td>
+                                <td class="is-collapsed is-center-aligned">
+                                    <div class="ts-badge is-not-minimal">目前</div>
+                                </td>
+                                <td class="is-collapsed">&gt; 768px</td>
+                                <td>不是最小化的時候才出現。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">is-not-standard</td>
+                                <td class="is-collapsed is-center-aligned">
+                                    <div class="ts-badge is-not-standard">目前</div>
+                                </td>
+                                <td class="is-collapsed">&lt; 768px 或者 &gt; 993px</td>
+                                <td>不是標準化的時候才出現。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">is-not-maximal</td>
+                                <td class="is-collapsed is-center-aligned">
+                                    <div class="ts-badge is-not-maximal">目前</div>
+                                </td>
+                                <td class="is-collapsed">&lt; 993px</td>
+                                <td>不是最大化的時候才出現。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            AttachedHTML: |
+                <div class="[[is-not-minimal]]">這個元素只會在手機以外的裝置顯示。</div>

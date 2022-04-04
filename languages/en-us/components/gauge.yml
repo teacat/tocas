@@ -1,0 +1,152 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: Gauge
+Description: The progress and usage levels are presented in a circular indicator.
+Intro: |
+    This component requires its own CSS variable `--value` to control the percentage progress of the progress bar.
+
+    This is usually used to indicate a value, so if you need to show that a behavior is loading, or download percentage, use the [Progress](./progress.html).
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Loading
+    - Progress
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-gauge]]">
+            <div class="bar" style="--value: 40;">
+                <div class="text">40%</div>
+            </div>
+        </div>
+
+Definitions:
+    - Title: Variations
+      Description:
+      Sections:
+          - Title: Circular
+            Anchor: Circular
+            Description: The entire Gauge is presented in a full circular shape without notches.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-gauge [[is-circular]]">
+                    <div class="bar" style="--value: 70;">
+                        <div class="text">70%</div>
+                    </div>
+                </div>
+
+          - Title: Uplifted
+            Anchor: Uplifted
+            Description: "A counter that presents rising values, such as: dose, temperature and humidity."
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-gauge [[is-uplifted]]">
+                    <div class="bar" style="--value: 50;">
+                        <div class="text">50%</div>
+                    </div>
+                </div>
+
+          - Title: Centered
+            Anchor: Centered
+            Description: Center aligned the Gauge itself.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-gauge [[is-centered]]">
+                    <div class="bar" style="--value: 40;">
+                        <div class="text">40%</div>
+                    </div>
+                </div>
+
+          - Title: Sizes
+            Anchor: Sizes
+            Description: Change the size of the Gauge.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-gauge [[is-small]]">
+                    <div class="bar" style="--value: 30;">
+                        <div class="text">30%</div>
+                    </div>
+                </div>
+                <div class="ts-gauge">
+                    <div class="bar" style="--value: 30;">
+                        <div class="text">30%</div>
+                    </div>
+                </div>
+                <div class="ts-gauge [[is-large]]">
+                    <div class="bar" style="--value: 30;">
+                        <div class="text">30%</div>
+                    </div>
+                </div>
+
+    - Title: Compositions
+      Description:
+      Sections:
+          - Title: Bandwidth Usages
+            Anchor: Composition Usage
+            Description: There's usually an associated counter that shows the current remaining quota or bandwidth on cloud storage service.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-grid}} is-evenly-divided">
+                    <div class="column">
+                        <div class="{{ts-wrap}} is-middle-aligned">
+                            <div class="[[ts-gauge]] is-small is-circular">
+                                <div class="bar" style="--value: 38;">
+                                    <div class="text">38%</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="{{ts-text}} is-bold">Storage</div>
+                                19.12 GB / 50 GB
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-wrap}} is-middle-aligned">
+                            <div class="[[ts-gauge]] is-small is-circular">
+                                <div class="bar" style="--value: 100;">
+                                    <div class="text">---</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="{{ts-text}} is-bold">Transfer</div>
+                                0 B Used
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Smart Home
+            Anchor: Composition Temperature
+            Description: A measurement meter used to indicate the current temperature and humidity.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-wrap}} is-middle-aligned">
+                    <div class="[[ts-gauge]] is-uplifted">
+                        <div class="bar" style="--value: 80;">
+                            <div class="text">
+                                <span class="{{ts-icon}} is-big is-temperature-full-icon"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="{{ts-statistic}}">
+                            <div class="value">32 °C</div>
+                            <div class="comparison is-increased">2 °C</div>
+                        </div>
+                        Room Temperature
+                    </div>
+                </div>

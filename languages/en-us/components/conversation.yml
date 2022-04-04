@@ -1,0 +1,408 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: Conversation
+Description: Presents the content of the messages.
+Intro: |
+    This component is suitable for chatting in chat rooms or messages, and can be used whenever there is a conversation between people.
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-conversation]] is-sent">
+            <div class="avatar">
+                <img src="!-user-!">
+            </div>
+            <div class="content">
+                <div class="bubble">
+                    <div class="author">Ayame Hoshino</div>
+                    <div class="text">
+                        You look at this guy, it's kind of funny,<br>
+                        he looks different now than he did before.
+                    </div>
+                    <div class="meta">
+                        <div class="item">PM 11:58</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+Definitions:
+    - Title: Message States
+      Description:
+      Sections:
+          - Title: Sent
+            Anchor: Sent
+            Description: This means that the message was sent to the server but not read by the user.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-conversation [[is-sent]]">
+                    <div class="avatar">
+                        <img src="!-user-!">
+                    </div>
+                    <div class="content">
+                        <div class="bubble">
+                            <div class="author">Kakeru Kimishima</div>
+                            <div class="text">
+                                You think you've gotten used to it over the years,<br>
+                                but you still can't say it after all.
+                            </div>
+                            <div class="meta">
+                                <div class="item">PM 10:04</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Sending
+            Anchor: Sending
+            Description: The message is still being sent to the server, probably because the Internet is too slow to finish sending.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-conversation [[is-sending]]">
+                    <div class="avatar">
+                        <img src="!-user-!">
+                    </div>
+                    <div class="content">
+                        <div class="bubble">
+                            <div class="author">Fumi Natsuki</div>
+                            <div class="text">
+                                You two are still disagreeing, still arguing,<br>
+                                and for a moment, you think that might be just fine.
+                            </div>
+                            <div class="meta">
+                                <div class="item">AM 12:04</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Read
+            Anchor: Read
+            Description: The user has received the message and has read it.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-conversation [[is-read]]">
+                    <div class="avatar">
+                        <img src="!-user-!">
+                    </div>
+                    <div class="content">
+                        <div class="bubble">
+                            <div class="author">Oritsuru Kawai</div>
+                            <div class="text">
+                                You say the things you once hated, and you go from communicating to arguing.
+                            </div>
+                            <div class="meta">
+                                <div class="item">PM 05:26</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Error
+            Anchor: Error
+            Description: An error occurred while sending a message.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-conversation [[is-error]]">
+                    <div class="avatar">
+                        <img src="!-user-!">
+                    </div>
+                    <div class="content">
+                        <div class="bubble">
+                            <div class="author">Masaaki Kiba</div>
+                            <div class="text">
+                                A few years later, you told me not to compromise.
+                            </div>
+                            <div class="meta">
+                                <div class="item">PM 08:14</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    - Title: Contents
+      Description:
+      Sections:
+          - Title: Quote
+            Anchor: Quote
+            Description: Mention the content of another message.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-conversation">
+                    <div class="avatar">
+                        <img src="!-user-!">
+                    </div>
+                    <div class="content">
+                        <div class="bubble">
+                            <div class="author">Kanade Hachima</div>
+                            <div class="[[quote]]">
+                                <div class="author">Tsukino Amakusa</div>
+                                <div class="text">
+                                    Dream big dreams,<br>
+                                    That's what they always said right?
+                                </div>
+                            </div>
+                            <div class="text">
+                                There's always a choice,<br>
+                                just never had the guts to make the right one
+                            </div>
+                            <div class="meta">
+                                <div class="item">PM 04:58</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Link Preview
+            Anchor: Link Preview
+            Description: If the message contains a hyperlink, it can have a link preview block.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-conversation" style="max-width: 400px;">
+                    <div class="avatar">
+                        <img src="!-user-!">
+                    </div>
+                    <div class="content">
+                        <div class="bubble">
+                            <div class="author">Seiichi Kageyama</div>
+                            <div class="text">
+                                It was dawn at 4:00 in Beijing in May,<br>
+                                and I hadn't been home for three days, like a parasite.
+                            </div>
+                            <div class="[[preview]]">
+                                <div class="site">Yami's Blog</div>
+                                <div class="title">ASUS calls itself a "Chinese company" and its Chinese branch speaks out to block Japanese industry and commerce</div>
+                                <div class="content">The editor of ROG on Weibo posted that he swears he will stop this commercial interaction between ASUS and Hololive in Japan. The majority of Chinese netizens expressed their anticipation and "buy ASUS or not depends on this time".</div>
+                                <div class="embed">
+                                    <img src="!-16:9-!">
+                                </div>
+                            </div>
+                            <div class="meta">
+                                <div class="item">PM 03:04</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Object
+            Anchor: Object
+            Description: |
+                Place other components, such as: [Image](./image.html), [Imageset](./imageset.html).
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-conversation" style="max-width: 400px;">
+                    <div class="avatar">
+                        <img src="!-user-!">
+                    </div>
+                    <div class="content">
+                        <div class="bubble">
+                            <div class="author">Suzune Shinonome</div>
+                            <div class="[[object]]">
+                                <div class="ts-image">
+                                    <img src="!-16:9-!">
+                                </div>
+                            </div>
+                            <div class="text">
+                                I dare not tell them that there are more bad reviews today.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-conversation" style="max-width: 400px;">
+                    <div class="avatar">
+                        <img src="!-user-!">
+                    </div>
+                    <div class="content">
+                        <div class="bubble">
+                            <div class="author">Sota Yamazaki</div>
+                            <div class="[[object]]">
+                                <div class="{{ts-imageset}} is-compact is-3-images">
+                                    <div class="item">
+                                        <img src="!-16:9-!">
+                                    </div>
+                                    <div class="item">
+                                        <img src="!-16:9-!">
+                                    </div>
+                                    <div class="item">
+                                        <img src="!-16:9-!">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text">
+                                It's 2:55 a.m.,<br>
+                                and for me, the day is only half over.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    - Title: Variations
+      Description:
+      Sections:
+          - Title: Self
+            Anchor: Self
+            Description: By having the message to the right and changing its semantics, the user can see at a glance that it is a message they have sent.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-conversation [[is-self]]">
+                    <div class="avatar">
+                        <img src="!-user-!">
+                    </div>
+                    <div class="content">
+                        <div class="bubble">
+                            <div class="author">Tsukasa Nitta</div>
+                            <div class="text">
+                                The cause should happen before the effect,<br>
+                                but it depends on how you look at the time.
+                            </div>
+                            <div class="meta">
+                                <div class="item">PM 05:18</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Object Only
+            Anchor: Object Only
+            Description: If the message contains only external objects and no other content, you can make the message look tighter and remove unnecessary space.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-conversation [[is-object-only]] is-sent">
+                    <div class="avatar">
+                        <img src="!-user-!">
+                    </div>
+                    <div class="content">
+                        <div class="bubble">
+                            <div class="object">
+                                <div class="ts-image">
+                                    <img src="!-16:9-!">
+                                </div>
+                            </div>
+                            <div class="meta">
+                                <div class="item">AM 06:37</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    - Title: Compositions
+      Description:
+      Sections:
+          - Title: Reactions
+            Anchor: Composition Reactions
+            Description: Placing a [Chip](./chip.html) under the message can create an opportunity for users to express their reactions to the message.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-conversation">
+                    <div class="avatar">
+                        <img src="!-user-!">
+                    </div>
+                    <div class="content">
+                        <div class="bubble">
+                            <div class="author">Rihito Sato</div>
+                            <div class="text">
+                                We all have to survive and live, too.<br>
+                                Not everyone has the courage to throw their weight around.
+                            </div>
+                        </div>
+                        <div class="{{ts-space}} is-small"></div>
+                        <div class="{{ts-wrap}} is-compact">
+                            <label class="[[{{ts-chip}}]] is-toggle is-small is-dense is-secondary is-circular is-outlined">
+                                <input type="checkbox" checked="">
+                                <div class="content">👌 21</div>
+                            </label>
+                            <label class="[[{{ts-chip}}]] is-toggle is-small is-dense is-secondary is-circular is-outlined">
+                                <input type="checkbox">
+                                <div class="content">👀 8</div>
+                            </label>
+                            <div class="[[{{ts-chip}}]] is-outlined is-small is-dense is-circular" style="padding: 0.1rem 0.5rem">
+                                <span class="{{ts-icon}} is-regular is-face-smile-icon"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Meta
+            Anchor: Composition Meta
+            Description: The [Meta](./meta.html) component can present detailed information about the message or part of the action behavior.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-conversation">
+                    <div class="avatar">
+                        <img src="!-user-!">
+                    </div>
+                    <div class="content">
+                        <div class="bubble">
+                            <div class="author">MhliA</div>
+                            <div class="text">
+                                You suddenly ask yourself, "When exactly did I die?"<br>
+                                The last second you try to remember, you finally remembered the scene.
+                            </div>
+                        </div>
+                        <div class="[[{{ts-meta}}]] is-small is-secondary">
+                            <a href="#!" class="item">Like</a>
+                            <a href="#!" class="item">Reply</a>
+                            <a href="#!" class="item">3 mins</a>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Callbacks
+            Anchor: Composition Callbacks
+            Description: With the [Button](./button.html) and [Grid](./grid.html), you can create action buttons for that message. Suitable for interact with chatbots.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-conversation">
+                    <div class="avatar">
+                        <img src="!-user-!">
+                    </div>
+                    <div class="content">
+                        <div class="bubble">
+                            <div class="author">TRPG Game Robots</div>
+                            <div class="text">
+                                You are currently in: <b>Tjarantis City</b><br>
+                                There are 11 players here,<br>
+                                A short distance ahead looks like the exit of the town.
+                            </div>
+                            <div class="meta">
+                                <div class="item">PM 01:02</div>
+                            </div>
+                        </div>
+                        <div class="{{ts-space}} is-small"></div>
+                        <div class="{{ts-row}} is-compact is-evenly-divided">
+                            <div class="column">
+                                <button class="[[{{ts-button}}]] is-small is-secondary is-dense is-fluid">
+                                    ⬆️ Forward
+                                </button>
+                            </div>
+                            <div class="column">
+                                <button class="[[{{ts-button}}]] is-small is-secondary is-dense is-fluid">
+                                    ↩️ Back to Alley
+                                </button>
+                            </div>
+                            <div class="column">
+                                <button class="[[{{ts-button}}]] is-small is-secondary is-dense is-fluid">
+                                    👁️‍🗨️ Investigate
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>

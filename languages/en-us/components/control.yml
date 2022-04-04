@@ -1,0 +1,177 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: Control
+Description: A specific layout with form fields.
+Intro: |
+    This is usually used for form input fields, which will simply divide the field into label, content, and can be described as a [Grid](./grid.html) with a fixed width. This component is not very suitable for responsive web pages, because it requires a certain width of the parent container. In this case, it is recommended to use [Grid](./grid.html) to create a more flexible form would be more appropriate.
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Grid
+    - Row
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="[[ts-control]]">
+            <div class="label">Username</div>
+            <div class="content">
+                <div class="{{ts-input}} is-fluid">
+                    <input type="text">
+                </div>
+            </div>
+        </div>
+
+Definitions:
+    - Title: Variations
+      Description:
+      Sections:
+          - Title: Label Aligns
+            Anchor: Label Aligns
+            Description: The label can be placed in the starting position, but this may make the label too far from the content field to be readable.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-control">
+                    <div class="label [[is-start-aligned]]">Age</div>
+                    <div class="content">
+                        <div class="{{ts-input}} is-fluid">
+                            <input type="number">
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Padded
+            Anchor: Padded
+            Description: If you place plain text or some shorter elements in the content field, you need to increase the padding to match the height of the label.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-control">
+                    <div class="label">Email Address</div>
+                    <div class="content [[is-padded]]">
+                        yamiodymel@example.com
+                    </div>
+                </div>
+                <div class="ts-control">
+                    <div class="label">Blocking ADs</div>
+                    <div class="content [[is-padded]]">
+                        <label class="ts-switch">
+                            <input type="checkbox" checked />
+                            Enable
+                        </label>
+                    </div>
+                </div>
+
+          - Title: Fluid
+            Anchor: Fluid
+            Description: The default width of the content field is not full width, so you can use this style if you want to fill the width of the parent container.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-control">
+                    <div class="label">Nickname</div>
+                    <div class="content [[is-fluid]]">
+                        <div class="{{ts-input}} is-fluid">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Wide
+            Anchor: Wide
+            Description: This allows the Control to be used with more spaces and is suitable for narrower containers.
+            Remove:
+                - <div class="ts-space"></div>
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-control">
+                    <div class="label">Label</div>
+                    <div class="content">
+                        <div class="{{ts-input}} is-fluid">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-control [[is-wide]]">
+                    <div class="label">Label</div>
+                    <div class="content">
+                        <div class="{{ts-input}} is-fluid">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+
+    - Title: Compositions
+      Description:
+      Sections:
+          - Title: Section Divider
+            Anchor: Composition Divider
+            Description: If there are two control fields that are not related to each other, you can consider separating them with a divider.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-wrap}} is-vertical">
+                    <div class="ts-control">
+                        <div class="label">Username</div>
+                        <div class="content">
+                            <div class="{{ts-input}} is-fluid">
+                                <input type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ts-control">
+                        <div class="label">Password</div>
+                        <div class="content">
+                            <div class="{{ts-input}} is-fluid">
+                                <input type="password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="[[{{ts-divider}}]]"></div>
+                    <div class="ts-control">
+                        <div class="label">Marketing Mails</div>
+                        <div class="content is-padded">
+                            <label class="{{ts-switch}}">
+                                <input type="checkbox" checked />
+                                Send me email notifications.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Block
+            Anchor: Composition Block
+            Description: The [Content](./content.html) can also make a Control look like a separate logical block.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-wrap}} is-vertical">
+                    <div class="ts-control">
+                        <div class="label">Realname</div>
+                        <div class="content">
+                            <div class="{{ts-input}} is-fluid">
+                                <input type="text">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="{{ts-divider}}"></div>
+                    <div class="ts-control">
+                        <div class="label">Danger Zone</div>
+                        <div class="content">
+                            <div class="[[{{ts-content}}]] is-rounded is-secondary is-padded">
+                                <button class="{{ts-button}} is-outlined is-negative">Delete User</button>
+                                <div class="{{ts-space}} is-small"></div>
+                                <div class="{{ts-text}} is-description">Note that you will not be able to recover this behavior.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>

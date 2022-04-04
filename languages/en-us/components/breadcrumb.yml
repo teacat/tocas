@@ -1,0 +1,143 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: Breadcrumb
+Description: Indicates the level and category of the currently viewing page.
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-breadcrumb]]">
+            <a href="#!" class="item">Movie</a>
+            <a href="#!" class="item">Awarded</a>
+            <a href="#!" class="item is-active">Koe no Katachi</a>
+        </div>
+
+Definitions:
+    - Title: States
+      Description:
+      Sections:
+          - Title: Active
+            Anchor: Active
+            Description: Indicates the current location.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-breadcrumb is-divided">
+                    <a href="#!" class="item">
+                        <span class="{{ts-icon}} is-house-icon"></span>
+                    </a>
+                    <a href="#!" class="item">
+                        <span class="{{ts-icon}} is-users-icon is-end-spaced"></span> User Management
+                    </a>
+                    <a href="#!" class="item [[is-active]]">
+                        Create User
+                    </a>
+                </div>
+
+    - Title: Variations
+      Description:
+      Sections:
+          - Title: Customized
+            Anchor: Customized
+            Description: The default navigation markers are separated by a slash. The separator can be customized with custom icons via the `divider` element.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-breadcrumb [[is-customized]]">
+                    <a href="#!" class="item">Website</a>
+                    <div class="divider">
+                        <span class="{{ts-icon}} is-caret-right-icon"></span>
+                    </div>
+                    <a href="#!" class="item">Registration</a>
+                    <div class="divider">
+                        <span class="{{ts-icon}} is-caret-right-icon"></span>
+                    </div>
+                    <a href="#!" class="item">Profile</a>
+                </div>
+
+          - Title: Stepped
+            Anchor: Stepped
+            Description: Giving the breadcrumb a level/staged feel, this will allow non-active items to be faded out.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-breadcrumb [[is-stepped]] is-chevroned">
+                    <a href="#!" class="item">Contact Us</a>
+                    <a href="#!" class="item">Technical Issues</a>
+                    <a href="#!" class="item is-active">Form</a>
+                </div>
+
+          - Title: Chevroned
+            Anchor: Chevroned
+            Description: Separate items by chevron arrows.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-breadcrumb [[is-chevroned]]">
+                    <a href="#!" class="item">Online Shopping</a>
+                    <a href="#!" class="item">24H Delivery</a>
+                    <a href="#!" class="item">Smartphone</a>
+                </div>
+
+          - Title: Hyphenated
+            Anchor: Hyphenated
+            Description: Separate items with basic hyphens.
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-breadcrumb [[is-hyphenated]]">
+                    <a href="#!" class="item">Wireless Mouse</a>
+                    <a href="#!" class="item">Low Response Time</a>
+                    <a href="#!" class="item">Special Sale</a>
+                </div>
+
+          - Title: Sizes
+            Anchor: Sizes
+            Description: Change the size of the breadcrumb.
+            Since: 4.0.0
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-breadcrumb [[is-small]]">
+                    <a href="#!" class="item">Documentations</a>
+                    <a href="#!" class="item">Programming</a>
+                    <a href="#!" class="item">Golang</a>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-breadcrumb">
+                    <a href="#!" class="item">Documentations</a>
+                    <a href="#!" class="item">Programming</a>
+                    <a href="#!" class="item">Golang</a>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-breadcrumb [[is-large]]">
+                    <a href="#!" class="item">Documentations</a>
+                    <a href="#!" class="item">Programming</a>
+                    <a href="#!" class="item">Golang</a>
+                </div>
+
+    - Title: Compositions
+      Description:
+      Sections:
+          - Title: Block Breadcrumb
+            Anchor: Composition Block
+            Description: If you want the breadcrumb to be presented in a block, don't forget to pair it with [Segment](./segment.html) or [Content](./content.html).
+            Since: 4.0.0
+            HTML: |
+                <div class="[[{{ts-segment}}]] is-secondary">
+                    <div class="ts-breadcrumb is-chevroned">
+                        <a href="#!" class="item">Movie</a>
+                        <a href="#!" class="item">Sci-Fi</a>
+                        <a href="#!" class="item">Interstellar</a>
+                    </div>
+                </div>

@@ -1,0 +1,158 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 通知
+Description: 帶有圖示、圖片與可互動選項的通知訊息。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="{{ts-box}}">
+            <div class="{{ts-content}}">
+                <div class="[[ts-notification]]">
+                    <div class="aside">
+                        <div class="{{ts-icon}} is-trash-icon"></div>
+                    </div>
+                    <div class="content">
+                        <div class="text">已將你的貼文移動至回收桶。</div>
+                        <div class="actions">
+                            <button class="item">還原</button>
+                            <button class="item is-secondary">下次提醒我</button>
+                        </div>
+                    </div>
+                    <button class="{{ts-close}}"></button>
+                </div>
+            </div>
+        </div>
+
+Definitions:
+    - Title: 內容
+      Description:
+      Sections:
+          - Title: 圖示
+            Anchor: Icon
+            Description:
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-notification">
+                    <div class="aside">
+                        <div class="[[{{ts-icon}}]] is-upload-icon"></div>
+                    </div>
+                    <div class="content">
+                        <div class="text">你的檔案「YamiOdymel.jpg」已經成功上傳了。</div>
+                    </div>
+                </div>
+
+          - Title: 圖片
+            Anchor: Image
+            Description:
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-notification">
+                    <div class="aside">
+                        <img class="[[{{ts-image}}]]" src="!-user-!">
+                    </div>
+                    <div class="content">
+                        <div class="text">Haneda Shirone 在你的貼文上留言。</div>
+                    </div>
+                    <button class="{{ts-close}}"></button>
+                </div>
+
+          - Title: 文字
+            Anchor: Text
+            Description:
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-notification">
+                    <div class="content">
+                        <div class="[[text]]">早安！自從你上次登入之後，我們已經新增了五篇文章。</div>
+                        <div class="actions">
+                            <button class="item">知道了</button>
+                        </div>
+                    </div>
+                    <button class="{{ts-close}}"></button>
+                </div>
+
+          - Title: 動作
+            Anchor: Actions
+            Description:
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-notification">
+                    <div class="aside">
+                        <div class="{{ts-icon}} is-heart-icon"></div>
+                    </div>
+                    <div class="content">
+                        <div class="text">你的貼文已經收到了 32 個收藏。</div>
+                        <div class="[[actions]]">
+                            <button class="item">不要再通知我</button>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 關閉按鈕
+            Anchor: Close
+            Description:
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-notification">
+                    <div class="content">
+                        <div class="text">已將項目加入至購物車，你的購物車現在有 5 項產品。</div>
+                        <div class="actions">
+                            <button class="item">結帳</button>
+                        </div>
+                    </div>
+                    <button class="[[{{ts-close}}]]"></button>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 動作語意
+            Anchor: Action Emphasises
+            Description:
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-notification">
+                    <div class="aside">
+                        <div class="{{ts-icon}} is-plane-icon"></div>
+                    </div>
+                    <div class="content">
+                        <div class="text">你已啟用飛航模式，你將不再能夠連上網際網路。</div>
+                        <div class="[[actions]]">
+                            <button class="item [[is-primary]]">關閉功能</button>
+                            <button class="item [[is-negative]]">不要再提醒我</button>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 次要的動作
+            Anchor: Action Secondary
+            Description:
+            Since: 4.0.0
+            HTML: |
+                <div class="ts-notification">
+                    <div class="aside">
+                        <div class="{{ts-icon}} is-trash-icon"></div>
+                    </div>
+                    <div class="content">
+                        <div class="text">已將你的貼文移動至回收桶。</div>
+                        <div class="actions">
+                            <button class="item">還原</button>
+                            <button class="item [[is-secondary]]">知道了</button>
+                        </div>
+                    </div>
+                </div>
