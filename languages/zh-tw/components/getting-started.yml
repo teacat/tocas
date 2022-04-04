@@ -25,85 +25,49 @@ Definitions:
             Description: |
                 這是由一家知名 CDN 公司 CloudFlare 所提供的免費服務並且提供夠快的服務速度，這使你不需要下載 Tocas UI，只需要將下列標籤放置於 HTML 中的 `<head> .. </head>` 處即可，該公司提供可靠的上線時間令你毋須擔心。
             AttachedHTML: |
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/4.0.0/tocas.css">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.0.0-beta.1/tocas.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.0.0-beta.1/tocas.js"></script>
 
           - Title: 自行下載 Tocas UI
-            Anchor: CDN
+            Anchor: Download
             Since: 4.0.0
             Description: |
-                到 [Tocas UI 的官方 Github](https://github.com/teacat/tocas) 下載樣式然後取出其中的 `/dist` 資料夾並像下面這樣引用 Tocas UI 檔案。使用此安裝方式的好處是可以確保樣式不會因為遠端的伺服器離線而遺失。
+                你也可以到 [Tocas UI 的官方 Github](https://github.com/teacat/tocas) 下載樣式然後取出其中的 `/dist` 資料夾並像下面這樣引用 Tocas UI 檔案。使用此安裝方式的好處是可以確保樣式不會因為遠端的伺服器離線而遺失。
             AttachedHTML: |
-                <link rel="stylesheet" href="tocas.css">
+                <link rel="stylesheet" href="./tocas/dist/tocas.min.css">
+                <script src="./tocas/dist/tocas.min.js"></script>
+
+          - Title: 以 NPM 安裝
+            Anchor: NPM
+            Since: 4.0.0
+            Description: |
+                Tocas UI 也能夠從 [NPM](https://www.npmjs.com/package/tocas) 中直接安裝，執行下列指令後引用最重要的 `@tocas/dist/tocas.min.css` 和 `@tocas/dist/tocas.min.js` 檔案即可。
+            AttachedHTML: |
+                npm i tocas
 
     - Title: 使用須知
       Description: 需要注意 HTML 和設計上是否有達到這些要求。
       Sections:
-          - Title: HTML5 宣告
-            Anchor: HTML5
-            Description: |
-                請確定有透過 `<!DOCTYPE HTML>` 將網頁宣告成 HTML5。
-            AttachedHTML: |
-                <!DOCTYPE HTML>
-                <html><!-- ... --></html>
-
-          - Title: 響應式設計標籤
-            Anchor: Meta Tag
-            Description: |
-                Tocas UI 支援響應式設計，為此需要新增下列一段的標籤在 HTML 來告訴行動裝置此網頁支援響應式設計。利用這個標籤還可以降低並解決行動裝置對於網頁的點擊延遲，請將這段放置於 HTML 中的 `<head> .. </head>` 處。
-            AttachedHTML: |
-                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-          - Title: 動態字體縮放
-            Anchor: Scales
-            Description: |
-                Tocas UI 的所有元件字體大小是依賴著網頁基底而定。當網頁字型太小時，不需要變更每個元件的字型，可以直接變更 `<html>` 中的 `font-size` 大小設定，但 Tocas UI 也內建了 `[data-scale]` 屬性標籤能夠更改縮放級距。
-
-                <div class="ts-box">
-                    <table class="ts-table is-definition is-celled">
-                        <thead>
-                            <tr>
-                                <th class="is-collapsed"></th>
-                                <th class="is-collapsed">字體大小</th>
-                                <th class="is-collapsed">適用情境</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="is-collapsed">small</td>
-                                <td class="is-collapsed">14px</td>
-                                <td>手機或是行動裝置應用程式。</td>
-                            </tr>
-                            <tr>
-                                <td class="is-collapsed">medium</td>
-                                <td class="is-collapsed">15px</td>
-                                <td>基本的網頁和桌上型電腦的軟體介面。</td>
-                            </tr>
-                            <tr>
-                                <td class="is-collapsed">large</td>
-                                <td class="is-collapsed">16px</td>
-                                <td>專注在文字的部落格、商業推廣情境。</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            AttachedHTML: |
-                <html [[data-scale]]="large">
-
-          - Title: 停用樣式重設
-            Anchor: Reset
-            Description: |
-                有時候 Tocas UI 會為了美化樣式而重設頁面上原先存在的樣式，如果這會破壞現有的外觀，請在 `<html>` 標籤中加上 `[data-ts-reset="false"]` 的停用屬性標籤。
-            AttachedHTML: |
-                <html [[data-ts-reset]]="false">
-
           - Title: 網頁字型
             Anchor: Fonts
             Description: |
                 目前 Tocas UI 使用下列字型在各個系統（如：Ubuntu、macOS、Windows）。
+
+                ```
+                "Noto Sans TC", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue", "Helvetica", "Arial", "Microsoft JhengHei", wf_SegoeUI, "Segoe UI", Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, 微軟正黑體, "LiHei Pro", "WenQuanYi Micro Hei", "Droid Sans Fallback", "AR PL UMing TW", Roboto, "Helvetica Neue", "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif
+                ```
+
+                由於每個系統的字型仍有差異，我們建議你直接在 HTML 中的 `<head> .. </head>` 引用 Google Fonts 的 [Noto Sans TC](https://fonts.google.com/noto/specimen/Noto+Sans+TC) 思源黑體字型，這樣便能在不同裝置與系統統一呈現效果而沒有誤差。
+
             AttachedHTML: |
-                "Noto Sans CJK TC", "Noto Sans TC", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue", "Helvetica", "Arial", "Microsoft JhengHei",
-                wf_SegoeUI, "Segoe UI", Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, 微軟正黑體, "LiHei Pro", "WenQuanYi Micro Hei",
-                "Droid Sans Fallback", "AR PL UMing TW", Roboto, "Helvetica Neue", "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+                <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+
+          - Title: HTML5 與響應式設計
+            Anchor: HTML5
+            Description: |
+                請確定有透過 `<!DOCTYPE HTML>` 將網頁宣告成 HTML5。Tocas UI 支援響應式設計，相關內容請參閱[響應式設計](./responsive.html)頁面。
 
     - Title: 與其他框架比較
       Description: |
@@ -163,7 +127,7 @@ Definitions:
             Anchor: Taildwind CSS And Tachyons
             Since: 4.0.0
             Description: |
-                Tailwind CSS 是近幾年來前端開發容易被採用的設計方式，比起框架這更像是設計的輔助工具。Tailwind CSS 與 Tachyons 的理念相近，這兩個框架並沒有元件觀念。這意味著你將需要透過 Tailwind CSS 內建的輔助樣式自行建立需要的元件。
+                雖然不能相互比較，但 Tailwind CSS 是近幾年來前端開發容易被採用的設計方式，比起框架這更像是設計的輔助工具。Tailwind CSS 與 Tachyons 的理念相近，這兩個框架並沒有元件觀念。這意味著你將需要透過 Tailwind CSS 內建的輔助樣式自行建立需要的元件。
 
                 通常使用 Tailwind CSS 會搭配 Node.js 預處理器（Preprocessor）來輔助（如：移除無用的多餘樣式），這令使用 Tailwind CSS 的專案都無法避免使用 Node.js 和其龐大且沈重的 npm 相依性套件。
 
