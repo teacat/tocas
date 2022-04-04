@@ -3,9 +3,10 @@
 # Header
 #=======================================================
 
-Title: 表單控制項
-Description: 帶有標籤欄位的特定排版格局。
-Intro: 這個通常用在表單輸入欄位上，這會單純地將欄位區分為標籤、內容，可以說是帶有固定寬度的[網格系統](./grid.html)。這個元件並不太適合應用於響應式設計的網頁，因為其要求父容器要有一定的寬度。此時建議使用[網格系統](./grid.html)來建立一個更彈性的表單會較為合適。
+Title: Control
+Description: A specific layout with form fields.
+Intro: |
+    This is usually used for form input fields, which will simply divide the field into label, content, and can be described as a [Grid](./grid.html) with a fixed width. This component is not very suitable for responsive web pages, because it requires a certain width of the parent container. In this case, it is recommended to use [Grid](./grid.html) to create a more flexible form would be more appropriate.
 
 #=======================================================
 # 設定
@@ -25,25 +26,25 @@ Relatives:
 Example:
     HTML: |
         <div class="[[ts-control]]">
-            <div class="label">使用者名稱</div>
+            <div class="label">Username</div>
             <div class="content">
                 <div class="{{ts-input}} is-fluid">
-                    <input type="password">
+                    <input type="text">
                 </div>
             </div>
         </div>
 
 Definitions:
-    - Title: 外觀
+    - Title: Variations
       Description:
       Sections:
-          - Title: 標籤對齊
+          - Title: Label Aligns
             Anchor: Label Aligns
-            Description: 標籤可以置起始位置，但這樣可能會讓標籤距離內容欄位太遠而不好辨識。
+            Description: The label can be placed in the starting position, but this may make the label too far from the content field to be readable.
             Since: 4.0.0
             HTML: |
                 <div class="ts-control">
-                    <div class="label [[is-start-aligned]]">年齡</div>
+                    <div class="label [[is-start-aligned]]">Age</div>
                     <div class="content">
                         <div class="{{ts-input}} is-fluid">
                             <input type="number">
@@ -51,34 +52,34 @@ Definitions:
                     </div>
                 </div>
 
-          - Title: 內距增高的
+          - Title: Padded
             Anchor: Padded
-            Description: 如果在內容欄位裡擺放純文字或是某些較矮的元素則需要特別增高內距以避免其高度無法與標籤對齊。
+            Description: If you place plain text or some shorter elements in the content field, you need to increase the padding to match the height of the label.
             Since: 4.0.0
             HTML: |
                 <div class="ts-control">
-                    <div class="label">電子信箱地址</div>
+                    <div class="label">Email Address</div>
                     <div class="content [[is-padded]]">
                         yamiodymel@example.com
                     </div>
                 </div>
                 <div class="ts-control">
-                    <div class="label">封鎖廣告內容</div>
+                    <div class="label">Blocking ADs</div>
                     <div class="content [[is-padded]]">
                         <label class="ts-switch">
                             <input type="checkbox" checked />
-                            啟用
+                            Enable
                         </label>
                     </div>
                 </div>
 
-          - Title: 流動的
+          - Title: Fluid
             Anchor: Fluid
-            Description: 內容欄位預設的寬度不是全寬，如果希望填滿父容器寬度則可以使用此樣式。
+            Description: The default width of the content field is not full width, so you can use this style if you want to fill the width of the parent container.
             Since: 4.0.0
             HTML: |
                 <div class="ts-control">
-                    <div class="label">暱稱</div>
+                    <div class="label">Nickname</div>
                     <div class="content [[is-fluid]]">
                         <div class="{{ts-input}} is-fluid">
                             <input type="text">
@@ -86,15 +87,15 @@ Definitions:
                     </div>
                 </div>
 
-          - Title: 較寬的
+          - Title: Wide
             Anchor: Wide
-            Description: 使整個控制項運用更多的空白，適合較窄的容器。
+            Description: This allows the Control to be used with more spaces and is suitable for narrower containers.
             Remove:
                 - <div class="ts-space"></div>
             Since: 4.0.0
             HTML: |
                 <div class="ts-control">
-                    <div class="label">標籤</div>
+                    <div class="label">Label</div>
                     <div class="content">
                         <div class="{{ts-input}} is-fluid">
                             <input type="text">
@@ -103,7 +104,7 @@ Definitions:
                 </div>
                 <div class="ts-space"></div>
                 <div class="ts-control [[is-wide]]">
-                    <div class="label">標籤</div>
+                    <div class="label">Label</div>
                     <div class="content">
                         <div class="{{ts-input}} is-fluid">
                             <input type="text">
@@ -111,17 +112,17 @@ Definitions:
                     </div>
                 </div>
 
-    - Title: 組合應用
+    - Title: Compositions
       Description:
       Sections:
-          - Title: 區段分隔線
+          - Title: Section Divider
             Anchor: Composition Divider
-            Description: 如果有兩個控制項欄位互不相關，可以考慮透過區段分隔線將其分開。
+            Description: If there are two control fields that are not related to each other, you can consider separating them with a divider.
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-wrap}} is-vertical">
                     <div class="ts-control">
-                        <div class="label">使用者名稱</div>
+                        <div class="label">Username</div>
                         <div class="content">
                             <div class="{{ts-input}} is-fluid">
                                 <input type="text">
@@ -129,7 +130,7 @@ Definitions:
                         </div>
                     </div>
                     <div class="ts-control">
-                        <div class="label">密碼</div>
+                        <div class="label">Password</div>
                         <div class="content">
                             <div class="{{ts-input}} is-fluid">
                                 <input type="password">
@@ -138,24 +139,24 @@ Definitions:
                     </div>
                     <div class="[[{{ts-divider}}]]"></div>
                     <div class="ts-control">
-                        <div class="label">行銷通知</div>
+                        <div class="label">Marketing Mails</div>
                         <div class="content is-padded">
                             <label class="{{ts-switch}}">
                                 <input type="checkbox" checked />
-                                我想接收到更多的電子信箱通知。
+                                Send me email notifications.
                             </label>
                         </div>
                     </div>
                 </div>
 
-          - Title: 特別區塊
+          - Title: Block
             Anchor: Composition Block
-            Description: 透過[內容區塊](./content.html)點綴也能讓某個控制項看起來像一個獨立的邏輯區塊。
+            Description: The [Content](./content.html) can also make a Control look like a separate logical block.
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-wrap}} is-vertical">
                     <div class="ts-control">
-                        <div class="label">真實姓名</div>
+                        <div class="label">Realname</div>
                         <div class="content">
                             <div class="{{ts-input}} is-fluid">
                                 <input type="text">
@@ -164,12 +165,12 @@ Definitions:
                     </div>
                     <div class="{{ts-divider}}"></div>
                     <div class="ts-control">
-                        <div class="label">危險地區</div>
+                        <div class="label">Danger Zone</div>
                         <div class="content">
                             <div class="[[{{ts-content}}]] is-rounded is-secondary is-padded">
-                                <button class="{{ts-button}} is-outlined is-negative">移除使用者</button>
+                                <button class="{{ts-button}} is-outlined is-negative">Delete User</button>
                                 <div class="{{ts-space}} is-small"></div>
-                                <div class="{{ts-text}} is-description">注意，你將無法復原這項行為。</div>
+                                <div class="{{ts-text}} is-description">Note that you will not be able to recover this behavior.</div>
                             </div>
                         </div>
                     </div>
