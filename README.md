@@ -17,16 +17,27 @@ The fastest and most intuitive way to build diverse websites and progressive web
 ## 🌼 Features
 
 -   **No jQuery dependency**
+
     No external JavaScript library dependencies.
+
 -   **Pure CSS**
+
     Tocas UI works well with all front-end frameworks. No built-in modules that take over the jobs from your favorite libraries.
+
 -   **No npm or Webpack**
+
     You don't need to install a bunch of packages via npm, nor setting up a bunch of loaders in Webpack.
+
 -   **Concise, semantic class names**
+
     Stlying colors with emphasises like `negative` and `positive`, meaningful class names like `is-outlined`.
+
 -   **Dynamic color scheme that supports light/dark themes**
+
     Automatically switch the color schemes between light/dark themes.
+
 -   **Over 50 components with 100+ combinations**
+
     Take a look at the [examples](https://v4.tocas-ui.com/en-us/examples.html) and see what you can create with Tocas UI.
 
 &nbsp;
