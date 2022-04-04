@@ -9457,7 +9457,7 @@ button {
     min-width: fit-content;
     text-align: right;
     transition: width 1s ease-out;
-    width: var(--value);
+    width: calc(var(--value) * 1%);
     z-index: 1;
 }
 
@@ -13030,7 +13030,7 @@ a.ts-box:hover {
  */
 
 .ts-breadcrumb.is-stepped .item {
-    color: var(--ts-gray-600);
+    color: var(--ts-gray-500);
 }
 
 /**
@@ -16611,104 +16611,6 @@ a.ts-segment:hover {
    Variables
    ========================================================================== */
 
-/* ==========================================================================
-   Base
-   ========================================================================== */
-
-.ts-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    color: inherit;
-}
-
-/* ==========================================================================
-   Variations
-   ========================================================================== */
-
-/**
- * Aligns
- */
-
-.ts-stack.is-start-aligned {
-    justify-content: flex-start;
-}
-
-.ts-stack.is-center-aligned {
-    justify-content: center;
-}
-
-.ts-stack.is-end-aligned {
-    justify-content: flex-end;
-}
-
-.ts-stack.is-top-aligned {
-    align-items: flex-start;
-}
-
-.ts-stack.is-middle-aligned {
-    align-items: center;
-}
-
-.ts-stack.is-bottom-aligned {
-    align-items: flex-end;
-}
-
-.ts-stack .column.is-middle-aligned {
-    align-items: center;
-    display: flex;
-}
-
-.ts-stack .column.is-center-aligned {
-    justify-content: center;
-    display: flex;
-}
-
-.ts-stack .column.is-bottom-aligned {
-    align-items: flex-end;
-    display: flex;
-}
-
-.ts-stack .column.is-start-aligned {
-    text-align: left;
-}
-
-.ts-stack .column.is-end-aligned {
-    text-align: right;
-}
-
-/**
- * Evenly Divided
- */
-
-.ts-stack.is-evenly-divided .column {
-    flex: 1;
-}
-
-/**
- * Fluid
- */
-
-.ts-stack .column.is-fluid {
-    flex: 1;
-}
-
-/**
- * Gapless
- */
-
-.ts-stack.is-compact {
-    gap: 0.5rem;
-}
-
-.ts-stack.is-relaxed {
-    gap: 2rem;
-}
-
-/* ==========================================================================
-   Variables
-   ========================================================================== */
-
 .ts-menu {
     --object-distance: 0.8rem;
 }
@@ -16931,51 +16833,6 @@ a.ts-segment:hover {
    Base
    ========================================================================== */
 
-.ts-align {
-    display: flex;
-}
-
-/* ==========================================================================
-   Variations
-   ========================================================================== */
-
-.ts-align.is-start-aligned {
-    justify-content: flex-start;
-}
-
-.ts-align.is-center-aligned {
-    justify-content: center;
-}
-
-.ts-align.is-end-aligned {
-    justify-content: flex-end;
-}
-
-.ts-align.is-middle-aligned {
-    align-items: center;
-}
-
-.ts-align.is-top-aligned {
-    align-items: flex-start;
-}
-
-.ts-align.is-bottom-aligned {
-    align-items: flex-end;
-}
-
-.ts-align.is-centered {
-    justify-content: center;
-    align-items: center;
-}
-
-/* ==========================================================================
-   Variables
-   ========================================================================== */
-
-/* ==========================================================================
-   Base
-   ========================================================================== */
-
 .ts-checklist {
     margin-right: 1.5rem;
     display: flex;
@@ -16990,7 +16847,7 @@ a.ts-segment:hover {
 .ts-checklist .item {
     color: var(--ts-gray-800);
     text-decoration: none;
-    padding-left: 30px;
+    padding-left: 28px;
 }
 
 .ts-checklist .item::before {
@@ -17004,17 +16861,17 @@ a.ts-segment:hover {
     font-size: var(--ts-font-size-12px);
     border-radius: 100rem;
     line-height: 1;
-    height: 16px;
-    width: 1rem;
+    height: 20px;
+    width: 20px;
     padding: 0.25rem;
     display: inline-block;
-    transform: scale(0.8);
+    transform: scale(0.9);
     padding-top: 0.3rem;
     padding-bottom: 0.1rem;
     vertical-align: middle;
     position: absolute;
     left: 0;
-    top: 2px;
+    top: 3px;
 }
 
 /* ==========================================================================
@@ -17637,6 +17494,12 @@ a.ts-segment:hover {
 /* ==========================================================================
    Base
    ========================================================================== */
+.ts-gauge {
+    --length: 0.8;
+    --value: 0;
+    --size: 5rem;
+    --thickness: calc(var(--size) / 10);
+}
 
 .ts-gauge,
 .ts-gauge .bar {
@@ -17644,45 +17507,55 @@ a.ts-segment:hover {
     display: inline-grid;
     height: var(--size);
     width: var(--size);
+
     place-content: center;
     border-radius: 9999px;
     background-color: transparent;
     vertical-align: middle;
     box-sizing: content-box;
-    --value: 0;
-    --size: 5rem;
-    --thickness: calc(var(--size) / 10);
+}
+
+.ts-gauge {
+    --value: 100;
+
+    transform: rotate(216deg);
 }
 
 /* ==========================================================================
    Structure
    ========================================================================== */
 
-.ts-gauge::after,
 .ts-gauge::before,
-.ts-gauge .bar::after,
 .ts-gauge .bar::before {
     position: absolute;
     border-radius: 9999px;
     content: "";
 }
 
-.ts-gauge::before,
 .ts-gauge .bar::before {
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    background: radial-gradient(farthest-side, currentColor 98%, #0000) top/var(--thickness) var(--thickness) no-repeat,
-        conic-gradient(currentColor calc(var(--value) * 1% * 0.8), #0000 0);
-    mask: radial-gradient(farthest-side, #0000 calc(99% - var(--thickness)), #000 calc(100% - var(--thickness)));
+
+    background: conic-gradient(currentColor calc(var(--value) * 1% * var(--length)), #0000 0);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(99% - var(--thickness)), rgb(0 0 0 / 85%) calc(100% - var(--thickness)));
+    mask: radial-gradient(farthest-side, #0000 calc(99% - var(--thickness)), rgb(0 0 0 / 85%) calc(100% - var(--thickness)));
 }
 
-.ts-gauge::after,
-.ts-gauge .bar::after {
-    inset: calc(50% - var(--thickness) / 2);
-    transform: rotate(calc(var(--value) * 3.6deg - 90deg)) translate(calc(var(--size) / 2 - 50%));
-    background-color: currentColor;
+.ts-gauge::before {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    -webkit-mask: radial-gradient(farthest-side, #f000 calc(99% - var(--thickness)), #0000001a calc(100% - var(--thickness)));
+    mask: radial-gradient(farthest-side, #f000 calc(99% - var(--thickness)), #0000001a calc(100% - var(--thickness)));
+    background: conic-gradient(currentColor calc(var(--value) * var(--length) * 1%), #0000 0);
+}
+
+.ts-gauge .bar .text {
+    transform: rotate(-216deg);
 }
 
 /* ==========================================================================
@@ -17690,10 +17563,62 @@ a.ts-segment:hover {
    ========================================================================== */
 
 /**
- * Negative
+ * Circular
  */
 
+.ts-gauge.is-circular {
+    transform: initial;
+    --length: 1;
+}
 
+.ts-gauge.is-circular .bar::before {
+    /*background: conic-gradient(currentColor calc(var(--value) * 1%), #0000 0);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(99% - var(--thickness)), rgb(0 0 0 / 85%) calc(100% - var(--thickness)));
+    mask: radial-gradient(farthest-side, #0000 calc(99% - var(--thickness)), rgb(0 0 0 / 85%) calc(100% - var(--thickness)));*/
+}
+
+.ts-gauge.is-circular::before {
+    /*background: conic-gradient(currentColor calc(var(--value) * 1%), #0000 0);
+    -webkit-mask: radial-gradient(farthest-side, #f000 calc(99% - var(--thickness)), #0000001a calc(100% - var(--thickness)));
+    mask: radial-gradient(farthest-side, #f000 calc(99% - var(--thickness)), #0000001a calc(100% - var(--thickness)));*/
+}
+
+.ts-gauge.is-circular .bar .text {
+    transform: initial;
+}
+
+/**
+ * Uplifted
+ */
+
+.ts-gauge.is-uplifted {
+    transform: rotate(180deg);
+    --length: 0.7;
+}
+
+.ts-gauge.is-uplifted .bar .text {
+    transform: rotate(-180deg);
+}
+
+/**
+ * Centered
+ */
+
+.ts-gauge.is-centered {
+    margin: 0 auto;
+    display: grid;
+}
+
+/**
+ * Sizes
+ */
+
+.ts-gauge.is-small {
+    --size: 4rem;
+}
+.ts-gauge.is-large {
+    --size: 6rem;
+}
 
 
 
