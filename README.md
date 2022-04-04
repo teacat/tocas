@@ -47,8 +47,8 @@ The fastest and most intuitive way to build diverse websites and progressive web
 Just copy the HTML tags to your `<head>...</head>` section and have a blast🔥.
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/4.0.0-alpha.1/tocas.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/4.0.0-alpha.1/tocas.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/4.0.0-beta.1/tocas.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/4.0.0-beta.1/tocas.min.js"></script>
 ```
 
 Or maybe you like `npm` 👀
