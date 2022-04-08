@@ -8823,6 +8823,7 @@ button {
 
 .ts-input.is-fluid {
     display: flex;
+    width: 100%;
 }
 
 .ts-input.is-fluid input,
@@ -8948,6 +8949,7 @@ button {
 
 .ts-file.is-fluid {
     display: flex;
+    width: 100%;
 }
 
 .ts-file.is-fluid input,
@@ -9007,7 +9009,7 @@ button {
     background: var(--ts-gray-50);
     color: var(--ts-gray-800);
     border-radius: 0.4rem;
-    padding: 0.35rem 0.5rem;
+    padding: 0.3rem 0.5rem;
     margin-right: 1rem;
     margin-top: 0.05rem;
     font-size: var(--ts-font-size-14px);
@@ -9096,10 +9098,9 @@ button {
 
 .ts-checkbox {
     display: inline-flex;
-    align-items: center;
+    align-items: flex-start;
     cursor: pointer;
     user-select: none;
-    line-height: 1.5;
     color: inherit;
     vertical-align: middle;
     margin-top: -3px;
@@ -9130,8 +9131,9 @@ button {
 }
 
 .ts-checkbox input {
-    height: 1.15rem;
-    width: 1.15rem;
+    min-height: 1.15rem;
+    min-width: 1.15rem;
+    margin-top: 5px;
     border-radius: 0.2rem;
     border: 1px solid var(--ts-gray-200);
     background: var(--ts-gray-200);
@@ -9158,10 +9160,10 @@ button {
     text-decoration: inherit;
     text-align: center;
     left: 0;
-    right: 1px;
+    right: 0;
     bottom: 0;
-    top: 1px;
-    transform: scale(0.7);
+    top: 0;
+    transform: scale(0.8);
     z-index: 1;
 
     align-items: center;
@@ -9218,8 +9220,8 @@ button {
  */
 
 .ts-checkbox.is-small input {
-    height: 0.95rem;
-    width: 0.95rem;
+    min-height: 0.95rem;
+    min-width: 0.95rem;
 }
 
 .ts-checkbox.is-small input::after {
@@ -9231,8 +9233,8 @@ button {
 }
 
 .ts-checkbox.is-large input {
-    height: 1.3rem;
-    width: 1.3rem;
+    min-height: 1.3rem;
+    min-width: 1.3rem;
 }
 
 .ts-checkbox.is-large {
@@ -9253,7 +9255,7 @@ button {
 
 .ts-radio {
     display: inline-flex;
-    align-items: center;
+    align-items: flex-start;
     cursor: pointer;
     user-select: none;
     color: inherit;
@@ -9286,8 +9288,9 @@ button {
 }
 
 .ts-radio input {
-    height: 1.15rem;
-    width: 1.15rem;
+    min-height: 1.15rem;
+    min-width: 1.15rem;
+    margin-top: 5px;
     border-radius: 100rem;
     border: 1px solid var(--ts-gray-200);
     background: var(--ts-gray-200);
@@ -9366,8 +9369,8 @@ button {
  */
 
 .ts-radio.is-small input {
-    height: 0.95rem;
-    width: 0.95rem;
+    min-height: 0.95rem;
+    min-width: 0.95rem;
 }
 
 .ts-radio.is-small input::after {
@@ -9379,8 +9382,8 @@ button {
 }
 
 .ts-radio.is-large input {
-    height: 1.3rem;
-    width: 1.3rem;
+    min-height: 1.3rem;
+    min-width: 1.3rem;
 }
 
 .ts-radio.is-large {
@@ -10155,7 +10158,7 @@ button {
  */
 
 .ts-text.is-bold {
-    font-weight: bold !important;
+    font-weight: 500 !important;
 }
 
 /**
@@ -10647,7 +10650,7 @@ button {
  */
 
 .ts-tab.is-small .item {
-    font-size: var(--ts-font-size-13px);
+    font-size: var(--ts-font-size-14px);
 }
 .ts-tab.is-large .item {
     font-size: var(--ts-font-size-17px);
@@ -11117,6 +11120,20 @@ a.ts-box:hover {
     margin-right: 0.45rem;
 }
 
+/**
+ * Aspect Ratio
+ */
+
+.ts-image.is-1-by-1 img {
+    aspect-ratio: 1 / 1;
+}
+.ts-image.is-4-by-3 img {
+    aspect-ratio: 4 / 3;
+}
+.ts-image.is-16-by-9 img {
+    aspect-ratio: 16 / 9;
+}
+
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -11127,7 +11144,7 @@ a.ts-box:hover {
 
 .ts-switch {
     display: inline-flex;
-    align-items: center;
+    align-items: flex-start;
     cursor: pointer;
     user-select: none;
     color: inherit;
@@ -11141,7 +11158,9 @@ a.ts-box:hover {
     appearance: none;
     -webkit-appearance: none;
     cursor: pointer;
+    margin: 0;
     margin-right: 0.5rem;
+    margin-top: 3px;
 }
 
 .ts-switch input::after {
@@ -11527,6 +11546,30 @@ a.ts-box:hover {
 }
 
 /**
+ * Padded
+ */
+
+.ts-table.is-padded tbody tr td {
+    padding: 1rem 1.5rem;
+}
+.ts-table.is-padded :is(thead, tfoot) tr th {
+    padding: 1rem 1.5rem;
+}
+
+.ts-table.is-horizontally-padded tbody tr td {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+.ts-table.is-horizontally-padded :is(thead, tfoot) tr th {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.ts-table td.is-padded {
+    padding: 1rem;
+}
+
+/**
  * Truncated
  */
 
@@ -11595,6 +11638,14 @@ a.ts-box:hover {
 }
 
 /**
+ * Insetted
+ */
+
+.ts-table td.is-insetted {
+    box-shadow: inset 0px 0px 10px 0px rgb(0 0 0 / 5%);
+}
+
+/**
  * Aligns
  */
 
@@ -11608,6 +11659,10 @@ a.ts-box:hover {
 
 .ts-table :is(th, td).is-end-aligned {
     text-align: right;
+}
+
+.ts-table.is-top-aligned :is(th, td) {
+    vertical-align: top;
 }
 
 .ts-table :is(th, td).is-top-aligned {
@@ -11631,6 +11686,14 @@ a.ts-box:hover {
  */
 
 .ts-table :is(tr, tr th, tr td).is-secondary {
+    background: var(--ts-gray-75);
+}
+
+/**
+ * Tertiary
+ */
+
+.ts-table :is(tr, tr th, tr td).is-tertiary {
     background: var(--ts-gray-100);
 }
 
@@ -11643,7 +11706,7 @@ a.ts-box:hover {
 }
 
 /**
- * Secondary
+ * Disabled
  */
 
 .ts-table :is(tr, tr th, tr td).is-disabled {
@@ -15718,7 +15781,7 @@ a.ts-box:hover {
    ========================================================================== */
 
 .ts-header {
-    font-weight: bold;
+    font-weight: 500;
     font-size: var(--ts-font-size-17px);
     color: inherit;
     line-height: 1.6;
@@ -16022,7 +16085,7 @@ a.ts-segment:hover {
 
 .ts-quote.is-heading {
     font-size: var(--ts-font-size-20px);
-    font-weight: bold;
+    font-weight: 500;
     color: var(--ts-gray-800);
     padding: 0;
     text-align: center;
