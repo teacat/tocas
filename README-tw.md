@@ -9,7 +9,7 @@
 -   👉 [[檢視所有元件]](https://v4.tocas-ui.com/zh-tw)
 -   📘 文件：[v4.tocas-ui.com/zh-tw](https://v4.tocas-ui.com/zh-tw)
 -   🎲 範例：[官方範例](https://v4.tocas-ui.com/zh-tw/examples.html)
--   📦 原始碼：[GitHub](https://github.com/teacat/tocas) | [NPM](https://www.npmjs.com/package/tocas) | [cdnjs](https://cdnjs.com/libraries/tocas-ui)
+-   📦 原始碼：[GitHub](https://github.com/teacat/tocas) | [NPM](https://www.npmjs.com/package/tocas) | [cdnjs](https://cdnjs.com/libraries/tocas)
 -   🌎 語系：**台灣正體** | [English](./README.md)
 
 &nbsp;
@@ -47,8 +47,8 @@
 只需要將下列 HTML 標籤複製至你的 `<head>...</head>` 網頁段落就可以開工了 🔥。
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/4.0.0-beta.1/tocas.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/4.0.0-beta.1/tocas.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.0.0-beta.2/tocas.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.0.0-beta.2/tocas.min.js"></script>
 ```
 
 又或者你喜歡 `npm` 的話…👀
