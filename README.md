@@ -9,7 +9,7 @@ The fastest and most intuitive way to build diverse websites and progressive web
 -   👉 [[See all components]](https://v4.tocas-ui.com/en-us)
 -   📘 Documents: [v4.tocas-ui.com/en-us](https://v4.tocas-ui.com/en-us)
 -   🎲 Examples: [Official examples](https://v4.tocas-ui.com/en-us/examples.html)
--   📦 Source: [GitHub](https://github.com/teacat/tocas) | [NPM](https://www.npmjs.com/package/tocas) | [cdnjs](https://cdnjs.com/libraries/tocas)
+-   📦 Source: [GitHub](https://github.com/teacat/tocas) | [NPM](https://www.npmjs.com/package/tocas) | [cdnjs](https://cdnjs.com/libraries/tocas-ui)
 -   🌎 Languages: [台灣正體](./README-tw.md) | **English**
 
 &nbsp;
