@@ -47,8 +47,8 @@
 只需要將下列 HTML 標籤複製至你的 `<head>...</head>` 網頁段落就可以開工了 🔥。
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/4.0.0-beta.3/tocas.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/4.0.0-beta.3/tocas.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/4.0.1/tocas.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/4.0.1/tocas.min.js"></script>
 ```
 
 又或者你喜歡 `npm` 的話…👀
