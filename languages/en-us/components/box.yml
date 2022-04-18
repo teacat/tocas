@@ -4,11 +4,11 @@
 #=======================================================
 
 Title: Box
-Description: The base container with borders can be mixed and matched with other elements.
+Description: A base container with a border that's able to compose with the other components.
 Intro: |
-    The Box looks a bit like a card, but the Box has no inner spacing. This is why Boxes are usually associated with [Content](./content.html), [Table](./table.html), [Image](./image.html) are used together with padded, edged elements.
+    A Box is like a card without padding. Since the Box has no padding, it is easily to presents something as a card or individual object by composing it with the other components like [Content](./content.html), [Table](./table.html) and [Image](./image.html).
 
-    Since Boxes do not have a default padding, this makes it easier to use multiple components together. If the content is just text, normally you can just use [Segment](./segment.html) which makes the structure more simple.
+    Use [Segment](./segment.html) instead if you are trying to present with the paragraphs only.
 
 #=======================================================
 # 設定
@@ -30,18 +30,18 @@ Example:
         <div class="[[ts-box]]">
             <img class="{{ts-image}}" src="!-16:9-!">
             <div class="{{ts-content}}">
-                <div class="{{ts-header}}">Delicious thousand-layer cake!</div>
-                <p>If you order online through May, you will now receive a limited number of free eco bags.</p>
+                <div class="{{ts-header}} is-heavy">Delicious thousand-layer cake!</div>
+                <p>You will receive a limited free eco bag if you order online before May.</p>
             </div>
         </div>
 
 Definitions:
-    - Title: Content
+    - Title: Contents
       Description:
       Sections:
           - Title: Symbol
             Anchor: Symbol
-            Description: A symbol can be placed in the corner of the Box. When the height of the Box is too short, the symbol will be cropped.
+            Description: It is possible to place a symbol icon of the Box right of it's corner. The symbol icon will be cropped if the Box doesn't have an enough height.
             Since: 4.0.0
             HTML: |
                 <div class="ts-box">
@@ -58,7 +58,7 @@ Definitions:
       Sections:
           - Title: Horizontal
             Anchor: Horizontal
-            Description: The elements in the Box are arranged vertically by default, but can be changed to horizontally if needed.
+            Description: The child elements of the Box are arranged vertically up and down by default, but it can be changed to horizontally left and right.
             Since: 4.0.0
             HTML: |
                 <div class="ts-box [[is-horizontal]]">
@@ -75,18 +75,18 @@ Definitions:
 
           - Title: Collapsed
             Anchor: Collapsed
-            Description: Since Box is default with a fluid width, you can set it to the minimum width to fits its content.
+            Description: Fits the width to it's content instead of the fluid width by default.
             Since: 4.0.0
             HTML: |
                 <div class="ts-box [[is-collapsed]]">
                     <div class="{{ts-content}}">
-                        <p>This is a social platform from Taiwan where we do not have "Like" or "Read".</p>
+                        <p>It's a social website from Taiwan which has no "Likes" and "Read" indicator for chats.</p>
                     </div>
                 </div>
 
           - Title: Indicated
             Anchor: Indicated
-            Description: A style that allows a Box to be specifically marked on one of its edges.
+            Description: Draws a specify color on one side of the border.
             Since: 4.0.0
             Remove:
                 - <div class="ts-space"></div>
@@ -109,7 +109,7 @@ Definitions:
 
           - Title: Emphasises
             Anchor: Emphasises
-            Description: Let the Box have edge markings while changing the color semantics of its markings. This can be used to emphasize whether the Box presents content that is dangerous, safe, or needs attention.
+            Description: Expresses a positive, negative meaning by emphasizing the indicated border.
             Since: 4.0.0
             Remove:
                 - <div class="ts-space"></div>
@@ -128,7 +128,7 @@ Definitions:
 
           - Title: Elevated
             Anchor: Elevated
-            Description: The shadows give the Box a floating appearance, which is a good choice if there is a central element that needs attention (e.g., a login form).
+            Description: The shadow gives the Box a floating appearance, which is a good choice if there is a central element that needs attention (e.g., a login form).
             Since: 4.0.0
             Remove:
                 - <div class="ts-space"></div>
@@ -143,23 +143,23 @@ Definitions:
 
           - Title: Squared
             Anchor: Squared
-            Description: Let the corners appear at right angles and not rounded.
+            Description: The corners will be appeared in right angles and not rounded.
             Since: 4.0.0
             HTML: |
                 <div class="ts-box [[is-squared]]">
-                    <div class="{{ts-content}}">Non-rounded Box</div>
+                    <div class="{{ts-content}}">Squared Box</div>
                 </div>
 
           - Title: Dashed
             Anchor: Dashed
-            Description: The border is drawn by thickening the dashed line, usually to present the empty blocks.
+            Description: Presents an empty block by drawing the border with a dashed line.
             Since: 4.0.0
             HTML: |
                 <div class="ts-box [[is-hollowed]]">
                     <div class="{{ts-content}} is-vertically-padded">
                         <div class="{{ts-center}}">
-                            <div class="{{ts-header}}">Upload pictures or video</div>
-                            <div class="{{ts-text}} is-secondary">Drag and drop images here for uploading</div>
+                            <div class="{{ts-header}} is-heavy">Upload Pictures</div>
+                            <div class="{{ts-text}} is-secondary">Drag and drop images here to upload</div>
                         </div>
                     </div>
                 </div>
@@ -169,7 +169,7 @@ Definitions:
       Sections:
           - Title: Information
             Anchor: Composition Information
-            Description: Combines with the Grid and symbolic icons to create the statistical summary information that is often found at the top of the system dashboard.
+            Description: The [Grid](./grid.html) and symbol icons can be used to create the statistical summary information that is often found at the top of the system dashboard.
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-grid}} is-2-columns">
@@ -205,14 +205,14 @@ Definitions:
 
           - Title: Link Preview
             Anchor: Composition Link Preview
-            Description: By placing the image and text with the title in a Box, you can achieve a link preview card like Facebook or Twitter.
+            Description: You can achieve a link preview card like Facebook or Twitter by placing the image and text in a Box.
             Since: 4.0.0
             HTML: |
                 <div class="[[ts-box]]" style="max-width: 360px">
                     <img class="{{ts-image}}" src="!-16:9-!">
                     <div class="{{ts-content}} is-secondary">
                         <div class="{{ts-text}} is-description">yami.io/rog-and-hololive/</div>
-                        <div class="{{ts-header}} is-truncated">ASUS calls itself a "Chinese company" and its Chinese branch speaks out to block Japanese industry and commerce</div>
-                        <div class="{{ts-text}} is-2-lines is-description">The editor of ROG on Weibo posted that he swears he will stop this commercial interaction between ASUS and Hololive in Japan. The majority of Chinese netizens expressed their anticipation and "buy ASUS or not depends on this time".</div>
+                        <div class="{{ts-header}} is-truncated is-heavy">ASUS calls itself a "Chinese company" and stops the cooperation with Japan companies</div>
+                        <div class="{{ts-text}} is-2-lines is-description">The editor of ROG on Weibo posted that they swear to stop the commercial cooperation between ASUS and Hololive in Japan. The majority of Chinese netizens agree and yelling "ASUS better make the right decision this time".</div>
                     </div>
                 </div>
