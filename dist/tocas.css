@@ -8523,6 +8523,8 @@ button {
 
 .ts-input {
     display: inline-flex;
+
+    --border-radius: .4rem;
 }
 
 /* ==========================================================================
@@ -8567,7 +8569,7 @@ button {
 
 .ts-input input,
 .ts-input textarea {
-    border-radius: 0.4rem;
+    border-radius: var(--border-radius);
     border: 1px solid var(--ts-gray-300);
 }
 
@@ -8591,7 +8593,7 @@ button {
 
 .ts-input.is-solid input,
 .ts-input.is-solid textarea {
-    border-radius: 0.4rem;
+    border-radius: var(--border-radius);
     border: 1px solid transparent;
     background: var(--ts-gray-100);
 }
@@ -8608,7 +8610,7 @@ button {
 
 .ts-input.is-underlined input,
 .ts-input.is-underlined textarea {
-    border-radius: 0.4rem 0.4rem 0 0;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
     border: 2px solid transparent;
     background: var(--ts-gray-100);
     border-bottom: 2px solid var(--ts-gray-400);
@@ -8627,6 +8629,14 @@ button {
 .ts-input.is-resizable textarea {
     min-height: 5rem;
     resize: vertical;
+}
+
+/**
+ * Circular
+ */
+
+.ts-input.is-circular {
+    --border-radius: 100rem;
 }
 
 /**
@@ -8650,7 +8660,7 @@ button {
 }
 
 .ts-input:is(.is-start-labeled, .is-end-labeled, .is-labeled) :is(.input, .label) {
-    border-radius: 0.4rem;
+    border-radius: var(--border-radius);
 }
 
 .ts-input:is(.is-start-labeled, .is-end-labeled, .is-labeled) .label {
@@ -8689,14 +8699,14 @@ button {
 
 .ts-input.is-labeled .label:first-child {
     border-left-width: 1px;
-    border-top-left-radius: 0.4rem;
-    border-bottom-left-radius: 0.4rem;
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
 }
 
 .ts-input.is-labeled .label:last-child {
     border-right-width: 1px;
-    border-top-right-radius: 0.4rem;
-    border-bottom-right-radius: 0.4rem;
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
 }
 
 /** Underlined */
@@ -10868,9 +10878,18 @@ a.ts-box:hover {
  * Primary
  */
 
-.ts-content.is-primary {
+/*.ts-content.is-primary {
     background: var(--ts-gray-800);
     color: var(--ts-gray-50);
+}*/
+
+/**
+ * Dark
+ */
+
+.ts-content.is-dark {
+    background: var(--ts-gray-50);
+    color: var(--ts-gray-800);
 }
 
 /**
@@ -11334,7 +11353,7 @@ a.ts-box:hover {
  */
 
 .ts-meta.is-secondary .item {
-    color: var(--ts-gray-600);
+    color: var(--ts-gray-500);
 }
 
 /**
@@ -15927,7 +15946,7 @@ a.ts-header:hover {
  */
 
 .ts-header.is-secondary {
-    color: var(--ts-gray-600);
+    color: var(--ts-gray-500);
 }
 
 /**
@@ -16200,7 +16219,8 @@ a.ts-segment:hover {
    ========================================================================== */
 
 .ts-app-layout .cell {
-    width: 100%;
+
+    flex-shrink: 0;
     background: var(--ts-gray-50);
 }
 
@@ -16275,6 +16295,7 @@ a.ts-segment:hover {
 
 .ts-app-layout .cell.is-fluid {
     flex: 1;
+    flex-shrink: 1;
 }
 
 /**
@@ -16285,6 +16306,13 @@ a.ts-segment:hover {
     background: var(--ts-gray-75);
 }
 
+/**
+ * Tertiary
+ */
+
+.ts-app-layout .cell.is-tertiary {
+    background: var(--ts-gray-100);
+}
 /* ==========================================================================
    Variables
    ========================================================================== */

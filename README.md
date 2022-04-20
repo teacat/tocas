@@ -9,7 +9,7 @@ The fastest and most intuitive way to build diverse websites and progressive web
 -   👉 [[See all components]](https://v4.tocas-ui.com/en-us)
 -   📘 Documents: [v4.tocas-ui.com/en-us](https://v4.tocas-ui.com/en-us)
 -   🎲 Examples: [Official examples](https://v4.tocas-ui.com/en-us/examples.html)
--   📦 Source: [GitHub](https://github.com/teacat/tocas) | [NPM](https://www.npmjs.com/package/tocas) | [cdnjs](https://cdnjs.com/libraries/tocas-ui)
+-   📦 Source: [GitHub](https://github.com/teacat/tocas) | [NPM](https://www.npmjs.com/package/tocas) | [cdnjs](https://cdnjs.com/libraries/tocas)
 -   🌎 Languages: [台灣正體](./README-tw.md) | **English**
 
 &nbsp;
@@ -47,8 +47,8 @@ The fastest and most intuitive way to build diverse websites and progressive web
 Just copy the HTML tags to your `<head>...</head>` section and have a blast🔥.
 
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/4.0.2/tocas.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/4.0.2/tocas.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.0.3/tocas.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.0.3/tocas.min.js"></script>
 ```
 
 Or maybe you like `npm` 👀

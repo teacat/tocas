@@ -4,13 +4,13 @@
 #=======================================================
 
 Title: App Layout
-Description: Divide the screen into separate parts for applications.
+Description: Divides the application interface layout into several parts.
 Intro: |
-    This is an application-specific component.
+    This is a component designed for applications.
 
-    It is usually placed at the top level of the application and is divided into side, top, bottom and main content blocks before placing the important content in them.
+    It's usually be treated as a top-level element that wraps the main content.
 
-    [App Sidebar](./app-sidebar.html) and [App Navbar](./app-navbar.html) are often used together along with this component.
+    Also it is often being used along with the [Sidebar](./app-sidebar.html) and [Navbar](./app-navbar.html).
 
 #=======================================================
 # 設定
@@ -33,9 +33,9 @@ Example:
                 <div class="cell">
                     <div class="{{ts-content}}">Sidebar</div>
                 </div>
-                <div class="cell is-vertical">
+                <div class="cell is-fluid is-vertical">
                     <div class="cell">
-                        <div class="{{ts-content}}">Top</div>
+                        <div class="{{ts-content}}">Topbar</div>
                     </div>
                     <div class="cell">
                         <div class="{{ts-content}}">Content</div>
@@ -50,18 +50,18 @@ Definitions:
       Sections:
           - Title: Horizontal
             Anchor: Horizontal
-            Description: The cells in the grid are arranged horizontally.
+            Description: The cells are arranged horizontally from left to right.
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-box}}">
                     <div class="ts-app-layout [[is-horizontal]]">
-                        <div class="cell">
+                        <div class="cell is-fluid">
                             <div class="{{ts-content}}">Left</div>
                         </div>
-                        <div class="cell">
+                        <div class="cell is-fluid">
                             <div class="{{ts-content}}">Center</div>
                         </div>
-                        <div class="cell">
+                        <div class="cell is-fluid">
                             <div class="{{ts-content}}">Right</div>
                         </div>
                     </div>
@@ -69,7 +69,7 @@ Definitions:
 
           - Title: Vertical
             Anchor: Vertical
-            Description: The cells in the grid are arranged vertically.
+            Description: The cells are arranged vertically from top to bottom.
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-box}}">
@@ -88,7 +88,7 @@ Definitions:
 
           - Title: Full
             Anchor: Full
-            Description: This is usually used if you want the layout to cover the entire page size.
+            Description: Fits the height, width of the parent container. Usually used if you want the layout to cover the whole page.
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-box}}">
@@ -102,9 +102,25 @@ Definitions:
     - Title: Cell Variations
       Description:
       Sections:
+          - Title: Fluid
+            Anchor: Fluid Cell
+            Description: A cell is default with a width that fits its own content. A fluid cell will take the remaining space of the layout.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout is-horizontal">
+                        <div class="cell">
+                            <div class="{{ts-content}}">Default</div>
+                        </div>
+                        <div class="cell [[is-fluid]]">
+                            <div class="{{ts-content}}">Fluid</div>
+                        </div>
+                    </div>
+                </div>
+
           - Title: Horizontal
             Anchor: Horizontal Cell
-            Description: The nesting cells in the cell will be arranged horizontally.
+            Description: The cells are arranged horizontally from left to right.
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-box}}">
@@ -113,13 +129,13 @@ Definitions:
                             <div class="{{ts-content}}">Top</div>
                         </div>
                         <div class="cell [[is-horizontal]]">
-                            <div class="cell">
+                            <div class="cell is-fluid">
                                 <div class="{{ts-content}}">Left</div>
                             </div>
-                            <div class="cell">
+                            <div class="cell is-fluid">
                                 <div class="{{ts-content}}">Center</div>
                             </div>
-                            <div class="cell">
+                            <div class="cell is-fluid">
                                 <div class="{{ts-content}}">Right</div>
                             </div>
                         </div>
@@ -128,7 +144,7 @@ Definitions:
 
           - Title: Vertical
             Anchor: Vertical Cell
-            Description: The nesting cells in the cell will be arranged vertically.
+            Description: The cells are arranged vertically from top to bottom.
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-box}}">
@@ -136,7 +152,7 @@ Definitions:
                         <div class="cell">
                             <div class="{{ts-content}}">Left</div>
                         </div>
-                        <div class="cell [[is-vertical]]">
+                        <div class="cell [[is-vertical]] is-fluid">
                             <div class="cell">
                                 <div class="{{ts-content}}">Top</div>
                             </div>
@@ -152,19 +168,17 @@ Definitions:
 
           - Title: Scrollable
             Anchor: Scrollable Cell
-            Description: Allows the cell content to be scroll up or down when the content is too long.
+            Description: Allows the cell to be scrollable if the content is overflowed.
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-box}}">
-                    <div class="ts-app-layout is-vertical" style="max-height: 260px;">
+                    <div class="ts-app-layout is-vertical" style="height: 260px;">
                         <div class="cell">
                             <div class="{{ts-content}}">Header</div>
                         </div>
-                        <div class="cell [[is-scrollable]]">
+                        <div class="cell [[is-scrollable]] is-fluid">
                             <div class="{{ts-content}}">
-                                <p>Sed dapibus ac tortor vel porta. Aenean pharetra vehicula nulla eu pretium.</p>
                                 <p>Fusce non enim egestas, lobortis diam et, congue felis.</p>
-                                <p>Quisque eleifend dolor mi, nec vehicula ipsum maximus non.</p>
                                 <p>Rhoncus est sed laoreet facilisis. Suspendisse ante odio,</p>
                                 <p>pulvinar non nulla sed, consequat lacinia risus.</p>
                                 <p>Aliquam mollis pulvinar lorem sed efficitur.</p>
@@ -176,34 +190,38 @@ Definitions:
                     </div>
                 </div>
 
-          - Title: Fluid
-            Anchor: Fluid Cell
-            Description: One cell can fill up the remaining space and squeeze the rest of the cells to the minimum width. When using this style, it is better to have a fixed width for the other cells to avoid errors in the extended style.
+          - Title: Secondary
+            Anchor: Secondary Cell
+            Description: A secondary background tone to presents it's not the main content section.
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-box}}">
                     <div class="ts-app-layout is-horizontal">
-                        <div class="cell [[is-fluid]]">
-                            <div class="{{ts-content}}">Fluid Cell</div>
+                        <div class="cell [[is-secondary]]">
+                            <div class="{{ts-content}}">Sidebar</div>
                         </div>
-                        <div class="cell" style="width: 180px;">
-                            <div class="{{ts-content}}">Default Cell</div>
+                        <div class="cell is-fluid">
+                            <div class="{{ts-content}}">Content</div>
                         </div>
                     </div>
                 </div>
 
-          - Title: Secondary
-            Anchor: Secondary Cell
-            Description: The less important background tones let the user know that this is not the main content.
+          - Title: Tertiary
+            Anchor: Tertiary Cell
+            Description: Background with a tertiary color stands out the main subject.
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-box}}">
                     <div class="ts-app-layout is-horizontal">
-                        <div class="cell [[is-secondary]]" style="width: 180px;">
+                        <div class="cell">
                             <div class="{{ts-content}}">Sidebar</div>
                         </div>
-                        <div class="cell">
-                            <div class="{{ts-content}}">Content</div>
+                        <div class="cell [[is-tertiary]] is-fluid">
+                            <div class="{{ts-content}}">
+                                <div class="{{ts-segment}}">
+                                    Hello, my friend!
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -211,14 +229,14 @@ Definitions:
     - Title: Compositions
       Description:
       Sections:
-          - Title: Single Page App
+          - Title: Single-page Application
             Anchor: Composition App
-            Description: By pairing [App Sidebar](./app-sidebar.html) and [App Navbar](./app-navbar.html), you can easily make a single-page application framework.
+            Description: You can easily create a single-page application layout by combining with the [Sidebar](./app-sidebar.html) and [Navbar](./app-navbar.html).
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-box}}">
                     <div class="{{ts-app-layout}} is-horizontal">
-                        <div class="cell" style="width: 355px;">
+                        <div class="cell" style="width: 245px;">
                             <div class="{{ts-content}}">
                                 <div class="{{ts-header}} is-big is-heavy">
                                     TEACAT DEVELOPERS
@@ -229,13 +247,13 @@ Definitions:
                             </div>
                             <div class="[[{{ts-app-sidebar}}]]">
                                 <div class="header">
-                                    START
+                                    STARTUP
                                 </div>
                                 <a href="#!" class="item">
                                     <span class="{{ts-icon}} is-house-icon"></span> Home
                                 </a>
                                 <div class="header">
-                                    Management
+                                    MANAGEMENT
                                 </div>
                                 <a href="#!" class="item is-active">
                                     <span class="{{ts-icon}} is-user-icon"></span> Users
@@ -252,11 +270,11 @@ Definitions:
                             </div>
                             <div class="{{ts-content}}">
                                 <button class="{{ts-button}} is-outlined is-fluid">
-                                    Sign Out
+                                    Logout
                                 </button>
                             </div>
                         </div>
-                        <div class="cell is-vertical">
+                        <div class="cell is-fluid is-vertical">
                             <div class="cell is-fluid is-secondary"></div>
                             <div class="cell">
                                 <div class="{{ts-content}}">
