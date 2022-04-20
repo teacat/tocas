@@ -33,7 +33,7 @@ Example:
                 <div class="cell">
                     <div class="{{ts-content}}">Sidebar</div>
                 </div>
-                <div class="cell is-vertical">
+                <div class="cell is-fluid is-vertical">
                     <div class="cell">
                         <div class="{{ts-content}}">Topbar</div>
                     </div>
@@ -55,13 +55,13 @@ Definitions:
             HTML: |
                 <div class="{{ts-box}}">
                     <div class="ts-app-layout [[is-horizontal]]">
-                        <div class="cell">
+                        <div class="cell is-fluid">
                             <div class="{{ts-content}}">Left</div>
                         </div>
-                        <div class="cell">
+                        <div class="cell is-fluid">
                             <div class="{{ts-content}}">Center</div>
                         </div>
-                        <div class="cell">
+                        <div class="cell is-fluid">
                             <div class="{{ts-content}}">Right</div>
                         </div>
                     </div>
@@ -102,6 +102,22 @@ Definitions:
     - Title: Cell Variations
       Description:
       Sections:
+          - Title: Fluid
+            Anchor: Fluid Cell
+            Description: A cell is default with a width that fits its own content. A fluid cell will take the remaining space of the layout.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout is-horizontal">
+                        <div class="cell">
+                            <div class="{{ts-content}}">Default</div>
+                        </div>
+                        <div class="cell [[is-fluid]]">
+                            <div class="{{ts-content}}">Fluid</div>
+                        </div>
+                    </div>
+                </div>
+
           - Title: Horizontal
             Anchor: Horizontal Cell
             Description: The cells are arranged horizontally from left to right.
@@ -113,13 +129,13 @@ Definitions:
                             <div class="{{ts-content}}">Top</div>
                         </div>
                         <div class="cell [[is-horizontal]]">
-                            <div class="cell">
+                            <div class="cell is-fluid">
                                 <div class="{{ts-content}}">Left</div>
                             </div>
-                            <div class="cell">
+                            <div class="cell is-fluid">
                                 <div class="{{ts-content}}">Center</div>
                             </div>
-                            <div class="cell">
+                            <div class="cell is-fluid">
                                 <div class="{{ts-content}}">Right</div>
                             </div>
                         </div>
@@ -136,7 +152,7 @@ Definitions:
                         <div class="cell">
                             <div class="{{ts-content}}">Left</div>
                         </div>
-                        <div class="cell [[is-vertical]]">
+                        <div class="cell [[is-vertical]] is-fluid">
                             <div class="cell">
                                 <div class="{{ts-content}}">Top</div>
                             </div>
@@ -156,15 +172,13 @@ Definitions:
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-box}}">
-                    <div class="ts-app-layout is-vertical" style="max-height: 260px;">
+                    <div class="ts-app-layout is-vertical" style="height: 260px;">
                         <div class="cell">
                             <div class="{{ts-content}}">Header</div>
                         </div>
-                        <div class="cell [[is-scrollable]]">
+                        <div class="cell [[is-scrollable]] is-fluid">
                             <div class="{{ts-content}}">
-                                <p>Sed dapibus ac tortor vel porta. Aenean pharetra vehicula nulla eu pretium.</p>
                                 <p>Fusce non enim egestas, lobortis diam et, congue felis.</p>
-                                <p>Quisque eleifend dolor mi, nec vehicula ipsum maximus non.</p>
                                 <p>Rhoncus est sed laoreet facilisis. Suspendisse ante odio,</p>
                                 <p>pulvinar non nulla sed, consequat lacinia risus.</p>
                                 <p>Aliquam mollis pulvinar lorem sed efficitur.</p>
@@ -176,22 +190,6 @@ Definitions:
                     </div>
                 </div>
 
-          - Title: Fluid
-            Anchor: Fluid Cell
-            Description: A cell can have a fluid width that takes the remaining space of the layout. It is required to having atleast one fixed width cell with it.
-            Since: 4.0.0
-            HTML: |
-                <div class="{{ts-box}}">
-                    <div class="ts-app-layout is-horizontal">
-                        <div class="cell [[is-fluid]]">
-                            <div class="{{ts-content}}">Fluid</div>
-                        </div>
-                        <div class="cell" style="width: 180px;">
-                            <div class="{{ts-content}}">Default</div>
-                        </div>
-                    </div>
-                </div>
-
           - Title: Secondary
             Anchor: Secondary Cell
             Description: A secondary background tone to presents it's not the main content section.
@@ -199,11 +197,31 @@ Definitions:
             HTML: |
                 <div class="{{ts-box}}">
                     <div class="ts-app-layout is-horizontal">
-                        <div class="cell [[is-secondary]]" style="width: 180px;">
+                        <div class="cell [[is-secondary]]">
                             <div class="{{ts-content}}">Sidebar</div>
                         </div>
-                        <div class="cell">
+                        <div class="cell is-fluid">
                             <div class="{{ts-content}}">Content</div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: Tertiary
+            Anchor: Tertiary Cell
+            Description: Background with a tertiary color stands out the main subject.
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout is-horizontal">
+                        <div class="cell">
+                            <div class="{{ts-content}}">Sidebar</div>
+                        </div>
+                        <div class="cell [[is-tertiary]] is-fluid">
+                            <div class="{{ts-content}}">
+                                <div class="{{ts-segment}}">
+                                    Hello, my friend!
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -218,7 +236,7 @@ Definitions:
             HTML: |
                 <div class="{{ts-box}}">
                     <div class="{{ts-app-layout}} is-horizontal">
-                        <div class="cell" style="width: 355px;">
+                        <div class="cell" style="width: 245px;">
                             <div class="{{ts-content}}">
                                 <div class="{{ts-header}} is-big is-heavy">
                                     TEACAT DEVELOPERS
@@ -256,7 +274,7 @@ Definitions:
                                 </button>
                             </div>
                         </div>
-                        <div class="cell is-vertical">
+                        <div class="cell is-fluid is-vertical">
                             <div class="cell is-fluid is-secondary"></div>
                             <div class="cell">
                                 <div class="{{ts-content}}">

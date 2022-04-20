@@ -33,7 +33,7 @@ Example:
                 <div class="cell">
                     <div class="{{ts-content}}">側邊欄</div>
                 </div>
-                <div class="cell is-vertical">
+                <div class="cell is-fluid is-vertical">
                     <div class="cell">
                         <div class="{{ts-content}}">頂部欄</div>
                     </div>
@@ -55,13 +55,13 @@ Definitions:
             HTML: |
                 <div class="{{ts-box}}">
                     <div class="ts-app-layout [[is-horizontal]]">
-                        <div class="cell">
+                        <div class="cell is-fluid">
                             <div class="{{ts-content}}">左</div>
                         </div>
-                        <div class="cell">
+                        <div class="cell is-fluid">
                             <div class="{{ts-content}}">中</div>
                         </div>
-                        <div class="cell">
+                        <div class="cell is-fluid">
                             <div class="{{ts-content}}">右</div>
                         </div>
                     </div>
@@ -102,6 +102,22 @@ Definitions:
     - Title: 欄位外觀
       Description:
       Sections:
+          - Title: 流動的
+            Anchor: Fluid Cell
+            Description: 預設的欄位寬度會以其最小內容為主，若要某個欄位填滿剩餘空間則需使用此樣式。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-box}}">
+                    <div class="ts-app-layout is-horizontal">
+                        <div class="cell">
+                            <div class="{{ts-content}}">一般欄位</div>
+                        </div>
+                        <div class="cell [[is-fluid]]">
+                            <div class="{{ts-content}}">流動欄位</div>
+                        </div>
+                    </div>
+                </div>
+
           - Title: 水平排列的
             Anchor: Horizontal Cell
             Description: 欄位裡的巢狀子欄位會依照左右排列。
@@ -113,13 +129,13 @@ Definitions:
                             <div class="{{ts-content}}">上</div>
                         </div>
                         <div class="cell [[is-horizontal]]">
-                            <div class="cell">
+                            <div class="cell is-fluid">
                                 <div class="{{ts-content}}">左</div>
                             </div>
-                            <div class="cell">
+                            <div class="cell is-fluid">
                                 <div class="{{ts-content}}">中</div>
                             </div>
-                            <div class="cell">
+                            <div class="cell is-fluid">
                                 <div class="{{ts-content}}">右</div>
                             </div>
                         </div>
@@ -136,7 +152,7 @@ Definitions:
                         <div class="cell">
                             <div class="{{ts-content}}">左</div>
                         </div>
-                        <div class="cell [[is-vertical]]">
+                        <div class="cell [[is-vertical]] is-fluid">
                             <div class="cell">
                                 <div class="{{ts-content}}">上</div>
                             </div>
@@ -156,15 +172,13 @@ Definitions:
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-box}}">
-                    <div class="ts-app-layout is-vertical" style="max-height: 260px;">
+                    <div class="ts-app-layout is-vertical" style="height: 260px;">
                         <div class="cell">
                             <div class="{{ts-content}}">頁頭</div>
                         </div>
-                        <div class="cell [[is-scrollable]]">
+                        <div class="cell [[is-scrollable]] is-fluid">
                             <div class="{{ts-content}}">
-                                <p>Sed dapibus ac tortor vel porta. Aenean pharetra vehicula nulla eu pretium.</p>
                                 <p>Fusce non enim egestas, lobortis diam et, congue felis.</p>
-                                <p>Quisque eleifend dolor mi, nec vehicula ipsum maximus non.</p>
                                 <p>Rhoncus est sed laoreet facilisis. Suspendisse ante odio,</p>
                                 <p>pulvinar non nulla sed, consequat lacinia risus.</p>
                                 <p>Aliquam mollis pulvinar lorem sed efficitur.</p>
@@ -176,34 +190,38 @@ Definitions:
                     </div>
                 </div>
 
-          - Title: 流動的
-            Anchor: Fluid Cell
-            Description: 某個欄位可以填滿剩餘空間並將其餘欄位壓縮至最小寬度，使用此樣式時其他欄位最好要有固定寬度以避免延伸樣式出錯。
+          - Title: 次要的
+            Anchor: Secondary Cell
+            Description: 其次的背景色調令使用者知道這不是內容主體。
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-box}}">
                     <div class="ts-app-layout is-horizontal">
-                        <div class="cell [[is-fluid]]">
-                            <div class="{{ts-content}}">流動欄位</div>
+                        <div class="cell [[is-secondary]]">
+                            <div class="{{ts-content}}">側邊欄</div>
                         </div>
-                        <div class="cell" style="width: 180px;">
-                            <div class="{{ts-content}}">一般欄位</div>
+                        <div class="cell is-fluid">
+                            <div class="{{ts-content}}">內容欄</div>
                         </div>
                     </div>
                 </div>
 
-          - Title: 次要的
-            Anchor: Secondary Cell
-            Description: 較不重要的背景色調令使用者知道這不是內容主體。
+          - Title: 不重要的
+            Anchor: Tertiary Cell
+            Description: 最不重要的背景色能夠使主體突出。
             Since: 4.0.0
             HTML: |
                 <div class="{{ts-box}}">
                     <div class="ts-app-layout is-horizontal">
-                        <div class="cell [[is-secondary]]" style="width: 180px;">
+                        <div class="cell">
                             <div class="{{ts-content}}">側邊欄</div>
                         </div>
-                        <div class="cell">
-                            <div class="{{ts-content}}">內容欄</div>
+                        <div class="cell [[is-tertiary]] is-fluid">
+                            <div class="{{ts-content}}">
+                                <div class="{{ts-segment}}">
+                                    早安，我的朋友！
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -218,7 +236,7 @@ Definitions:
             HTML: |
                 <div class="{{ts-box}}">
                     <div class="{{ts-app-layout}} is-horizontal">
-                        <div class="cell" style="width: 355px;">
+                        <div class="cell" style="width: 245px;">
                             <div class="{{ts-content}}">
                                 <div class="{{ts-header}} is-big is-heavy">
                                     TEACAT DEVELOPERS
@@ -256,7 +274,7 @@ Definitions:
                                 </button>
                             </div>
                         </div>
-                        <div class="cell is-vertical">
+                        <div class="cell is-fluid is-vertical">
                             <div class="cell is-fluid is-secondary"></div>
                             <div class="cell">
                                 <div class="{{ts-content}}">
