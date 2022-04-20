@@ -20,9 +20,9 @@
 
 &nbsp;
 
-#### 3. 好好的過你的人生 😎👍
+#### 3. 要好好的過你的人生 😎👍
 
-就像 Tocas UI 文件裡的[每](https://v4.tocas-ui.com/zh-tw/) [一](https://v4.tocas-ui.com/zh-tw/getting-started.html) [頁](https://v4.tocas-ui.com/zh-tw/colors.html) [的](https://v4.tocas-ui.com/zh-tw/responsive.html) [原](https://v4.tocas-ui.com/zh-tw/box.html) [始](https://v4.tocas-ui.com/zh-tw/center.html) [碼](https://v4.tocas-ui.com/zh-tw/container.html)那樣，我必須告訴你：「你只能死一次，一定要死的轟轟烈烈」。
+就像 Tocas UI 文件裡[每](https://v4.tocas-ui.com/zh-tw/) [一](https://v4.tocas-ui.com/zh-tw/getting-started.html) [頁](https://v4.tocas-ui.com/zh-tw/colors.html) [的](https://v4.tocas-ui.com/zh-tw/responsive.html) [原](https://v4.tocas-ui.com/zh-tw/box.html) [始](https://v4.tocas-ui.com/zh-tw/center.html) [碼](https://v4.tocas-ui.com/zh-tw/container.html)那樣，我必須告訴你：「你只能死一次，一定要死的轟轟烈烈」。
 
 > 將自己的生命活得淋漓盡致才是最重要的；不要將剛開始的序章放在頁尾。
 
