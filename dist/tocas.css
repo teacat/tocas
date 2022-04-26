@@ -17761,6 +17761,87 @@ a.ts-segment:hover {
     --size: 6rem;
 }
 
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+@keyframes tooltip-appear {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+[data-tooltip] {
+    overflow: visible;
+}
+
+[data-tooltip]::after {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    top: calc(100% + .5rem);
+    background: var(--ts-gray-600);
+    padding: 0.1rem 0.35rem;
+    font-size: var(--ts-font-size-13px);
+    border-radius: 0.2rem;
+    color: var(--ts-gray-50);
+    visibility: hidden;
+    opacity: 0;
+    content: attr(data-tooltip);
+    font-weight: normal;
+    z-index: 99;
+}
+
+[data-tooltip]:hover::after {
+    visibility: visible;
+    animation: tooltip-appear 0s ease-in .5s;
+    animation-fill-mode: forwards
+}
+
+@media (pointer:coarse) {
+    [data-tooltip]:hover {
+        visibility: hidden;
+    }
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Positions
+ */
+
+[data-tooltip][data-position="top"]::after {
+    top: initial;
+    bottom: calc(100% + .5rem);
+}
+
+[data-tooltip][data-position="bottom"]::after {
+    top: calc(100% + .5rem);
+}
+
+[data-tooltip][data-position="left"]::after {
+    right: calc(100% + .5rem);
+    left: initial;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+[data-tooltip][data-position="right"]::after {
+    left: calc(100% + .5rem);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 
 
 
