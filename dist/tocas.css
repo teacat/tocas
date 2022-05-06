@@ -114,6 +114,10 @@ button {
     }
 }
 
+.ts-button {
+    --horizontal-padding: 1.25rem;
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -160,7 +164,7 @@ button {
     align-items: center;
     text-align: center;
 
-    padding: 0.4rem 1.25rem;
+    padding: 0.4rem var(--horizontal-padding);
     border-radius: 0.4rem;
 }
 
@@ -228,8 +232,8 @@ button {
  */
 
 .ts-button.is-compact {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    --horizontal-padding: 0.5rem;
+
     min-width: 65px;
 }
 
@@ -292,6 +296,8 @@ button {
  */
 
 .ts-button.is-compact {
+    --horizontal-padding: 0.75rem;
+
     padding: 0.25rem 0.75rem;
 }
 
@@ -328,7 +334,7 @@ button {
 
 .ts-button.is-icon {
     min-width: 40px;
-    padding: calc(0.45rem / 1.35) calc(1.25rem / 2);
+    padding: calc(0.45rem / 1.35) calc(var(--horizontal-padding) / 2);
 }
 
 .ts-button.is-icon .ts-icon {
@@ -379,7 +385,7 @@ button {
 }
 
 .ts-button.is-start-labeled-icon {
-    padding-left: 4rem;
+    padding-left: calc(var(--horizontal-padding) + 2.75rem);
 }
 
 .ts-button.is-start-labeled-icon .ts-icon {
@@ -388,7 +394,7 @@ button {
 }
 
 .ts-button.is-end-labeled-icon {
-    padding-right: 4rem;
+    padding-right: calc(var(--horizontal-padding) + 2.75rem);
 }
 
 .ts-button.is-end-labeled-icon .ts-icon {
@@ -419,6 +425,13 @@ button {
     padding-bottom: 0.2rem;
 }
 
+/**
+ * Wide
+ */
+
+.ts-button.is-wide {
+    --horizontal-padding: 2rem;
+}
 .ts-icon.is-apple-icon::before {
     font-family: "IconsBrands";
     content: "\f179";
@@ -10538,6 +10551,10 @@ button {
    Variables
    ========================================================================== */
 
+.ts-tab {
+    --horizontal-padding-multiplier: 1;
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -10557,7 +10574,7 @@ button {
 .ts-tab .item {
     text-decoration: none;
     color: var(--ts-gray-800);
-    padding: 0.5rem 1rem;
+    padding: 0.5rem calc(1rem * var(--horizontal-padding-multiplier));
     display: inline-flex;
     border-bottom: 3px solid transparent;
     text-align: center;
@@ -10603,7 +10620,7 @@ button {
 
 .ts-tab.is-pilled .item {
     border-radius: 100rem;
-    padding: 0.25rem 1rem;
+    padding: 0.25rem calc(1rem * var(--horizontal-padding-multiplier));
     border-bottom: 0;
 }
 
@@ -10646,7 +10663,7 @@ button {
 }
 
 .ts-tab.is-segmented .item {
-    padding: 0.45rem 0.9rem;
+    padding: 0.45rem calc(0.9rem * var(--horizontal-padding-multiplier));
     margin: 0.2rem 0rem;
     border-radius: 0.3rem;
     user-select: none;
@@ -10699,6 +10716,13 @@ button {
     padding-bottom: 0.05rem;
 }
 
+/**
+ * Relaxed
+ */
+
+.ts-tab.is-relaxed {
+    --horizontal-padding-multiplier: 1.6;
+}
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -10844,6 +10868,7 @@ a.ts-box:hover {
 
 .ts-box.is-hollowed {
     border: 4px dashed var(--ts-gray-300);
+    background: transparent;
 }
 
 /* ==========================================================================
@@ -12169,7 +12194,7 @@ a.ts-box:hover {
  */
 
 .ts-grid.is-relaxed {
-    gap: 2rem;
+    gap: 2rem min(2rem, 5%); /** Issue #814 */
 }
 .ts-grid.is-compact {
     gap: 0.5rem;
@@ -12824,6 +12849,16 @@ a.ts-box:hover {
     backface-visibility: hidden;
     content: "\f00c";
     font-size: 12px;
+}
+
+.ts-chip.is-input.is-start-icon input:checked +.content::before,
+.ts-chip.is-input.is-end-icon input:checked+.content::before {
+    display: none;
+}
+
+.ts-chip.is-input.is-start-icon input:checked + .content .ts-icon::before,
+.ts-chip.is-input.is-end-icon input:checked + .content .ts-icon::before {
+    content: "\f00c";
 }
 
 /**
@@ -16035,6 +16070,22 @@ a.ts-segment:hover {
 
 .ts-segment.is-tertiary {
     background: var(--ts-gray-100);
+}
+
+/**
+ * Aligns
+ */
+
+.ts-segment.is-start-aligned {
+    text-align: left;
+}
+
+.ts-segment.is-end-aligned {
+    text-align: right;
+}
+
+.ts-segment.is-center-aligned {
+    text-align: center;
 }
 
 /**
