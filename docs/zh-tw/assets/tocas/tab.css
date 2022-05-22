@@ -2,6 +2,10 @@
    Variables
    ========================================================================== */
 
+.ts-tab {
+    --horizontal-padding-multiplier: 1;
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -21,7 +25,7 @@
 .ts-tab .item {
     text-decoration: none;
     color: var(--ts-gray-800);
-    padding: 0.5rem 1rem;
+    padding: 0.5rem calc(1rem * var(--horizontal-padding-multiplier));
     display: inline-flex;
     border-bottom: 3px solid transparent;
     text-align: center;
@@ -67,7 +71,7 @@
 
 .ts-tab.is-pilled .item {
     border-radius: 100rem;
-    padding: 0.25rem 1rem;
+    padding: 0.25rem calc(1rem * var(--horizontal-padding-multiplier));
     border-bottom: 0;
 }
 
@@ -110,7 +114,7 @@
 }
 
 .ts-tab.is-segmented .item {
-    padding: 0.45rem 0.9rem;
+    padding: 0.45rem calc(0.9rem * var(--horizontal-padding-multiplier));
     margin: 0.2rem 0rem;
     border-radius: 0.3rem;
     user-select: none;
@@ -161,4 +165,12 @@
 .ts-tab.is-dense.is-pilled .item {
     padding-top: 0.05rem;
     padding-bottom: 0.05rem;
+}
+
+/**
+ * Relaxed
+ */
+
+.ts-tab.is-relaxed {
+    --horizontal-padding-multiplier: 1.6;
 }

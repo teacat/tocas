@@ -51,8 +51,20 @@ body {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /** 4. */
 
     font-family: "Noto Sans TC", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue", "Helvetica", "Arial", "Microsoft JhengHei", wf_SegoeUI, "Segoe UI",
-        Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", Tahoma, 微軟正黑體, "LiHei Pro", "WenQuanYi Micro Hei", "Droid Sans Fallback",
-        "AR PL UMing TW", Roboto, "Helvetica Neue", "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif;
+        Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", 微軟正黑體, "LiHei Pro", "WenQuanYi Micro Hei", "Droid Sans Fallback",
+        "AR PL UMing TW", Roboto, "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif;
+}
+
+/**
+ * Input for iOS date input
+ *
+ * https://github.com/teacat/tocas/issues/804
+ * https://github.com/twbs/bootstrap/pull/31993
+ * https://github.com/twbs/bootstrap/blob/80621d6431acd964690f89352b4f1bf8be9cfaf3/scss/forms/_form-control.scss#L47
+ */
+
+input::-webkit-date-and-time-value {
+    min-height: calc(1rem * 1.5);
 }
 
 /**
@@ -114,6 +126,10 @@ button {
     }
 }
 
+.ts-button {
+    --horizontal-padding: 1.25rem;
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -160,7 +176,7 @@ button {
     align-items: center;
     text-align: center;
 
-    padding: 0.4rem 1.25rem;
+    padding: 0.4rem var(--horizontal-padding);
     border-radius: 0.4rem;
 }
 
@@ -228,8 +244,8 @@ button {
  */
 
 .ts-button.is-compact {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    --horizontal-padding: 0.5rem;
+
     min-width: 65px;
 }
 
@@ -292,6 +308,8 @@ button {
  */
 
 .ts-button.is-compact {
+    --horizontal-padding: 0.75rem;
+
     padding: 0.25rem 0.75rem;
 }
 
@@ -328,7 +346,7 @@ button {
 
 .ts-button.is-icon {
     min-width: 40px;
-    padding: calc(0.45rem / 1.35) calc(1.25rem / 2);
+    padding: calc(0.45rem / 1.35) calc(var(--horizontal-padding) / 2);
 }
 
 .ts-button.is-icon .ts-icon {
@@ -379,7 +397,7 @@ button {
 }
 
 .ts-button.is-start-labeled-icon {
-    padding-left: 4rem;
+    padding-left: calc(var(--horizontal-padding) + 2.75rem);
 }
 
 .ts-button.is-start-labeled-icon .ts-icon {
@@ -388,7 +406,7 @@ button {
 }
 
 .ts-button.is-end-labeled-icon {
-    padding-right: 4rem;
+    padding-right: calc(var(--horizontal-padding) + 2.75rem);
 }
 
 .ts-button.is-end-labeled-icon .ts-icon {
@@ -419,6 +437,13 @@ button {
     padding-bottom: 0.2rem;
 }
 
+/**
+ * Wide
+ */
+
+.ts-button.is-wide {
+    --horizontal-padding: 2rem;
+}
 .ts-icon.is-apple-icon::before {
     font-family: "IconsBrands";
     content: "\f179";
@@ -10538,6 +10563,10 @@ button {
    Variables
    ========================================================================== */
 
+.ts-tab {
+    --horizontal-padding-multiplier: 1;
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -10557,7 +10586,7 @@ button {
 .ts-tab .item {
     text-decoration: none;
     color: var(--ts-gray-800);
-    padding: 0.5rem 1rem;
+    padding: 0.5rem calc(1rem * var(--horizontal-padding-multiplier));
     display: inline-flex;
     border-bottom: 3px solid transparent;
     text-align: center;
@@ -10603,7 +10632,7 @@ button {
 
 .ts-tab.is-pilled .item {
     border-radius: 100rem;
-    padding: 0.25rem 1rem;
+    padding: 0.25rem calc(1rem * var(--horizontal-padding-multiplier));
     border-bottom: 0;
 }
 
@@ -10646,7 +10675,7 @@ button {
 }
 
 .ts-tab.is-segmented .item {
-    padding: 0.45rem 0.9rem;
+    padding: 0.45rem calc(0.9rem * var(--horizontal-padding-multiplier));
     margin: 0.2rem 0rem;
     border-radius: 0.3rem;
     user-select: none;
@@ -10699,6 +10728,13 @@ button {
     padding-bottom: 0.05rem;
 }
 
+/**
+ * Relaxed
+ */
+
+.ts-tab.is-relaxed {
+    --horizontal-padding-multiplier: 1.6;
+}
 /* ==========================================================================
    Variables
    ========================================================================== */
@@ -10844,6 +10880,7 @@ a.ts-box:hover {
 
 .ts-box.is-hollowed {
     border: 4px dashed var(--ts-gray-300);
+    background: transparent;
 }
 
 /* ==========================================================================
@@ -12169,7 +12206,7 @@ a.ts-box:hover {
  */
 
 .ts-grid.is-relaxed {
-    gap: 2rem;
+    gap: 2rem min(2rem, 5%); /** Issue #814 */
 }
 .ts-grid.is-compact {
     gap: 0.5rem;
@@ -12824,6 +12861,16 @@ a.ts-box:hover {
     backface-visibility: hidden;
     content: "\f00c";
     font-size: 12px;
+}
+
+.ts-chip.is-input.is-start-icon input:checked +.content::before,
+.ts-chip.is-input.is-end-icon input:checked+.content::before {
+    display: none;
+}
+
+.ts-chip.is-input.is-start-icon input:checked + .content .ts-icon::before,
+.ts-chip.is-input.is-end-icon input:checked + .content .ts-icon::before {
+    content: "\f00c";
 }
 
 /**
@@ -16038,6 +16085,22 @@ a.ts-segment:hover {
 }
 
 /**
+ * Aligns
+ */
+
+.ts-segment.is-start-aligned {
+    text-align: left;
+}
+
+.ts-segment.is-end-aligned {
+    text-align: right;
+}
+
+.ts-segment.is-center-aligned {
+    text-align: center;
+}
+
+/**
  * Emphasises
  */
 
@@ -16805,6 +16868,10 @@ a.ts-segment:hover {
     background: var(--ts-gray-75);
 }
 
+.ts-menu .item :where(.ts-row, .ts-grid) {
+    flex: 1;
+}
+
 /* ==========================================================================
    Variations
    ========================================================================== */
@@ -16953,6 +17020,11 @@ a.ts-segment:hover {
 .ts-menu.is-dropdown.is-bottom-right {
     top: calc(100% + 0.5rem);
     right: 0;
+}
+
+.ts-menu.is-dropdown.is-separated {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
 }
 
 .ts-menu.is-dropdown.is-top-center {
@@ -17756,6 +17828,87 @@ a.ts-segment:hover {
     --size: 6rem;
 }
 
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+@keyframes tooltip-appear {
+    from {
+        opacity: 0
+    }
+    to {
+        opacity: 1
+    }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+[data-tooltip] {
+    overflow: visible;
+}
+
+[data-tooltip]::after {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    top: calc(100% + .5rem);
+    background: var(--ts-gray-600);
+    padding: 0.1rem 0.35rem;
+    font-size: var(--ts-font-size-13px);
+    border-radius: 0.2rem;
+    color: var(--ts-gray-50);
+    visibility: hidden;
+    opacity: 0;
+    content: attr(data-tooltip);
+    font-weight: normal;
+    z-index: 99;
+}
+
+[data-tooltip]:hover::after {
+    visibility: visible;
+    animation: tooltip-appear 0s ease-in .5s;
+    animation-fill-mode: forwards
+}
+
+@media (pointer:coarse) {
+    [data-tooltip]:hover {
+        visibility: hidden;
+    }
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Positions
+ */
+
+[data-tooltip][data-position="top"]::after {
+    top: initial;
+    bottom: calc(100% + .5rem);
+}
+
+[data-tooltip][data-position="bottom"]::after {
+    top: calc(100% + .5rem);
+}
+
+[data-tooltip][data-position="left"]::after {
+    right: calc(100% + .5rem);
+    left: initial;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+[data-tooltip][data-position="right"]::after {
+    left: calc(100% + .5rem);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 
 
 
@@ -17982,6 +18135,8 @@ html,
 html[data-scheme="light"],
 .is-light,
 html[data-scheme="dark"] .is-inverted {
+    color-scheme: light;
+
     --ts-gray-50: var(--ts-light-gray-50);
     --ts-gray-75: var(--ts-light-gray-75);
     --ts-gray-100: var(--ts-light-gray-100);
@@ -18005,6 +18160,8 @@ html[data-scheme="light"] .is-inverted,
 .is-inverted,
 html[data-scheme="dark"],
 .is-dark {
+    color-scheme: dark;
+
     --ts-gray-50: var(--ts-dark-gray-50);
     --ts-gray-75: var(--ts-dark-gray-75);
     --ts-gray-100: var(--ts-dark-gray-100);
@@ -18016,6 +18173,8 @@ html[data-scheme="dark"],
     --ts-gray-700: var(--ts-dark-gray-700);
     --ts-gray-800: var(--ts-dark-gray-800);
     --ts-gray-900: var(--ts-dark-gray-900);
+
+    --ts-link-700: #8887ff;
 
     --ts-tonal-positive-400: #92d34f;
     --ts-tonal-positive-800: #0e4600;
@@ -18044,6 +18203,8 @@ html[data-scheme="dark"] .is-light-only {
         display: none;
     }
     html {
+        color-scheme: dark;
+
         --ts-gray-50: var(--ts-dark-gray-50);
         --ts-gray-75: var(--ts-dark-gray-75);
         --ts-gray-100: var(--ts-dark-gray-100);
@@ -18072,6 +18233,8 @@ html[data-scheme="dark"] .is-light-only {
         --ts-tonal-negative-800: #fff;
     }
     .is-inverted {
+        color-scheme: light;
+
         --ts-gray-50: var(--ts-light-gray-50);
         --ts-gray-75: var(--ts-light-gray-75);
         --ts-gray-100: var(--ts-light-gray-100);
