@@ -22,8 +22,9 @@ type Article struct {
 
 // ArticleDefinition
 type ArticleExample struct {
-	Centered bool   `yaml:"Centered"`
-	HTML     string `yaml:"HTML"`
+	Centered bool     `yaml:"Centered"`
+	HTML     string   `yaml:"HTML"`
+	Remove   []string `yaml:"Remove"`
 	// FormattedHTML 是程式會自動進行段落掃描並整理的 HTML 程式碼，這不在 YAML 之中。
 	FormattedHTML template.HTML
 }
@@ -88,10 +89,11 @@ type MetaComponent struct {
 
 // MetaInformation
 type MetaInformation struct {
-	Language string `yaml:"Language"`
-	Flag     string `yaml:"Flag"`
-	Version  string `yaml:"Version"`
-	Path     string `yaml:"Path"`
+	Language     string `yaml:"Language"`
+	LanguageCode string `yaml:"LanguageCode"`
+	Flag         string `yaml:"Flag"`
+	Version      string `yaml:"Version"`
+	Path         string `yaml:"Path"`
 }
 
 // MetaContributor

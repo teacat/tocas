@@ -160,8 +160,10 @@ func build(c *cli.Context) error {
 				}
 				// 如果這個元件的範例 HTML 不是空的話，就透過 Highlight JS 跟 Beautify 處理。
 				if article.Example.HTML != "" {
-					article.Example.FormattedHTML = tmplCode(trim(trim(article.Example.HTML, []string{}), article.Remove))
+					article.Example.FormattedHTML = tmplCode(trim(trim(article.Example.HTML, []string{}), article.Example.Remove))
 				}
+				// 事後幫 HTML 加上 alt，避免出現在 FormattedHTML 裡。
+				article.Example.HTML = imgAlt(meta, article.Example.HTML)
 				for vi, v := range article.Definitions {
 					for ji, j := range v.Sections {
 						// 如果這個段落有附加的 HTML 片段，就透過 Highlight JS 跟 Beautify 處理。
@@ -172,6 +174,8 @@ func build(c *cli.Context) error {
 						if j.HTML != "" {
 							article.Definitions[vi].Sections[ji].FormattedHTML = tmplCode(trim(trim(j.HTML, j.Remove), article.Remove))
 						}
+						// 事後幫 HTML 加上 alt，避免出現在 FormattedHTML 裡。
+						article.Definitions[vi].Sections[ji].HTML = imgAlt(meta, j.HTML)
 					}
 				}
 
