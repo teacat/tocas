@@ -98,6 +98,15 @@ func tmplMarked(s string) string {
 	return r[0][1]
 }
 
+// imgAlt 將所有圖片加上輔助用的 Alt。
+func imgAlt(meta Meta, s string) string {
+	r, err := regexp.Compile(`<img (.*?)>`)
+	if err != nil {
+		panic(err)
+	}
+	return r.ReplaceAllString(s, "<img alt='"+meta.UI.Paragraph["Article_Image_Placeholder_Alt"]+"' $1>")
+}
+
 // tmplTranslators 會輸出語系翻譯者的相關名稱並帶有連接符號。
 func tmplTranslators(meta Meta) func(string) template.HTML {
 	var ss string
