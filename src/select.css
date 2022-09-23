@@ -16,7 +16,7 @@
     /*min-height: 2.5rem;*/
     /*width: 100%;*/
     cursor: pointer;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 /* ==========================================================================
@@ -33,10 +33,10 @@
     color: inherit;
     font: inherit;
     line-height: normal;
-    border-radius: 0;
     outline: none;
     box-sizing: border-box;
     user-select: none;
+    border-radius: 0.4rem;
 
     -webkit-font-smoothing: inherit;
     -moz-osx-font-smoothing: inherit;
@@ -47,7 +47,8 @@
     outline: 0;
 }
 
-.ts-select select {
+.ts-select select,
+.ts-select .content {
     line-height: 1.5;
     font-size: var(--ts-font-size-14px);
     color: var(--ts-gray-800);
@@ -57,6 +58,13 @@
 
     width: 100%;
     cursor: pointer;
+}
+
+.ts-select .content {
+    user-select: none;
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
 }
 
 .ts-select select option {
@@ -90,6 +98,31 @@
 /* ==========================================================================
    Variations
    ========================================================================== */
+
+/**
+ * Combo
+ */
+
+.ts-select.is-combo {
+
+}
+
+.ts-select.is-combo .ts-dropdown {
+
+}
+
+/**
+ * Active
+ */
+
+.ts-select.is-active {
+    border-color: var(--ts-primary-600);
+}
+
+/** If select is-active then open child .ts-dropdown also */
+.ts-select.is-active .ts-dropdown {
+    display: inline-flex;
+}
 
 /**
  * Solid
@@ -201,7 +234,8 @@
     min-height: 2rem;
 }
 
-.ts-select.is-dense select {
+.ts-select.is-dense select,
+.ts-select.is-dense .content {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
 }

@@ -8,8 +8,6 @@ Description: Provides list of actions or navigation for users to interact with.
 Intro: |
     選單是一個提供垂直可選項目清單的元件，如果希望建立一個左右水平的導覽選單則可以考慮使用[分頁籤](./tab.html)。
 
-    這個元件同時也被設計作為右鍵選單、下拉式選單的基礎設計，如果在網頁或是應用程式裡需要一個右鍵選單則可以考慮使用此選單元件並將其設為「下拉式選單的」來達成。
-
 #=======================================================
 # 設定
 # Settings
@@ -17,6 +15,7 @@ Intro: |
 
 Type: Article
 Relatives:
+    - Dropdown
     - Tab
 
 #=======================================================
@@ -85,28 +84,6 @@ Definitions:
     - Title: Contents
       Description:
       Sections:
-          - Title: Description
-            Anchor: Description
-            Description: 以較淺的文字說明特定項目。
-            Since: 4.0.0
-            HTML: |
-                <div class="{{ts-box}} is-collapsed">
-                    <div class="ts-menu is-collapsed">
-                        <a class="item" href="#!">
-                            下載
-                            <span class="[[description]]">Ctrl + D</span>
-                        </a>
-                        <a class="item" href="#!">
-                            儲存圖片
-                            <span class="[[description]]">Ctrl + S</span>
-                        </a>
-                        <a class="item" href="#!">
-                            全選
-                            <span class="[[description]]">Ctrl + A</span>
-                        </a>
-                    </div>
-                </div>
-
           - Title: Avatar
             Anchor: Avatar
             Description: 項目前面可以放置大頭貼作為輔助人名使用。
@@ -312,79 +289,6 @@ Definitions:
                     <a class="item" href="#!">
                         <span class="{{ts-icon}} is-table-icon"></span> 訂單
                     </a>
-                </div>
-
-    - Title: Dropdown
-      Description:
-      Sections:
-          - Title: Dropdown
-            Anchor: Dropdown
-            Description: 當選單成為下拉式選單時會成為浮動元素並帶有陰影、框線和較小且密集的項目樣式。
-            Since: 4.0.0
-            HTML: |
-                <div style="display: inline-block; margin-bottom: 8rem;">
-                    <button class="{{ts-button}} is-secondary is-icon">
-                        <span class="{{ts-icon}} is-ellipsis-icon"></span>
-                    </button>
-                    <div class="ts-menu [[is-dropdown]] is-visible is-bottom-left">
-                        <button class="item">下載</button>
-                        <button class="item">重新命名</button>
-                        <button class="item">刪除</button>
-                    </div>
-                </div>
-
-          - Title: Visible
-            Anchor: Dropdown Visible
-            Description: 下拉式選單型態預設是隱藏的，必須指定為「可見的」才會顯示在頁面上。這個設計是為了讓 JavaScript 能夠切換其可見度。
-            Since: 4.0.0
-            HTML: |
-                <div style="display: inline-block; margin-bottom: 8rem;">
-                    <button class="{{ts-button}} is-secondary">選擇表情</button>
-                    <div class="ts-menu is-dropdown [[is-visible]] is-start-icon is-bottom-left">
-                        <button class="item">
-                            <span class="{{ts-icon}} is-face-laugh-icon"></span> 非常滿意
-                        </button>
-                        <button class="item">
-                            <span class="{{ts-icon}} is-face-meh-icon"></span> 一般
-                        </button>
-                        <button class="item">
-                            <span class="{{ts-icon}} is-face-angry-icon"></span> 糟透了
-                        </button>
-                    </div>
-                </div>
-
-          - Title: Aligns
-            Anchor: Dropdown Aligns
-            Description: 選單可以選擇要貼齊父容器的哪個角落，透過 `is-top-left`、`is-top-right`　和 `is-bottom-left`、`is-bottom-right` 指定。
-            Since: 4.0.0
-            HTML: |
-                <div style="display: inline-block; margin-top: 8rem;">
-                    <button class="{{ts-button}} is-secondary is-start-icon">
-                        <span class="ts-icon is-wand-magic-sparkles-icon"></span>
-                        施展魔法
-                    </button>
-                    <div class="ts-menu is-dropdown [[is-top-left]] is-visible">
-                        <button class="item">路摸思</button>
-                        <button class="item">疾疾，護法現身</button>
-                        <div class="{{ts-divider}}"></div>
-                        <button class="item">去去武器走</button>
-                    </div>
-                </div>
-
-          - Title: Fluid
-            Anchor: Dropdown Fluid
-            Description: 下拉式選單的寬度預設會以項目為主，但也能指定為流動的令其與父容器相同寬度。
-            Since: 4.0.0
-            HTML: |
-                <div style="margin-bottom: 11rem;">
-                    <div class="{{ts-input}} is-fluid">
-                        <input type="text" placeholder="輸入使用者名稱…"/>
-                    </div>
-                    <div class="ts-menu is-dropdown [[is-fluid]] is-visible is-bottom-left">
-                        <button class="item">Yami Odymel</button>
-                        <button class="item is-active">Caris Events</button>
-                        <button class="item">Tunalog</button>
-                    </div>
                 </div>
 
     - Title: Compositions
