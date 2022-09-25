@@ -2,22 +2,25 @@
    Variables
    ========================================================================== */
 
+.ts-select {
+    --object-distance-vertical: 0.4rem;
+    --object-distance-horizontal: 0.8rem;
+    --height: var(--ts-input-height-medium);
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
 
 .ts-select {
     display: inline-flex;
-
     background: var(--ts-gray-50);
     border: 1px solid var(--ts-gray-300);
     border-radius: 0.4rem;
-
-    /*min-height: 2.5rem;*/
-    /*width: 100%;*/
     cursor: pointer;
-    /*overflow: hidden;*/
+    height: var(--height);
 }
+
 
 /* ==========================================================================
    Structure
@@ -26,17 +29,15 @@
 .ts-select select {
     border: none;
     margin: 0;
-    padding: 0;
-    width: auto;
-    overflow: visible;
     background: inherit;
-    color: inherit;
     font: inherit;
-    line-height: normal;
     outline: none;
     box-sizing: border-box;
     user-select: none;
     border-radius: 0.4rem;
+    /*text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;*/
 
     -webkit-font-smoothing: inherit;
     -moz-osx-font-smoothing: inherit;
@@ -53,7 +54,7 @@
     font-size: var(--ts-font-size-14px);
     color: var(--ts-gray-800);
 
-    padding: 0.45rem 1rem;
+    padding: 0 1rem;
     padding-right: 2.5rem;
 
     width: 100%;
@@ -63,8 +64,9 @@
 .ts-select .content {
     user-select: none;
     display: flex;
-    gap: 0.8rem;
+    gap: var(--object-distance-vertical) var(--object-distance-horizontal);
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .ts-select select option {
@@ -98,18 +100,6 @@
 /* ==========================================================================
    Variations
    ========================================================================== */
-
-/**
- * Combo
- */
-
-.ts-select.is-combo {
-
-}
-
-.ts-select.is-combo .ts-dropdown {
-
-}
 
 /**
  * Active
@@ -219,6 +209,13 @@
  * Sizes
  */
 
+.ts-select.is-small {
+    --height: var(--ts-input-height-small);
+}
+.ts-select.is-large {
+    --height: var(--ts-input-height-large);
+}
+
 .ts-select.is-small select {
     font-size: var(--ts-font-size-13px);
 }
@@ -231,11 +228,12 @@
  */
 
 .ts-select.is-dense {
-    min-height: 2rem;
+    --height: var(--ts-input-height-medium-dense);
 }
 
-.ts-select.is-dense select,
-.ts-select.is-dense .content {
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
+.ts-select.is-dense.is-small {
+    --height: var(--ts-input-height-small-dense);
+}
+.ts-select.is-dense.is-large {
+    --height: var(--ts-input-height-large-dense);
 }
