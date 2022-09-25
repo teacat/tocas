@@ -35,9 +35,9 @@
     box-sizing: border-box;
     user-select: none;
     border-radius: 0.4rem;
-    /*text-overflow: ellipsis;
+    text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;*/
+    white-space: nowrap;
 
     -webkit-font-smoothing: inherit;
     -moz-osx-font-smoothing: inherit;
@@ -66,7 +66,16 @@
     display: flex;
     gap: var(--object-distance-vertical) var(--object-distance-horizontal);
     align-items: center;
-    flex-wrap: wrap;
+    width: calc(100% - 2.5rem);
+    overflow: hidden;
+}
+
+.ts-select .content,
+.ts-select .content * {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .ts-select select option {
@@ -236,4 +245,23 @@
 }
 .ts-select.is-dense.is-large {
     --height: var(--ts-input-height-large-dense);
+}
+
+/**
+ * Wrappable
+ */
+
+.ts-select.is-wrappable {
+    min-height: var(--height);
+    height: auto;
+    padding: 0.184em 0;
+}
+
+.ts-select.is-wrappable .content {
+    flex-wrap: wrap;
+}
+
+.ts-select.is-wrappable::after {
+    top: 0.5em;
+    bottom: initial;
 }
