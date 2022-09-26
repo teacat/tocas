@@ -2,45 +2,50 @@
    Variables
    ========================================================================== */
 
+.ts-input {
+    --border-radius: .4rem;
+    --height: var(--ts-input-height-medium);
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
 
 .ts-input {
-    display: inline-flex;
-
-    --border-radius: .4rem;
+    display: flex;
+    width: 100%;
 }
 
 /* ==========================================================================
    Structure
    ========================================================================== */
 
+.ts-input input {
+    padding: 0 1rem;
+    height: var(--height);
+}
+
 .ts-input input,
 .ts-input textarea {
-    border: none;
     margin: 0;
-    padding: 0;
-    width: auto;
+    width: 100%;
     overflow: visible;
-    background: transparent;
-    color: inherit;
     font: inherit;
-    line-height: normal;
-    border-radius: 0;
     outline: none;
     box-sizing: border-box;
-    user-select: none;
     resize: none;
     font-size: var(--ts-font-size-14px);
     line-height: 1.5;
     color: var(--ts-gray-800);
     background: var(--ts-gray-50);
-    padding: 0.45rem 1rem;
 
     -webkit-font-smoothing: inherit;
     -moz-osx-font-smoothing: inherit;
     -webkit-appearance: none;
+}
+
+.ts-input textarea {
+    padding: 0.467rem 1rem;
 }
 
 .ts-input input:focus,
@@ -66,6 +71,45 @@
 .ts-input input::-webkit-inner-spin-button,
 .ts-input input::-webkit-calendar-picker-indicator {
     opacity: 0.4;
+    line-height: 1;
+}
+
+/**
+ * Color
+ */
+
+.ts-input input[type="color"] {
+    padding: 0;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    cursor: pointer;
+    width: auto;
+}
+
+.ts-input input[type="color"]::-webkit-color-swatch {
+    padding: 0;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border: 0;
+    border-radius: 0.4rem;
+    width: auto;
+    height: auto;
+}
+
+.ts-input input[type="color"]::-moz-color-swatch {
+    padding: 0;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border: 0;
+    border-radius: 0.4rem;
+    width: auto;
+    height: auto;
 }
 
 /* ==========================================================================
@@ -327,12 +371,34 @@
 }
 
 /**
+ * Dense
+ */
+
+.ts-input.is-dense input {
+    --height: var(--ts-input-height-medium-dense);
+}
+.ts-input.is-dense.is-small input {
+    --height: var(--ts-input-height-small-dense);
+}
+.ts-input.is-dense.is-large input {
+    --height: var(--ts-input-height-large-dense);
+}
+
+/**
  * Sizes
  */
+
+.ts-input.is-small input {
+    --height: var(--ts-input-height-small);
+}
+.ts-input.is-large input {
+    --height: var(--ts-input-height-large);
+}
 
 .ts-input.is-small :is(input, textarea, .ts-icon) {
     font-size: var(--ts-font-size-13px);
 }
+
 .ts-input.is-large :is(input, textarea, .ts-icon) {
     font-size: var(--ts-font-size-17px);
 }
