@@ -20,6 +20,7 @@
 
 .ts-imageset .item img {
     width: 100%;
+    height: 100%;
     vertical-align: top;
     object-fit: cover;
 }
@@ -56,13 +57,6 @@
  * Portrait
  */
 
-.ts-imageset.is-portrait {
-}
-
-.ts-imageset.is-portrait .item img {
-    height: 100%;
-}
-
 .ts-imageset.is-portrait.is-3-images {
     grid-template-columns: repeat(2, 1fr);
 }
@@ -93,28 +87,30 @@
  * Circular
  */
 
-.ts-imageset.is-circular .item:first-child img {
-    border-radius: 0.4rem 0.4rem 0 0;
-}
-
-.ts-imageset.is-circular .item:nth-child(2) img {
-    border-radius: 0 0 0 0.4rem;
-}
-
-.ts-imageset.is-circular .item:last-child img {
-    border-radius: 0 0 0.4rem 0;
-}
-
 .ts-imageset.is-circular.is-portrait .item:first-child img {
-    border-radius: 0.4rem 0 0.4rem 0;
+    border-top-left-radius: 0.4rem;
+    border-bottom-left-radius: 0.4rem;
 }
 
 .ts-imageset.is-circular.is-portrait .item:nth-child(2) img {
-    border-radius: 0 0.4rem 0 0;
+    border-top-right-radius: 0.4rem;
 }
 
 .ts-imageset.is-circular.is-portrait .item:last-child img {
-    border-radius: 0 0 0.4rem 0;
+    border-bottom-right-radius: 0.4rem;
+}
+
+.ts-imageset.is-circular:not(.is-portrait) .item:first-child img {
+    border-top-right-radius: 0.4rem;
+    border-top-left-radius: 0.4rem;
+}
+
+.ts-imageset.is-circular:not(.is-portrait) .item:nth-child(2) img {
+    border-bottom-left-radius: 0.4rem;
+}
+
+.ts-imageset.is-circular:not(.is-portrait) .item:last-child img {
+    border-bottom-right-radius: 0.4rem;
 }
 
 /**
