@@ -6,7 +6,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -19,7 +18,6 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-//
 func path(typ string) string {
 	exe, err := os.Executable()
 	if err != nil {
@@ -85,7 +83,7 @@ func main() {
 		// 檢查本地是否已經有跟遠端一模一樣最新的 Font Awesome 檔案，如果沒有的話…。
 		if _, err := os.Stat(fmt.Sprintf("%s/%s", os.TempDir(), fileprefix)); os.IsNotExist(err) {
 			// 在系統暫存目錄中，建立一個新的檔案 Font Awesome 暫存檔案。
-			file, err := ioutil.TempFile(os.TempDir(), fileprefix)
+			file, err := os.CreateTemp(os.TempDir(), fileprefix)
 			if err != nil {
 				panic(err)
 			}
@@ -124,11 +122,11 @@ func main() {
 
 		// 複製圖示字型檔案到 Tocas 資料夾中，並且取代相對應的舊圖示字型檔案。
 		for _, v := range fontsPath {
-			dat, err := ioutil.ReadFile(v)
+			dat, err := os.ReadFile(v)
 			if err != nil {
 				panic(err)
 			}
-			err = ioutil.WriteFile(fmt.Sprintf("%s%s", path("icons"), filepath.Base(v)), dat, 0777)
+			err = os.WriteFile(fmt.Sprintf("%s%s", path("icons"), filepath.Base(v)), dat, 0777)
 			if err != nil {
 				panic(err)
 			}
@@ -137,7 +135,7 @@ func main() {
 
 		// 讀取剛下載的 Font Awesome 圖示索引資料。
 		log.Printf("正在轉譯 Font Awesome 圖示至 Tocas UI 格式…")
-		iconList, err := ioutil.ReadFile(fmt.Sprintf("%s/%s/metadata/icons.json", os.TempDir(), fileprefix))
+		iconList, err := os.ReadFile(fmt.Sprintf("%s/%s/metadata/icons.json", os.TempDir(), fileprefix))
 		if err != nil {
 			panic(err)
 		}
@@ -150,7 +148,7 @@ func main() {
 		}
 
 		//
-		b, err := ioutil.ReadFile(fmt.Sprintf("%s/%s/metadata/categories.yml", os.TempDir(), fileprefix))
+		b, err := os.ReadFile(fmt.Sprintf("%s/%s/metadata/categories.yml", os.TempDir(), fileprefix))
 		if err != nil {
 			panic(err)
 		}
@@ -160,7 +158,7 @@ func main() {
 			panic(err)
 		}
 
-		b, err = ioutil.ReadFile(fmt.Sprintf("%s/%s/metadata/icons.yml", os.TempDir(), fileprefix))
+		b, err = os.ReadFile(fmt.Sprintf("%s/%s/metadata/icons.yml", os.TempDir(), fileprefix))
 		if err != nil {
 			panic(err)
 		}
@@ -179,7 +177,9 @@ func main() {
 			final[k] = []string{}
 
 			section := ArticleDefinitionSection{
-				Title: k,
+				Title:  k,
+				Since:  "4.0.0",
+				Anchor: k,
 			}
 
 			for _, j := range v.(map[string]interface{})["icons"].([]interface{}) {
@@ -204,7 +204,7 @@ func main() {
 		yamlEncoder.SetIndent(6)
 		yamlEncoder.Encode(&sorted)
 
-		err = ioutil.WriteFile("dist.yml", bb.Bytes(), 0777)
+		err = os.WriteFile("dist.yml", bb.Bytes(), 0777)
 		if err != nil {
 			panic(err)
 		}
@@ -227,7 +227,7 @@ func main() {
 		}
 
 		// 將機器自動修改後的結果存入 Tocas UI 的圖示原始碼內，完成本次的自動升級。
-		err = ioutil.WriteFile(path("icon"), []byte(newContent), 0777)
+		err = os.WriteFile(path("icon"), []byte(newContent), 0777)
 		if err != nil {
 			panic(err)
 		}
