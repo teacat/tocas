@@ -24,24 +24,24 @@
 .ts-rating :is(.star, .heart).is-active,
 .ts-rating.is-input :is(.star, .heart):checked,
 .ts-rating.is-input :is(.star, .heart):hover,
-.ts-rating.is-input :is(.star, .heart):hover ~ :is(.star, .heart),
-.ts-rating.is-input :is(.star, .heart):checked ~ :is(.star, .heart) {
+.ts-rating.is-input :is(.star, .heart):has(~ :is(.star, .heart):hover),
+.ts-rating.is-input :is(.star, .heart):has(~ :is(.star, .heart):checked) {
     color: inherit;
 }
 
 .ts-rating.is-yellow :is(.star, .heart).is-active,
 .ts-rating.is-yellow.is-input :is(.star, .heart):checked,
 .ts-rating.is-yellow.is-input :is(.star, .heart):hover,
-.ts-rating.is-yellow.is-input :is(.star, .heart):hover ~ :is(.star, .heart),
-.ts-rating.is-yellow.is-input :is(.star, .heart):checked ~ :is(.star, .heart) {
+.ts-rating.is-yellow.is-input :is(.star, .heart):has(~ :is(.star, .heart):hover),
+.ts-rating.is-yellow.is-input :is(.star, .heart):has(~ :is(.star, .heart):checked) {
     color: #e3c81b;
 }
 
 .ts-rating.is-red :is(.star, .heart).is-active,
 .ts-rating.is-red.is-input :is(.star, .heart):checked,
 .ts-rating.is-red.is-input :is(.star, .heart):hover,
-.ts-rating.is-red.is-input :is(.star, .heart):hover ~ :is(.star, .heart),
-.ts-rating.is-red.is-input :is(.star, .heart):checked ~ :is(.star, .heart) {
+.ts-rating.is-red.is-input :is(.star, .heart):has(~ :is(.star, .heart):hover),
+.ts-rating.is-red.is-input :is(.star, .heart):has(~ :is(.star, .heart):checked) {
     color: #ff1100;
 }
 
@@ -100,12 +100,16 @@
 }
 
 /**
- * Input
+ * Disabled
  */
 
-.ts-rating.is-input {
-    flex-direction: row-reverse;
+.ts-rating.is-disabled {
+    pointer-events: none;
 }
+
+/**
+ * Input
+ */
 
 .ts-rating.is-input input {
     appearance: none;
@@ -115,8 +119,9 @@
     transition: color 0.1s ease, opacity 0.1s ease;
 }
 
-.ts-rating.is-input input:hover:not(:focus) ~ input {
-    opacity: 0.8;
+.ts-rating.is-input input:hover:not(:focus) ~ input,
+.ts-rating.is-input input:hover:focus~input {
+    opacity: 0.7;
 }
 
 .ts-rating.is-input input:hover:not(:focus) {

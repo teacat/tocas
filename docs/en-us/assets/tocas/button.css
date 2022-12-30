@@ -80,6 +80,16 @@
 }
 
 /**
+ * Tertiary
+ */
+
+.ts-button.is-tertiary {
+    color: var(--ts-gray-800);
+    background: var(--ts-gray-300);
+    border-color: var(--ts-gray-300);
+}
+
+/**
  * Outlined
  */
 
@@ -134,6 +144,10 @@
     opacity: 0.5;
 }
 
+.ts-button.is-loading .ts-icon {
+    visibility: hidden;
+}
+
 .ts-button.is-loading::after {
     font-family: "Icons";
     font-weight: normal;
@@ -153,7 +167,7 @@
     left: 50%;
 }
 
-.ts-button.is-loading:is(.is-outlined, .is-secondary)::after {
+.ts-button.is-loading:is(.is-outlined, .is-secondary, .is-tertiary, .is-ghost)::after {
     color: var(--ts-gray-800);
 }
 
@@ -231,7 +245,7 @@
  * Side Icon
  */
 
-.ts-button:is(.is-start-icon, .is-end-icon) .ts-icon {
+.ts-button:where(.is-start-icon, .is-end-icon) .ts-icon {
     font-size: 1.2em;
 }
 
@@ -261,7 +275,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: calc(2.75em + 2px);
+    width: calc(2.75rem + 2px);
+}
+
+.ts-button:where(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
+    font-size: 1.2em;
 }
 
 .ts-button.is-start-labeled-icon {
@@ -296,6 +314,10 @@
     background: var(--ts-gray-200);
 }
 
+.ts-button.is-tertiary:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
+    background: var(--ts-gray-400);
+}
+
 /**
  * Dense
  */
@@ -321,4 +343,24 @@
 }
 .ts-button.is-wide {
     --horizontal-padding: 2em;
+}
+
+/**
+ * Start & End
+ */
+
+.ts-addon {
+    display: flex;
+    gap: 2px;
+}
+
+.ts-addon > *:first-child,
+.ts-addon > .ts-input:first-child :where(input, textarea) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.ts-addon > *:last-child,
+.ts-addon > .ts-input:last-child :where(input, textarea) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
