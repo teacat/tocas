@@ -78,6 +78,10 @@
     flex-shrink: 0;
 }
 
+.ts-select .content .ts-icon {
+    font-size: 1.1em;
+}
+
 .ts-select select option {
     background: inherit;
 }
@@ -111,16 +115,31 @@
    ========================================================================== */
 
 /**
- * Active
+ * Multiple
  */
 
-.ts-select.is-active {
-    border-color: var(--ts-primary-600);
+.ts-select:has(select[multiple]) {
+    height: auto;
 }
 
-/** If select is-active then open child .ts-dropdown also */
-.ts-select.is-active .ts-dropdown {
-    display: inline-flex;
+.ts-select:has(select[multiple])::after {
+    content: none;
+}
+
+.ts-select select[multiple] {
+    padding: 0.5rem 0.5rem;
+    overflow-y: auto;
+}
+
+.ts-select select[multiple] option {
+    border-radius: 0.4rem;
+    padding: 0.3rem 0.5rem;
+    margin: 0.1rem 0;
+}
+
+.ts-select select[multiple] option:checked {
+    background: var(--ts-primary-700);
+    color: var(--ts-white);
 }
 
 /**
@@ -149,11 +168,50 @@
 }
 
 .ts-select.is-underlined select option {
-    background: var(--ts-gray-50);
+    background: var(--t/**
+ * Multiple
+ */
+
+.ts-select:has(select[multiple]) {
+    height: auto;
+}
+
+.ts-select:has(select[multiple])::after {
+    content: none;
+}
+
+.ts-select select[multiple] {
+    padding: 0.5rem 0.5rem;
+    overflow-y: auto;
+}
+
+.ts-select select[multiple] option {
+    border-radius: 0.4rem;
+    padding: 0.3rem 0.5rem;
+    margin: 0.1rem 0;
+}
+
+.ts-select select[multiple] option:checked {
+    background: var(--ts-primary-700);
+    color: var(--ts-white);
+}s-gray-50);
 }
 
 .ts-select.is-underlined:focus-within {
     border-bottom-color: var(--ts-primary-600);
+}
+
+/**
+ * Active
+ */
+
+.ts-select.is-active {
+    border-color: var(--ts-primary-600);
+}
+
+/** If select is-active then open child .ts-dropdown also */
+.ts-select.is-active .ts-dropdown {
+    display: inline-flex;
 }
 
 /**
