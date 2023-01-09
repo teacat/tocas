@@ -4,7 +4,7 @@
 
 Title: Accordion
 Description: Allows the user to expand and close the content.
-Intro: Accordion uses the native HTML `<details>` tag, [Dividers](./divider.html) can be placed between if there are multiple Accordions.
+Intro: JavaScript is required to control the activation status of the component to present the open or closed status. [Dividers](./divider.html) should be placed between if there are multiple Accordions.
 
 #=======================================================
 # Settings
@@ -18,26 +18,26 @@ Type: Article
 
 Example:
     HTML: |
-        <details class="[[ts-accordion]]" open>
-            <summary>What are the business hours?</summary>
-            Daily from 9:00 AM to 8:00 PM.
-        </details>
+        <div class="[[ts-accordion]]">
+            <div class="title">What are the business hours?</div>
+            <div class="content">Daily from 9:00 AM to 8:00 PM.</div>
+        </div>
 
 Definitions:
     - Title: States
       Description:
       Sections:
-          - Title: Open
-            Anchor: Open
-            Description: The collapsed content will be displayed by the browser when the Accordion is set to `[open]`.
+          - Title: Active
+            Anchor: Active
+            Description: The `content` element will be displayed when an Accordion is active.
             Since: 4.0.0
             HTML: |
-                <details class="ts-accordion" [[open]]>
-                    <summary>Is there an SSL encrypted transport protocol provided when I am using the API?</summary>
-                    No, the Bank use the traditional standard protocol of non-encrypted HTTP communication.
-                </details>
+                <div class="ts-accordion [[is-active]]">
+                    <div class="title">Is there an SSL encrypted transport protocol provided when I am using the API?</div>
+                    <div class="content">No, the Bank use the traditional standard protocol of non-encrypted HTTP communication.</div>
+                </div>
                 <div class="{{ts-divider}} is-section"></div>
-                <details class="ts-accordion">
-                    <summary>Do I need to sign my own key to prevent a middleman attack?</summary>
-                    No need, because it is just a matter of luck.
-                </details>
+                <div class="ts-accordion">
+                    <div class="title">Do I need to sign my own key to prevent a middleman attack?</div>
+                    <div class="content">No need, because it is just a matter of luck.</div>
+                </div>

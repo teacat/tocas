@@ -4,7 +4,7 @@
 
 Title: 可折疊內容
 Description: 將內容以群組區分並讓使用者可以折疊、展開。
-Intro: 可折疊內容使用瀏覽器原生的 `<details>` HTML 標籤。欲使用多個可折疊內容，應該在兩個之間手動擺放[分隔線](./divider.html)元件以便使用者區分。
+Intro: 使用時需自行搭配 JavaScript 操控元件的啟用狀態以呈現開啟或閉合狀態。欲使用多個可折疊內容，應該在兩個之間手動擺放[分隔線](./divider.html)元件以便使用者區分。
 
 #=======================================================
 # Settings
@@ -18,26 +18,26 @@ Type: Article
 
 Example:
     HTML: |
-        <details class="[[ts-accordion]]" open>
-            <summary>營業時間為何？</summary>
-            每日的早上九點至晚上八點。
-        </details>
+        <div class="[[ts-accordion]]">
+            <div class="title">營業時間為何？</div>
+            <div class="content">每日的早上九點至晚上八點。</div>
+        </div>
 
 Definitions:
     - Title: 狀態
       Description:
       Sections:
-          - Title: 打開的
-            Anchor: Open
-            Description: 當一個可折疊內容被指定 `[open]` 的時候，瀏覽器就會顯示其內容。
+          - Title: 啟用的
+            Anchor: Active
+            Description: 當一個可折疊內容被啟用的時候，其 `content` 元素就會顯示。
             Since: 4.0.0
             HTML: |
-                <details class="ts-accordion" [[open]]>
-                    <summary>當我使用 API 的時候，是否有提供 SSL 加密傳輸協定？</summary>
-                    無，本銀行全面採用非加密的 HTTP 傳統標準通訊協定。
-                </details>
+                <div class="ts-accordion [[is-active]]">
+                    <div class="title">當我使用 API 的時候，是否有提供 SSL 加密傳輸協定？</div>
+                    <div class="content">無，本銀行全面採用非加密的 HTTP 傳統標準通訊協定。</div>
+                </div>
                 <div class="{{ts-divider}} is-section"></div>
-                <details class="ts-accordion">
-                    <summary>需要自行簽署金鑰以防中間人攻擊嗎？</summary>
-                    不需要，因為這只是運氣問題。
-                </details>
+                <div class="ts-accordion">
+                    <div class="title">需要自行簽署金鑰以防中間人攻擊嗎？</div>
+                    <div class="content">不需要，因為這只是運氣問題。</div>
+                </div>
