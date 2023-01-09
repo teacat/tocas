@@ -15,26 +15,14 @@
    Structure
    ========================================================================== */
 
-.ts-accordion summary {
-    list-style-type: none;
-}
-
-.ts-accordion summary::-webkit-details-marker {
-    display: none;
-}
-
-.ts-accordion summary::marker {
-    display: none;
-}
-
-.ts-accordion summary {
+.ts-accordion .title {
     display: flex;
     align-items: center;
     user-select: none;
     cursor: pointer;
 }
 
-.ts-accordion summary::before {
+.ts-accordion .title::before {
     font-family: "Icons";
     font-weight: normal;
     font-style: normal;
@@ -53,18 +41,23 @@
     font-size: 14px;
 }
 
+.ts-accordion .content {
+    display: none;
+    margin: 1rem 0 0;
+}
+
 /* ==========================================================================
    Variations
    ========================================================================== */
 
 /**
- * Open
+ * Active
  */
 
-.ts-accordion[open] summary::before {
-    transform: rotate(0deg);
+.ts-accordion.is-active .content {
+    display: block;
 }
 
-.ts-accordion[open] summary {
-    margin-bottom: .5rem;
+.ts-accordion.is-active .title::before {
+    transform: rotate(0deg);
 }
