@@ -314,18 +314,18 @@ func listMetaInformation(ctx context.Context) ([]MetaInformation, error) {
 		// 防止 `for` 迴圈覆蓋變數。
 		index, lang := index, lang
 
-		group.Go(func() (err error) {
+		group.Go(func() error {
 			select {
 			case <-ctx.Done():
-				return
+				return nil
 			default:
 				meta, err := readLanguageMeta(lang)
 				if err != nil {
-					return
+					return err
 				}
 
 				infos[index] = meta.Information
-				return
+				return nil
 			}
 		})
 	}
