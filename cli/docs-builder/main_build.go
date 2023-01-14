@@ -94,7 +94,7 @@ func build(c *cli.Context) (err error) {
 
 	// 建立一個貯存 articles 任務的 errgroup
 	group, ctx := errgroup.WithContext(ctx)
-	group.SetLimit(runtime.NumCPU())
+	group.SetLimit(2) // 把 limits 讓給下方的 tmplCode
 
 	/**
 	 * index.html
@@ -193,8 +193,10 @@ func build(c *cli.Context) (err error) {
 			case <-ctx.Done():
 				return nil
 			default:
-				sectionName := strings.TrimSuffix(f.Name(), filepath.Ext(f.Name()))
+				group, _ := errgroup.WithContext(ctx)
+				group.SetLimit(runtime.NumCPU())
 
+				sectionName := strings.TrimSuffix(f.Name(), filepath.Ext(f.Name()))
 				file, err := os.Create(path.Join(tmpdir, sectionName+".html"))
 				if err != nil {
 					return err
@@ -215,9 +217,13 @@ func build(c *cli.Context) (err error) {
 
 				// 如果這個元件的範例 HTML 不是空的話，就透過 Highlight JS 跟 Beautify 處理。
 				if article.Example.HTML != "" {
-					article.Example.FormattedHTML = tmplCode(
-						trim(article.Example.HTML, article.Example.Remove),
-					)
+					group.Go(func() error {
+						article.Example.FormattedHTML = tmplCode(
+							trim(article.Example.HTML, article.Example.Remove),
+						)
+
+						return nil
+					})
 				}
 
 				// 事後幫 HTML 加上 alt，避免出現在 FormattedHTML 裡。
@@ -227,15 +233,22 @@ func build(c *cli.Context) (err error) {
 
 					for ji, j := range v.Sections {
 						section := &definitions.Sections[ji]
+						j := j
 
 						// 如果這個段落有附加的 HTML 片段，就透過 Highlight JS 跟 Beautify 處理。
 						if j.AttachedHTML != "" {
-							section.FormattedHTML = tmplCode(trim(trim(j.AttachedHTML, j.Remove), article.Remove))
+							group.Go(func() error {
+								section.FormattedHTML = tmplCode(trim(trim(j.AttachedHTML, j.Remove), article.Remove))
+								return nil
+							})
 						}
 
 						// 如果這個段落有 HTML 標籤內容，就透過 Highlight JS 跟 Beautify 處理。
 						if j.HTML != "" {
-							section.FormattedHTML = tmplCode(trim(trim(j.HTML, j.Remove), article.Remove))
+							group.Go(func() error {
+								section.FormattedHTML = tmplCode(trim(trim(j.HTML, j.Remove), article.Remove))
+								return nil
+							})
 						}
 
 						// 事後幫 HTML 加上 alt，避免出現在 FormattedHTML 裡。
@@ -243,6 +256,9 @@ func build(c *cli.Context) (err error) {
 					}
 				}
 
+				if err = group.Wait(); err != nil {
+					return err
+				}
 				if err = tmpl.Execute(file, article); err != nil {
 					return err
 				}
