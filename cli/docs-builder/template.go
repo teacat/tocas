@@ -196,7 +196,7 @@ func trim(s string, r []string) string {
 // highlight 會將純文字透過 Node 版本的 Highlight.js 來轉化為格式化後的螢光程式碼。
 func highlight(s string) string {
 	b, err := getOrCacheByte("hljs", []byte(s), func() (output []byte, err error) {
-		cmd := exec.Command("npx", "hljs", "html")
+		cmd := exec.Command(Npx("hljs"), "html")
 		cmd.Stdin = strings.NewReader(fmt.Sprintf("<pre><code>%s</code></pre>", html.EscapeString(s)))
 		output, err = cmd.CombinedOutput()
 		if err != nil {
@@ -218,11 +218,11 @@ func beautify(s string, typ string) string {
 		var cmd *exec.Cmd
 		switch typ {
 		case "css":
-			cmd = exec.Command("npx", "js-beautify", "--css", "-L false", "-N false")
+			cmd = exec.Command(Npx("js-beautify"), "--css", "-L false", "-N false")
 		case "js":
-			cmd = exec.Command("npx", "js-beautify")
+			cmd = exec.Command(Npx("js-beautify"))
 		case "html":
-			cmd = exec.Command("npx", "js-beautify", "--html")
+			cmd = exec.Command(Npx("js-beautify"), "--html")
 		}
 		cmd.Stdin = strings.NewReader(s)
 		output, err = cmd.CombinedOutput()

@@ -23,3 +23,9 @@ func ProjectDir() string {
 	// TODO: dynamically determine
 	return path.Join(ExecutableDir(), "../..")
 }
+
+// Npx emulates `npx`, which will pick the executable file
+// in the `node_modules/.bin`.
+func Npx(exe string) string {
+	return path.Join(ProjectDir(), "node_modules", ".bin", exe)
+}

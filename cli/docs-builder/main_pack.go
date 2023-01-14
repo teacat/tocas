@@ -39,7 +39,7 @@ func buildCSSMinify() error {
 		return err
 	}
 
-	return exec.Command("npx", "css-minify", "-f", DistFile("tocas.css"), "-o", DistDir()).Run()
+	return exec.Command(Npx("css-minify"), "-f", DistFile("tocas.css"), "-o", DistDir()).Run()
 }
 
 func buildCSS() error {
