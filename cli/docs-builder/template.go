@@ -25,7 +25,7 @@ func tmplHTML(html string) template.HTML {
 
 // tmplCapitalize 會將傳入的字串以標題命名法（HelloWorld），大寫後並自動在每個單字後加上空白區隔。
 func tmplCapitalize(s string) string {
-	s = cases.Title(language.English).String(s)
+	s = cases.Title(language.English, cases.NoLower).String(s)
 	buf := &bytes.Buffer{}
 	for i, chr := range s {
 		if unicode.IsUpper(chr) && i > 0 {
@@ -195,9 +195,9 @@ func trim(s string, r []string) string {
 
 // highlight 會將純文字透過 Node 版本的 Highlight.js 來轉化為格式化後的螢光程式碼。
 func highlight(s string) string {
-	b, err := getOrCacheByte("highlight", []byte(s), func() (output []byte, err error) {
+	b, err := getOrCacheByte("hljs", []byte(s), func() (output []byte, err error) {
 		cmd := exec.Command("npx", "hljs", "html")
-		cmd.Stdin = bytes.NewBuffer([]byte(fmt.Sprintf("<pre><code>%s</code></pre>", html.EscapeString(s))))
+		cmd.Stdin = strings.NewReader(fmt.Sprintf("<pre><code>%s</code></pre>", html.EscapeString(s)))
 		output, err = cmd.CombinedOutput()
 		if err != nil {
 			return output, errors.New(err.Error() + string(output))
@@ -224,7 +224,8 @@ func beautify(s string, typ string) string {
 		case "html":
 			cmd = exec.Command("npx", "js-beautify", "--html")
 		}
-		cmd.Stdin = bytes.NewBuffer([]byte(s))
+		cmd.Stdin = strings.NewReader(s)
+		output, err = cmd.CombinedOutput()
 
 		if err != nil {
 			// Not critical?
