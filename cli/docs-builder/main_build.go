@@ -1,24 +1,17 @@
 package main
 
 import (
-	"bytes"
 	"context"
-	"errors"
-	"fmt"
-	"github.com/google/uuid"
 	cp "github.com/otiai10/copy"
 	"github.com/samber/lo"
-	"html"
 	"log"
 	"os"
-	"os/exec"
 	"path"
 	"path/filepath"
 	"regexp"
 	"strings"
 	"text/template"
 
-	"github.com/russross/blackfriday/v2"
 	"github.com/urfave/cli/v2"
 	"golang.org/x/sync/errgroup"
 	"gopkg.in/yaml.v2"
@@ -358,83 +351,6 @@ func funcMap(meta Meta) template.FuncMap {
 	}
 }
 
-// getOrCache 會先尋找有沒有對應的快取。如果有，則取回；反之則
-// 根據 `create` 引數的 closure 建立之。
-//
-// 快取將存在 `caches` 中 namespace 資料夾下，identifier 會用
-// `uuid` (with `md5`) 取得 unique identifier。
-func getOrCacheByte(namespace string, identifier []byte, create func() ([]byte, error)) (b []byte, err error) {
-	// FIXME: We should maintain a lock based on namespace & identifier
-	//        to prevent the race condition.
-
-	hash := uuid.NewMD5(uuid.New(), identifier)
-
-	cacheDir := path.Join(ExecutableDir(), "caches", namespace)
-	cacheFilename := path.Join(cacheDir, hash.String())
-
-	b, err = os.ReadFile(cacheFilename)
-	if err != nil {
-		if err := os.MkdirAll(cacheDir, 0755); err != nil {
-			return b, err
-		}
-		// Try again.
-		return getOrCacheByte(namespace, identifier, create)
-	}
-
-	// Hit!
-	if len(b) > 0 {
-		return
-	}
-
-	// Not hit. Create cache.
-	b, err = create()
-	if err != nil {
-		return
-	}
-
-	err = os.WriteFile(cacheFilename, b, 0644)
-	return
-}
-
-// highlight 會將純文字透過 Node 版本的 Highlight.js 來轉化為格式化後的螢光程式碼。
-func highlight(s string) (string, error) {
-	b, err := getOrCacheByte("highlight", []byte(s), func() (output []byte, err error) {
-		cmd := exec.Command("npx", "hljs", "html")
-		cmd.Stdin = bytes.NewBuffer([]byte(fmt.Sprintf("<pre><code>%s</code></pre>", html.EscapeString(s))))
-		output, err = cmd.CombinedOutput()
-		if err != nil {
-			return output, errors.New(err.Error() + string(output))
-		}
-		return
-	})
-
-	return string(b), err
-}
-
-// beautify 會透過 js-beautify 美化程式碼。
-func beautify(s string, typ string) (string, error) {
-	b, err := getOrCacheByte("beautify", []byte(s), func() (output []byte, err error) {
-		var cmd *exec.Cmd
-		switch typ {
-		case "css":
-			cmd = exec.Command("npx", "js-beautify", "--css", "-L false", "-N false")
-		case "js":
-			cmd = exec.Command("npx", "js-beautify")
-		case "html":
-			cmd = exec.Command("npx", "js-beautify", "--html")
-		}
-		cmd.Stdin = bytes.NewBuffer([]byte(s))
-
-		if err != nil {
-			// Not critical?
-			log.Println(err.Error() + string(output))
-		}
-		return output, nil
-	})
-
-	return string(b), err
-}
-
 // asset
 func asset(s string, real bool) string {
 	if real {
@@ -463,70 +379,6 @@ func asset(s string, real bool) string {
 		s = "user.png"
 	}
 	return s
-}
-
-// trim
-func trim(s string, r []string) string {
-	for _, v := range r {
-		s = strings.Replace(s, v+"\n", "", -1)
-		s = strings.Replace(s, v, "", -1)
-	}
-	return s
-}
-
-// clean
-func clean(s string) string {
-	s = regexp.MustCompile(`\(\((.*?)\)\)`).ReplaceAllString(s, "$1")
-	s = regexp.MustCompile(`\[\[(.*?)]]`).ReplaceAllString(s, "$1")
-	s = regexp.MustCompile(`{{(.*?)}}`).ReplaceAllString(s, "$1")
-	s = replaceAllStringSubmatchFunc(regexp.MustCompile(`!-(.*?)-!`), s, func(groups []string) string {
-		if len(groups) == 0 {
-			return ""
-		}
-		return asset(groups[1], true)
-	})
-	return s
-}
-
-// decodePlaceholder 會將預置標籤轉為實際可呈現的 HTML 標籤。
-func decodePlaceholder(s string) string {
-	//
-	s = regexp.MustCompile(`BARK(.*?)BARKEND`).ReplaceAllString(s, "<mark class=\"tag\">$1</mark>")
-	// 將螢光標記模板符號轉換回 `<mark>` 的 HTML 標記程式碼。
-	s = regexp.MustCompile(`MARK(.*?)MARKEND`).ReplaceAllString(s, "<mark>$1</mark>")
-	// 將圖片模板符號轉換成真正的預置圖片路徑。
-	s = replaceAllStringSubmatchFunc(regexp.MustCompile(`IMAG(.*?)IMAGEND`), s, func(groups []string) string {
-		if len(groups) == 0 {
-			return ""
-		}
-		return asset(groups[1], false)
-	})
-	// 將元件連結模板符號轉換成真正指向到該元件文件的 HTML 連結程式碼。
-	s = replaceAllStringSubmatchFunc(regexp.MustCompile(`COMP(.*?)COMPEND`), s, func(groups []string) string {
-		if len(groups) == 0 {
-			return ""
-		}
-		return fmt.Sprintf(`<a href="./%s.html">%s</a>`, strings.ReplaceAll(groups[1], "ts-", ""), groups[1])
-	})
-	return s
-}
-
-// placeholder 會將預置標籤轉為純文字，避免被 Beautifier 或 Highlight JS 誤認。
-func placeholder(s string) string {
-	// 大標籤標籤。
-	s = regexp.MustCompile(`\(\((.*?)\)\)`).ReplaceAllString(s, `BARK${1}BARKEND`)
-	// 螢光標籤。
-	s = regexp.MustCompile(`\[\[(.*?)]]`).ReplaceAllString(s, `MARK${1}MARKEND`)
-	// 元件連結。
-	s = regexp.MustCompile(`{{(.*?)}}`).ReplaceAllString(s, `COMP${1}COMPEND`)
-	// 圖片。
-	s = regexp.MustCompile(`!-(.*?)-!`).ReplaceAllString(s, `IMAG${1}IMAGEND`)
-	return s
-}
-
-// markdown 會將傳入的字串從 Markdown 轉為 HTML。
-func markdown(s string) string {
-	return string(blackfriday.Run([]byte(s)))
 }
 
 // replaceAllStringSubmatchFunc
