@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"fmt"
 	cp "github.com/otiai10/copy"
 	"github.com/samber/lo"
+	"github.com/schollz/progressbar/v3"
 	"log"
 	"os"
 	"path"
@@ -26,10 +28,14 @@ func build(c *cli.Context) (err error) {
 	// 取得該語系裡所有的元件檔案。
 	lang := c.String("lang")
 
+	// 要編譯的 components 總數
 	files, err := os.ReadDir(path.Join(ProjectDir(), "languages", lang, "components"))
 	if err != nil {
 		return err
 	}
+
+	// Progress bar
+	bar := progressbar.Default(int64(len(files))+2, fmt.Sprintf("Components (%s)", lang))
 
 	// 建立暫存資料夾，用來存放 dist 檔案
 	tmpdir, err := os.MkdirTemp("", "*-tocas-build")
@@ -114,7 +120,10 @@ func build(c *cli.Context) (err error) {
 				return err
 			}
 
-			log.Printf("已編譯：index.html")
+			_ = bar.Add(1)
+			if c.Bool("verbose") {
+				log.Printf("已編譯：index.html")
+			}
 			return nil
 		}
 	})
@@ -154,7 +163,10 @@ func build(c *cli.Context) (err error) {
 				return err
 			}
 
-			log.Printf("已編譯：examples.html")
+			_ = bar.Add(1)
+			if c.Bool("verbose") {
+				log.Printf("已編譯：examples.html")
+			}
 			return nil
 		}
 	})
@@ -234,7 +246,11 @@ func build(c *cli.Context) (err error) {
 				if err = tmpl.Execute(file, article); err != nil {
 					return err
 				}
-				log.Printf("已編譯：%s.html", sectionName)
+
+				_ = bar.Add(1)
+				if c.Bool("verbose") {
+					log.Printf("已編譯：%s.html", sectionName)
+				}
 				return nil
 			}
 		})
