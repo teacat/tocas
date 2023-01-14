@@ -9,6 +9,7 @@ import (
 	"path"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"strings"
 	"text/template"
 
@@ -31,7 +32,7 @@ func build(c *cli.Context) (err error) {
 	}
 
 	// 建立暫存資料夾，用來存放 dist 檔案
-	tmpdir, err := os.MkdirTemp("tocas-ui", "*-build")
+	tmpdir, err := os.MkdirTemp("", "*-tocas-build")
 	if err != nil {
 		return err
 	}
@@ -48,10 +49,10 @@ func build(c *cli.Context) (err error) {
 			path.Join(ExecutableDir(), "templates", "assets"),
 			"assets",
 		), DMap(
-			path.Join(ExecutableDir(), "src"),
+			path.Join(ProjectDir(), "src"),
 			"assets/tocas",
 		), DMap(
-			path.Join(ExecutableDir(), "examples"),
+			path.Join(ProjectDir(), "examples"),
 			"examples",
 		),
 	}, tmpdir)
@@ -87,6 +88,7 @@ func build(c *cli.Context) (err error) {
 
 	// 建立一個貯存 articles 任務的 errgroup
 	group, ctx := errgroup.WithContext(ctx)
+	group.SetLimit(runtime.NumCPU())
 
 	/**
 	 * index.html
@@ -98,7 +100,7 @@ func build(c *cli.Context) (err error) {
 		default:
 			article := createArticle()
 
-			file, err := os.Create(path.Join(tmpdir, lang, "index.html"))
+			file, err := os.Create(path.Join(tmpdir, "index.html"))
 			if err != nil {
 				return err
 			}
@@ -135,7 +137,7 @@ func build(c *cli.Context) (err error) {
 				return err
 			}
 
-			file, err := os.Create(path.Join(tmpdir, lang, "examples.html"))
+			file, err := os.Create(path.Join(tmpdir, "examples.html"))
 			if err != nil {
 				return err
 			}
@@ -179,11 +181,9 @@ func build(c *cli.Context) (err error) {
 			case <-ctx.Done():
 				return nil
 			default:
-
 				sectionName := strings.TrimSuffix(f.Name(), filepath.Ext(f.Name()))
 
-				// pan: 看起來所有檔案已經是 html 了，所以不再留存 RemoveSuffix 邏輯以加快效率。
-				file, err := os.Create(path.Join(tmpdir, lang, f.Name()))
+				file, err := os.Create(path.Join(tmpdir, sectionName+".html"))
 				if err != nil {
 					return err
 				}

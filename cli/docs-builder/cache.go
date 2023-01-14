@@ -20,17 +20,13 @@ func getOrCacheByte(namespace string, identifier []byte, create func() ([]byte, 
 	cacheDir := path.Join(ExecutableDir(), "caches", namespace)
 	cacheFilename := path.Join(cacheDir, hash.String())
 
-	b, err = os.ReadFile(cacheFilename)
-	if err != nil {
-		if err := os.MkdirAll(cacheDir, 0755); err != nil {
-			return b, err
-		}
-		// Try again.
-		return getOrCacheByte(namespace, identifier, create)
+	if err := os.MkdirAll(cacheDir, 0755); err != nil {
+		return nil, err
 	}
+	b, err = os.ReadFile(cacheFilename)
 
 	// Hit!
-	if len(b) > 0 {
+	if err == nil && len(b) > 0 {
 		return
 	}
 
