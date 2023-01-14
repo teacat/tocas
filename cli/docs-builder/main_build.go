@@ -383,15 +383,21 @@ func asset(s string, real bool) string {
 
 // replaceAllStringSubmatchFunc
 func replaceAllStringSubmatchFunc(re *regexp.Regexp, str string, repl func([]string) string) string {
-	result := ""
+	result := strings.Builder{}
 	lastIndex := 0
 	for _, v := range re.FindAllSubmatchIndex([]byte(str), -1) {
-		var groups []string
+		// Preallocate the group storage.
+		groups := make([]string, 0, len(v)/2+1)
+
 		for i := 0; i < len(v); i += 2 {
 			groups = append(groups, str[v[i]:v[i+1]])
 		}
-		result += str[lastIndex:v[0]] + repl(groups)
+
+		result.WriteString(str[lastIndex:v[0]])
+		result.WriteString(repl(groups))
 		lastIndex = v[1]
 	}
-	return result + str[lastIndex:]
+
+	result.WriteString(str[lastIndex:])
+	return result.String()
 }

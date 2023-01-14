@@ -1,57 +1,105 @@
 package main
 
 import (
+	"context"
+	"golang.org/x/sync/errgroup"
 	"log"
 	"os"
 	"os/exec"
+	"path"
 	"regexp"
 	"strings"
 
-	cli "github.com/urfave/cli/v2"
+	cp "github.com/otiai10/copy"
+	"github.com/urfave/cli/v2"
 )
 
 // pack 會把 `tocas.css` 的內容打包進 `/dist`。
-func pack(c *cli.Context) error {
+func pack(*cli.Context) error {
+	ctx := context.Background()
+	group, ctx := errgroup.WithContext(ctx)
+
+	group.Go(buildCSSMinify)
+	group.Go(func() error {
+		return updateTo(SrcFile("fonts"), DistFile("fonts"))
+	})
+	group.Go(func() error {
+		return updateTo(SrcFile("flags"), DistFile("flags"))
+	})
+
+	if err := group.Wait(); err != nil {
+		log.Fatal(err)
+	}
+
+	return nil
+}
+
+func buildCSSMinify() error {
+	if err := buildCSS(); err != nil {
+		return err
+	}
+
+	return exec.Command("npx", "css-minify", "-f", DistFile("tocas.css"), "-o", DistDir()).Run()
+}
+
+func buildCSS() error {
 	// 先載入 `/src/tocas.css` 的內容。
-	b, err := os.ReadFile("./../../src/tocas.css")
+	b, err := os.ReadFile(SrcFile("tocas.css"))
 	if err != nil {
 		log.Fatal(err)
 	}
 	tocas := string(b)
 
-	var content string
+	content := strings.Builder{}
 	// 找出所有被 `@import` 的檔案並載入其內容，然後把 `tocas.css` 裡的 `@import` 換成真實的內容。
-	for _, v := range regexp.MustCompile(`@import ".\/(.*?)";`).FindAllStringSubmatch(string(b), -1) {
-		b, err := os.ReadFile("./../../src/" + v[1])
+	for _, v := range regexp.MustCompile(`@import "./(.*?)";`).FindAllStringSubmatch(string(b), -1) {
+		b, err := os.ReadFile(path.Join(ProjectDir(), "src", v[1]))
 		if err != nil {
 			log.Fatal(err)
 		}
 		// 讀取之後就把這行 `@import` 從原本的 `tocas.css` 裡拿走。
 		tocas = strings.ReplaceAll(tocas, v[0], "")
-		content += string(b) + "\n"
+		content.WriteString(string(b))
+		content.WriteByte('\n')
 	}
+	content.WriteString(tocas)
+
 	// 將這個新的組合原始碼儲存至 `/dist/tocas.css`。
-	err = os.WriteFile("./../../dist/tocas.css", []byte(content+tocas), 0777)
+	err = os.WriteFile(DistFile("tocas.css"), []byte(content.String()), 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
-	// 透過 `css-minify` 將 `/dist/tocas.css` 的內容最小化。
-	if err := exec.Command("css-minify", "-f", "./../../dist/tocas.css", "-o", "./../../dist/").Run(); err != nil {
-		log.Fatal(err)
-	}
-	// 移除舊有的 `/dist/fonts` 並從 `/src/fonts` 複製過去一份。
-	if err := exec.Command("rm", "-rf", "./../../dist/fonts").Run(); err != nil {
-		log.Fatal(err)
-	}
-	if err := exec.Command("cp", "-rf", "./../../src/fonts", "./../../dist/fonts").Run(); err != nil {
-		log.Fatal(err)
-	}
-	// 移除舊有的 `/dist/flags` 並從 `/src/flags` 複製過去一份。
-	if err := exec.Command("rm", "-rf", "./../../dist/flags").Run(); err != nil {
-		log.Fatal(err)
-	}
-	if err := exec.Command("cp", "-rf", "./../../src/flags", "./../../dist/flags").Run(); err != nil {
-		log.Fatal(err)
-	}
+
 	return nil
+}
+
+func updateTo(src string, tgt string) error {
+	if err := os.RemoveAll(tgt); err != nil {
+		return err
+	}
+	if err := cp.Copy(src, tgt); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// DistDir gets the Tocas dist directory.
+func DistDir() string {
+	return path.Join(ProjectDir(), "dist")
+}
+
+// DistFile is the wrapper of `path.join(DistDir(), ...)`
+func DistFile(f string) string {
+	return path.Join(DistDir(), f)
+}
+
+// SrcDir gets the Tocas source directory.
+func SrcDir() string {
+	return path.Join(ProjectDir(), "src")
+}
+
+// SrcFile is the wrapper of `path.join(SrcDir(), ...)`
+func SrcFile(f string) string {
+	return path.Join(SrcDir(), f)
 }
