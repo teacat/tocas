@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"golang.org/x/sync/errgroup"
+	"github.com/sourcegraph/conc/pool"
 	"log"
 	"os"
 	"os/exec"
@@ -17,14 +17,31 @@ import (
 // pack 會把 `tocas.css` 的內容打包進 `/dist`。
 func pack(*cli.Context) error {
 	ctx := context.Background()
-	group, ctx := errgroup.WithContext(ctx)
+	group := pool.New().WithContext(ctx)
 
-	group.Go(buildCSSMinify)
-	group.Go(func() error {
-		return updateTo(SrcFile("fonts"), DistFile("fonts"))
+	group.Go(func(ctx context.Context) error {
+		select {
+		case <-ctx.Done():
+			return nil
+		default:
+			return buildCSSMinify()
+		}
 	})
-	group.Go(func() error {
-		return updateTo(SrcFile("flags"), DistFile("flags"))
+	group.Go(func(ctx context.Context) error {
+		select {
+		case <-ctx.Done():
+			return nil
+		default:
+			return updateTo(SrcFile("fonts"), DistFile("fonts"))
+		}
+	})
+	group.Go(func(ctx context.Context) error {
+		select {
+		case <-ctx.Done():
+			return nil
+		default:
+			return updateTo(SrcFile("flags"), DistFile("flags"))
+		}
 	})
 
 	if err := group.Wait(); err != nil {

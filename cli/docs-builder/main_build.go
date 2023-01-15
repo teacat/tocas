@@ -5,9 +5,11 @@ import (
 	"fmt"
 	cp "github.com/otiai10/copy"
 	"github.com/samber/lo"
+	"github.com/sourcegraph/conc/pool"
 	"github.com/vbauerster/mpb/v8"
 	"github.com/vbauerster/mpb/v8/decor"
 	"log"
+	"math"
 	"os"
 	"path"
 	"path/filepath"
@@ -17,7 +19,6 @@ import (
 	"text/template"
 
 	"github.com/urfave/cli/v2"
-	"golang.org/x/sync/errgroup"
 	"gopkg.in/yaml.v2"
 )
 
@@ -98,14 +99,17 @@ func build(c *cli.Context) (err error) {
 	}
 
 	// 建立一個貯存 articles 任務的 errgroup
-	group, ctx := errgroup.WithContext(ctx)
-	group.SetLimit(3) // 把 limits 讓給下方的 tmplCode
+	group := pool.New().WithContext(ctx).WithMaxGoroutines(
+		// 把 limits 讓給下方的 tmplCode
+		int(math.Max(float64(runtime.NumCPU()/2), 1)),
+	)
 
 	/**
 	 * index.html
 	 */
-	group.Go(func() error {
+	group.Go(func(ctx context.Context) error {
 		defer bar.Increment()
+		defer log.Printf("已編譯：index.html")
 
 		select {
 		case <-ctx.Done():
@@ -123,20 +127,16 @@ func build(c *cli.Context) (err error) {
 				return err
 			}
 
-			if err := tmpl.Execute(file, article); err != nil {
-				return err
-			}
-
-			log.Printf("已編譯：index.html")
-			return nil
+			return tmpl.Execute(file, article)
 		}
 	})
 
 	/**
 	 * examples.html
 	 */
-	group.Go(func() error {
+	group.Go(func(ctx context.Context) error {
 		defer bar.Increment()
+		defer log.Printf("已編譯：examples.html")
 
 		select {
 		case <-ctx.Done():
@@ -165,12 +165,7 @@ func build(c *cli.Context) (err error) {
 				return err
 			}
 
-			if err = tmpl.Execute(file, article); err != nil {
-				return err
-			}
-
-			log.Printf("已編譯：examples.html")
-			return nil
+			return tmpl.Execute(file, article)
 		}
 	})
 
@@ -191,17 +186,19 @@ func build(c *cli.Context) (err error) {
 		// 防止 `for` 迴圈覆蓋變數。
 		f := f
 
-		group.Go(func() error {
+		group.Go(func(ctx context.Context) error {
 			defer bar.Increment()
 
 			select {
 			case <-ctx.Done():
 				return nil
 			default:
-				group, _ := errgroup.WithContext(ctx)
-				group.SetLimit(runtime.NumCPU())
+				group := pool.New().WithContext(ctx)
+				group.WithMaxGoroutines(runtime.NumCPU())
 
 				sectionName := strings.TrimSuffix(f.Name(), filepath.Ext(f.Name()))
+				defer log.Printf("已編譯：%s.html", sectionName)
+
 				file, err := os.Create(path.Join(tmpdir, sectionName+".html"))
 				if err != nil {
 					return err
@@ -226,13 +223,17 @@ func build(c *cli.Context) (err error) {
 
 				// 如果這個元件的範例 HTML 不是空的話，就透過 Highlight JS 跟 Beautify 處理。
 				if article.Example.HTML != "" {
-					group.Go(func() error {
+					group.Go(func(ctx context.Context) error {
 						bar.SetTotal(bar.Current()+1, false)
 						defer bar.Increment()
 
-						article.Example.FormattedHTML = tmplCode(
-							trim(article.Example.HTML, article.Example.Remove),
-						)
+						select {
+						case <-ctx.Done():
+						default:
+							article.Example.FormattedHTML = tmplCode(
+								trim(article.Example.HTML, article.Example.Remove),
+							)
+						}
 
 						return nil
 					})
@@ -249,22 +250,32 @@ func build(c *cli.Context) (err error) {
 
 						// 如果這個段落有附加的 HTML 片段，就透過 Highlight JS 跟 Beautify 處理。
 						if j.AttachedHTML != "" {
-							group.Go(func() error {
+							group.Go(func(ctx context.Context) error {
 								bar.SetTotal(bar.Current()+1, false)
 								defer bar.Increment()
 
-								section.FormattedHTML = tmplCode(trim(trim(j.AttachedHTML, j.Remove), article.Remove))
+								select {
+								case <-ctx.Done():
+								default:
+									section.FormattedHTML = tmplCode(trim(trim(j.AttachedHTML, j.Remove), article.Remove))
+								}
+
 								return nil
 							})
 						}
 
 						// 如果這個段落有 HTML 標籤內容，就透過 Highlight JS 跟 Beautify 處理。
 						if j.HTML != "" {
-							group.Go(func() error {
+							group.Go(func(ctx context.Context) error {
 								bar.SetTotal(bar.Current()+1, false)
 								defer bar.Increment()
 
-								section.FormattedHTML = tmplCode(trim(trim(j.HTML, j.Remove), article.Remove))
+								select {
+								case <-ctx.Done():
+								default:
+									section.FormattedHTML = tmplCode(trim(trim(j.HTML, j.Remove), article.Remove))
+								}
+
 								return nil
 							})
 						}
@@ -277,12 +288,8 @@ func build(c *cli.Context) (err error) {
 				if err = group.Wait(); err != nil {
 					return err
 				}
-				if err = tmpl.Execute(file, article); err != nil {
-					return err
-				}
 
-				log.Printf("已編譯：%s.html", sectionName)
-				return nil
+				return tmpl.Execute(file, article)
 			}
 		})
 	}
@@ -310,12 +317,12 @@ func templatePath(template string) string {
 
 // copyFromProjects 會從專案複製資料夾到暫存資料夾。
 func copyFromProjects(ctx context.Context, src []DirMap, tgt string) error {
-	group, ctx := errgroup.WithContext(ctx)
+	group := pool.New().WithContext(ctx)
 
 	for _, s := range src {
 		// 防止 `for` 迴圈覆蓋變數。
 		s := s
-		group.Go(func() error {
+		group.Go(func(ctx context.Context) error {
 			select {
 			case <-ctx.Done():
 				return nil
@@ -346,7 +353,7 @@ func readLanguageMeta(language string) (meta Meta, error error) {
 // listMetaInformation 會取得所有文件裡的 `MetaInformation`，
 // 這樣才能從 `zh-tw` 文件中取得如何稱呼 `en-us`。
 func listMetaInformation(ctx context.Context) ([]MetaInformation, error) {
-	group, ctx := errgroup.WithContext(ctx)
+	group := pool.New().WithContext(ctx)
 	availableDirectories, err := os.ReadDir(path.Join(ProjectDir(), "languages"))
 	if err != nil {
 		return nil, err
@@ -361,7 +368,7 @@ func listMetaInformation(ctx context.Context) ([]MetaInformation, error) {
 		// 防止 `for` 迴圈覆蓋變數。
 		index, lang := index, lang
 
-		group.Go(func() error {
+		group.Go(func(ctx context.Context) error {
 			select {
 			case <-ctx.Done():
 				return nil
@@ -453,13 +460,13 @@ func createProgressBar(p *mpb.Progress, name string, total int64) *mpb.Bar {
 	return p.AddBar(total,
 		mpb.PrependDecorators(
 			// display our name with one space on the right
-			decor.Name(name, decor.WC{W: len(name) + 1, C: decor.DidentRight}),
+			decor.Name(name, decor.WC{W: len(name) + 1, C: decor.DSyncSpaceR}),
 			// replace ETA decorator with "done" message, OnComplete event
 			decor.OnComplete(
-				decor.AverageETA(decor.ET_STYLE_GO, decor.WC{W: 4}), "done!",
+				decor.AverageETA(decor.ET_STYLE_GO, decor.WC{W: 14, C: decor.DSyncSpace}), "done!",
 			),
 			decor.OnComplete(
-				decor.CountersNoUnit("%d / %d", decor.WC{W: 8}),
+				decor.CountersNoUnit("%d / %d", decor.WC{W: 14, C: decor.DSyncSpace}),
 				"",
 			),
 		),
