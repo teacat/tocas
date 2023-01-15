@@ -17,11 +17,6 @@ func main() {
 				Aliases: []string{"l"},
 				Usage:   "指定要載入的相關語系代號，只能同時間指定一個，例如：`zh-tw`。",
 			},
-			&cli.BoolFlag{
-				Name:    "verbose",
-				Aliases: []string{"v"},
-				Usage:   "詳細輸出",
-			},
 		},
 		Commands: []*cli.Command{
 			{

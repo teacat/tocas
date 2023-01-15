@@ -5,7 +5,8 @@ import (
 	"fmt"
 	cp "github.com/otiai10/copy"
 	"github.com/samber/lo"
-	"github.com/schollz/progressbar/v3"
+	"github.com/vbauerster/mpb/v8"
+	"github.com/vbauerster/mpb/v8/decor"
 	"log"
 	"os"
 	"path"
@@ -35,7 +36,11 @@ func build(c *cli.Context) (err error) {
 	}
 
 	// Progress bar
-	bar := progressbar.Default(int64(len(files))+2, fmt.Sprintf("Components (%s)", lang))
+	p := mpb.New(mpb.WithWidth(64))
+	name := fmt.Sprintf("Components (%s)", lang)
+	total := int64(len(files)) + 2
+	bar := createProgressBar(p, name, total)
+	log.SetOutput(p)
 
 	// 建立暫存資料夾，用來存放 dist 檔案
 	tmpdir, err := os.MkdirTemp("", "*-tocas-build")
@@ -94,12 +99,14 @@ func build(c *cli.Context) (err error) {
 
 	// 建立一個貯存 articles 任務的 errgroup
 	group, ctx := errgroup.WithContext(ctx)
-	group.SetLimit(2) // 把 limits 讓給下方的 tmplCode
+	group.SetLimit(3) // 把 limits 讓給下方的 tmplCode
 
 	/**
 	 * index.html
 	 */
 	group.Go(func() error {
+		defer bar.Increment()
+
 		select {
 		case <-ctx.Done():
 			return nil
@@ -120,10 +127,7 @@ func build(c *cli.Context) (err error) {
 				return err
 			}
 
-			_ = bar.Add(1)
-			if c.Bool("verbose") {
-				log.Printf("已編譯：index.html")
-			}
+			log.Printf("已編譯：index.html")
 			return nil
 		}
 	})
@@ -132,6 +136,8 @@ func build(c *cli.Context) (err error) {
 	 * examples.html
 	 */
 	group.Go(func() error {
+		defer bar.Increment()
+
 		select {
 		case <-ctx.Done():
 			return nil
@@ -163,10 +169,7 @@ func build(c *cli.Context) (err error) {
 				return err
 			}
 
-			_ = bar.Add(1)
-			if c.Bool("verbose") {
-				log.Printf("已編譯：examples.html")
-			}
+			log.Printf("已編譯：examples.html")
 			return nil
 		}
 	})
@@ -189,6 +192,8 @@ func build(c *cli.Context) (err error) {
 		f := f
 
 		group.Go(func() error {
+			defer bar.Increment()
+
 			select {
 			case <-ctx.Done():
 				return nil
@@ -201,6 +206,10 @@ func build(c *cli.Context) (err error) {
 				if err != nil {
 					return err
 				}
+
+				name := fmt.Sprintf("Temlcode (%s)", sectionName)
+				bar := createProgressBar(p, name, 0)
+				defer bar.Abort(true)
 
 				article := Article{
 					This: sectionName,
@@ -218,6 +227,9 @@ func build(c *cli.Context) (err error) {
 				// 如果這個元件的範例 HTML 不是空的話，就透過 Highlight JS 跟 Beautify 處理。
 				if article.Example.HTML != "" {
 					group.Go(func() error {
+						bar.SetTotal(bar.Current()+1, false)
+						defer bar.Increment()
+
 						article.Example.FormattedHTML = tmplCode(
 							trim(article.Example.HTML, article.Example.Remove),
 						)
@@ -238,6 +250,9 @@ func build(c *cli.Context) (err error) {
 						// 如果這個段落有附加的 HTML 片段，就透過 Highlight JS 跟 Beautify 處理。
 						if j.AttachedHTML != "" {
 							group.Go(func() error {
+								bar.SetTotal(bar.Current()+1, false)
+								defer bar.Increment()
+
 								section.FormattedHTML = tmplCode(trim(trim(j.AttachedHTML, j.Remove), article.Remove))
 								return nil
 							})
@@ -246,6 +261,9 @@ func build(c *cli.Context) (err error) {
 						// 如果這個段落有 HTML 標籤內容，就透過 Highlight JS 跟 Beautify 處理。
 						if j.HTML != "" {
 							group.Go(func() error {
+								bar.SetTotal(bar.Current()+1, false)
+								defer bar.Increment()
+
 								section.FormattedHTML = tmplCode(trim(trim(j.HTML, j.Remove), article.Remove))
 								return nil
 							})
@@ -263,10 +281,7 @@ func build(c *cli.Context) (err error) {
 					return err
 				}
 
-				_ = bar.Add(1)
-				if c.Bool("verbose") {
-					log.Printf("已編譯：%s.html", sectionName)
-				}
+				log.Printf("已編譯：%s.html", sectionName)
 				return nil
 			}
 		})
@@ -432,4 +447,22 @@ func replaceAllStringSubmatchFunc(re *regexp.Regexp, str string, repl func([]str
 
 	result.WriteString(str[lastIndex:])
 	return result.String()
+}
+
+func createProgressBar(p *mpb.Progress, name string, total int64) *mpb.Bar {
+	return p.AddBar(total,
+		mpb.PrependDecorators(
+			// display our name with one space on the right
+			decor.Name(name, decor.WC{W: len(name) + 1, C: decor.DidentRight}),
+			// replace ETA decorator with "done" message, OnComplete event
+			decor.OnComplete(
+				decor.AverageETA(decor.ET_STYLE_GO, decor.WC{W: 4}), "done!",
+			),
+			decor.OnComplete(
+				decor.CountersNoUnit("%d / %d", decor.WC{W: 8}),
+				"",
+			),
+		),
+		mpb.AppendDecorators(decor.OnComplete(decor.Percentage(), "")),
+	)
 }
