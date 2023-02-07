@@ -2,13 +2,17 @@
    Variables
    ========================================================================== */
 
+.ts-container {
+    --ts-container-gap: 1rem;
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
 
 .ts-container {
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 var(--ts-container-gap);
     max-width: 1180px;
     width: 100%;
     color: inherit;
@@ -23,8 +27,14 @@
  * Fluid
  */
 
-.ts-container.is-fluid {
-    max-width: 100%;
+ .ts-container.is-relaxed {
+    --ts-container-gap: 2rem;
+}
+.ts-container.is-compact {
+    --ts-container-gap: 0.5rem;
+}
+.ts-container.is-fitted {
+    --ts-container-gap: 0;
 }
 
 /**
@@ -34,7 +44,14 @@
 .ts-container.is-narrow {
     max-width: 910px;
 }
-
 .ts-container.is-very-narrow {
     max-width: 720px;
+}
+
+/**
+ * Fluid
+ */
+
+ .ts-container.is-fluid {
+    max-width: 100%;
 }
