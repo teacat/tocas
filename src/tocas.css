@@ -61,6 +61,7 @@
 @import "./tooltip.css";
 @import "./dropdown.css";
 @import "./deprecated_420.css";
+@import "./utilities.css";
 
 /* ==========================================================================
    Variables
@@ -240,8 +241,8 @@ html {
 
 html,
 html[data-scheme="light"],
-.is-light,
-html[data-scheme="dark"] .is-inverted {
+.u-light,
+html[data-scheme="dark"] .u-inverted {
     color-scheme: light;
 
     --ts-gray-50: var(--ts-light-gray-50);
@@ -269,10 +270,10 @@ html[data-scheme="dark"] .is-inverted {
     --ts-tonal-warning-800: #866800;
 }
 
-html[data-scheme="light"] .is-inverted,
-.is-inverted,
+html[data-scheme="light"] .u-inverted,
+.u-inverted,
 html[data-scheme="dark"],
-.is-dark {
+.u-dark {
     color-scheme: dark;
 
     --ts-gray-50: var(--ts-dark-gray-50);
@@ -302,13 +303,23 @@ html[data-scheme="dark"],
     --ts-tonal-warning-800: #463f00;
 }
 
-html[data-scheme="light"] .is-dark-only,
-html[data-scheme="dark"] .is-light-only {
+/**
+ * Hidden
+ */
+
+html.is-light .u-light-hidden,
+html.is-dark .u-dark-hidden {
     display: none;
 }
 
 @media (prefers-color-scheme: light) {
-    html:not([data-scheme="dark"]) .is-dark-only {
+    html:not(.is-dark) .u-light-hidden {
+        display: none;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    html:not(.is-light) .u-dark-hidden {
         display: none;
     }
 }
@@ -318,9 +329,6 @@ html[data-scheme="dark"] .is-light-only {
  */
 
 @media (prefers-color-scheme: dark) {
-    html:not([data-scheme="light"]) .is-light-only {
-        display: none;
-    }
     html {
         color-scheme: dark;
 
@@ -357,7 +365,7 @@ html[data-scheme="dark"] .is-light-only {
         --ts-tonal-warning-400: #edff00;
         --ts-tonal-warning-800: #463f00;
     }
-    .is-inverted {
+    .u-inverted {
         color-scheme: light;
 
         --ts-gray-50: var(--ts-light-gray-50);
@@ -390,13 +398,13 @@ html[data-scheme="dark"] .is-light-only {
    Scales
    ========================================================================== */
 
-html[data-scale="small"],
-html[data-scale="small"] body {
+html.is-small,
+html.is-small body {
     font-size: 14px;
 }
 
-html[data-scale="large"],
-html[data-scale="large"] body {
+html.is-large,
+html.is-large body {
     font-size: 16px;
 }
 
@@ -404,7 +412,7 @@ html[data-scale="large"] body {
    Background Color
    ========================================================================== */
 
-html[data-background="secondary"],
-html[data-background="secondary"] body {
+html.is-secondary,
+html.is-secondary body {
     background-color: var(--ts-gray-75);
 }
