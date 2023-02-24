@@ -41,7 +41,8 @@
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    margin-right: 0.5rem;
+    margin-right: 1rem;
+
 
     background: transparent;
 }
@@ -66,15 +67,16 @@
     font-weight: normal;
 }
 
-.ts-procedure .item .line {
+.ts-procedure .item::after {
     height: 2px;
+    content: "";
     flex: 1 1 0%;
     background: var(--ts-gray-300);
     margin: 0 1rem;
     pointer-events: none;
 }
 
-.ts-procedure .item:last-child .line {
+.ts-procedure .item:last-child::after {
     display: none;
 }
 
@@ -110,7 +112,7 @@
     margin-right: 0;
 }
 
-.ts-procedure.is-stacked .item .line {
+.ts-procedure.is-stacked .item::after {
     margin-bottom: 2rem;
 }
 
@@ -128,7 +130,7 @@
  * Completed
  */
 
-.ts-procedure .item.is-completed .line {
+.ts-procedure .item.is-completed::after {
     background: var(--ts-gray-800);
 }
 
@@ -157,7 +159,7 @@
  */
 
 .ts-procedure .item.is-completed .line.is-half::before {
-    content: " ";
+    content: ' ';
     position: absolute;
     top: 0;
     right: 0;
@@ -220,7 +222,7 @@
     border-color: var(--ts-gray-200);
 }
 
-.ts-procedure.is-unordered .item.is-completed .line {
+.ts-procedure.is-unordered .item.is-completed::after {
     background: var(--ts-gray-300);
 }
 
@@ -279,25 +281,14 @@
     width: 100%;
 }
 
-.ts-procedure.is-vertical .item .content {
-    align-items: flex-start;
-}
-
-.ts-procedure.is-vertical .item .label {
-    line-height: 1.8;
-}
-.ts-procedure.is-vertical .item .indicator {
-    flex-shrink: 0;
-}
-
-.ts-procedure.is-vertical .item .line {
+.ts-procedure.is-vertical .item::after {
     height: auto;
     min-height: 1.5rem;
     width: 2px;
     margin: 0.5rem 0 0.5rem 0.9rem;
 }
 
-.ts-procedure.is-vertical.is-compact .item .line {
+.ts-procedure.is-vertical.is-compact .item::after {
     margin: 0rem 0 0rem 0.4rem;
 }
 
