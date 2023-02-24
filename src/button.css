@@ -364,3 +364,56 @@
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
+
+/**
+ * Buttons
+ */
+
+.ts-buttons {
+    display: flex;
+}
+
+.ts-buttons .ts-button {
+    width: auto;
+}
+
+.ts-buttons .ts-button:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.ts-buttons .ts-button:not(:first-child):not(:last-child) {
+    border-radius: 0;
+}
+
+.ts-buttons .ts-button:not(:first-child)::before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    height: 70%;
+    background: var(--ts-gray-600);
+    width: 1px;
+}
+
+.ts-buttons .ts-button.is-outlined::before {
+    display: none;
+}
+
+.ts-buttons .ts-button.is-negative::before {
+    background: var(--ts-negative-400);
+}
+
+.ts-buttons .ts-button.is-secondary::before {
+    background: var(--ts-gray-400);
+}
+
+.ts-buttons .ts-button:last-child {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.ts-buttons .ts-button.is-outlined + .ts-button.is-outlined {
+    border-left-color: transparent;
+}
