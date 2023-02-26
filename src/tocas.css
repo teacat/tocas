@@ -39,7 +39,6 @@
 @import "./app-navbar.css";
 @import "./snackbar.css";
 @import "./accordion.css";
-@import "./notification.css";
 @import "./mask.css";
 @import "./placeholder.css";
 @import "./header.css";
@@ -54,7 +53,6 @@
 @import "./checklist.css";
 @import "./imageset.css";
 @import "./iconset.css";
-@import "./app-statusbar.css";
 @import "./conversation.css";
 @import "./modal.css";
 @import "./gauge.css";
@@ -62,6 +60,10 @@
 @import "./dropdown.css";
 @import "./deprecated_420.css";
 @import "./utilities.css";
+@import "./app-topbar.css";
+@import "./app-drawer.css";
+@import "./timeline.css";
+@import "./stash.css";
 
 /* ==========================================================================
    Variables
@@ -240,9 +242,9 @@ html {
  */
 
 html,
-html[data-scheme="light"],
+html.is-light,
 .u-light,
-html[data-scheme="dark"] .u-inverted {
+html.is-dark .u-inverted {
     color-scheme: light;
 
     --ts-gray-50: var(--ts-light-gray-50);
@@ -270,9 +272,9 @@ html[data-scheme="dark"] .u-inverted {
     --ts-tonal-warning-800: #866800;
 }
 
-html[data-scheme="light"] .u-inverted,
+html.is-light .u-inverted,
 .u-inverted,
-html[data-scheme="dark"],
+html.is-dark,
 .u-dark {
     color-scheme: dark;
 
@@ -309,18 +311,18 @@ html[data-scheme="dark"],
 
 html.is-light .u-light-hidden,
 html.is-dark .u-dark-hidden {
-    display: none;
+    display: none !important;
 }
 
 @media (prefers-color-scheme: light) {
     html:not(.is-dark) .u-light-hidden {
-        display: none;
+        display: none !important;
     }
 }
 
 @media (prefers-color-scheme: dark) {
     html:not(.is-light) .u-dark-hidden {
-        display: none;
+        display: none !important;
     }
 }
 
