@@ -2,6 +2,11 @@
    Variables
    ========================================================================== */
 
+.ts-app-navbar {
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -73,7 +78,12 @@
  */
 
 .ts-app-navbar .item.is-active {
-    color: var(--ts-gray-800);
+    color: var(--accent-color, var(--ts-gray-800));
+}
+
+.ts-app-navbar .item.is-active .ts-icon {
+    --accent-color: inherit;
+    --accent-foreground-color: inherit;
 }
 
 /**
@@ -126,8 +136,8 @@
 }
 
 .ts-app-navbar.is-indicated .item.is-active .ts-icon {
-    background: var(--ts-gray-800);
-    color: var(--ts-gray-50);
+    background: var(--accent-color, var(--ts-gray-800));
+    color: var(--accent-foreground-color, var(--ts-gray-50));
 }
 
 /**

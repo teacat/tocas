@@ -2,6 +2,12 @@
    Variables
    ========================================================================== */
 
+.ts-rating {
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+    --color: var(--accent-color, inherit);
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -26,23 +32,15 @@
 .ts-rating.is-input :is(.star, .heart):hover,
 .ts-rating.is-input :is(.star, .heart):has(~ :is(.star, .heart):hover),
 .ts-rating.is-input :is(.star, .heart):has(~ :is(.star, .heart):checked) {
-    color: inherit;
+    color: var(--color);
 }
 
-.ts-rating.is-yellow :is(.star, .heart).is-active,
-.ts-rating.is-yellow.is-input :is(.star, .heart):checked,
-.ts-rating.is-yellow.is-input :is(.star, .heart):hover,
-.ts-rating.is-yellow.is-input :is(.star, .heart):has(~ :is(.star, .heart):hover),
-.ts-rating.is-yellow.is-input :is(.star, .heart):has(~ :is(.star, .heart):checked) {
-    color: #e3c81b;
+.ts-rating.is-yellow {
+    --color: #e3c81b;
 }
 
-.ts-rating.is-red :is(.star, .heart).is-active,
-.ts-rating.is-red.is-input :is(.star, .heart):checked,
-.ts-rating.is-red.is-input :is(.star, .heart):hover,
-.ts-rating.is-red.is-input :is(.star, .heart):has(~ :is(.star, .heart):hover),
-.ts-rating.is-red.is-input :is(.star, .heart):has(~ :is(.star, .heart):checked) {
-    color: #ff1100;
+.ts-rating.is-red {
+    --color: #ff1100;
 }
 
 .ts-rating :is(.star, .heart)::after,
@@ -79,15 +77,7 @@
 }
 
 .ts-rating .star.is-active.is-half::before {
-    color: var(--ts-gray-800);
-}
-
-.ts-rating.is-yellow .star.is-active.is-half::before {
-    color: #e3c81b;
-}
-
-.ts-rating.is-red .star.is-active.is-half::before {
-    color: #ff1100;
+    color: var(--color);
 }
 
 .ts-rating .star.is-active.is-half::before {

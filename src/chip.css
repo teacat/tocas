@@ -2,6 +2,11 @@
    Variables
    ========================================================================== */
 
+.ts-chip {
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
@@ -26,7 +31,7 @@
     line-height: 1.75;
     min-height: 22px;
     /*min-width: 55px;*/
-    color: var(--ts-gray-800);
+    color: var(--accent-color, var(--ts-gray-800));
 }
 
 .ts-chip.is-input,
@@ -96,15 +101,15 @@
  */
 
 .ts-chip.is-toggle input:checked + .content {
-    background: var(--ts-gray-800);
-    border-color: var(--ts-gray-800);
-    color: var(--ts-gray-50);
+    background: var(--accent-color, var(--ts-gray-800));
+    border-color: var(--accent-color, var(--ts-gray-800));
+    color: var(--accent-foreground-color, var(--ts-gray-50));
 }
 
 .ts-chip.is-toggle.is-secondary input:checked + .content {
-    color: var(--ts-gray-800);
+    color: var(--accent-color, var(--ts-gray-800));
     background: var(--ts-gray-200);
-    border-color: var(--ts-gray-600);
+    border-color: var(--accent-color, var(--ts-gray-600));
 }
 
 /**
@@ -112,15 +117,15 @@
  */
 
 .ts-chip.is-input input:checked + .content {
-    background: var(--ts-primary-700);
-    border-color: var(--ts-primary-700);
-    color: var(--ts-white);
+    background: var(--accent-color, var(--ts-primary-700));
+    border-color: var(--accent-color, var(--ts-primary-700));
+    color: var(--accent-foreground-color, var(--ts-white));
 }
 
 .ts-chip.is-input.is-secondary input:checked + .content {
-    color: var(--ts-primary-600);
+    color: var(--accent-color, var(--ts-primary-600));
     background: var(--ts-gray-100);
-    border-color: var(--ts-primary-600);
+    border-color: var(--accent-color, var(--ts-primary-600));
 }
 
 .ts-chip.is-input input:checked + .content::before {
