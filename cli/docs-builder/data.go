@@ -9,8 +9,10 @@ type Article struct {
 	Description string                  `yaml:"Description"`
 	Type        string                  `yaml:"Type"`
 	Intro       string                  `yaml:"Intro"`
+	Links       []ArticleLink           `yaml:"Links"`
 	Example     ArticleExample          `yaml:"Example"`
 	Examples    []ArticleExampleSection `yaml:"Examples"`
+	Variables   []ArticleVariable       `yaml:"Variables"`
 	Remove      []string                `yaml:"Remove"`
 	Relatives   []string                `yaml:"Relatives"`
 	Definitions []ArticleDefinition     `yaml:"Definitions"`
@@ -29,6 +31,21 @@ type ArticleExample struct {
 	FormattedHTML template.HTML
 }
 
+// ArticleLink
+type ArticleLink struct {
+	Icon        string `yaml:"Icon"`
+	Title       string `yaml:"Title"`
+	Description string `yaml:"Description"`
+	Link        string `yaml:"Link"`
+}
+
+// ArticleVariable
+type ArticleVariable struct {
+	Name        string `yaml:"Name"`
+	Example     string `yaml:"Example"`
+	Description string `yaml:"Description"`
+}
+
 // ArticleDefinition
 type ArticleDefinition struct {
 	Title       string                     `yaml:"Title"`
@@ -40,15 +57,16 @@ type ArticleDefinition struct {
 
 // ArticleDefinitionSection
 type ArticleDefinitionSection struct {
-	Title       string   `yaml:"Title"`
-	Description string   `yaml:"Description"`
-	Version     string   `yaml:"Version"`
-	HTML        string   `yaml:"HTML"`
-	Responsive  bool     `yaml:"Responsive"`
-	Since       string   `yaml:"Since"`
-	Icon        string   `yaml:"Icon"`
-	Remove      []string `yaml:"Remove"`
-	Anchor      string   `yaml:"Anchor"`
+	Title          string   `yaml:"Title"`
+	Description    string   `yaml:"Description"`
+	Version        string   `yaml:"Version"`
+	HTML           string   `yaml:"HTML"`
+	Responsive     bool     `yaml:"Responsive"`
+	Since          string   `yaml:"Since"`
+	Icon           string   `yaml:"Icon"`
+	Remove         []string `yaml:"Remove"`
+	Anchor         string   `yaml:"Anchor"`
+	IsDownloadable bool     `yaml:"IsDownloadable"`
 	//
 	AttachedHTML string `yaml:"AttachedHTML"`
 	//
