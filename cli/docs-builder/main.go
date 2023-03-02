@@ -17,6 +17,11 @@ func main() {
 				Aliases: []string{"l"},
 				Usage:   "指定要載入的相關語系代號，只能同時間指定一個，例如：`zh-tw`。",
 			},
+			&cli.StringFlag{
+				Name:    "screenshot-path",
+				Aliases: []string{"sp"},
+				Usage:   "",
+			},
 		},
 		Commands: []*cli.Command{
 			{
@@ -28,6 +33,16 @@ func main() {
 				Name:   "pack",
 				Usage:  "會將 Tocas UI 的 /src 轉譯至 /dist。",
 				Action: pack,
+			},
+			{
+				Name:   "screenshot",
+				Usage:  "",
+				Action: screenshot,
+			},
+			{
+				Name:   "compress",
+				Usage:  "",
+				Action: compressScreenshots,
 			},
 		},
 	}
