@@ -1,0 +1,142 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-selection {
+    --height: var(--ts-input-height-medium);
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-selection {
+    border: 1px solid var(--ts-gray-100);
+    border-radius: 0.4rem;
+    padding: 0 0.35rem;
+    display: inline-flex;
+    background: var(--ts-gray-100);
+    box-sizing: border-box;
+    height: var(--height);
+    align-items: center;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-selection .item {
+    display: flex;
+}
+
+.ts-selection .item .text {
+    display: inline-flex;
+    padding: 0.25rem 1rem;
+    border-radius: 0.3rem;
+    font-size: var(--ts-absolute-small);
+    color: var(--ts-gray-800);
+    border-color: var(--ts-gray-100);
+    user-select: none;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.ts-selection .item input {
+    display: none;
+}
+
+.ts-selection input:checked + .text {
+    background: var(--accent-color, var(--ts-primary-700));
+    border-color: var(--accent-color, var(--ts-primary-700));
+    color: var(--accent-foreground-color, var(--ts-white));
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Disabled
+ */
+
+.ts-selection.is-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
+}
+
+.ts-selection .item.is-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
+}
+
+/**
+ * Circular
+ */
+
+.ts-selection.is-circular {
+    border-radius: 100rem;
+}
+
+.ts-selection.is-circular .item .text {
+    border-radius: 100rem;
+}
+
+/**
+ * Fluid
+ */
+
+.ts-selection.is-fluid {
+    width: 100%;
+}
+.ts-selection.is-fluid .item {
+    flex: 1;
+}
+.ts-selection.is-fluid .item .text {
+    width: 100%;
+}
+
+/**
+ * Sizes
+ */
+
+.ts-selection.is-small {
+    --height: var(--ts-input-height-small);
+}
+
+.ts-selection.is-small .item .text {
+    font-size: var(--ts-font-size-13px);
+}
+
+.ts-selection.is-large {
+    --height: var(--ts-input-height-large);
+}
+
+.ts-selection.is-large .item .text {
+    font-size: var(--ts-font-size-17px);
+}
+
+/**
+ * Dense
+ */
+
+.ts-selection.is-dense {
+    --height: var(--ts-input-height-medium-dense);
+}
+.ts-selection.is-dense.is-small {
+    --height: var(--ts-input-height-small-dense);
+}
+.ts-selection.is-dense.is-small {
+    --height: var(--ts-input-height-large-dense);
+}
+
+.ts-selection.is-dense .item .text {
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+}

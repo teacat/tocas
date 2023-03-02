@@ -84,7 +84,7 @@ body {
     text-align: left;
     width: max-content;
     right: 0;
-    z-index: 101;
+    z-index: 1001;
 }
 
 .穹頂-導航列-項目-語系下拉式選單.穹頂-導航列-項目-語系下拉式選單_開啟的 {
@@ -266,8 +266,18 @@ body {
     max-width: calc(100% - (210px + 210px));
 }
 
-.主體-格局-內容 .ts-modal {
+.主體-格局-內容 .ts-modal:not([data-name="modal"]) {
     position: relative;
+}
+
+.主體-格局-內容 .ts-app-drawer:not([data-name="drawer"]) {
+    position: relative;
+    border: 1px solid var(--ts-gray-300);
+    min-height: 120px;
+}
+
+.主體-格局-內容 .ts-app-drawer.is-bottom {
+    min-height: 320px !important;
 }
 
 .主體-格局-內容_網格範例的 .ts-grid {
@@ -292,7 +302,14 @@ body {
     color: var(--ts-gray-400);
     font-weight: bold;
     border: 1px solid var(--ts-gray-300);
-    margin: -1px -1px;
+    margin: -1px 0px;
+}
+
+.主體-格局-內容_網格範例的 .ts-grid:is(.is-top-aligned, .is-middle-aligned, .is-bottom-aligned) .column:not(:nth-child(2)) {
+    min-height: 8rem;
+}
+.主體-格局-內容_網格範例的 .ts-grid:is(.is-top-aligned, .is-middle-aligned, .is-bottom-aligned) .column:nth-child(2) {
+    min-height: 3rem;
 }
 
 /*.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column::after {
@@ -387,6 +404,53 @@ body {
 .主體-格局-內容_網格範例的 .ts-grid .column.is-16-wide::after {
     content: "16";
 }
+.主體-格局-內容_網格範例的 .ts-grid .column.is-fluid::after {
+    content: "Fluid";
+}
+.主體-格局-內容_網格範例的 .ts-grid.is-top-aligned .column:nth-child(2)::after {
+    content: "Top";
+}
+.主體-格局-內容_網格範例的 .ts-grid.is-middle-aligned .column:nth-child(2)::after {
+    content: "Middle";
+}
+.主體-格局-內容_網格範例的 .ts-grid.is-bottom-aligned .column:nth-child(2)::after {
+    content: "Bottom";
+}
+/*.主體-格局-內容_網格範例的 .ts-grid .column.is-first::after {
+    content: "First";
+}
+.主體-格局-內容_網格範例的 .ts-grid .column.is-last::after {
+    content: "Last";
+}
+
+.主體-格局-內容_網格範例的 .ts-grid .column[class*="is-order-"]::after,
+.主體-格局-內容_網格範例的 .ts-grid.is-reversed .column::after {
+    border-radius: 100rem;
+    background: var(--ts-gray-300);
+    width: 33px;
+    height: 33px;
+    text-align: center;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ts-gray-50);
+}
+.主體-格局-內容_網格範例的 .ts-grid .column.is-order-1::after,
+.主體-格局-內容_網格範例的 .ts-grid.is-reversed .column:nth-child(1):after {
+    content: "1";
+}
+.主體-格局-內容_網格範例的 .ts-grid .column.is-order-2::after,
+.主體-格局-內容_網格範例的 .ts-grid.is-reversed .column:nth-child(2):after {
+    content: "2";
+}
+.主體-格局-內容_網格範例的 .ts-grid .column.is-order-3::after,
+.主體-格局-內容_網格範例的 .ts-grid.is-reversed .column:nth-child(3):after {
+    content: "3";
+}
+.主體-格局-內容_網格範例的 .ts-grid .column.is-order-4::after {
+    content: "4";
+}*/
 
 .主體-格局-內容_網格範例的 .ts-grid {
     position: relative;
@@ -399,7 +463,7 @@ body {
 }
 
 .主體-格局-內容-文字 a {
-    color: var(--ts-gray-800);
+    color: var(--ts-primary-800);
     text-decoration: underline;
 }
 
@@ -458,7 +522,7 @@ body {
     text-align: left;
     width: max-content;
     right: 0;
-    z-index: 101;
+    z-index: 1001;
 }
 
 .主體-格局-內容-工具列-項目-下拉式選單-群組-項目 {
@@ -488,11 +552,41 @@ body {
     color: var(--ts-gray-800);
     margin-right: auto;
     margin-left: initial;
+    text-align: left;
+}
+
+.主體-格局-內容-工具列-項目-連結標籤 {
+    display: flex;
+    gap: .8rem;
+    margin-top: 13px;
+}
+
+.主體-格局-內容-工具列-項目-連結標籤-項目 {
+    border: 1px solid var(--ts-gray-300);
+    border-radius: 4px;
+    font-size: 14px;
+    padding: 0.4rem 0.7rem;
+    display: flex;
+    white-space: nowrap;
+    gap: 0.5rem;
+    font-weight: normal;
+    line-height: 1;
+    color: var(--ts-gray-800);
+}
+
+.主體-格局-內容-工具列-項目-連結標籤-項目-文字 {
+
+}
+
+.主體-格局-內容-工具列-項目-連結標籤-項目 .ts-icon {
+    font-size: 13px;
+    margin-top: 1px;
 }
 
 .主體-格局-內容-主要範例 {
     border: 1px solid var(--ts-gray-300);
     border-radius: 0.4rem;
+    overflow: hidden;
 }
 
 .主體-格局-內容-主要範例-實際效果 {
@@ -502,11 +596,18 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 0.4rem;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
     border-bottom: 1px solid var(--ts-gray-300);
 }
 
 .主體-格局-內容-主要範例-實際效果:not(.主體-格局-內容-主要範例-實際效果_置中的) .主體-格局-內容-主要範例-實際效果-置中容器 {
     width: 100%;
+}
+
+.主體-格局-內容-主要範例-實際效果-置中容器 > .ts-email {
+    padding: 0;
+    margin: -45px 0;
 }
 
 .主體-格局-內容-主要範例-程式碼 {
@@ -516,7 +617,7 @@ body {
 
 .主體-格局-內容-主要範例-程式碼 pre {
     margin: 0;
-    line-height: 1.5;
+    /*line-height: 1.5;*/
 }
 
 .主體-格局-內容-標題 {
@@ -551,12 +652,102 @@ body {
 }
 
 .主體-格局-內容-單個範例-文字 a {
-    color: var(--ts-gray-800);
+    color: var(--ts-primary-800);
     text-decoration: underline;
 }
 
+.主體-格局-內容-變數屬性 {
+    margin-top: 1.5rem;
+}
+
+.主體-格局-內容-額外連結 {
+    display: flex;
+    gap: 1rem;
+    margin-top: 8rem;
+}
+
+.主體-格局-內容-額外連結-項目 {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border: 1px solid var(--ts-gray-300);
+    padding: 0.8rem 0.8rem;
+    border-radius: 6px;
+    width: 40%;
+}
+
+.主體-格局-內容-額外連結-項目-主體 {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    flex: 1;
+}
+
+.主體-格局-內容-額外連結-項目-主體-圖示容器 {
+}
+
+.主體-格局-內容-額外連結-項目-主體-圖示容器 .ts-icon {
+    background: var(--ts-gray-200);
+    height: 40px;
+    width: 40px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ts-gray-800);
+    border-radius: 100em;
+}
+
+.主體-格局-內容-額外連結-項目-主體-文字容器 {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.主體-格局-內容-額外連結-項目-主體-文字容器-標題 {
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--ts-gray-800);
+    line-height: 1.2;
+}
+
+.主體-格局-內容-額外連結-項目-主體-文字容器-說明 {
+    font-size: 14px;
+    color: var(--ts-gray-600);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+}
+
+.主體-格局-內容-額外連結-項目-連結文字 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.7rem 0.35rem 0;
+    margin-top: 0.2rem;
+    line-height: 1;
+    border-top: 1px solid var(--ts-gray-300);
+}
+
+.主體-格局-內容-額外連結-項目-連結文字-文字 {
+    flex: 1;
+    color: var(--ts-gray-600);
+}
+
+.主體-格局-內容-額外連結-項目-連結文字-圖示容器 {
+    color: var(--ts-gray-600);
+    font-size: var(--ts-font-size-17px);
+}
+
 .主體-格局-內容-文字 p code,
-.主體-格局-內容-單個範例-文字 p code {
+.主體-格局-內容-單個範例-文字 p code,
+.主體-格局-內容-單個範例-文字 .ts-list code,
+.主體-格局-內容-單個範例-文字 .ts-table code,
+.主體-格局-內容-文字 .ts-table code,
+.主體-格局-內容-變數屬性 .ts-table code {
     padding: 0 0.4rem;
     display: inline-block;
     border-radius: 0.3rem;
@@ -680,6 +871,26 @@ body {
 .主體-格局-內容-單個範例-範例-實際效果 {
 }
 
+.主體-格局-內容-單個範例-範例-實際效果
+    :is(
+        .u-padded,
+        .u-horizontally-padded,
+        .u-vertically-padded,
+        .u-very-padded,
+        .u-horizontally-very-padded,
+        .u-vertically-very-padded,
+        .u-spaced,
+        .u-horizontally-spaced,
+        .u-vertically-spaced,
+        .u-very-spaced,
+        .u-horizontally-very-spaced,
+        .u-vertically-very-spaced
+    ) {
+    background-image: linear-gradient(to bottom, var(--ts-gray-50) 0%, var(--ts-gray-50) 100%), linear-gradient(to bottom, var(--ts-gray-300) 0%, var(--ts-gray-300) 100%);
+    background-clip: content-box, padding-box;
+    border: 1px solid var(--ts-gray-300);
+}
+
 .主體-格局-內容-單個範例_檢視原始碼中 .主體-格局-內容-單個範例-範例-實際效果 {
     padding: 1.5rem;
     border-bottom: 1px solid var(--ts-gray-300);
@@ -710,12 +921,55 @@ body {
     margin: 0;
 }
 
+.主體-格局-內容-單個範例-附帶程式碼_可下載的 {
+    max-height: 270px;
+    overflow: hidden;
+}
+
+.主體-格局-內容-單個範例-附帶程式碼_可下載的 pre {
+    position: static;
+    overflow: hidden;
+}
+
+.主體-格局-內容-單個範例-附帶程式碼_可下載的 pre::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    content: '';
+    background: linear-gradient(to bottom, rgb(255 255 255 / 0%) 0%,rgb(255 255 255 / 80%) 100%);
+}
+
+.主體-格局-內容-單個範例-附帶程式碼-下載按鈕 {
+    appearance: none;
+    border: 0;
+    border-radius: 0.4rem;
+    border-radius: 100em;
+    background: var(--ts-gray-800);
+    color: var(--ts-gray-50);
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+    font-family: "Noto Sans TC", "Noto Sans CJK TC";
+    cursor: pointer;
+    font-size: var(--ts-font-size-14px);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
 .主體-格局-內容-相關元件 {
     padding: 2rem 2rem;
     margin-top: 8rem;
     background: var(--ts-gray-100);
     border-radius: 0.8rem;
     color: var(--ts-gray-800);
+}
+
+.主體-格局-內容-額外連結 + .主體-格局-內容-相關元件 {
+    margin-top: 1.5rem;
 }
 
 .主體-格局-內容-相關元件-標題 {
@@ -1087,7 +1341,7 @@ body {
         left: 1rem;
         right: 1rem;
         border-radius: 1rem;
-        z-index: 102;
+        z-index: 1002;
         background: var(--ts-gray-50);
         padding: 1.5rem;
         overflow-y: auto;
@@ -1116,7 +1370,7 @@ body {
         bottom: 0;
         background: var(--ts-gray-300);
         backdrop-filter: blur(1px);
-        z-index: 101;
+        z-index: 1001;
         display: none;
     }
 
@@ -1137,6 +1391,11 @@ body {
         padding: 1rem;
     }
 
+    .主體-格局-內容-主要範例-實際效果-置中容器 > .ts-email {
+        padding: 0;
+        margin: -15px 0;
+    }
+
     .主體-格局-內容-單個範例_檢視原始碼中 .主體-格局-內容-單個範例-範例-實際效果 {
         padding: 1rem;
     }
@@ -1145,13 +1404,13 @@ body {
         padding: 1rem;
     }
 
-    .主體-格局-內容-單個範例-附帶程式碼 pre,
+    .主體-格局-內容-單個範例-附帶程式碼:not(.主體-格局-內容-單個範例-附帶程式碼_可下載的) pre,
     .主體-格局-內容-主要範例-程式碼 pre,
     .主體-格局-內容-單個範例-範例-程式碼 pre {
         overflow-x: auto;
     }
 
-    .主體-格局-內容-單個範例-附帶程式碼 .hljs,
+    .主體-格局-內容-單個範例-附帶程式碼:not(.主體-格局-內容-單個範例-附帶程式碼_可下載的) .hljs,
     .主體-格局-內容-主要範例-程式碼 .hljs,
     .主體-格局-內容-單個範例-範例-程式碼 .hljs {
         white-space: pre;

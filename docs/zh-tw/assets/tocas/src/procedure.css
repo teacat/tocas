@@ -1,0 +1,307 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-procedure {
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-procedure {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-procedure .item {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    flex: 1 0 auto;
+    color: var(--ts-gray-800);
+    counter-increment: ordered;
+}
+
+.ts-procedure .item:last-child {
+    flex: 0 0 auto;
+}
+
+.ts-procedure .item .indicator {
+    border-radius: 100rem;
+
+    border: 2px solid var(--ts-gray-300);
+    color: var(--ts-gray-800);
+    height: 2rem;
+    width: 2rem;
+    display: inline-flex;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-right: 1rem;
+    background: transparent;
+}
+
+.ts-procedure:not(.is-compact) .item .indicator:empty::after {
+    content: counter(ordered, decimal);
+}
+
+.ts-procedure .item .content {
+    display: flex;
+    align-items: center;
+}
+
+.ts-procedure .item .label {
+    color: var(--ts-gray-800);
+    font-weight: 500;
+}
+
+.ts-procedure .item .label .description {
+    color: var(--ts-gray-600);
+    font-size: var(--ts-font-size-14px);
+    font-weight: normal;
+}
+
+.ts-procedure .item::after {
+    height: 2px;
+    content: "";
+    flex: 1 1 0%;
+    background: var(--ts-gray-300);
+    margin: 0 1rem;
+    pointer-events: none;
+}
+
+.ts-procedure .item:last-child::after {
+    display: none;
+}
+
+.ts-procedure .item .indicator .ts-icon {
+    font-size: var(--ts-font-size-14px);
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Active
+ */
+
+.ts-procedure .item.is-active .indicator {
+    background: var(--accent-color, var(--ts-gray-800));
+    border-color: var(--accent-color, var(--ts-gray-800));
+    color: var(--accent-foreground-color, var(--ts-gray-50));
+}
+
+/**
+ * Stacked
+ */
+
+.ts-procedure.is-stacked .item .content {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+}
+
+.ts-procedure.is-stacked .item .indicator {
+    margin-right: 0;
+}
+
+.ts-procedure.is-stacked .item::after {
+    margin-bottom: 2rem;
+}
+
+/**
+ * Processing
+ */
+
+.ts-procedure .item.is-processing .indicator {
+    background: transparent;
+    border-color: var(--accent-color, var(--ts-gray-800));
+    color: var(--ts-gray-800);
+}
+
+/**
+ * Completed
+ */
+
+.ts-procedure .item.is-completed::after {
+    background: var(--accent-color, var(--ts-gray-800));
+}
+
+.ts-procedure .item.is-completed .indicator {
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: inherit;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+    background: var(--accent-color, var(--ts-gray-800));
+    border-color: var(--accent-color, var(--ts-gray-800));
+    color: var(--accent-foreground-color, var(--ts-gray-50));
+}
+.ts-procedure .item.is-completed .indicator::after,
+.ts-procedure .item.is-completed .indicator * {
+    display: none;
+}
+.ts-procedure .item.is-completed .indicator::before {
+    content: "\f00c";
+}
+
+/**
+ * Completed Half Line
+ */
+
+.ts-procedure .item.is-completed .line.is-half::before {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    background: var(--ts-gray-300);
+}
+
+/**
+ * Disabled
+ */
+
+.ts-procedure .item.is-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
+}
+
+.ts-procedure .item.is-disabled .indicator {
+    background: transparent;
+    border-color: var(--ts-gray-300);
+}
+
+/**
+ * Negative
+ */
+
+.ts-procedure .item.is-negative .indicator {
+    background: var(--ts-negative-500);
+    color: var(--ts-white);
+    border-color: var(--ts-negative-500);
+}
+
+.ts-procedure .item.is-negative .label {
+    color: var(--ts-negative-500);
+}
+
+/**
+ * Compact
+ */
+
+.ts-procedure.is-compact .item .indicator {
+    height: 1rem;
+    width: 1rem;
+    padding: 0;
+}
+
+.ts-procedure.is-compact .item.is-completed .indicator::after,
+.ts-procedure.is-compact .item.is-completed .indicator::before,
+.ts-procedure.is-compact .item.is-completed .indicator * {
+    display: none;
+}
+
+/**
+ * Unordered
+ */
+
+.ts-procedure.is-unordered .item .indicator {
+    background: var(--ts-gray-200);
+    border-color: var(--ts-gray-200);
+}
+
+.ts-procedure.is-unordered .item.is-completed::after {
+    background: var(--ts-gray-300);
+}
+
+.ts-procedure.is-unordered .item.is-active .indicator {
+    background: var(--accent-color, var(--ts-gray-800));
+    border-color: var(--accent-color, var(--ts-gray-800));
+}
+
+.ts-procedure.is-unordered .item.is-completed .indicator {
+    background: var(--ts-gray-200);
+    border-color: var(--ts-gray-200);
+    color: var(--ts-gray-800);
+}
+
+/**
+ * Compact
+ */
+
+.ts-procedure.is-compact .item.is-completed .indicator {
+    background: var(--accent-color, var(--ts-gray-800));
+    border-color: var(--accent-color, var(--ts-gray-800));
+}
+
+.ts-procedure.is-compact .item.is-active .indicator {
+    background: transparent;
+    border-color: var(--accent-color, var(--ts-gray-800));
+}
+
+.ts-procedure.is-compact .item.is-active .indicator::after {
+    content: "";
+    background: var(--accent-color, var(--ts-gray-800));
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    border-radius: 100rem;
+    display: block;
+}
+
+/**
+ * Vertical
+ */
+
+.ts-procedure.is-vertical {
+    flex-direction: column;
+}
+
+.ts-procedure.is-vertical .item {
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1 0 auto;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    display: flex;
+    width: 100%;
+}
+
+.ts-procedure.is-vertical .item::after {
+    height: auto;
+    min-height: 1.5rem;
+    width: 2px;
+    margin: 0.5rem 0 0.5rem 0.9rem;
+}
+
+.ts-procedure.is-vertical.is-compact .item::after {
+    margin: 0rem 0 0rem 0.4rem;
+}
+
+/**
+ * Sizes
+ */
+
+.ts-procedure.is-small {
+    font-size: var(--ts-font-size-14px);
+}
+.ts-procedure.is-large {
+    font-size: var(--ts-font-size-17px);
+}
