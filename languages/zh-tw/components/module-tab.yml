@@ -1,0 +1,70 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 分頁模組
+Description: 透過分頁籤群組來開關內容。
+Intro: |
+    這個 JavaScript 模組主要與[分頁籤](./tab.html)元件搭配，可以讓使用者點擊分頁籤項目時，顯示指定的內容並隱藏其他無關內容。
+
+    在[分頁籤](./tab.html)裡面的項目套用 `[data-tab="分頁名稱"]` 並在目標分頁內容套用 `[data-name="分頁名稱"]`，就能夠透過點擊分頁籤項目來切換對應的分頁內容可見度。
+
+    初始化時，沒有被啟用的內容會被隱藏。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Tab
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Remove:
+        - <div class="ts-space"></div>
+    HTML: |
+        <div class="{{ts-tab}} is-pilled">
+            <button class="item is-active" [[data-tab]]="logs">交易紀錄</button>
+            <button class="item" [[data-tab]]="info">帳戶資訊</button>
+        </div>
+        <div class="ts-space"></div>
+        <div class="{{ts-segment}}" [[data-name]]="logs">
+            你尚未有任何交易紀錄。
+        </div>
+        <div class="{{ts-segment}}" [[data-name]]="info">
+            你的帳戶目前有 3,000 元。
+        </div>
+
+
+Definitions:
+    # - Title: 使用說明
+    #   Description:
+    #   Sections:
+    #       - Title: 預設分頁籤
+    #         Anchor: Default
+    #         Description: |
+    #             這個模組主要會切換項目的 `is-active` 還有分頁內容的 `u-hidden` 樣式，你**必須**在網頁初始化之前手動先替分頁套用這些 CSS 樣式類別。
+#
+    #             `u-hidden` 是會隱藏元素的全域輔助函式，更多用法請參考[輔助樣式](./utilities.html)頁面。
+    #         Since: 4.0.0
+    #         Remove:
+    #             - <div class="ts-space"></div>
+    #         HTML: |
+    #             <div class="{{ts-tab}}">
+    #                 <button class="item" data-tab="foo">分頁</button>
+    #                 <button class="item [[is-active]]" data-tab="bar">預設分頁</button>
+    #             </div>
+    #             <div class="ts-space"></div>
+    #             <div class="{{ts-segment}} [[u-hidden]]" data-name="foo">
+    #                 你必須透過 "u-hidden" 隱藏非預設內容。
+    #             </div>
+    #             <div class="{{ts-segment}}" data-name="bar">
+    #                 這個內容預設會顯示。
+    #             </div>
