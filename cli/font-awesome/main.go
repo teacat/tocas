@@ -33,7 +33,7 @@ func path(typ string) string {
 	case "list":
 		return pathx.Join(r, "list.yml")
 	case "icons":
-		return pathx.JoinDir(r, "dist/fonts/icons")
+		return pathx.JoinDir(r, "src/fonts/icons")
 	case "/":
 		return r
 	}
