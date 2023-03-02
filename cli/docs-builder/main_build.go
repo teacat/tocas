@@ -13,8 +13,10 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 	"text/template"
+	"time"
 
 	"github.com/russross/blackfriday/v2"
 	cli "github.com/urfave/cli/v2"
@@ -35,20 +37,35 @@ func build(c *cli.Context) error {
 		return err
 	}
 	// 重新複製一份模板的 `/assets` 進去。
+	log.Printf("正在複製模板 /assets")
 	if err := exec.Command("rm", "-rf", "./../../docs/"+c.String("lang")+"/assets").Run(); err != nil {
 		return err
 	}
 	if err := exec.Command("cp", "-rf", "./templates/assets", "./../../docs/"+c.String("lang")+"/assets").Run(); err != nil {
 		return err
 	}
-	// 重新複製一份 `/src` 到文件的 `/assets/tocas` 進去。
+	log.Printf("正在打包成為 /dist")
+	if err := pack(c); err != nil {
+		return err
+	}
+	log.Printf("正在複製 /dist 到本語系的 /assets/tocas")
 	if err := exec.Command("rm", "-rf", "./../../docs/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
 		return err
 	}
-	if err := exec.Command("cp", "-rf", "./../../src", "./../../docs/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
+	if err := exec.Command("cp", "-rf", "./../../dist", "./../../docs/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
 		return err
 	}
+
+	// 重新複製一份 `/src` 到文件的 `/assets/tocas` 進去。
+	if err := exec.Command("rm", "-rf", "./../../docs/"+c.String("lang")+"/assets/tocas/src").Run(); err != nil {
+		return err
+	}
+	if err := exec.Command("cp", "-rf", "./../../src", "./../../docs/"+c.String("lang")+"/assets/tocas/src").Run(); err != nil {
+		return err
+	}
+
 	// 重新複製一份 `/examples` 到文件的 `/examples` 進去。
+	log.Printf("正在複製 /examples")
 	if err := exec.Command("rm", "-rf", "./../../docs/"+c.String("lang")+"/examples").Run(); err != nil {
 		return err
 	}
@@ -168,6 +185,14 @@ func build(c *cli.Context) error {
 					for ji, j := range v.Sections {
 						// 如果這個段落有附加的 HTML 片段，就透過 Highlight JS 跟 Beautify 處理。
 						if j.AttachedHTML != "" {
+							if strings.Contains(j.AttachedHTML, "{- email.css -}") {
+								b, err := os.ReadFile("./../../src/email.css")
+								if err != nil {
+									panic(err)
+								}
+								j.AttachedHTML = cssminify(string(b))
+							}
+
 							article.Definitions[vi].Sections[ji].FormattedHTML = tmplCode(trim(trim(j.AttachedHTML, j.Remove), article.Remove))
 						}
 						// 如果這個段落有 HTML 標籤內容，就透過 Highlight JS 跟 Beautify 處理。
@@ -248,6 +273,37 @@ func highlight(s string) string {
 	}
 	ioutil.WriteFile("./caches/hljs/"+hash, output, 0777)
 	return string(output)
+}
+
+// cssminify 會將透過 css-minify 最小化 CSS 樣式。
+func cssminify(content string) string {
+	hash := fmt.Sprintf("%x", md5.Sum([]byte(content)))
+	b, err := ioutil.ReadFile("./caches/cssminify/" + hash)
+	if err != nil {
+		os.MkdirAll("./caches/cssminify/", 0777)
+	}
+	if len(b) != 0 {
+		return string(b)
+	}
+	tmp, err := os.Create("./caches/cssminify/" + strconv.Itoa(int(time.Now().Unix())))
+	if err != nil {
+		panic(err)
+	}
+	if _, err := tmp.WriteString(content); err != nil {
+		panic(err)
+	}
+	if err := tmp.Close(); err != nil {
+		panic(err)
+	}
+	if err := exec.Command("css-minify", "-f", tmp.Name(), "-o", "./caches/cssminify/").Run(); err != nil {
+		panic(err)
+	}
+	b, err = os.ReadFile(tmp.Name() + ".min.css")
+	if err != nil {
+		panic(err)
+	}
+	ioutil.WriteFile("./caches/cssminify/"+hash, b, 0777)
+	return string(b)
 }
 
 // beautify 會透過 js-beautify 美化程式碼。

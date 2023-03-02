@@ -18,9 +18,20 @@ func main() {
 				Usage:   "指定要載入的相關語系代號，只能同時間指定一個，例如：`zh-tw`。",
 			},
 			&cli.StringFlag{
-				Name:    "screenshot-path",
-				Aliases: []string{"sp"},
-				Usage:   "",
+				Name:  "screenshot-path",
+				Usage: "會讓 Chrome Headless 螢幕截圖的本地 file:/// 路徑，例如：`file:///C:/Users/yami/tocas/examples/`",
+			},
+			&cli.StringFlag{
+				Name:  "mailto",
+				Usage: "Gmail 的電子郵件地址。",
+			},
+			&cli.StringFlag{
+				Name:  "mailpwd",
+				Usage: "Gmail 的應用程式密碼。",
+			},
+			&cli.StringFlag{
+				Name:  "mailtmpl",
+				Usage: "要寄送信件的 HTML 檔案路徑。",
 			},
 		},
 		Commands: []*cli.Command{
@@ -36,13 +47,18 @@ func main() {
 			},
 			{
 				Name:   "screenshot",
-				Usage:  "",
+				Usage:  "會透過 Chrome Headless 螢幕截圖資料夾裡的所有網頁並且存到 /examples/screenshots。",
 				Action: screenshot,
 			},
 			{
 				Name:   "compress",
 				Usage:  "",
 				Action: compressScreenshots,
+			},
+			{
+				Name:   "mail",
+				Usage:  "會透過 Gmail 寄送指定網頁給指定的收件人，用來測試 Email 模板。",
+				Action: testMail,
 			},
 		},
 	}
