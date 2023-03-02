@@ -18,7 +18,6 @@ func pack(c *cli.Context) error {
 		log.Fatal(err)
 	}
 	tocas := string(b)
-
 	var content string
 	// 找出所有被 `@import` 的檔案並載入其內容，然後把 `tocas.css` 裡的 `@import` 換成真實的內容。
 	for _, v := range regexp.MustCompile(`@import ".\/(.*?)";`).FindAllStringSubmatch(string(b), -1) {
@@ -30,6 +29,10 @@ func pack(c *cli.Context) error {
 		tocas = strings.ReplaceAll(tocas, v[0], "")
 		content += string(b) + "\n"
 	}
+	//
+	if err := os.MkdirAll("./../../dist", 0777); err != nil {
+		log.Fatal(err)
+	}
 	// 將這個新的組合原始碼儲存至 `/dist/tocas.css`。
 	err = os.WriteFile("./../../dist/tocas.css", []byte(content+tocas), 0777)
 	if err != nil {
@@ -39,7 +42,6 @@ func pack(c *cli.Context) error {
 	if err := exec.Command("css-minify", "-f", "./../../dist/tocas.css", "-o", "./../../dist/").Run(); err != nil {
 		log.Fatal(err)
 	}
-
 	// 先載入 `/src/scripts/tocas.js` 的內容。
 	b, err = os.ReadFile("./../../src/scripts/tocas.js")
 	if err != nil {
