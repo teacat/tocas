@@ -39,6 +39,37 @@ func pack(c *cli.Context) error {
 	if err := exec.Command("css-minify", "-f", "./../../dist/tocas.css", "-o", "./../../dist/").Run(); err != nil {
 		log.Fatal(err)
 	}
+
+	// 先載入 `/src/scripts/tocas.js` 的內容。
+	b, err = os.ReadFile("./../../src/scripts/tocas.js")
+	if err != nil {
+		log.Fatal(err)
+	}
+	tocasjs := string(b)
+
+	content = ""
+	// 找出所有被 `@import` 的檔案並載入其內容，然後把 `tocas.css` 裡的 `@import` 換成真實的內容。
+	for _, v := range regexp.MustCompile(`// @import "(.*?)";`).FindAllStringSubmatch(string(b), -1) {
+		b, err := os.ReadFile("./../../src/scripts/" + v[1])
+		if err != nil {
+			log.Fatal(err)
+		}
+		// 讀取之後就把這行 `@import` 從原本的 `tocas.js` 裡取代掉。
+		tocasjs = strings.ReplaceAll(tocasjs, v[0], string(b)+"\n")
+	}
+	// 將這個新的組合原始碼儲存至 `/dist/tocas.js`。
+	err = os.WriteFile("./../../dist/tocas.js", []byte(content+tocasjs), 0777)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// 使用 `minify` 將 `/dist/tocas.js` 縮小一份並輸出到 `/dist/tocas.min.js`
+	b, err = exec.Command("minify", "./../../dist/tocas.js").Output()
+	if err != nil {
+		log.Fatal(err)
+	}
+	if err := os.WriteFile("./../../dist/tocas.min.js", b, 0644); err != nil {
+		log.Fatal(err)
+	}
 	// 移除舊有的 `/dist/fonts` 並從 `/src/fonts` 複製過去一份。
 	if err := exec.Command("rm", "-rf", "./../../dist/fonts").Run(); err != nil {
 		log.Fatal(err)
