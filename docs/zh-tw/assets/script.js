@@ -51,8 +51,11 @@ document.addEventListener("DOMContentLoaded", () => {
             var menu = e.target.closest(".主體-格局-內容-工具列-項目-下拉式選單");
 
             if (e.target.classList.contains("主體-格局-內容-工具列-項目-下拉式選單-群組-項目")) {
-                let [key, value] = e.target.getAttribute("data-value").split(",");
-                document.querySelector("html").setAttribute(`data-${key}`, value);
+                let [removes, add] = e.target.getAttribute("data-value").split(";")
+                document.querySelector("html").classList.remove(...removes.split(","))
+                if (add !== undefined) {
+                    document.querySelector("html").classList.add(add);
+                }
                 menu.querySelectorAll(".主體-格局-內容-工具列-項目-下拉式選單-群組-項目").forEach(e => {
                     e.classList.remove("主體-格局-內容-工具列-項目-下拉式選單-群組-項目_啟用的");
                 });
