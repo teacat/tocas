@@ -32,16 +32,16 @@ func build(c *cli.Context) error {
 		return err
 	}
 	// 建立該語系文件自己的資料夾。
-	err = os.MkdirAll("./../../docs/"+c.String("lang")+"/", 0777)
+	err = os.MkdirAll("./../../docs-dev/"+c.String("lang")+"/", 0777)
 	if err != nil {
 		return err
 	}
 	// 重新複製一份模板的 `/assets` 進去。
 	log.Printf("正在複製模板 /assets")
-	if err := exec.Command("rm", "-rf", "./../../docs/"+c.String("lang")+"/assets").Run(); err != nil {
+	if err := exec.Command("rm", "-rf", "./../../docs-dev/"+c.String("lang")+"/assets").Run(); err != nil {
 		return err
 	}
-	if err := exec.Command("cp", "-rf", "./templates/assets", "./../../docs/"+c.String("lang")+"/assets").Run(); err != nil {
+	if err := exec.Command("cp", "-rf", "./templates/assets", "./../../docs-dev/"+c.String("lang")+"/assets").Run(); err != nil {
 		return err
 	}
 	log.Printf("正在打包成為 /dist")
@@ -49,27 +49,27 @@ func build(c *cli.Context) error {
 		return err
 	}
 	log.Printf("正在複製 /dist 到本語系的 /assets/tocas")
-	if err := exec.Command("rm", "-rf", "./../../docs/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
+	if err := exec.Command("rm", "-rf", "./../../docs-dev/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
 		return err
 	}
-	if err := exec.Command("cp", "-rf", "./../../dist", "./../../docs/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
+	if err := exec.Command("cp", "-rf", "./../../dist", "./../../docs-dev/"+c.String("lang")+"/assets/tocas").Run(); err != nil {
 		return err
 	}
 
 	// 重新複製一份 `/src` 到文件的 `/assets/tocas` 進去。
-	if err := exec.Command("rm", "-rf", "./../../docs/"+c.String("lang")+"/assets/tocas/src").Run(); err != nil {
+	if err := exec.Command("rm", "-rf", "./../../docs-dev/"+c.String("lang")+"/assets/tocas/src").Run(); err != nil {
 		return err
 	}
-	if err := exec.Command("cp", "-rf", "./../../src", "./../../docs/"+c.String("lang")+"/assets/tocas/src").Run(); err != nil {
+	if err := exec.Command("cp", "-rf", "./../../src", "./../../docs-dev/"+c.String("lang")+"/assets/tocas/src").Run(); err != nil {
 		return err
 	}
 
 	// 重新複製一份 `/examples` 到文件的 `/examples` 進去。
 	log.Printf("正在複製 /examples")
-	if err := exec.Command("rm", "-rf", "./../../docs/"+c.String("lang")+"/examples").Run(); err != nil {
+	if err := exec.Command("rm", "-rf", "./../../docs-dev/"+c.String("lang")+"/examples").Run(); err != nil {
 		return err
 	}
-	if err := exec.Command("cp", "-rf", "./../../examples", "./../../docs/"+c.String("lang")+"/examples").Run(); err != nil {
+	if err := exec.Command("cp", "-rf", "./../../examples", "./../../docs-dev/"+c.String("lang")+"/examples").Run(); err != nil {
 		return err
 	}
 	// 載入這個文件語系的 `meta.yml` 主要中繼檔案。
@@ -97,7 +97,7 @@ func build(c *cli.Context) error {
 	article := Article{
 		Meta: meta,
 	}
-	file, err := os.Create("./../../docs/" + c.String("lang") + "/index.html")
+	file, err := os.Create("./../../docs-dev/" + c.String("lang") + "/index.html")
 	if err != nil {
 		return err
 	}
@@ -124,7 +124,7 @@ func build(c *cli.Context) error {
 	if err = yaml.Unmarshal(b, &article); err != nil {
 		return err
 	}
-	file, err = os.Create("./../../docs/" + c.String("lang") + "/examples.html")
+	file, err = os.Create("./../../docs-dev/" + c.String("lang") + "/examples.html")
 	if err != nil {
 		return err
 	}
@@ -160,7 +160,7 @@ func build(c *cli.Context) error {
 		// 獨立一個閉包函式執行，這樣才不會被 `for` 迴圈覆蓋變數。
 		func(f fs.FileInfo) {
 			group.Go(func() error {
-				file, err := os.Create("./../../docs/" + c.String("lang") + "/" + strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())) + ".html")
+				file, err := os.Create("./../../docs-dev/" + c.String("lang") + "/" + strings.TrimSuffix(f.Name(), filepath.Ext(f.Name())) + ".html")
 				if err != nil {
 					return err
 				}
