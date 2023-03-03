@@ -6,7 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="./assets/style.css" />
         <link rel="stylesheet" href="./assets/highlight.css" />
-        <link rel="stylesheet" href="./assets/tocas/tocas.css" />
+        <link rel="stylesheet" href="./assets/tocas/tocas.min.css" />
+        <link rel="stylesheet" href="./assets/tocas/src/email.css" />
+        <script src="./assets/tocas/tocas.min.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -141,7 +143,21 @@
                         <!-- 文章工具列 -->
                         {{if eq .Type "Article" }}
                         <div class="主體-格局-內容-工具列">
-                            <div class="主體-格局-內容-工具列-項目 主體-格局-內容-工具列-項目_標題">{{ "Article_Example_Title" | i18n }}</div>
+                            <div class="主體-格局-內容-工具列-項目 主體-格局-內容-工具列-項目_標題">
+                                {{ "Article_Example_Title" | i18n }}
+                                <!-- 標籤連結
+                                {{ if .Links }}
+                                <div class="主體-格局-內容-工具列-項目-連結標籤">
+                                    {{ range .Links }}
+                                    <div class="主體-格局-內容-工具列-項目-連結標籤-項目">
+                                        <span class="ts-icon is-{{ .Icon }}-icon"></span>
+                                        <div class="主體-格局-內容-工具列-項目-連結標籤-項目-文字">{{ .Title }}</div>
+                                    </div>
+                                    {{ end }}
+                                </div>
+                                {{ end }}
+                                 / 標籤連結 -->
+                            </div>
 
                             <!-- 明暗色系 -->
                             <div class="主體-格局-內容-工具列-項目">
@@ -197,7 +213,7 @@
                         </div>
                         <!-- / 主要範例 -->
                         {{ end }}
-                        <!-- 文章工具列 -->
+                        <!-- / 文章工具列 -->
 
                         <!-- 概要 -->
                         {{ if .Intro }}
@@ -260,7 +276,14 @@
 
                             <!-- 附帶程式片段 -->
                             {{ if .AttachedHTML }}
-                            <div class="主體-格局-內容-單個範例-附帶程式碼">{{ .FormattedHTML }}</div>
+                            <div class="主體-格局-內容-單個範例-附帶程式碼 {{ if .IsDownloadable }}主體-格局-內容-單個範例-附帶程式碼_可下載的{{ end }}">
+                                {{ .FormattedHTML }} {{ if .IsDownloadable }}<button
+                                    class="主體-格局-內容-單個範例-附帶程式碼-下載按鈕"
+                                    onclick="(function(event){download(event)})(event)"
+                                >
+                                    下載原始碼</button
+                                >{{ end }}
+                            </div>
                             {{ end }}
                             <!-- / 附帶程式片段 -->
 
@@ -282,6 +305,58 @@
                         {{ end }}
                         <!-- / 章節 -->
 
+                        <!-- 變數屬性 -->
+                        {{ if .Variables }}
+                        <div class="主體-格局-內容-標題 主體-格局-內容-標題_章節">變數與屬性</div>
+                        <div class="主體-格局-內容-變數屬性">
+                            <div class="ts-box">
+                                <table class="ts-table is-definition is-celled">
+                                    <thead>
+                                        <tr>
+                                            <th class="is-collapsed"></th>
+                                            <th class="is-collapsed">範例</th>
+                                            <th>說明</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{ range .Variables }}
+                                        <tr>
+                                            <td class="is-collapsed">{{ .Name }}</td>
+                                            <td class="is-collapsed"><code>{{ .Example }}</code></td>
+                                            <td>{{ .Description | markdown }}</td>
+                                        </tr>
+                                        {{ end }}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {{ end }}
+                        <!-- / 變數屬性 -->
+
+                        <!-- 額外連結 -->
+                        {{ if .Links }}
+                        <div class="主體-格局-內容-額外連結">
+                            {{ range .Links }}
+                            <div class="主體-格局-內容-額外連結-項目">
+                                <div class="主體-格局-內容-額外連結-項目-主體">
+                                    <div class="主體-格局-內容-額外連結-項目-主體-圖示容器">
+                                        <span class="ts-icon is-{{ .Icon }}-icon"></span>
+                                    </div>
+                                    <div class="主體-格局-內容-額外連結-項目-主體-文字容器">
+                                        <div class="主體-格局-內容-額外連結-項目-主體-文字容器-標題">{{ .Title }}</div>
+                                        <div class="主體-格局-內容-額外連結-項目-主體-文字容器-說明">{{ .Description }}</div>
+                                    </div>
+                                </div>
+                                <div class="主體-格局-內容-額外連結-項目-連結文字">
+                                    <div class="主體-格局-內容-額外連結-項目-連結文字-文字">相關連結</div>
+                                    <div class="主體-格局-內容-額外連結-項目-連結文字-圖示容器"><span class="ts-icon is-arrow-up-right-from-square-icon"></span></div>
+                                </div>
+                            </div>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                        <!-- / 額外連結 -->
+
                         {{ if .Relatives }}
                         <div class="主體-格局-內容-相關元件">
                             <div class="主體-格局-內容-相關元件-標題">{{ "Article_LookingFor_Title" | i18n }}</div>
@@ -297,7 +372,6 @@
                     </main>
 
                     <!-- 側邊索引 -->
-                    {{if ne .Type "Paragraphy" }}
                     <div class="主體-格局-索引">
                         {{ range .Definitions }}
                         <div class="主體-格局-索引-標題">{{ .Title }}</div>
@@ -311,7 +385,6 @@
                         {{ end }}
                         <button class="主體-格局-索引-回到頂部"><span class="ts-icon is-arrow-up-icon"></span> {{ "Article_ToTop" | i18n }}</button>
                     </div>
-                    {{ end }}
                     <!-- / 側邊索引 -->
                 </div>
             </div>

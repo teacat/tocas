@@ -4,6 +4,10 @@
 
 .ts-dropdown {
     --object-distance: 0.8rem;
+    --ts-dropdown-min-width: initial;
+    --ts-dropdown-position: absolute;
+    --accent-color: initial;
+    --accent-foreground-color: initial;
 }
 
 /* ==========================================================================
@@ -11,7 +15,7 @@
    ========================================================================== */
 
 .ts-dropdown {
-    position: absolute;
+    position: var(--ts-dropdown-position);
     display: none;
     color: inherit;
     flex-direction: column;
@@ -23,6 +27,7 @@
     font-size: var(--ts-font-size-14px);
     padding: 0.2rem 0;
     white-space: nowrap;
+    min-width: var(--ts-dropdown-min-width);
 }
 
 .ts-dropdown > .item {
@@ -81,8 +86,8 @@
  */
 
 .ts-dropdown .item.is-active {
-    background: var(--ts-gray-800);
-    color: var(--ts-gray-50);
+    background: var(--accent-color, var(--ts-gray-800));
+    color: var(--accent-foreground-color, var(--ts-gray-50));
 }
 
 /**
@@ -100,8 +105,8 @@
  */
 
 .ts-dropdown .item.is-selected {
-    background: var(--ts-primary-700);
-    color: var(--ts-white);
+    background: var(--accent-color, var(--ts-primary-700));
+    color: var(--accent-foreground-color, var(--ts-white));
 }
 
 /**
@@ -137,7 +142,6 @@
     margin-top: 2px;
 }
 
-
 /**
  * Density
  */
@@ -167,7 +171,6 @@
 /**
  * Visible
  */
-
 
 .ts-dropdown.is-visible {
     display: inline-flex;

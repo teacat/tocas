@@ -3,7 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <link rel="stylesheet" href="./../assets/tocas/tocas.css" />
+        <link rel="stylesheet" href="./../assets/tocas/tocas.min.css" />
+        <script src="./../assets/tocas/tocas.min.js"></script>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
         <title>雲端硬碟 - Tocas UI</title>
         <style type="text/css">
@@ -19,22 +20,18 @@
                 align-items: center;
                 justify-content: center;
             }
-            /** Temporary RWD for this Demo ; _ ; */
-            /** Waiting for Container Query to be stablized */
-            @media screen and (max-width: 1750px) {
-                .ts-grid.is-5-columns {
-                    grid-template-columns: repeat(4, minmax(0, 1fr));
-                }
-            }
-            @media screen and (max-width: 1480px) {
-                .ts-grid.is-5-columns {
-                    grid-template-columns: repeat(3, minmax(0, 1fr));
-                }
-            }
-            @media screen and (max-width: 1280px) {
-                .ts-grid.is-5-columns {
-                    grid-template-columns: repeat(2, minmax(0, 1fr));
-                }
+            html {
+                --ts-breakpoint-mobile-min: 0px;
+                --ts-breakpoint-mobile-max: 689px;
+
+                --ts-breakpoint-tablet-min: 690px;
+                --ts-breakpoint-tablet-max: 895px;
+
+                --ts-breakpoint-desktop-min: 895px;
+                --ts-breakpoint-desktop-max: 1189px;
+
+                --ts-breakpoint-widescreen-min: 1190px;
+                --ts-breakpoint-widescreen-max: 9999px;
             }
         </style>
     </head>
@@ -74,7 +71,7 @@
                     <div class="ts-content is-dense">
                         <div class="ts-row is-middle-aligned">
                             <div class="column is-fluid">
-                                <div class="ts-input is-solid is-start-icon">
+                                <div class="ts-input is-solid is-start-icon" style="max-width: 450px">
                                     <span class="ts-icon is-magnifying-glass-icon"></span>
                                     <input type="text" placeholder="搜尋雲端硬碟" />
                                 </div>
@@ -127,7 +124,7 @@
                     </div>
                 </div>
                 <div class="cell is-horizontal is-fluid">
-                    <div class="cell is-scrollable is-fluid">
+                    <div class="cell is-scrollable is-fluid @container">
                         <div class="ts-space"></div>
                         <div class="ts-container">
                             <div class="ts-notice is-outlined is-negative">
@@ -139,7 +136,7 @@
                                 <div class="ts-text is-label">資料夾</div>
                             </div>
                             <div class="ts-space"></div>
-                            <div class="ts-grid is-5-columns" style="color: var(--ts-gray-600)">
+                            <div class="ts-grid @widescreen:is-5-columns @desktop:is-4-columns @tablet:is-3-columns @mobile:is-2-columns" style="color: var(--ts-gray-600)">
                                 <div class="column">
                                     <a href="#!" class="ts-segment is-dense">
                                         <div class="ts-wrap is-middle-aligned">
@@ -178,7 +175,7 @@
                                 <div class="ts-text is-label">檔案</div>
                             </div>
                             <div class="ts-space"></div>
-                            <div class="ts-grid is-5-columns" style="color: var(--ts-gray-600)">
+                            <div class="ts-grid @widescreen:is-5-columns @desktop:is-4-columns @tablet:is-3-columns @mobile:is-2-columns" style="color: var(--ts-gray-600)">
                                 <div class="column">
                                     <a href="#!" class="file ts-box">
                                         <div class="file-preview ts-content is-vertically-padded is-center-aligned">
