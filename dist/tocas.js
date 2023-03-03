@@ -225,7 +225,7 @@ window.tocas = {
                     // 如果這個規則開頭有個 @ 符號，就尋找最近的 Container 容器來作為寬度判斷，
                     // 但如果沒有，就以視窗的 innerWidth 為主。
                     // @breakpoint
-                    var width = rule.startsWith("@") ? element.closest(`[class~="${tocas.config.scopes.container}"]`).getBoundingClientRect().width : window.innerWidth;
+                    var width = rule.startsWith("@") ? Math.round(element.closest(`[class~="${tocas.config.scopes.container}"]`).getBoundingClientRect().width) : Math.round(window.innerWidth);
 
                     return {
                         min,
