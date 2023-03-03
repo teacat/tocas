@@ -1,0 +1,123 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-gauge {
+    --length: 0.8;
+    --value: 0;
+    --size: 5rem;
+    --thickness: calc(var(--size) / 10);
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-gauge,
+.ts-gauge .bar {
+    position: relative;
+    display: inline-grid;
+    height: var(--size);
+    width: var(--size);
+
+    place-content: center;
+    border-radius: 9999px;
+    background-color: transparent;
+    vertical-align: middle;
+    box-sizing: content-box;
+}
+
+.ts-gauge {
+    --value: 100;
+
+    transform: rotate(216deg);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-gauge::before,
+.ts-gauge .bar::before {
+    position: absolute;
+    border-radius: 9999px;
+    content: "";
+}
+
+.ts-gauge .bar::before {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    background: conic-gradient(var(--accent-color, currentColor) calc(var(--value) * 1% * var(--length)), #0000 0);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(99% - var(--thickness)), rgb(0 0 0 / 85%) calc(100% - var(--thickness)));
+    mask: radial-gradient(farthest-side, #0000 calc(99% - var(--thickness)), rgb(0 0 0 / 85%) calc(100% - var(--thickness)));
+}
+
+.ts-gauge::before {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    -webkit-mask: radial-gradient(farthest-side, #f000 calc(99% - var(--thickness)), #0000001a calc(100% - var(--thickness)));
+    mask: radial-gradient(farthest-side, #f000 calc(99% - var(--thickness)), #0000001a calc(100% - var(--thickness)));
+    background: conic-gradient(currentColor calc(var(--value) * var(--length) * 1%), #0000 0);
+}
+
+.ts-gauge .bar .text {
+    transform: rotate(-216deg);
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Circular
+ */
+
+.ts-gauge.is-circular {
+    transform: initial;
+    --length: 1;
+}
+
+.ts-gauge.is-circular .bar .text {
+    transform: initial;
+}
+
+/**
+ * Uplifted
+ */
+
+.ts-gauge.is-uplifted {
+    transform: rotate(180deg);
+    --length: 0.7;
+}
+
+.ts-gauge.is-uplifted .bar .text {
+    transform: rotate(-180deg);
+}
+
+/**
+ * Centered
+ */
+
+.ts-gauge.is-centered {
+    margin: 0 auto;
+    display: grid;
+}
+
+/**
+ * Sizes
+ */
+
+.ts-gauge.is-small {
+    --size: 4rem;
+}
+.ts-gauge.is-large {
+    --size: 6rem;
+}

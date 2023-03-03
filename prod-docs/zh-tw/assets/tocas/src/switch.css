@@ -1,0 +1,134 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-switch {
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-switch {
+    display: inline-flex;
+    align-items: flex-start;
+    cursor: pointer;
+    user-select: none;
+    color: inherit;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-switch input {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    margin: 0;
+    margin-right: 0.5rem;
+    margin-top: 3px;
+}
+
+.ts-switch input::after {
+    display: block;
+    content: "";
+    height: 22px;
+    width: 38px;
+    border-radius: 100rem;
+    background: var(--ts-gray-300);
+    transition: background 0.1s ease;
+}
+
+.ts-switch input::before {
+    position: absolute;
+    display: block;
+    content: "";
+    height: 15px;
+    width: 15px;
+    border-radius: 100rem;
+    top: 3.5px;
+    left: 4px;
+    background: var(--ts-white);
+    transition: left 0.1s ease;
+    z-index: 1;
+}
+
+.ts-switch input:checked::after {
+    background: var(--accent-color, var(--ts-primary-700));
+}
+
+.ts-switch input:checked::before {
+    background: var(--accent-foreground-color, var(--ts-white));
+    left: 19px;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Disabled
+ */
+
+.ts-switch.is-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+}
+
+/**
+ * Solo
+ */
+
+.ts-switch.is-solo input {
+    margin-right: 0;
+    margin-top: 0;
+}
+
+/**
+ * Negative
+ */
+
+.ts-switch.is-negative input {
+    border-radius: 100rem;
+    border: 2px solid var(--ts-negative-600);
+}
+
+/**
+ * Sizes
+ */
+
+.ts-switch.is-small {
+    font-size: var(--ts-font-size-14px);
+}
+.ts-switch.is-small input::after {
+    height: 19px;
+    width: 31px;
+}
+.ts-switch.is-small input::before {
+    height: 12px;
+    width: 12px;
+    top: 3.5px;
+}
+.ts-switch.is-small input:checked::before {
+    left: 15px;
+}
+
+.ts-switch.is-large {
+    font-size: var(--ts-font-size-17px);
+}
+.ts-switch.is-large input::after {
+    height: 25px;
+    width: 46px;
+}
+.ts-switch.is-large input::before {
+    height: 18px;
+    width: 18px;
+    top: 3.5px;
+}
+.ts-switch.is-large input:checked::before {
+    left: 24px;
+}

@@ -1,0 +1,80 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+@keyframes ts-loading-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.ts-loading {
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-loading {
+    display: inline-block;
+    text-align: center;
+    color: var(--accent-color, var(--ts-gray-600));
+}
+
+.ts-loading::after {
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: inherit;
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+    animation: ts-loading-spin 2s linear infinite;
+    font-size: 2rem;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-loading::after {
+    content: "\f110";
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Notched
+ */
+
+.ts-loading.is-notched::after {
+    content: "\f1ce";
+}
+
+/**
+ * Centered
+ */
+
+.ts-loading.is-centered {
+    display: flex;
+    justify-content: center;
+}
+
+/**
+ * Sizes
+ */
+
+.ts-loading.is-small::after {
+    font-size: 1rem;
+}
+
+.ts-loading.is-large::after {
+    font-size: 2.8rem;
+}

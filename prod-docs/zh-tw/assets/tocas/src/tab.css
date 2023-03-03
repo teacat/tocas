@@ -1,0 +1,204 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-tab {
+    --horizontal-padding-multiplier: 1;
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-tab {
+    margin-bottom: -1px; /** For border merge */
+    user-select: none;
+    display: flex;
+    flex-wrap: wrap;
+    z-index: 1; /** For cover divider */
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-tab .item {
+    text-decoration: none;
+    color: var(--ts-gray-800);
+    padding: 0.5rem calc(1rem * var(--horizontal-padding-multiplier));
+    display: inline-flex;
+    border-bottom: 3px solid transparent;
+    text-align: center;
+    justify-content: center;
+    cursor: pointer;
+    gap: 0.5rem;
+    line-height: 1.8;
+    align-items: center;
+}
+
+.ts-tab .ts-icon {
+    font-size: 1.1em;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Active
+ */
+
+.ts-tab .item.is-active {
+    border-bottom-color: var(--accent-color, var(--ts-gray-800));
+    cursor: default;
+}
+
+/**
+ * Disabled
+ */
+
+.ts-tab .item.is-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+}
+
+/**
+ * Evenly Divided (Use Fluid instead)
+ */
+
+/*.ts-tab.is-evenly-divided .item {
+    flex: 1;
+}*/
+
+/**
+ * Pilled
+ */
+
+.ts-tab.is-pilled .item {
+    border-radius: 100rem;
+    padding: 0.25rem calc(1rem * var(--horizontal-padding-multiplier));
+    border-bottom: 0;
+}
+
+.ts-tab.is-pilled .item.is-active {
+    background: var(--accent-color, var(--ts-gray-800));
+    color: var(--accent-foreground-color, var(--ts-gray-50));
+}
+
+.ts-tab.is-pilled.is-secondary .item.is-active {
+    background: var(--ts-gray-200);
+    color: var(--accent-color, var(--ts-gray-800));
+}
+
+/**
+ * Aligns
+ */
+
+.ts-tab.is-start-aligned {
+    justify-content: flex-start;
+}
+
+.ts-tab.is-center-aligned {
+    justify-content: center;
+}
+
+.ts-tab.is-end-aligned {
+    justify-content: flex-end;
+}
+
+/**
+ * Segmented
+ */
+
+.ts-tab.is-segmented {
+    --height: var(--ts-input-height-medium);
+
+    color: var(--ts-gray-700);
+    border: 1px solid var(--ts-gray-300);
+    border-radius: 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 0.25rem;
+    height: var(--height);
+}
+
+.ts-tab.is-segmented .item {
+    padding: 0.45rem calc(0.9rem * var(--horizontal-padding-multiplier));
+    border-radius: 0.3rem;
+    user-select: none;
+    line-height: 1;
+    border-bottom: 0;
+}
+
+.ts-tab.is-segmented .item.is-active {
+    background: var(--accent-color, var(--ts-gray-800));
+    color: var(--accent-foreground-color, var(--ts-gray-50));
+}
+
+/**
+ * Fluid
+ */
+
+.ts-tab.is-fluid {
+    display: flex;
+}
+
+.ts-tab.is-fluid .item {
+    flex: 1;
+}
+
+/**
+ * Sizes
+ */
+
+.ts-tab.is-small .item {
+    font-size: var(--ts-font-size-14px);
+}
+.ts-tab.is-large .item {
+    font-size: var(--ts-font-size-17px);
+}
+
+.ts-tab.is-small.is-segmented {
+    --height: var(--ts-input-height-small);
+}
+.ts-tab.is-large.is-segmented {
+    --height: var(--ts-input-height-large);
+}
+
+/**
+ * Dense
+ */
+
+.ts-tab.is-dense .item {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+.ts-tab.is-dense.is-segmented .item {
+    padding-top: 0.35rem;
+    padding-bottom: 0.35rem;
+}
+.ts-tab.is-dense.is-pilled .item {
+    padding-top: 0.05rem;
+    padding-bottom: 0.05rem;
+}
+
+.ts-tab.is-segmented.is-dense {
+    --height: var(--ts-input-height-medium-dense);
+}
+.ts-tab.is-segmented.is-small.is-dense {
+    --height: var(--ts-input-height-small-dense);
+}
+.ts-tab.is-segmented.is-large.is-dense {
+    --height: var(--ts-input-height-large-dense);
+}
+
+/**
+ * Relaxed
+ */
+
+.ts-tab.is-relaxed {
+    --horizontal-padding-multiplier: 1.6;
+}

@@ -1,0 +1,215 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-chip {
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-chip {
+    vertical-align: middle;
+    text-decoration: none;
+}
+
+.ts-chip,
+.ts-chip.is-input .content,
+.ts-chip.is-toggle .content {
+    background: var(--ts-gray-200);
+    padding: 0.1rem 0.6rem;
+    border: 1px solid var(--ts-gray-200);
+    border-radius: 0.4rem;
+    font-size: var(--ts-font-size-14px);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    line-height: 1.75;
+    min-height: 22px;
+    /*min-width: 55px;*/
+    color: var(--accent-color, var(--ts-gray-800));
+}
+
+.ts-chip.is-input,
+.ts-chip.is-toggle {
+    background: initial;
+    padding: initial;
+    border: initial;
+
+    font-size: initial;
+    display: initial;
+    gap: initial;
+    line-height: initial;
+    min-height: initial;
+    min-width: initial;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-chip img {
+    width: 24px;
+    height: 24px;
+    border-radius: 0.4rem;
+    margin-left: -5px;
+}
+
+.ts-chip input {
+    display: none;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Outlined
+ */
+
+.ts-chip.is-outlined,
+.ts-chip.is-outlined .content {
+    background: transparent;
+    border-color: var(--ts-gray-300);
+}
+
+/**
+ * Circular
+ */
+
+.ts-chip.is-circular,
+.ts-chip.is-circular .content {
+    border-radius: 100rem;
+}
+
+/**
+ * Input
+ */
+
+.ts-chip.is-input,
+.ts-chip.is-toggle {
+    cursor: pointer;
+    user-select: none;
+}
+
+/**
+ * Toggle
+ */
+
+.ts-chip.is-toggle input:checked + .content {
+    background: var(--accent-color, var(--ts-gray-800));
+    border-color: var(--accent-color, var(--ts-gray-800));
+    color: var(--accent-foreground-color, var(--ts-gray-50));
+}
+
+.ts-chip.is-toggle.is-secondary input:checked + .content {
+    color: var(--accent-color, var(--ts-gray-800));
+    background: var(--ts-gray-200);
+    border-color: var(--accent-color, var(--ts-gray-600));
+}
+
+/**
+ * Input
+ */
+
+.ts-chip.is-input input:checked + .content {
+    background: var(--accent-color, var(--ts-primary-700));
+    border-color: var(--accent-color, var(--ts-primary-700));
+    color: var(--accent-foreground-color, var(--ts-white));
+}
+
+.ts-chip.is-input.is-secondary input:checked + .content {
+    color: var(--accent-color, var(--ts-primary-600));
+    background: var(--ts-gray-100);
+    border-color: var(--accent-color, var(--ts-primary-600));
+}
+
+.ts-chip.is-input input:checked + .content::before {
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+    display: inline;
+    text-decoration: inherit;
+    text-align: center;
+    width: 1.18em;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+    content: "\f00c";
+    font-size: 12px;
+}
+
+.ts-chip.is-input.is-start-icon input:checked + .content::before,
+.ts-chip.is-input.is-end-icon input:checked + .content::before {
+    display: none;
+}
+
+.ts-chip.is-input.is-start-icon input:checked + .content .ts-icon::before,
+.ts-chip.is-input.is-end-icon input:checked + .content .ts-icon::before {
+    content: "\f00c";
+}
+
+/**
+ * Disabled
+ */
+
+.ts-chip.is-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
+}
+
+/**
+ * Fluid
+ */
+
+.ts-chip.is-fluid {
+    display: flex;
+}
+
+.ts-chip.is-fluid .content {
+    width: 100%;
+}
+
+/**
+ * Sizes
+ */
+
+.ts-chip.is-small,
+.ts-chip.is-small .content {
+    font-size: var(--ts-font-size-12px);
+}
+
+.ts-chip.is-large,
+.ts-chip.is-large .content {
+    font-size: var(--ts-font-size-16px);
+}
+
+/**
+ * Dense
+ */
+
+.ts-chip.is-dense {
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+}
+
+.ts-chip.is-dense:is(.is-input, .is-toggle) .content {
+    min-height: 20px;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+}
+
+/**
+ * Spaced
+ */
+
+.ts-chip.is-start-spaced {
+    margin-left: 0.45rem;
+}
+.ts-chip.is-end-spaced {
+    margin-right: 0.45rem;
+}
