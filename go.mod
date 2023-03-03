@@ -9,7 +9,7 @@ require (
 	github.com/russross/blackfriday/v2 v2.0.1
 	github.com/teacat/pathx v0.0.0-20201109184104-55ec346a0c6d
 	github.com/urfave/cli/v2 v2.3.0
-	golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8
+	golang.org/x/image v0.5.0
 	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
 	gopkg.in/yaml.v2 v2.2.8
 )
