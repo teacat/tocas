@@ -57,6 +57,7 @@ window.tocas = {
 
         // attributeMutation
         attributeMutation(mutation) {
+
             // 如果有任何樣式異動，就馬上檢查這個元素的響應式渲染。
             // NOTE: 他目前會造成無限迴圈 :(
             // this.check(mutation.target);
@@ -71,15 +72,15 @@ window.tocas = {
         }
 
         // addedNodeMutation
-        addedNodeMutation(addedNode) {
+        addedNodeMutation(added_node) {
             // 如果這個追加的新元素帶有響應式樣式，就立即檢查響應式渲染。
-            if (this.isResponsiveElement(addedNode)) {
-                this.check(addedNode);
+            if (this.isResponsiveElement(added_node)) {
+                this.check(added_node);
             }
 
             // 如果這個追加的新元素是一個 Container，就納入容器的尺寸監聽裡。
-            if (this.isContainer(addedNode)) {
-                this.resize_observer.observe(addedNode);
+            if (this.isContainer(added_node)) {
+                this.resize_observer.observe(added_node);
             }
         }
 
@@ -277,9 +278,9 @@ window.tocas = {
         attributeMutation(mutation) {}
 
         // addedNodeMutation
-        addedNodeMutation(addedNode) {
+        addedNodeMutation(added_node) {
             if (addedNode.matches(`[data-stash]`)) {
-                this.initial(addedNode);
+                this.initial(added_node);
             }
         }
 
@@ -349,14 +350,14 @@ window.tocas = {
         attributeMutation(mutation) {}
 
         // addedNodeMutation
-        addedNodeMutation(addedNode) {
+        addedNodeMutation(added_node) {
             // 如果這個新追加的 DOM 節點是一個 Tab 模組，就監聽其點擊事件。
-            if (this.isTab(addedNode)) {
+            if (this.isTab(added_node)) {
                 // 監聽其點擊事件。
-                this.bindEventListener(addedNode);
+                this.bindEventListener(added_node);
 
                 // 如果這個項目沒有被啟用，就預設隱藏對應的內容，這樣使用者就不用額外手動隱藏該內容。
-                this.initialTab(addedNode);
+                this.initialTab(added_node);
             }
         }
 
@@ -452,10 +453,10 @@ window.tocas = {
         attributeMutation(mutation) {}
 
         // addedNodeMutation
-        addedNodeMutation(addedNode) {
+        addedNodeMutation(added_node) {
             // 如果這個新追加的 DOM 節點是一個 Toggle 模組，就監聽其點擊事件。
-            if (this.isToggle(addedNode)) {
-                this.bindEventListener(addedNode);
+            if (this.isToggle(added_node)) {
+                this.bindEventListener(added_node);
             }
         }
 
@@ -494,15 +495,15 @@ window.tocas = {
         attributeMutation(mutation) {}
 
         // addedNodeMutation
-        addedNodeMutation(addedNode) {
+        addedNodeMutation(added_node) {
             // 如果這個追加的 DOM 元素是一個會觸發彈出式選單的元素，就監聽其點擊事件。
-            if (this.isDropdownTrigger(addedNode)) {
-                this.bindEventListener(addedNode);
+            if (this.isDropdownTrigger(added_node)) {
+                this.bindEventListener(added_node);
             }
 
             // 如果這個追加的 DOM 元素是一個彈出式選單容器，就監聽其選項點擊事件。
-            if (this.isDropdown(addedNode)) {
-                this.bindItemEventListener(addedNode);
+            if (this.isDropdown(added_node)) {
+                this.bindItemEventListener(added_node);
             }
         }
 
@@ -688,10 +689,10 @@ window.tocas = {
         }
 
         // addedNodeMutation
-        addedNodeMutation(addedNode) {
+        addedNodeMutation(added_node) {
             // 如果追加的 DOM 節點是一個 Tooltip 模組就監聽其互動事件。
-            if (this.isTooltip(addedNode)) {
-                this.bindEventListener(addedNode);
+            if (this.isTooltip(added_node)) {
+                this.bindEventListener(added_node);
             }
         }
 
@@ -905,36 +906,82 @@ window.tocas = {
     // stashModule
     // var stashModule = new Stash();
 
-    var mutation_observer = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
+    //
+    function addedNodeMutation(node) {
+        responsiveModule.addedNodeMutation(node);
+        tabModule.addedNodeMutation(node);
+        toggleModule.addedNodeMutation(node);
+        dropdownModule.addedNodeMutation(node);
+        tooltipModule.addedNodeMutation(node);
+        // stashModule.addedNodeMutation(node);
+    }
+
+    //
+    function attributeMutation(mutation) {
+        responsiveModule.attributeMutation(mutation);
+        tabModule.attributeMutation(mutation);
+        toggleModule.attributeMutation(mutation);
+        dropdownModule.attributeMutation(mutation);
+        tooltipModule.attributeMutation(mutation);
+        // stashModule.attributeMutation(mutation);
+    }
+
+    // MutationObserver 是真正會監聽每個元素異動的函式。
+    var mutation_observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            // 如果是屬性的異動就交給屬性函式處理。
             if (mutation.type === "attributes") {
-                responsiveModule.attributeMutation(mutation);
-                tabModule.attributeMutation(mutation);
-                toggleModule.attributeMutation(mutation);
-                dropdownModule.attributeMutation(mutation);
-                tooltipModule.attributeMutation(mutation);
-                // stashModule.attributeMutation(mutation);
-            } else if (mutation.addedNodes && mutation.addedNodes.length) {
-                mutation.addedNodes.forEach(function (addedNode) {
-                    if (addedNode.nodeType !== Node.ELEMENT_NODE) {
+                attributeMutation(mutation)
+            }
+
+            // 如果是節點的新增就交給節點函式處理。
+            else if (mutation.addedNodes && mutation.addedNodes.length) {
+                mutation.addedNodes.forEach((added_node) => {
+                    // 如果這個節點不是 HTMLElement 就略過，因為他有可能是 Text Node。
+                    if (added_node.nodeType !== Node.ELEMENT_NODE || !(added_node instanceof HTMLElement)) {
                         return;
                     }
-                    responsiveModule.addedNodeMutation(addedNode);
-                    tabModule.addedNodeMutation(addedNode);
-                    toggleModule.addedNodeMutation(addedNode);
-                    dropdownModule.addedNodeMutation(addedNode);
-                    tooltipModule.addedNodeMutation(addedNode);
-                    // stashModule.addedNodeMutation(addedNode);
+
+                    // 建立一個 TreeWalker 來加強 MutationObserver 的 childList 跟 subtree，
+                    // 因為 MutationObserver 可能會忽略 Vue.js 那樣透過 innerHTML 修改節點的時候。
+                    var tree_walker = document.createTreeWalker(added_node, NodeFilter.SHOW_ELEMENT);
+
+                    // 收集需要監聽的 HTML 節點元素。
+                    var nodes = [];
+
+                    // 會使用遞迴，所以先將自己視為其中一個節點。
+                    var current_node = tree_walker.currentNode;
+
+                    // 不斷地爬到沒有下個節點為止。
+                    while (current_node) {
+                        nodes = [...nodes, current_node];
+                        current_node = tree_walker.nextNode();
+                    }
+
+                    // 將使用 TreeWalker 爬到的每個節點收錄進 MutationObserver 裡面，監聽更詳細的節點。
+                    nodes.forEach((node) => {
+                        mutation_observer.observe(node, {
+                            childList: true,
+                            subtree: true,
+                            attributes: true,
+                            attributeOldValue: true,
+                            attributeFilter: ["class"],
+                        });
+
+                        // 替這些節點呼叫對應的函式。
+                        addedNodeMutation(node)
+                    })
                 });
             }
         });
     });
 
-    //
+    // 監聽網頁元素異動的 MutationObserver。
     mutation_observer.observe(document.documentElement, {
         childList: true,
         subtree: true,
         attributes: true,
+        characterData: true,
         attributeOldValue: true,
         attributeFilter: ["class"],
     });
