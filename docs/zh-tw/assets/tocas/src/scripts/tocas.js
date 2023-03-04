@@ -976,7 +976,6 @@ window.tocas = {
         childList: true,
         subtree: true,
         attributes: true,
-        characterData: true,
         attributeOldValue: true,
         attributeFilter: ["class"],
     });
