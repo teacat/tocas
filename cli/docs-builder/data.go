@@ -62,7 +62,6 @@ type ArticleDefinitionSection struct {
 	Version        string   `yaml:"Version"`
 	HTML           string   `yaml:"HTML"`
 	Responsive     bool     `yaml:"Responsive"`
-	Since          string   `yaml:"Since"`
 	Icon           string   `yaml:"Icon"`
 	Remove         []string `yaml:"Remove"`
 	Anchor         string   `yaml:"Anchor"`

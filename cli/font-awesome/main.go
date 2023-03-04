@@ -50,7 +50,6 @@ type Icon struct {
 
 type ArticleDefinitionSection struct {
 	Title  string `yaml:"Title"`
-	Since  string `yaml:"Since"`
 	Anchor string `yaml:"Anchor"`
 	//
 	Icons []string `yaml:"Icons"`
@@ -178,7 +177,6 @@ func main() {
 
 			section := ArticleDefinitionSection{
 				Title:  k,
-				Since:  "4.0.0",
 				Anchor: k,
 			}
 
