@@ -10,7 +10,7 @@
 -   📘 文件：[v4.tocas-ui.com/zh-tw](https://v4.tocas-ui.com/zh-tw)
 -   🎲 範例：[官方範例](https://v4.tocas-ui.com/zh-tw/examples.html)
 -   📦 原始碼：[GitHub](https://github.com/teacat/tocas) | [NPM](https://www.npmjs.com/package/tocas) | [cdnjs](https://cdnjs.com/libraries/tocas)
--   🌎 語系：**台灣正體** | [English](./README.md)
+-   🌎 語系：**台灣正體**
 
 &nbsp;
 
