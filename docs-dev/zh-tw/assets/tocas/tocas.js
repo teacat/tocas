@@ -56,8 +56,7 @@ window.tocas = {
         }
 
         // attributeMutation
-        attributeMutation(mutation) {
-
+        attributeMutation = mutation => {
             // 如果有任何樣式異動，就馬上檢查這個元素的響應式渲染。
             // NOTE: 他目前會造成無限迴圈 :(
             // this.check(mutation.target);
@@ -69,10 +68,10 @@ window.tocas = {
             } else {
                 this.resize_observer.unobserve(mutation.target);
             }
-        }
+        };
 
         // addedNodeMutation
-        addedNodeMutation(added_node) {
+        addedNodeMutation = added_node => {
             // 如果這個追加的新元素帶有響應式樣式，就立即檢查響應式渲染。
             if (this.isResponsiveElement(added_node)) {
                 this.check(added_node);
@@ -82,57 +81,57 @@ window.tocas = {
             if (this.isContainer(added_node)) {
                 this.resize_observer.observe(added_node);
             }
-        }
+        };
 
         // getAllContaineredElements
-        getAllContaineredElements(container) {
+        getAllContaineredElements = container => {
             return container.querySelectorAll(tocas.config.strict_responsive ? `[class^="@"]:is([class*=":is-"],[class*=":u-"])` : `[class^="@"][class*=":"]`);
-        }
+        };
 
         // getAllResponsiveElements
-        getAllResponsiveElements(container) {
+        getAllResponsiveElements = container => {
             return container.querySelectorAll(tocas.config.strict_responsive ? `[class*=":is-"],[class*=":u-"]` : `[class*=":"]`);
-        }
+        };
 
         // isContainer
-        isContainer(element) {
+        isContainer = element => {
             return element.matches(`[class~="${tocas.config.scopes.container}"]`);
-        }
+        };
 
         // isResponsiveElement
-        isResponsiveElement(element) {
+        isResponsiveElement = element => {
             return element.matches(tocas.config.strict_responsive ? `[class*=":is-"],[class*=":u-"]` : `[class*=":"]`);
-        }
+        };
 
         // hasResponsiveClass
-        hasResponsiveClass(class_name) {
+        hasResponsiveClass = class_name => {
             return tocas.config.strict_responsive ? class_name.includes(":is-") || class_name.includes(":u-") : class_name.includes(":");
-        }
+        };
 
         // windowResize
-        windowResize() {
+        windowResize = () => {
             this.getAllResponsiveElements(document).forEach(element => {
                 this.check(element);
             });
-        }
+        };
 
         // unit
-        unit(value) {
+        unit = value => {
             return parseInt(value, 10) || 0;
-        }
+        };
 
         // breakpointSize
-        breakpointSize(breakpoint, element) {
+        breakpointSize = (breakpoint, element) => {
             var style = window.getComputedStyle(element);
 
             return {
                 min: this.unit(style.getPropertyValue(`--ts-breakpoint-${breakpoint}-min`)),
                 max: this.unit(style.getPropertyValue(`--ts-breakpoint-${breakpoint}-max`)),
             };
-        }
+        };
 
         // rule
-        rule(rule, element) {
+        rule = (rule, element) => {
             // 判斷規則有沒有 @ 開頭來看是不是一個 Container Query。
             // @breakpoint
             var is_container_query = rule.startsWith("@");
@@ -210,10 +209,10 @@ window.tocas = {
             // 這個規則只會在這個中斷點生效。
             // breakpoint
             return [from.min, from.max];
-        }
+        };
 
         // compile
-        compile(element) {
+        compile = element => {
             return Array.from(element.classList)
                 .filter(class_name => this.hasResponsiveClass(class_name))
                 .map(class_name => {
@@ -226,7 +225,9 @@ window.tocas = {
                     // 如果這個規則開頭有個 @ 符號，就尋找最近的 Container 容器來作為寬度判斷，
                     // 但如果沒有，就以視窗的 innerWidth 為主。
                     // @breakpoint
-                    var width = rule.startsWith("@") ? Math.round(element.closest(`[class~="${tocas.config.scopes.container}"]`).getBoundingClientRect().width) : Math.round(window.innerWidth);
+                    var width = rule.startsWith("@")
+                        ? Math.round(element.closest(`[class~="${tocas.config.scopes.container}"]`).getBoundingClientRect().width)
+                        : Math.round(window.innerWidth);
 
                     return {
                         min,
@@ -235,10 +236,10 @@ window.tocas = {
                         target_class,
                     };
                 });
-        }
+        };
 
         // check
-        check(element) {
+        check = element => {
             // 這個陣列會用來記得我們在目前中斷點有哪些樣式是生效的，
             // 這樣遇到不相符的中斷點，就不會因為起衝突然後又把他們移除掉。
             var applieds = [];
@@ -264,7 +265,7 @@ window.tocas = {
                     element.classList.remove(target_class);
                 }
             });
-        }
+        };
     }
 
     /* ==========================================================================
@@ -347,10 +348,10 @@ window.tocas = {
         constructor() {}
 
         // attributeMutation
-        attributeMutation(mutation) {}
+        attributeMutation = mutation => {};
 
         // addedNodeMutation
-        addedNodeMutation(added_node) {
+        addedNodeMutation = added_node => {
             // 如果這個新追加的 DOM 節點是一個 Tab 模組，就監聽其點擊事件。
             if (this.isTab(added_node)) {
                 // 監聽其點擊事件。
@@ -359,29 +360,29 @@ window.tocas = {
                 // 如果這個項目沒有被啟用，就預設隱藏對應的內容，這樣使用者就不用額外手動隱藏該內容。
                 this.initialTab(added_node);
             }
-        }
+        };
 
         // isTab
-        isTab(element) {
+        isTab = element => {
             return element.matches(`[${tocas.config.attributes.tab}]`);
-        }
+        };
 
         // isActiveTab
-        isActiveTab(element) {
+        isActiveTab = element => {
             return element.classList.contains(tocas.config.classes.tab_active);
-        }
+        };
 
         // initialTab
-        initialTab(element) {
+        initialTab = element => {
             if (!this.isActiveTab(element)) {
                 searchScopeTargets(element, element.getAttribute(tocas.config.attributes.tab), tocas.config.scopes.tab, tocas.config.attributes.tab_name).forEach(target => {
                     target.classList.add(tocas.config.classes.hidden);
                 });
             }
-        }
+        };
 
         // toggle
-        toggle(event) {
+        toggle = event => {
             // 有時候點擊按鈕可能是裡面的圖示觸發事件，所以要取得點擊後最鄰近的分頁模組。
             var element = event.target.closest(`[${tocas.config.attributes.tab}]`);
 
@@ -435,13 +436,13 @@ window.tocas = {
                     target.classList.add(tocas.config.classes.hidden);
                 }
             });
-        }
+        };
 
         // bindEventListener
-        bindEventListener(element) {
+        bindEventListener = element => {
             element.removeEventListener("click", this.toggle);
             element.addEventListener("click", this.toggle);
-        }
+        };
     }
 
     /* ==========================================================================
@@ -450,23 +451,23 @@ window.tocas = {
 
     class Toggle {
         // attributeMutation
-        attributeMutation(mutation) {}
+        attributeMutation = mutation => {};
 
         // addedNodeMutation
-        addedNodeMutation(added_node) {
+        addedNodeMutation = added_node => {
             // 如果這個新追加的 DOM 節點是一個 Toggle 模組，就監聽其點擊事件。
             if (this.isToggle(added_node)) {
                 this.bindEventListener(added_node);
             }
-        }
+        };
 
         // isToggle
-        isToggle(element) {
+        isToggle = element => {
             return element.matches(`[${tocas.config.attributes.toggle}]`);
-        }
+        };
 
         // toggle
-        toggle(event) {
+        toggle = event => {
             // 有時候點擊按鈕可能是裡面的圖示觸發事件，所以要取得點擊後最鄰近的切換模組。
             var element = event.target.closest(`[${tocas.config.attributes.toggle}]`);
 
@@ -477,13 +478,13 @@ window.tocas = {
             searchScopeTargets(element, name, tocas.config.scopes.toggle, tocas.config.attributes.toggle_name).forEach(target => {
                 target.classList.toggle(class_name);
             });
-        }
+        };
 
         // bindEventListener
-        bindEventListener(element) {
-            element.removeEventListener("click", this.toggle.bind(this));
-            element.addEventListener("click", this.toggle.bind(this));
-        }
+        bindEventListener = element => {
+            element.removeEventListener("click", this.toggle);
+            element.addEventListener("click", this.toggle);
+        };
     }
 
     /* ==========================================================================
@@ -492,10 +493,10 @@ window.tocas = {
 
     class Dropdown {
         // attributeMutation
-        attributeMutation(mutation) {}
+        attributeMutation = mutation => {};
 
         // addedNodeMutation
-        addedNodeMutation(added_node) {
+        addedNodeMutation = added_node => {
             // 如果這個追加的 DOM 元素是一個會觸發彈出式選單的元素，就監聽其點擊事件。
             if (this.isDropdownTrigger(added_node)) {
                 this.bindEventListener(added_node);
@@ -505,25 +506,25 @@ window.tocas = {
             if (this.isDropdown(added_node)) {
                 this.bindItemEventListener(added_node);
             }
-        }
+        };
 
         // isDropdownTrigger
-        isDropdownTrigger(element) {
+        isDropdownTrigger = element => {
             return element.matches(`[${tocas.config.attributes.dropdown}]`);
-        }
+        };
 
         // isDropdown
-        isDropdown(element) {
+        isDropdown = element => {
             return element.matches(`.ts-dropdown[${tocas.config.attributes.dropdown_name}]`);
-        }
+        };
 
         // position
-        position(element) {
+        position = element => {
             return element.getAttribute(tocas.config.attributes.dropdown_position) || "bottom";
-        }
+        };
 
         // windowClick
-        windowClick(event) {
+        windowClick = event => {
             // 取得這個視窗點擊最鄰近的 Dropdown 模組觸發元素。
             var closest_trigger = event.target.closest(`[${tocas.config.attributes.dropdown}]`);
 
@@ -555,31 +556,31 @@ window.tocas = {
                 // 關閉這個 Dropdown 以外的其他所有 Dropdown。
                 this.closeDropdownsExcept(closest_dropdown);
             }
-        }
+        };
 
         // closeDropdownsExcept
-        closeDropdownsExcept(excluded_dropdown) {
+        closeDropdownsExcept = excluded_dropdown => {
             document.querySelectorAll(`.ts-dropdown[${tocas.config.attributes.dropdown_name}]`).forEach(dropdown => {
                 if (dropdown !== excluded_dropdown) {
                     this.closeDropdown(dropdown);
                 }
             });
-        }
+        };
 
         // bindEventListener
-        bindEventListener(element) {
-            element.removeEventListener("click", this.clickEventListener.bind(this));
-            element.addEventListener("click", this.clickEventListener.bind(this));
-        }
+        bindEventListener = element => {
+            element.removeEventListener("click", this.clickEventListener);
+            element.addEventListener("click", this.clickEventListener);
+        };
 
         // bindItemEventListener
-        bindItemEventListener(element) {
-            element.removeEventListener("click", this.itemClickEventListener.bind(this));
-            element.addEventListener("click", this.itemClickEventListener.bind(this));
-        }
+        bindItemEventListener = element => {
+            element.removeEventListener("click", this.itemClickEventListener);
+            element.addEventListener("click", this.itemClickEventListener);
+        };
 
         // closeDropdown
-        closeDropdown(dropdown) {
+        closeDropdown = dropdown => {
             // 如果這個元素不包含 `ts-dropdown` 或者也不是可見狀態，就忽略不計。
             if (!dropdown.classList.contains(".ts-dropdown") && !dropdown.classList.contains("is-visible")) {
                 return;
@@ -596,10 +597,10 @@ window.tocas = {
                 dropdown.style.removeProperty("--ts-dropdown-min-width");
                 dropdown.style.removeProperty("--ts-dropdown-position");
             }
-        }
+        };
 
         // itemClickEventListener
-        itemClickEventListener(event) {
+        itemClickEventListener = event => {
             // 取得這個點擊事件最鄰近的彈出式選單。
             var dropdown = event.target.closest(`.ts-dropdown[${tocas.config.attributes.dropdown_name}]`);
 
@@ -611,10 +612,10 @@ window.tocas = {
 
             // 項目點擊成功，關閉這個彈出式選單。
             this.closeDropdown(dropdown);
-        }
+        };
 
         // clickEventListener
-        clickEventListener(event) {
+        clickEventListener = event => {
             //
             var element = event.target.closest(`[${tocas.config.attributes.dropdown}]`);
 
@@ -672,7 +673,7 @@ window.tocas = {
                     });
                 });
             });
-        }
+        };
     }
 
     /* ==========================================================================
@@ -681,38 +682,41 @@ window.tocas = {
 
     class Tooltip {
         // attributeMutation
-        attributeMutation(mutation) {
+        attributeMutation = mutation => {
             // 如果追加的屬性包含 Tooltip 模組相關字樣，就監聽其互動事件。
             if (this.isTooltip(mutation.target)) {
                 this.bindEventListener(mutation.target);
             }
-        }
+        };
 
         // addedNodeMutation
-        addedNodeMutation(added_node) {
+        addedNodeMutation = added_node => {
             // 如果追加的 DOM 節點是一個 Tooltip 模組就監聽其互動事件。
             if (this.isTooltip(added_node)) {
                 this.bindEventListener(added_node);
             }
-        }
+        };
 
         // isTooltip
-        isTooltip(element) {
+        isTooltip = element => {
             return element.matches(`[${tocas.config.attributes.tooltip}]`);
-        }
+        };
 
         // bindEventListener
-        bindEventListener(element) {
+        bindEventListener = element => {
             // 重設這個元素的彈出提示計時器。
             element.tocas_tooltip_timer = null;
 
             // 監聽滑鼠移入跟移出的事件。
-            this.enterEventListener(element);
-            this.leaveEventListener(element);
-        }
+            element.removeEventListener("mouseover", this.enterEventListener);
+            element.addEventListener("mouseover", this.enterEventListener);
+
+            element.removeEventListener("mouseleave", this.leaveEventListener);
+            element.addEventListener("mouseleave", this.leaveEventListener);
+        };
 
         // delay
-        delay(element) {
+        delay = element => {
             // 從元素的屬性裡取得延遲的定義，如果是 0 就回傳 0。
             // 不直接丟給 parseInt 是因為可能會被當 false 值而回傳預設的 200ms。
             var delay = element.getAttribute(tocas.config.attributes.tooltip_delay);
@@ -720,80 +724,81 @@ window.tocas = {
                 return 0;
             }
             return parseInt(delay, 10) || 200;
-        }
+        };
 
         // position
-        position(element) {
+        position = element => {
             return element.getAttribute(tocas.config.attributes.tooltip_position) || "bottom";
-        }
+        };
 
         // enterEventListener
-        enterEventListener(element) {
-            element.addEventListener("mouseover", event => {
-                // 如果目前的裝置是觸控裝置就忽略工具提示的觸發行為。
-                if (window.matchMedia("(pointer: coarse)").matches) {
-                    return;
-                }
+        enterEventListener = event => {
+            var element = event.target.closest(`[${tocas.config.attributes.tooltip}]`);
 
-                // 如果上一個工具提示的觸發計時器還存在或浮動元素還在的話，就忽略本次觸發行為，
-                // 避免二次觸發而造成不可預期的錯誤。
-                if (element.tocas_tooltip_timer !== null || element.tocas_tooltip !== undefined) {
-                    return;
-                }
+            // 如果目前的裝置是觸控裝置就忽略工具提示的觸發行為。
+            if (window.matchMedia("(pointer: coarse)").matches) {
+                return;
+            }
 
-                // 初始化一個會顯示工具提示的計時器，這樣滑鼠移入的數秒後就會顯示。
-                element.tocas_tooltip_timer = setTimeout(() => {
-                    this.showTooltip(element);
-                }, this.delay(element) + 1);
-            });
-        }
+            // 如果上一個工具提示的觸發計時器還存在或浮動元素還在的話，就忽略本次觸發行為，
+            // 避免二次觸發而造成不可預期的錯誤。
+            if (element.tocas_tooltip_timer !== null || element.tocas_tooltip !== undefined) {
+                return;
+            }
+
+            // 初始化一個會顯示工具提示的計時器，這樣滑鼠移入的數秒後就會顯示。
+            element.tocas_tooltip_timer = setTimeout(() => {
+                this.showTooltip(element);
+            }, this.delay(element) + 1);
+        };
 
         // leaveEventListener
-        leaveEventListener(element) {
-            element.addEventListener("mouseleave", event => {
-                // 如果離開的元素不是主元素就忽略，
-                // 如：使用者可能是離開了裡面的圖示元素，但滑鼠其實還在主元素裡。
-                if (event.target !== element) {
-                    return;
-                }
+        leaveEventListener = event => {
+            var element = event.target.closest(`[${tocas.config.attributes.tooltip}]`);
 
-                // 如果浮動元素存在的話，就呼叫浮動元素的解除函式，然後歸零這個變數。
-                if (element.tocas_tooltip !== undefined) {
-                    element.tocas_tooltip();
-                    element.tocas_tooltip = undefined;
-                }
+            // 如果離開的元素不是主元素就忽略，
+            // 如：使用者可能是離開了裡面的圖示元素，但滑鼠其實還在主元素裡。
+            if (event.target !== element) {
+                return;
+            }
 
-                // 如果原先的計時器存在的話，就先重設，避免重複觸發。
-                if (element.tocas_tooltip_timer !== null) {
-                    clearTimeout(element.tocas_tooltip_timer);
-                    element.tocas_tooltip_timer = null;
-                }
+            // 如果浮動元素存在的話，就呼叫浮動元素的解除函式，然後歸零這個變數。
+            if (element.tocas_tooltip !== undefined) {
+                element.tocas_tooltip();
+                element.tocas_tooltip = undefined;
+            }
 
-                // 移除頁面上的所有工具提示。
-                document.querySelectorAll(".ts-tooltip").forEach(tooltip => {
-                    tooltip.remove();
-                });
+            // 如果原先的計時器存在的話，就先重設，避免重複觸發。
+            if (element.tocas_tooltip_timer !== null) {
+                clearTimeout(element.tocas_tooltip_timer);
+                element.tocas_tooltip_timer = null;
+            }
+
+            // 移除頁面上的所有工具提示。
+            document.querySelectorAll(".ts-tooltip").forEach(tooltip => {
+                tooltip.remove();
             });
-        }
+        };
 
         // createTooltip
-        createTooltip(element, arrow) {
+        createTooltip = (element, arrow) => {
             var tooltip = document.createElement("div");
             tooltip.innerText = element.getAttribute(tocas.config.attributes.tooltip);
             tooltip.classList.add("ts-tooltip", tocas.config.classes.tooltip_visible);
+
             tooltip.appendChild(arrow);
             return tooltip;
-        }
+        };
 
         // createArrow
-        createArrow() {
+        createArrow = () => {
             var arrow = document.createElement("div");
             arrow.classList.add("arrow");
             return arrow;
-        }
+        };
 
         // showTooltip
-        showTooltip(element) {
+        showTooltip = element => {
             // 取得這個工具提示的位置設定。
             var position = this.position(element);
 
@@ -820,12 +825,14 @@ window.tocas = {
                         // 因為有箭頭所以上下軸要偏移 10px，
                         // 而容器有外距（詳見 CSS）所以左右要偏移 15px。
                         TocasFloatingUIDOM.offset({
-                            crossAxis: -15,
+                            //crossAxis: -15,
                             mainAxis: 10,
                         }),
 
                         // 會被螢幕左右推移。
-                        TocasFloatingUIDOM.shift(),
+                        TocasFloatingUIDOM.shift({
+                            padding: 20, // 0 by default
+                        }),
 
                         // 有箭頭。
                         TocasFloatingUIDOM.arrow({
@@ -852,7 +859,7 @@ window.tocas = {
                     }
                 });
             });
-        }
+        };
     }
 
     /* ==========================================================================
@@ -860,7 +867,7 @@ window.tocas = {
        ========================================================================== */
 
     // searchScopeTargets
-    function searchScopeTargets(element, name, scope_attribute, name_attribute) {
+    searchScopeTargets = (element, name, scope_attribute, name_attribute) => {
         // 找尋這個元素最鄰近的命名空間容器。
         var container = element.closest(`[class*="${scope_attribute}"]`) || document;
 
@@ -886,7 +893,7 @@ window.tocas = {
 
         // 如果這一層找不到東西，就遞迴網更上面的命名空間來搜尋。
         return this.searchScopeTargets(container.parentNode, name, scope_attribute, name_attribute);
-    }
+    };
 
     // responsiveModule
     var responsiveModule = new Responsive();
@@ -907,36 +914,39 @@ window.tocas = {
     // var stashModule = new Stash();
 
     //
-    function addedNodeMutation(node) {
+    addedNodeMutation = node => {
         responsiveModule.addedNodeMutation(node);
         tabModule.addedNodeMutation(node);
         toggleModule.addedNodeMutation(node);
         dropdownModule.addedNodeMutation(node);
         tooltipModule.addedNodeMutation(node);
         // stashModule.addedNodeMutation(node);
-    }
+    };
 
     //
-    function attributeMutation(mutation) {
+    attributeMutation = mutation => {
         responsiveModule.attributeMutation(mutation);
         tabModule.attributeMutation(mutation);
         toggleModule.attributeMutation(mutation);
         dropdownModule.attributeMutation(mutation);
         tooltipModule.attributeMutation(mutation);
         // stashModule.attributeMutation(mutation);
-    }
+    };
+
+    // mutation_observered 用來儲存正在監聽的元素以避免重複加入到 MutationObserver 裡。
+    var mutation_observered = new Set([]);
 
     // MutationObserver 是真正會監聽每個元素異動的函式。
-    var mutation_observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
+    var mutation_observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
             // 如果是屬性的異動就交給屬性函式處理。
             if (mutation.type === "attributes") {
-                attributeMutation(mutation)
+                attributeMutation(mutation);
             }
 
             // 如果是節點的新增就交給節點函式處理。
             else if (mutation.addedNodes && mutation.addedNodes.length) {
-                mutation.addedNodes.forEach((added_node) => {
+                mutation.addedNodes.forEach(added_node => {
                     // 如果這個節點不是 HTMLElement 就略過，因為他有可能是 Text Node。
                     if (added_node.nodeType !== Node.ELEMENT_NODE || !(added_node instanceof HTMLElement)) {
                         return;
@@ -959,7 +969,14 @@ window.tocas = {
                     }
 
                     // 將使用 TreeWalker 爬到的每個節點收錄進 MutationObserver 裡面，監聽更詳細的節點。
-                    nodes.forEach((node) => {
+                    nodes.forEach(node => {
+                        // 如果這個節點已經被監聽過了則忽略。
+                        if (mutation_observered.has(node)) {
+                            return;
+                        } else {
+                            mutation_observered.add(node);
+                        }
+
                         mutation_observer.observe(node, {
                             childList: true,
                             subtree: true,
@@ -969,8 +986,21 @@ window.tocas = {
                         });
 
                         // 替這些節點呼叫對應的函式。
-                        addedNodeMutation(node)
-                    })
+                        addedNodeMutation(node);
+                    });
+                });
+            }
+
+            // 如果是節點的移除就做一些清除的函式。
+            else if (mutation.removedNodes && mutation.removedNodes.length) {
+                mutation.removedNodes.forEach(removed_node => {
+                    // 如果這個節點不是 HTMLElement 就略過，因為他有可能是 Text Node。
+                    if (removed_node.nodeType !== Node.ELEMENT_NODE || !(removed_node instanceof HTMLElement)) {
+                        return;
+                    }
+
+                    // 從已監聽的清單中移除來節省部份資源。
+                    mutation_observered.delete(removed_node);
                 });
             }
         });

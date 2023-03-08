@@ -18020,7 +18020,7 @@ a.ts-segment:hover {
    ========================================================================== */
 
 .ts-tooltip {
-    position: absolute;
+    position: fixed;
     background: var(--ts-gray-600);
     padding: 0.1rem 0.35rem;
     font-size: var(--ts-font-size-13px);
@@ -18029,8 +18029,8 @@ a.ts-segment:hover {
     visibility: hidden;
     font-weight: normal;
     z-index: 99;
-    max-width: calc(300px - 2rem);
-    margin: 0 15px;
+    max-width: min(300px, calc(100vw - 2rem));
+    pointer-events: none;
 }
 
 .ts-tooltip.is-visible {
@@ -18043,6 +18043,7 @@ a.ts-segment:hover {
     height: 0;
     border-color: transparent;
     border-style: solid;
+    pointer-events: none;
 }
 
 .ts-tooltip[class*="is-bottom"] .arrow {
@@ -18058,13 +18059,13 @@ a.ts-segment:hover {
 }
 
 .ts-tooltip[class$="start"] .arrow {
-    left: calc(10px);
+    left: 10px;
 }
 .ts-tooltip[class$="end"] .arrow {
-    right: calc(10px);
+    right: 10px;
 }
 .ts-tooltip:not([class$="start"]):not([class$="end"]) .arrow {
-    left: calc(var(--ts-tooltip-x) - 2.5px - 15px);
+    left: calc(var(--ts-tooltip-x) - 2.5px);
 }
 
 /* ==========================================================================
