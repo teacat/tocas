@@ -49,6 +49,17 @@
 .ts-pagination .item.is-active {
     background: var(--accent-color, var(--ts-gray-800));
     color: var(--accent-foreground-color, var(--ts-gray-50));
+    pointer-events: none;
+}
+
+/**
+ * Dot
+ */
+
+.ts-pagination .item.is-dot {
+    padding: 0.5rem 0rem;
+    color: var(--ts-gray-600);
+    pointer-events: none;
 }
 
 /**
@@ -82,7 +93,9 @@
  */
 
 .ts-pagination .item.is-back,
-.ts-pagination .item.is-next {
+.ts-pagination .item.is-next,
+.ts-pagination .item.is-first,
+.ts-pagination .item.is-last {
     font-family: "Icons";
     font-weight: normal;
     font-style: normal;
@@ -94,18 +107,27 @@
     padding-bottom: 0.5rem;
 }
 
-.ts-pagination .item.is-back::before {
-    content: "\f053";
+.ts-pagination .item.is-back::before,
+.ts-pagination .item.is-next::after,
+.ts-pagination .item.is-first::before,
+.ts-pagination .item.is-last::after {
     font-size: 13px;
 }
 
+.ts-pagination .item.is-back::before {
+    content: "\f053";
+}
 .ts-pagination .item.is-next {
     margin-left: auto;
 }
-
 .ts-pagination .item.is-next::after {
     content: "\f054";
-    font-size: 13px;
+}
+.ts-pagination .item.is-first::before {
+    content: "\f048";
+}
+.ts-pagination .item.is-last::after {
+    content: "\f051";
 }
 
 /**
