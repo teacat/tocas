@@ -12,11 +12,14 @@ window.tocas = {
             tooltip: "data-tooltip",
             tooltip_position: "data-position",
             tooltip_delay: "data-delay",
+            fileplace: "data-fileplace",
+            fileplace_name: "data-name",
         },
         scopes: {
             tab: "@scope",
             toggle: "@scope",
             tab: "@scope",
+            fileplace: "@scope",
             dropdown: "@scope",
             container: "@container",
         },
@@ -1242,12 +1245,12 @@ window.tocas = {
 
         // createTextContainer
         createTextContainer = () => {
-            return this.createElement(`<div class="content"></div>`);
+            return createElement(`<div class="content"></div>`);
         };
 
         // createAppendInput
         createAppendInput = () => {
-            return this.createElement(`<input class="append" type="text">`);
+            return createElement(`<input class="append" type="text">`);
         };
 
         // createDropdown
@@ -1289,7 +1292,7 @@ window.tocas = {
 
         renderOption = (element, dropdown, option) => {
             var text = this.getOptionText(option);
-            var item = this.createElement(`<button data-value="${option.value}" class="item">${text}</button>`);
+            var item = createElement(`<button data-value="${option.value}" class="item">${text}</button>`);
             var definition = this.getOptionDefinition(option);
 
             // 如果這個項目被停用而且又沒有值，那很有可能只是一個預設的預置項目（Placeholder），
@@ -1306,27 +1309,27 @@ window.tocas = {
             //
             if (definition.icon !== null) {
                 dropdown.classList.add("is-start-icon");
-                item.prepend(this.createElement(`<span class="ts-icon is-${definition.icon}-icon"></span>`));
+                item.prepend(createElement(`<span class="ts-icon is-${definition.icon}-icon"></span>`));
             }
 
             //
             if (definition.image !== null) {
-                item.prepend(this.createElement(`<span class="ts-avatar"><img src="${definition.image}"></span>`));
+                item.prepend(createElement(`<span class="ts-avatar"><img src="${definition.image}"></span>`));
             }
 
             //
             if (definition.avatar !== null) {
-                item.prepend(this.createElement(`<span class="ts-avatar is-circular"><img src="${definition.avatar}"></span>`));
+                item.prepend(createElement(`<span class="ts-avatar is-circular"><img src="${definition.avatar}"></span>`));
             }
 
             //
             if (definition.flag !== null) {
-                item.prepend(this.createElement(`<span class="ts-flag is-rounded is-bordered is-${definition.flag}-flag"></span>`));
+                item.prepend(createElement(`<span class="ts-flag is-rounded is-bordered is-${definition.flag}-flag"></span>`));
             }
 
             //
             if (definition.description !== null) {
-                item.append(this.createElement(`<span class="description">${definition.description}</span>`));
+                item.append(createElement(`<span class="description">${definition.description}</span>`));
             }
 
             return item;
@@ -1348,22 +1351,22 @@ window.tocas = {
 
             //
             if (definition.icon !== null) {
-                replacement.prepend(this.createElement(`<span class="ts-icon is-${definition.icon}-icon"></span>`));
+                replacement.prepend(createElement(`<span class="ts-icon is-${definition.icon}-icon"></span>`));
             }
 
             //
             if (definition.image !== null) {
-                replacement.prepend(this.createElement(`<span class="ts-avatar"><img src="${definition.image}"></span>`));
+                replacement.prepend(createElement(`<span class="ts-avatar"><img src="${definition.image}"></span>`));
             }
 
             //
             if (definition.avatar !== null) {
-                replacement.prepend(this.createElement(`<span class="ts-avatar is-circular"><img src="${definition.avatar}"></span>`));
+                replacement.prepend(createElement(`<span class="ts-avatar is-circular"><img src="${definition.avatar}"></span>`));
             }
 
             //
             if (definition.flag !== null) {
-                replacement.prepend(this.createElement(`<span class="ts-flag is-rounded is-bordered is-${definition.flag}-flag"></span>`));
+                replacement.prepend(createElement(`<span class="ts-flag is-rounded is-bordered is-${definition.flag}-flag"></span>`));
             }
 
             text_container.parentNode.replaceChild(replacement, text_container);
@@ -1372,26 +1375,26 @@ window.tocas = {
         renderChip = option => {
             var text = this.getOptionText(option);
             var definition = this.getOptionDefinition(option);
-            var chip = this.createElement(`<div class="ts-chip" data-value="${option.value}">${text}</div>`);
+            var chip = createElement(`<div class="ts-chip" data-value="${option.value}">${text}</div>`);
 
             //
             if (definition.icon !== null) {
-                chip.prepend(this.createElement(`<span class="ts-icon is-${definition.icon}-icon"></span>`));
+                chip.prepend(createElement(`<span class="ts-icon is-${definition.icon}-icon"></span>`));
             }
 
             //
             if (definition.image !== null) {
-                chip.prepend(this.createElement(`<span class="ts-image"><img src="${definition.image}"></span>`));
+                chip.prepend(createElement(`<span class="ts-image"><img src="${definition.image}"></span>`));
             }
 
             //
             if (definition.avatar !== null) {
-                chip.prepend(this.createElement(`<span class="ts-image is-circular"><img src="${definition.avatar}"></span>`));
+                chip.prepend(createElement(`<span class="ts-image is-circular"><img src="${definition.avatar}"></span>`));
             }
 
             //
             if (definition.flag !== null) {
-                chip.prepend(this.createElement(`<span class="ts-flag is-rounded is-bordered is-${definition.flag}-flag"></span>`));
+                chip.prepend(createElement(`<span class="ts-flag is-rounded is-bordered is-${definition.flag}-flag"></span>`));
             }
 
             return chip;
@@ -1443,8 +1446,8 @@ window.tocas = {
         };
 
         createDropdownElement = () => {
-            return this.createElement(`<div class="ts-dropdown is-scrollable is-visible"></div>`);
-        }
+            return createElement(`<div class="ts-dropdown is-scrollable is-visible"></div>`);
+        };
 
         /**
          * Combo
@@ -1457,8 +1460,7 @@ window.tocas = {
 
         // createComboAppendInput
         createComboAppendInput = element => {
-            var append_input = this.createElement(`<input class="append" type="text">`);
-
+            var append_input = createElement(`<input class="append" type="text">`);
 
             // 監聽輸入欄位的聚焦事件，如果被聚焦了就打開下拉式選單。
             append_input.addEventListener("focus", event => {
@@ -1466,11 +1468,10 @@ window.tocas = {
 
                 append_input.value = "";
 
-                var text_container = this.getTextContainer(element)
+                var text_container = this.getTextContainer(element);
 
-                text_container.classList.remove("u-invisible")
-                    text_container.classList.add("is-ghosting")
-
+                text_container.classList.remove("u-invisible");
+                text_container.classList.add("is-ghosting");
             });
 
             // 監聽輸入欄位的輸入事件，並且用來篩選、搜尋清單。
@@ -1478,29 +1479,26 @@ window.tocas = {
                 this.createComboDropdown(element);
                 this.refreshComboDropdown(element);
 
-                var text_container = this.getTextContainer(element)
+                var text_container = this.getTextContainer(element);
 
                 if (append_input.value.trim() === "") {
-                    text_container.classList.remove("u-invisible")
-                    text_container.classList.add("is-ghosting")
+                    text_container.classList.remove("u-invisible");
+                    text_container.classList.add("is-ghosting");
                 } else {
-                    text_container.classList.remove("is-ghosting")
-                    text_container.classList.add("u-invisible")
+                    text_container.classList.remove("is-ghosting");
+                    text_container.classList.add("u-invisible");
                 }
             });
 
             //
-            append_input.addEventListener("blur", (event) => {
-
-                var text_container = this.getTextContainer(element)
-
-
+            append_input.addEventListener("blur", event => {
+                var text_container = this.getTextContainer(element);
 
                 append_input.value = "";
 
-                text_container.classList.remove("is-ghosting")
-                text_container.classList.remove("u-invisible")
-            })
+                text_container.classList.remove("is-ghosting");
+                text_container.classList.remove("u-invisible");
+            });
 
             return append_input;
         };
@@ -1539,7 +1537,7 @@ window.tocas = {
 
             // 再單獨顯示合格的項目。
             options.forEach(option => {
-                var item = dropdown.querySelector(`button.item[data-value="${option.value}"]`)
+                var item = dropdown.querySelector(`button.item[data-value="${option.value}"]`);
 
                 // 有時候這個項目可能不存在於下拉式選單裡，因為值可能是空白或是被隱藏的。
                 if (item === null) {
@@ -1614,7 +1612,7 @@ window.tocas = {
         // initializeCombo
         initializeCombo = element => {
             var container = this.getContainer(element);
-            var text_container = this.createTextContainer()
+            var text_container = this.createTextContainer();
             var append_input = this.createComboAppendInput(element);
 
             // 賦予特殊標籤用以套用樣式。
@@ -1659,14 +1657,12 @@ window.tocas = {
             // 取得現在這個下拉選單的對應 `option` 項目。
             var option = this.getOptionByInputValue(input);
 
-            console.log(option, input)
+            console.log(option, input);
 
             // 如果沒有對應項目就先不要更新。
             if (option === undefined) {
                 return;
             }
-
-
 
             // 更新文字容器的呈現內容。
             this.renderTextContainer(this.getTextContainer(input), option);
@@ -1674,8 +1670,6 @@ window.tocas = {
             // 更換快取的舊值。
             input.tocas_input_old_value = input.value;
         };
-
-
 
         /**
          * Select
@@ -1800,7 +1794,7 @@ window.tocas = {
 
         // createMultiInputTextContainer
         createMultiInputTextContainer = () => {
-            return this.createElement(`<div class="content"></div>`);
+            return createElement(`<div class="content"></div>`);
         };
 
         // initializeMultiInput
@@ -1842,7 +1836,7 @@ window.tocas = {
             }
 
             var input = this.getInput(element);
-            var dropdown = this.createElement(`<div class="ts-dropdown is-visible"></div>`);
+            var dropdown = createElement(`<div class="ts-dropdown is-visible"></div>`);
 
             var datalist = this.getDatalist(element);
             if (datalist === null) {
@@ -1851,7 +1845,7 @@ window.tocas = {
 
             datalist.querySelectorAll("option").forEach(option => {
                 var text = this.getOptionText(option);
-                var item = this.createElement(`<button data-value="${option.value}" class="item"><div class="checkbox"></div> ${text}</button>`);
+                var item = createElement(`<button data-value="${option.value}" class="item"><div class="checkbox"></div> ${text}</button>`);
 
                 item.addEventListener("click", event => {
                     if (this.existsInputValue(element, option.value)) {
@@ -1897,7 +1891,7 @@ window.tocas = {
         // createChipsItem
         createChipsItem = (element, option, value) => {
             // 建立一個新的關閉按鈕。
-            var button = this.createElement(`<button class="ts-close is-small"></button>`);
+            var button = createElement(`<button class="ts-close is-small"></button>`);
 
             // 監聽關閉按鈕的點擊事件，如果被點擊就從輸入欄位中移除對應的項目。
             button.addEventListener("click", event => {
@@ -1907,7 +1901,7 @@ window.tocas = {
 
             // 建立一個新的標籤項目，如果這個項目不是預先項目，
             // 那就是使用者自己追加的項目，我們以手動方式新增。
-            var item = option ? this.renderChip(option, value) : this.createElement(`<div class="ts-chip" data-value="${value}">${value}</div>`);
+            var item = option ? this.renderChip(option, value) : createElement(`<div class="ts-chip" data-value="${value}">${value}</div>`);
 
             // 將關閉按鈕推入至標籤項目中。
             item.append(button);
@@ -1918,7 +1912,7 @@ window.tocas = {
         // createChipsAppendInput
         createChipsAppendInput = element => {
             // 建立一個用來輸入、搜尋關鍵字的額外輸入欄位。
-            var append_input = this.createElement(`<input class="append" data-autosize="horizontal" type="text">`);
+            var append_input = createElement(`<input class="append" data-autosize="horizontal" type="text">`);
 
             // 監聽輸入欄位的聚焦事件，如果被聚焦了就打開下拉式選單。
             append_input.addEventListener("focus", event => {
@@ -1978,7 +1972,7 @@ window.tocas = {
             });
 
             // 建立用來包覆輸入欄位的容器，這樣才能完好地與其他標籤項目混為一起。
-            var wrapper = this.createElement(`<div></div>`);
+            var wrapper = createElement(`<div></div>`);
 
             // 將輸入欄位推入至包覆容器裡。
             wrapper.append(append_input);
@@ -2071,7 +2065,7 @@ window.tocas = {
             }
 
             var append_input = this.getAppendInput(element);
-            var dropdown = this.createElement(`<div class="ts-dropdown is-scrollable is-visible"></div>`);
+            var dropdown = createElement(`<div class="ts-dropdown is-scrollable is-visible"></div>`);
             var options = this.getOptions(element);
 
             // 如果這個輸入欄位沒有定義 `<datalist>` 而找不到任何預先選項，就不需要建立這個下拉式選單。
@@ -2151,7 +2145,7 @@ window.tocas = {
 
         // createPasswordIcon
         createPasswordIcon = () => {
-            var icon = this.createElement(`<button class="ts-icon is-eye-icon" data-tocas="visibility"></button>`);
+            var icon = createElement(`<button class="ts-icon is-eye-icon" data-tocas="visibility"></button>`);
 
             // 如果使用者點擊圖示就切換輸入欄位的 `type` 種類。
             icon.addEventListener("click", this.togglePasswordVisibility);
@@ -2189,6 +2183,277 @@ window.tocas = {
     }
 
     /* ==========================================================================
+       FilePlace
+       ========================================================================== */
+
+    class FilePlace {
+        constructor() {}
+
+        // attributeMutation
+        attributeMutation = mutation => {};
+
+        // addedNodeMutation
+        addedNodeMutation = added_node => {
+            // 如果這個新追加的 DOM 節點是一個 FilePlace 模組，就監聽其點擊事件。
+            if (this.isFilePlace(added_node)) {
+                // 監聽其點擊事件。
+                this.bindEventListener(added_node);
+            }
+        };
+
+        // isFilePlace
+        isFilePlace = element => {
+            return element.matches(`[data-fileplace]`);
+        };
+
+        // bindEventListener
+        bindEventListener = element => {
+
+            element.removeEventListener("dragover", this.dragEventHandler);
+            element.removeEventListener("dragenter", this.dragEventHandler);
+            element.removeEventListener("drop", this.dropEventHandler);
+            element.removeEventListener("click", this.clickEventHandler);
+
+            element.addEventListener("dragover", this.dragEventHandler);
+            element.addEventListener("dragenter", this.dragEventHandler);
+            element.addEventListener("drop", this.dropEventHandler);
+            element.addEventListener("click", this.clickEventHandler);
+        };
+
+        // getFileInput
+        getFileInput = element => {
+            return searchScopeTargets(element, element.getAttribute(tocas.config.attributes.fileplace), tocas.config.scopes.fileplace, tocas.config.attributes.fileplace_name)[0];
+        };
+
+        // dragEventHandler
+        dragEventHandler = event => {
+            // 避免瀏覽器有其他動作。
+            event.preventDefault();
+        };
+
+        // dropEventHandler
+        dropEventHandler = event => {
+            // 取得對應的 Fileplace 元素。
+            var element = event.target.closest(`[${tocas.config.attributes.fileplace}]`);
+
+            // 避免瀏覽器有其他動作。
+            event.preventDefault();
+
+            // 取得關聯的檔案上傳欄位。
+            var file_input = this.getFileInput(element);
+
+            // 如果沒有指定可以多選，就永遠只取得拖曳的第一個檔案。
+            // 如果有多選的話，就直接將拖曳的檔案列表轉發給檔案上傳欄位。
+            if (file_input.getAttribute("multiple") === null) {
+                var data = new DataTransfer();
+                data.items.add(event.dataTransfer.files[0]);
+                file_input.files = data.files;
+            } else {
+                file_input.files = event.dataTransfer.files;
+            }
+
+            // 觸發變更事件，讓其他程式能夠監聽此異動。
+            file_input.dispatchEvent(new Event("change", { bubbles: true }));
+        };
+
+        // clickEventHandler
+        clickEventHandler = event => {
+            // 取得對應的 Fileplace 元素。
+            var element = event.target.closest(`[${tocas.config.attributes.fileplace}]`);
+
+            // 取得關聯的檔案上傳欄位。
+            var file_input = this.getFileInput(element);
+
+            // 點擊檔案上傳欄位來開啟檔案視窗。
+            file_input.click();
+        };
+    }
+
+    /* ==========================================================================
+       Pagination
+       ========================================================================== */
+
+    class Pagination {
+        constructor() {}
+
+        // attributeMutation
+        attributeMutation = mutation => {};
+
+        // addedNodeMutation
+        addedNodeMutation = added_node => {
+            // 如果這個新追加的 DOM 節點是一個 Pagination 模組，就監聽其點擊事件。
+            if (this.isPagination(added_node)) {
+                // 監聽其點擊事件。
+                this.initializePagination(added_node);
+                this.bindEventListener(added_node);
+            }
+        };
+
+        // isPagination
+        isPagination = element => {
+            return element.matches(`[data-pagination]`);
+        };
+
+        // bindEventListener
+        bindEventListener = element => {
+            var input = this.getPageInput(element);
+
+            if (input === null) {
+                return
+            }
+
+            // todo remove event listener
+            input.addEventListener("change", event => {
+                this.renderView(element);
+            });
+        };
+
+        //
+        renderView = element => {
+            // 先清空原本的內容。
+            element.innerHTML = "";
+
+            // 取得總頁數。
+            var total_page = this.getTotalPage(element);
+
+            // 取得目前的頁數。
+            var current_page = this.getCurrentPage(element);
+
+            // 取得是否有連結規則。
+            var pattern = this.getLinkPattern(element);
+
+            //
+            var distance = this.getDistance(element);
+
+            // 產生「<」返回項目。
+            var back_item;
+            if (current_page <= 1) {
+                back_item = this.createItem(element, "", "", pattern);
+                back_item.classList.add("is-back", "is-disabled");
+            } else {
+                back_item = this.createItem(element, "", current_page - 1, pattern);
+                back_item.classList.add("is-back");
+            }
+
+
+            // 產生「>」下一個項目。
+            var next_item;
+            if (current_page + 1 > total_page) {
+                next_item = this.createItem(element, "", "", pattern);
+                next_item.classList.add("is-next", "is-disabled");
+            } else {
+                next_item = this.createItem(element, "", current_page + 1, pattern);
+                next_item.classList.add("is-next");
+            }
+
+            var dotshow = true;
+
+            // 依據目前的頁數來決定要怎麼呈現未來的頁數距離。
+            if (current_page == 2 || current_page == total_page - 1) {
+                distance = distance;
+            } else if (current_page >= 3 && current_page != total_page) {
+                distance = distance;
+            } else {
+                distance = distance+1;
+            }
+
+            //
+            element.append(back_item);
+
+
+
+            if (total_page != 1) {
+                for (let i = 1; i <= total_page; i++) {
+                    if (i === 1 || i === total_page || (i >= current_page - distance && i <= current_page + distance)) {
+                        dotshow = true;
+
+                        var item = this.createItem(element, i, i, pattern);
+
+                        if (i === current_page) {
+                            item.classList.add("is-active");
+                        }
+
+                        element.append(item);
+                    } else if (dotshow) {
+                        dotshow = false;
+
+                        var item = this.createItem(element, "...", "", pattern);
+                        item.classList.add("is-dot");
+                        element.append(item);
+                    }
+                }
+
+                //
+                element.append(next_item);
+            }
+        };
+
+        // createItem
+        createItem = (element, text ="", page = "", pattern = "") => {
+            var item;
+            if (pattern !== "") {
+                item = createElement(`<a href="${page === "" ? "#" : pattern.replace("${page}", page)}" class="item">${text}</a>`);
+            } else {
+                item = createElement(`<button class="item">${text}</button>`);
+
+                if (text !== "...") {
+                    item.addEventListener("click", event => {
+                        this.updatePage(element, page);
+                    });
+                }
+            }
+            return item;
+        };
+
+        // getCurrentPage
+        getCurrentPage = element => {
+            var current = element.getAttribute("data-current");
+            if (current !== null) {
+                return parseInt(current) || 1;
+            }
+            return parseInt(this.getPageInput(element).value) || 1;
+        };
+
+        // getTotalPage
+        getTotalPage = element => {
+            return parseInt(element.getAttribute("data-total")) || 1;
+        };
+
+         // getDistance
+        getDistance = element => {
+            return parseInt(element.getAttribute("data-distance")) || 2;
+        };
+
+        // getLinkPattern
+        getLinkPattern = element => {
+            var pattern = element.getAttribute(`data-pagination`);
+            return pattern.includes("${page}") ? pattern : "";
+        };
+
+        // getPageInput
+        getPageInput = element => {
+            var inputs = searchScopeTargets(element, element.getAttribute(`data-pagination`), `@scope`, `data-name`)
+            return inputs.length !== 0 ? inputs[0] : null;
+        };
+
+        // updatePage
+        updatePage = (element, page) => {
+            if (this.getLinkPattern(element) !== "") {
+                return;
+            }
+            var input = this.getPageInput(element);
+
+            input.value = page;
+            input.dispatchEvent(new Event("change", { bubbles: true }));
+        };
+
+        // initializePagination
+        initializePagination = element => {
+            this.renderView(element);
+        };
+    }
+
+    /* ==========================================================================
        Base
        ========================================================================== */
 
@@ -2221,6 +2486,13 @@ window.tocas = {
         return this.searchScopeTargets(container.parentNode, name, scope_attribute, name_attribute);
     };
 
+    // createElement
+    createElement = html => {
+        var template = document.createElement("template");
+        template.innerHTML = html.trim();
+        return template.content.firstChild;
+    };
+
     // responsiveModule
     var responsiveModule = new Responsive();
 
@@ -2242,6 +2514,12 @@ window.tocas = {
     // inputModule
     var inputModule = new Input();
 
+    // filePlaceModule
+    var filePlaceModule = new FilePlace();
+
+    // paginationModule
+    var paginationModule = new Pagination();
+
     // stashModule
     // var stashModule = new Stash();
 
@@ -2254,6 +2532,8 @@ window.tocas = {
         tooltipModule.addedNodeMutation(node);
         autoSizeModule.addedNodeMutation(node);
         inputModule.addedNodeMutation(node);
+        filePlaceModule.addedNodeMutation(node);
+        paginationModule.addedNodeMutation(node);
         // stashModule.addedNodeMutation(node);
     };
 
@@ -2266,6 +2546,8 @@ window.tocas = {
         tooltipModule.attributeMutation(mutation);
         autoSizeModule.attributeMutation(mutation);
         inputModule.attributeMutation(mutation);
+        filePlaceModule.attributeMutation(mutation);
+        paginationModule.attributeMutation(mutation);
         // stashModule.attributeMutation(mutation);
     };
 
