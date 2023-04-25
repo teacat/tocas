@@ -19,46 +19,22 @@ Definitions:
     - Title: 安裝與使用
       Description: 引用 Tocas UI 的檔案才能夠開始使用，你可以直接複製貼上或是下載原始碼供離線、自行使用。
       Sections:
-          - Title: 立即使用的免安裝線上 CDN 來源
-            Anchor: CDN
+          - Title: 引用檔案
+            Anchor: Style Installation
             Description: |
-                這是由一家知名 CDN 公司 CloudFlare 所提供的免費服務並且提供夠快的服務速度，這使你不需要下載 Tocas UI，只需要將下列標籤放置於 HTML 中的 `<head> .. </head>` 處即可。
+                將下列標籤放置於 HTML 中的 `<head> .. </head>` 處即可使用 Tocas UI，你也可以透過 [NPM](https://www.npmjs.com/package/tocas) 安裝或是自行至 [GitHub](https://github.com/teacat/tocas) 下載。
             AttachedHTML: |
+                <!-- Tocas UI -->
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.2.3/tocas.min.css">
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.2.3/tocas.min.js"></script>
 
-          - Title: 自行下載 Tocas UI
-            Anchor: Download
-            Description: |
-                你也可以到 [Tocas UI 的官方 GitHub](https://github.com/teacat/tocas) 下載樣式然後取出其中的 `/dist` 資料夾並像下面這樣引用 Tocas UI 檔案。使用此安裝方式的好處是可以確保樣式不會因為遠端的伺服器離線而遺失。
-            AttachedHTML: |
-                <link rel="stylesheet" href="./tocas/dist/tocas.min.css">
-                <script src="./tocas/dist/tocas.min.js"></script>
-
-          - Title: 以 NPM 安裝
-            Anchor: NPM
-            Description: |
-                Tocas UI 也能夠從 [NPM](https://www.npmjs.com/package/tocas) 中直接安裝，執行下列指令後引用最重要的 `@tocas/dist/tocas.min.css` 和 `@tocas/dist/tocas.min.js` 檔案即可。
-            AttachedHTML: |
-                npm i tocas
-
-    - Title: 使用須知
-      Sections:
-          - Title: 網頁字型
-            Anchor: Fonts
-            Description: |
-                目前 Tocas UI 使用下列字型在各個系統（如：Ubuntu、macOS、Windows）。
-
-                ```
-                "Noto Sans TC", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue", "Helvetica", "Arial", "Microsoft JhengHei", wf_SegoeUI, "Segoe UI", Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", 微軟正黑體, "LiHei Pro", "WenQuanYi Micro Hei", "Droid Sans Fallback", "AR PL UMing TW", Roboto, "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif
-                ```
-
-                由於每個系統的字型仍有差異，我們建議你直接在 HTML 中的 `<head> .. </head>` 引用 Google Fonts 的 [Noto Sans TC](https://fonts.google.com/noto/specimen/Noto+Sans+TC) 思源黑體字型，這樣便能在不同裝置與系統統一呈現效果而沒有誤差。
-
-            AttachedHTML: |
+                <!-- 建議字型 -->
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
                 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+
+                <!-- 響應式設計 -->
+                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     - Title: 與其他框架比較
       Description: |
@@ -128,6 +104,7 @@ Definitions:
                 * 無法避免的 Node.js 相依性使專案需要大量前置作業。
                 * 樣式名稱眾多且不直覺，開發時須翻閱說明文件。
                 * 開發者須具備進階的 CSS 知識。
+                * Tocas UI 與 Tailwind CSS 其實可以同時使用，用以輔助、修改 Tocas UI 不足之處。
 
     - Title: 雜談
       Description: 一些和 Tocas UI 相關的開發歷程，還有其中瑣碎的事物。
@@ -138,6 +115,8 @@ Definitions:
                 Tocas UI 並不是萬靈丹，這更像是一個元件庫。設計應用程式介面時十分地方便，但作為自由發揮的設計而言，一定沒有辦法從頭到尾都只使用 Tocas UI。
 
                 在這種情況下我們鼓勵你直接透過 HTML 的 `style` 標籤，直接對該容器、元素進行樣式的修改。就像 Tailwind UI 那樣，不需要特別花費時間整理出一個 `my-style.css` 來好好地規劃樣式，直接在 HTML 中修改樣式令其影響一目了然。
+
+                你也可以使用 Tailwind CSS 與 Tocas UI 一起搭配。
 
           - Title: 減少 JavaScript 模組的干涉
             Anchor: Modules

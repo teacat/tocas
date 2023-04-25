@@ -8,8 +8,6 @@ Description: 針對內容格局、元件所設計的排版系統。
 Intro: |
     在 Tocas UI 裡，網格系統的每行都被劃分為 16 格寬度。為了方便展示網格系統，我們將背景加上了灰色與輔助數字，在實際應用中這些都並不會出現。
 
-    如果你希望有個欄位可以填滿剩餘空間，請參閱[水平排列](./row.html)元件。
-
 #=======================================================
 # 設定
 # Settings
@@ -18,8 +16,18 @@ Intro: |
 Type: Article
 Grid: true
 Relatives:
-    - Row
     - Wrap
+
+#=======================================================
+# 變數
+# Variables
+#=======================================================
+
+Variables:
+    - Name: "--gap"
+      Default: "1rem"
+      Description: "欄位之間的空白間隙像素寬度。"
+      Target: ".ts-grid"
 
 #=======================================================
 # 基本樣式
@@ -208,6 +216,44 @@ Definitions:
                     <div class="column"></div>
                 </div>
 
+          - Title: 高度拉伸的
+            Anchor: Stretched
+            Description: 如果欄位裡有[箱型容器](./box.html)或[片段](./segment.html)，你會需要此樣式拉伸欄位裡的第一層元素，使其高度都與其他欄位相同。
+            Remove:
+                - <span class="no-grid-indicator"></span>
+            HTML: |
+                <span class="no-grid-indicator"></span>
+                <div class="ts-grid [[is-stretched]] is-3-columns">
+                    <div class="column">
+                        <div class="{{ts-segment}}">
+                            <p>這個片段有一行文字。</p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-segment}}">
+                            <p>這個片段有兩行文字。</p>
+                            <p>這個片段有兩行文字。</p>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-segment}}">
+                            <p>這個片段有三行文字。</p>
+                            <p>這個片段有三行文字。</p>
+                            <p>每個片段高度都一樣。</p>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 分隔的
+            Anchor: Divided
+            Description: 讓欄位之間有垂直分隔線區隔項目，僅適用於單行的網格系統。
+            HTML: |
+                <div class="ts-grid [[is-divided]] is-3-columns">
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                </div>
+
           - Title: 空白圍繞
             Anchor: Space Between And Around
             Description: 使空白圍繞在欄位之間或是周圍。
@@ -317,4 +363,25 @@ Definitions:
                     <div class="column [[tablet+:u-hidden]] is-4-wide"></div>
                     <div class="column [[desktop-:u-hidden]] is-4-wide"></div>
                     <div class="column [[widescreen:u-hidden]] is-4-wide"></div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 搜尋欄位
+            Anchor: Composition Search
+            Description: 通常搜尋欄位會有流動欄位與一個固定欄位，沒有指定寬度的欄位會以其內容寬度為主。
+            Remove:
+                - <span class="no-grid-indicator"></span>
+            HTML: |
+                <span class="no-grid-indicator"></span>
+                <div class="ts-grid">
+                    <div class="column [[is-fluid]]">
+                        <div class="{{ts-input}}">
+                            <input type="text" class="input" placeholder="搜尋文章…"/>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <button class="{{ts-button}}">送出</button>
+                    </div>
                 </div>
