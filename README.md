@@ -31,7 +31,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 ```
 
-### 以 NPM 安裝
+&nbsp;
+
+**或者…以 NPM 安裝**
 
 Tocas UI 也能夠從 [NPM](https://www.npmjs.com/package/tocas) 中直接安裝。
 
@@ -41,7 +43,9 @@ $ npm i tocas
 
 執行上述指令後引用 `@tocas/dist/tocas.min.css` 和 `@tocas/dist/tocas.min.js` 檔案即可。
 
-### 自行下載 Tocas UI
+&nbsp;
+
+**或者…自行下載 Tocas UI**
 
 下載 `/dist` 資料夾並像下面這樣引用 Tocas UI 檔案，使用此安裝方式的好處是可以確保樣式不會因為遠端的伺服器離線而遺失。
 
