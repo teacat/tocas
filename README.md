@@ -6,39 +6,10 @@
 [![](https://img.shields.io/npm/v/tocas.svg)](https://github.com/teacat/tocas/releases)
 [![](https://img.shields.io/npm/l/tocas.svg)](https://github.com/teacat/tocas/blob/master/LICENSE)
 
--   👉 [[檢視所有元件]](https://v4.tocas-ui.com/zh-tw)
 -   📘 文件：[v4.tocas-ui.com/zh-tw](https://v4.tocas-ui.com/zh-tw)
--   🎲 範例：[官方範例](https://v4.tocas-ui.com/zh-tw/examples.html)
+-   🎲 範例：[v4.tocas-ui.com/zh-tw/examples.html](https://v4.tocas-ui.com/zh-tw/examples.html)
 -   📦 原始碼：[GitHub](https://github.com/teacat/tocas) | [NPM](https://www.npmjs.com/package/tocas) | [cdnjs](https://cdnjs.com/libraries/tocas)
 -   🌎 語系：**台灣正體**
-
-&nbsp;
-
-## 🌼 特色
-
--   **不需要 jQuery 相依性**
-
-    你不需要額外的 JavaScript 套件相依性就能直接使用。
-
--   **純粹的 CSS**
-
-    Tocas UI 能夠與所有的前端框架妥善搭配。沒有那種會跟你最喜愛的套件搶工作的鳥 JavaScript 模組。
-
--   **不需要 npm 或 Webpack**
-
-    你不需要透過 npm 安裝一堆套件，也不需要在 Webpack 裡面設置一坨載入器。
-
--   **簡潔又有意義的樣式名稱**
-
-    透過 `negative`（負面的）和 `positive`（正面的）或 `is-outlined`（有外框線的）這樣有意義的名稱來點綴元件。
-
--   **支援亮色、暗色主題的動態色彩系統**
-
-    能夠自動在亮色與暗色系統之間來會切換主題色系。
-
--   **超過 50 個元件與 100+ 種搭配組合**
-
-    看看我們的好棒棒[範例](https://v4.tocas-ui.com/zh-tw/examples.html)來學習你能夠怎麼發揮 Tocas UI 的最大效益。
 
 &nbsp;
 
@@ -47,31 +18,50 @@
 只需要將下列 HTML 標籤複製至你的 `<head>...</head>` 網頁段落就可以開工了 🔥。
 
 ```html
+<!-- Tocas UI -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.2.3/tocas.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.2.3/tocas.min.js"></script>
+
+<!-- 建議字型 -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+
+<!-- 響應式設計 -->
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 ```
 
-又或者你喜歡 `npm` 的話…👀
+### 以 NPM 安裝
+
+Tocas UI 也能夠從 [NPM](https://www.npmjs.com/package/tocas) 中直接安裝。
 
 ```bash
-npm i tocas
+$ npm i tocas
 ```
 
-接著你應該引用最重要的 `@tocas/dist/tocas.min.css` 和 `@tocas/dist/tocas.min.js` 檔案。
+執行上述指令後引用 `@tocas/dist/tocas.min.css` 和 `@tocas/dist/tocas.min.js` 檔案即可。
+
+### 自行下載 Tocas UI
+
+下載 `/dist` 資料夾並像下面這樣引用 Tocas UI 檔案，使用此安裝方式的好處是可以確保樣式不會因為遠端的伺服器離線而遺失。
+
+```html
+<link rel="stylesheet" href="./tocas/dist/tocas.min.css" />
+<script src="./tocas/dist/tocas.min.js"></script>
+```
 
 &nbsp;
 
-## 🚀 使用方式
+## 🚀 範例程式碼
 
 ```html
+<!-- 按鈕 -->
 <button class="ts-button">按鈕</button>
-```
 
-```html
+<!-- 標題 -->
 <div class="ts-header">標題</div>
-```
 
-```html
+<!-- 輸入欄位 -->
 <div class="ts-input">
     <input type="text" placeholder="搜尋…" />
 </div>
@@ -79,13 +69,6 @@ npm i tocas
 
 -   👉 [[檢視所有元件]](https://v4.tocas-ui.com/zh-tw)
 -   🎲 範例：[官方範例](https://v4.tocas-ui.com/zh-tw/examples.html)
-
-&nbsp;
-
-## 📘 文件
-
-從官方網站檢視：
-[[v4.tocas-ui.com/zh-tw ↗︎]](https://v4.tocas-ui.com/zh-tw)
 
 &nbsp;
 
