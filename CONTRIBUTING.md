@@ -1,10 +1,10 @@
 # 該怎麼對 Tocas UI 做出神奇蹦蹦好貢獻
 
-#### 1. 確定你的合併分支目的地是 `tocas-4`。 
+#### 1. 確定你的合併分支目的地是 `master`。
 
-合併請求（Pull Request）的目標**必須是** **[`tocas-4`](https://github.com/teacat/tocas/tree/tocas4)** 分支而不是 [`master`](https://github.com/teacat/tocas/tree/master)。
+合併請求（Pull Request）的目標**必須是** **[`master`](https://github.com/teacat/tocas/tree/master)**，且最好不要動到 `/dist` 與 `/docs`。
 
-> 正式版本釋出的時候才會將原始碼合併到 `master`。
+> `/docs` 是線上的文件資料夾。
 
 &nbsp;
 
@@ -13,7 +13,7 @@
 改善語系或文件內容時，請修改 [`/languages`](https://github.com/teacat/tocas/tree/tocas4/languages) 裡的檔案而不是 [`/docs`](https://github.com/teacat/tocas/tree/tocas4/docs)。
 
 > `/docs` 是程式編譯後的資料夾，每次更新文件時裡面的資料都會被覆寫。
-> 
+>
 > 由於編譯手續複雜，目前建議直接改 `/languages` 裡的檔案合併之後在交給開發作者編譯就好 🥺
 >
 > ※ 這樣的缺點是沒辦法邊改善邊預覽結果就是了 👀
