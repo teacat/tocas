@@ -252,7 +252,19 @@ func funcMap(meta Meta) template.FuncMap {
 		"anchor":      tmplAnchor,
 		"i18n":        tmplI18N(meta),
 		"translators": tmplTranslators(meta),
+		"isModule":    tmplIsModule,
+		"trimModule":  tmplTrimModule,
 	}
+}
+
+// tmplIsModule
+func tmplIsModule(s string) bool {
+	return strings.HasPrefix(s, "Module")
+}
+
+// tmplTrimModule
+func tmplTrimModule(s string) string {
+	return strings.TrimPrefix(s, "Module")
 }
 
 // highlight 會將純文字透過 Node 版本的 Highlight.js 來轉化為格式化後的螢光程式碼。
@@ -405,7 +417,12 @@ func decodePlaceholder(s string) string {
 		if len(groups) == 0 {
 			return ""
 		}
-		return fmt.Sprintf(`<a href="./%s.html">%s</a>`, strings.ReplaceAll(groups[1], "ts-", ""), groups[1])
+		url := strings.ReplaceAll(groups[1], "ts-", "")
+		if strings.HasPrefix(groups[1], "u-") {
+			url = "utilities"
+		}
+
+		return fmt.Sprintf(`<a href="./%s.html">%s</a>`, url, groups[1])
 	})
 	return s
 }

@@ -41,9 +41,13 @@ type ArticleLink struct {
 
 // ArticleVariable
 type ArticleVariable struct {
-	Name        string `yaml:"Name"`
-	Example     string `yaml:"Example"`
-	Description string `yaml:"Description"`
+	Name           string `yaml:"Name"`
+	Default        string `yaml:"Default"`
+	Type           string `yaml:"Type"`
+	Example        string `yaml:"Example"`
+	AdvanceExample string `yaml:"AdvanceExample"`
+	Target         string `yaml:"Target"`
+	Description    string `yaml:"Description"`
 }
 
 // ArticleDefinition

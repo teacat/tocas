@@ -124,9 +124,9 @@
                         <div class="主體-格局-導覽-標題">{{ index $.Meta.UI.ComponentsCategories .Name }}</div>
                         {{ range .Items }}
                         <a href="./{{ . | kebablize }}.html" class="主體-格局-導覽-項目{{ if eq $.This (kebablize .) }} 主體-格局-導覽-項目_啟用的{{ end }}">
-                            {{ index $.Meta.UI.Components . }} {{ if ne (index $.Meta.UI.Components .) (capitalize .) }}<span class="主體-格局-導覽-項目-英文"
-                                >{{ . | capitalize }}</span
-                            >{{ end }}
+                            {{ index $.Meta.UI.Components . }} {{ if ne (index $.Meta.UI.Components .) (capitalize (trimModule .)) }}<span class="主體-格局-導覽-項目-英文"
+                                >{{ capitalize (trimModule .) }}</span
+                            >{{ end }}{{ if isModule . }}<span class="主體-格局-導覽-項目-模組">JS</span>{{ end }}
                         </a>
                         {{ end }} {{ end }}
                         <div class="主體-格局-導覽-關閉按鈕">
@@ -318,16 +318,38 @@
                                     <thead>
                                         <tr>
                                             <th class="is-collapsed"></th>
+                                            {{ if ne (index .Variables 0).Default "" }}
+                                            <th class="is-collapsed">預設值</th>
+                                            {{ end }} {{ if ne (index .Variables 0).Example "" }}
                                             <th class="is-collapsed">範例</th>
+                                            {{ end }} {{ if ne (index .Variables 0).Type "" }}
+                                            <th class="is-collapsed">型態</th>
+                                            {{ end }}
                                             <th>說明</th>
+                                            {{ if ne (index .Variables 0).Target "" }}
+                                            <th class="is-collapsed">對象</th>
+                                            {{ end }}
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {{ range .Variables }}
                                         <tr>
                                             <td class="is-collapsed">{{ .Name }}</td>
+                                            {{ if ne (index $.Variables 0).Default "" }}
+                                            <td class="is-collapsed"><code>{{ .Default }}</code></td>
+                                            {{ end }} {{ if ne (index $.Variables 0).Example "" }}
                                             <td class="is-collapsed"><code>{{ .Example }}</code></td>
-                                            <td>{{ .Description | markdown }}</td>
+                                            {{ end }} {{ if ne (index $.Variables 0).Type "" }}
+                                            <td class="is-collapsed"><code>{{ .Type }}</code></td>
+                                            {{ end }}
+                                            <td>
+                                                {{ .Description | markdown }} {{ if .AdvanceExample }}
+                                                <code>{{ .AdvanceExample | highlight }}</code>
+                                                {{ end }}
+                                            </td>
+                                            {{ if ne (index $.Variables 0).Target "" }}
+                                            <td class="is-collapsed"><code>{{ .Target }}</code></td>
+                                            {{ end }}
                                         </tr>
                                         {{ end }}
                                     </tbody>
