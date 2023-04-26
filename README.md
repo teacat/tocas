@@ -15,7 +15,7 @@
 
 ## 📀 開始使用！
 
-只需要將下列 HTML 標籤複製至你的 `<head>...</head>` 網頁段落就可以開工了 🔥。
+只需要將下列 HTML 標籤複製至你的 `<head>...</head>` 網頁段落就可以開工了 🔥
 
 ```html
 <!-- Tocas UI -->
@@ -47,7 +47,7 @@ $ npm i tocas
 
 **或者…自行下載 Tocas UI**
 
-下載 `/dist` 資料夾並像下面這樣引用 Tocas UI 檔案，使用此安裝方式的好處是可以確保樣式不會因為遠端的伺服器離線而遺失。
+下載 `/dist` 資料夾並像下面這樣引用 Tocas UI 檔案，這樣你便能在離線環境使用 Tocas UI。
 
 ```html
 <link rel="stylesheet" href="./tocas/dist/tocas.min.css" />
@@ -71,11 +71,11 @@ $ npm i tocas
 </div>
 ```
 
--   👉 [[檢視所有元件]](https://v4.tocas-ui.com/zh-tw)
--   🎲 範例：[官方範例](https://v4.tocas-ui.com/zh-tw/examples.html)
+-   📘 文件：[v4.tocas-ui.com/zh-tw](https://v4.tocas-ui.com/zh-tw)
+-   🎲 範例：[v4.tocas-ui.com/zh-tw/examples.html](https://v4.tocas-ui.com/zh-tw/examples.html)
 
 &nbsp;
 
 ## ❤️ 來自台灣的愛心
 
-٩(ˊᗜˋ\*)و 由來自 🇹🇼 台灣的 [Yami Odymel](https://twitter.com/YamiOdymel) 所設計，當然還有[貢獻者們](https://github.com/teacat/tocas/graphs/contributors)的愛心 ❤️。原始碼授權方式為 [MIT](https://github.com/teacat/tocas/blob/master/LICENSE)，文件則為 [CC 0](https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW) 公眾領域。還請盡情地使用、分享或一同改進。Tocas UI 是[卡莉絲伊繁星](https://caris.events/)的設計語言，而卡莉絲伊繁星屬[對空音商事有限公司](https://sorae.co/zh-tw.html)。
+٩(ˊᗜˋ\*)و 由來自 🇹🇼 台灣的 [Yami Odymel](https://twitter.com/YamiOdymel) 所設計，當然還有[貢獻者們](https://github.com/teacat/tocas/graphs/contributors)的愛心 ❤️。原始碼授權方式為 [MIT](https://github.com/teacat/tocas/blob/master/LICENSE)，文件則為 [CC 0](https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW) 公眾領域。還請盡情地使用、分享或一同改進。Tocas UI 是[卡莉絲伊繁星](https://caris.events/)的設計語言，而卡莉絲伊繁星屬[對空音商事](https://sorae.co/zh-tw.html)。
