@@ -18,17 +18,14 @@
 只需要將下列 HTML 標籤複製至你的 `<head>...</head>` 網頁段落就可以開工了 🔥
 
 ```html
-<!-- Tocas UI -->
+<!-- 核心：Tocas UI -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.2.3/tocas.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.2.3/tocas.min.js"></script>
 
-<!-- 建議字型 -->
+<!-- 字體：Noto Sans TC -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
-
-<!-- 響應式設計 -->
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 ```
 
 &nbsp;
