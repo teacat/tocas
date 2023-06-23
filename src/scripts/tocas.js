@@ -891,6 +891,7 @@ window.tocas = {
             });
         };
 
+        // recalculateSize
         recalculateSize = event => {
             var element = event.target.closest(`input, textarea`);
             var direction = element.getAttribute("data-autosize");
@@ -936,6 +937,7 @@ window.tocas = {
             }
         };
 
+        // calculateHeight
         calculateHeight = element => {
             return element.scrollHeight;
         };
@@ -2378,7 +2380,7 @@ window.tocas = {
                         dotshow = false;
 
                         var item = this.createItem(element, "...", "", pattern);
-                        item.classList.add("is-dot");
+                        item.classList.add("is-skipped");
                         element.append(item);
                     }
                 }
