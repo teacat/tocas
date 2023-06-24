@@ -250,6 +250,20 @@ body {
     color: var(--ts-gray-300);
 }
 
+.主體-格局-導覽-項目-模組 {
+    display: inline-flex;
+    background: var(--ts-gray-300);
+    color: var(--ts-gray-800);
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    border-radius: .2rem;
+    margin-left: 0.65rem;
+    padding: 0.15rem 0.25rem;
+    font-size: var(--ts-font-size-12px);
+}
+
 .主體-格局-導覽-項目-英文 {
     color: var(--ts-gray-500);
     opacity: 0.8;
@@ -280,19 +294,29 @@ body {
     min-height: 320px !important;
 }
 
-.主體-格局-內容_網格範例的 .ts-grid {
+.主體-格局-內容 .ts-app-layout.is-full {
     width: 100%;
-    background: var(--ts-gray-50);
+    height: 200px;
 }
 
-.主體-格局-內容_網格範例的 .ts-grid .ts-grid {
+.主體-格局-內容_網格範例的 *:not(.no-grid-indicator) + .ts-grid,
+.主體-格局-內容_網格範例的 .ts-grid:first-child {
+    width: 100%;
+    background: var(--ts-gray-50);
+    position: relative;
+    border: 2px solid var(--ts-gray-300);
+}
+
+.主體-格局-內容_網格範例的 *:not(.no-grid-indicator) + .ts-grid .ts-grid,
+.主體-格局-內容_網格範例的 .ts-grid:first-child .ts-grid {
     margin: -2px;
     border: 4px solid var(--ts-gray-300);
     border-left-width: 2px;
     border-right-width: 2px;
 }
 
-.主體-格局-內容_網格範例的 .ts-grid .column {
+.主體-格局-內容_網格範例的 *:not(.no-grid-indicator) + .ts-grid .column,
+.主體-格局-內容_網格範例的 .ts-grid:first-child .column {
     min-height: 5rem;
     background: var(--ts-gray-200);
     display: flex;
@@ -312,7 +336,22 @@ body {
     min-height: 3rem;
 }
 
-/*.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column::after {
+.主體-格局-內容_網格範例的 .ts-grid.is-divided .column {
+    border: 0;
+    background-color: transparent;
+}
+
+.主體-格局-內容_網格範例的 .ts-grid.is-divided .column:nth-child(1)::before {
+    content: "A";
+}
+.主體-格局-內容_網格範例的 .ts-grid.is-divided .column:nth-child(2)::before {
+    content: "B";
+}
+.主體-格局-內容_網格範例的 .ts-grid.is-divided .column:nth-child(3)::before {
+    content: "C";
+}
+
+/*.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column::before {
     border-radius: 100rem;
     background: var(--ts-gray-300);
     width: 33px;
@@ -325,106 +364,106 @@ body {
     color: var(--ts-gray-50);
 }
 
-.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(1)::after {
+.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(1)::before {
     content: "1";
 }
-.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(2)::after {
+.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(2)::before {
     content: "2";
 }
-.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(3)::after {
+.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(3)::before {
     content: "3";
 }
-.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(4)::after {
+.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(4)::before {
     content: "4";
 }
-.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(5)::after {
+.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(5)::before {
     content: "5";
 }
-.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(6)::after {
+.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(6)::before {
     content: "6";
 }
-.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(7)::after {
+.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(7)::before {
     content: "7";
 }
-.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(8)::after {
+.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(8)::before {
     content: "8";
 }
-.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(9)::after {
+.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(9)::before {
     content: "9";
 }
-.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(10)::after {
+.主體-格局-內容_網格範例的 .ts-grid[class*="-columns"] .column:nth-child(10)::before {
     content: "10";
 }*/
 
-.主體-格局-內容_網格範例的 .ts-grid .column.is-1-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-1-wide::before {
     content: "1";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-2-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-2-wide::before {
     content: "2";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-3-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-3-wide::before {
     content: "3";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-4-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-4-wide::before {
     content: "4";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-5-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-5-wide::before {
     content: "5";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-6-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-6-wide::before {
     content: "6";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-7-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-7-wide::before {
     content: "7";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-8-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-8-wide::before {
     content: "8";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-9-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-9-wide::before {
     content: "9";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-10-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-10-wide::before {
     content: "10";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-11-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-11-wide::before {
     content: "11";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-12-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-12-wide::before {
     content: "12";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-13-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-13-wide::before {
     content: "13";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-14-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-14-wide::before {
     content: "14";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-15-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-15-wide::before {
     content: "15";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-16-wide::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-16-wide::before {
     content: "16";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-fluid::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-4-wide + .column.is-fluid::before {
     content: "Fluid";
 }
-.主體-格局-內容_網格範例的 .ts-grid.is-top-aligned .column:nth-child(2)::after {
+.主體-格局-內容_網格範例的 .ts-grid.is-top-aligned .column:nth-child(2)::before {
     content: "Top";
 }
-.主體-格局-內容_網格範例的 .ts-grid.is-middle-aligned .column:nth-child(2)::after {
+.主體-格局-內容_網格範例的 .ts-grid.is-middle-aligned .column:nth-child(2)::before {
     content: "Middle";
 }
-.主體-格局-內容_網格範例的 .ts-grid.is-bottom-aligned .column:nth-child(2)::after {
+.主體-格局-內容_網格範例的 .ts-grid.is-bottom-aligned .column:nth-child(2)::before {
     content: "Bottom";
 }
-/*.主體-格局-內容_網格範例的 .ts-grid .column.is-first::after {
+/*.主體-格局-內容_網格範例的 .ts-grid .column.is-first::before {
     content: "First";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-last::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-last::before {
     content: "Last";
 }
 
-.主體-格局-內容_網格範例的 .ts-grid .column[class*="is-order-"]::after,
-.主體-格局-內容_網格範例的 .ts-grid.is-reversed .column::after {
+.主體-格局-內容_網格範例的 .ts-grid .column[class*="is-order-"]::before,
+.主體-格局-內容_網格範例的 .ts-grid.is-reversed .column::before {
     border-radius: 100rem;
     background: var(--ts-gray-300);
     width: 33px;
@@ -436,26 +475,21 @@ body {
     justify-content: center;
     color: var(--ts-gray-50);
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-order-1::after,
+.主體-格局-內容_網格範例的 .ts-grid .column.is-order-1::before,
 .主體-格局-內容_網格範例的 .ts-grid.is-reversed .column:nth-child(1):after {
     content: "1";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-order-2::after,
+.主體-格局-內容_網格範例的 .ts-grid .column.is-order-2::before,
 .主體-格局-內容_網格範例的 .ts-grid.is-reversed .column:nth-child(2):after {
     content: "2";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-order-3::after,
+.主體-格局-內容_網格範例的 .ts-grid .column.is-order-3::before,
 .主體-格局-內容_網格範例的 .ts-grid.is-reversed .column:nth-child(3):after {
     content: "3";
 }
-.主體-格局-內容_網格範例的 .ts-grid .column.is-order-4::after {
+.主體-格局-內容_網格範例的 .ts-grid .column.is-order-4::before {
     content: "4";
 }*/
-
-.主體-格局-內容_網格範例的 .ts-grid {
-    position: relative;
-    border: 2px solid var(--ts-gray-300);
-}
 
 .主體-格局-內容-文字 {
     color: var(--ts-gray-800);
@@ -557,7 +591,7 @@ body {
 
 .主體-格局-內容-工具列-項目-連結標籤 {
     display: flex;
-    gap: .8rem;
+    gap: 0.8rem;
     margin-top: 13px;
 }
 
@@ -575,7 +609,6 @@ body {
 }
 
 .主體-格局-內容-工具列-項目-連結標籤-項目-文字 {
-
 }
 
 .主體-格局-內容-工具列-項目-連結標籤-項目 .ts-icon {
@@ -871,18 +904,17 @@ body {
 .主體-格局-內容-單個範例-範例-實際效果 {
 }
 
-.主體-格局-內容-單個範例-範例-實際效果
-    :is(
+.主體-格局-內容-單個範例-範例-實際效果 :not([class*="ts-"]):is(
         .u-padded,
         .u-horizontally-padded,
         .u-vertically-padded,
-        .u-very-padded,
+        .u-padded-large,
         .u-horizontally-very-padded,
         .u-vertically-very-padded,
         .u-spaced,
         .u-horizontally-spaced,
         .u-vertically-spaced,
-        .u-very-spaced,
+        .u-spaced-large,
         .u-horizontally-very-spaced,
         .u-vertically-very-spaced
     ) {
@@ -937,8 +969,8 @@ body {
     left: 0;
     bottom: 0;
     right: 0;
-    content: '';
-    background: linear-gradient(to bottom, rgb(255 255 255 / 0%) 0%,rgb(255 255 255 / 80%) 100%);
+    content: "";
+    background: linear-gradient(to bottom, rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 80%) 100%);
 }
 
 .主體-格局-內容-單個範例-附帶程式碼-下載按鈕 {
