@@ -19,8 +19,8 @@
 
 ```html
 <!-- 核心：Tocas UI -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.2.3/tocas.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.2.3/tocas.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.2.4/tocas.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.2.4/tocas.min.js"></script>
 
 <!-- 字體：Noto Sans TC -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
