@@ -50,7 +50,7 @@ func pack(c *cli.Context) error {
 	tocasjs := string(b)
 
 	content = ""
-	// 找出所有被 `@import` 的檔案並載入其內容，然後把 `tocas.css` 裡的 `@import` 換成真實的內容。
+	// 找出所有被 `@import` 的檔案並載入其內容，然後把 `tocas.js` 裡的 `@import` 換成真實的內容。
 	for _, v := range regexp.MustCompile(`// @import "(.*?)";`).FindAllStringSubmatch(string(b), -1) {
 		b, err := os.ReadFile("./../../src/scripts/" + v[1])
 		if err != nil {
