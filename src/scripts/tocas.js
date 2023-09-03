@@ -25,7 +25,7 @@ window.tocas = {
             container: "@container",
         },
         classes: {
-            hidden: "u-hidden",
+            hidden: "has-hidden",
             tab_active: "is-active",
             tooltip_visible: "is-visible",
             tab: "ts-tab",
