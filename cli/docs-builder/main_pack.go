@@ -39,8 +39,8 @@ func pack(c *cli.Context) error {
 		log.Fatal(err)
 	}
 	// 透過 `css-minify` 將 `/dist/tocas.css` 的內容最小化。
-	if err := exec.Command("css-minify", "-f", "./../../dist/tocas.css", "-o", "./../../dist/").Run(); err != nil {
-		log.Fatal(err)
+	if output, err := exec.Command("css-minify", "-f", "./../../dist/tocas.css", "-o", "./../../dist/").CombinedOutput(); err != nil {
+		log.Fatal(err.Error() + string(output))
 	}
 	// 先載入 `/src/scripts/tocas.js` 的內容。
 	b, err = os.ReadFile("./../../src/scripts/tocas.js")
@@ -65,26 +65,26 @@ func pack(c *cli.Context) error {
 		log.Fatal(err)
 	}
 	// 使用 `minify` 將 `/dist/tocas.js` 縮小一份並輸出到 `/dist/tocas.min.js`
-	b, err = exec.Command("minify", "./../../dist/tocas.js").Output()
+	b, err = exec.Command("minify", "./../../dist/tocas.js").CombinedOutput()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(err.Error() + string(b))
 	}
 	if err := os.WriteFile("./../../dist/tocas.min.js", b, 0644); err != nil {
 		log.Fatal(err)
 	}
 	// 移除舊有的 `/dist/fonts` 並從 `/src/fonts` 複製過去一份。
-	if err := exec.Command("rm", "-rf", "./../../dist/fonts").Run(); err != nil {
-		log.Fatal(err)
+	if output, err := exec.Command("rm", "-rf", "./../../dist/fonts").CombinedOutput(); err != nil {
+		log.Fatal(err.Error() + string(output))
 	}
-	if err := exec.Command("cp", "-rf", "./../../src/fonts", "./../../dist/fonts").Run(); err != nil {
-		log.Fatal(err)
+	if output, err := exec.Command("cp", "-rf", "./../../src/fonts", "./../../dist/fonts").CombinedOutput(); err != nil {
+		log.Fatal(err.Error() + string(output))
 	}
 	// 移除舊有的 `/dist/flags` 並從 `/src/flags` 複製過去一份。
-	if err := exec.Command("rm", "-rf", "./../../dist/flags").Run(); err != nil {
-		log.Fatal(err)
+	if output, err := exec.Command("rm", "-rf", "./../../dist/flags").CombinedOutput(); err != nil {
+		log.Fatal(err.Error() + string(output))
 	}
-	if err := exec.Command("cp", "-rf", "./../../src/flags", "./../../dist/flags").Run(); err != nil {
-		log.Fatal(err)
+	if output, err := exec.Command("cp", "-rf", "./../../src/flags", "./../../dist/flags").CombinedOutput(); err != nil {
+		log.Fatal(err.Error() + string(output))
 	}
 	return nil
 }

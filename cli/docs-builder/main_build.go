@@ -418,7 +418,7 @@ func decodePlaceholder(s string) string {
 			return ""
 		}
 		url := strings.ReplaceAll(groups[1], "ts-", "")
-		if strings.HasPrefix(groups[1], "u-") {
+		if strings.HasPrefix(groups[1], "has-") {
 			url = "utilities"
 		}
 
