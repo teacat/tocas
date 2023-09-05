@@ -1323,189 +1323,6 @@
         };
     }
 
-    /* ==========================================================================
-       Pagination
-       ========================================================================== */
-
-    class Pagination {
-        constructor() {}
-
-        // attributeMutation
-        attributeMutation = mutation => {};
-
-        // addedNodeMutation
-        addedNodeMutation = added_node => {
-            // 如果這個新追加的 DOM 節點是一個 Pagination 模組，就監聽其點擊事件。
-            if (this.isPagination(added_node)) {
-                // 監聽其點擊事件。
-                this.initializePagination(added_node);
-                this.bindEventListener(added_node);
-            }
-        };
-
-        // isPagination
-        isPagination = element => {
-            return element.matches(`[data-pagination]`);
-        };
-
-        // bindEventListener
-        bindEventListener = element => {
-            var input = this.getPageInput(element);
-
-            if (input === null) {
-                return
-            }
-
-            // todo remove event listener
-            input.addEventListener("change", event => {
-                this.renderView(element);
-            });
-        };
-
-        //
-        renderView = element => {
-            // 先清空原本的內容。
-            element.innerHTML = "";
-
-            // 取得總頁數。
-            var total_page = this.getTotalPage(element);
-
-            // 取得目前的頁數。
-            var current_page = this.getCurrentPage(element);
-
-            // 取得是否有連結規則。
-            var pattern = this.getLinkPattern(element);
-
-            //
-            var distance = this.getDistance(element);
-
-            // 產生「<」返回項目。
-            var back_item;
-            if (current_page <= 1) {
-                back_item = this.createItem(element, "", "", pattern);
-                back_item.classList.add("is-back", "is-disabled");
-            } else {
-                back_item = this.createItem(element, "", current_page - 1, pattern);
-                back_item.classList.add("is-back");
-            }
-
-
-            // 產生「>」下一個項目。
-            var next_item;
-            if (current_page + 1 > total_page) {
-                next_item = this.createItem(element, "", "", pattern);
-                next_item.classList.add("is-next", "is-disabled");
-            } else {
-                next_item = this.createItem(element, "", current_page + 1, pattern);
-                next_item.classList.add("is-next");
-            }
-
-            var dotshow = true;
-
-            // 依據目前的頁數來決定要怎麼呈現未來的頁數距離。
-            if (current_page == 2 || current_page == total_page - 1) {
-                distance = distance;
-            } else if (current_page >= 3 && current_page != total_page) {
-                distance = distance;
-            } else {
-                distance = distance+1;
-            }
-
-            //
-            element.append(back_item);
-
-
-
-            if (total_page != 1) {
-                for (let i = 1; i <= total_page; i++) {
-                    if (i === 1 || i === total_page || (i >= current_page - distance && i <= current_page + distance)) {
-                        dotshow = true;
-
-                        var item = this.createItem(element, i, i, pattern);
-
-                        if (i === current_page) {
-                            item.classList.add("is-active");
-                        }
-
-                        element.append(item);
-                    } else if (dotshow) {
-                        dotshow = false;
-
-                        var item = this.createItem(element, "...", "", pattern);
-                        item.classList.add("is-skipped");
-                        element.append(item);
-                    }
-                }
-
-                //
-                element.append(next_item);
-            }
-        };
-
-        // createItem
-        createItem = (element, text ="", page = "", pattern = "") => {
-            var item;
-            if (pattern !== "") {
-                item = createElement(`<a href="${page === "" ? "#" : pattern.replace("${page}", page)}" class="item">${text}</a>`);
-            } else {
-                item = createElement(`<button class="item">${text}</button>`);
-
-                if (text !== "...") {
-                    item.addEventListener("click", event => {
-                        this.updatePage(element, page);
-                    });
-                }
-            }
-            return item;
-        };
-
-        // getCurrentPage
-        getCurrentPage = element => {
-            var current = element.getAttribute("data-current");
-            if (current !== null) {
-                return parseInt(current) || 1;
-            }
-            return parseInt(this.getPageInput(element).value) || 1;
-        };
-
-        // getTotalPage
-        getTotalPage = element => {
-            return parseInt(element.getAttribute("data-total")) || 1;
-        };
-
-         // getDistance
-        getDistance = element => {
-            return parseInt(element.getAttribute("data-distance")) || 2;
-        };
-
-        // getLinkPattern
-        getLinkPattern = element => {
-            var pattern = element.getAttribute(`data-pagination`);
-            return pattern.includes("${page}") ? pattern : "";
-        };
-
-        // getPageInput
-        getPageInput = element => {
-            var inputs = searchScopeTargets(element, element.getAttribute(`data-pagination`), `@scope`, `data-name`)
-            return inputs.length !== 0 ? inputs[0] : null;
-        };
-
-        // updatePage
-        updatePage = (element, page) => {
-            if (this.getLinkPattern(element) !== "") {
-                return;
-            }
-            var input = this.getPageInput(element);
-
-            input.value = page;
-            input.dispatchEvent(new Event("change", { bubbles: true }));
-        };
-
-        // initializePagination
-        initializePagination = element => {
-            this.renderView(element);
-        };
-}
 
 // autoSizeModule
 var autoSizeModule = new AutoSize();
@@ -1516,18 +1333,14 @@ var inputModule = new Input();
 // filePlaceModule
 var filePlaceModule = new FilePlace();
 
-// paginationModule
-var paginationModule = new Pagination();
 
 autoSizeModule.addedNodeMutation(node);
         inputModule.addedNodeMutation(node);
         filePlaceModule.addedNodeMutation(node);
-        paginationModule.addedNodeMutation(node);
 
 
         autoSizeModule.attributeMutation(mutation);
         inputModule.attributeMutation(mutation);
         filePlaceModule.attributeMutation(mutation);
-        paginationModule.attributeMutation(mutation);
 
         inputModule.windowClick(event);
