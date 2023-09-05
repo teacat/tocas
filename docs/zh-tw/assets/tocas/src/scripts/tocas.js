@@ -6,6 +6,7 @@ window.tocas = {
             tab_name: "data-name",
             toggle: "data-toggle",
             toggle_name: "data-name",
+            input: "data-input",
             dropdown: "data-dropdown",
             dropdown_name: "data-name",
             dropdown_position: "data-position",
@@ -24,7 +25,7 @@ window.tocas = {
             container: "@container",
         },
         classes: {
-            hidden: "u-hidden",
+            hidden: "has-hidden",
             tab_active: "is-active",
             tooltip_visible: "is-visible",
             tab: "ts-tab",
@@ -71,6 +72,24 @@ window.tocas_modules = [];
        ========================================================================== */
 
     // @import "tocas.tooltip.js";
+
+    /* ==========================================================================
+       Select
+       ========================================================================== */
+
+    // @/import "tocas.select.js";
+
+    /* ==========================================================================
+       Input
+       ========================================================================== */
+
+    // @/import "tocas.input.js";
+
+    /* ==========================================================================
+       Fileplace
+       ========================================================================== */
+
+    // @/import "tocas.fileplace.js";
 
     /* ==========================================================================
        Base

@@ -6,6 +6,7 @@ window.tocas = {
             tab_name: "data-name",
             toggle: "data-toggle",
             toggle_name: "data-name",
+            input: "data-input",
             dropdown: "data-dropdown",
             dropdown_name: "data-name",
             dropdown_position: "data-position",
@@ -24,7 +25,7 @@ window.tocas = {
             container: "@container",
         },
         classes: {
-            hidden: "u-hidden",
+            hidden: "has-hidden",
             tab_active: "is-active",
             tooltip_visible: "is-visible",
             tab: "ts-tab",
@@ -94,12 +95,12 @@ window.tocas_modules = [];
 
     // getAllContaineredElements
     getAllContaineredElements = container => {
-        return container.querySelectorAll(tocas.config.strict_responsive ? `[class^="@"]:is([class*=":is-"],[class*=":u-"])` : `[class^="@"][class*=":"]`);
+        return container.querySelectorAll(tocas.config.strict_responsive ? `[class^="@"]:is([class*=":is-"],[class*=":u-"],[class*=":has-"])` : `[class^="@"][class*=":"]`);
     };
 
     // getAllResponsiveElements
     getAllResponsiveElements = container => {
-        return container.querySelectorAll(tocas.config.strict_responsive ? `[class*=":is-"],[class*=":u-"]` : `[class*=":"]`);
+        return container.querySelectorAll(tocas.config.strict_responsive ? `[class*=":is-"],[class*=":u-"],[class*=":has-"]` : `[class*=":"]`);
     };
 
     // isContainer
@@ -109,12 +110,12 @@ window.tocas_modules = [];
 
     // isResponsiveElement
     isResponsiveElement = element => {
-        return element.matches(tocas.config.strict_responsive ? `[class*=":is-"],[class*=":u-"]` : `[class*=":"]`);
+        return element.matches(tocas.config.strict_responsive ? `[class*=":is-"],[class*=":u-"],[class*=":has-"]` : `[class*=":"]`);
     };
 
     // hasResponsiveClass
     hasResponsiveClass = class_name => {
-        return tocas.config.strict_responsive ? class_name.includes(":is-") || class_name.includes(":u-") : class_name.includes(":");
+        return tocas.config.strict_responsive ? class_name.includes(":is-") || class_name.includes(":u-") || class_name.includes(":has-") : class_name.includes(":");
     };
 
     // windowResize
@@ -813,6 +814,24 @@ window.tocas_modules = [...window.tocas_modules, new Dropdown()]
 
 window.tocas_modules = [...window.tocas_modules, new Tooltip()]
 
+
+    /* ==========================================================================
+       Select
+       ========================================================================== */
+
+    // @/import "tocas.select.js";
+
+    /* ==========================================================================
+       Input
+       ========================================================================== */
+
+    // @/import "tocas.input.js";
+
+    /* ==========================================================================
+       Fileplace
+       ========================================================================== */
+
+    // @/import "tocas.fileplace.js";
 
     /* ==========================================================================
        Base

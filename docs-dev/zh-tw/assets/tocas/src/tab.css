@@ -4,6 +4,7 @@
 
 .ts-tab {
     --horizontal-padding-multiplier: 1;
+    --vertical-padding-multiplier: 1;
     --accent-color: initial;
     --accent-foreground-color: initial;
 }
@@ -27,7 +28,7 @@
 .ts-tab .item {
     text-decoration: none;
     color: var(--ts-gray-800);
-    padding: 0.5rem calc(1rem * var(--horizontal-padding-multiplier));
+    padding: calc(0.5rem * var(--vertical-padding-multiplier)) calc(1rem * var(--horizontal-padding-multiplier));
     display: inline-flex;
     border-bottom: 3px solid transparent;
     text-align: center;
@@ -79,7 +80,7 @@
 
 .ts-tab.is-pilled .item {
     border-radius: 100rem;
-    padding: 0.25rem calc(1rem * var(--horizontal-padding-multiplier));
+    padding: calc(0.25rem * var(--vertical-padding-multiplier)) calc(1rem * var(--horizontal-padding-multiplier));
     border-bottom: 0;
 }
 
@@ -107,6 +108,36 @@
 
 .ts-tab.is-end-aligned {
     justify-content: flex-end;
+}
+
+/**
+ * Indicated
+ */
+
+.ts-tab.is-indicated {
+    gap: calc(1.6rem * var(--horizontal-padding-multiplier));
+    cursor: pointer;
+}
+
+.ts-tab.is-indicated .item.is-active {
+    border-bottom-color: transparent;
+}
+
+.ts-tab.is-indicated .item {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.ts-tab.is-indicated .item.is-active::after {
+    position: absolute;
+    background: var(--accent-color, var(--ts-gray-800));
+    bottom: -2px;
+    content: "";
+    height: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    border-radius: 1rem;
 }
 
 /**
@@ -148,6 +179,14 @@
 
 .ts-tab.is-fluid .item {
     flex: 1;
+}
+
+/**
+ * Tall
+ */
+
+.ts-tab.is-tall {
+    --vertical-padding-multiplier: 1.6;
 }
 
 /**
