@@ -1,78 +1,5 @@
 
     /* ==========================================================================
-       Stash
-       ========================================================================== */
-
-    /*class Stash {
-        constructor() {}
-
-        // attributeMutation
-        attributeMutation(mutation) {}
-
-        // addedNodeMutation
-        addedNodeMutation(added_node) {
-            if (addedNode.matches(`[data-stash]`)) {
-                this.initial(added_node);
-            }
-        }
-
-        // initial
-        initial(element) {
-            if (element.classList.contains("is-init")) {
-                return;
-            }
-            element.classList.add("is-init");
-
-            var clone = element.cloneNode(true);
-            clone.classList.add("ts-stash");
-
-            var toggle_name = element.getAttribute("data-stash");
-
-            var toggle = document.querySelector(`[data-name="${toggle_name}"]`);
-
-            if (toggle.closest("[data-stash]") === element) {
-                var width = document.querySelector(`[data-name="${toggle_name}"]`).getBoundingClientRect().width;
-
-                clone.style.setProperty("--ts-stash-offset", `${width + 5}px`);
-            }
-
-            element.after(clone);
-
-            const observer = new IntersectionObserver(
-                (entries, owner) => {
-                    entries.forEach(entry => {
-                        var stash = entry.target.getAttribute("data-target");
-
-                        if (entry.isIntersecting) {
-                            element.querySelector(`[data-target="${stash}"]`).classList.remove(tocas.config.classes.hidden);
-                            document.querySelector(`[data-name="${stash}"]`).classList.add(tocas.config.classes.hidden);
-                        } else {
-                            element.querySelector(`[data-target="${stash}"]`).classList.add(tocas.config.classes.hidden);
-                            document.querySelector(`[data-name="${stash}"]`).classList.remove(tocas.config.classes.hidden);
-                        }
-
-                        if (element.querySelectorAll(`.${tocas.config.classes.hidden}[data-target]`).length > 0) {
-                            document.querySelector(`[data-name="${toggle_name}"]`).classList.remove(tocas.config.classes.hidden);
-                        } else {
-                            document.querySelector(`[data-name="${toggle_name}"]`).classList.add(tocas.config.classes.hidden);
-                        }
-                    });
-                },
-                {
-                    root: clone,
-                    rootMargin: "0px 0px 0px 0px",
-                    threshold: [0.99],
-                }
-            );
-
-            clone.querySelectorAll("[data-target]").forEach(v => {
-                observer.observe(v);
-            });
-        }
-    }*/
-
-
-    /* ==========================================================================
        AutoSize
        ========================================================================== */
 
@@ -1592,20 +1519,15 @@ var filePlaceModule = new FilePlace();
 // paginationModule
 var paginationModule = new Pagination();
 
-// stashModule
-// var stashModule = new Stash();
-
 autoSizeModule.addedNodeMutation(node);
         inputModule.addedNodeMutation(node);
         filePlaceModule.addedNodeMutation(node);
         paginationModule.addedNodeMutation(node);
-        // stashModule.addedNodeMutation(node);
 
 
         autoSizeModule.attributeMutation(mutation);
         inputModule.attributeMutation(mutation);
         filePlaceModule.attributeMutation(mutation);
         paginationModule.attributeMutation(mutation);
-        // stashModule.attributeMutation(mutation);
 
         inputModule.windowClick(event);
