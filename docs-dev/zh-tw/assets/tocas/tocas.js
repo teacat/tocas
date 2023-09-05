@@ -95,12 +95,12 @@ window.tocas_modules = [];
 
     // getAllContaineredElements
     getAllContaineredElements = container => {
-        return container.querySelectorAll(tocas.config.strict_responsive ? `[class^="@"]:is([class*=":is-"],[class*=":u-"],[class*=":has-"])` : `[class^="@"][class*=":"]`);
+        return container.querySelectorAll(tocas.config.strict_responsive ? `[class^="@"]:is([class*=":is-"],[class*=":has-"])` : `[class^="@"][class*=":"]`);
     };
 
     // getAllResponsiveElements
     getAllResponsiveElements = container => {
-        return container.querySelectorAll(tocas.config.strict_responsive ? `[class*=":is-"],[class*=":u-"],[class*=":has-"]` : `[class*=":"]`);
+        return container.querySelectorAll(tocas.config.strict_responsive ? `[class*=":is-"],[class*=":has-"]` : `[class*=":"]`);
     };
 
     // isContainer
@@ -110,12 +110,12 @@ window.tocas_modules = [];
 
     // isResponsiveElement
     isResponsiveElement = element => {
-        return element.matches(tocas.config.strict_responsive ? `[class*=":is-"],[class*=":u-"],[class*=":has-"]` : `[class*=":"]`);
+        return element.matches(tocas.config.strict_responsive ? `[class*=":is-"],[class*=":has-"]` : `[class*=":"]`);
     };
 
     // hasResponsiveClass
     hasResponsiveClass = class_name => {
-        return tocas.config.strict_responsive ? class_name.includes(":is-") || class_name.includes(":u-") || class_name.includes(":has-") : class_name.includes(":");
+        return tocas.config.strict_responsive ? class_name.includes(":is-") || class_name.includes(":has-") : class_name.includes(":");
     };
 
     // windowResize
