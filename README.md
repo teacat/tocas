@@ -61,6 +61,16 @@
 
 &nbsp;
 
+## 👥 使用的原始碼
+
+Tocas UI 使用且包含了下面套件的部份原始碼，謝謝他們 🥳！
+
+-   [FortAwesome/Font-Awesome](https://github.com/FortAwesome/Font-Awesome)
+-   [floating-ui/floating-ui](https://github.com/floating-ui/floating-ui)
+-   [lipis/flag-icons](https://github.com/lipis/flag-icons)
+
+&nbsp;
+
 ## ❤️ 來自台灣的愛心
 
 ٩(ˊᗜˋ\*)و 由來自 🇹🇼 台灣的 [Yami Odymel](https://twitter.com/YamiOdymel) 所設計，當然還有[貢獻者們](https://github.com/teacat/tocas/graphs/contributors)的愛心 ❤️。原始碼授權方式為 [MIT](https://github.com/teacat/tocas/blob/master/LICENSE)，文件則為 [CC 0](https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW) 公眾領域。還請盡情地使用、分享或一同改進。Tocas UI 是[卡莉絲伊繁星](https://caris.events/)的設計語言，而卡莉絲伊繁星屬[對空音商事](https://sorae.co/zh-tw.html)。
