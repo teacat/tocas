@@ -442,7 +442,10 @@ func placeholder(s string) string {
 
 // markdown 會將傳入的字串從 Markdown 轉為 HTML。
 func markdown(s string) string {
-	return string(blackfriday.Run([]byte(s)))
+	content := string(blackfriday.Run([]byte(s)))
+	content = strings.ReplaceAll(content, "<a href", `<a target="_blank" href`)
+
+	return content
 }
 
 // replaceAllStringSubmatchFunc
