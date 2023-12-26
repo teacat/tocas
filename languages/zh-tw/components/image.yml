@@ -5,7 +5,7 @@
 
 Title: 多媒體圖片
 Description: 呈現照片、圖片的基本元素。
-Intro: 在沒有指定寬度的情況下，圖片預設會以最寬填滿其父容器為優先。
+Intro: 在沒有指定寬度的情況下，圖片預設會以最寬填滿其父容器為優先。若要變更圖片的尺寸，請將樣式新增於 `<img style>` 標籤。
 
 #=======================================================
 # 設定
@@ -25,8 +25,8 @@ Relatives:
 Example:
     Centered: true
     HTML: |
-        <div class="[[ts-image]] is-small">
-            <img src="!-4:3-!">
+        <div class="[[ts-image]]">
+            <img src="!-4:3-!" style="width: 150px">
         </div>
 
 Definitions:
@@ -37,8 +37,8 @@ Definitions:
             Anchor: Disabled
             Description: 表示這個圖片已經無法互動、不再可用了。
             HTML: |
-                <div class="ts-image [[is-disabled]] is-small">
-                    <img src="!-16:9-!">
+                <div class="ts-image [[is-disabled]]">
+                    <img src="!-16:9-!" style="width: 150px">
                 </div>
 
     - Title: 外觀
@@ -48,32 +48,32 @@ Definitions:
             Anchor: Rounded
             Description: 使四個角落都變得稍微有點圓角修飾。
             HTML: |
-                <div class="ts-image [[is-rounded]] is-small">
-                    <img src="!-16:9-!">
+                <div class="ts-image [[is-rounded]]">
+                    <img src="!-16:9-!" style="width: 150px">
                 </div>
 
           - Title: 圓形的
             Anchor: Circular
             Description: 將整張圖片變為圓形，只有在圖片是正方形的情況下才會生效。
             HTML: |
-                <div class="ts-image [[is-circular]] is-small">
-                    <img src="!-1:1-!">
+                <div class="ts-image [[is-circular]]">
+                    <img src="!-1:1-!" style="width: 150px">
                 </div>
 
           - Title: 邊框的
             Anchor: Bordered
             Description: 使圖片帶有邊框，適合用於白底圖片讓使用者知道其邊界在哪。
             HTML: |
-                <div class="ts-image [[is-bordered]] is-small">
-                    <img src="!-1:1_white-!">
+                <div class="ts-image [[is-bordered]]">
+                    <img src="!-1:1_white-!" style="width: 150px">
                 </div>
 
           - Title: 置中的
             Anchor: Centered
             Description: 水平左右置中一張圖片。
             HTML: |
-                <div class="ts-image [[is-centered]] is-small">
-                    <img src="!-16:9-!">
+                <div class="ts-image [[is-centered]]">
+                    <img src="!-16:9-!" style="width: 150px">
                 </div>
 
           #- Title: 全尺寸的
@@ -97,7 +97,7 @@ Definitions:
             Description: 不論是什麼長寬比都不會變形而會自動裁切其內容。
             HTML: |
                 <div class="ts-image [[is-covered]]">
-                    <img src="!-16:9-!" style="height: 100px; width: 110px;">
+                    <img src="!-16:9-!" style="width: 100px; height: 100px">
                 </div>
 
           - Title: 長寬比的
@@ -107,15 +107,15 @@ Definitions:
                 - <div class="ts-space"></div>
             HTML: |
                 <div class="ts-image [[is-1-by-1]] is-covered">
-                    <img src="!-16:9-!" style="max-width: 200px;">
+                    <img src="!-16:9-!" style="width: 200px">
                 </div>
                 <div class="ts-space"></div>
                 <div class="ts-image [[is-4-by-3]] is-covered">
-                    <img src="!-16:9-!" style="max-width: 200px;">
+                    <img src="!-16:9-!" style="width: 200px">
                 </div>
                 <div class="ts-space"></div>
                 <div class="ts-image [[is-16-by-9]] is-covered">
-                    <img src="!-16:9-!" style="max-width: 200px;">
+                    <img src="!-16:9-!" style="width: 200px">
                 </div>
 
           - Title: 間隔的
@@ -123,78 +123,15 @@ Definitions:
             Description: 在前或後新增間隔以避免與其他元件相鄰太近。
             HTML: |
                 相較於稱呼自己是間「科技公司」，我們
-                <div class="ts-image [[is-start-spaced]] is-mini">
-                    <img src="!-1:1-!">
+                <div class="ts-image [[is-start-spaced]]">
+                    <img src="!-1:1-!" style="width: 35px">
                 </div>
                 的運作模式更像是所「學校」。雖然卡莉絲伊繁星提供網際網路服務與電子科技產業的相關產品，但我們更注重人們是否能在開發的過程
-                <div class="ts-image [[is-end-spaced]] is-mini">
-                    <img src="!-1:1-!">
+                <div class="ts-image [[is-end-spaced]]">
+                    <img src="!-1:1-!" style="width: 35px">
                 </div>
                 中有所收穫並學以致用，而我們也十分地重視一項產品是否能夠達成社會的期許並希望能藉此改變某些人的生活，協助大眾
-                <div class="ts-image [[is-spaced]] is-mini">
-                    <img src="!-1:1-!">
+                <div class="ts-image [[is-spaced]]">
+                    <img src="!-1:1-!" style="width: 35px">
                 </div>
                 更向自己的目標邁進；這也正是伊繁星最高協議被創造的原因。
-
-          - Title: 尺寸
-            Anchor: Sizes
-            Description: |
-                圖片比起其他元件有更多的尺寸可供使用，但因為在設計上這些大小並不會剛好符合所有人的需求，若真遇上尺寸不符預期的情況時，請別拘謹地直接手動覆寫其大小吧。
-                <div class="ts-box">
-                    <table class="ts-table is-definition is-celled">
-                        <thead>
-                            <tr>
-                                <th class="is-collapsed"></th>
-                                <th>尺寸</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="is-collapsed">is-mini</td>
-                                <td>35px</td>
-                            </tr>
-                            <tr>
-                                <td class="is-collapsed">is-tiny</td>
-                                <td>80px</td>
-                            </tr>
-                            <tr>
-                                <td class="is-collapsed">is-small</td>
-                                <td>150px</td>
-                            </tr>
-                            <tr>
-                                <td class="is-collapsed">is-medium</td>
-                                <td>300px</td>
-                            </tr>
-                            <tr>
-                                <td class="is-collapsed">is-large</td>
-                                <td>450px</td>
-                            </tr>
-                            <tr>
-                                <td class="is-collapsed">is-big</td>
-                                <td>600px</td>
-                            </tr>
-                            <tr>
-                                <td class="is-collapsed">is-huge</td>
-                                <td>800px</td>
-                            </tr>
-                            <tr>
-                                <td class="is-collapsed">is-massive</td>
-                                <td>960px</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            Remove:
-                - <div class="ts-space"></div>
-            HTML: |
-                <div class="ts-image [[is-tiny]]">
-                    <img src="!-16:9-!">
-                </div>
-                <div class="ts-space"></div>
-                <div class="ts-image [[is-small]]">
-                    <img src="!-16:9-!">
-                </div>
-                <div class="ts-space"></div>
-                <div class="ts-image [[is-medium]]">
-                    <img src="!-16:9-!">
-                </div>
