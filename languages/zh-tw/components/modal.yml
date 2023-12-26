@@ -6,7 +6,7 @@
 Title: 快顯視窗
 Description: 跳出強制性互動的視窗提供附屬資訊或是詢問。
 Intro: |
-    使用時需自行搭配 JavaScript 操控元件的可見狀態。
+    快顯視窗使用瀏覽器原生的 `<dialog>` HTML 標籤並支援 `.show()` 與 `.showModal()` 這些 JavaScript 語法來控制視窗的開關，檢視英文的 [MDN 文件](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog)以獲得更多資訊。
 
     快顯視窗出現時會覆蓋整個畫面且使用者將無法與背景的元素互動，使用此元件時必須注意這件事情是否急迫到需要打斷使用者目前的操作。
 
@@ -26,7 +26,7 @@ Type: Article
 
 Example:
     HTML: |
-        <div class="[[ts-modal]] is-visible">
+        <dialog class="[[ts-modal]]" open>
             <div class="content">
                 <div class="{{ts-content}} is-center-aligned is-vertically-padded">
                     <div class="{{ts-header}} is-icon {{has-bottom-spaced}}">
@@ -40,7 +40,7 @@ Example:
                     <button class="{{ts-button}} is-fluid">了解</button>
                 </div>
             </div>
-        </div>
+        </dialog>
 
 Definitions:
     - Title: 外觀
@@ -48,9 +48,10 @@ Definitions:
       Sections:
           - Title: 可見的
             Anchor: Visible
-            Description: 快顯視窗預設是隱藏的，必須指定為「可見的」才會顯示在頁面上。這個設計是為了讓 JavaScript 能夠切換其可見度。
+            Description: |
+                當一個快顯視窗被指定 `[open]` 的時候，瀏覽器就會顯示其內容。
             HTML: |
-                <div class="ts-modal [[is-visible]]">
+                <dialog class="ts-modal" [[open]]>
                     <div class="content">
                         <div class="{{ts-content}}">
                             <div class="{{ts-grid}} is-middle-aligned">
@@ -67,7 +68,7 @@ Definitions:
                             我們希望透過這個協議能夠避免未來誤入歧途朝著並非當初的理想道路前進；顧名思義，最高協議中的所有定義都是旗下服務所必須遵循的核心條件，而且沒有任何規則可以覆蓋這些最上級的規定。這些協議在定制的時候參考了許多世界人權宣言的部份。
                         </div>
                     </div>
-                </div>
+                </dialog>
 
           - Title: 尺寸
             Anchor: Sizes
@@ -106,27 +107,27 @@ Definitions:
             Remove:
                 - <div class="ts-space"></div>
             HTML: |
-                <div class="ts-modal [[is-small]] is-visible">
+                <dialog class="ts-modal [[is-small]]" open>
                     <div class="content">
                         <div class="{{ts-content}} is-center-aligned">
                             小型視窗
                         </div>
                     </div>
-                </div>
-                <div class="ts-modal is-visible">
+                </dialog>
+                <dialog class="ts-modal" open>
                     <div class="content">
                         <div class="{{ts-content}} is-center-aligned">
                             預設視窗
                         </div>
                     </div>
-                </div>
-                <div class="ts-modal [[is-large]] is-visible">
+                </dialog>
+                <dialog class="ts-modal [[is-large]]" open>
                     <div class="content">
                         <div class="{{ts-content}} is-center-aligned">
                             大型視窗
                         </div>
                     </div>
-                </div>
+                </dialog>
 
     - Title: 組合應用
       Description:
@@ -135,7 +136,7 @@ Definitions:
             Anchor: Composition Prompt
             Description: 結合[輸入欄位](./input.html)可以打造出一個等待使用者輸入資料的視窗。
             HTML: |
-                <div class="ts-modal is-visible">
+                <dialog class="ts-modal" open>
                     <div class="content">
                         <div class="{{ts-content}}">
                             <div class="{{ts-header}}">輸入使用者名稱</div>
@@ -154,14 +155,14 @@ Definitions:
                             </div>
                         </div>
                     </div>
-                </div>
+                </dialog>
 
           - Title: 可捲動內容
             Anchor: Composition Scrollable
             Description: |
                 有時能指派 `overflow: auto` 樣式給過長的[內容區塊](./content.html)讓其文字過長時可以捲動。
             HTML: |
-                <div class="ts-modal is-visible">
+                <dialog class="ts-modal" open>
                     <div class="content">
                         <div class="{{ts-content}}">
                             <div class="{{ts-header}}">使用者條約</div>
@@ -184,4 +185,4 @@ Definitions:
                             <button class="{{ts-button}} is-fluid">確定</button>
                         </div>
                     </div>
-                </div>
+                </dialog>
