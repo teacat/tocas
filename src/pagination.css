@@ -5,6 +5,7 @@
 .ts-pagination {
     --accent-color: initial;
     --accent-foreground-color: initial;
+    --horizontal-padding-multiplier: 1;
 }
 
 /* ==========================================================================
@@ -18,7 +19,7 @@
     border-radius: 100rem;
     color: var(--ts-gray-800);
     border: 1px solid var(--ts-gray-200);
-    gap: 0.15rem;
+    gap: calc(0.15rem * var(--horizontal-padding-multiplier));
 }
 
 /* ==========================================================================
@@ -50,6 +51,14 @@
     background: var(--accent-color, var(--ts-gray-800));
     color: var(--accent-foreground-color, var(--ts-gray-50));
     pointer-events: none;
+}
+
+/**
+ * Relaxed
+ */
+
+.ts-pagination.is-relaxed {
+    --horizontal-padding-multiplier: 2;
 }
 
 /**
@@ -153,7 +162,7 @@
     padding: 0;
     background: transparent;
     border-color: transparent;
-    gap: 0.45rem;
+    gap: calc(0.45rem * var(--horizontal-padding-multiplier));
 }
 
 .ts-pagination.is-outlined .item {
