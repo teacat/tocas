@@ -94,6 +94,7 @@ class Tooltip {
 
         // 移除頁面上的所有工具提示。
         document.querySelectorAll(".ts-tooltip").forEach(tooltip => {
+            tooltip.hidePopover();
             tooltip.remove();
         });
     };
@@ -103,7 +104,7 @@ class Tooltip {
         var tooltip = document.createElement("div");
         tooltip.innerText = element.getAttribute(tocas.config.attributes.tooltip);
         tooltip.classList.add("ts-tooltip", tocas.config.classes.tooltip_visible);
-
+        tooltip.setAttribute("popover", "manual"); // 使用 Popover API 才能在 Top-Layer 顯示。
         tooltip.append(arrow);
         return tooltip;
     };
@@ -128,6 +129,9 @@ class Tooltip {
 
         // 將工具提示插入到網頁中。
         document.body.append(tooltip);
+
+        // 透過 Popover API 顯示這個 Tooltip。
+        tooltip.showPopover();
 
         // 使用 FloatingUI 來初始化工具提示的浮動元素。
         element.tocas_tooltip = TocasFloatingUIDOM.autoUpdate(element, tooltip, () => {
