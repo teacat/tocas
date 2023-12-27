@@ -6,9 +6,7 @@
 Title: 快顯視窗
 Description: 跳出強制性互動的視窗提供附屬資訊或是詢問。
 Intro: |
-    快顯視窗使用瀏覽器原生的 `<dialog>` HTML 標籤並支援 `.show()` 與 `.showModal()` 這些 JavaScript 語法來控制視窗的開關，檢視英文的 [MDN 文件](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog)以獲得更多資訊。
-
-    快顯視窗出現時會覆蓋整個畫面且使用者將無法與背景的元素互動，使用此元件時必須注意這件事情是否急迫到需要打斷使用者目前的操作。
+    快顯視窗使用 `<dialog>` HTML 標籤，因此支援瀏覽器原生的 [`.showModal()`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) 與 [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) 等功能，不須安裝額外套件就能控制視窗的顯示。
 
     這個元件是一個雛型框架，如果希望在其中建立標題、頁腳跟動作按鈕，則需自行搭配其他元件，可以參考底部的組合應用章節。
 
@@ -18,6 +16,17 @@ Intro: |
 #=======================================================
 
 Type: Article
+
+#=======================================================
+# 變數
+# Variables
+#=======================================================
+
+Variables:
+    - Name: "--width"
+      Default: "380px"
+      Description: "快顯視窗的內容寬度。"
+      Target: ".ts-modal"
 
 #=======================================================
 # 基本樣式
@@ -48,8 +57,7 @@ Definitions:
       Sections:
           - Title: 可見的
             Anchor: Visible
-            Description: |
-                當一個快顯視窗被指定 `[open]` 的時候，瀏覽器就會顯示其內容。
+            Description: 當快顯視窗被指定 `[open]` 的時候，瀏覽器就會顯示其內容。
             HTML: |
                 <dialog class="ts-modal" [[open]]>
                     <div class="content">

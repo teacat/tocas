@@ -2,13 +2,13 @@
    Variables
    ========================================================================== */
 
+dialog.ts-modal {
+    --width: 380px;
+}
+
 /* ==========================================================================
    Base
    ========================================================================== */
-
-dialog.ts-modal[open] {
-    display: flex;
-}
 
 dialog.ts-modal {
     position: fixed;
@@ -21,6 +21,7 @@ dialog.ts-modal {
     justify-content: center;
     overflow-y: auto;
     padding: 2rem 1rem;
+    background: rgb(0 0 0 / 50%);
     z-index: var(--ts-z-modal);
     border: 0;
     width: initial;
@@ -29,12 +30,9 @@ dialog.ts-modal {
     max-height: initial;
 }
 
-dialog.ts-modal:modal {
+dialog.ts-modal:modal,
+dialog.ts-modal:popover-open {
     background: transparent;
-}
-
-dialog.ts-modal:not(:modal) {
-    background: rgb(0 0 0 / 50%);
 }
 
 dialog.ts-modal::backdrop {
@@ -49,7 +47,7 @@ dialog.ts-modal > .content {
     background: var(--ts-gray-50);
     border-radius: 0.4rem;
     box-shadow: 0 0 20px rgb(0 0 0 / 10%);
-    width: 380px;
+    width: var(--width);
     margin: auto;
     overflow: hidden;
 }
@@ -59,10 +57,11 @@ dialog.ts-modal > .content {
    ========================================================================== */
 
 /**
- * Active
+ * Open
  */
 
-dialog.ts-modal.is-visible {
+dialog.ts-modal[open],
+dialog.ts-modal:popover-open {
     display: flex;
 }
 
@@ -70,14 +69,14 @@ dialog.ts-modal.is-visible {
  * Sizes
  */
 
-dialog.ts-modal.is-small > .content {
-    width: 280px;
+dialog.ts-modal.is-small {
+    --width: 280px;
 }
 
-dialog.ts-modal.is-large > .content {
-    width: 580px;
+dialog.ts-modal.is-large {
+    --width: 580px;
 }
 
-dialog.ts-modal.is-big > .content {
-    width: 780px;
+dialog.ts-modal.is-big {
+    --width: 780px;
 }
