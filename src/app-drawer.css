@@ -2,7 +2,15 @@
    Variables
    ========================================================================== */
 
-.ts-app-drawer {
+dialog.ts-app-drawer {
+    --width: 380px;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+dialog.ts-app-drawer {
     position: fixed;
     top: 0;
     left: 0;
@@ -12,11 +20,22 @@
     display: none;
     overflow-y: auto;
     z-index: var(--ts-z-app-drawer);
+    border: 0;
+    padding: 0;
+    width: initial;
+    height: initial;
+    max-width: initial;
+    max-height: initial;
 }
 
-/* ==========================================================================
-   Base
-   ========================================================================== */
+dialog.ts-app-drawer:modal,
+dialog.ts-app-drawer:popover-open {
+    background: transparent;
+}
+
+dialog.ts-app-drawer::backdrop {
+    background: rgb(0 0 0 / 50%);
+}
 
 /* ==========================================================================
    Structure
@@ -25,7 +44,7 @@
 .ts-app-drawer > .content {
     background: var(--ts-gray-50);
     box-shadow: 0 0 20px rgb(0 0 0 / 10%);
-    width: 380px;
+    width: var(--width);
     overflow: hidden;
 }
 
@@ -37,7 +56,8 @@
  * Visible
  */
 
-.ts-app-drawer.is-visible {
+dialog.ts-app-drawer[open],
+dialog.ts-app-drawer:popover-open {
     display: flex;
 }
 
@@ -50,8 +70,8 @@
     justify-content: center;
 }
 
-.ts-app-drawer.is-bottom .content {
-    width: 100%;
+.ts-app-drawer.is-bottom {
+    --width: 100%;
 }
 
 .ts-app-drawer.is-right {
@@ -66,10 +86,10 @@
  * Sizes
  */
 
-.ts-app-drawer.is-small > .content {
-    width: 280px;
+.ts-app-drawer.is-small {
+    --width: 280px;
 }
 
-.ts-app-drawer.is-large > .content {
-    width: 580px;
+.ts-app-drawer.is-large {
+    --width: 580px;
 }

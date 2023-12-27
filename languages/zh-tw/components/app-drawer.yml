@@ -8,9 +8,7 @@ Description: 從側邊或底部彈出的延伸內容空間。
 Intro: |
     這是一個專為應用程式設計的元件。
 
-    使用時需自行搭配 JavaScript 操控元件的可見狀態，你可以考慮使用 Tocas UI 的[樣式切換](./module-toggle.html)模組。
-
-    邊緣抽屜會呈現在畫面上的某個邊緣（如：右側或底部）並蓋過整個畫面。適合用來擺放側邊購物車、行動裝置用的底部選單。
+    邊緣抽屜使用 `<dialog>` HTML 標籤，因此支援瀏覽器原生的 [`.showModal()`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) 與 [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API) 等功能，不須安裝額外套件就能控制抽屜的顯示。
 
     這個元件是一個雛型框架，如果希望在其中建立標題、頁腳跟動作按鈕，則需自行搭配其他元件，可以參考底部的組合應用章節。
 
@@ -22,13 +20,24 @@ Intro: |
 Type: Article
 
 #=======================================================
+# 變數
+# Variables
+#=======================================================
+
+Variables:
+    - Name: "--width"
+      Default: "380px"
+      Description: "邊緣抽屜的內容寬度。"
+      Target: ".ts-app-drawer"
+
+#=======================================================
 # 基本樣式
 # Definitions
 #=======================================================
 
 Example:
     HTML: |
-        <div class="[[ts-app-drawer]] is-visible is-right is-small">
+        <dialog class="[[ts-app-drawer]] is-right is-small" open>
             <div class="content">
                 <div class="{{ts-content}}">
                     <div class="{{ts-header}} is-large">詳細資料</div>
@@ -39,7 +48,7 @@ Example:
                     <button class="{{ts-button}} is-fluid is-outlined">確定</button>
                 </div>
             </div>
-        </div>
+        </dialog>
 
 Definitions:
     - Title: 外觀
@@ -47,11 +56,11 @@ Definitions:
       Sections:
           - Title: 可見的
             Anchor: Visible
-            Description: 邊緣抽屜預設是隱藏的，必須指定為「可見的」才會顯示在頁面上。這個設計是為了讓 JavaScript 能夠切換其可見度。
+            Description: 當邊緣抽屜被指定 `[open]` 的時候，瀏覽器就會顯示其內容。
             Remove:
                 - <div class="ts-space is-big"></div>
             HTML: |
-                <div class="ts-app-drawer [[is-visible]] is-left is-small">
+                <dialog class="ts-app-drawer is-left is-small" [[open]]>
                     <div class="content">
                         <div class="{{ts-content}}">
                             <div class="{{ts-grid}}">
@@ -66,7 +75,7 @@ Definitions:
                             <div class="ts-space is-big"></div>
                         </div>
                     </div>
-                </div>
+                </dialog>
 
           - Title: 位置
             Anchor: Positions
@@ -74,7 +83,7 @@ Definitions:
             Remove:
                 - <div class="ts-space"></div>
             HTML: |
-                <div class="ts-app-drawer [[is-bottom]] is-visible">
+                <dialog class="ts-app-drawer [[is-bottom]]" open>
                     <div class="content">
                         <div class="ts-content">
                             <div class="{{ts-header}} is-large">最新消息</div>
@@ -88,7 +97,7 @@ Definitions:
                             <button class="{{ts-button}} is-fluid is-outlined {{has-top-spaced-large}}">關閉</button>
                         </div>
                     </div>
-                </div>
+                </dialog>
 
           - Title: 尺寸
             Anchor: Sizes
@@ -123,29 +132,29 @@ Definitions:
             Remove:
                 - <div class="ts-space"></div>
             HTML: |
-                <div class="ts-app-drawer [[is-small]] is-visible is-right">
+                <dialog class="ts-app-drawer [[is-small]] is-right" open>
                     <div class="content">
                         <div class="{{ts-content}} is-center-aligned">
                             小型抽屜
                         </div>
                     </div>
-                </div>
+                </dialog>
                 <div class="ts-space"></div>
-                <div class="ts-app-drawer is-visible is-right">
+                <dialog class="ts-app-drawer is-right" open>
                     <div class="content">
                         <div class="{{ts-content}} is-center-aligned">
                             預設抽屜
                         </div>
                     </div>
-                </div>
+                </dialog>
                 <div class="ts-space"></div>
-                <div class="ts-app-drawer [[is-large]] is-visible is-right">
+                <dialog class="ts-app-drawer [[is-large]] is-right" open>
                     <div class="content">
                         <div class="{{ts-content}} is-center-aligned">
                             大型抽屜
                         </div>
                     </div>
-                </div>
+                </dialog>
 
     - Title: 組合應用
       Description:
@@ -156,7 +165,7 @@ Definitions:
             Remove:
                 - <div class="ts-space is-huge"></div>
             HTML: |
-                <div class="ts-app-drawer is-visible is-right is-small">
+                <dialog class="ts-app-drawer is-right is-small" open>
                     <div class="content">
                         <div class="{{ts-content}}">
                             <div class="{{ts-grid}}">
@@ -174,7 +183,7 @@ Definitions:
                             </div>
                         </div>
                     </div>
-                </div>
+                </dialog>
 
           - Title: 篩選條件
             Anchor: Composition Filter
@@ -182,7 +191,7 @@ Definitions:
             Remove:
                 - <div class="ts-space"></div>
             HTML: |
-                <div class="ts-app-drawer is-left is-visible is-small">
+                <dialog class="ts-app-drawer is-left is-small" open>
                     <div class="content">
                         <div class="{{ts-content}}">
                             <div class="{{ts-header}} is-large">篩選條件</div>
@@ -202,7 +211,7 @@ Definitions:
                             <button class="{{ts-button}} is-fluid {{has-top-spaced-big}}">套用</button>
                         </div>
                     </div>
-                </div>
+                </dialog>
 
           - Title: 底部選單
             Anchor: Composition Bottom Sheet
@@ -210,7 +219,7 @@ Definitions:
             Remove:
                 - <div class="ts-space"></div>
             HTML: |
-                <div class="ts-app-drawer is-bottom is-visible">
+                <dialog class="ts-app-drawer is-bottom" open>
                     <div class="content">
                         <div class="[[{{ts-menu}}]] is-start-icon {{has-top-spaced}}">
                             <a class="item" href="#!">
@@ -226,5 +235,5 @@ Definitions:
                             <button class="{{ts-button}} is-fluid is-outlined">關閉</button>
                         </div>
                     </div>
-                </div>
+                </dialog>
 
