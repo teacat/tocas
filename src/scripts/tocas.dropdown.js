@@ -96,11 +96,6 @@ class Dropdown {
         // 移除這個彈出式選單的可見狀態。
         dropdown.classList.remove("is-visible");
 
-        // 透過 Popover API 隱藏這個 Dropdown。
-        if (dropdown.hasAttribute("popover")) {
-            dropdown.hidePopover();
-        }
-
         // 如果這個彈出式選單有 FLoating UI 的清除函式，就呼叫該清除函式，
         // 然後重設對應的 CSS 變數。
         if (dropdown.tocas_dropdown !== undefined) {
@@ -151,18 +146,10 @@ class Dropdown {
         // 切換目標彈出式選單的可見度。
         target.classList.toggle("is-visible");
 
-        // 使用 Popover API 才能在 Top-Layer 顯示。
-        target.setAttribute("popover", "manual");
-
         // 如果目標選單現在不再可見，就是被隱藏了，那就不需要執行接下來的行為。
         if (!target.classList.contains("is-visible")) {
-            // 透過 Popover API 隱藏這個 Dropdown。
-            target.hidePopover();
             return;
         }
-
-        // 透過 Popover API 顯示這個 Dropdown。
-        target.showPopover();
 
         // 設定選單的最小寬度和絕對位置，至少要跟切換觸發元素一樣寬。
         target.style.setProperty("--ts-dropdown-min-width", `${element.getBoundingClientRect().width}px`);
