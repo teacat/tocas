@@ -14,6 +14,7 @@ window.tocas = {
             tooltip_position: "data-position",
             tooltip_delay: "data-delay",
             tooltip_html: "data-html",
+            tooltip_trigger: "data-trigger",
             fileplace: "data-fileplace",
             fileplace_name: "data-name",
         },

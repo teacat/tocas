@@ -25,12 +25,21 @@ class Tooltip {
         // 重設這個元素的彈出提示計時器。
         element.tocas_tooltip_timer = null;
 
-        // 監聽滑鼠移入跟移出的事件。
+        // 無論怎樣都先移除所有監聽事件，也不要取決於 [data-trigger]，
+        // 因為新的跟舊的可能不一樣，到時候會有遺漏忘記的監聽器。
         element.removeEventListener("mouseover", this.enterEventListener);
-        element.addEventListener("mouseover", this.enterEventListener);
-
         element.removeEventListener("mouseleave", this.leaveEventListener);
-        element.addEventListener("mouseleave", this.leaveEventListener);
+        element.removeEventListener("focusin", this.enterEventListener);
+        element.removeEventListener("focusout", this.leaveEventListener);
+
+        // 監聽移入跟移出的事件。
+        if (this.trigger(element) === "focus") {
+            element.addEventListener("focusin", this.enterEventListener);
+            element.addEventListener("focusout", this.leaveEventListener);
+        } else {
+            element.addEventListener("mouseover", this.enterEventListener);
+            element.addEventListener("mouseleave", this.leaveEventListener);
+        }
     };
 
     // delay
@@ -49,12 +58,17 @@ class Tooltip {
         return element.getAttribute(tocas.config.attributes.tooltip_position) || "bottom";
     };
 
+    // trigger
+    trigger = element => {
+        return element.getAttribute(tocas.config.attributes.tooltip_trigger) || "hover";
+    };
+
     // enterEventListener
     enterEventListener = event => {
         var element = event.target.closest(`[${tocas.config.attributes.tooltip}]`);
 
         // 如果目前的裝置是觸控裝置就忽略工具提示的觸發行為。
-        if (window.matchMedia("(pointer: coarse)").matches) {
+        if (window.matchMedia("(pointer: coarse)").matches && this.trigger(element) === "hover") {
             return;
         }
 
@@ -73,10 +87,11 @@ class Tooltip {
     // leaveEventListener
     leaveEventListener = event => {
         var element = event.target.closest(`[${tocas.config.attributes.tooltip}]`);
+        var is_hover_trigger = this.trigger(element) === "hover";
 
         // 如果離開的元素不是主元素就忽略，
         // 如：使用者可能是離開了裡面的圖示元素，但滑鼠其實還在主元素裡。
-        if (event.target !== element) {
+        if (event.target !== element && is_hover_trigger) {
             return;
         }
 
@@ -92,8 +107,10 @@ class Tooltip {
             element.tocas_tooltip_timer = null;
         }
 
-        // 移除頁面上的所有工具提示。
-        document.querySelectorAll(".ts-tooltip").forEach(tooltip => {
+        // 依據觸發方式，移除對應的工具提示，
+        // 因為使用者可能在透過 Focus 觸發了某個工具提示，但是滑鼠又移入了另一個工具提示，
+        // 結果滑鼠移出時，連 Focus 的工具提示都被移除了。
+        document.querySelectorAll(is_hover_trigger ? `.ts-tooltip:not([data-trigger="focus"])` : `.ts-tooltip[data-trigger="focus"]`).forEach(tooltip => {
             tooltip.remove();
         });
     };
@@ -108,6 +125,9 @@ class Tooltip {
         } else {
             tooltip.innerText = element.getAttribute(tocas.config.attributes.tooltip);
         }
+
+        // 標記這個工具提示被觸發的方式。
+        tooltip.setAttribute("data-trigger", this.trigger(element));
 
         tooltip.classList.add("ts-tooltip", tocas.config.classes.tooltip_visible);
         tooltip.append(arrow);
