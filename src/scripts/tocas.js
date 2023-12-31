@@ -13,6 +13,7 @@ window.tocas = {
             tooltip: "data-tooltip",
             tooltip_position: "data-position",
             tooltip_delay: "data-delay",
+            tooltip_html: "data-html",
             fileplace: "data-fileplace",
             fileplace_name: "data-name",
         },
@@ -120,7 +121,7 @@ window.tocas_modules = [];
             return [];
         }
 
-        // 如果這一層找不到東西，就遞迴網更上面的命名空間來搜尋。
+        // 如果這一層找不到東西，就遞迴往更上面的命名空間來搜尋。
         return this.searchScopeTargets(container.parentNode, name, scope_attribute, name_attribute);
     };
 

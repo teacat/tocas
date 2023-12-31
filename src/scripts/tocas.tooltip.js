@@ -101,7 +101,14 @@ class Tooltip {
     // createTooltip
     createTooltip = (element, arrow) => {
         var tooltip = document.createElement("div");
-        tooltip.innerText = element.getAttribute(tocas.config.attributes.tooltip);
+
+        // 如果 [data-html] 是 "true" 的話就允許使用者在工具提示裡使用 HTML。
+        if (element.getAttribute(tocas.config.attributes.tooltip_html) === 'true') {
+            tooltip.innerHTML = element.getAttribute(tocas.config.attributes.tooltip);
+        } else {
+            tooltip.innerText = element.getAttribute(tocas.config.attributes.tooltip);
+        }
+
         tooltip.classList.add("ts-tooltip", tocas.config.classes.tooltip_visible);
         tooltip.append(arrow);
         return tooltip;
