@@ -1,9 +1,16 @@
 class Dropdown {
+    // #dropdowns 用以隨時更新頁面上有哪些存在的彈出式選單 ID，
+    // 這個清單資料來自於有被指定在 [data-dropdown] 裡的名稱。
+    #dropdowns = new Set();
+
     // attributeMutation
     attributeMutation = mutation => {};
 
     // addedNodeMutation
     addedNodeMutation = added_node => {
+        // 當有新的節點被增加，就更新彈出式選單的清單。
+        this.updateDropdowns();
+
         // 如果這個追加的 DOM 元素是一個會觸發彈出式選單的元素，就監聽其點擊事件。
         if (this.isDropdownTrigger(added_node)) {
             this.bindEventListener(added_node);
@@ -17,31 +24,39 @@ class Dropdown {
 
     // isDropdownTrigger
     isDropdownTrigger = element => {
-        return element.matches(`[${tocas.config.attributes.dropdown}]`);
+        return element.matches("[data-dropdown]");
     };
 
     // isDropdown
     isDropdown = element => {
-        return element.matches(`.ts-dropdown[${tocas.config.attributes.dropdown_name}]`);
+        // 必須要有 .ts-dropdown 且 ID 有出現在其他元素的 data-dropdown 屬性裡面。
+        return element.matches(`.ts-dropdown`) && this.#dropdowns.has(element.id);
     };
+
+    // updateDropdowns
+    updateDropdowns = () => {
+        document.querySelectorAll("[data-dropdown]").forEach(element => {
+            this.#dropdowns.add(element.dataset.dropdown);
+        });
+    }
 
     // position
     position = element => {
-        return element.getAttribute(tocas.config.attributes.dropdown_position) || "bottom";
+        return element.dataset.position || "bottom";
     };
 
     // windowClick
     windowClick = event => {
         // 取得這個視窗點擊最鄰近的 Dropdown 模組觸發元素。
-        var closest_trigger = event.target.closest(`[${tocas.config.attributes.dropdown}]`);
+        var closest_trigger = event.target.closest("[data-dropdown]");
 
         // 取得這個視窗點擊最鄰近的 Dropdown 容器本身。
-        var closest_dropdown = event.target.closest(`[${tocas.config.attributes.dropdown_name}]`);
+        var closest_dropdown = event.target.closest(".ts-dropdown");
 
         // 如果這個點擊事件既沒有關聯任何觸發元素，也沒有在點擊任何 Dropdown 容器，
         // 那使用者應該就是在點擊其他東西，所以關閉所有頁面上可見的彈出式選單。
         if (closest_trigger === null && closest_dropdown === null) {
-            document.querySelectorAll(`.ts-dropdown[${tocas.config.attributes.dropdown_name}]`).forEach(dropdown => {
+            document.querySelectorAll(".ts-dropdown").forEach(dropdown => {
                 this.closeDropdown(dropdown);
             });
         }
@@ -49,13 +64,13 @@ class Dropdown {
         // 如果這個點擊事件是在點擊一個會開關 Dropdown 的觸發元素。
         if (closest_trigger !== null) {
             // 取得這個觸發元素原本會打開的 Dropdown 名稱。
-            var name = closest_trigger.getAttribute(tocas.config.attributes.dropdown);
+            var name = closest_trigger.dataset.dropdown;
 
             // 透過該名稱搜尋對應的 Dropdown。
-            var local_dropdown = searchScopeTargets(closest_trigger, name, tocas.config.scopes.dropdown, tocas.config.attributes.dropdown_name)[0];
+            var dropdown = document.getElementById(name)
 
             // 除了找到的這個對應 Dropdown 以外，關掉其他所有 Dropdown。
-            this.closeDropdownsExcept(local_dropdown);
+            this.closeDropdownsExcept(dropdown);
         }
 
         // 如果這個點擊事件是在點擊某個 Dropdown 容器或內部的項目。
@@ -67,7 +82,7 @@ class Dropdown {
 
     // closeDropdownsExcept
     closeDropdownsExcept = excluded_dropdown => {
-        document.querySelectorAll(`.ts-dropdown[${tocas.config.attributes.dropdown_name}]`).forEach(dropdown => {
+        document.querySelectorAll(".ts-dropdown").forEach(dropdown => {
             if (dropdown !== excluded_dropdown) {
                 this.closeDropdown(dropdown);
             }
@@ -93,6 +108,12 @@ class Dropdown {
             return;
         }
 
+        // 如果這個選單不在清單裡，就不要在乎是否該關閉這個選單，
+        // 因為這很有可能是 .ts-dropdown 但由使用者自行控制可見狀態。
+        if (!this.#dropdowns.has(dropdown.id)) {
+            return;
+        }
+
         // 移除這個彈出式選單的可見狀態。
         dropdown.classList.remove("is-visible");
 
@@ -109,7 +130,7 @@ class Dropdown {
     // itemClickEventListener
     itemClickEventListener = event => {
         // 取得這個點擊事件最鄰近的彈出式選單。
-        var dropdown = event.target.closest(`.ts-dropdown[${tocas.config.attributes.dropdown_name}]`);
+        var dropdown = event.target.closest(".ts-dropdown");
 
         // 如果找不到點擊事件最鄰近的選單項目，
         // 那可能點擊的不是項目而是其他容器裡的東西，那就忽略這個動作。
@@ -123,14 +144,13 @@ class Dropdown {
 
     // clickEventListener
     clickEventListener = event => {
-        //
-        var element = event.target.closest(`[${tocas.config.attributes.dropdown}]`);
+        var element = event.target.closest("[data-dropdown]");
 
         // 取得這個觸發元素會切換的彈出式選單名稱。
-        var name = element.getAttribute(tocas.config.attributes.dropdown);
+        var name = element.dataset.dropdown;
 
         // 透過命名空間搜尋對應的彈出式選單。
-        var target = searchScopeTargets(element, name, tocas.config.scopes.dropdown, tocas.config.attributes.dropdown_name)[0];
+        var target = document.getElementById(name)
 
         // 取得目標選單的偏好位置設定。
         var position = this.position(target);
@@ -153,7 +173,7 @@ class Dropdown {
 
         // 設定選單的最小寬度和絕對位置，至少要跟切換觸發元素一樣寬。
         target.style.setProperty("--ts-dropdown-min-width", `${element.getBoundingClientRect().width}px`);
-        target.style.setProperty("--ts-dropdown-position", `fixed`);
+        target.style.setProperty("--ts-dropdown-position", "fixed");
 
         // 透過 Floating UI 來觸發浮動顯示。
         target.tocas_dropdown = TocasFloatingUIDOM.autoUpdate(element, target, () => {
