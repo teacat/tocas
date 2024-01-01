@@ -42,7 +42,7 @@ class Dropdown {
 
     // position
     position = element => {
-        return element.dataset.position || "bottom";
+        return element.dataset.position || "bottom-start";
     };
 
     // windowClick
