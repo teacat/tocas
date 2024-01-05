@@ -1,0 +1,142 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 彈出內容
+Description: 相對於某個元素而彈出的內容。
+Intro: |
+    彈出內容使用瀏覽器原生 [Popover API](https://developer.mozilla.org/en-US/docs/Web/API/Popover_API)，你可能需要先了解相關資訊。
+
+    在 `[popover]` 元素指定 `[data-popover="名稱"]`，該彈出內容顯示時就會吸附於對應的 `[id]` 元素。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Dropdown
+    - Modal
+
+#=======================================================
+# 屬性
+# Properties
+#=======================================================
+
+Properties:
+    - Name: "[data-position]"
+      Default: bottom
+      Description: |
+          彈出內容顯示時的偏好位置。
+
+          - `top`
+          - `top-start`
+          - `top-end`
+          - `bottom`
+          - `bottom-start`
+          - `bottom-end`
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <button class="{{ts-button}} is-end-icon" id="detail" popovertarget="popup-detail">
+            詳細內容
+            <span class="{{ts-icon}} is-caret-down-icon"></span>
+        </button>
+        <div class="[[ts-popover]]" id="popup-detail" [[data-popover]]="detail" popover>
+            <div class="{{ts-content}}">
+                <div class="{{ts-header}} is-heavy">好吃的鮪魚罐頭</div>
+                <p>現在加入購物車再送你兩個！</p>
+            </div>
+        </div>
+
+Definitions:
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 同行編輯
+            Anchor: Composition Inline Edit
+            Description: |
+                在螢幕空間有限的情況下，某些文字被點擊後會彈出額外的表單供使用者編輯資料。
+            HTML: |
+                <button class="{{ts-text}} is-editable" id="edit" popovertarget="popup-edit">
+                    商品售價：$3,600
+                </button>
+                <div class="ts-popover" id="popup-edit" [[data-popover]]="edit" popover>
+                    <div class="{{ts-content}} is-secondary is-dense">
+                        <div class="{{ts-text}} is-bold">編輯價格</div>
+                    </div>
+                    <div class="{{ts-divider}}"></div>
+                    <div class="{{ts-content}}">
+                        <div class="{{ts-input}}">
+                            <input type="number" value="3600">
+                        </div>
+                    </div>
+                    <div class="{{ts-divider}}"></div>
+                    <div class="{{ts-content}} is-secondary is-dense">
+                        <div class="{{ts-wrap}}">
+                            <button class="{{ts-button}}" popovertarget="popup-edit">
+                                儲存
+                            </button>
+                            <button class="{{ts-button}} is-outlined" popovertarget="popup-edit">
+                                取消
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 商品評價
+            Anchor: Composition Rating
+            Description: |
+                搭配[評分](./rating.html)元件來設計商品評價的彈出內容。
+            HTML: |
+                <button class="{{ts-button}} is-start-icon" id="rating" popovertarget="popup-rating">
+                    <span class="{{ts-icon}} is-star-icon"></span>
+                    評價商品
+                </button>
+                <div class="ts-popover" id="popup-rating" data-popover="rating" popover>
+                    <div class="{{ts-content}}">
+                        <div class="{{ts-text}} is-bold">評價商品</div>
+                        <div class="[[{{ts-rating}}]] is-input is-yellow {{has-top-spaced-small}}">
+                            <input class="star" type="radio" name="rating" value="1" />
+                            <input class="star" type="radio" name="rating" value="2" checked/>
+                            <input class="star" type="radio" name="rating" value="3" />
+                            <input class="star" type="radio" name="rating" value="4" />
+                            <input class="star" type="radio" name="rating" value="5" />
+                        </div>
+                        <div class="{{ts-input}} {{has-top-spaced}}" style="width: 250px">
+                            <textarea placeholder="在此留下你的使用感想…" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 使用者詳情
+            Anchor: Composition Profile
+            Description: |
+                點選某個[大頭貼](./avatar.html)之後彈出使用者詳情與[多媒體圖片](./image.html)。
+            HTML: |
+                <button class="{{ts-avatar}}" id="avatar" popovertarget="popup-avatar">
+                    <img src="!-user-!">
+                </button>
+                <div class="ts-popover" id="popup-avatar" [[data-popover]]="avatar" popover>
+                    <div class="{{ts-image}}">
+                        <img src="!-16:9-!" style="width: 300px">
+                    </div>
+                    <div class="{{ts-content}}">
+                        <div class="{{ts-header}} is-heavy">Yami Odymel</div>
+                        <div class="{{ts-meta}} is-secondary">
+                            <a class="item">3 天前加入</a>
+                            <a class="item">5 位好友</a>
+                        </div>
+                    </div>
+                </div>
+
+
+

@@ -70,6 +70,12 @@ window.tocas_modules = [];
     // @import "tocas.dropdown.js";
 
     /* ==========================================================================
+       Popover
+       ========================================================================== */
+
+    // @import "tocas.popover.js";
+
+    /* ==========================================================================
        Tooltip
        ========================================================================== */
 
@@ -98,32 +104,8 @@ window.tocas_modules = [];
        ========================================================================== */
 
     // searchScopeTargets
-    searchScopeTargets = (element, name, scope_attribute, name_attribute) => {
-        // 找尋這個元素最鄰近的命名空間容器。
-        var container = element.closest(`[class*="${scope_attribute}"]`) || document;
-
-        // 在命名空間裡找尋目標元素，但是這個目標元素
-        //
-        // NOTE: 這裡的 item.closest(`[class*="${scope_attribute}"]`) 可能要對應 === container，
-        // 主要取決之後對命名空間的寬鬆度設計如何。
-        //
-        // 例如：A 命名空間裡有 B 跟 C 子空間，B 可以呼叫同為 A 空間裡的 C 空間裡的元素嗎？
-        var targets = Array.from(container.querySelectorAll(`[${name_attribute}="${name}"]`)).filter(item => {
-            return item.closest(`[class*="${scope_attribute}"]`) || document === container;
-        });
-
-        // 如果有找到元素則回傳。
-        if (targets.length > 0) {
-            return targets;
-        }
-
-        // 如果已經找到最上層了還是什麼結果都沒有，就回傳空陣列，讓其他程式報錯。
-        if (container === document) {
-            return [];
-        }
-
-        // 如果這一層找不到東西，就遞迴往更上面的命名空間來搜尋。
-        return this.searchScopeTargets(container.parentNode, name, scope_attribute, name_attribute);
+    getID = () => {
+        return (Math.random().toString(36)+'00000000000000000').slice(2, 10+2);
     };
 
     // createElement
