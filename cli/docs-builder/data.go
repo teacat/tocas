@@ -13,6 +13,7 @@ type Article struct {
 	Example     ArticleExample          `yaml:"Example"`
 	Examples    []ArticleExampleSection `yaml:"Examples"`
 	Variables   []ArticleVariable       `yaml:"Variables"`
+	Properties  []ArticleVariable       `yaml:"Properties"`
 	Remove      []string                `yaml:"Remove"`
 	Relatives   []string                `yaml:"Relatives"`
 	Definitions []ArticleDefinition     `yaml:"Definitions"`

@@ -309,24 +309,74 @@
                         {{ end }}
                         <!-- / 章節 -->
 
-                        <!-- 變數屬性 -->
-                        {{ if .Variables }}
-                        <div class="主體-格局-內容-標題 主體-格局-內容-標題_章節">變數與屬性</div>
+                        <!-- HTML 屬性 -->
+                        {{ if .Properties }}
+                        <div class="主體-格局-內容-標題 主體-格局-內容-標題_章節">屬性設定</div>
                         <div class="主體-格局-內容-變數屬性">
                             <div class="ts-box">
                                 <table class="ts-table is-definition is-celled">
                                     <thead>
                                         <tr>
                                             <th class="is-collapsed"></th>
-                                            {{ if ne (index .Variables 0).Default "" }}
+                                            {{ if ne (index .Properties 0).Example "" }}
+                                            <th class="is-collapsed">範例</th>
+                                            {{ end }} {{ if ne (index .Properties 0).Type "" }}
+                                            <th class="is-collapsed">型態</th>
+                                            {{ end }}
+                                            <th>說明</th>
+                                            {{ if ne (index .Properties 0).Default "" }}
                                             <th class="is-collapsed">預設值</th>
-                                            {{ end }} {{ if ne (index .Variables 0).Example "" }}
+                                            {{ end }} {{ if ne (index .Properties 0).Target "" }}
+                                            <th class="is-collapsed">對象</th>
+                                            {{ end }}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{ range .Properties }}
+                                        <tr>
+                                            <td class="is-collapsed">{{ .Name }}</td>
+                                            {{ if ne (index $.Properties 0).Example "" }}
+                                            <td class="is-collapsed"><code>{{ .Example }}</code></td>
+                                            {{ end }} {{ if ne (index $.Properties 0).Type "" }}
+                                            <td class="is-collapsed"><code>{{ .Type }}</code></td>
+                                            {{ end }}
+                                            <td>
+                                                {{ .Description | markdown }} {{ if .AdvanceExample }}
+                                                <code>{{ .AdvanceExample | highlight }}</code>
+                                                {{ end }}
+                                            </td>
+                                            {{ if ne (index $.Properties 0).Default "" }}
+                                            <td class="is-collapsed"><code>{{ .Default }}</code></td>
+                                            {{ end }} {{ if ne (index $.Properties 0).Target "" }}
+                                            <td class="is-collapsed"><code>{{ .Target }}</code></td>
+                                            {{ end }}
+                                        </tr>
+                                        {{ end }}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {{ end }}
+                        <!-- / HTML 屬性 -->
+
+                        <!-- 變數屬性 -->
+                        {{ if .Variables }}
+                        <div class="主體-格局-內容-標題 主體-格局-內容-標題_章節">樣式變數</div>
+                        <div class="主體-格局-內容-變數屬性">
+                            <div class="ts-box">
+                                <table class="ts-table is-definition is-celled">
+                                    <thead>
+                                        <tr>
+                                            <th class="is-collapsed"></th>
+                                            {{ if ne (index .Variables 0).Example "" }}
                                             <th class="is-collapsed">範例</th>
                                             {{ end }} {{ if ne (index .Variables 0).Type "" }}
                                             <th class="is-collapsed">型態</th>
                                             {{ end }}
                                             <th>說明</th>
-                                            {{ if ne (index .Variables 0).Target "" }}
+                                            {{ if ne (index .Variables 0).Default "" }}
+                                            <th class="is-collapsed">預設值</th>
+                                            {{ end }} {{ if ne (index .Variables 0).Target "" }}
                                             <th class="is-collapsed">對象</th>
                                             {{ end }}
                                         </tr>
@@ -335,9 +385,7 @@
                                         {{ range .Variables }}
                                         <tr>
                                             <td class="is-collapsed">{{ .Name }}</td>
-                                            {{ if ne (index $.Variables 0).Default "" }}
-                                            <td class="is-collapsed"><code>{{ .Default }}</code></td>
-                                            {{ end }} {{ if ne (index $.Variables 0).Example "" }}
+                                            {{ if ne (index $.Variables 0).Example "" }}
                                             <td class="is-collapsed"><code>{{ .Example }}</code></td>
                                             {{ end }} {{ if ne (index $.Variables 0).Type "" }}
                                             <td class="is-collapsed"><code>{{ .Type }}</code></td>
@@ -347,7 +395,9 @@
                                                 <code>{{ .AdvanceExample | highlight }}</code>
                                                 {{ end }}
                                             </td>
-                                            {{ if ne (index $.Variables 0).Target "" }}
+                                            {{ if ne (index $.Variables 0).Default "" }}
+                                            <td class="is-collapsed"><code>{{ .Default }}</code></td>
+                                            {{ end }} {{ if ne (index $.Variables 0).Target "" }}
                                             <td class="is-collapsed"><code>{{ .Target }}</code></td>
                                             {{ end }}
                                         </tr>
