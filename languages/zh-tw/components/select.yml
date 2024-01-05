@@ -53,7 +53,7 @@ Definitions:
       Sections:
           - Title: 停用的
             Anchor: Disabled
-            Description: 有 `[disabled]` 屬性的下拉選擇欄位會呈現無法互動、點擊的模樣。
+            Description: 有 `[disabled]` 屬性的下拉選擇會無法互動。
             HTML: |
                 <div class="ts-select">
                     <select [[disabled]]>
@@ -65,7 +65,7 @@ Definitions:
 
           - Title: 啟用的
             Anchor: Active
-            Description: 表示選擇欄位目前正在被選取或是展開的樣子。若子元素裡包含[彈出式選單](./dropdown.html)則會一同連帶開啟。
+            Description: 表示選擇欄位目前正在被選取或是展開的樣子。
             HTML: |
                 <div class="ts-select [[is-active]]">
                     <select>
@@ -73,23 +73,6 @@ Definitions:
                         <option>Tunalog</option>
                         <option>EnekoCore</option>
                     </select>
-                </div>
-
-    - Title: 內容
-      Description:
-      Sections:
-          - Title: 自訂內容
-            Anchor: Content
-            Description: |
-                在下拉選擇欄位中擺放更豐富的內容，如：[圖示](./icon.html)、[旗幟](./flag.html)或是[大頭貼](./avatar.html)。
-
-                使用此樣式的時候原生 HTML 選擇元素將無法使用，須搭配[彈出式選單](./dropdown.html)或是以 JavaScript 觸發其他元素。查看底部的組合應用章節來檢視如何使用。
-            HTML: |
-                <div class="ts-select">
-                    <div class="[[content]]">
-                        <span class="{{ts-flag}} is-tw-flag"></span>
-                        Taiwan
-                    </div>
                 </div>
 
     - Title: 外觀
@@ -198,55 +181,4 @@ Definitions:
                     <select>
                         <option>寬鬆欄位</option>
                     </select>
-                </div>
-
-    - Title: 組合應用
-      Description:
-      Sections:
-          - Title: 彈出式選單
-            Anchor: Composition Dropdown
-            Description: 下拉式選擇欄位能夠與[彈出式選單](./dropdown.html)一同使用。像 Facebook 貼文發表那樣，一個帶有圖示輔助的內容隱私設定欄位。
-            Remove:
-                - <div class="ts-space is-huge"></div>
-            HTML: |
-                <div class="ts-select is-active">
-                    <div class="content">
-                        <span class="{{ts-icon}} is-users-icon"></span> 所有人
-                    </div>
-                    <div class="[[{{ts-dropdown}}]] is-bottom">
-                        <button class="item">
-                            <span class="{{ts-icon}} is-users-icon"></span> 所有人
-                        </button>
-                        <button class="item is-selected">
-                            <span class="{{ts-icon}} is-user-group-icon"></span> 僅有朋友
-                        </button>
-                        <button class="item">
-                            <span class="{{ts-icon}} is-lock-icon"></span> 只限自己
-                        </button>
-                    </div>
-                </div>
-                <div class="ts-space is-huge"></div>
-                <div class="ts-space is-huge"></div>
-
-          - Title: 使用者標註
-            Anchor: Composition Chips
-            Description: 在電子信箱或是標註人名時，常常會有一個可供新增更多使用者的下拉式選擇欄位。
-            HTML: |
-                <div class="ts-select is-fluid">
-                    <div class="content">
-                        <div class="[[{{ts-chip}}]]">
-                            <div class="{{ts-image}}">
-                                <img src="!-user-!" />
-                            </div>
-                            ゲオルイース
-                            <button class="{{ts-close}} is-small"></button>
-                        </div>
-                        <div class="[[{{ts-chip}}]]">
-                            <div class="{{ts-image}}">
-                                <img src="!-user-!" />
-                            </div>
-                            グイーネ
-                            <button class="{{ts-close}} is-small"></button>
-                        </div>
-                    </div>
                 </div>
