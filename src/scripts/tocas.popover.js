@@ -133,7 +133,6 @@ class Popover {
                 popover.tocas_popover = undefined
                 // NOTE: 以後再來考慮 A11y。
                 // target.removeAttribute("aria-expanded")
-                popover.style.removeProperty("--ts-popover-position")
             }
             return
         }
