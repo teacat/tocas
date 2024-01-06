@@ -191,6 +191,16 @@ class Dropdown {
 
                     // 選單會被螢幕左右推移，避免超出畫面空間。
                     TocasFloatingUIDOM.shift(),
+
+                    // 選單的寬高不會超過可用空間。
+                    TocasFloatingUIDOM.size({
+                        apply({availableWidth, availableHeight, elements}) {
+                            Object.assign(elements.floating.style, {
+                                maxWidth: `${availableWidth}px`,
+                                maxHeight: `${availableHeight}px`,
+                            });
+                        },
+                    }),
                 ],
             }).then(({ x, y }) => {
                 // 賦予彈出式選單絕對位置。
