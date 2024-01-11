@@ -15,6 +15,11 @@
 .ts-dropdown .item {
     --indented-padding: 0px;
     --padding-multiplier: 1;
+    --color: inherit;
+}
+
+.ts-dropdown .item .ts-icon {
+    --color: inherit;
 }
 
 /* ==========================================================================
@@ -38,7 +43,8 @@
     margin: 0;
     width: fit-content;
     height: fit-content;
-    overflow: visible;
+    overflow: auto;
+    overflow-x: hidden;
 }
 
 .ts-dropdown > .item {
@@ -48,7 +54,7 @@
     font-size: inherit;
     text-align: inherit;
     background: transparent;
-    color: inherit;
+    color: var(--color);
     line-height: 1;
     text-decoration: none;
     display: flex;
@@ -60,6 +66,7 @@
 }
 
 .ts-dropdown .item .ts-icon {
+    color: var(--color);
     font-size: 1.1em;
 }
 
@@ -106,6 +113,8 @@
 
 .ts-dropdown .item.is-header {
     color: var(--ts-gray-500);
+    pointer-events: none;
+    user-select: none;
 }
 
 .ts-dropdown .item.is-header:hover {
@@ -139,6 +148,10 @@
 .ts-dropdown .item.is-selected {
     background: var(--accent-color, var(--ts-primary-700));
     color: var(--accent-foreground-color, var(--ts-white));
+}
+
+.ts-dropdown .item.is-selected .ts-icon {
+    color: inherit;
 }
 
 .ts-dropdown .item.is-selected .description {
