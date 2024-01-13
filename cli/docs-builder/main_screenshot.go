@@ -45,11 +45,11 @@ func screenshot(c *cli.Context) error {
 			continue
 		}
 		log.Printf("正在截圖亮色主題：%s", v.Name())
-		if err := chromedp.Run(ctx, takeScreenshot(pathx.Join(screenshotPath, v.Name()), false)); err != nil {
+		if err := chromedp.Run(ctx, takeScreenshot(screenshotPath+v.Name(), false)); err != nil {
 			return err
 		}
 		log.Printf("正在截圖暗色主題：%s", v.Name())
-		if err := chromedp.Run(ctx, takeScreenshot(pathx.Join(screenshotPath, v.Name()), true)); err != nil {
+		if err := chromedp.Run(ctx, takeScreenshot(screenshotPath+v.Name(), true)); err != nil {
 			return err
 		}
 	}
