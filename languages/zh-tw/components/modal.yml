@@ -6,7 +6,7 @@
 Title: 快顯視窗
 Description: 跳出強制性互動的視窗提供附屬資訊或是詢問。
 Intro: |
-    快顯視窗使用 `<dialog>` HTML 標籤，因此支援瀏覽器原生的 [`.showModal()`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) 以控制視窗的顯示。若快顯視窗內有表單元素，則可以使用 [`.returnValue`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/returnValue) 屬性取得回傳值。
+    快顯視窗使用 [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) HTML 標籤，因此支援瀏覽器原生的 [`.showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal) 與 [`.close()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/close) 開關視窗。快顯視窗關閉時會觸發 [`close`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/close_event) 或 [`cancel`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/cancel_event) 的 JavaScript 事件。
 
     這個元件是一個雛型框架，如果希望在其中建立標題、頁腳跟動作按鈕，則需自行搭配其他元件，可以參考底部的組合應用章節。
 
@@ -18,15 +18,26 @@ Intro: |
 Type: Article
 
 #=======================================================
+# 屬性
+# Properties
+#=======================================================
+
+Properties:
+    - Name: "[data-dismissible]"
+      Default: true
+      Target: .ts-modal
+      Description: 使用者是否能透過 `Esc` 鍵或是點擊視窗外的區域關閉快顯視窗。
+
+#=======================================================
 # 變數
 # Variables
 #=======================================================
 
 Variables:
-    - Name: "--width"
-      Default: "380px"
-      Description: "快顯視窗的內容寬度。"
-      Target: ".ts-modal"
+    - Name: --width
+      Default: 380px
+      Target: .ts-modal
+      Description: 快顯視窗的內容寬度。
 
 #=======================================================
 # 基本樣式
@@ -37,19 +48,32 @@ Example:
     HTML: |
         <dialog class="[[ts-modal]]" open>
             <div class="content">
-                <div class="{{ts-content}} is-center-aligned is-vertically-padded">
-                    <div class="{{ts-header}} is-icon {{has-bottom-spaced}}">
-                        <span class="{{ts-icon}} is-circle-exclamation-icon"></span>
-                        你正要重新啟動伺服器
-                    </div>
-                    這個手續將會花上至少半小時，在這段期間內你將無法執行任何動作。
+                <div class="{{ts-content}}">
+                    <div class="{{ts-header}}">視窗標題</div>
                 </div>
                 <div class="{{ts-divider}}"></div>
-                <div class="{{ts-content}} is-tertiary">
-                    <button class="{{ts-button}} is-fluid">了解</button>
+                <div class="{{ts-content}}">
+                    在工地上，劈哩啪啦的聲音不斷地響起，
+                    工人們忙碌地進行各種建築工作，喧囂的聲音彷彿是建築的樂章。
                 </div>
             </div>
         </dialog>
+#    HTML: |
+#        <dialog class="[[ts-modal]]" open>
+#            <div class="content">
+#                <div class="{{ts-content}} is-center-aligned is-vertically-padded">
+#                    <div class="{{ts-header}} is-icon {{has-bottom-spaced}}">
+#                        <span class="{{ts-icon}} is-circle-exclamation-icon"></span>
+#                        你正要重新啟動伺服器
+#                    </div>
+#                    這個手續將會花上至少半小時，在這段期間內你將無法執行任何動作。
+#                </div>
+#                <div class="{{ts-divider}}"></div>
+#                <div class="{{ts-content}} is-tertiary">
+#                    <button class="{{ts-button}} is-fluid">了解</button>
+#                </div>
+#            </div>
+#        </dialog>
 
 Definitions:
     - Title: 外觀
@@ -57,7 +81,7 @@ Definitions:
       Sections:
           - Title: 可見的
             Anchor: Visible
-            Description: 當快顯視窗被指定 `[open]` 的時候，瀏覽器就會顯示其內容。
+            Description: 當快顯視窗被指定 `[open]` 時，瀏覽器就會顯示其內容；但我們建議透過 [`.showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal) 打開視窗，而不是自己控制 `[open]` 屬性。
             HTML: |
                 <dialog class="ts-modal" [[open]]>
                     <div class="content">
@@ -67,7 +91,7 @@ Definitions:
                                     <div class="{{ts-header}}">伊繁星最高協議</div>
                                 </div>
                                 <div class="column">
-                                    <button class="{{ts-close}}"></button>
+                                    <button class="{{ts-close}} is-large"></button>
                                 </div>
                             </div>
                         </div>
@@ -165,10 +189,30 @@ Definitions:
                     </div>
                 </dialog>
 
+          - Title: 警告視窗
+            Anchor: Composition Warning
+            Description: 搭配帶有圖示的[標題](./header.html)營造出一個警告視窗。
+            HTML: |
+                <dialog class="ts-modal" open>
+                    <div class="content">
+                        <div class="{{ts-content}} is-center-aligned is-padded">
+                            <div class="[[{{ts-header}}]] is-icon">
+                                <span class="{{ts-icon}} is-bomb-icon"></span>
+                                你正要重新啟動伺服器
+                            </div>
+                            <p>這個手續將會花上至少半小時，在這段期間內你將無法執行任何動作。</p>
+                        </div>
+                        <div class="{{ts-divider}}"></div>
+                        <div class="{{ts-content}} is-tertiary">
+                            <button class="{{ts-button}} is-fluid">了解</button>
+                        </div>
+                    </div>
+                </dialog>
+
           - Title: 可捲動內容
             Anchor: Composition Scrollable
             Description: |
-                有時能指派 `overflow: auto` 樣式給過長的[內容區塊](./content.html)讓其文字過長時可以捲動。
+                賦予 `overflow: auto` 樣式給過長的[內容區塊](./content.html)讓其文字過長時可以捲動。
             HTML: |
                 <dialog class="ts-modal" open>
                     <div class="content">
@@ -191,6 +235,35 @@ Definitions:
                         <div class="{{ts-divider}}"></div>
                         <div class="{{ts-content}} is-tertiary">
                             <button class="{{ts-button}} is-fluid">確定</button>
+                        </div>
+                    </div>
+                </dialog>
+
+    - Title: JavaScript 模組
+      Description:
+      Sections:
+          - Title: 開關視窗
+            Anchor: Module Invoke
+            Description: |
+                點擊帶有 `[data-invoke="名稱"]` 的元素可以開關對應 `[id="名稱"]` 的快顯視窗，適用於不想額外撰寫 JavaScript 程式碼的情境。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <button class="{{ts-button}}" [[data-invoke]]="modal">
+                    打開範例視窗 ✨
+                </button>
+                <dialog class="ts-modal" id="modal">
+                    <div class="content">
+                        <div class="{{ts-content}}">
+                            <div class="{{ts-header}}">視窗標題</div>
+                        </div>
+                        <div class="{{ts-divider}}"></div>
+                        <div class="{{ts-content}}">
+                            點擊關閉按鈕或是灰色區域來關閉視窗。
+                        </div>
+                        <div class="{{ts-divider}}"></div>
+                        <div class="{{ts-content}} is-tertiary">
+                            <button class="{{ts-button}}" [[data-invoke]]="modal">關閉</button>
                         </div>
                     </div>
                 </dialog>

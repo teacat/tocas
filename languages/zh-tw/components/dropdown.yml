@@ -6,7 +6,7 @@
 Title: 彈出式選單
 Description: 附著於某個元素且浮動可隱藏的功能選單。
 Intro: |
-    在按鈕元素套用 `[data-dropdown="名稱"]`，點擊時就能開關對應 `[id]` 的彈出式選單，目前不支援巢狀子選單。
+    點擊帶有 `[data-dropdown="名稱"]` 的元素就會開關對應 `[id="名稱"]` 的彈出式選單，目前不支援巢狀子選單。
 
 #=======================================================
 # 設定
@@ -26,8 +26,8 @@ Relatives:
 Variables:
     - Name: --min-width
       Default: 10rem
-      Description: 選單最小的寬度。
       Target: .ts-dropdown
+      Description: 選單最小的寬度。
 
 #=======================================================
 # 屬性
@@ -37,6 +37,7 @@ Variables:
 Properties:
     - Name: "[data-position]"
       Default: bottom-start
+      Target: .ts-dropdown
       Description: |
           彈出式選單展開時的偏好位置。
 
@@ -58,7 +59,7 @@ Example:
         - <div class="ts-space is-huge"></div>
         - <div class="ts-space is-big"></div>
     HTML: |
-        <button class="{{ts-button}} is-start-icon" [[data-dropdown]]="dropdown">
+        <button class="{{ts-button}} is-start-icon" ((data-dropdown))="dropdown">
             <span class="{{ts-icon}} is-chevron-down-icon"></span>
             打開選單
         </button>
@@ -548,12 +549,12 @@ Definitions:
                         <div class="item is-text">應用程式</div>
                     </div>
                     <div class="end">
-                        <button class="item" [[data-dropdown]]="menu">
+                        <button class="item" ((data-dropdown))="dropdown-menu">
                             <span class="{{ts-icon}} is-ellipsis-vertical-icon"></span>
                         </button>
                     </div>
                 </div>
-                <div class="{{ts-dropdown}}" [[id]]="menu" data-position="bottom-end">
+                <div class="[[ts-dropdown]]" id="dropdown-menu" data-position="bottom-end">
                     <button class="item">關於</button>
                     <button class="item">檢查更新</button>
                 </div>
@@ -565,12 +566,12 @@ Definitions:
                 <div class="{{ts-tab}} is-pilled">
                     <button class="item">主打內容</button>
                     <button class="item">最新</button>
-                    <button class="item" [[data-dropdown]]="links">
+                    <button class="item" ((data-dropdown))="dropdown-links">
                         <span class="{{ts-icon}} is-ellipsis-icon"></span>
                         更多
                     </button>
                 </div>
-                <div class="{{ts-dropdown}}" [[id]]="links">
+                <div class="[[ts-dropdown]]" id="dropdown-links">
                     <button class="item">遊戲</button>
                     <button class="item">音樂</button>
                     <button class="item">影片</button>

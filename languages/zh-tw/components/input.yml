@@ -14,6 +14,17 @@ Description: 可供使用者輸入文字的欄位。
 Type: Article
 
 #=======================================================
+# 屬性
+# Properties
+#=======================================================
+
+Properties:
+    - Name: "[data-max-rows]"
+      Default: 0
+      Target: .ts-input
+      Description: 限制自動延展高度的最大行數，`0` 表示不限。
+
+#=======================================================
 # 基本樣式
 # Definitions
 #=======================================================
@@ -204,4 +215,18 @@ Definitions:
                 <div class="ts-space"></div>
                 <div class="ts-input">
                     <input type="[[week]]">
+                </div>
+
+    - Title: JavaScript 模組
+      Description:
+      Sections:
+          - Title: 自動延伸
+            Anchor: Module Autosize
+            Description: |
+                帶有 `[data-autosize]` 的輸入欄位會自動依據內容的多寡延展高度。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-input">
+                    <textarea rows="3" placeholder="試試換行文字…" [[data-autosize]]></textarea>
                 </div>
