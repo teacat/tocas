@@ -6,9 +6,7 @@
 Title: 邊緣抽屜
 Description: 從側邊或底部彈出的延伸內容空間。
 Intro: |
-    這是一個專為應用程式設計的元件。
-
-    邊緣抽屜是一個使用 [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) HTML 標籤的雛型框架；內部的標題、動作列需搭配其他元件，可以參考底部的《[組合應用](#composition-close)》章節。
+    邊緣抽屜使用 [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) HTML 標籤。
 
 #=======================================================
 # 設定
@@ -46,7 +44,7 @@ Variables:
 
 Example:
     HTML: |
-        <dialog class="[[ts-app-drawer]] is-right is-small" open>
+        <dialog class="[[ts-app-drawer]] is-end is-small" open>
             <div class="content">
                 <div class="{{ts-content}}">
                     <div class="{{ts-header}}">筆記 #52</div>
@@ -60,6 +58,20 @@ Example:
         </dialog>
 
 Definitions:
+    - Title: 結構
+      Description:
+      Sections:
+          - Title: 內容區塊
+            Anchor: Content
+            Description: |
+                邊緣抽屜是一個雛型框架，主要內容擺放於內容區塊裡。標題、動作列需搭配其他元件，請參考底部的《[組合應用](#composition-close)》章節。
+            AttachedHTML: |
+                <dialog class="ts-app-drawer" open>
+                    <div class="[[content]]">
+                        <!-- ... -->
+                    </div>
+                </dialog>
+
     - Title: 狀態
       Description:
       Sections:
@@ -68,10 +80,12 @@ Definitions:
             Description: |
                 被指定 `[open]` 屬性的邊緣抽屜會出現在畫面上。
             HTML: |
-                <dialog class="ts-app-drawer is-left" [[open]]>
+                <dialog class="ts-app-drawer is-start" [[open]]>
                     <div class="content">
                         <div class="{{ts-content}}">
-                            這個邊緣抽屜是打開的 ✨
+                            看似最重要的東西卻沒能被妥善利用，<br>
+                            沒有人能發現這一點，因為他們早已活在過去，<br>
+                            才剛開始的序章卻被放在頁尾。
                         </div>
                     </div>
                 </dialog>
@@ -81,22 +95,19 @@ Definitions:
       Sections:
           - Title: 位置
             Anchor: Positions
-            Description: 使用邊緣抽屜時必須指定位置，可用的位置有：`is-right`（右側）、`is-left`（左側）和 `is-bottom`（底部）。
-            Remove:
-                - <div class="ts-space"></div>
+            Description: 使用邊緣抽屜時必須指定位置，可用的位置有：`is-start`（起始左側）、`is-end`（結束右側）和 `is-bottom`（底部）。
             HTML: |
                 <dialog class="ts-app-drawer [[is-bottom]]" open>
                     <div class="content">
                         <div class="ts-content">
-                            <div class="{{ts-header}} is-large">最新消息</div>
+                            <div class="{{ts-header}}">最新消息</div>
                             <div class="{{ts-iconset}} {{has-top-spaced}}">
-                                <span class="{{ts-icon}} is-wand-magic-sparkles-icon"></span>
+                                <span class="{{ts-icon}} is-newspaper-icon"></span>
                                 <div class="content">
                                     <div class="title">新的魔法已可供學習</div>
                                     <div class="text">現在前往交誼廳就可以打聽相關情報。</div>
                                 </div>
                             </div>
-                            <button class="{{ts-button}} is-fluid is-outlined {{has-top-spaced-large}}">關閉</button>
                         </div>
                     </div>
                 </dialog>
@@ -134,7 +145,7 @@ Definitions:
             Remove:
                 - <div class="ts-space"></div>
             HTML: |
-                <dialog class="ts-app-drawer [[is-small]] is-right" open>
+                <dialog class="ts-app-drawer [[is-small]] is-end" open>
                     <div class="content">
                         <div class="{{ts-content}} is-center-aligned">
                             小型抽屜
@@ -142,7 +153,7 @@ Definitions:
                     </div>
                 </dialog>
                 <div class="ts-space"></div>
-                <dialog class="ts-app-drawer is-right" open>
+                <dialog class="ts-app-drawer is-end" open>
                     <div class="content">
                         <div class="{{ts-content}} is-center-aligned">
                             預設抽屜
@@ -150,10 +161,39 @@ Definitions:
                     </div>
                 </dialog>
                 <div class="ts-space"></div>
-                <dialog class="ts-app-drawer [[is-large]] is-right" open>
+                <dialog class="ts-app-drawer [[is-large]] is-end" open>
                     <div class="content">
                         <div class="{{ts-content}} is-center-aligned">
                             大型抽屜
+                        </div>
+                    </div>
+                </dialog>
+
+          - Title: 類快顯的
+            Anchor: Modal
+            Description: 讓邊緣抽屜看起來像快顯視窗並且與螢幕邊緣保留一定的邊距。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <dialog class="ts-app-drawer is-end [[is-modal]]" open>
+                    <div class="content">
+                        <div class="ts-content">
+                            <div class="{{ts-header}}">抽屜標題</div>
+                            <p>末日的天災抹去了大部分人類的所有文明，使得少數人在有毒粉塵以及火山灰中勉強生活。在地球遭遇毀滅後，《人類》成了最黑暗的代名詞。</p>
+                        </div>
+                    </div>
+                </dialog>
+
+          - Title: 全螢幕的
+            Anchor: Fullscreen
+            Description: |
+                讓邊緣抽屜填滿整個畫面，適合搭配[響應式設計](./responsive.html)改善抽屜在行動裝置上的顯示方式。
+            HTML: |
+                <dialog class="ts-app-drawer [[is-fullscreen]]" open>
+                    <div class="content">
+                        <div class="{{ts-content}}">
+                            <div class="{{ts-header}}">將二次元文化融入三次元。</div>
+                            <p>現實生活應該像二次元那樣充滿新鮮的挑戰卻又十分地美好，而計畫這樣的未來正在我們的目標之一。我們正試著找尋多個不同的方式實現這樣的夢想，即便現在不可行，我們也永不放棄。</p>
                         </div>
                     </div>
                 </dialog>
@@ -167,23 +207,21 @@ Definitions:
             Remove:
                 - <div class="ts-space is-huge"></div>
             HTML: |
-                <dialog class="ts-app-drawer is-right is-small" open>
+                <dialog class="ts-app-drawer is-end is-small" open>
                     <div class="content">
                         <div class="{{ts-content}}">
                             <div class="{{ts-grid}}">
                                 <div class="column is-fluid">
-                                    <div class="{{ts-header}} is-large">備註事項</div>
+                                    <div class="{{ts-header}}">備註事項</div>
                                 </div>
                                 <div class="column">
-                                    <button class="[[{{ts-close}}]] is-large"></button>
+                                    <button class="[[{{ts-close}}]] is-secondary is-large"></button>
                                 </div>
                             </div>
-                            <div class="{{ts-content}}">
-                                <div class="{{ts-list}} is-unordered">
-                                    <div class="item">蘆森詩音</div>
-                                    <div class="item">天野悟美</div>
-                                    <div class="item">佐藤綾</div>
-                                </div>
+                            <div class="{{ts-list}} is-unordered {{has-top-spaced}}">
+                                <div class="item">蘆森詩音</div>
+                                <div class="item">天野悟美</div>
+                                <div class="item">佐藤綾</div>
                             </div>
                         </div>
                     </div>
@@ -192,10 +230,8 @@ Definitions:
           - Title: 篩選條件
             Anchor: Composition Filter
             Description: 側邊的邊緣抽屜裡面可以擺放部份表單元件，例如：[輸入欄位](./input.html)。
-            Remove:
-                - <div class="ts-space"></div>
             HTML: |
-                <dialog class="ts-app-drawer is-left is-small" open>
+                <dialog class="ts-app-drawer is-start is-small" open>
                     <div class="content">
                         <div class="{{ts-content}}">
                             <div class="{{ts-header}} is-large">篩選條件</div>
@@ -217,11 +253,36 @@ Definitions:
                     </div>
                 </dialog>
 
+          - Title: 標題動作列
+            Anchor: Composition Action
+            Description: 透過[網格系統](./grid.html)在抽屜標題區塊擺放標題與返回、關閉按鈕。
+            HTML: |
+                <dialog class="ts-app-drawer is-end is-modal" open>
+                    <div class="content">
+                        <div class="ts-content">
+                            <div class="[[{{ts-grid}}]] is-middle-aligned">
+                                <div class="column">
+                                    <button class="{{ts-button}} is-icon is-ghost">
+                                        <span class="{{ts-icon}} is-arrow-left-icon"></span>
+                                    </button>
+                                </div>
+                                <div class="column is-fluid">
+                                    <div class="{{ts-header}}">抽屜標題</div>
+                                </div>
+                                <div class="column">
+                                    <button class="{{ts-button}} is-icon is-ghost">
+                                        <span class="{{ts-icon}} is-xmark-icon"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <p>這裡可以擺放其他文字內容。</p>
+                        </div>
+                    </div>
+                </dialog>
+
           - Title: 底部選單
             Anchor: Composition Bottom Sheet
             Description: 貼齊底部的邊緣抽屜再搭配一個[選單](./menu.html)就可以達成像行動裝置的底部彈出選單元件。
-            Remove:
-                - <div class="ts-space"></div>
             HTML: |
                 <dialog class="ts-app-drawer is-bottom" open>
                     <div class="content">
@@ -248,14 +309,12 @@ Definitions:
           - Title: 以按鈕控制抽屜
             Anchor: Dialog Trigger
             Description: |
-                你可以點擊有 `[data-dialog]` 的按鈕來開、關對應 `[id]` 的邊緣抽屜。
-            Remove:
-                - <div class="ts-space"></div>
+                點擊帶有 `[data-dialog]` 屬性的按鈕可以開、關對應 `[id]` 的邊緣抽屜。
             HTML: |
                 <button class="{{ts-button}}" [[data-dialog]]="drawer">
                     打開範例抽屜 ✨
                 </button>
-                <dialog class="ts-app-drawer is-right is-small" id="drawer">
+                <dialog class="ts-app-drawer is-end is-small" id="drawer">
                     <div class="content">
                         <div class="{{ts-content}}">
                             <div class="{{ts-header}}">抽屜標題</div>
