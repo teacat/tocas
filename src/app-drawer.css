@@ -21,6 +21,9 @@ dialog.ts-app-drawer {
     overflow-y: auto;
     height: auto;
     width: auto;
+    outline: none;
+    align-items: flex-start;
+    flex-direction: column;
     z-index: var(--ts-z-app-drawer);
 }
 
@@ -41,7 +44,8 @@ dialog.ts-app-drawer::backdrop {
     background: var(--ts-gray-50);
     box-shadow: var(--ts-elevated-shadow-drawer);
     width: var(--width);
-    overflow: hidden;
+    max-width: 100%;
+    flex: 1;
 }
 
 /* ==========================================================================
@@ -62,20 +66,21 @@ dialog.ts-app-drawer:popover-open {
  */
 
 .ts-app-drawer.is-bottom {
-    align-items: flex-end;
-    justify-content: center;
-}
-
-.ts-app-drawer.is-bottom {
     --width: 100%;
+
+    flex-direction: row;
+    align-items: flex-end;
 }
 
-.ts-app-drawer.is-right {
-    justify-content: flex-end;
+.ts-app-drawer.is-bottom > .content {
 }
 
-.ts-app-drawer.is-left {
-    justify-content: flex-start;
+.ts-app-drawer.is-end {
+    align-items: flex-end;
+}
+
+.ts-app-drawer.is-start {
+    align-items: flex-start;
 }
 
 /**
@@ -88,4 +93,24 @@ dialog.ts-app-drawer:popover-open {
 
 .ts-app-drawer.is-large {
     --width: 580px;
+}
+
+/**
+ * Modal
+ */
+
+.ts-app-drawer.is-modal {
+    padding: 1rem;
+}
+
+.ts-app-drawer.is-modal > .content {
+    border-radius: var(--ts-border-radius-container);
+}
+
+/**
+ * Fullscreen
+ */
+
+.ts-app-drawer.is-fullscreen {
+    --width: 100%;
 }
