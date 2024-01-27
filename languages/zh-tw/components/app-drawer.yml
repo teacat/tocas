@@ -8,9 +8,7 @@ Description: 從側邊或底部彈出的延伸內容空間。
 Intro: |
     這是一個專為應用程式設計的元件。
 
-    邊緣抽屜使用 [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) HTML 標籤，因此支援瀏覽器原生的 [`.showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal) 與 [`.close()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/close) 開關抽屜。邊緣抽屜關閉時會觸發 [`close`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/close_event) 或 [`cancel`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/cancel_event) 的 JavaScript 事件。
-
-    這個元件是一個雛型框架，如果希望在其中建立標題、頁腳跟動作按鈕，則需自行搭配其他元件，可以參考底部的組合應用章節。
+    邊緣抽屜是一個使用 [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) HTML 標籤的雛型框架；內部的標題、動作列需搭配其他元件，可以參考底部的《[組合應用](#composition-close)》章節。
 
 #=======================================================
 # 設定
@@ -26,10 +24,9 @@ Type: Article
 
 Properties:
     - Name: "[data-dismissible]"
-      Default: "true"
+      Default: true
       Target: .ts-app-drawer
-      Description: |
-          使用者是否能透過 `Esc` 鍵或是點擊視窗外的區域關閉邊緣抽屜。
+      Description: 使用者是否能透過 `Esc` 鍵或是點擊抽屜外的區域關閉邊緣抽屜。
 
 #=======================================================
 # 變數
@@ -39,8 +36,8 @@ Properties:
 Variables:
     - Name: --width
       Default: 380px
-      Description: 邊緣抽屜的內容寬度。
       Target: .ts-app-drawer
+      Description: 邊緣抽屜的內容寬度。
 
 #=======================================================
 # 基本樣式
@@ -49,46 +46,39 @@ Variables:
 
 Example:
     HTML: |
-        <dialog class="[[ts-app-drawer]] is-right" open>
+        <dialog class="[[ts-app-drawer]] is-right is-small" open>
             <div class="content">
                 <div class="{{ts-content}}">
-                    <div class="{{ts-header}} is-large">筆記 #52</div>
+                    <div class="{{ts-header}}">筆記 #52</div>
                     <p>我不想失去這份心情，我什麼都想嘗試。
                     當我找到了這份熱情的時候，整個世界瞬間變得亮麗無比。</p>
                     <p>但你卻嘆了氣並說道：「正因為我愛你，
                     所以我不得不告訴你；你也差不多該長大了吧？」</p>
-                    <button class="{{ts-button}} is-fluid is-outlined">確定</button>
+                    <button class="{{ts-button}} is-fluid is-outlined">關閉</button>
                 </div>
             </div>
         </dialog>
 
 Definitions:
-    - Title: 外觀
+    - Title: 狀態
       Description:
       Sections:
-          - Title: 可見的
-            Anchor: Visible
-            Description: 當邊緣抽屜被指定 `[open]` 的時候，瀏覽器就會顯示其內容；但我們建議透過 [`.showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal) 打開抽屜，而不是自己控制 `[open]` 屬性。
-            Remove:
-                - <div class="ts-space is-big"></div>
+          - Title: 打開的
+            Anchor: Open
+            Description: |
+                被指定 `[open]` 屬性的邊緣抽屜會出現在畫面上。
             HTML: |
                 <dialog class="ts-app-drawer is-left" [[open]]>
                     <div class="content">
                         <div class="{{ts-content}}">
-                            <div class="{{ts-grid}}">
-                                <div class="column is-fluid">
-                                    <div class="{{ts-header}} is-large">我們的初衷</div>
-                                </div>
-                                <div class="column">
-                                    <button class="{{ts-close}} is-large is-secondary"></button>
-                                </div>
-                            </div>
-                            <p>這個網站初衷就是希望這些事情不再繼續發生，而那一天會讓這個網站變得不再有用。就目前如此，我們沒有足夠的力量改變這一切，但仍希望能以觀測者的角度讓你明瞭世界上發生了什麼事。</p>
-                            <div class="ts-space is-big"></div>
+                            這個邊緣抽屜是打開的 ✨
                         </div>
                     </div>
                 </dialog>
 
+    - Title: 外觀
+      Description:
+      Sections:
           - Title: 位置
             Anchor: Positions
             Description: 使用邊緣抽屜時必須指定位置，可用的位置有：`is-right`（右側）、`is-left`（左側）和 `is-bottom`（底部）。
@@ -177,7 +167,7 @@ Definitions:
             Remove:
                 - <div class="ts-space is-huge"></div>
             HTML: |
-                <dialog class="ts-app-drawer is-right" open>
+                <dialog class="ts-app-drawer is-right is-small" open>
                     <div class="content">
                         <div class="{{ts-content}}">
                             <div class="{{ts-grid}}">
@@ -185,13 +175,15 @@ Definitions:
                                     <div class="{{ts-header}} is-large">備註事項</div>
                                 </div>
                                 <div class="column">
-                                    <button class="[[{{ts-close}}]] is-large is-secondary"></button>
+                                    <button class="[[{{ts-close}}]] is-large"></button>
                                 </div>
                             </div>
-                            <div class="{{ts-list}} is-unordered {{has-vertically-spaced}}">
-                                <div class="item">蘆森詩音</div>
-                                <div class="item">天野悟美</div>
-                                <div class="item">佐藤綾</div>
+                            <div class="{{ts-content}}">
+                                <div class="{{ts-list}} is-unordered">
+                                    <div class="item">蘆森詩音</div>
+                                    <div class="item">天野悟美</div>
+                                    <div class="item">佐藤綾</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -227,7 +219,7 @@ Definitions:
 
           - Title: 底部選單
             Anchor: Composition Bottom Sheet
-            Description: 貼齊底部的邊緣抽屜再搭配一個[選單](./menu.html)就可以達成像行動裝置那樣的 Bottom Sheet 元件。為了讓使用者更方便關閉抽屜，我們建議你再額外加上一個[按鈕](./button.html)可供手動關閉。
+            Description: 貼齊底部的邊緣抽屜再搭配一個[選單](./menu.html)就可以達成像行動裝置的底部彈出選單元件。
             Remove:
                 - <div class="ts-space"></div>
             HTML: |
@@ -249,27 +241,39 @@ Definitions:
                     </div>
                 </dialog>
 
-    - Title: JavaScript 模組
-      Description:
+    - Title: JavaScript 功能
+      Description: |
+          邊緣抽屜被關閉時，會觸發 [`close`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/close_event) 事件。若使用者透過 `Esc` 鍵或是點擊抽屜外的區域關閉邊緣抽屜，則會觸發額外的 [`cancel`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/cancel_event) 事件。
       Sections:
-          - Title: 切換抽屜可見度
-            Anchor: Module Invoke
+          - Title: 以按鈕控制抽屜
+            Anchor: Dialog Trigger
             Description: |
-                點擊有 `[data-invoke="名稱"]` 的元素就能開關對應 `[id="名稱"]` 的邊緣抽屜，適合用於簡單的情境。
+                你可以點擊有 `[data-dialog]` 的按鈕來開、關對應 `[id]` 的邊緣抽屜。
             Remove:
                 - <div class="ts-space"></div>
             HTML: |
-                <button class="{{ts-button}} is-start-icon" [[data-invoke]]="drawer">
-                    <span class="{{ts-icon}} is-window-restore-icon"></span> 打開視窗
+                <button class="{{ts-button}}" [[data-dialog]]="drawer">
+                    打開範例抽屜 ✨
                 </button>
                 <dialog class="ts-app-drawer is-right is-small" id="drawer">
                     <div class="content">
-                        <div class="{{ts-content}} {{has-vertically-spaced}}">
-                            點擊關閉按鈕或是灰色區域來關閉抽屜。
-                            <button class="{{ts-button}} {{has-top-spaced}}" [[data-invoke]]="drawer">
-                                關閉
-                            </button>
+                        <div class="{{ts-content}}">
+                            <div class="{{ts-header}}">抽屜標題</div>
+                            <p>點擊關閉按鈕或是灰色區域來關閉抽屜。</p>
+                        </div>
+                        <div class="{{ts-content}}">
+                            <button class="{{ts-button}}" [[data-dialog]]="drawer">關閉</button>
                         </div>
                     </div>
                 </dialog>
 
+          - Title: 以 JavaScript 控制抽屜
+            Anchor: Js Trigger
+            Description: |
+                透過瀏覽器原生的 [`.showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal) 函式打開抽屜，若抽屜本身已有 `[open]` 屬性，這個函式將不會有任何效果。開啟之後可以呼叫 [`.close()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/close) 函式關閉抽屜。
+            AttachedHTML: |
+                // 打開 #drawer 邊緣抽屜。
+                document.getElementById('drawer').showModal();
+
+                // 關閉 #modal 邊緣抽屜。
+                document.getElementById('drawer').close();

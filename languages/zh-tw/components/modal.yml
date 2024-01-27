@@ -6,9 +6,7 @@
 Title: 快顯視窗
 Description: 跳出強制性互動的視窗提供附屬資訊或是詢問。
 Intro: |
-    快顯視窗使用 [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) HTML 標籤，因此支援瀏覽器原生的 [`.showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal) 與 [`.close()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/close) 開關視窗。快顯視窗關閉時會觸發 [`close`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/close_event) 或 [`cancel`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/cancel_event) 的 JavaScript 事件。
-
-    這個元件是一個雛型框架，如果希望在其中建立標題、頁腳跟動作按鈕，則需自行搭配其他元件，可以參考底部的組合應用章節。
+    快顯視窗是一個使用 [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) HTML 標籤的雛型框架；內部的標題、動作列需搭配其他元件，可以參考底部的《[組合應用](#composition-close)》章節。
 
 #=======================================================
 # 設定
@@ -58,50 +56,41 @@ Example:
                 </div>
             </div>
         </dialog>
-#    HTML: |
-#        <dialog class="[[ts-modal]]" open>
-#            <div class="content">
-#                <div class="{{ts-content}} is-center-aligned is-vertically-padded">
-#                    <div class="{{ts-header}} is-icon {{has-bottom-spaced}}">
-#                        <span class="{{ts-icon}} is-circle-exclamation-icon"></span>
-#                        你正要重新啟動伺服器
-#                    </div>
-#                    這個手續將會花上至少半小時，在這段期間內你將無法執行任何動作。
-#                </div>
-#                <div class="{{ts-divider}}"></div>
-#                <div class="{{ts-content}} is-tertiary">
-#                    <button class="{{ts-button}} is-fluid">了解</button>
-#                </div>
-#            </div>
-#        </dialog>
 
 Definitions:
-    - Title: 外觀
+    #- Title: 結構
+    #  Description:
+    #  Sections:
+    #      - Title: 內容區塊
+    #        Anchor: Content
+    #        Description: |
+    #            快顯視窗是一個雛型框架，內容都擺放在內容區塊裡；而標題、動作列需搭配其他元件，可以參考下方的《[組合應用](#composition-close)》章節。
+    #        AttachedHTML: |
+    #            <dialog class="ts-modal" open>
+    #                <div class="[[content]]">
+    #                    <!-- 在這裡擺放內容 ✨ -->
+    #                </div>
+    #            </dialog>
+
+    - Title: 狀態
       Description:
       Sections:
-          - Title: 可見的
-            Anchor: Visible
-            Description: 當快顯視窗被指定 `[open]` 時，瀏覽器就會顯示其內容；但我們建議透過 [`.showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal) 打開視窗，而不是自己控制 `[open]` 屬性。
+          - Title: 打開的
+            Anchor: Open
+            Description: |
+                被指定 `[open]` 屬性的快顯視窗會出現在畫面上。
             HTML: |
                 <dialog class="ts-modal" [[open]]>
                     <div class="content">
                         <div class="{{ts-content}}">
-                            <div class="{{ts-grid}} is-middle-aligned">
-                                <div class="column is-fluid">
-                                    <div class="{{ts-header}}">伊繁星最高協議</div>
-                                </div>
-                                <div class="column">
-                                    <button class="{{ts-close}} is-large"></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="{{ts-divider}}"></div>
-                        <div class="{{ts-content}}">
-                            我們希望透過這個協議能夠避免未來誤入歧途朝著並非當初的理想道路前進；顧名思義，最高協議中的所有定義都是旗下服務所必須遵循的核心條件，而且沒有任何規則可以覆蓋這些最上級的規定。這些協議在定制的時候參考了許多世界人權宣言的部份。
+                            這個快顯視窗是打開的 ✨
                         </div>
                     </div>
                 </dialog>
 
+    - Title: 外觀
+      Description:
+      Sections:
           - Title: 尺寸
             Anchor: Sizes
             Description: |
@@ -161,9 +150,53 @@ Definitions:
                     </div>
                 </dialog>
 
+          - Title: 全螢幕的
+            Anchor: Fullscreen
+            Description: |
+                讓快顯視窗填滿整個畫面，適合搭配[響應式設計](./responsive.html)改善視窗在行動裝置上的顯示方式。
+            HTML: |
+                <dialog class="ts-modal [[is-fullscreen]]" open>
+                    <div class="content">
+                        <div class="{{ts-content}} is-tertiary">
+                            <div class="{{ts-header}}">建立社群網路與情感社交的聯繫。</div>
+                        </div>
+                        <div class="{{ts-divider}}"></div>
+                        <div class="{{ts-content}}">
+                            建立人與人之間的聯繫並提供一個良好的內容創作環境是我們的首要目標。任何人都應該有不受拘束的創作自由，這也是我們最致力發展的目標。其次是協助推廣創作者們得到更大的迴響進而推動整個產業的發展。
+                        </div>
+                        <div class="{{ts-divider}}"></div>
+                        <div class="{{ts-content}} is-tertiary">
+                            <button class="{{ts-button}}">關閉</button>
+                        </div>
+                    </div>
+                </dialog>
+
     - Title: 組合應用
       Description:
       Sections:
+          - Title: 關閉按鈕
+            Anchor: Composition Close
+            Description: 在視窗標題旁邊加上關閉按鈕。
+            HTML: |
+                <dialog class="ts-modal" open>
+                    <div class="content">
+                        <div class="{{ts-content}}">
+                            <div class="{{ts-grid}}">
+                                <div class="column is-fluid">
+                                    <div class="{{ts-header}}">伊繁星最高協議</div>
+                                </div>
+                                <div class="column">
+                                    <button class="[[{{ts-close}}]] is-large"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="{{ts-divider}}"></div>
+                        <div class="{{ts-content}}">
+                            我們希望透過這個協議能夠避免未來誤入歧途朝著並非當初的理想道路前進；顧名思義，最高協議中的所有定義都是旗下服務所必須遵循的核心條件，而且沒有任何規則可以覆蓋這些最上級的規定。這些協議在定制的時候參考了許多世界人權宣言的部份。
+                        </div>
+                    </div>
+                </dialog>
+
           - Title: 輸入視窗
             Anchor: Composition Prompt
             Description: 結合[輸入欄位](./input.html)可以打造出一個等待使用者輸入資料的視窗。
@@ -212,7 +245,7 @@ Definitions:
           - Title: 可捲動內容
             Anchor: Composition Scrollable
             Description: |
-                賦予 `overflow: auto` 樣式給過長的[內容區塊](./content.html)讓其文字過長時可以捲動。
+                賦予 `overflow-y: auto` 樣式給過長的[內容區塊](./content.html)讓其文字過長時可以捲動。
             HTML: |
                 <dialog class="ts-modal" open>
                     <div class="content">
@@ -221,9 +254,7 @@ Definitions:
                         </div>
                         <div class="{{ts-divider}}"></div>
                         <div class="[[{{ts-content}}]]" style="max-height: 170px; overflow-y: auto">
-                            <p>我們希望透過這個協議能夠避免未來誤入歧途朝著並非當初的理想道路前進；顧名思義，最高協議中的所有定義都是旗下服務所必須遵循的核心條件，而且沒有任何規則可以覆蓋這些最上級的規定。這些協議在定制的時候參考了許多世界人權宣言的部份。</p>
-                            <p>在探討之後，這個協議主要能夠被區分為三個環節，分別是：「設計」時所該顧慮到的全面盤局、自我期許還有看待事物的「態度」，以及最為重要的「執行」手段。但無論如何—</p>
-                            <p>設計的時候應該為全民、大眾所設計、運作並傾聽；向著夢想的態度應該永不放棄；對事執行的時候則莫忘初衷。</p>
+                            <p>我們希望透過這個協議能夠避免未來誤入歧途朝著並非當初的理想道路前進；顧名思義，最高協議中的所有定義都是旗下服務所必須遵循的核心條件，而且沒有任何規則可以覆蓋這些最上級的規定。這些協議在定制的時候參考了許多世界人權宣言的部份。在探討之後，這個協議主要能夠被區分為三個環節，分別是：「設計」時所該顧慮到的全面盤局、自我期許還有看待事物的「態度」，以及最為重要的「執行」手段。但無論如何—設計的時候應該為全民、大眾所設計、運作並傾聽；向著夢想的態度應該永不放棄；對事執行的時候則莫忘初衷。</p>
                         </div>
                         <div class="{{ts-divider}}"></div>
                         <div class="{{ts-content}}">
@@ -239,31 +270,39 @@ Definitions:
                     </div>
                 </dialog>
 
-    - Title: JavaScript 模組
-      Description:
+    - Title: JavaScript 功能
+      Description: |
+          快顯視窗被關閉時，會觸發 [`close`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/close_event) 事件。若使用者透過 `Esc` 鍵或是點擊視窗外的區域關閉快顯視窗，則會觸發額外的 [`cancel`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/cancel_event) 事件。
       Sections:
-          - Title: 開關視窗
-            Anchor: Module Invoke
+          - Title: 以按鈕控制視窗
+            Anchor: Dialog Trigger
             Description: |
-                點擊帶有 `[data-invoke="名稱"]` 的元素可以開關對應 `[id="名稱"]` 的快顯視窗，適用於不想額外撰寫 JavaScript 程式碼的情境。
+                你可以點擊有 `[data-dialog]` 的按鈕來開、關對應 `[id]` 的快顯視窗。
             Remove:
                 - <div class="ts-space"></div>
             HTML: |
-                <button class="{{ts-button}}" [[data-invoke]]="modal">
+                <button class="{{ts-button}}" [[data-dialog]]="modal">
                     打開範例視窗 ✨
                 </button>
                 <dialog class="ts-modal" id="modal">
                     <div class="content">
                         <div class="{{ts-content}}">
                             <div class="{{ts-header}}">視窗標題</div>
+                            <p>點擊關閉按鈕或是灰色區域來關閉視窗。</p>
                         </div>
-                        <div class="{{ts-divider}}"></div>
                         <div class="{{ts-content}}">
-                            點擊關閉按鈕或是灰色區域來關閉視窗。
-                        </div>
-                        <div class="{{ts-divider}}"></div>
-                        <div class="{{ts-content}} is-tertiary">
-                            <button class="{{ts-button}}" [[data-invoke]]="modal">關閉</button>
+                            <button class="{{ts-button}}" [[data-dialog]]="modal">關閉</button>
                         </div>
                     </div>
                 </dialog>
+
+          - Title: 以 JavaScript 控制視窗
+            Anchor: Js Trigger
+            Description: |
+                透過瀏覽器原生的 [`.showModal()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/showModal) 函式打開視窗，若視窗本身已有 `[open]` 屬性，這個函式將不會有任何效果。開啟之後可以呼叫 [`.close()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDialogElement/close) 函式關閉視窗。
+            AttachedHTML: |
+                // 打開 #modal 快顯視窗。
+                document.getElementById('modal').showModal();
+
+                // 關閉 #modal 快顯視窗。
+                document.getElementById('modal').close();
