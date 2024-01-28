@@ -4,7 +4,7 @@
 #=======================================================
 
 Title: 間隔容器
-Description: 在項目之間自動以空白區隔。
+Description: 自動在項目之間以空白區隔。
 Intro: |
     元件裡的項目會自動以空白區隔，項目會在過寬時自動換行。若希望某個項目可以填滿剩餘空間，請使用[網格系統](./grid.html)。
 
@@ -51,9 +51,9 @@ Definitions:
             Description: 將排列的方向改為上下垂直。
             HTML: |
                 <div class="ts-wrap [[is-vertical]]">
-                    <div class="{{ts-segment}}">片段</div>
-                    <div class="{{ts-segment}}">片段</div>
-                    <div class="{{ts-segment}}">片段</div>
+                    <button class="{{ts-button}}">按鈕</button>
+                    <button class="{{ts-button}}">按鈕</button>
+                    <button class="{{ts-button}}">按鈕</button>
                 </div>
 
           - Title: 水平對齊
@@ -63,21 +63,15 @@ Definitions:
                 - <div class="ts-space"></div>
             HTML: |
                 <div class="ts-wrap [[is-start-aligned]]">
-                    <div class="{{ts-segment}}" style="width: 160px">
-                        置左對齊
-                    </div>
+                    <button class="{{ts-button}}">置左對齊</button>
                 </div>
                 <div class="ts-space"></div>
                 <div class="ts-wrap [[is-center-aligned]]">
-                    <div class="{{ts-segment}}" style="width: 160px">
-                        置中對齊
-                    </div>
+                    <button class="{{ts-button}}">置中對齊</button>
                 </div>
                 <div class="ts-space"></div>
                 <div class="ts-wrap [[is-end-aligned]]">
-                    <div class="{{ts-segment}}" style="width: 160px">
-                        置右對齊
-                    </div>
+                    <button class="{{ts-button}}">置右對齊</button>
                 </div>
 
           - Title: 垂直對齊
@@ -87,37 +81,37 @@ Definitions:
                 - <div class="ts-space"></div>
             HTML: |
                 <div class="ts-wrap [[is-top-aligned]]">
-                    <div class="{{ts-segment}}" style="width: 25%">
+                    <div class="{{ts-card}} {{has-padded}}" style="width: 30%">
                         Consectetur adipiscing elit. In fermentum metus dolor.
                     </div>
-                    <div class="{{ts-segment}}" style="width: 25%">
+                    <div class="{{ts-card}} {{has-padded}}" style="width: 30%">
                         置上對齊
                     </div>
-                    <div class="{{ts-segment}}" style="width: 25%">
+                    <div class="{{ts-card}} {{has-padded}}" style="width: 30%">
                         Consectetur adipiscing elit. In fermentum metus dolor.
                     </div>
                 </div>
                 <div class="ts-space"></div>
                 <div class="ts-wrap [[is-middle-aligned]]">
-                    <div class="{{ts-segment}}" style="width: 25%">
+                    <div class="{{ts-card}} {{has-padded}}" style="width: 30%">
                         Consectetur adipiscing elit. In fermentum metus dolor.
                     </div>
-                    <div class="{{ts-segment}}" style="width: 25%">
+                    <div class="{{ts-card}} {{has-padded}}" style="width: 30%">
                         置中對齊
                     </div>
-                    <div class="{{ts-segment}}" style="width: 25%">
+                    <div class="{{ts-card}} {{has-padded}}" style="width: 30%">
                         Consectetur adipiscing elit. In fermentum metus dolor.
                     </div>
                 </div>
                 <div class="ts-space"></div>
                 <div class="ts-wrap [[is-bottom-aligned]]">
-                    <div class="{{ts-segment}}" style="width: 25%">
+                    <div class="{{ts-card}} {{has-padded}}" style="width: 30%">
                         Consectetur adipiscing elit. In fermentum metus dolor.
                     </div>
-                    <div class="{{ts-segment}}" style="width: 25%">
+                    <div class="{{ts-card}} {{has-padded}}" style="width: 30%">
                         置下對齊
                     </div>
-                    <div class="{{ts-segment}}" style="width: 25%">
+                    <div class="{{ts-card}} {{has-padded}}" style="width: 30%">
                         Consectetur adipiscing elit. In fermentum metus dolor.
                     </div>
                 </div>
@@ -129,18 +123,18 @@ Definitions:
                 - <div class="ts-space"></div>
             HTML: |
                 <div class="ts-wrap [[is-relaxed]]">
-                    <div class="{{ts-segment}}">項目</div>
-                    <div class="{{ts-segment}}">項目</div>
+                    <button class="{{ts-button}}">項目</button>
+                    <button class="{{ts-button}}">項目</button>
                 </div>
                 <div class="ts-space"></div>
                 <div class="ts-wrap">
-                    <div class="{{ts-segment}}">項目</div>
-                    <div class="{{ts-segment}}">項目</div>
+                    <button class="{{ts-button}}">項目</button>
+                    <button class="{{ts-button}}">項目</button>
                 </div>
                 <div class="ts-space"></div>
                 <div class="ts-wrap [[is-compact]]">
-                    <div class="{{ts-segment}}">項目</div>
-                    <div class="{{ts-segment}}">項目</div>
+                    <button class="{{ts-button}}">項目</button>
+                    <button class="{{ts-button}}">項目</button>
                 </div>
 
     - Title: 組合應用
@@ -148,30 +142,32 @@ Definitions:
       Sections:
           - Title: 關聯標籤
             Anchor: Composition Chip
-            Description: 擺放一些可能會換行的元件（如：[關聯標籤](./chip.html)）可以讓他們仍然保持完美的空白間隙。
+            Description: 標籤元件就算換行，也能保持一定的空白間隔。
             HTML: |
                 <div class="ts-wrap is-compact">
                     <div class="[[{{ts-chip}}]]">
-                        <img src="!-user-!" />
-                        Yami Odymel
+                        <img src="!-user-!" /> Yami Odymel
                     </div>
                     <div class="[[{{ts-chip}}]]">
-                        <img src="!-user2-!" />
-                        Henry Wu
+                        <img src="!-user2-!" /> Henry Wu
                     </div>
                     <div class="[[{{ts-chip}}]]">
-                        <img src="!-user-!" />
-                        Sean
+                        <img src="!-user-!" /> Sean
                     </div>
                     <div class="[[{{ts-chip}}]]">
-                        <img src="!-user3-!" />
-                        Ming Tsay
+                        <img src="!-user3-!" /> Ming Tsay
+                    </div>
+                    <div class="[[{{ts-chip}}]]">
+                        <img src="!-user-!" /> Mac Taylor
+                    </div>
+                    <div class="[[{{ts-chip}}]]">
+                        <img src="!-user2-!" /> Tsundere Chen
                     </div>
                 </div>
 
           - Title: 表單欄位
             Anchor: Composition Form
-            Description: 表單的欄位通常會是垂直排列，若希望每個欄位之間都能有空白則間隔容器就會是最佳首選。
+            Description: 透過間隔容器讓表單欄位保持一定空白距離。
             HTML: |
                 <div class="[[{{ts-wrap}}]] is-vertical">
                     <div class="{{ts-text}} is-label">使用者帳號</div>
