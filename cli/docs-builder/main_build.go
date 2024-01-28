@@ -443,7 +443,7 @@ func placeholder(s string) string {
 // markdown 會將傳入的字串從 Markdown 轉為 HTML。
 func markdown(s string) string {
 	content := string(blackfriday.Run([]byte(s)))
-	content = strings.ReplaceAll(content, "<a href", `<a target="_blank" href`)
+	content = strings.ReplaceAll(content, `<a href="h`, `<a target="_blank" href="h`) // https:// 這樣就不會影響到 # anchor
 
 	return content
 }
