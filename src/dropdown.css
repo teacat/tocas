@@ -5,6 +5,7 @@
 .ts-dropdown {
     --object-distance: 0.8rem;
     --min-width: 10rem;
+    --padding-multiplier: 1;
 
     --ts-dropdown-min-width: 0px;
     --ts-dropdown-position: absolute;
@@ -14,7 +15,6 @@
 
 .ts-dropdown .item {
     --indented-padding: 0px;
-    --padding-multiplier: 1;
     --color: inherit;
 }
 
@@ -116,13 +116,20 @@
  * Header
  */
 
-.ts-dropdown .item.is-header {
+.ts-dropdown .header {
     color: var(--ts-gray-500);
+    line-height: 1;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 0.65rem calc(1rem * var(--padding-multiplier));
+    padding-left: calc(1rem * var(--padding-multiplier));
+    gap: var(--object-distance);
     pointer-events: none;
     user-select: none;
 }
 
-.ts-dropdown .item.is-header:hover {
+.ts-dropdown .header:hover {
     cursor: default;
     background: transparent;
 }
@@ -169,14 +176,14 @@
  */
 
 .ts-dropdown.is-separated {
+    --padding-multiplier: 0.8;
+
     gap: 0.25rem;
     padding-left: 0.4rem;
     padding-right: 0.4rem;
 }
 
 .ts-dropdown.is-separated .item {
-    --padding-multiplier: 0.8;
-
     border-radius: var(--ts-border-radius-secondary);
 }
 
