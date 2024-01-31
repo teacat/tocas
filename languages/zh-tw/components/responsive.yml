@@ -17,58 +17,12 @@ Grid: true
 #=======================================================
 
 Definitions:
-    - Title: 前置準備
-      Sections:
-          - Title: 響應式標籤
-            Anchor: Tag
-            Description: |
-                必須在 HTML 的 `<head> .. </head>` 處聲明下列標籤來告訴行動裝置此網頁支援響應式設計。
-            AttachedHTML: |
-                <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-          - Title: 頁面字體縮放
-            Anchor: Scales
-            Description: |
-                Tocas UI 的所有元件字體大小是依賴著網頁基底而定。當網頁字型太小時，不需要變更每個元件的字型，可以直接變更 `<html>` 中的 `font-size` 大小設定。
-
-                <div class="ts-card">
-                    <table class="ts-table is-definition is-celled">
-                        <thead>
-                            <tr>
-                                <th class="is-collapsed"></th>
-                                <th class="is-collapsed">字體大小</th>
-                                <th>適用情境</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="is-collapsed">is-small</td>
-                                <td class="is-collapsed">14px</td>
-                                <td>手機或是行動裝置應用程式。</td>
-                            </tr>
-                            <tr>
-                                <td class="is-collapsed">is-medium</td>
-                                <td class="is-collapsed">15px</td>
-                                <td>預設尺寸，基本的網頁和桌上型電腦的軟體介面。</td>
-                            </tr>
-                            <tr>
-                                <td class="is-collapsed">is-large</td>
-                                <td class="is-collapsed">16px</td>
-                                <td>專注在文字的部落格、商業推廣情境。</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            AttachedHTML: |
-                <!-- 指定 `is-large` 會讓網頁使用 16px 字體基礎 -->
-                <html class="[[is-large]]">
-
     - Title: 響應式系統
       Sections:
           - Title: 中斷點尺寸
             Anchor: Default Breakpoints
             Description: |
-                預設的響應式系統提供這些裝置中斷點：行動裝置（Mobile）、平板（Tablet）、桌上型電腦（Desktop）、大型螢幕（Widescreen）。
+                Tocas UI 預設提供四個裝置中斷點。
 
                 <div class="ts-card">
                     <table class="ts-table is-definition is-celled">
@@ -140,7 +94,7 @@ Definitions:
           - Title: 使用方式
             Anchor: Responsive Usage
             Description: |
-                在 Tocas UI 裡面，透過套用 `中斷點:樣式` 來實現響應式設計。
+               將 `中斷點:樣式` 套用到元素上，就能使用響應式功能。
 
                 <div class="ts-card">
                     <table class="ts-table is-definition is-celled">
@@ -193,7 +147,7 @@ Definitions:
           - Title: 臨時尺寸
             Anchor: Responsive Arbitrary
             Description: |
-                透過方括號 `[尺寸]` 取代原本的中斷點名稱來使用一些沒有意義的尺寸，例如：`123px` 或 `450px` 這種臨時尺寸。
+                透過方括號 `[尺寸]` 取代原本的中斷點名稱，就能使用像 `100px` 或 `450px` 這種臨時尺寸。
 
                 <div class="ts-card">
                     <table class="ts-table is-definition is-celled">
@@ -238,25 +192,10 @@ Definitions:
 
     - Title: 實際應用
       Sections:
-          - Title: 網格系統
-            Anchor: Responsive Grid
-            Description: |
-                欄位所佔的格數寬度可以依據裝置而有所不同。Tocas UI 不是行動優先（Mobile First）框架，在 `mobile` 中斷點設置的樣式**並不會**自動往上套用。
-            HTML: |
-                <div class="{{ts-grid}}">
-                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
-                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
-                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
-                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
-                </div>
-
-
-          - Title: 在 … 時隱藏元素
+          - Title: 在 … 時隱藏/顯示元素
             Anchor: Responsive Visibility
             Description: |
-                透過切換某個元素的 `has-hidden` 樣式，可以在某些裝置上隱藏元素。`has-hidden` 是會隱藏元素的全域輔助函式，更多用法請參考[輔助樣式](./utilities.html)頁面。
-
-                Tocas UI 目前的設計偏好「在什麼時候隱藏」而不是「在什麼時候顯示」，這點需要額外注意。
+                在指定中斷點套用 `has-hidden` [輔助樣式](./utilities.html)就能隱藏元素，善用此功能可以讓元素只在特定裝置顯示。
             HTML: |
                 <!-- 在 tablet, desktop, widescreen 隱藏 -->
                 <!-- 等同於：只在 mobile 顯示 -->
@@ -274,12 +213,24 @@ Definitions:
                 <!-- 等同於：只在 widescreen 顯示 -->
                 <div class="{{ts-badge}} [[desktop-:has-hidden]]">Widescreen 📺</div>
 
+          - Title: 響應網格系統
+            Anchor: Responsive Grid
+            Description: |
+                讓欄位寬度隨著螢幕尺寸變動，但 `mobile` 中斷點設置的樣式**不會**往上沿用，所以你必須指定每個階段的樣式。
+            HTML: |
+                <div class="{{ts-grid}}">
+                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
+                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
+                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
+                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
+                </div>
+
     - Title: 進階功能
       Sections:
           - Title: 自訂中斷點
             Anchor: Responsive Customize
             Description: |
-                透過覆寫 CSS 變數來編輯預設的 Tocas UI 中斷點尺寸、名稱甚至是新增中斷點。這些設定預設寫在 `html` 的 CSS 樣式中。新增中斷點時，必須同時新增兩個 CSS 變數：
+                透過 CSS 變數覆寫、新增 Tocas UI 的中斷點尺寸。新增中斷點時，必須同時指定兩個 CSS 變數：
 
                 <div class="ts-list is-unordered">
                     <div class="item">
@@ -306,9 +257,9 @@ Definitions:
           - Title: 基於容器的中斷點
             Anchor: Responsive Container Query
             Description: |
-                預設的中斷點或尺寸是依據視窗寬度生效，但也能改為依據某個容器的寬度，這個功能也稱作 Container Query。
+                讓元素依據容器的寬度來當作中斷點基準，而非螢幕大小；這也被稱作 Container Query。
 
-                在中斷點或尺寸前面加上 `@`（例如：`@mobile`、`@[400px]+`）這些元素就會依據最鄰近的 `@container` 容器的寬度來做為響應式的判斷依據。
+                在中斷點前面加上 `@` 符號（例如：`@mobile`、`@[400px]+`），元素就會依據最鄰近的 `@container` 容器寬度來做為響應式的判斷依據。
             AttachedHTML: |
                 <div class="{{ts-content}} [[@container]]">
                     <!-- 如果 ts-content 的寬度在 300px 或以上就套用 is-small -->
