@@ -31,6 +31,31 @@ Example:
         </div>
 
 Definitions:
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 啟用的
+            Anchor: Active
+            Description: 表示目前檢視的頁數。
+            HTML: |
+                <div class="ts-pagination">
+                    <a class="item">1</a>
+                    <a class="item [[is-active]]">2</a>
+                    <a class="item">3</a>
+                </div>
+
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 有 `[disabled]` 屬性的頁數會無法互動，若頁數是一個 `<a>` 超連結，則需套用 `.is-disabled` 樣式。
+            HTML: |
+                <div class="ts-pagination">
+                    <button class="item is-back" [[disabled]]>上一頁</button>
+                    <a class="item is-active">1</a>
+                    <a class="item">2</a>
+                    <a class="item">3</a>
+                    <a class="item is-next [[is-disabled]]">下一頁</a>
+                </div>
+
     - Title: 項目
       Description:
       Sections:
@@ -58,39 +83,17 @@ Definitions:
                     <a class="item [[is-last]]">最舊</a>
                 </div>
 
-          - Title: 啟用的
-            Anchor: Active
-            Description: 表示目前檢視的頁數。
-            HTML: |
-                <div class="ts-pagination">
-                    <a class="item">1</a>
-                    <a class="item [[is-active]]">2</a>
-                    <a class="item">3</a>
-                </div>
-
-          - Title: 停用的
-            Anchor: Disabled
-            Description: 表示某個頁數或是功能已經不再可用，例如：已經達到第一頁而無法繼續往回。有 `[disabled]` 屬性的頁數會無法互動，若頁數是一個 `<a>` 超連結，則需套用 `.is-disabled` 樣式。
-            HTML: |
-                <div class="ts-pagination">
-                    <button class="item is-back" [[disabled]]>上一頁</button>
-                    <a class="item is-active">1</a>
-                    <a class="item">2</a>
-                    <a class="item">3</a>
-                    <a class="item is-next [[is-disabled]]">下一頁</a>
-                </div>
-
           - Title: 省略的
             Anchor: Skipped
-            Description: 帶有 `...` 的省略項目會比其他頁數項目還要窄且無法互動，避免佔空間。
+            Description: 用省略符號表示某些頁數不重要，避免佔空間。
             HTML: |
                 <div class="ts-pagination">
                     <a class="item">1</a>
-                    <a class="item [[is-skipped]]"></a>
+                    <span class="item [[is-skipped]]"></span>
                     <a class="item">4</a>
                     <a class="item is-active">5</a>
                     <a class="item">6</a>
-                    <a class="item [[is-skipped]]"></a>
+                    <span class="item [[is-skipped]]"></span>
                     <a class="item">10</a>
                 </div>
 
