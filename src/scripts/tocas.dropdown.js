@@ -45,8 +45,8 @@ class Dropdown {
         return element.dataset.position || "bottom-start"
     }
 
-    // windowClick
-    windowClick = event => {
+    // windowMousedown
+    windowMousedown = event => {
         // 取得這個視窗點擊最鄰近的 Dropdown 模組觸發元素。
         var closest_trigger = event.target.closest("[data-dropdown]")
 
@@ -63,6 +63,11 @@ class Dropdown {
 
         // 如果這個點擊事件是在點擊一個會開關 Dropdown 的觸發元素。
         if (closest_trigger !== null) {
+            //if (document.activeElement === event.target && document.activeElement.tagName === "INPUT") {
+            //    console.log("wow")
+            //    return
+            //}
+
             // 取得這個觸發元素原本會打開的 Dropdown 名稱。
             var name = closest_trigger.dataset.dropdown
 
@@ -163,6 +168,13 @@ class Dropdown {
             target.style.removeProperty("--ts-dropdown-position")
         }
 
+        //if (document.activeElement.closest("[data-dropdown]") === element && document.activeElement.tagName === "INPUT") {
+        //    if (target.classList.contains("is-visible")) {
+        //        return
+        //    }
+        //
+        //}
+
         // 切換目標彈出式選單的可見度。
         target.classList.toggle("is-visible")
 
@@ -181,13 +193,13 @@ class Dropdown {
                 strategy: "fixed",
                 placement: position,
                 middleware: [
+                    // 偏移選單的上下垂直留點空隙。
+                    TocasFloatingUIDOM.offset(8),
+
                     // 選單某面如果沒有空間就被擠兌到另一邊。
                     TocasFloatingUIDOM.flip({
                         crossAxis: false,
                     }),
-
-                    // 偏移選單的上下垂直留點空隙。
-                    TocasFloatingUIDOM.offset(8),
 
                     // 選單會被螢幕左右推移，避免超出畫面空間。
                     TocasFloatingUIDOM.shift(),
