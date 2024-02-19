@@ -1,0 +1,163 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-radio {
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-radio {
+    display: inline-flex;
+    align-items: flex-start;
+    cursor: pointer;
+    user-select: none;
+    color: inherit;
+    vertical-align: middle;
+    margin-top: -3px;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-radio input {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: normal;
+    border-radius: 0;
+    outline: none;
+    box-sizing: border-box;
+    user-select: none;
+
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.ts-radio input {
+    min-height: 1.15rem;
+    min-width: 1.15rem;
+    margin-top: 5px;
+    border-radius: 100rem;
+    border: 1px solid var(--ts-gray-200);
+    background: var(--ts-gray-200);
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+.ts-radio input:checked {
+    background: var(--accent-color, var(--ts-primary-700));
+    background: var(--accent-color, var(--ts-primary-700));
+}
+
+.ts-radio input:focus {
+    outline: 0;
+}
+
+.ts-radio input::after {
+    position: absolute;
+    display: none;
+    content: "\f111";
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: inherit;
+    text-align: center;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    transform: scale(0.5);
+    z-index: 1;
+
+    align-items: center;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+    font-size: 1rem;
+    color:var(--accent-foreground-color, var(--ts-white));
+}
+
+.ts-radio input:checked::after {
+    display: flex;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Disabled
+ */
+
+.ts-radio.is-disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
+}
+
+.ts-radio.is-disabled input {
+    background: var(--ts-gray-200);
+    border-color: var(--ts-gray-200);
+}
+
+/**
+ * Solo
+ */
+
+.ts-radio.is-solo input {
+    margin-right: 0;
+    margin-top: 0;
+}
+
+/**
+ * Negative
+ */
+
+.ts-radio.is-negative input {
+    border-color: var(--ts-negative-600);
+    border-width: 2px;
+}
+
+/**
+ * Sizes
+ */
+
+.ts-radio.is-small input {
+    min-height: 0.95rem;
+    min-width: 0.95rem;
+}
+
+.ts-radio.is-small input::after {
+    font-size: var(--ts-font-size-14px);
+}
+
+.ts-radio.is-small {
+    font-size: var(--ts-font-size-14px);
+}
+
+.ts-radio.is-large input {
+    min-height: 1.3rem;
+    min-width: 1.3rem;
+}
+
+.ts-radio.is-large {
+    font-size: var(--ts-font-size-17px);
+}
+
+.ts-radio.is-large input::after {
+    font-size: var(--ts-font-size-18px);
+}

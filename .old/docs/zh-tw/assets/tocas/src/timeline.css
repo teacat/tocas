@@ -1,0 +1,215 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-timeline {
+    --ts-timeline-top-line-height: 14px;
+    --ts-timeline-top-distance: calc(var(--ts-timeline-top-line-height) + 2px);
+    --ts-timeline-content-distance: 1rem;
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-timeline {
+    display: grid;
+    grid-template-columns: min-content min-content auto;
+    gap: 0rem 1rem;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+/**
+ * Item
+ */
+
+.ts-timeline > .item {
+    display: contents;
+}
+
+.ts-timeline > .item.is-secondary {
+    --ts-timeline-top-line-height: 2px;
+    --ts-timeline-top-distance: calc(var(--ts-timeline-top-line-height) - 4px);
+}
+
+.ts-timeline > .item:first-child,
+.ts-timeline > .item.is-break + .item {
+    --ts-timeline-top-distance: 0;
+}
+
+/**
+ * Aside
+ */
+
+.ts-timeline > .item .aside {
+    margin-top: var(--ts-timeline-top-distance);
+    margin-bottom: 0.5rem;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/**
+ * Indicator
+ */
+
+.ts-timeline > .item .indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    grid-column: 1 / 3;
+}
+
+.ts-timeline > .item .aside + .indicator {
+    grid-column: 2 / 3;
+}
+
+.ts-timeline > .item.is-break + .item.is-secondary .indicator,
+.ts-timeline > .item.is-secondary:first-child .indicator {
+    margin-top: 6px;
+}
+
+.ts-timeline > .item .indicator::before {
+    display: block;
+    content: "";
+    background: var(--ts-gray-300);
+    pointer-events: none;
+    min-height: var(--ts-timeline-top-line-height);
+    width: 2px;
+}
+
+.ts-timeline > .item .indicator::after {
+    display: block;
+    flex: 1;
+    content: "";
+    background: var(--ts-gray-300);
+    pointer-events: none;
+    min-height: 0;
+    height: 100%;
+    width: 2px;
+}
+
+.ts-timeline > .item:last-child .indicator::after {
+    display: none;
+}
+
+.ts-timeline > .item:first-child .indicator::before,
+.ts-timeline > .item.is-break + .item .indicator::before {
+    display: none;
+}
+
+.ts-timeline > .item:last-child .content,
+.ts-timeline > .item.is-break + .item .content {
+    margin-bottom: 0;
+}
+
+/**
+ * Content
+ */
+
+.ts-timeline > .item .content {
+    flex: 1;
+    margin-top: var(--ts-timeline-top-distance);
+    margin-bottom: var(--ts-timeline-content-distance);
+}
+
+/**
+ * Break
+ */
+
+.ts-timeline > .item.is-break {
+    display: flex;
+    grid-column: 1 / 4;
+    height: 4px;
+    background: var(--ts-gray-300);
+}
+
+.ts-timeline > .item.is-break:not(:last-child) {
+    margin-bottom: var(--ts-timeline-content-distance);
+}
+
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Icon Indicator
+ */
+
+.ts-timeline > .item .indicator .ts-icon {
+    aspect-ratio: 1/1;
+    width: 30px;
+    height: 30px;
+    font-size: var(--ts-font-size-14px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    background: var(--ts-gray-100);
+    border-radius: 100rem;
+    color: var(--ts-gray-600);
+}
+
+.ts-timeline > .item.is-secondary .indicator .ts-icon {
+    aspect-ratio: 1/1;
+    width: 16px;
+    height: 16px;
+    background: initial;
+}
+
+.ts-timeline > .item .indicator.is-icon ~ .content::after {
+    width: 3px;
+    left: -45px;
+}
+
+/**
+ * Negative
+ */
+
+.ts-timeline > .item.is-negative .indicator .ts-icon {
+    background: var(--ts-negative-500);
+    color: var(--ts-white);
+}
+
+.ts-timeline > .item.is-negative.is-secondary .indicator .ts-icon {
+    background: initial;
+    color: var(--ts-negative-500);
+}
+
+/**
+ * Active
+ */
+
+.ts-timeline > .item.is-active .indicator .ts-icon {
+    background: var(--accent-color, var(--ts-gray-800));
+    color: var(--accent-foreground-color, var(--ts-gray-50));
+}
+
+.ts-timeline > .item.is-active.is-secondary .indicator .ts-icon {
+    background: initial;
+    color: var(--ts-gray-800);
+}
+
+/**
+ * Disabled
+ */
+
+.ts-timeline > .item.is-disabled :is(.aside, .content, .indicator) {
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
+}
+
+/**
+ * Compact
+ */
+
+.ts-timeline.is-compact {
+    --ts-timeline-content-distance: 0.5rem;
+}

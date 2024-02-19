@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html class="is-secondary">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="stylesheet" href="./../assets/tocas/tocas.min.css" />
+        <script src="./../assets/tocas/tocas.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+        <title>雲端硬碟 - Tocas UI</title>
+        <style type="text/css">
+            .file {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                min-height: 220px;
+            }
+            .file-preview {
+                flex-grow: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            html {
+                --ts-breakpoint-mobile-min: 0px;
+                --ts-breakpoint-mobile-max: 689px;
+
+                --ts-breakpoint-tablet-min: 690px;
+                --ts-breakpoint-tablet-max: 895px;
+
+                --ts-breakpoint-desktop-min: 895px;
+                --ts-breakpoint-desktop-max: 1189px;
+
+                --ts-breakpoint-widescreen-min: 1190px;
+                --ts-breakpoint-widescreen-max: 9999px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="ts-app-layout is-full is-horizontal">
+            <div class="cell" style="width: 275px">
+                <div class="ts-content">
+                    <div class="ts-header is-huge is-heavy" style="line-height: 1.25">我的雲端硬碟<br />儲存空間</div>
+                    <div class="ts-text is-description is-heavy">VERSION 1.3.4</div>
+                </div>
+                <div class="ts-app-sidebar">
+                    <div class="header">捷徑</div>
+                    <a href="#!" class="item"> <span class="ts-icon is-house-icon"></span>首頁 </a>
+                    <a href="#!" class="item"> <span class="ts-icon is-star-icon"></span>已標記 </a>
+                    <div class="header">管理</div>
+                    <a href="#!" class="item is-active"> <span class="ts-icon is-folder-icon"></span>檔案瀏覽 </a>
+                    <a href="#!" class="item"> <span class="ts-icon is-download-icon"></span>下載檔案 </a>
+                    <div class="header">系統</div>
+                    <a href="#!" class="item"> <span class="ts-icon is-cloud-icon"></span>儲存空間 </a>
+                </div>
+                <div class="ts-content">
+                    <div class="ts-divider is-section"></div>
+                    <div class="ts-progress is-tiny">
+                        <div class="bar" style="width: 88%">
+                            <div class="text">88%</div>
+                        </div>
+                    </div>
+                    <div class="ts-text is-small has-top-spaced-small">
+                        目前使用量：14.98 GB<br />
+                        儲存空間配額：17 GB
+                    </div>
+                </div>
+            </div>
+            <div class="cell is-fluid is-vertical">
+                <div class="cell">
+                    <div class="ts-content is-dense">
+                        <div class="ts-grid is-middle-aligned">
+                            <div class="column is-fluid">
+                                <div class="ts-input is-solid is-start-icon" style="max-width: 450px">
+                                    <span class="ts-icon is-magnifying-glass-icon"></span>
+                                    <input type="text" placeholder="搜尋雲端硬碟" />
+                                </div>
+                            </div>
+                            <div class="column">
+                                <button class="ts-button is-circular is-icon is-ghost">
+                                    <span class="ts-icon is-circle-question-icon"></span>
+                                </button>
+                                <button class="ts-button is-circular is-icon is-ghost">
+                                    <span class="ts-icon is-gear-icon"></span>
+                                </button>
+                            </div>
+                            <div class="column">
+                                <div class="ts-avatar is-circular">
+                                    <img src="./../assets/images/user3.png" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cell">
+                    <div class="ts-content is-dense">
+                        <div class="ts-grid is-middle-aligned">
+                            <div class="column is-fluid">
+                                <div class="ts-select is-basic is-large">
+                                    <select>
+                                        <option>我的雲端硬碟</option>
+                                        <option>公開分享的檔案</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="column" style="opacity: 0.6">
+                                <button class="ts-button is-circular is-icon is-ghost">
+                                    <span class="ts-icon is-link-icon"></span>
+                                </button>
+                                <button class="ts-button is-circular is-icon is-ghost">
+                                    <span class="ts-icon is-user-plus-icon"></span>
+                                </button>
+                                <button class="ts-button is-circular is-icon is-ghost">
+                                    <span class="ts-icon is-eye-icon"></span>
+                                </button>
+                                <button class="ts-button is-circular is-icon is-ghost">
+                                    <span class="ts-icon is-trash-icon"></span>
+                                </button>
+                                <button class="ts-button is-circular is-icon is-ghost">
+                                    <span class="ts-icon is-ellipsis-vertical-icon"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cell is-horizontal is-fluid">
+                    <div class="cell is-scrollable is-fluid @container">
+                        <div class="ts-container has-vertically-spaced">
+                            <div class="ts-notice is-outlined is-negative">
+                                <div class="title">空間用盡</div>
+                                <div class="content">你的儲存空間用量已達 88%。儲存空間用盡後，你將無法上傳新檔案。</div>
+                            </div>
+                            <div class="ts-content has-top-spaced">
+                                <div class="ts-text is-label">資料夾</div>
+                            </div>
+                            <div
+                                class="ts-grid @widescreen:is-5-columns @desktop:is-4-columns @tablet:is-3-columns @mobile:is-2-columns has-top-spaced"
+                                style="color: var(--ts-gray-600)"
+                            >
+                                <div class="column">
+                                    <a href="#!" class="ts-segment is-dense">
+                                        <div class="ts-wrap is-middle-aligned">
+                                            <span class="ts-icon is-large is-folder-icon"></span>
+                                            <div class="ts-text is-small">UpdraftPlus</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="column">
+                                    <a href="#!" class="ts-segment is-dense">
+                                        <div class="ts-wrap is-middle-aligned">
+                                            <span class="ts-icon is-large is-folder-icon"></span>
+                                            <div class="ts-text is-small">Tasker</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="column">
+                                    <a href="#!" class="ts-segment is-dense">
+                                        <div class="ts-wrap is-middle-aligned">
+                                            <span class="ts-icon is-large is-folder-icon"></span>
+                                            <div class="ts-text is-small">Struct Crystal</div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="column">
+                                    <a href="#!" class="ts-segment is-dense">
+                                        <div class="ts-wrap is-middle-aligned">
+                                            <span class="ts-icon is-large is-folder-icon"></span>
+                                            <div class="ts-text is-small">對空音商事有限公司</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ts-content has-top-spaced">
+                                <div class="ts-text is-label">檔案</div>
+                            </div>
+                            <div
+                                class="ts-grid @widescreen:is-5-columns @desktop:is-4-columns @tablet:is-3-columns @mobile:is-2-columns has-top-spaced"
+                                style="color: var(--ts-gray-600)"
+                            >
+                                <div class="column">
+                                    <a href="#!" class="file ts-box">
+                                        <div class="file-preview ts-content is-vertically-padded is-center-aligned">
+                                            <span class="ts-icon is-heading is-file-icon"></span>
+                                        </div>
+                                        <div class="ts-divider"></div>
+                                        <div class="ts-content">
+                                            <div class="ts-wrap is-middle-aligned">
+                                                <span class="ts-icon is-large is-file-icon"></span>
+                                                <div class="ts-text is-small">myPassword.kbdx</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="column">
+                                    <a href="#!" class="file ts-box">
+                                        <div class="file-preview ts-image is-covered is-full-height">
+                                            <img src="./../assets/images/4-3.png" />
+                                        </div>
+                                        <div class="ts-divider"></div>
+                                        <div class="ts-content">
+                                            <div class="ts-wrap is-middle-aligned">
+                                                <span class="ts-icon is-large is-image-icon"></span>
+                                                <div class="ts-text is-small">sshot-3395.png</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="column">
+                                    <a href="#!" class="file ts-box">
+                                        <div class="file-preview ts-image is-covered is-full-height">
+                                            <img src="./../assets/images/4-3.png" />
+                                        </div>
+                                        <div class="ts-divider"></div>
+                                        <div class="ts-content">
+                                            <div class="ts-wrap is-middle-aligned">
+                                                <span class="ts-icon is-large is-image-icon"></span>
+                                                <div class="ts-text is-small">sshot-2117.png</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="column">
+                                    <a href="#!" class="file ts-box">
+                                        <div class="file-preview ts-image is-covered is-full-height">
+                                            <img src="./../assets/images/4-3.png" />
+                                        </div>
+                                        <div class="ts-divider"></div>
+                                        <div class="ts-content is-active">
+                                            <div class="ts-wrap is-middle-aligned">
+                                                <span class="ts-icon is-large is-image-icon"></span>
+                                                <div class="ts-text is-small">IMG_20210815.jpg</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="column">
+                                    <a href="#!" class="file ts-box">
+                                        <div class="file-preview ts-content is-vertically-padded is-center-aligned">
+                                            <span class="ts-icon is-heading is-file-icon"></span>
+                                        </div>
+                                        <div class="ts-divider"></div>
+                                        <div class="ts-content">
+                                            <div class="ts-wrap is-middle-aligned">
+                                                <span class="ts-icon is-large is-file-icon"></span>
+                                                <div class="ts-text is-small">繪圖委託單(公版) .pdf</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="column">
+                                    <a href="#!" class="file ts-box">
+                                        <div class="file-preview ts-content is-vertically-padded is-center-aligned">
+                                            <span class="ts-icon is-heading is-file-icon"></span>
+                                        </div>
+                                        <div class="ts-divider"></div>
+                                        <div class="ts-content">
+                                            <div class="ts-wrap is-middle-aligned">
+                                                <span class="ts-icon is-large is-file-icon"></span>
+                                                <div class="ts-text is-small">backup.xml</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="column">
+                                    <a href="#!" class="file ts-box">
+                                        <div class="file-preview ts-content is-vertically-padded is-center-aligned">
+                                            <span class="ts-icon is-heading is-file-icon"></span>
+                                        </div>
+                                        <div class="ts-divider"></div>
+                                        <div class="ts-content">
+                                            <div class="ts-wrap is-middle-aligned">
+                                                <span class="ts-icon is-large is-file-icon"></span>
+                                                <div class="ts-text is-small">2022-02-12.xml</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cell" style="width: 300px">
+                        <div class="ts-content">
+                            <div class="ts-wrap">
+                                <span class="ts-icon is-large is-image-icon"></span>
+                                <div class="ts-header">IMG_20210815.jpg</div>
+                            </div>
+                        </div>
+                        <div class="ts-tab is-fluid">
+                            <a href="#!" class="item is-active">詳細資訊</a>
+                            <a href="#!" class="item">活動</a>
+                        </div>
+                        <div class="ts-divider"></div>
+                        <div class="ts-image">
+                            <img src="./../assets/images/4-3.png" />
+                        </div>
+                        <div class="ts-content">
+                            <div class="ts-header">擁有存取權的使用者</div>
+                            <div class="ts-wrap is-middle-aligned has-top-spaced">
+                                <div class="ts-avatar is-circular">
+                                    <img src="./../assets/images/user.png" />
+                                </div>
+                                <div class="ts-text">Yami Odymel</div>
+                            </div>
+                            <div class="ts-header has-top-spaced">系統屬性</div>
+                            <div class="ts-grid has-top-spaced">
+                                <div class="column is-6-wide"><div class="ts-text is-description">類型</div></div>
+                                <div class="column is-10-wide">圖片</div>
+                                <div class="column is-6-wide"><div class="ts-text is-description">大小</div></div>
+                                <div class="column is-10-wide">76 KB</div>
+                                <div class="column is-6-wide"><div class="ts-text is-description">儲存空間使用量</div></div>
+                                <div class="column is-10-wide">76 KB</div>
+                                <div class="column is-6-wide"><div class="ts-text is-description">擁有者</div></div>
+                                <div class="column is-10-wide">我</div>
+                                <div class="column is-6-wide"><div class="ts-text is-description">上次修改日期</div></div>
+                                <div class="column is-10-wide">我於 2021年3月6日修改過</div>
+                                <div class="column is-6-wide"><div class="ts-text is-description">建立日期</div></div>
+                                <div class="column is-10-wide">2021年3月6日</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,118 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 中央區塊
+Description: 將表單或區塊置中在應用程式的畫面中央。
+Intro: |
+    適合將表單、區塊置中在畫面中央，但這不適合用來置中文字。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="[[ts-app-center]]">
+            <div class="content">
+                <div class="{{ts-card}}">
+                    <div class="{{ts-content}} is-padded">
+                        這個區塊會置中出現在畫面正中央。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+Definitions:
+    - Title: 結構
+      Description:
+      Sections:
+          - Title: 內容區塊
+            Anchor: Content
+            Description: |
+                中央區塊的主要內容擺放於內容區塊裡。
+            AttachedHTML: |
+                <div class="ts-app-center">
+                    <div class="[[content]]">
+                        <!-- ... -->
+                    </div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 登入表單
+            Anchor: Composition Form
+            Description: 登入頁面會有置中的表單與輸入欄位。
+            Since: 4.0.0
+            HTML: |
+                <div class="[[ts-app-center]]">
+                    <div class="content">
+                        <div class="{{ts-card}}" style="width: 270px">
+                            <div class="ts-content">
+                                <div class="{{ts-wrap}} is-vertical">
+                                    <div class="{{ts-text}} is-label">使用者帳號</div>
+                                    <div class="{{ts-input}} is-start-icon">
+                                        <span class="{{ts-icon}} is-user-icon"></span>
+                                        <input type="text" />
+                                    </div>
+                                    <div class="{{ts-text}} is-label">密碼</div>
+                                    <div class="{{ts-input}} is-start-icon">
+                                        <span class="{{ts-icon}} is-lock-icon"></span>
+                                        <input type="password" />
+                                    </div>
+                                    <button class="{{ts-button}} is-fluid">登入</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 初始建議行為
+            Anchor: Composition Startup
+            Description: 某些應用程式啟動的時候，畫面中央會有建議行為或上次開啟的檔案路徑。
+            Since: 4.0.0
+            HTML: |
+                <div class="{{ts-app-layout}} is-vertical">
+                    <div class="cell is-secondary" style="height: 300px">
+                        <div class="[[ts-app-center]]">
+                            <div class="content">
+                                <div class="{{ts-content}} is-rounded is-padded is-tertiary">
+                                    <div class="{{ts-header}}">選擇初始專案…</div>
+                                    <div class="{{ts-list}} is-unordered {{has-top-spaced}}">
+                                        <a class="item">C:\Users\Yami\Spring-2016</a>
+                                        <a class="item">C:\Users\Yami\Caris-Events</a>
+                                        <a class="item">D:\Casino-Dev</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <div class="{{ts-content}}">
+                            <div class="{{ts-app-navbar}} is-fluid">
+                                <a class="item">
+                                    <span class="{{ts-icon}} is-diagram-project-icon"></span>
+                                    <div class="label">專案</div>
+                                </a>
+                                <a class="item">
+                                    <span class="{{ts-icon}} is-bug-icon"></span>
+                                    <div class="label">除錯</div>
+                                </a>
+                                <a class="item">
+                                    <span class="{{ts-icon}} is-gear-icon"></span>
+                                    <div class="label">設定</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>

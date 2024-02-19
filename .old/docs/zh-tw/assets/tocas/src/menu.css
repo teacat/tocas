@@ -1,0 +1,176 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-menu {
+    --object-distance: 0.8rem;
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-menu {
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+}
+
+.ts-menu .item {
+    font-family: inherit;
+    appearance: none;
+    border: unset;
+    font-size: inherit;
+    text-align: inherit;
+    background: transparent;
+    color: inherit;
+    line-height: 1;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    gap: var(--object-distance);
+}
+
+.ts-menu .item .ts-icon {
+    font-size: 1.1em;
+}
+
+.ts-menu .item .ts-badge {
+    margin-left: auto;
+    margin-top: -1px;
+}
+
+.ts-menu .item .ts-avatar {
+    margin-top: -0.4rem;
+    margin-bottom: -0.4rem;
+}
+
+.ts-menu .item .description {
+    font-size: var(--ts-relative-small);
+    color: var(--ts-gray-500);
+
+    text-align: right;
+    margin-left: auto;
+    float: right;
+}
+
+.ts-menu .item:hover {
+    cursor: pointer;
+    background: var(--ts-gray-75);
+}
+
+.ts-menu .item :where(.ts-row, .ts-grid) {
+    flex: 1;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Active
+ */
+
+.ts-menu .item.is-active {
+    background: var(--accent-color, var(--ts-gray-800));
+    color: var(--accent-foreground-color, var(--ts-gray-50));
+}
+
+/**
+ * Disabled
+ */
+
+.ts-menu .item.is-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+}
+
+/**
+ * Selected
+ */
+
+.ts-menu .item.is-selected {
+    background: var(--accent-color, var(--ts-primary-700));
+    color: var(--accent-foreground-color, var(--ts-white));
+}
+
+/**
+ * Separated
+ */
+
+.ts-menu.is-separated {
+    gap: 0.25rem;
+}
+
+.ts-menu.is-separated .item {
+    border-radius: 0.4rem;
+}
+
+/**
+ * Icon
+ */
+
+.ts-menu.is-start-icon .item .ts-icon {
+    min-width: 1rem;
+    text-align: center;
+    display: inline-block;
+    margin-top: 2px;
+}
+
+.ts-menu.is-end-icon .item .ts-icon {
+    margin-left: auto;
+    min-width: 1rem;
+    text-align: center;
+    display: inline-block;
+    margin-top: 2px;
+}
+
+/**
+ * Collapsed
+ */
+
+.ts-menu.is-collapsed {
+    width: fit-content;
+}
+
+/**
+ * Density
+ */
+
+.ts-menu.is-relaxed .item {
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
+}
+
+.ts-menu.is-dense .item {
+    padding-top: 0.65rem;
+    padding-bottom: 0.65rem;
+}
+
+/**
+ * Sizes
+ */
+
+.ts-menu.is-small {
+    font-size: var(--ts-font-size-14px);
+}
+.ts-menu.is-large {
+    font-size: var(--ts-font-size-16px);
+}
+
+/**
+ * Horizontally Padded
+ */
+
+.ts-menu.is-horizontally-padded .item {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+.ts-menu.is-horizontally-very-padded .item {
+    padding-left: 3.5rem;
+    padding-right: 3.5rem;
+}

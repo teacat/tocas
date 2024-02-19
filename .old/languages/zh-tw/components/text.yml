@@ -1,0 +1,214 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 文字
+Description: 以不同的語氣或方式改變文字的呈現方式。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Header
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <span class="[[ts-text]]">Hello, world!</span>
+
+Definitions:
+    - Title: 種類
+      Description:
+      Sections:
+          - Title: 連結
+            Anchor: Link
+            Description: 基本的連結樣式可套用在一般文字上，這能讓使用者一目瞭然這是個超連結。
+            HTML: |
+                <a class="ts-text [[is-link]]">Hello, world!</a>
+
+          - Title: 外部連結
+            Anchor: External Link
+            Description: 以圖示輔助告訴使用者點擊這個連結將會另開視窗。
+            HTML: |
+                關於更多消息，請參閱<a class="ts-text [[is-external-link]]">區塊鏈白皮書</a>。
+
+          - Title: 圖示連結
+            Anchor: Icon Link
+            Description: 在側邊帶有圖示的連結。
+            HTML: |
+                <a class="ts-text [[is-icon-link]]">
+                    <span class="ts-icon is-arrow-left-icon"></span>
+                    返回上一頁
+                </a>
+
+          - Title: 無連結裝飾的
+            Anchor: Undecorated
+            Description: 透過移除連結裝飾，可以移除連結常態時的底線。
+            HTML: |
+                <a class="ts-text [[is-undecorated]]">這個連結</a>只有滑過時才有底線。
+
+          - Title: 程式碼
+            Anchor: Code
+            Description: 展示一個程式碼片段。
+            HTML: |
+                透過 <span class="ts-text [[is-code]]">ts-button</span> 能夠讓你的按鈕看起來特別像按鈕，蒸蚌！
+
+          - Title: 標籤
+            Anchor: Label
+            Description: 作為某個物體的標籤，例如：輸入欄位、數據。
+            HTML: |
+                <span class="ts-text [[is-label]]">使用者帳號</span>
+                <div class="{{ts-input}} {{has-top-spaced-small}}">
+                    <input type="text">
+                </div>
+
+          - Title: 註釋
+            Anchor: Description
+            Description: 用來說明某些行為的小型不起眼文字。
+            HTML: |
+                <button class="{{ts-button}}">儲存變更</button>
+                <div class="ts-text [[is-description]] {{has-top-spaced-small}}">
+                    由於系統快取的緣故，你所造成的變更會在 24 小時之後才生效。
+                </div>
+
+          - Title: 上標與下標
+            Anchor: Sup And Sub
+            Description: 將指定文字偏上或偏下。
+            HTML: |
+                <p>朋友買了一件衣料，綠色的底子帶白色方格，當她拿給我們看時<span class="ts-text is-sup">[8]</span>：</p>
+                <p>「關我屁事？」我說。</p>
+                <p>我們不禁哄堂大笑，同樣的一件衣料<span class="ts-text is-sub">[9]</span>到底關其他人屁事。</p>
+
+          - Title: 快捷鍵的
+            Anchor: Key
+            Description: 類似鍵盤快捷鍵的提示文字。
+            HTML: |
+                按下 <span class="ts-text [[is-key]]">shift</span> + <span class="ts-text [[is-key]]">H</span> 以開始。
+
+          - Title: 螢光標記的
+            Anchor: Mark
+            Description: 讓文字看起來就像被螢光筆標記一樣。
+            HTML: |
+                當我閉上眼，我，什麼都<span class="ts-text [[is-mark]]">看不見</span>
+
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 已經不再作為可參考的文字敘述。
+            HTML: |
+                <span class="ts-text [[is-disabled]]">我們從不懷疑自己是不是沒殺人的殺人犯。</span>
+
+          - Title: 必要的
+            Anchor: Required
+            Description: 以紅色的星號在文字尾端作為必填提示，通常會和標籤一起搭配表示某個輸入欄位不得留空。
+            HTML: |
+                <label class="{{ts-checkbox}}">
+                    <input type="checkbox" checked/>
+                    <span class="ts-text [[is-required]]">我已年滿 18 歲</span>
+                </label>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 可編輯的
+            Anchor: Editable
+            Description: 以虛線和游標提示使用者點擊這段文字也許可以即時編輯。
+            HTML: |
+                金額為：<span class="ts-text [[is-editable]]">$ 3,600</span>
+
+          - Title: 次要的
+            Anchor: Secondary
+            Description: 以較不重要的顏色使文字淡化呈現。
+            HTML: |
+                <span class="ts-text [[is-secondary]]">程式正在執行中…</span>
+
+          - Title: 粗體的
+            Anchor: Bold
+            Description: 以粗體的方式標註某個文字讓使用者知道重點為何。
+            HTML: |
+                是時候按下前面的<span class="ts-text [[is-bold]]">按鈕</span>來揭曉這一切了！
+
+          - Title: 沈重的
+            Anchor: Heavy
+            Description: 以最粗的方式標註某段文字，如果字體不支援這個粗度，那麼這會與「粗體的」有相同外觀。
+            HTML: |
+                <span class="ts-text [[is-heavy]]">噢不</span>！今天是芥末日！
+
+          - Title: 斜體的
+            Anchor: Italic
+            Description: 令文字傾斜，通常用於特別標註某個代名詞或是該注意的事物。
+            HTML: |
+                我不建議你打開後面的那扇門，在那裡面有一個他親自打造的<span class="ts-text [[is-italic]]">世界</span>。
+
+          - Title: 刪除線的
+            Anchor: Deleted
+            Description: 在中間劃條刪除線表示以不再提供參考。
+            HTML: |
+                <span class="ts-text [[is-deleted]]">這段文字已經不再具有參考價值。</span>
+
+          - Title: 底線的
+            Anchor: Underlined
+            Description: 在底部下劃一條線，通常用以標註特別名稱。
+            HTML: |
+                在<span class="ts-text [[is-underlined]]">卡萊迪亞</span>的中央重生區有著一個巨大的水晶。
+
+          - Title: 截斷的
+            Anchor: Truncated
+            Description: 文字超過一定寬度之後就會被截斷而不會換行或溢出，通常父容器需要有個固定寬度。
+            HTML: |
+                <div class="ts-text [[is-truncated]]" style="max-width: 300px">
+                    豔陽高照，前方的道路什麼都看不見。明明不清楚前方的事物，卻感覺自己正在邁向的是一個新世界。
+                </div>
+
+          - Title: 負面的
+            Anchor: Negative
+            Description: 表達這個文字帶有危險、負面的意味，可以用來敘述某個物體的狀態或是顯示錯誤訊息。
+            HTML: |
+                <span class="ts-text [[is-negative]]">伺服器已經損毀！</span>
+
+          - Title: 大、小寫的
+            Anchor: Uppercased And Lowercased
+            Description: 強制使某段文字大小寫，僅能用於英文。
+            HTML: |
+                <div class="ts-text [[is-uppercased]]">Here comes another world.</div>
+                <div class="ts-text [[is-lowercased]]">Here comes another world.</div>
+
+          - Title: 對齊
+            Anchor: Aligns
+            Description: 更改文字的對齊方式。
+            HTML: |
+                <div class="ts-text [[is-start-aligned]]">置起始位置</div>
+                <div class="ts-text [[is-center-aligned]]">置中對齊</div>
+                <div class="ts-text [[is-end-aligned]]">置結束位置</div>
+
+          - Title: 均衡對齊
+            Anchor: Justify Aligned
+            Description: |
+                在文字換行時，自動均衡字元之間的空白寬度來避免結尾有視覺上不平衡的空白。
+            HTML: |
+                <div class="ts-text [[is-justify-aligned]]">
+                    This paragraph uses "Justify" to automatically equalize the gaps between characters for a more balanced and comfortable visual appearance. 這段文字使用了《均衡對齊》能夠自動均衡字元之間的空白，使視覺上看起來更平衡舒適。
+                </div>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改文字的大小。
+            HTML: |
+                <div class="ts-text [[is-tiny]]">(微小) Tocas UI 來自台灣。</div>
+                <div class="ts-text [[is-small]]">(小的) Tocas UI 來自台灣。</div>
+                <div class="ts-text [[is-medium]]">(預設) Tocas UI 來自台灣。</div>
+                <div class="ts-text [[is-large]]">(大的) Tocas UI 來自台灣。</div>
+                <div class="ts-text [[is-big]]">(更大) Tocas UI 來自台灣。</div>
+                <div class="ts-text [[is-huge]]">(巨大) Tocas UI 來自台灣。</div>
+                <div class="ts-text [[is-massive]]">(重量級) Tocas UI 來自台灣。</div>

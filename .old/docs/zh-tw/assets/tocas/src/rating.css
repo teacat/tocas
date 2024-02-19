@@ -1,0 +1,135 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-rating {
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+    --color: var(--accent-color, inherit);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-rating {
+    display: inline-flex;
+    gap: 0.2rem;
+    user-select: none;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-rating :is(.star, .heart) {
+    color: var(--ts-gray-200);
+    text-decoration: none;
+}
+
+.ts-rating :is(.star, .heart).is-active,
+.ts-rating.is-input :is(.star, .heart):checked,
+.ts-rating.is-input :is(.star, .heart):hover {
+    color: var(--color);
+}
+
+/* Issue #924 */
+.ts-rating.is-input :is(.star, .heart):has(~ :is(.star, .heart):hover),
+.ts-rating.is-input :is(.star, .heart):has(~ :is(.star, .heart):checked) {
+    color: var(--color);
+}
+
+.ts-rating.is-yellow {
+    --color: #e3c81b;
+}
+
+.ts-rating.is-red {
+    --color: #ff1100;
+}
+
+.ts-rating :is(.star, .heart)::after,
+.ts-rating :is(.star, .heart)::before {
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+    display: inline;
+    text-decoration: inherit;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+}
+
+.ts-rating .star::after {
+    content: "\f005";
+    z-index: 0;
+}
+
+.ts-rating .heart::after {
+    content: "\f004";
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Half
+ */
+
+.ts-rating .star.is-active.is-half::after {
+    color: var(--ts-gray-200);
+}
+
+.ts-rating .star.is-active.is-half::before {
+    color: var(--color);
+}
+
+.ts-rating .star.is-active.is-half::before {
+    content: "\f089";
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+/**
+ * Disabled
+ */
+
+.ts-rating.is-disabled {
+    pointer-events: none;
+}
+
+/**
+ * Input
+ */
+
+.ts-rating.is-input input {
+    appearance: none;
+    margin: 0;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: color 0.1s ease, opacity 0.1s ease;
+}
+
+.ts-rating.is-input input:hover:not(:focus) ~ input,
+.ts-rating.is-input input:hover:focus ~ input {
+    opacity: 0.7;
+}
+
+.ts-rating.is-input input:hover:not(:focus) {
+    transform: scale(1.1);
+}
+
+/**
+ * Sizes
+ */
+
+.ts-rating.is-small {
+    font-size: var(--ts-font-size-13px);
+}
+
+.ts-rating.is-large {
+    font-size: var(--ts-font-size-18px);
+}

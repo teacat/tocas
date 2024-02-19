@@ -1,0 +1,213 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+@keyframes ts-placeholder-shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes ts-placeholder-blink {
+    30% {
+        opacity: 0;
+    }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-placeholder .text,
+.ts-placeholder .image.is-header::after,
+.ts-placeholder .image.is-header::before,
+.ts-placeholder .image {
+    background: var(--ts-gray-200);
+    height: 0.8em;
+    width: 45%;
+    margin: 0.8em 0;
+}
+
+.ts-placeholder:first-child > *:first-child {
+    margin-top: 0;
+}
+
+.ts-placeholder:last-child > *:last-child {
+    margin-bottom: 0;
+}
+
+.ts-placeholder .image {
+    height: 150px;
+    width: 100%;
+}
+
+.ts-placeholder .text:nth-child(1) {
+    width: 43%;
+}
+.ts-placeholder .text:nth-child(2) {
+    width: 78%;
+}
+.ts-placeholder .text:nth-child(3) {
+    width: 70%;
+}
+.ts-placeholder .text:nth-child(4) {
+    width: 80%;
+}
+.ts-placeholder .text:nth-child(5) {
+    width: 60%;
+}
+.ts-placeholder .text:nth-child(6) {
+    width: 44%;
+}
+.ts-placeholder .text:nth-child(7) {
+    width: 63%;
+}
+.ts-placeholder .text:nth-child(8) {
+    width: 49%;
+}
+.ts-placeholder .text:nth-child(9) {
+    width: 72%;
+}
+.ts-placeholder .text:nth-child(10) {
+    width: 61%;
+}
+.ts-placeholder .text:nth-child(11) {
+    width: 45%;
+}
+.ts-placeholder .text:nth-child(12) {
+    width: 55%;
+}
+.ts-placeholder .text:nth-child(13) {
+    width: 56%;
+}
+.ts-placeholder .text:nth-child(14) {
+    width: 57%;
+}
+.ts-placeholder .text:nth-child(15) {
+    width: 73%;
+}
+.ts-placeholder .text:nth-child(16) {
+    width: 59%;
+}
+.ts-placeholder .text:nth-child(17) {
+    width: 47%;
+}
+.ts-placeholder .text:nth-child(18) {
+    width: 77%;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Header
+ */
+
+.ts-placeholder .text.is-header {
+    background: var(--ts-gray-300);
+}
+
+.ts-placeholder .image.is-header {
+    width: 36px;
+    height: 36px;
+    position: static;
+}
+
+.ts-placeholder .image.is-header::after,
+.ts-placeholder .image.is-header::before {
+    position: absolute;
+    content: "";
+    margin: 0;
+}
+
+.ts-placeholder .image.is-header::after {
+    top: 0;
+    left: calc(36px + 1rem);
+    width: 65%;
+    background: var(--ts-gray-300);
+}
+
+.ts-placeholder .image.is-header::before {
+    top: 25px;
+    left: calc(36px + 1rem);
+    width: 55%;
+}
+
+/**
+ * Preparing
+ */
+
+.ts-placeholder.is-preparing .text,
+.ts-placeholder.is-preparing .text.is-header,
+.ts-placeholder.is-preparing .image.is-header::after,
+.ts-placeholder.is-preparing .image.is-header::before,
+.ts-placeholder.is-preparing .image {
+    animation-duration: 1.8s;
+    animation-fill-mode: alternate;
+    animation-iteration-count: infinite;
+    animation-name: ts-placeholder-blink;
+    animation-timing-function: linear;
+}
+
+/**
+ * Loading
+ */
+
+.ts-placeholder.is-loading .text,
+.ts-placeholder.is-loading .text.is-header,
+.ts-placeholder.is-loading .image.is-header::after,
+.ts-placeholder.is-loading .image.is-header::before,
+.ts-placeholder.is-loading .image {
+    animation-duration: 1.2s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: ts-placeholder-shimmer;
+    animation-timing-function: linear;
+
+    background: linear-gradient(to right, var(--ts-gray-200) 8%, var(--ts-gray-300) 18%, var(--ts-gray-200) 33%);
+    background-size: 1000px 200px;
+}
+
+.ts-placeholder.is-loading .text.is-header {
+    background: linear-gradient(to right, var(--ts-gray-300) 8%, var(--ts-gray-400) 18%, var(--ts-gray-300) 33%);
+    background-size: 1000px 200px;
+}
+
+/**
+ * Rounded
+ */
+
+.ts-placeholder.is-rounded * {
+    border-radius: 0.4rem;
+}
+
+/**
+ * Widthes
+ */
+
+.ts-placeholder .text.is-short {
+    width: 30%;
+}
+.ts-placeholder .text.is-very-short {
+    width: 30%;
+}
+.ts-placeholder .text.is-extra-short {
+    width: 20%;
+}
+.ts-placeholder .text.is-long {
+    width: 70%;
+}
+.ts-placeholder .text.is-very-long {
+    width: 80%;
+}
+.ts-placeholder .text.is-extra-long {
+    width: 90%;
+}

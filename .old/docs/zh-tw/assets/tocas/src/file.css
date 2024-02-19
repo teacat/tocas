@@ -1,0 +1,155 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-file {
+    --height: var(--ts-input-height-medium);
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-file {
+    display: flex;
+    width: 100%;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-file input {
+    height: var(--height);
+    line-height: calc(var(--height) - 1px);
+    font-size: var(--ts-font-size-14px);
+    color: var(--ts-gray-800);
+    padding: 0 1rem;
+    padding-left: 0.6rem;
+    background: var(--ts-gray-50);
+    border: 1px solid var(--ts-gray-300);
+    border-radius: 0.4rem;
+    width: 100%;
+}
+
+.ts-file input::file-selector-button,
+.ts-file input::-webkit-file-upload-button {
+    border: 0;
+    min-width: 75px;
+    /** Firefox */
+    font-family: "Noto Sans TC", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue", "Helvetica", "Arial", "Microsoft JhengHei", wf_SegoeUI, "Segoe UI",
+            Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", 微軟正黑體, "LiHei Pro", "WenQuanYi Micro Hei", "Droid Sans Fallback",
+            "AR PL UMing TW", Roboto, "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif;
+    font-size: var(--ts-relative-small);
+    line-height: 1.5;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+
+    padding: 0.2em 0.5rem;
+    border-radius: 0.4rem;
+    margin-right: 0.5rem;
+
+    color: var(--accent-foreground-color, var(--ts-gray-800));
+    background: var(--accent-color, var(--ts-gray-200));
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Underlined
+ */
+
+.ts-file.is-underlined input {
+    border-radius: 0.4rem 0.4rem 0 0;
+    border: 2px solid transparent;
+    background: var(--ts-gray-100);
+    border-bottom: 2px solid var(--ts-gray-400);
+}
+
+/**
+ * Solid
+ */
+
+.ts-file.is-solid input {
+    background: var(--ts-gray-100);
+    border-color: transparent;
+}
+
+.ts-file:is(.is-solid, .is-underlined) input::file-selector-button,
+.ts-file:is(.is-solid, .is-underlined) input::-webkit-file-upload-button {
+    background: var(--accent-color, var(--ts-gray-300));
+}
+
+/**
+ * Disabled
+ */
+
+.ts-file.is-disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
+}
+
+/**
+ * Negative
+ */
+
+.ts-file.is-negative input {
+    border-color: var(--ts-negative-400);
+    color: var(--ts-negative-600);
+    font-weight: 500;
+}
+
+.ts-file.is-negative.is-underlined input {
+    border-color: transparent;
+    border-bottom-color: var(--ts-negative-400);
+}
+
+/**
+ * Sizes
+ */
+
+.ts-file.is-small input {
+    --height: var(--ts-input-height-small);
+}
+
+.ts-file.is-large input {
+    --height: var(--ts-input-height-large);
+}
+
+.ts-file.is-small :is(input, input::file-selector-button, input::-webkit-file-upload-button) {
+    font-size: var(--ts-font-size-13px);
+}
+
+.ts-file.is-large :is(input, input::file-selector-button, input::-webkit-file-upload-button) {
+    font-size: var(--ts-font-size-17px);
+}
+
+/**
+ * Dense
+ */
+
+.ts-file.is-dense input {
+    --height: var(--ts-input-height-medium-dense);
+}
+
+.ts-file.is-dense input::file-selector-button,
+.ts-file.is-dense input::-webkit-file-upload-button {
+    padding-top: 0.15rem;
+    padding-bottom: 0.15rem;
+}
+
+.ts-file.is-small.is-dense input {
+    --height: var(--ts-input-height-small-dense);
+}
+
+.ts-file.is-large.is-dense input {
+    --height: var(--ts-input-height-large-dense);
+}

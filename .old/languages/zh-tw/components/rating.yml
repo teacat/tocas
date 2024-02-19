@@ -1,0 +1,144 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 評分
+Description: 呈現物體的評分數值或是對其進行評分。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-rating]] is-yellow">
+            <div class="star is-active"></div>
+            <div class="star is-active"></div>
+            <div class="star"></div>
+        </div>
+
+Definitions:
+    - Title: 結構
+      Description:
+      Sections:
+          - Title: 星號
+            Anchor: Star
+            Description: 以星星的方式呈現評分。
+            HTML: |
+                <div class="ts-rating">
+                    <div class="[[star]] is-active"></div>
+                    <div class="[[star]]"></div>
+                    <div class="[[star]]"></div>
+                </div>
+
+          - Title: 愛心
+            Anchor: Heart
+            Description: 以愛心的方式呈現評分。
+            HTML: |
+                <div class="ts-rating">
+                    <div class="[[heart]] is-active"></div>
+                    <div class="[[heart]]"></div>
+                    <div class="[[heart]]"></div>
+                </div>
+
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 啟用的
+            Anchor: Active
+            Description: 啟用指定的項目讓使用者得知目前評分為何。
+            HTML: |
+                <div class="ts-rating">
+                    <div class="star [[is-active]]"></div>
+                    <div class="star [[is-active]]"></div>
+                    <div class="star"></div>
+                </div>
+
+          - Title: 半星的
+            Anchor: Half
+            Description: 使某個啟用的星號項目以一半呈現，通常用於帶有小數點的評分。
+            HTML: |
+                <div class="ts-rating">
+                    <div class="star is-active"></div>
+                    <div class="star is-active [[is-half]]"></div>
+                    <div class="star"></div>
+                </div>
+
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 有 `[disabled]` 屬性的評分會無法互動。
+            HTML: |
+                <div class="ts-rating is-input is-red">
+                    <input class="heart" type="radio" name="love" value="1" [[disabled]]/>
+                    <input class="heart" type="radio" name="love" value="2" checked [[disabled]]/>
+                    <input class="heart" type="radio" name="love" value="3" [[disabled]]/>
+                    <input class="heart" type="radio" name="love" value="4" [[disabled]]/>
+                    <input class="heart" type="radio" name="love" value="5" [[disabled]]/>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 顏色
+            Anchor: Colors
+            Description: 評分的星星通常會是黃色，愛心則是紅色。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-rating [[is-yellow]]">
+                    <div class="star is-active"></div>
+                    <div class="star is-active"></div>
+                    <div class="star"></div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-rating [[is-red]]">
+                    <div class="heart is-active"></div>
+                    <div class="heart"></div>
+                    <div class="heart"></div>
+                </div>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改評分的大小。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-rating is-yellow [[is-small]]">
+                    <div class="star is-active"></div>
+                    <div class="star is-active"></div>
+                    <div class="star"></div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-rating is-yellow">
+                    <div class="star is-active"></div>
+                    <div class="star is-active"></div>
+                    <div class="star"></div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-rating is-yellow [[is-large]]">
+                    <div class="star is-active"></div>
+                    <div class="star is-active"></div>
+                    <div class="star"></div>
+                </div>
+
+          - Title: 可供輸入的
+            Anchor: Input
+            Description: 可讓使用者以點擊的方式輸入評分數值。
+            HTML: |
+                <div class="ts-rating is-yellow [[is-input]]">
+                    <input class="star" type="radio" name="rating" value="1" />
+                    <input class="star" type="radio" name="rating" value="2" checked/>
+                    <input class="star" type="radio" name="rating" value="3" />
+                    <input class="star" type="radio" name="rating" value="4" />
+                    <input class="star" type="radio" name="rating" value="5" />
+                </div>

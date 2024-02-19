@@ -1,0 +1,191 @@
+/* ==========================================================================
+   Grid
+   ========================================================================== */
+
+.ts-grid {
+    --ts-grid-gap: 1rem;
+
+    --ts-grid-1-wide: calc((100% / (16 / 1)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 1)));
+    --ts-grid-2-wide: calc((100% / (16 / 2)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 2)));
+    --ts-grid-3-wide: calc((100% / (16 / 3)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 3)));
+    --ts-grid-4-wide: calc((100% / (16 / 4)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 4)));
+    --ts-grid-5-wide: calc((100% / (16 / 5)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 5)));
+    --ts-grid-6-wide: calc((100% / (16 / 6)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 6)));
+    --ts-grid-7-wide: calc((100% / (16 / 7)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 7)));
+    --ts-grid-8-wide: calc((100% / (16 / 8)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 8)));
+    --ts-grid-9-wide: calc((100% / (16 / 9)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 9)));
+    --ts-grid-10-wide: calc((100% / (16 / 10)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 10)));
+    --ts-grid-11-wide: calc((100% / (16 / 11)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 11)));
+    --ts-grid-12-wide: calc((100% / (16 / 12)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 12)));
+    --ts-grid-13-wide: calc((100% / (16 / 13)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 13)));
+    --ts-grid-14-wide: calc((100% / (16 / 14)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 14)));
+    --ts-grid-15-wide: calc((100% / (16 / 15)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 15)));
+    --ts-grid-16-wide: calc((100% / (16 / 16)) - var(--ts-grid-gap) + (var(--ts-grid-gap) / (16 / 16)));
+
+    --ts-grid-1-columns: calc((100% / 1) - var(--ts-grid-gap) + (var(--ts-grid-gap) / 1));
+    --ts-grid-2-columns: calc((100% / 2) - var(--ts-grid-gap) + (var(--ts-grid-gap) / 2));
+    --ts-grid-3-columns: calc((100% / 3) - var(--ts-grid-gap) + (var(--ts-grid-gap) / 3));
+    --ts-grid-4-columns: calc((100% / 4) - var(--ts-grid-gap) + (var(--ts-grid-gap) / 4));
+    --ts-grid-5-columns: calc((100% / 5) - var(--ts-grid-gap) + (var(--ts-grid-gap) / 5));
+    --ts-grid-6-columns: calc((100% / 6) - var(--ts-grid-gap) + (var(--ts-grid-gap) / 6));
+    --ts-grid-7-columns: calc((100% / 7) - var(--ts-grid-gap) + (var(--ts-grid-gap) / 7));
+    --ts-grid-8-columns: calc((100% / 8) - var(--ts-grid-gap) + (var(--ts-grid-gap) / 8));
+    --ts-grid-9-columns: calc((100% / 9) - var(--ts-grid-gap) + (var(--ts-grid-gap) / 9));
+    --ts-grid-10-columns: calc((100% / 10) - var(--ts-grid-gap) + (var(--ts-grid-gap) / 10));
+}
+
+/* ==========================================================================
+   Row
+   ========================================================================== */
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-row {
+    display: flex;
+    gap: 1rem;
+    color: inherit;
+    min-width: 0;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Aligns
+ */
+
+.ts-row.is-start-aligned {
+    justify-content: flex-start;
+}
+
+.ts-row.is-center-aligned {
+    justify-content: center;
+}
+
+.ts-row.is-end-aligned {
+    justify-content: flex-end;
+}
+
+.ts-row.is-top-aligned {
+    align-items: flex-start;
+}
+
+.ts-row.is-middle-aligned {
+    align-items: center;
+}
+
+.ts-row.is-bottom-aligned {
+    align-items: flex-end;
+}
+
+.ts-row .column.is-middle-aligned {
+    align-items: center;
+    display: flex;
+}
+
+.ts-row .column.is-center-aligned {
+    justify-content: center;
+    display: flex;
+}
+
+.ts-row .column.is-bottom-aligned {
+    align-items: flex-end;
+    display: flex;
+}
+
+.ts-row .column.is-start-aligned {
+    text-align: left;
+}
+
+.ts-row .column.is-end-aligned {
+    text-align: right;
+}
+
+/**
+ * Truncated
+ */
+
+.ts-row .column.is-truncated,
+.ts-row .column.is-truncated * {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/**
+ * Evenly Divided
+ */
+
+.ts-row.is-evenly-divided .column {
+    flex: 1;
+}
+
+/**
+ * Fluid
+ */
+
+.ts-row .column.is-fluid {
+    flex: 1;
+    min-width: 0;
+    flex-grow: 1;
+    /*flex-shrink: 1;*/
+}
+
+/**
+ * Gapless
+ */
+
+.ts-row.is-compact {
+    gap: 0.5rem;
+}
+
+.ts-row.is-relaxed {
+    gap: 2rem;
+}
+
+/* ==========================================================================
+   Space
+   ========================================================================== */
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-space {
+    height: var(--ts-space-gap);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-space::before {
+    content: " ";
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Sizes
+ */
+
+.ts-space.is-small {
+    height: var(--ts-space-gap-small);
+}
+
+.ts-space.is-large {
+    height: var(--ts-space-gap-large);
+}
+
+.ts-space.is-big {
+    height: var(--ts-space-gap-big);
+}
+
+.ts-space.is-huge {
+    height: var(--ts-space-gap-huge);
+}

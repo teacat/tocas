@@ -1,0 +1,112 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 檔案上傳
+Description: 可供使用者從裝置中選擇檔案。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-file]]">
+            <input type="file" />
+        </div>
+
+Definitions:
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 有 `[disabled]` 屬性的檔案欄位會無法互動。
+            HTML: |
+                <div class="ts-file">
+                    <input type="file" [[disabled]]/>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 實心填充的
+            Anchor: Solid
+            Description: 帶有實心背景的欄位能更明確地呈現這是可供互動的元素。
+            HTML: |
+                <div class="ts-file [[is-solid]]">
+                    <input type="file" />
+                </div>
+
+          - Title: 底線的
+            Anchor: Underlined
+            Description: 以實心背景和底線明顯呈現一個欄位，讓使用者如填寫表單一樣。
+            HTML: |
+                <div class="ts-file [[is-underlined]]">
+                    <input type="file" />
+                </div>
+
+          - Title: 負面的
+            Anchor: Negative
+            Description: 令一個欄位看起來帶有負面或危險的狀態，通常可能是指這個欄位沒有選擇檔案。
+            HTML: |
+                <div class="ts-file [[is-negative]]">
+                    <input type="file" />
+                </div>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改檔案上傳的大小。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-file [[is-small]]">
+                    <input type="file" />
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-file">
+                    <input type="file" />
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-file [[is-large]]">
+                    <input type="file" />
+                </div>
+
+          - Title: 較密的
+            Anchor: Dense
+            Description: 變更元件的內距，令元素之間看起來更密集。
+            HTML: |
+                <div class="ts-file [[is-dense]]">
+                    <input type="file" />
+                </div>
+
+    #- Title: JavaScript 模組
+    #  Description:
+    #  Sections:
+    #      - Title: 檔案功能
+    #        Anchor: Module Invoke
+    #        Description: |
+    #            點擊或拖曳檔案至帶有 `[data-invoke="名稱"]` 的元素就會觸發對應 `[id="名稱"]` 的檔案上傳欄位。
+    #        Remove:
+    #            - <div class="ts-space"></div>
+    #        HTML: |
+    #            <div class="{{ts-card}} is-hollowed">
+    #                <div class="{{ts-blankslate}} is-interactive" [[data-invoke]]="upload">
+    #                    <span class="{{ts-icon}} is-upload-icon"></span>
+    #                    <div class="header">上傳圖片或影音</div>
+    #                    <div class="description">將圖片拖拉至此處進行上傳</div>
+    #                </div>
+    #            </div>
+    #            <div class="{{ts-file}} {{has-top-spaced}}">
+    #                <input type="file" id="upload" multiple />
+    #            </div>

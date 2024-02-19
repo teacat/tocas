@@ -1,0 +1,232 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 輸入欄位
+Description: 可供使用者輸入文字的欄位。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 屬性
+# Properties
+#=======================================================
+
+#Properties:
+#    - Name: "[data-max-rows]"
+#      Default: 0
+#      Target: .ts-input
+#      Description: 限制自動延展高度的最大行數，`0` 表示不限。
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-input]]">
+            <input type="text" placeholder="搜尋關鍵字…">
+        </div>
+
+Definitions:
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 有 `[disabled]` 屬性的輸入欄位會無法互動。
+            HTML: |
+                <div class="ts-input">
+                    <input type="text" placeholder="使用者帳號" [[disabled]]>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 實心填充的
+            Anchor: Solid
+            Description: 帶有實心背景的輸入欄位能更明確地呈現這是可供互動的元素。
+            HTML: |
+                <div class="ts-input [[is-solid]]">
+                    <input type="text" placeholder="傳送訊息…">
+                </div>
+
+          - Title: 底線的
+            Anchor: Underlined
+            Description: 以實心背景和底線明顯呈現一個輸入欄位，讓使用者如填寫表單一樣。
+            HTML: |
+                <div class="ts-input [[is-underlined]]">
+                    <input type="text" placeholder="搜尋">
+                </div>
+
+          - Title: 基本的
+            Anchor: Basic
+            Description: 僅帶有基本結構而沒有框線或是內距。
+            HTML: |
+                <div class="ts-input [[is-basic]] is-start-icon">
+                    <span class="{{ts-icon}} is-magnifying-glass-icon"></span>
+                    <input type="text" placeholder="輸入關鍵字…">
+                </div>
+
+          - Title: 圓角的
+            Anchor: Circular
+            Description: 使角落以圓形呈現。
+            HTML: |
+                <div class="ts-input [[is-circular]]">
+                    <input type="text" placeholder="搜尋 1,382 位使用者…">
+                </div>
+
+          - Title: 可調整尺寸的
+            Anchor: Resizable
+            Description: 用於多行輸入欄位可以讓使用者拖曳角落邊緣重新調整輸入欄位的高度。
+            HTML: |
+                <div class="ts-input [[is-resizable]]">
+                    <textarea placeholder="回覆此訊息…"></textarea>
+                </div>
+
+          - Title: 帶標籤的
+            Anchor: Labeled
+            Description: 輸入欄位的開頭或結束位置可以擺放文字標籤，作為前輟或後輟提示。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-input [[is-start-labeled]]">
+                    <span class="label">$</span>
+                    <input type="text">
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-input [[is-labeled]]">
+                    <span class="label">https://</span>
+                    <input type="text">
+                    <span class="label">.co</span>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-input [[is-end-labeled]]">
+                    <input type="text">
+                    <span class="label">.00</span>
+                </div>
+
+          - Title: 負面的
+            Anchor: Negative
+            Description: 表示輸入欄位出錯可能不符合表單驗證規則。
+            HTML: |
+                <div class="ts-input [[is-negative]]">
+                    <input type="text" placeholder="電子信箱地址">
+                </div>
+
+          - Title: 側邊圖示
+            Anchor: Side Icon
+            Description: 欄位的左右兩側可以擺放輔助圖示令使用者更加一目瞭然其用途。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-input [[is-start-icon]]">
+                    <span class="{{ts-icon}} is-phone-icon"></span>
+                    <input type="text" placeholder="電話號碼">
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-input [[is-icon]]">
+                    <span class="{{ts-icon}} is-phone-icon"></span>
+                    <input type="text" placeholder="電話號碼">
+                    <span class="{{ts-icon}} is-triangle-exclamation-icon"></span>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-input [[is-end-icon]]">
+                    <input type="text" placeholder="密碼">
+                    <span class="{{ts-icon}} is-lock-icon"></span>
+                </div>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改輸入欄位的大小。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-input [[is-small]]">
+                    <input type="text" placeholder="小型輸入欄位">
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-input">
+                    <input type="text" placeholder="預設輸入欄位">
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-input [[is-large]]">
+                    <input type="text" placeholder="大型輸入欄位">
+                </div>
+
+          - Title: 密度
+            Anchor: Density
+            Description: 變更輸入欄位的高度，看起來更緊密或是令人感到寬鬆。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-input [[is-dense]]">
+                    <input type="text" placeholder="緊密欄位">
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-input">
+                    <input type="text" placeholder="預設欄位">
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-input [[is-relaxed]]">
+                    <input type="text" placeholder="寬鬆欄位">
+                </div>
+
+    - Title: 種類
+      Description:
+      Sections:
+          - Title: 顏色選擇器
+            Anchor: Type Color
+            Description: 透過原生的輸入欄位選擇指定的顏色。
+            HTML: |
+                <div class="ts-input">
+                    <input type="[[color]]">
+                </div>
+
+          - Title: 日期與時間
+            Anchor: Date And Time
+            Description: HTML 有提供數種用於時間、日期與週期的輸入欄位。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-input">
+                    <input type="[[datetime-local]]">
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-input">
+                    <input type="[[date]]">
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-input">
+                    <input type="[[time]]">
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-input">
+                    <input type="[[month]]">
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-input">
+                    <input type="[[week]]">
+                </div>
+
+    #- Title: JavaScript 模組
+    #  Description:
+    #  Sections:
+    #      - Title: 自動延伸
+    #        Anchor: Module Autosize
+    #        Description: |
+    #            帶有 `[data-autosize]` 的輸入欄位會自動依據內容的多寡延展高度。
+    #        Remove:
+    #            - <div class="ts-space"></div>
+    #        HTML: |
+    #            <div class="ts-input">
+    #                <textarea rows="3" placeholder="試試換行文字…" [[data-autosize]]></textarea>
+    #            </div>

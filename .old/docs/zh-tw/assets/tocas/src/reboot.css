@@ -1,0 +1,118 @@
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+
+/**
+ * Document
+ *
+ * 1. 讓所有的元素不會因為內距而更改其 `width` 寬度。
+ * 2. 讓元素預設都以相對位置呈現，這樣裡面的 `absolute` 元素才能有父依據。
+ */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box; /** 1. */
+    position: relative; /** 2. */
+}
+
+/**
+ * HTML
+ *
+ * 1. 指定預設的動態背景與文字顏色，這樣才可以支援亮與暗色主題。
+ * 2. 預設要讓網頁能夠填滿整個螢幕才能讓某些元素運用整個高度。
+ */
+
+html {
+    background: var(--ts-gray-50); /** 1. */
+    color: var(--ts-gray-800); /** 1. */
+
+    width: 100%; /** 2. */
+    height: 100%; /** 2. */
+
+    font-size: 15px;
+    line-height: 1.75;
+}
+
+body {
+    width: 100%; /** 2. */
+    height: 100%; /** 2. */
+}
+
+/**
+ * Body
+ *
+ * 1. 移除所有瀏覽器上的外距。
+ * 2. 避免元素過寬而出現不好捲動的水平捲軸。
+ * 3. 避免 iOS 在轉向之後變更字體縮放大小。
+ * 4. 改為透明來移除 Webkit 瀏覽器上的點擊高光。
+ */
+body {
+    margin: 0; /** 1. */
+    overflow-x: hidden; /** 2. */
+    -webkit-text-size-adjust: 100%; /** 3. */
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /** 4. */
+
+    font-family: "Noto Sans TC", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue", "Helvetica", "Arial", "Microsoft JhengHei", wf_SegoeUI, "Segoe UI",
+        Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", 微軟正黑體, "LiHei Pro", "WenQuanYi Micro Hei", "Droid Sans Fallback", "AR PL UMing TW",
+        Roboto, "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif;
+}
+
+/**
+ * Input for iOS date input
+ *
+ * https://github.com/teacat/tocas/issues/804
+ * https://github.com/twbs/bootstrap/pull/31993
+ * https://github.com/twbs/bootstrap/blob/80621d6431acd964690f89352b4f1bf8be9cfaf3/scss/forms/_form-control.scss#L47
+ */
+
+input::-webkit-date-and-time-value {
+    min-height: calc(1rem * 1.5);
+}
+
+/**
+ * Button
+ */
+
+button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: normal;
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    user-select: none;
+}
+
+/**
+ * Paragraphy
+ */
+
+[class*="ts-"] :where(p) {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}
+
+[class*="ts-"] :where(:first-child) {
+    margin-block-start: 0;
+}
+
+[class*="ts-"] .ts-header + p {
+    margin-block-start: 0.5em;
+}
+
+[class*="ts-"] :where(:last-child) {
+    margin-block-end: 0;
+}
+
+[class*="ts-"] :where(a) {
+    color: inherit;
+}

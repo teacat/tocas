@@ -1,0 +1,64 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-tooltip {
+    --ts-tooltip-x: 0;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-tooltip {
+    position: fixed;
+    background: var(--ts-gray-600);
+    padding: 0.1rem 0.35rem;
+    font-size: var(--ts-font-size-13px);
+    border-radius: 0.2rem;
+    color: var(--ts-gray-50);
+    visibility: hidden;
+    font-weight: normal;
+    z-index: 99;
+    max-width: min(300px, calc(100vw - 2rem));
+    pointer-events: none;
+}
+
+.ts-tooltip.is-visible {
+    visibility: visible;
+}
+
+.ts-tooltip .arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    pointer-events: none;
+}
+
+.ts-tooltip[class*="is-bottom"] .arrow {
+    top: -4px;
+    border-width: 0 5px 5px;
+    border-bottom-color: var(--ts-gray-600);
+}
+
+.ts-tooltip[class*="is-top"] .arrow {
+    bottom: -4px;
+    border-width: 5px 5px 0;
+    border-top-color: var(--ts-gray-600);
+}
+
+.ts-tooltip[class$="start"] .arrow {
+    left: 10px;
+}
+.ts-tooltip[class$="end"] .arrow {
+    right: 10px;
+}
+.ts-tooltip:not([class$="start"]):not([class$="end"]) .arrow {
+    left: calc(var(--ts-tooltip-x) - 2.5px);
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */

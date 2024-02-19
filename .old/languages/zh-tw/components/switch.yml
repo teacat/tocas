@@ -1,0 +1,83 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 指撥開關
+Description: 提供一個僅有開、關狀態的選項。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Checkbox
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <label class="[[ts-switch]]">
+            <input type="checkbox" checked/>
+            斷路保護措施
+        </label>
+
+Definitions:
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 有 `[disabled]` 屬性的指撥開關會無法互動。
+            HTML: |
+                <label class="ts-switch">
+                    <input type="checkbox" [[disabled]]/>
+                    進階模式
+                </label>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 負面的
+            Anchor: Negative
+            Description: 表示一個指撥開關可能沒有被啟用。
+            HTML: |
+                <label class="ts-switch [[is-negative]]">
+                    <input type="checkbox" />
+                    自動偵測垃圾訊息
+                </label>
+
+          - Title: 單獨的
+            Anchor: Solo
+            Description: 指撥開關如果沒有任何標籤文字，可以將其指定為單獨的開關，藉此來移除多餘的間距。
+            HTML: |
+                <label class="ts-switch [[is-solo]]">
+                    <input type="checkbox" />
+                </label>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改指撥開關的大小。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <label class="ts-switch [[is-small]]">
+                    <input type="checkbox" checked/>
+                    小型開關
+                </label>
+                <div class="ts-space"></div>
+                <label class="ts-switch">
+                    <input type="checkbox" checked/>
+                    預設開關
+                </label>
+                <div class="ts-space"></div>
+                <label class="ts-switch [[is-large]]">
+                    <input type="checkbox" checked/>
+                    大型開關
+                </label>

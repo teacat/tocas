@@ -1,0 +1,190 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 空白看板
+Description: 在沒有任何資料的情況下給予提示與建議行為。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Content
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-blankslate]]">
+            <span class="{{ts-icon}} is-cart-shopping-icon"></span>
+            <div class="header">購物車是空的</div>
+            <div class="description">請購買些商品之後再回來查看</div>
+            <div class="action">
+                <button class="{{ts-button}}">瀏覽商品</button>
+            </div>
+        </div>
+
+Definitions:
+    - Title: 結構
+      Description:
+      Sections:
+          - Title: 標題
+            Anchor: Header
+            Description: 簡短地告知使用者主要發生了什麼事情。
+            HTML: |
+                <div class="ts-blankslate">
+                    <div class="[[header]]">主要的標題</div>
+                    <div class="description">這裡擺放一些敘述讓使用者知道發生了什麼</div>
+                </div>
+
+          - Title: 說明
+            Anchor: Description
+            Description: 輔助說明來引導使用者如何解決這個問題。
+            HTML: |
+                <div class="ts-blankslate">
+                    <div class="[[description]]">目前沒有任何文章。</div>
+                </div>
+
+          - Title: 圖示
+            Anchor: Icon
+            Description: 以主要圖示襯托意義。
+            HTML: |
+                <div class="ts-blankslate">
+                    <span class="[[{{ts-icon}}]] is-face-smile-wink-icon"></span>
+                    <div class="header">註冊完成</div>
+                    <div class="description">嗨！你成功地註冊了我們的網站</div>
+                </div>
+
+          - Title: 動作區塊
+            Anchor: Action
+            Description: 主要推薦的行為，同個空白看板可以擺放多個動作區塊。
+            HTML: |
+                <div class="ts-blankslate">
+                    <span class="{{ts-icon}} is-code-pull-request-icon"></span>
+                    <div class="header">目前沒有任何合併請求</div>
+                    <div class="description">
+                        合併請求讓你可以在合併變更至主分支之前先審視相關的資訊。
+                    </div>
+                    <div class="[[action]]">
+                        <button class="{{ts-button}}">建立合併請求</button>
+                    </div>
+                    <div class="[[action]]">
+                        <a class="{{ts-text}} is-link is-small">了解更多</a>
+                    </div>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 次要的
+            Anchor: Secondary
+            Description: 令整個語氣以次要的方式呈現，避免這個空白看板成為網頁的主體。
+            HTML: |
+                <div class="ts-blankslate [[is-secondary]]">
+                    <span class="{{ts-icon}} is-dolly-icon"></span>
+                    <div class="header">貨物尚未報關</div>
+                    <div class="description">待貨物抵達本國時，你便能在這裡看到海關通知。</div>
+                </div>
+
+          - Title: 較窄的
+            Anchor: Narrow
+            Description: 縮窄容器的左右寬度以呈現更佳的文字閱讀效果，適合用於說明文字過長的時機。
+            HTML: |
+                <div class="ts-blankslate [[is-narrow]]">
+                    <span class="{{ts-icon}} is-person-circle-question-icon"></span>
+                    <div class="header">你還沒有驗證身份</div>
+                    <div class="description">
+                        為了配合政府的洗錢防治法規範，使用半音商業銀行的服務之前，
+                        我們要求任何人都必須先通過實名認證。
+                    </div>
+                </div>
+
+          - Title: 可互動的
+            Anchor: Interactive
+            Description: 增加視覺效果令使用者能夠透過滑鼠、觸控得知這個區塊可以被點擊或是互動。通常很適合讓整個空白看板作為檔案上傳、重新導向的區塊。
+            HTML: |
+                <div class="{{ts-card}} is-hollowed">
+                    <div class="ts-blankslate [[is-interactive]]">
+                        <span class="{{ts-icon}} is-arrow-pointer-icon"></span>
+                        <div class="header">將滑鼠移至此處</div>
+                    </div>
+                </div>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 以不同文字與圖示大小呈現一個空白看板的內容。
+            HTML: |
+                <div class="ts-blankslate [[is-small]]">
+                    <span class="{{ts-icon}} is-receipt-icon"></span>
+                    <div class="header">尚未有收據</div>
+                    <div class="description">如果你最近有購買商品，待數分鐘後才會更新資料</div>
+                </div>
+                <div class="ts-blankslate">
+                    <span class="{{ts-icon}} is-receipt-icon"></span>
+                    <div class="header">尚未有收據</div>
+                    <div class="description">如果你最近有購買商品，待數分鐘後才會更新資料</div>
+                </div>
+                <div class="ts-blankslate [[is-large]]">
+                    <span class="{{ts-icon}} is-receipt-icon"></span>
+                    <div class="header">尚未有收據</div>
+                    <div class="description">如果你最近有購買商品，待數分鐘後才會更新資料</div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 上傳區域
+            Anchor: Composition Uploadzone
+            Description: 透過結合[卡片容器](./card.html)呈現出一個能夠讓使用者拖曳檔案上傳的空虛區塊。
+            HTML: |
+                <div class="[[{{ts-card}}]] is-hollowed">
+                    <div class="ts-blankslate is-interactive">
+                        <span class="{{ts-icon}} is-upload-icon"></span>
+                        <div class="header">上傳圖片或影音</div>
+                        <div class="description">將圖片拖拉至此處進行上傳</div>
+                    </div>
+                </div>
+
+          - Title: 背景區塊
+            Anchor: Composition Content
+            Description: 結合[內容區塊](./content.html)來呈現較不重要的背景來與目前頁面明顯區隔。
+            HTML: |
+                <div class="[[{{ts-content}}]] is-secondary is-fitted">
+                    <div class="ts-blankslate">
+                        <span class="{{ts-icon}} is-envelope-icon"></span>
+                        <div class="header">信件已送出</div>
+                        <div class="description">檢查你的電子郵件信箱是否有登入信件。</div>
+                    </div>
+                </div>
+
+          - Title: 搜尋欄位
+            Anchor: Composition Grid
+            Description: 動作區塊裡可以使用[網格系統](./grid.html)來呈現更豐富的行為。
+            HTML: |
+                <div class="{{ts-card}}">
+                    <div class="ts-blankslate is-narrow">
+                        <span class="{{ts-icon}} is-user-astronaut-icon"></span>
+                        <div class="header">你還沒有跟隨任何人</div>
+                        <div class="description">但是你並不孤單，現在就找些什麼來跟隨吧！</div>
+                        <div class="action">
+                            <div class="[[{{ts-grid}}]]">
+                                <div class="column is-fluid">
+                                    <div class="{{ts-input}}">
+                                        <input type="text" placeholder="搜尋人名…">
+                                    </div>
+                                </div>
+                                <div class="column">
+                                    <button class="{{ts-button}}">送出</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>

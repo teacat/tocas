@@ -1,0 +1,148 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 內容遮罩
+Description: 可淡化背景並強調特定主體的遮蔽元素。
+Intro: 遮罩預設會覆蓋整個父容器，但也可以指定只遮蔽某半部份。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="{{ts-image}}">
+            <img src="!-16:9-!" style="max-width: 450px">
+            <div class="[[ts-mask]] {{has-flex-center}}">
+                <div class="{{ts-loading}} is-large" style="color: #FFF"></div>
+            </div>
+        </div>
+
+Definitions:
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 半部的
+            Anchor: Partially
+            Description: 遮罩可以處於父容器的上、中、下部份。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="{{ts-image}}">
+                    <img src="!-16:9-!" style="max-width: 450px">
+                    <div class="ts-mask [[is-top]]">
+                        <div class="{{ts-content}}" style="color: #FFF">
+                            <div class="{{ts-header}}">置上遮罩</div>
+                            然後這裡會放一段文字。
+                        </div>
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="{{ts-image}}">
+                    <img src="!-16:9-!" style="max-width: 450px">
+                    <div class="ts-mask [[is-middle]]">
+                        <div class="{{ts-content}}" style="color: #FFF">
+                            <div class="{{ts-header}}">置中遮罩</div>
+                            然後這裡會放一段文字。
+                        </div>
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="{{ts-image}}">
+                    <img src="!-16:9-!" style="max-width: 450px">
+                    <div class="ts-mask [[is-bottom]]">
+                        <div class="{{ts-content}}" style="color: #FFF">
+                            <div class="{{ts-header}}">置底遮罩</div>
+                            然後這裡會放一段文字。
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 淡化的
+            Anchor: Faded
+            Description: 遮罩可以處於父容器的上、中、下部份。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="{{ts-image}}">
+                    <img src="!-16:9-!" style="max-width: 450px">
+                    <div class="ts-mask [[is-faded]] is-top">
+                        <div class="{{ts-content}}" style="color: #FFF">
+                            <div class="{{ts-header}}">置上遮罩</div>
+                            然後這裡會放一段文字。
+                        </div>
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="{{ts-image}}">
+                    <img src="!-16:9-!" style="max-width: 450px">
+                    <div class="ts-mask [[is-faded]] is-bottom">
+                        <div class="{{ts-content}}" style="color: #FFF">
+                            <div class="{{ts-header}}">置底遮罩</div>
+                            然後這裡會放一段文字。
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 次要的
+            Anchor: Secondary
+            Description: 沒有背景的遮罩會顯得不重要，但可以用來呈現內容在某些物件上。
+            HTML: |
+                <div class="{{ts-image}}">
+                    <img src="!-16:9-!" style="max-width: 450px">
+                    <div class="ts-mask [[is-secondary]] is-bottom">
+                        <div class="{{ts-content}}" style="color: #333">
+                            <div class="{{ts-header}}">限時特價</div>
+                            現在購買這個蛋糕只需要新台幣 3,000 元！
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 模糊的
+            Anchor: Blurring
+            Description: 被遮蔽的內容能夠以模糊化處理。
+            HTML: |
+                <div class="{{ts-image}}">
+                    <img src="!-16:9-!" style="max-width: 450px">
+                    <div class="ts-mask [[is-blurring]]"></div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 關閉按鈕
+            Anchor: Composition Close
+            Description: 透過搭配遮罩與關閉按鈕可以讓圖片的右上角有個常見的移除、關閉動作。
+            HTML: |
+                <div class="{{ts-image}} is-rounded">
+                    <img src="!-1:1-!" width="150">
+                    <div class="ts-mask is-secondary is-top">
+                        <div class="{{ts-content}} is-compact is-end-aligned {{has-leading-none}}">
+                            <button class="[[{{ts-close}}]]"></button>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 附屬資訊
+            Anchor: Composition Additional Information
+            Description: 圖片的右下角可以擺放時間或是檔案大小。
+            HTML: |
+                <div class="{{ts-image}} is-rounded">
+                    <img src="!-16:9-!" width="150">
+                    <div class="ts-mask is-secondary is-bottom">
+                        <div class="{{ts-content}} is-compact is-end-aligned">
+                            <div class="[[{{ts-badge}}]]">32 KB</div>
+                        </div>
+                    </div>
+                </div>

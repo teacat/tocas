@@ -1,0 +1,119 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 樣式切換
+Description: 與某個元素互動來切換另一個元素的樣式類別。
+Intro: |
+    這個 JavaScript 模組能讓你很輕易地就透過按鈕來切換某個容器的 CSS 樣式類別。
+
+    在可供互動的元素上套用 `[data-toggle="名稱:樣式名稱"]` 並在目標元素套用 `[data-name="名稱"]`，就能夠透過點擊互動元素來切換目標的 CSS 樣式類別。
+
+    ※ Tocas UI 的 JavaScript 模組文件呈現方式正在改善。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    Remove:
+        - <div class="ts-space"></div>
+    HTML: |
+        <button class="{{ts-button}}" [[data-toggle]]="btn:is-outlined" [[data-name]]="btn">
+            按我切換樣式 😮
+        </button>
+
+Definitions:
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 頂部列與閉合選單
+            Anchor: Composition Topbar
+            Description: |
+                [頂部列](./app-topbar.html)可以擺放一個漢堡選單按鈕，然後透過樣式切換來控制一個容器的可見度，用以在行動裝置上開關一個進階選單。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="{{ts-app-topbar}}">
+                    <div class="start">
+                        <a class="item" [[data-toggle]]="menu:has-hidden">
+                            <span class="{{ts-icon}} is-bars-icon"></span>
+                        </a>
+                        <div class="item is-text">應用程式</div>
+                    </div>
+                    <div class="content {{has-hidden}}" [[data-name]]="menu">
+                        <div class="{{ts-menu}} is-separated is-start-icon {{has-dark}}">
+                            <a class="item">
+                                <span class="{{ts-icon}} is-inbox-icon"></span>
+                                收件匣
+                            </a>
+                            <a class="item">
+                                <span class="{{ts-icon}} is-bookmark-icon"></span>
+                                重要郵件
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 快顯視窗
+            Anchor: Composition Modal
+            Description: |
+                透過樣式切換來開關一個[快顯視窗](./modal.html)的可見度，只需要按下按鈕就可以打開快顯視窗。
+
+                如果你需要監聽開關事件並做額外處理（例如：打開視窗時才載入 YouTube 嵌入影片、資料…等），則建議自行額外撰寫 JavaScript 程式碼並開關其 `is-visible` 樣式。
+            HTML: |
+                <button class="{{ts-button}}" [[data-toggle]]="modal:is-visible">
+                    打開快顯視窗
+                </button>
+                <div class="{{ts-modal}}" [[data-name]]="modal">
+                    <div class="content">
+                        <div class="{{ts-content}} is-padded">
+                            <p>好了，現在你可以透過下面的關閉按鈕把我關閉了。</p>
+                            <p>這個關閉按鈕也是透過 [data-toggle] 來切換快顯視窗的可見度。</p>
+                        </div>
+                        <div class="{{ts-divider}}"></div>
+                        <div class="{{ts-content}} is-tertiary is-horizontally-padded">
+                            <button class="{{ts-button}}" [[data-toggle]]="modal:is-visible">
+                                關閉
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 邊緣抽屜
+            Anchor: Composition Drawer
+            Description: |
+                [邊緣抽屜](./app-drawer.html)與[快顯視窗](./modal.html)一樣，都可以透過樣式切換 CSS 來變更其可見度。
+
+                如果你希望使用者可以點擊灰色遮罩的部份來關閉邊緣抽屜，那則需要自行額外撰寫 JavaScript 程式碼。
+            HTML: |
+                <button class="{{ts-button}}" [[data-toggle]]="drawer:is-visible">
+                    打開側邊抽屜
+                </button>
+                <div class="{{ts-app-drawer}} is-right" [[data-name]]="drawer">
+                    <div class="content">
+                        <div class="{{ts-content}} is-padded">
+                            <div class="{{ts-header}} is-large">備註事項</div>
+                            <div class="{{ts-content}} is-padded">
+                                <div class="{{ts-list}} is-unordered">
+                                    <div class="item">蘆森詩音</div>
+                                    <div class="item">天野悟美</div>
+                                    <div class="item">佐藤綾</div>
+                                </div>
+                            </div>
+                            <button class="ts-button is-fluid" [[data-toggle]]="drawer:is-visible">
+                                關閉
+                            </button>
+                        </div>
+                    </div>
+                </div>

@@ -1,0 +1,148 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-imageset {
+    display: grid;
+    gap: 1rem;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-imageset .item {
+    min-height: min-content;
+}
+
+.ts-imageset .item img {
+    width: 100%;
+    height: 100%;
+    vertical-align: top;
+    object-fit: cover;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Images
+ */
+
+ /** 2 */
+.ts-imageset.is-2-images {
+    grid-template-columns: repeat(1, 1fr);
+}
+
+/** 3 */
+.ts-imageset.is-3-images {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1.777fr 1fr;
+}
+
+.ts-imageset.ts-imageset.is-3-images .item:first-child {
+    grid-column: 1 / 3;
+}
+
+/** 4 */
+.ts-imageset.is-4-images {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1.777fr 1fr;
+}
+
+.ts-imageset.ts-imageset.is-4-images .item:first-child {
+    grid-column: 1 / 4;
+}
+/**
+ * Portrait
+ */
+
+.ts-imageset.is-portrait .item img {
+    object-position: top;
+}
+
+/** 2 */
+.ts-imageset.is-portrait.is-2-images {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/** 3 */
+.ts-imageset.is-portrait.is-3-images {
+    grid-template-columns: 1.4fr 1fr;
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.ts-imageset.is-portrait.is-3-images .item:first-child {
+    grid-row: 1 / 3;
+    grid-column: initial;
+}
+
+/** 4 */
+.ts-imageset.is-portrait.is-4-images {
+    grid-template-columns: 1.4fr 1fr;
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.ts-imageset.is-portrait.is-4-images .item:first-child {
+    grid-row: 1 / 4;
+    grid-column: initial;
+}
+
+/**
+ * Rounded
+ */
+
+.ts-imageset.is-rounded .item img {
+    border-radius: 0.4rem;
+}
+
+/**
+ * Circular
+ */
+
+.ts-imageset.is-circular.is-portrait .item:first-child img {
+    border-top-left-radius: 0.4rem;
+    border-bottom-left-radius: 0.4rem;
+}
+
+.ts-imageset.is-circular.is-portrait .item:nth-child(2) img {
+    border-top-right-radius: 0.4rem;
+}
+
+.ts-imageset.is-circular.is-portrait .item:last-child img {
+    border-bottom-right-radius: 0.4rem;
+}
+
+.ts-imageset.is-circular:not(.is-portrait) .item:first-child img {
+    border-top-right-radius: 0.4rem;
+    border-top-left-radius: 0.4rem;
+}
+
+.ts-imageset.is-circular:not(.is-portrait) .item:nth-child(2) img {
+    border-bottom-left-radius: 0.4rem;
+}
+
+.ts-imageset.is-circular:not(.is-portrait) .item:last-child img {
+    border-bottom-right-radius: 0.4rem;
+}
+
+/**
+ * Relaxed
+ */
+
+.ts-imageset.is-relaxed {
+    gap: 1.5rem;
+}
+
+/**
+ * Compact
+ */
+
+.ts-imageset.is-compact {
+    gap: 0.5rem;
+}

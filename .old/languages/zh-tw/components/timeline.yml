@@ -1,0 +1,375 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 時間軸
+Description: 敘述同個主題所發生的關聯事件。
+Intro: |
+    時間軸本身沒有進度指示，通常用來陳列已經發生過的事情。若你希望預先提示未來可能發生的事情或步驟，可以使用[步驟指示器](./steps.html)。
+
+    這個元件沒有順序，你可以依照自己喜好把最新發生的事情放置在最上或下面。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Steps
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="[[ts-timeline]]">
+            <div class="item is-active">
+                <div class="indicator">
+                    <span class="{{ts-icon}} is-user-icon"></span>
+                </div>
+                <div class="content">夏野姫依已經被指派到這份工作。</div>
+            </div>
+            <div class="item">
+                <div class="indicator">
+                    <span class="{{ts-icon}} is-signs-post-icon"></span>
+                </div>
+                <div class="content">這個工作被納入下個更新的里程碑。</div>
+            </div>
+            <div class="item">
+                <div class="indicator">
+                    <span class="{{ts-icon}} is-quote-left-icon"></span>
+                </div>
+                <div class="content">冬島緣糸提及了這個工作。</div>
+            </div>
+        </div>
+
+Definitions:
+    - Title: 結構
+      Description:
+      Sections:
+          - Title: 圖示
+            Anchor: Icon
+            Description: 每個事件都必須帶有象徵圖示。
+            HTML: |
+                <div class="ts-timeline">
+                    <div class="item">
+                        <div class="indicator">
+                            <span class="[[{{ts-icon}}]] is-bread-slice-icon"></span>
+                        </div>
+                        <div class="content">
+                            <div class="{{ts-text}} is-description">早上 07:01</div>
+                            早上吃了土司。
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="indicator">
+                            <span class="[[{{ts-icon}}]] is-glass-water-icon"></span>
+                        </div>
+                        <div class="content">
+                            <div class="{{ts-text}} is-description">下午 02:46</div>
+                            喝了一杯水。
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 輔助內容
+            Anchor: Aside
+            Description: 事件的對側可以擺放額外的敘述文字或圖片。
+            HTML: |
+                <div class="ts-timeline">
+                    <div class="item">
+                        <div class="[[aside]]">
+                            <div class="{{ts-text}} is-description">12月25日<br>07:16</div>
+                        </div>
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-door-open-icon"></span>
+                        </div>
+                        <div class="content">「客廳的門」被打開。</div>
+                    </div>
+                    <div class="item">
+                        <div class="[[aside]]">
+                            <div class="{{ts-text}} is-description">12月25日<br>11:23</div>
+                        </div>
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-door-closed-icon"></span>
+                        </div>
+                        <div class="content">「客廳的門」已經關上。</div>
+                    </div>
+                </div>
+
+          - Title: 次要事件
+            Anchor: Secondary
+            Description: 如果有些事情太過冗長或不重要，可以將其以更小的方式呈現。
+            HTML: |
+                <div class="ts-timeline">
+                    <div class="item">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-bug-icon"></span>
+                        </div>
+                        <div class="content">春町葉白回報了這個錯誤。</div>
+                    </div>
+                    <div class="item [[is-secondary]]">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-code-commit-icon"></span>
+                        </div>
+                        <div class="content">確認已修正這個錯誤。</div>
+                    </div>
+                    <div class="item [[is-secondary]]">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-code-commit-icon"></span>
+                        </div>
+                        <div class="content">還原上個推送的修正，修改錯字。</div>
+                    </div>
+                    <div class="item">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-check-icon"></span>
+                        </div>
+                        <div class="content">錯誤已經被解決。</div>
+                    </div>
+                </div>
+
+          - Title: 休止符號
+            Anchor: Break
+            Description: 表示某件事情發生之後有歇止一小段時間或不連貫。
+            HTML: |
+                <div class="ts-timeline">
+                    <div class="item">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-screwdriver-wrench-icon"></span>
+                        </div>
+                        <div class="content">正在修復這個不可預期的錯誤。</div>
+                    </div>
+                    <div class="item">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-pause-icon"></span>
+                        </div>
+                        <div class="content">這個問題被暫緩。</div>
+                    </div>
+                    <div class="item [[is-break]]"></div>
+                    <div class="item">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-eye-icon"></span>
+                        </div>
+                        <div class="content">安全系統正在監視是否發生相同問題。</div>
+                    </div>
+                </div>
+
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 啟用的
+            Anchor: Active
+            Description: 標明目前正處於的事件狀態。
+            HTML: |
+                <div class="ts-timeline">
+                    <div class="item [[is-active]]">
+                        <div class="aside">
+                            <div class="{{ts-text}} is-description">02月13日</div>
+                        </div>
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-check-icon"></span>
+                        </div>
+                        <div class="content">買家取件成功。</div>
+                    </div>
+                    <div class="item">
+                        <div class="aside">
+                            <div class="{{ts-text}} is-description">02月13日</div>
+                        </div>
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-store-icon"></span>
+                        </div>
+                        <div class="content">包裹已配達買家取件門市（夏洛夏分店）。</div>
+                    </div>
+                    <div class="item">
+                        <div class="aside">
+                            <div class="{{ts-text}} is-description">02月12日</div>
+                        </div>
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-truck-icon"></span>
+                        </div>
+                        <div class="content">包裹已從深圳物流中心出貨。</div>
+                    </div>
+                </div>
+
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 淡化某個事件表示已經撤銷或不重要。
+            HTML: |
+                <div class="ts-timeline">
+                    <div class="item">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-rotate-left-icon"></span>
+                        </div>
+                        <div class="content">已申請退款，原先的款項已經退回至原信用卡。</div>
+                    </div>
+                    <div class="item [[is-disabled]]">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-credit-card-icon"></span>
+                        </div>
+                        <div class="content">透過 VISA 信用卡消費 320 元（後四碼 8277）。</div>
+                    </div>
+                    <div class="item [[is-disabled]]">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-receipt-icon"></span>
+                        </div>
+                        <div class="content">訂單已經成立。</div>
+                    </div>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 緊緻的
+            Anchor: Compact
+            Description: 縮小事件之間的間距，令整個排序變得更加緊湊。
+            HTML: |
+                <div class="ts-timeline [[is-compact]]">
+                    <div class="item is-secondary">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-person-icon"></span>
+                        </div>
+                        <div class="content">玩家已經登入。</div>
+                    </div>
+                    <div class="item is-secondary">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-crown-icon"></span>
+                        </div>
+                        <div class="content">玩家拾取了經驗皇冠。</div>
+                    </div>
+                    <div class="item is-secondary">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-dragon-icon"></span>
+                        </div>
+                        <div class="content">玩家打敗了魔法飛龍。</div>
+                    </div>
+                </div>
+
+          - Title: 負面的
+            Anchor: Negative
+            Description: 表示某個環節出錯了。
+            HTML: |
+                <div class="ts-timeline">
+                    <div class="item">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-cloud-arrow-down-icon"></span>
+                        </div>
+                        <div class="content">下載最新的系統映像檔案。</div>
+                    </div>
+                    <div class="item">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-copy-icon"></span>
+                        </div>
+                        <div class="content">複製檔案至目標系統。</div>
+                    </div>
+                    <div class="item [[is-negative]]">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-xmark-icon"></span>
+                        </div>
+                        <div class="content">建置 Linux 版本失敗。</div>
+                    </div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 變更歷史
+            Anchor: Composition Commits
+            Description: 透過[大頭貼](./avatar.html)模擬 GitHub 或是一些 Git 網站對於檔案變更歷史的呈現。
+            HTML: |
+                <div class="ts-timeline">
+                    <div class="item">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-code-fork-icon"></span>
+                        </div>
+                        <div class="content">新的程式碼分支已經建立。</div>
+                    </div>
+                    <div class="item is-secondary">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-code-commit-icon"></span>
+                        </div>
+                        <div class="content">
+                            <div class="{{ts-grid}} is-middle-aligned is-compact">
+                                <div class="column">
+                                    <span class="[[{{ts-avatar}}]] is-circular">
+                                        <img src="!-user-!">
+                                    </span>
+                                </div>
+                                <div class="column is-fluid">
+                                    修正使用者無法登入的問題。
+                                </div>
+                                <div class="column">2 天前</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item is-secondary">
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-code-commit-icon"></span>
+                        </div>
+                        <div class="content">
+                            <div class="{{ts-grid}} is-middle-aligned is-compact">
+                                <div class="column">
+                                    <span class="[[{{ts-avatar}}]] is-circular">
+                                        <img src="!-user2-!">
+                                    </span>
+                                </div>
+                                <div class="column is-fluid">
+                                    還原上個變更。
+                                </div>
+                                <div class="column">3 天前</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 測試紀錄
+            Anchor: Composition Tests
+            Description: 內容裡面可以擺放其他元件來呈現詳細的事件內容，這個範例模擬了一個測試系統的細節報錯。
+            HTML: |
+                <div class="ts-timeline">
+                    <div class="item is-negative">
+                        <div class="aside">
+                            <div class="{{ts-text}} is-description">63 秒</div>
+                        </div>
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-xmark-icon"></span>
+                        </div>
+                        <div class="content">
+                            執行主要測試
+                            <div class="[[{{ts-content}}]] is-rounded is-secondary {{has-top-spaced}}">
+                                <div class="[[{{ts-checklist}}]]">
+                                    <div class="item is-positive">
+                                        系統環境正常。
+                                    </div>
+                                    <div class="item is-negative">
+                                        沒有通過安全測試。
+                                    </div>
+                                    <div class="item is-negative">
+                                        資料庫帳號不能為空。
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="aside">
+                            <div class="{{ts-text}} is-description">18 秒</div>
+                        </div>
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-check-icon"></span>
+                        </div>
+                        <div class="content">檢查授權金鑰</div>
+                    </div>
+                    <div class="item">
+                        <div class="aside">
+                            <div class="{{ts-text}} is-description">1 分 32 秒</div>
+                        </div>
+                        <div class="indicator">
+                            <span class="{{ts-icon}} is-check-icon"></span>
+                        </div>
+                        <div class="content">初始化測試環境</div>
+                    </div>
+                </div>

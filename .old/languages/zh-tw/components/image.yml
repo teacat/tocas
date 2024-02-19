@@ -1,0 +1,137 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 多媒體圖片
+Description: 呈現照片、圖片的基本元素。
+Intro: 圖片預設會填滿父容器的寬度，若要變更圖片的尺寸，請在 `<img>` 標籤指定寬高。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Avatar
+    - Imageset
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-image]]">
+            <img src="!-4:3-!" width="150">
+        </div>
+
+Definitions:
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 表示這個圖片已經無法互動、不再可用了。
+            HTML: |
+                <div class="ts-image [[is-disabled]]">
+                    <img src="!-16:9-!" width="150">
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 圓角的
+            Anchor: Rounded
+            Description: 使四個角落都變得稍微有點圓角修飾。
+            HTML: |
+                <div class="ts-image [[is-rounded]]">
+                    <img src="!-16:9-!" width="150">
+                </div>
+
+          - Title: 圓形的
+            Anchor: Circular
+            Description: 將整張圖片變為圓形，只有在圖片是正方形的情況下才會生效。
+            HTML: |
+                <div class="ts-image [[is-circular]]">
+                    <img src="!-1:1-!" width="150">
+                </div>
+
+          - Title: 邊框的
+            Anchor: Bordered
+            Description: 使圖片帶有邊框，適合用於白底圖片讓使用者知道其邊界在哪。
+            HTML: |
+                <div class="ts-image [[is-bordered]]">
+                    <img src="!-1:1_white-!" width="150">
+                </div>
+
+          - Title: 置中的
+            Anchor: Centered
+            Description: 水平左右置中一張圖片。
+            HTML: |
+                <div class="ts-image [[is-centered]]">
+                    <img src="!-16:9-!" width="150">
+                </div>
+
+          #- Title: 全尺寸的
+          #  Anchor: Full
+          #  Description: 圖片的寬度或高度能以 100% 來填滿父容器，這可能會讓圖片變形，通常會建議與「裁切的」樣式一同使用。
+          #  Since: 4.0.0
+          #  HTML: |
+          #      <div style="width: 100px; height: 100px">
+          #          <div class="ts-image [[is-full-width]]">
+          #              <img src="!-16:9-!">
+          #          </div>
+          #      </div>
+          #      <div style="width: 100px; height: 100px">
+          #          <div class="ts-image [[is-full-height]]">
+          #              <img src="!-16:9-!">
+          #          </div>
+          #      </div>
+
+          - Title: 裁切的
+            Anchor: Covered
+            Description: 不論是什麼長寬比都不會變形而會自動裁切其內容。
+            HTML: |
+                <div class="ts-image [[is-covered]]">
+                    <img src="!-16:9-!" width="100" height="100">
+                </div>
+
+          - Title: 長寬比的
+            Anchor: Aspect Ratios
+            Description: 將圖片以 `1:1`、`4:3`、`16:9` 的方式呈現，通常建議與「裁切的」樣式一同使用以避免圖片拉伸。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-image [[is-1-by-1]] is-covered">
+                    <img src="!-16:9-!" width="200">
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-image [[is-4-by-3]] is-covered">
+                    <img src="!-16:9-!" width="200">
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-image [[is-16-by-9]] is-covered">
+                    <img src="!-16:9-!" width="200">
+                </div>
+
+          - Title: 間隔的
+            Anchor: Spaced
+            Description: 在前或後新增間隔以避免與其他元件相鄰太近。
+            HTML: |
+                相較於稱呼自己是間「科技公司」，我們
+                <div class="ts-image [[is-start-spaced]]">
+                    <img src="!-1:1-!" width="35">
+                </div>
+                的運作模式更像是所「學校」。雖然卡莉絲伊繁星提供網際網路服務與電子科技產業的相關產品，但我們更注重人們是否能在開發的過程
+                <div class="ts-image [[is-end-spaced]]">
+                    <img src="!-1:1-!" width="35">
+                </div>
+                中有所收穫並學以致用，而我們也十分地重視一項產品是否能夠達成社會的期許並希望能藉此改變某些人的生活，協助大眾
+                <div class="ts-image [[is-spaced]]">
+                    <img src="!-1:1-!" width="35">
+                </div>
+                更向自己的目標邁進；這也正是伊繁星最高協議被創造的原因。

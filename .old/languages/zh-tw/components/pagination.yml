@@ -1,0 +1,264 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 頁數導覽列
+Description: 供前、後換頁或是頁數跳轉的導覽元件。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-pagination]]">
+            <a class="item is-back"></a>
+            <a class="item">1</a>
+            <a class="item is-active">2</a>
+            <a class="item">3</a>
+            <a class="item">4</a>
+            <a class="item is-next"></a>
+        </div>
+
+Definitions:
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 啟用的
+            Anchor: Active
+            Description: 表示目前檢視的頁數。
+            HTML: |
+                <div class="ts-pagination">
+                    <a class="item">1</a>
+                    <a class="item [[is-active]]">2</a>
+                    <a class="item">3</a>
+                </div>
+
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 有 `[disabled]` 屬性的頁數會無法互動，若頁數是一個 `<a>` 超連結，則需套用 `.is-disabled` 樣式。
+            HTML: |
+                <div class="ts-pagination">
+                    <button class="item is-back" [[disabled]]>上一頁</button>
+                    <a class="item is-active">1</a>
+                    <a class="item">2</a>
+                    <a class="item">3</a>
+                    <a class="item is-next [[is-disabled]]">下一頁</a>
+                </div>
+
+    - Title: 項目
+      Description:
+      Sections:
+          - Title: 上、下一頁
+            Anchor: Previous And Next
+            Description: 帶有前、後圖示的項目，能夠同時在裡面擺放文字。
+            HTML: |
+                <div class="ts-pagination">
+                    <a class="item [[is-back]]">上一頁</a>
+                    <a class="item">1</a>
+                    <a class="item">2</a>
+                    <a class="item">3</a>
+                    <a class="item [[is-next]]">下一頁</a>
+                </div>
+
+          - Title: 第一頁、最後頁
+            Anchor: First And Last
+            Description: 帶有最新、最舊圖示的項目，能夠導引使用者到第一頁或最後一頁，能夠同時在裡面擺放文字。
+            HTML: |
+                <div class="ts-pagination">
+                    <a class="item [[is-first]]">最新</a>
+                    <a class="item">1</a>
+                    <a class="item">2</a>
+                    <a class="item">3</a>
+                    <a class="item [[is-last]]">最舊</a>
+                </div>
+
+          - Title: 省略的
+            Anchor: Skipped
+            Description: 用省略符號表示某些頁數不重要，避免佔空間。
+            HTML: |
+                <div class="ts-pagination">
+                    <a class="item">1</a>
+                    <span class="item [[is-skipped]]"></span>
+                    <a class="item">4</a>
+                    <a class="item is-active">5</a>
+                    <a class="item">6</a>
+                    <span class="item [[is-skipped]]"></span>
+                    <a class="item">10</a>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 次要的
+            Anchor: Secondary
+            Description: 讓整個導覽列沒那麼顯眼。
+            HTML: |
+                <div class="ts-pagination [[is-secondary]]">
+                    <a class="item is-back"></a>
+                    <a class="item">1</a>
+                    <a class="item is-skipped"></a>
+                    <a class="item">4</a>
+                    <a class="item is-active">5</a>
+                    <a class="item">6</a>
+                    <a class="item is-skipped"></a>
+                    <a class="item">10</a>
+                    <a class="item is-next"></a>
+                </div>
+
+          - Title: 外框線的
+            Anchor: Outlined
+            Description: 以外框線襯托每個頁數項目。
+            HTML: |
+                <div class="ts-pagination [[is-outlined]]">
+                    <a class="item is-back"></a>
+                    <a class="item">1</a>
+                    <a class="item is-active">2</a>
+                    <a class="item">3</a>
+                    <a class="item is-next"></a>
+                </div>
+
+          - Title: 流動的
+            Anchor: Fluid
+            Description: 令整個頁數導覽列和父容器有相同的寬度。
+            HTML: |
+                <div class="ts-pagination [[is-fluid]]">
+                    <a class="item is-back"></a>
+                    <a class="item">1</a>
+                    <a class="item">2</a>
+                    <a class="item">3</a>
+                    <a class="item is-next"></a>
+                </div>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改頁數導覽列的大小。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-pagination [[is-small]]">
+                    <a class="item is-back"></a>
+                    <a class="item">1</a>
+                    <a class="item is-active">2</a>
+                    <a class="item">3</a>
+                    <a class="item is-next"></a>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-pagination">
+                    <a class="item is-back"></a>
+                    <a class="item">1</a>
+                    <a class="item is-active">2</a>
+                    <a class="item">3</a>
+                    <a class="item is-next"></a>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-pagination [[is-large]]">
+                    <a class="item is-back"></a>
+                    <a class="item">1</a>
+                    <a class="item is-active">2</a>
+                    <a class="item">3</a>
+                    <a class="item is-next"></a>
+                </div>
+
+          - Title: 寬鬆的
+            Anchor: Relaxed
+            Description: 使項目之間看起來更寬鬆不擁擠。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-pagination is-outlined">
+                    <a class="item is-back"></a>
+                    <a class="item">1</a>
+                    <a class="item is-active">2</a>
+                    <a class="item">3</a>
+                    <a class="item is-next"></a>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-pagination is-outlined [[is-relaxed]]">
+                    <a class="item is-back"></a>
+                    <a class="item">1</a>
+                    <a class="item is-active">2</a>
+                    <a class="item">3</a>
+                    <a class="item is-next"></a>
+                </div>
+
+          - Title: 較密的
+            Anchor: Dense
+            Description: 變更元件的內距，令元素之間看起來更密集。
+            HTML: |
+                <div class="ts-pagination [[is-dense]]">
+                    <a class="item is-back"></a>
+                    <a class="item">1</a>
+                    <a class="item is-active">2</a>
+                    <a class="item">3</a>
+                    <a class="item is-next"></a>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 詳細分頁列
+            Anchor: Composition Detail
+            Description: 在資料的上、下方通常會有一個換頁用的導覽列，有時會包含筆數資訊。
+            HTML: |
+                <div class="{{ts-card}}">
+                    <table class="{{ts-table}} is-basic">
+                        <thead>
+                            <tr>
+                                <th>醫院種類</th>
+                                <th>名稱</th>
+                                <th class="is-collapsed">建立於</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="is-collapsed">東京 AH 綜合醫院</td>
+                                <td>醫學藥品</td>
+                                <td>2021/08/01</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">東京 AH 綜合醫院</td>
+                                <td>常規心電圖</td>
+                                <td>2021/08/01</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="{{ts-divider}}"></div>
+                    <div class="{{ts-content}} is-dense is-secondary">
+                        <div class="{{ts-grid}} is-compact is-middle-aligned">
+                            <div class="column is-fluid">
+                                單頁筆數：
+                                <div class="{{ts-select}} is-basic">
+                                    <select>
+                                        <option>10</option>
+                                        <option>20</option>
+                                        <option selected>30</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="[[ts-pagination]] is-secondary">
+                                    <a class="item is-back"></a>
+                                    <a class="item">1</a>
+                                    <a class="item is-skipped"></a>
+                                    <a class="item">4</a>
+                                    <a class="item is-active">5</a>
+                                    <a class="item">6</a>
+                                    <a class="item is-skipped"></a>
+                                    <a class="item">10</a>
+                                    <a class="item is-next"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>

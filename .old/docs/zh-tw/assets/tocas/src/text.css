@@ -1,0 +1,340 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-text {
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-text {
+    color: var(--accent-color, inherit);
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Editable
+ */
+
+.ts-text.is-editable {
+    text-decoration-style: dotted;
+    text-decoration-line: underline;
+    text-decoration-color: var(--ts-gray-400);
+    cursor: pointer;
+}
+
+/**
+ * Line Clamps
+ */
+
+.ts-text:is(.is-1-lines, .is-2-lines, .is-3-lines, .is-4-lines, .is-5-lines) {
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    word-break: break-all;
+}
+
+.ts-text.is-1-lines {
+    -webkit-line-clamp: 1;
+}
+
+.ts-text.is-2-lines {
+    -webkit-line-clamp: 2;
+}
+
+.ts-text.is-3-lines {
+    -webkit-line-clamp: 3;
+}
+
+.ts-text.is-4-lines {
+    -webkit-line-clamp: 4;
+}
+
+.ts-text.is-5-lines {
+    -webkit-line-clamp: 5;
+}
+
+/**
+ * Secondary
+ */
+
+.ts-text.is-secondary {
+    color: var(--ts-gray-500);
+}
+
+/**
+ * Bold
+ */
+
+.ts-text.is-bold {
+    font-weight: 500 !important;
+}
+
+/**
+ * Heavy
+ */
+
+.ts-text.is-heavy {
+    font-weight: bold !important;
+}
+
+/**
+ * Italic
+ */
+
+.ts-text.is-italic {
+    font-style: italic !important;
+}
+
+/**
+ * Deleted
+ */
+
+.ts-text.is-deleted {
+    text-decoration: line-through !important;
+}
+
+/**
+ * Underlined
+ */
+
+.ts-text.is-underlined {
+    text-decoration: underline !important;
+}
+
+/**
+ * Link
+ */
+
+.ts-text.is-link.is-link.is-link {
+    color: var(--accent-color, var(--ts-link-700));
+}
+.ts-text.is-link {
+    text-decoration: underline;
+}
+.ts-text.is-link:hover {
+    color: inherit;
+}
+.ts-text.is-link:active {
+    color: inherit;
+}
+.ts-text.is-link:visited {
+    color: inherit;
+}
+
+/**
+ * Undecorated
+ */
+
+.ts-text.is-undecorated {
+    text-decoration: none;
+}
+.ts-text.is-undecorated:hover {
+    text-decoration: underline;
+}
+
+/**
+ * External Link
+ */
+
+.ts-text.is-external-link::after {
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+    display: inline;
+    text-decoration: inherit;
+    text-align: center;
+    width: 1.18em;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+    content: "\f35d";
+    font-size: 0.8em;
+    margin-left: 0.25rem;
+}
+
+/**
+ * Code
+ */
+
+.ts-text.is-code {
+    border-radius: 0.4rem;
+    background: var(--ts-gray-200);
+    padding: 0 0.2rem;
+    font-size: var(--ts-font-size-14px);
+    color: var(--ts-gray-800);
+}
+
+/**
+ * Mark
+ */
+
+.ts-text.is-mark {
+    border-radius: 0.4rem;
+    background: var(--ts-warning-500);
+    padding: 0 0.25rem;
+    color: var(--ts-black);
+    font-size: var(--ts-font-size-14px);
+}
+
+/**
+ * Key
+ */
+
+.ts-text.is-key {
+    border-radius: 0.4rem;
+    background: var(--ts-gray-100);
+    padding: 0 0.35rem;
+    color: var(--ts-gray-800);
+    border-bottom: 3px solid var(--ts-gray-300);
+    font-size: var(--ts-font-size-14px);
+}
+
+/**
+ * Sup
+ */
+
+.ts-text.is-sup {
+    font-size: 12px;
+    vertical-align: top;
+    opacity: 0.8;
+}
+
+/**
+ * Sub
+ */
+
+.ts-text.is-sub {
+    font-size: 12px;
+    vertical-align: bottom;
+    opacity: 0.8;
+}
+
+/**
+ * Truncated
+ */
+
+.ts-text.is-truncated {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: block;
+}
+
+/**
+ * Uppercased
+ */
+
+.ts-text.is-uppercased {
+    text-transform: uppercase;
+}
+
+/**
+ * Lowercased
+ */
+
+.ts-text.is-lowercased {
+    text-transform: lowercase;
+}
+
+/**
+ * Aligns
+ */
+
+.ts-text.is-center-aligned {
+    text-align: center;
+}
+.ts-text.is-start-aligned {
+    text-align: left;
+}
+.ts-text.is-end-aligned {
+    text-align: right;
+}
+.ts-text.is-justify-aligned {
+    text-align: justify;
+}
+
+/**
+ * Label
+ */
+
+.ts-text.is-label {
+    font-weight: 500;
+    color: var(--ts-gray-800);
+    font-size: var(--ts-font-size-14px);
+    line-height: 1;
+}
+
+/**
+ * Description
+ */
+
+.ts-text.is-description {
+    color: var(--ts-gray-500);
+    font-size: var(--ts-font-size-14px);
+}
+
+/**
+ * Disabled
+ */
+
+.ts-text.is-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+}
+
+/**
+ * Required
+ */
+
+.ts-text.is-required::after {
+    content: " *";
+    font-weight: bold;
+    color: var(--ts-negative-600);
+}
+
+/**
+ * Sizes
+ */
+
+.ts-text.is-tiny {
+    font-size: var(--ts-font-size-13px);
+}
+.ts-text.is-small {
+    font-size: var(--ts-font-size-14px);
+}
+.ts-text.is-medium {
+    font-size: var(--ts-font-size-15px);
+}
+.ts-text.is-large {
+    font-size: var(--ts-font-size-17px);
+}
+.ts-text.is-big {
+    font-size: var(--ts-font-size-20px);
+}
+.ts-text.is-huge {
+    font-size: var(--ts-font-size-24px);
+}
+.ts-text.is-massive {
+    font-size: var(--ts-font-size-30px);
+}
+
+/**
+ * Negative
+ */
+
+.ts-text.is-negative {
+    color: var(--ts-negative-600);
+}
+
+.ts-text.is-negative.is-secondary {
+    color: var(--ts-negative-500);
+}

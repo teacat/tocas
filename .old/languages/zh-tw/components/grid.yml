@@ -1,0 +1,395 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 網格系統
+Description: 針對內容格局、元件所設計的排版系統。
+Intro: |
+    Tocas UI 的網格系統將每行劃分為 16 格寬度。為了方便展示網格系統，我們將背景加上了灰色與輔助數字，在實際應用中這些都並不會出現。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Grid: true
+Relatives:
+    - Wrap
+
+#=======================================================
+# 變數
+# Variables
+#=======================================================
+
+Variables:
+    - Name: --gap
+      Default: 1rem
+      Target: .ts-grid
+      Description: 欄位之間的空白間隙寬度。
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="[[ts-grid]]">
+            <div class="column is-4-wide"></div>
+            <div class="column is-4-wide"></div>
+            <div class="column is-4-wide"></div>
+            <div class="column is-4-wide"></div>
+        </div>
+
+Definitions:
+    - Title: 概念
+      Description:
+      Sections:
+          - Title: 欄位與寬度
+            Anchor: Wides
+            Description: |
+                被劃分開來的區塊是「欄位」，每個欄位的寬度都可以自己決定。
+
+                Tocas UI 的網格系統每行皆有 16 格寬，這個範例由 2、8、6 格寬的欄位所組成，所以 `2 + 8 + 6 = 16` 剛好達到了一行的最大格數。
+
+                沒有指定寬度的欄位會以其內容寬度為主。
+            HTML: |
+                <div class="ts-grid">
+                    <div class="column [[is-2-wide]]"></div>
+                    <div class="column [[is-8-wide]]"></div>
+                    <div class="column [[is-6-wide]]"></div>
+                </div>
+
+          - Title: 欄位換行
+            Anchor: Wrapping
+            Description: |
+                如果單行的欄位寬度加起來超過 16 格寬，溢出來的欄位會自動換行。這個範例由 5、6、8 格寬的欄位所組成，所以 `5 + 6 + 8 = 19`，多出來的欄位會換行。
+            HTML: |
+                <div class="ts-grid">
+                    <div class="column [[is-5-wide]]"></div>
+                    <div class="column [[is-6-wide]]"></div>
+                    <div class="column [[is-8-wide]]"></div>
+                </div>
+
+          - Title: 欄位數量
+            Anchor: Amounts
+            Description: |
+                透過 `is-1-columns` 到 `is-10-columns` 指定單行要有幾個欄位，避免某些欄位沒辦法被 16 整除。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-grid [[is-3-columns]]">
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-grid [[is-6-columns]]">
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                </div>
+
+          - Title: 欄位均分
+            Anchor: Evenly Divided
+            Description: |
+                使用均分讓每個欄位都有相同寬度，舉例來說：2 個欄位會各佔 50%，而 3 個欄位會均分成 33%…以此類推。
+            HTML: |
+                <div class="ts-grid [[is-evenly-divided]]">
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                </div>
+
+          - Title: 巢狀式網格
+            Anchor: Sub Grid
+            Description: |
+                網格系統內還可以有另一個網格系統，這樣便能在單個欄位裡再進行寬度細分。
+            HTML: |
+                <div class="ts-grid is-2-columns">
+                    <div class="column">
+                        <div class="[[ts-grid]] is-4-columns">
+                            <div class="column"></div>
+                            <div class="column"></div>
+                            <div class="column"></div>
+                            <div class="column"></div>
+                        </div>
+                    </div>
+                    <div class="column"></div>
+                </div>
+
+    - Title: 欄位
+      Description:
+      Sections:
+          - Title: 流動寬度
+            Anchor: Fluid
+            Description: 使某個欄位的寬度填滿剩餘空白位置。
+            HTML: |
+                <div class="ts-grid">
+                    <div class="column is-4-wide"></div>
+                    <div class="column [[is-fluid]]"></div>
+                    <div class="column is-4-wide"></div>
+                </div>
+
+          - Title: 移至首位、尾端
+            Anchor: First And Last
+            Description: 把某個欄位的排序調到第一個或是最後一個。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-grid">
+                    <div class="column is-4-wide"></div>
+                    <div class="column is-4-wide"></div>
+                    <div class="column is-8-wide [[is-first]]"></div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-grid">
+                    <div class="column is-8-wide [[is-last]]"></div>
+                    <div class="column is-4-wide"></div>
+                    <div class="column is-4-wide"></div>
+                </div>
+
+          - Title: 指定順序
+            Anchor: Orders
+            Description: 透過 `is-order-1` 到 `is-order-10` 重新排序欄位，使用此功能時所有的欄位都必須指定順序。適合搭配「[響應式設計](./responsive.html)」功能來在行動裝置上重新排序欄位。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-grid">
+                    <div class="column is-2-wide [[is-order-4]]"></div>
+                    <div class="column is-3-wide [[is-order-3]]"></div>
+                    <div class="column is-4-wide [[is-order-2]]"></div>
+                    <div class="column is-7-wide [[is-order-1]]"></div>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 水平對齊
+            Anchor: Horizontal Aligns
+            Description: 項目可以選擇靠左、中或右對齊。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-grid [[is-start-aligned]]">
+                    <div class="column is-3-wide"></div>
+                    <div class="column is-3-wide"></div>
+                    <div class="column is-3-wide"></div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-grid [[is-center-aligned]]">
+                    <div class="column is-3-wide"></div>
+                    <div class="column is-3-wide"></div>
+                    <div class="column is-3-wide"></div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-grid [[is-end-aligned]]">
+                    <div class="column is-3-wide"></div>
+                    <div class="column is-3-wide"></div>
+                    <div class="column is-3-wide"></div>
+                </div>
+
+          - Title: 垂直對齊
+            Anchor: Vertical Aligns
+            Description: 可以根據項目之間的高度，更改其上、中或下對齊方式。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-grid [[is-top-aligned]] is-3-columns">
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-grid [[is-middle-aligned]] is-3-columns">
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-grid [[is-bottom-aligned]] is-3-columns">
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                </div>
+
+          - Title: 高度拉伸的
+            Anchor: Stretched
+            Description: 使欄位裡的[卡片容器](./card.html)或第一層的元素高度拉伸至與其他欄位相同。
+            Remove:
+                - <span class="no-grid-indicator"></span>
+            HTML: |
+                <span class="no-grid-indicator"></span>
+                <div class="ts-grid [[is-stretched]] is-3-columns">
+                    <div class="column">
+                        <div class="{{ts-card}}">
+                            <div class="{{ts-content}}">
+                                <p>這個片段有一行文字。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-card}}">
+                            <div class="{{ts-content}}">
+                                <p>這個片段有兩行文字。</p>
+                                <p>這個片段有兩行文字。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-card}}">
+                            <div class="{{ts-content}}">
+                                <p>這個片段有三行文字。</p>
+                                <p>這個片段有三行文字。</p>
+                                <p>每個片段高度都一樣。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 分隔的
+            Anchor: Divided
+            Description: 讓欄位之間有垂直分隔線區隔項目，僅適用於單行的網格系統。
+            HTML: |
+                <div class="ts-grid [[is-divided]] is-3-columns">
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                </div>
+
+          - Title: 空白圍繞
+            Anchor: Space Between And Around
+            Description: 使空白圍繞在欄位之間或是周圍。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-grid [[is-spaced-between]]">
+                    <div class="column is-3-wide"></div>
+                    <div class="column is-3-wide"></div>
+                    <div class="column is-3-wide"></div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-grid [[is-spaced-around]]">
+                    <div class="column is-3-wide"></div>
+                    <div class="column is-3-wide"></div>
+                    <div class="column is-3-wide"></div>
+                </div>
+
+          - Title: 顛倒順序
+            Anchor: Reversed
+            Description: 顛倒網格系統裡所有欄位順序，你可以透過搭配「[響應式設計](./responsive.html)」功能來在行動裝置上切換這個樣式（如：將側邊欄改成優先順位）。
+            HTML: |
+                <div class="ts-grid [[is-reversed]]">
+                    <div class="column is-2-wide"></div>
+                    <div class="column is-4-wide"></div>
+                    <div class="column is-10-wide"></div>
+                </div>
+
+          - Title: 層疊的
+            Anchor: Stacked
+            Description: 這會不論原訂的欄位寬度，直接將所有欄位各自獨立成為一行（便是將所有欄位設置為 16 格寬）。適合搭配「[響應式設計](./responsive.html)」功能在行動裝置上讓所有欄位層疊起來。
+            HTML: |
+                <div class="ts-grid [[is-stacked]]">
+                    <div class="column is-2-wide"></div>
+                    <div class="column is-3-wide"></div>
+                    <div class="column is-4-wide"></div>
+                </div>
+
+          - Title: 密度
+            Anchor: Density
+            Description: 網格系統裡欄位的間距可以更密或是更寬鬆。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-grid [[is-relaxed]] is-3-columns">
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-grid is-3-columns">
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-grid [[is-compact]] is-3-columns">
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                </div>
+
+    - Title: 響應式設計
+      Description: 在 Tocas UI 裡，所有東西都可以套用響應式設計系統，所以我們建議你閱讀[響應式設計](./responsive.html)頁面。下列範例僅作為基本的指導教學。
+      Sections:
+          - Title: 指定寬度
+            Anchor: Responsive Wides
+            Description: 欄位所佔的格數寬度可以依據裝置而有所不同，相關介面尺寸請參閱[響應式設計](./responsive.html)頁面。舉例來說：`tablet+:is-8-wide` 會在平板或更大的裝置上以 8 格寬的方式呈現。
+            HTML: |
+                <div class="ts-grid">
+                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
+                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
+                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
+                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
+                </div>
+
+          - Title: 自動層疊
+            Anchor: Responsive Stacked
+            Description: 這會不論原訂的欄位寬度，在手機裝置時套用 `is-stacked` 層疊樣式並令所有欄位各自獨立成為一行（便是將所有欄位設置為 16 格寬）。
+            HTML: |
+                <div class="ts-grid [[mobile:is-stacked]]">
+                    <div class="column is-4-wide"></div>
+                    <div class="column is-4-wide"></div>
+                    <div class="column is-4-wide"></div>
+                    <div class="column is-4-wide"></div>
+                </div>
+
+          - Title: 指定數量
+            Anchor: Responsive Amounts
+            Description: 你可以在指定裝置上變更一個網格系統的欄位數量，這個範例的 `mobile:is-2-columns` 表示行動裝置會有 2 欄，而 `tablet+:is-3-columns` 是指平板或是更大的裝置會有 3 欄。
+            HTML: |
+                <div class="ts-grid [[mobile:is-2-columns]] [[tablet+:is-3-columns]]">
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                    <div class="column"></div>
+                </div>
+
+          - Title: 可見度
+            Anchor: Responsive Visibility
+            Description: 某些欄位可以只在指定介面尺寸上呈現、隱藏，相關使用方式請參閱[響應式設計](./responsive.html)頁面。
+            HTML: |
+                <div class="ts-grid">
+                    <div class="column [[mobile:has-hidden]] is-4-wide"></div>
+                    <div class="column [[tablet+:has-hidden]] is-4-wide"></div>
+                    <div class="column [[desktop-:has-hidden]] is-4-wide"></div>
+                    <div class="column [[widescreen:has-hidden]] is-4-wide"></div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 搜尋欄位
+            Anchor: Composition Search
+            Description: 通常搜尋欄位會有流動欄位與一個固定欄位，沒有指定寬度的欄位會以其內容寬度為主。
+            Remove:
+                - <span class="no-grid-indicator"></span>
+            HTML: |
+                <span class="no-grid-indicator"></span>
+                <div class="ts-grid">
+                    <div class="column [[is-fluid]]">
+                        <div class="{{ts-input}}">
+                            <input type="text" class="input" placeholder="搜尋文章…"/>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <button class="{{ts-button}}">送出</button>
+                    </div>
+                </div>

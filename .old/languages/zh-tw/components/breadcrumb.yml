@@ -1,0 +1,138 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 導覽標記
+Description: 提示目前瀏覽的階層、分類項目。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-breadcrumb]]">
+            <a class="item">映画</a>
+            <a class="item">受賞作</a>
+            <a class="item is-active">聲の形</a>
+        </div>
+
+Definitions:
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 啟用的
+            Anchor: Active
+            Description: 表示目前正處於的位置。
+            HTML: |
+                <div class="ts-breadcrumb">
+                    <a class="item">
+                        <span class="{{ts-icon}} is-house-icon"></span>
+                    </a>
+                    <a class="item">
+                        <span class="{{ts-icon}} is-users-icon is-end-spaced"></span>會員管理
+                    </a>
+                    <a class="item [[is-active]]">
+                        建立使用者
+                    </a>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 自訂圖示的
+            Anchor: Customized
+            Description: 預設的導覽標記會以斜線分隔，透過自訂圖示可以透過 `divider` 元素客製化分隔圖示。
+            HTML: |
+                <div class="ts-breadcrumb [[is-customized]]">
+                    <a class="item">網站</a>
+                    <div class="divider">
+                        <span class="{{ts-icon}} is-caret-right-icon"></span>
+                    </div>
+                    <a class="item">註冊程序</a>
+                    <div class="divider">
+                        <span class="{{ts-icon}} is-caret-right-icon"></span>
+                    </div>
+                    <a class="item">個人資料</a>
+                </div>
+
+          - Title: 階段的
+            Anchor: Stepped
+            Description: 讓導覽標記有階段性的感覺，這會讓非啟用的項目全部淡化呈現。
+            HTML: |
+                <div class="ts-breadcrumb [[is-stepped]] is-chevroned">
+                    <a class="item">聯絡我們</a>
+                    <a class="item">技術問題</a>
+                    <a class="item is-active">表單</a>
+                </div>
+
+          - Title: 箭頭的
+            Anchor: Chevroned
+            Description: 以箭頭分隔項目。
+            HTML: |
+                <div class="ts-breadcrumb [[is-chevroned]]">
+                    <a class="item">線上購物</a>
+                    <a class="item">24H 送達</a>
+                    <a class="item">智慧型手機</a>
+                </div>
+
+          - Title: 連字符的
+            Anchor: Hyphenated
+            Description: 以基本的連字符號分隔項目。
+            HTML: |
+                <div class="ts-breadcrumb [[is-hyphenated]]">
+                    <a class="item">無線滑鼠</a>
+                    <a class="item">快速響應</a>
+                    <a class="item">特價下殺</a>
+                </div>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改導覽標記的大小。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-breadcrumb [[is-small]]">
+                    <a class="item">使用文件</a>
+                    <a class="item">程式開發</a>
+                    <a class="item">Golang</a>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-breadcrumb">
+                    <a class="item">使用文件</a>
+                    <a class="item">程式開發</a>
+                    <a class="item">Golang</a>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-breadcrumb [[is-large]]">
+                    <a class="item">使用文件</a>
+                    <a class="item">程式開發</a>
+                    <a class="item">Golang</a>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 區塊導覽標記
+            Anchor: Composition Block
+            Description: 搭配[卡片容器](./card.html)呈現出一個區塊導覽標記。
+            HTML: |
+                <div class="[[{{ts-card}}]]">
+                    <div class="{{ts-content}} is-secondary">
+                        <div class="ts-breadcrumb is-chevroned">
+                            <a class="item">電影</a>
+                            <a class="item">科幻與冒險</a>
+                            <a class="item">星際效應</a>
+                        </div>
+                    </div>
+                </div>

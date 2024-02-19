@@ -1,0 +1,246 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-conversation {
+    display: flex;
+    gap: 1rem;
+    --brand-color: var(--ts-primary-600);
+}
+
+/**
+ * Avatar
+ */
+
+.ts-conversation .avatar img {
+    width: 40px;
+    border-radius: 0.4rem;
+}
+
+/**
+ * Bubble
+ */
+
+.ts-conversation .bubble {
+    background: var(--ts-gray-100);
+    border-radius: 0.4rem;
+    line-height: 1.5;
+    padding: 0.5rem 0.8rem;
+    font-size: var(--ts-font-size-14px);
+    overflow: hidden;
+}
+
+/** Clearfix for meta */
+.ts-conversation .bubble::after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+/**
+ * Author
+ */
+
+.ts-conversation .bubble .author {
+    font-weight: 500;
+    color: var(--brand-color);
+}
+
+/**
+ * Meta
+ */
+
+.ts-conversation .bubble .meta {
+    float: right;
+    line-height: 1.5;
+    bottom: -3px;
+    margin-left: 0.6rem;
+    display: inline-flex;
+    gap: 0.65rem;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: var(--ts-font-size-14px);
+    color: var(--ts-gray-500);
+}
+
+.ts-conversation .bubble .meta.is-floated {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0.4rem;
+    padding: 0.1rem 0.4rem;
+    color: var(--ts-white);
+}
+
+/**
+ * Text
+ */
+
+.ts-conversation .bubble .text {
+    display: inline;
+}
+
+.ts-conversation .bubble .text a {
+    color: var(--ts-link-700);
+}
+
+/**
+ * Actions
+ */
+
+/**
+ * Meta
+ */
+
+/**
+ * Quote
+ */
+
+.ts-conversation .bubble .quote {
+    --brand-color: var(--ts-positive-600);
+    border-left: 2px solid var(--brand-color);
+    margin: 0.5rem 0;
+    padding-left: 0.8rem;
+}
+
+.ts-conversation .bubble .quote .author {
+    font-weight: 500;
+    color: var(--brand-color);
+}
+
+/**
+ * Preview
+ */
+
+.ts-conversation .bubble .preview {
+    padding-left: 0.8rem;
+    border-left: 2px solid var(--brand-color);
+    margin: 0.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    --brand-color: #1074c5;
+}
+
+.ts-conversation .bubble .site {
+    font-weight: 500;
+    color: var(--brand-color);
+}
+
+.ts-conversation .bubble .title {
+    font-weight: 500;
+}
+
+.ts-conversation .bubble .embed {
+    overflow: hidden;
+    border-radius: 0.4rem;
+}
+
+.ts-conversation .bubble .embed > * {
+    width: 100%;
+    object-fit: cover;
+    vertical-align: top;
+}
+
+/**
+ * Object
+ */
+
+.ts-conversation .bubble .object {
+    margin: 0.4rem -0.8rem;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ *
+ */
+
+.ts-conversation:is(.is-sent, .is-sending, .is-error, .is-read, .is-warning) .bubble .meta::after {
+    color: var(--ts-gray-500);
+
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+
+    text-decoration: inherit;
+    text-align: center;
+    width: 1.18em;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+
+    font-size: var(--ts-font-size-13px);
+}
+
+.ts-conversation.is-sent .bubble .meta::after {
+    content: "\f00c";
+}
+
+.ts-conversation.is-sending .bubble .meta::after {
+    content: "\f017";
+}
+
+.ts-conversation.is-read .bubble .meta::after {
+    content: "\f560";
+}
+
+.ts-conversation.is-error .bubble .meta::after {
+    content: "\f071";
+    color: var(--ts-negative-400);
+}
+
+/**
+ * Self
+ */
+
+.ts-conversation.is-self {
+    flex-direction: row-reverse;
+}
+
+.ts-conversation.is-self .bubble {
+    background: #e8fbd1;
+    color: var(--ts-black);
+}
+
+.ts-conversation.is-self .bubble .author {
+    color: #538e0b;
+}
+
+.ts-conversation.is-self .bubble .meta,
+.ts-conversation.is-self .bubble .meta::after {
+    color: #538e0b;
+}
+
+/**
+ * Object Only
+ */
+
+.ts-conversation.is-object-only .bubble {
+    padding: 0;
+}
+
+.ts-conversation.is-object-only .bubble .object {
+    margin: 0;
+}
+
+.ts-conversation.is-object-only .bubble .meta {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 0.4rem;
+    padding: 0.1rem 0.4rem;
+    color: var(--ts-white);
+}
+
+.ts-conversation.is-object-only .bubble .meta::after {
+    color: var(--ts-white);
+}

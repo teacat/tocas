@@ -1,0 +1,539 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-input {
+    --border-radius: 0.4rem;
+    --height: var(--ts-input-height-medium);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-input {
+    display: flex;
+    width: 100%;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-input input {
+    padding: 0 1rem;
+    height: var(--height);
+}
+
+.ts-input input,
+.ts-input textarea {
+    margin: 0;
+    width: 100%;
+    overflow: visible;
+    font: inherit;
+    outline: none;
+    box-sizing: border-box;
+    resize: none;
+    font-size: var(--ts-font-size-14px);
+    line-height: 1.5;
+    color: var(--ts-gray-800);
+    background: var(--ts-gray-50);
+
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.ts-input textarea {
+    padding: 0.467rem 1rem;
+}
+
+.ts-input input:focus,
+.ts-input textarea:focus {
+    outline: 0;
+}
+
+/**
+ * Input
+ */
+
+.ts-input input,
+.ts-input textarea {
+    border-radius: var(--border-radius);
+    border: 1px solid var(--ts-gray-300);
+}
+
+.ts-input input:focus,
+.ts-input textarea:focus {
+    border-color: var(--ts-primary-600);
+}
+
+.ts-input input::-webkit-inner-spin-button,
+.ts-input input::-webkit-calendar-picker-indicator {
+    opacity: 0.4;
+    line-height: 1;
+}
+
+/**
+ * Color
+ */
+
+.ts-input input[type="color"] {
+    padding: 0;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    cursor: pointer;
+    width: auto;
+}
+
+.ts-input input[type="color"]::-webkit-color-swatch {
+    padding: 0;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border: 0;
+    border-radius: 0.4rem;
+    width: auto;
+    height: auto;
+}
+
+.ts-input input[type="color"]::-moz-color-swatch {
+    padding: 0;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border: 0;
+    border-radius: 0.4rem;
+    width: auto;
+    height: auto;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Solid
+ */
+
+.ts-input.is-solid input,
+.ts-input.is-solid textarea {
+    border-radius: var(--border-radius);
+    border: 1px solid transparent;
+    background: var(--ts-gray-100);
+}
+
+.ts-input.is-solid input:focus,
+.ts-input.is-solid textarea:focus {
+    background: var(--ts-gray-50);
+    border: 1px solid var(--ts-gray-300);
+}
+
+/**
+ * Underlined
+ */
+
+.ts-input.is-underlined input,
+.ts-input.is-underlined textarea {
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    border: 2px solid transparent;
+    background: var(--ts-gray-100);
+    border-bottom: 2px solid var(--ts-gray-400);
+}
+
+.ts-input.is-underlined input:focus,
+.ts-input.is-underlined textarea:focus {
+    border-bottom-color: var(--ts-primary-600);
+}
+
+/**
+ * Resizable
+ */
+
+.ts-input.is-resizable input,
+.ts-input.is-resizable textarea {
+    min-height: 5rem;
+    resize: vertical;
+}
+
+/**
+ * Circular
+ */
+
+.ts-input.is-circular {
+    --border-radius: 100rem;
+}
+
+/**
+ * Basic
+ */
+
+.ts-input.is-basic input {
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+/**
+ * Labeled
+ */
+
+.ts-input:is(.is-start-labeled, .is-end-labeled, .is-labeled) :is(.input, .label) {
+    border-radius: var(--border-radius);
+}
+
+.ts-input:is(.is-start-labeled, .is-end-labeled, .is-labeled) .label {
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ts-gray-100);
+    padding: 0 0.6rem;
+    font-size: var(--ts-font-size-14px);
+    color: var(--ts-gray-700);
+    border: 1px solid var(--ts-gray-300);
+}
+
+.ts-input:is(.is-start-labeled, .is-labeled) .label {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right-width: 0;
+}
+
+.ts-input:is(.is-start-labeled, .is-labeled) input {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.ts-input:is(.is-end-labeled, .is-labeled) .label {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left-width: 0;
+}
+
+.ts-input:is(.is-end-labeled, .is-labeled) input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.ts-input.is-labeled .label:first-child {
+    border-left-width: 1px;
+    border-top-left-radius: var(--border-radius);
+    border-bottom-left-radius: var(--border-radius);
+}
+
+.ts-input.is-labeled .label:last-child {
+    border-right-width: 1px;
+    border-top-right-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+}
+
+/** Underlined */
+.ts-input:is(.is-start-labeled, .is-labeled, .is-end-labeled).is-underlined .label {
+    border: 0;
+    border-bottom: 2px solid var(--ts-gray-400);
+    background: var(--ts-gray-200);
+}
+
+.ts-input:is(.is-start-labeled, .is-labeled).is-underlined .label {
+    border-bottom-left-radius: 0;
+}
+
+.ts-input:is(.is-end-labeled, .is-labeled).is-underlined .label {
+    border-bottom-right-radius: 0;
+}
+
+.ts-input:is(.is-start-labeled, .is-labeled).is-underlined input {
+    border-left: 0;
+}
+
+.ts-input:is(.is-end-labeled, .is-labeled).is-underlined input {
+    border-right: 0;
+}
+
+/** Solid */
+.ts-input:is(.is-start-labeled, .is-labeled, .is-end-labeled).is-solid .label {
+    border-color: transparent;
+    background: var(--ts-gray-200);
+}
+
+.ts-input:is(.is-start-labeled, .is-labeled, .is-end-labeled).is-solid:focus-within .label {
+    border-color: var(--ts-gray-300);
+}
+
+/**
+ * Action Icon
+ */
+
+.ts-input.is-end-action-icon :where(a, button).ts-icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--ts-gray-700);
+    z-index: 1;
+}
+
+.ts-input.is-end-action-icon :where(a, button).ts-icon {
+    padding: 0 1.5rem;
+    border-radius: 0.4rem;
+    background: var(--ts-gray-100);
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0.35rem;
+    padding: 0;
+    aspect-ratio: 1.1 / 1;
+    height: 75%;
+    width: auto;
+    font-size: 1em;
+}
+
+.ts-input.is-end-action-icon :where(a, button).ts-icon:hover {
+    opacity: 0.9;
+}
+
+.ts-input.is-end-action-icon input {
+    padding-right: 3rem;
+    box-sizing: border-box;
+}
+
+/**
+ * Icon
+ */
+
+.ts-input.is-start-icon .ts-icon:not(a):not(button),
+.ts-input.is-end-icon .ts-icon:not(a):not(button),
+.ts-input.is-icon .ts-icon:not(a):not(button) {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--ts-gray-700);
+    z-index: 1;
+}
+
+.ts-input.is-start-icon .ts-icon:not(a):not(button),
+.ts-input.is-icon .ts-icon:not(a):not(button):first-child {
+    left: 1rem;
+}
+
+.ts-input.is-start-icon input,
+.ts-input.is-icon input {
+    padding-left: 2.8rem;
+    box-sizing: border-box;
+}
+
+.ts-input.is-end-icon .ts-icon:not(a):not(button),
+.ts-input.is-icon .ts-icon:not(a):not(button):last-child {
+    right: 1rem;
+}
+
+.ts-input.is-end-icon input,
+.ts-input.is-icon input {
+    padding-right: 2.8rem;
+    box-sizing: border-box;
+}
+
+/**
+ * Negative
+ */
+
+.ts-input.is-negative :is(input, textarea) {
+    color: var(--ts-negative-600);
+    border-color: var(--ts-negative-400);
+    font-weight: 500;
+}
+
+.ts-input.is-negative .label {
+    border-color: var(--ts-negative-400);
+}
+
+/** Solid */
+.ts-input.is-negative.is-solid:is(.is-start-labeled, .is-labeled, .is-end-labeled) .label {
+    border-color: var(--ts-negative-400);
+}
+
+.ts-input.is-negative.is-solid input:focus,
+.ts-input.is-negative.is-solid textarea:focus {
+    background: var(--ts-gray-100);
+    border: 1px solid var(--ts-negative-400);
+}
+
+/** Underlined */
+.ts-input.is-negative.is-underlined :is(.label, input, textarea) {
+    border-color: transparent;
+    border-bottom-color: var(--ts-negative-400);
+}
+
+/**
+ * Disabled
+ */
+
+.ts-input.is-disabled input,
+.ts-input.is-disabled textarea {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.ts-input.is-disabled.is-underlined {
+    border-bottom-color: var(--ts-gray-300);
+}
+
+/**
+ * Fluid
+ */
+
+.ts-input.is-fluid {
+    display: flex;
+    width: 100%;
+}
+
+.ts-input.is-fluid input,
+.ts-input.is-fluid textarea {
+    width: 100%;
+}
+
+/**
+ * Dense
+ */
+
+.ts-input.is-dense input {
+    --height: var(--ts-input-height-medium-dense);
+}
+.ts-input.is-dense.is-small input {
+    --height: var(--ts-input-height-small-dense);
+}
+.ts-input.is-dense.is-large input {
+    --height: var(--ts-input-height-large-dense);
+}
+
+/**
+ * Relaxed
+ */
+
+.ts-input.is-relaxed input {
+    --height: var(--ts-input-height-large);
+}
+
+/**
+ * Sizes
+ */
+
+.ts-input.is-small input {
+    --height: var(--ts-input-height-small);
+}
+.ts-input.is-large input {
+    --height: var(--ts-input-height-large);
+}
+
+.ts-input.is-small :is(input, textarea, .ts-icon) {
+    font-size: var(--ts-font-size-13px);
+}
+
+.ts-input.is-large :is(input, textarea, .ts-icon) {
+    font-size: var(--ts-font-size-17px);
+}
+
+/* ==========================================================================
+   Data Input
+   ========================================================================== */
+
+.ts-taginput {
+    --border-radius: 0.4rem;
+    --height: var(--ts-input-height-medium);
+}
+
+.ts-taginput {
+    padding: 0.25rem 1rem;
+    min-height: var(--height);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--ts-gray-300);
+    align-items: center;
+    display: flex;
+    cursor: text;
+}
+
+.ts-taginput.is-focused {
+    border-color: var(--ts-primary-600);
+}
+
+.ts-taginput .content {
+    align-items: center;
+    display: flex;
+}
+
+.ts-taginput .append {
+    margin: 0;
+    overflow: visible;
+    font: inherit;
+    outline: none;
+    /* border: none;*/
+    box-sizing: border-box;
+    resize: none;
+    font-size: var(--ts-font-size-14px);
+    line-height: 1.5;
+    color: var(--ts-gray-800);
+    background: var(--ts-gray-50);
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 10px;
+}
+
+.ts-taginput input:not(.append) {
+    display: none;
+}
+
+.ts-input[data-tocas="input-chips"] {
+    border: 1px solid var(--ts-gray-300);
+    border-radius: var(--border-radius);
+    min-height: var(--height);
+    padding: 0.25rem 1rem;
+
+    background: var(--ts-gray-50);
+    box-sizing: border-box;
+    color: var(--ts-gray-800);
+    font: inherit;
+    font-size: var(--ts-font-size-14px);
+    outline: none;
+    overflow: visible;
+    resize: none;
+    width: 100%;
+    cursor: text;
+}
+
+.ts-input[data-tocas="input-chips"] input:not(.append) {
+    display: none;
+}
+
+.ts-input[data-tocas="input-chips"] .content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ts-input[data-tocas="input-chips"] .content .ts-chip {
+    cursor: default;
+    user-select: none;
+}
+
+.ts-input[data-tocas="input-chips"] input.append {
+    border: 0;
+    height: auto;
+    line-height: 1.7;
+    padding: 0;
+    border-radius: 0;
+    width: 1px;
+}

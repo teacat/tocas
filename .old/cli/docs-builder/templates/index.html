@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="{{ .Meta.Information.LanguageCode }}">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./assets/style.css" />
+        <link rel="stylesheet" href="./assets/index.css" />
+        <link rel="stylesheet" href="./assets/highlight.css" />
+        <link rel="stylesheet" href="./assets/tocas/tocas.min.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+        <script src="./assets/script.js"></script>
+        <title>Tocas UI</title>
+        <!--
+
+
+
+        ▄▄▄        ▄▄████▄
+      ▄█████▄    ▄██▀    ██
+      ▀█▄   ██▄ ██▀      ██
+       ▀██▄▄▄████   ▄▄▄██▀
+          ▀▀▀████▀▀▀▀▀
+             ██
+            ██          ▄█████▄       █████████████          ▄█             █▄
+           ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+           ██        ██         ██    ██         ██        ██  ▀██       ██▀
+           ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+           ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+            ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄███       █▀
+
+
+
+            「你只能死一次，一定要死的轟轟烈烈。」
+
+            沒有人可以做一件事情直到永遠，
+            而一個人的生命也不是永生。
+
+            死亡給予了我們試著活下去的動力，
+            在那之前都應該竭盡所能的向著自己的夢邁進。
+
+            將自己的生命活得淋漓盡致才是最重要的；
+            不要將剛開始的序章放在頁尾。
+
+
+
+        -->
+        <meta name="description" content="以最快最直覺的方式，建構多樣的網站與漸進式網路應用程式介面。" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="Tocas UI" />
+        <meta name="twitter:description" content="以最快最直覺的方式，建構多樣的網站與漸進式網路應用程式介面。" />
+        <meta name="twitter:image" content="https://v4.tocas-ui.com/{{ .Meta.Information.Path }}/assets/images/og.png" />
+        <meta property="og:title" content="Tocas UI" />
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content="https://v4.tocas-ui.com/{{ .Meta.Information.Path }}/assets/images/og.png" />
+        <meta property="og:url" content="https://v4.tocas-ui.com/{{ .Meta.Information.Path }}/index.html" />
+        <meta property="og:image:width" content="1280" />
+        <meta property="og:image:height" content="720" />
+        <meta property="og:description" content="以最快最直覺的方式，建構多樣的網站與漸進式網路應用程式介面。" />
+        </head>
+    </head>
+    <body>
+        <div class="穹頂">
+            <div class="界限容器">
+                <div class="穹頂-導航列">
+                    <div class="穹頂-導航列-左側">
+                        <a class="穹頂-導航列-項目 穹頂-導航列-項目_主要" href="./index.html">Tocas UI</a>
+                        <a class="穹頂-導航列-項目" href="./getting-started.html">{{ "Navbar_GettingStarted" | i18n }}</a>
+                        <a class="穹頂-導航列-項目" href="./button.html">{{ "Navbar_Components" | i18n }}</a>
+                        <a class="穹頂-導航列-項目" href="./examples.html">{{ "Navbar_Examples" | i18n }}</a>
+                    </div>
+                    <div class="穹頂-導航列-右側">
+                        <div class="穹頂-導航列-項目 穹頂-導航列-項目_語系的">
+                            <span class="ts-flag is-{{ .Meta.Information.Flag }}-flag"></span> {{ .Meta.Information.Language }}
+                            <div class="穹頂-導航列-項目-語系下拉式選單">
+                                {{ range .Meta.GlobalInformations }}
+                                <a
+                                    class="穹頂-導航列-項目-語系下拉式選單-項目 {{ if eq $.Meta.Information.Path .Path }}穹頂-導航列-項目-語系下拉式選單-項目_啟用的{{end}}"
+                                    href="./../{{ .Path }}/index.html"
+                                    ><span class="ts-flag is-{{ .Flag }}-flag"></span> {{ .Language }}</a
+                                >
+                                {{ end }}
+                            </div>
+                        </div>
+                        <a class="穹頂-導航列-項目" href="https://github.com/teacat/tocas" target="_blank"><span class="ts-icon is-github-icon"></span> GitHub</a>
+                    </div>
+                </div>
+                <div class="穹頂-導航列 穹頂-導航列_手機的">
+                        <div class="穹頂-導航列-右側">
+                            <div class="穹頂-導航列-項目 穹頂-導航列-項目_語系的">
+                                <span class="ts-flag is-{{ .Meta.Information.Flag }}-flag"></span> {{ .Meta.Information.Language }}
+                                <div class="穹頂-導航列-項目-語系下拉式選單">
+                                    {{ range .Meta.GlobalInformations }}
+                                    <a
+                                        class="穹頂-導航列-項目-語系下拉式選單-項目 {{ if eq $.Meta.Information.Path .Path }}穹頂-導航列-項目-語系下拉式選單-項目_啟用的{{end}}"
+                                        href="./../{{ .Path }}/index.html"
+                                        ><span class="ts-flag is-{{ .Flag }}-flag"></span> {{ .Language }}</a
+                                    >
+                                    {{ end }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="穹頂-行動號召">
+                    <div class="穹頂-行動號召-容器">
+                        <div class="穹頂-行動號召-容器-標題">{{ "Index_Title" | i18n }}</div>
+                        <div class="穹頂-行動號召-容器-副標題">{{ "Index_Description" | i18n }}</div>
+                        <a href="./getting-started.html" class="穹頂-行動號召-容器-動作">{{ "Index_GettingStarted" | i18n }}</a>
+                        <a href="./examples.html" class="穹頂-行動號召-容器-動作 穹頂-行動號召-容器-動作_次要的">{{ "Index_Examples" | i18n }}</a>
+                    </div>
+                </div>
+
+                <div class="進階宣傳-彈性格局">
+                    <div class="進階宣傳-彈性格局-標題">{{ "Index_ComingSoon" | i18n }}</div>
+                    <div class="進階宣傳-彈性格局-內容">{{ "Index_ComingSoon_Description" | i18n }}</div>
+                    <!--<a href="#!" class="進階宣傳-彈性格局-連結" target="_blank">
+                        <span class="ts-icon is-chevron-right-icon"></span>
+                    </a>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="主要內容">
+            <div class="界限容器">
+                <div class="主要內容-贊助者 主要內容-內容區塊">
+                    <div class="主要內容-贊助者-標題 主要內容-內容區塊-標題">{{ "Index_Donators" | i18n }}</div>
+                    <div class="主要內容-贊助者-清單">
+                        <div class="主要內容-贊助者-清單-項目">
+                            <img src="./assets/images/donators/Mac Taylor.jpg" class="主要內容-贊助者-清單-項目-頭像" />
+                            <div class="主要內容-贊助者-清單-項目-名稱">Mac Taylor</div>
+                        </div>
+                        <div class="主要內容-贊助者-清單-項目">
+                            <img src="./assets/images/donators/Sciuridae Li.jpg" class="主要內容-贊助者-清單-項目-頭像" />
+                            <div class="主要內容-贊助者-清單-項目-名稱">Sciuridae Li</div>
+                        </div>
+                        <div class="主要內容-贊助者-清單-項目">
+                            <img src="./assets/images/donators/Yan-K.jpg" class="主要內容-贊助者-清單-項目-頭像" />
+                            <div class="主要內容-贊助者-清單-項目-名稱">Yan-K</div>
+                        </div>
+                        <div class="主要內容-贊助者-清單-項目">
+                            <img src="./assets/images/donators/李政皇.jpg" class="主要內容-贊助者-清單-項目-頭像" />
+                            <div class="主要內容-贊助者-清單-項目-名稱">李政皇</div>
+                        </div>
+                        <div class="主要內容-贊助者-清單-項目">
+                            <img src="./assets/images/donators/Fan Kangtai.jpg" class="主要內容-贊助者-清單-項目-頭像" />
+                            <div class="主要內容-贊助者-清單-項目-名稱">乾太₍₍ ◝(･◡･)◟ ⁾⁾</div>
+                        </div>
+                        <div class="主要內容-贊助者-清單-項目">
+                            <img src="./assets/images/donators/Rex Tseng.jpg" class="主要內容-贊助者-清單-項目-頭像" />
+                            <div class="主要內容-贊助者-清單-項目-名稱">Leko</div>
+                        </div>
+                        <div class="主要內容-贊助者-清單-項目">
+                            <img src="./assets/images/donators/Bobby Ho.jpg" class="主要內容-贊助者-清單-項目-頭像" />
+                            <div class="主要內容-贊助者-清單-項目-名稱">Bobby Ho</div>
+                        </div>
+                        <div class="主要內容-贊助者-清單-項目">
+                            <img src="./assets/images/donators/Coin.jpg" class="主要內容-贊助者-清單-項目-頭像" />
+                            <div class="主要內容-贊助者-清單-項目-名稱">Coin</div>
+                        </div>
+                        <div class="主要內容-贊助者-清單-項目">
+                            <img src="./assets/images/donators/SpaceTimeHalf.jpg" class="主要內容-贊助者-清單-項目-頭像" />
+                            <div class="主要內容-贊助者-清單-項目-名稱">SpaceTimeHalf</div>
+                        </div>
+                        <div class="主要內容-贊助者-清單-項目">
+                            <img src="./assets/images/donators/methratton.jpg" class="主要內容-贊助者-清單-項目-頭像" />
+                            <div class="主要內容-贊助者-清單-項目-名稱">methratton</div>
+                        </div>
+                        <div class="主要內容-贊助者-清單-項目">
+                            <img src="./assets/images/donators/Sean Wei.jpg" class="主要內容-贊助者-清單-項目-頭像" />
+                            <div class="主要內容-贊助者-清單-項目-名稱">Sean Wei</div>
+                        </div>
+                        <div class="主要內容-贊助者-清單-項目">
+                            <img src="./assets/images/donators/Jonathan Goh.jpg" class="主要內容-贊助者-清單-項目-頭像" />
+                            <div class="主要內容-贊助者-清單-項目-名稱">Jonathan Goh</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="主要內容-特色說明 主要內容-內容區塊">
+                    <div class="主要內容-特色說明-項目">
+                        <div class="主要內容-特色說明-項目-標題">{{ "Index_Spotlight_A_Title" | i18n }}</div>
+                        <div class="主要內容-特色說明-項目-說明">
+                            {{ "Index_Spotlight_A_Description" | i18n }}
+                        </div>
+                    </div>
+                    <div class="主要內容-特色說明-項目">
+                        <div class="主要內容-特色說明-項目-標題">{{ "Index_Spotlight_B_Title" | i18n }}</div>
+                        <div class="主要內容-特色說明-項目-說明">
+                            {{ "Index_Spotlight_B_Description" | i18n }}
+                        </div>
+                    </div>
+                    <div class="主要內容-特色說明-項目">
+                        <div class="主要內容-特色說明-項目-標題">{{ "Index_Spotlight_C_Title" | i18n }}</div>
+                        <div class="主要內容-特色說明-項目-說明">
+                            {{ "Index_Spotlight_C_Description" | i18n }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="主要內容-內容區塊">
+                    <div class="主要內容-內容區塊-標題">{{ "Index_Spotlight_D_Title" | i18n }}</div>
+                    <div class="主要內容-內容區塊-說明">{{ "Index_Spotlight_D_Description" | i18n }}</div>
+                    <div class="主要內容-內容區塊-藝廊格局">
+                        <div class="主要內容-內容區塊-藝廊格局-主要">
+                            <div class="ts-grid is-relaxed">
+                                <!-- 左側 -->
+                                <div class="column is-4-wide">
+                                    <!-- 圖片卡片 -->
+                                    <div class="ts-header">{{ "Index_Showcase_ImageCard_Section" | i18n }}</div>
+                                    <div class="ts-space"></div>
+                                    <div class="ts-card">
+                                        <img class="ts-image" src="./assets/images/16-9.png" />
+                                        <div class="ts-content">
+                                            <div class="ts-header is-heavy">{{ "Index_Showcase_ImageCard_Title" | i18n }}</div>
+                                            <p>{{ "Index_Showcase_ImageCard_Content" | i18n }}</p>
+                                        </div>
+                                    </div>
+                                    <!-- / 圖片卡片 -->
+                                    <div class="ts-space is-large"></div>
+                                    <!-- 按鈕 -->
+                                    <div class="ts-header">{{ "Index_Showcase_Button_Section" | i18n }}</div>
+                                    <div class="ts-space is-small"></div>
+                                    <div class="ts-grid is-3-columns">
+                                        <div class="column">
+                                            <button class="ts-button is-fluid">{{ "Index_Showcase_Button_A" | i18n }}</button>
+                                        </div>
+                                        <div class="column">
+                                            <button class="ts-button is-fluid is-secondary">{{ "Index_Showcase_Button_B" | i18n }}</button>
+                                        </div>
+                                        <div class="column">
+                                            <button class="ts-button is-fluid is-outlined is-negative">{{ "Index_Showcase_Button_C" | i18n }}</button>
+                                        </div>
+                                    </div>
+                                    <!-- / 按鈕 -->
+                                    <div class="ts-space is-large"></div>
+                                    <!-- 標籤 -->
+                                    <div class="ts-header">{{ "Index_Showcase_Label_Section" | i18n }}</div>
+                                    <div class="ts-space is-small"></div>
+                                    <div class="ts-wrap is-compact">
+                                        <span class="ts-chip">
+                                            <div class="ts-image">
+                                                <img src="./assets/images/user.png" />
+                                            </div>
+                                            {{ "Index_Showcase_Label_A" | i18n }}
+                                        </span>
+                                        <span class="ts-chip">
+                                            <div class="ts-image">
+                                                <img src="./assets/images/user3.png" />
+                                            </div>
+                                            {{ "Index_Showcase_Label_B" | i18n }}
+                                        </span>
+                                    </div>
+                                    <div class="ts-space"></div>
+                                    <div class="ts-wrap is-compact">
+                                        <span class="ts-badge">8,964</span>
+                                        <span class="ts-badge is-secondary">16,226</span>
+                                        <span class="ts-badge is-negative">320</span>
+                                    </div>
+                                    <!-- / 標籤 -->
+                                </div>
+                                <!-- / 左側 -->
+
+                                <!-- 中間 -->
+                                <div class="column is-8-wide">
+                                    <!-- 統計數據 -->
+                                    <div class="ts-header">{{ "Index_Showcase_Statistic_Section" | i18n }}</div>
+                                    <div class="ts-space"></div>
+                                    <div class="ts-grid is-2-columns">
+                                        <div class="column">
+                                            <div class="ts-card">
+                                                <div class="ts-content">
+                                                    <div class="ts-statistic">
+                                                        <div class="value">42,689</div>
+                                                        <div class="comparison is-increased">32</div>
+                                                    </div>
+                                                    {{ "Index_Showcase_Statistic_A_Label" | i18n }}
+                                                </div>
+                                                <div class="symbol">
+                                                    <span class="ts-icon is-eye-icon"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="column">
+                                            <div class="ts-card">
+                                                <div class="ts-content">
+                                                    <div class="ts-statistic">
+                                                        <div class="value">8,652</div>
+                                                        <div class="comparison is-increased">351</div>
+                                                    </div>
+                                                    {{ "Index_Showcase_Statistic_B_Label" | i18n }}
+                                                </div>
+                                                <div class="symbol">
+                                                    <span class="ts-icon is-users-icon"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- / 統計數據 -->
+                                    <div class="ts-space is-large"></div>
+                                    <!-- 導航列 -->
+                                    <div class="ts-header">{{ "Index_Showcase_Navbar_Section" | i18n }}</div>
+                                    <div class="ts-space"></div>
+                                    <div class="ts-card">
+                                        <div class="ts-content is-dense">
+                                            <div class="ts-app-navbar is-indicated is-dense is-fluid">
+                                                <a href="#!" class="item">
+                                                    <div class="ts-icon is-user-icon"></div>
+                                                    <div class="label">{{ "Index_Showcase_Navbar_A" | i18n }}</div>
+                                                </a>
+                                                <a href="#!" class="item">
+                                                    <div class="ts-icon is-house-icon"></div>
+                                                    <div class="label">{{ "Index_Showcase_Navbar_B" | i18n }}</div>
+                                                </a>
+                                                <a href="#!" class="item is-active">
+                                                    <div class="ts-icon is-newspaper-icon"></div>
+                                                    <div class="label">{{ "Index_Showcase_Navbar_C" | i18n }}</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- / 導航列 -->
+                                    <div class="ts-space is-large"></div>
+                                    <!-- 表格 -->
+                                    <div class="ts-header">{{ "Index_Showcase_Table_Section" | i18n }}</div>
+                                    <div class="ts-space"></div>
+                                    <div class="ts-card">
+                                        <table class="ts-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>{{ "Index_Showcase_Table_Header_A" | i18n }}</th>
+                                                    <th>{{ "Index_Showcase_Table_Header_B" | i18n }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>{{ "Index_Showcase_Table_A_Cell_A" | i18n }}</td>
+                                                    <td>{{ "Index_Showcase_Table_A_Cell_B" | i18n }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>{{ "Index_Showcase_Table_B_Cell_A" | i18n }}</td>
+                                                    <td>{{ "Index_Showcase_Table_B_Cell_B" | i18n }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>{{ "Index_Showcase_Table_C_Cell_A" | i18n }}</td>
+                                                    <td>{{ "Index_Showcase_Table_C_Cell_B" | i18n }}</td>
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="3">{{ "Index_Showcase_Table_Footer" | i18n }}</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <!-- / 表格 -->
+                                </div>
+                                <!-- / 中間 -->
+
+                                <!-- 右側 -->
+                                <div class="column is-4-wide">
+                                    <!-- 導覽標記 -->
+                                    <div class="ts-header">{{ "Index_Showcase_Breadcrumb_Section" | i18n }}</div>
+                                    <div class="ts-space"></div>
+                                    <div class="ts-card">
+                                        <div class="ts-content is-secondary">
+                                            <div class="ts-breadcrumb is-chevroned">
+                                                <a class="item">{{ "Index_Showcase_Breadcrumb_A" | i18n }}</a>
+                                                <a class="item">{{ "Index_Showcase_Breadcrumb_B" | i18n }}</a>
+                                                <a class="item">{{ "Index_Showcase_Breadcrumb_C" | i18n }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- / 導覽標記 -->
+                                    <div class="ts-space is-large"></div>
+                                    <!-- 預置內容 -->
+                                    <div class="ts-header">{{ "Index_Showcase_Placeholder_Section" | i18n }}</div>
+                                    <div class="ts-space"></div>
+                                    <div class="ts-card">
+                                        <div class="ts-content">
+                                            <div class="ts-placeholder">
+                                                <div class="image is-header"></div>
+                                                <div class="text"></div>
+                                                <div class="text"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- / 預置內容 -->
+                                    <div class="ts-space is-large"></div>
+                                    <!-- 國旗 -->
+                                    <div class="ts-header">{{ "Index_Showcase_Flag_Section" | i18n }}</div>
+                                    <div class="ts-space is-small"></div>
+                                    <span class="ts-flag is-rounded is-taiwan-flag"></span>
+                                    <span class="ts-flag is-rounded is-america-flag"></span>
+                                    <span class="ts-flag is-rounded is-hong-kong-flag"></span>
+                                    <span class="ts-flag is-rounded is-south-korea-flag"></span>
+                                    <span class="ts-flag is-rounded is-sweden-flag"></span>
+                                    <span class="ts-flag is-rounded is-poland-flag"></span>
+                                    <span class="ts-flag is-rounded is-bordered is-japan-flag"></span>
+                                    <span class="ts-flag is-rounded is-india-flag"></span>
+                                    <span class="ts-flag is-rounded is-nigeria-flag"></span>
+                                    <!-- / 國旗 -->
+                                    <div class="ts-space is-large"></div>
+                                    <!-- 評分 -->
+                                    <div class="ts-header">{{ "Index_Showcase_Rating_Section" | i18n }}</div>
+                                    <div class="ts-space is-small"></div>
+                                    <div class="ts-rating is-yellow">
+                                        <div class="star is-active"></div>
+                                        <div class="star is-active"></div>
+                                        <div class="star"></div>
+                                    </div>
+                                    <div class="ts-rating is-red">
+                                        <div class="heart is-active"></div>
+                                        <div class="heart"></div>
+                                        <div class="heart"></div>
+                                    </div>
+                                    <!-- / 評分 -->
+                                    <div class="ts-space is-large"></div>
+                                    <!-- 項目切換 -->
+                                    <div class="ts-header">{{ "Index_Showcase_Selection_Section" | i18n }}</div>
+                                    <div class="ts-space is-small"></div>
+                                    <div class="ts-selection is-fluid is-circular">
+                                        <label class="item">
+                                            <input type="radio" name="performance" checked />
+                                            <div class="text">{{ "Index_Showcase_Selection_A" | i18n }}</div>
+                                        </label>
+                                        <label class="item">
+                                            <input type="radio" name="performance" />
+                                            <div class="text">{{ "Index_Showcase_Selection_B" | i18n }}</div>
+                                        </label>
+                                        <label class="item">
+                                            <input type="radio" name="performance" />
+                                            <div class="text">{{ "Index_Showcase_Selection_C" | i18n }}</div>
+                                        </label>
+                                    </div>
+                                    <!-- / 項目切換 -->
+                                </div>
+                                <!-- / 右側 -->
+                            </div>
+                        </div>
+                        <div class="主要內容-內容區塊-藝廊格局-次要">
+                            <div class="主要內容-內容區塊-藝廊格局-標題">{{ "Index_Feature_A_Title" | i18n }}</div>
+                            <div class="主要內容-內容區塊-藝廊格局-說明">{{ "Index_Feature_A_Description" | i18n }}</div>
+                            <a href="./responsive.html" class="主要內容-內容區塊-藝廊格局-按鈕">{{ "Index_Feature_A_Action" | i18n }}</a>
+                        </div>
+                        <div class="主要內容-內容區塊-藝廊格局-次要">
+                            <div class="主要內容-內容區塊-藝廊格局-標題">{{ "Index_Feature_B_Title" | i18n }}</div>
+                            <div class="主要內容-內容區塊-藝廊格局-說明">{{ "Index_Feature_B_Description" | i18n }}</div>
+                            <a href="./button.html" class="主要內容-內容區塊-藝廊格局-按鈕">{{ "Index_Feature_B_Action" | i18n }}</a>
+                        </div>
+                        <div class="主要內容-內容區塊-藝廊格局-次要">
+                            <div class="主要內容-內容區塊-藝廊格局-標題">{{ "Index_Feature_C_Title" | i18n }}</div>
+                            <div class="主要內容-內容區塊-藝廊格局-說明">{{ "Index_Feature_C_Description" | i18n }}</div>
+                            <a href="./examples.html" class="主要內容-內容區塊-藝廊格局-按鈕">{{ "Index_Feature_C_Action" | i18n }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="主要內容-準備區塊 主要內容-內容區塊 is-light">
+                <div class="主要內容-準備區塊-標題">{{ "Index_LetsGo_Title" | i18n }}</div>
+                <div class="主要內容-準備區塊-說明">{{ "Index_LetsGo_Description" | i18n }}</div>
+                <div class="主要內容-準備區塊-程式碼">{{ code (i18n "Index_LetsGo_Code") }}</div>
+                <div class="主要內容-準備區塊-行動號召">
+                    <a href="./getting-started.html" class="主要內容-準備區塊-行動號召-動作">{{ "Index_LetsGo_Action" | i18n }}</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="頁腳">
+            <div class="界限容器">
+                <div class="頁腳-導航列">
+                    <button class="頁腳-導航列-項目 頁腳-導航列-項目_回到頂部"><span class="ts-icon is-arrow-up-icon"></span> {{ "Footer_ToTop" | i18n }}</button>
+                    <a class="頁腳-導航列-項目" href="https://github.com/teacat/tocas" target="_blank">GitHub</a>
+                    <a class="頁腳-導航列-項目" href="./getting-started.html">{{ "Footer_GettingStarted" | i18n }}</a>
+                    <a class="頁腳-導航列-項目" href="./button.html">{{ "Footer_Components" | i18n }}</a>
+                    <a class="頁腳-導航列-項目" href="./examples.html">{{ "Footer_Examples" | i18n }}</a>
+                </div>
+                <div class="頁腳-格局">
+                    <div class="頁腳-格局-資訊">
+                        <div class="頁腳-格局-資訊-文字">{{ html (i18n "Footer_Paragraph") }}</div>
+                        <div class="頁腳-格局-資訊-翻譯者">{{ translators (i18n "Footer_Translators") }}</div>
+                    </div>
+                    <div class="頁腳-格局-商標">
+                        <img class="頁腳-格局-商標-圖片" src="./assets/images/caris-events.svg" alt='{{ i18n "Footer_Logo_Alt" }}'/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,110 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 分隔線
+Description: 區隔主題或段落的分隔線段。
+Intro: |
+    分隔線預設情況下沒有外距，因此能作為線條使用。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="[[ts-divider]]"></div>
+
+Definitions:
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 區段的
+            Anchor: Section
+            Description: 區段的分隔線上下會有空白間隔。
+            HTML: |
+                <p>我是微笑小安安，歡迎來到小安網站。</p>
+                <div class="[[ts-divider]] [[is-section]]"></div>
+                <p>你將會在這裡看見一個魔法師的日常生活。沒錯，只要你能夠單身三十年，你也可以跟我一樣成為魔法師。</p>
+
+          - Title: 垂直的
+            Anchor: Vertical
+            Description: 在水平的[卡片容器](./card.html)裡可以擺放垂直分隔線來劃分兩個區塊。
+            HTML: |
+                <div class="{{ts-card}} is-horizontal">
+                    <div class="{{ts-content}}">嗶嗶嗶。</div>
+                    <div class="ts-divider [[is-vertical]]"></div>
+                    <div class="{{ts-content}}">旁邊是國際換日線。</div>
+                </div>
+
+          - Title: 文字的
+            Anchor: Text
+            Description: 分隔線中間能夠插入文字。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-divider [[is-start-text]]">2022 年 04 月 01 日</div>
+                <div class="ts-space"></div>
+                <div class="ts-divider [[is-center-text]]">你可能會喜歡這些商品</div>
+                <div class="ts-space"></div>
+                <div class="ts-divider [[is-end-text]]">商品說明</div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 界線劃分
+            Anchor: Composition Content
+            Description: 透過分隔線來劃分[卡片容器](./card.html)裡兩個不同的[內容區塊](./content.html)。
+            HTML: |
+                <div class="{{ts-card}}">
+                    <div class="{{ts-content}}">
+                        Event Store 是一個基於 CQRS 與 Event Sourcing 理念所衍生出來的新概念並由 C Sharp 撰寫。
+                    </div>
+                    <div class="[[ts-divider]]"></div>
+                    <div class="{{ts-content}} is-secondary">
+                        6,439,852 觀看次數
+                    </div>
+                </div>
+
+          - Title: 第三方登入
+            Anchor: Composition Form
+            Description: 在登入表單下方以分隔線告訴使用者有額外方式能登入。
+            HTML: |
+                <div class="{{ts-app-center}}">
+                    <div class="content">
+                        <div class="{{ts-card}}" style="width: 280px">
+                            <div class="{{ts-content}}">
+                                <div class="{{ts-wrap}} is-vertical">
+                                    <div class="{{ts-text}} is-label">電子信箱地址</div>
+                                    <div class="{{ts-input}} is-start-icon">
+                                        <span class="{{ts-icon}} is-envelope-icon"></span>
+                                        <input type="text" />
+                                    </div>
+                                    <div class="{{ts-text}} is-label">密碼</div>
+                                    <div class="{{ts-input}} is-start-icon">
+                                        <span class="{{ts-icon}} is-lock-icon"></span>
+                                        <input type="password" />
+                                    </div>
+                                    <button class="{{ts-button}} is-fluid">註冊</button>
+                                    <div class="[[ts-divider]] is-center-text">
+                                        <div class="{{ts-text}} is-description">
+                                            或是透過下列方式登入
+                                        </div>
+                                    </div>
+                                    <button class="{{ts-button}} is-fluid is-start-icon is-outlined">
+                                        <span class="{{ts-icon}} is-google-icon"></span> Google
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>

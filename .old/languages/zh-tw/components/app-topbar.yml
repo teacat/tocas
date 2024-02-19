@@ -1,0 +1,162 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 頂部列
+Description: 應用程式最上方的功能列。
+Intro: |
+    通常被擺放在應用程式的最上方，可與[格局劃分](./app-layout.html)一起使用。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="[[ts-app-topbar]]">
+            <div class="start">
+                <div class="item is-text">應用程式</div>
+            </div>
+            <div class="end">
+                <button class="item">
+                    <span class="{{ts-icon}} is-magnifying-glass-icon"></span>
+                </button>
+                <button class="item">
+                    <span class="{{ts-icon}} is-ellipsis-vertical-icon"></span>
+                </button>
+            </div>
+        </div>
+
+Definitions:
+    - Title: 結構
+      Description:
+      Sections:
+          - Title: 區塊
+            Anchor: Positions
+            Description: 頂部列被劃分為 `start`（起始）、`center`（中間）和 `end`（尾端）三個區塊，可以用來擺放不同內容。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-app-topbar">
+                    <div class="[[start]]">
+                        <button class="item">
+                            <span class="{{ts-icon}} is-chevron-left-icon"></span>
+                        </button>
+                    </div>
+                    <div class="[[center]]">
+                        <div class="item is-text">我的相簿</div>
+                    </div>
+                    <div class="[[end]]">
+                        <button class="item">
+                            <span class="{{ts-icon}} is-magnifying-glass-icon"></span>
+                        </button>
+                        <button class="item">
+                            <span class="{{ts-icon}} is-ellipsis-vertical-icon"></span>
+                        </button>
+                    </div>
+                </div>
+
+          - Title: 文字項目
+            Anchor: Text Item
+            Description: 專門呈現文字的項目，通常用以擺放應用程式的標題名稱。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-app-topbar">
+                    <div class="start">
+                        <div class="item [[is-text]]">檢視 PDF 文件</div>
+                    </div>
+                    <div class="end">
+                        <button class="item">
+                            <span class="{{ts-icon}} is-circle-question-icon"></span>
+                        </button>
+                    </div>
+                </div>
+
+          - Title: 內容
+            Anchor: Content
+            Description: 頂部列可以擺放額外的內容或選單。
+            HTML: |
+                <div class="ts-app-topbar">
+                    <div class="start">
+                        <button class="item">
+                            <span class="{{ts-icon}} is-arrow-left-icon"></span>
+                        </button>
+                    </div>
+                    <div class="end">
+                        <button class="item">
+                            <span class="{{ts-icon}} is-magnifying-glass-icon"></span>
+                        </button>
+                        <button class="item">
+                            <span class="{{ts-icon}} is-ellipsis-vertical-icon"></span>
+                        </button>
+                    </div>
+                    <div class="[[content]]">
+                        <div class="{{ts-header}} is-large">我的檔案</div>
+                    </div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 展開選單
+            Anchor: Composition Hamburger Menu
+            Description: 搭配[樣式切換模組](./module-toggle.html)與[選單](./menu.html)可以在行動裝置上提供一個可展開的額外選單。
+            HTML: |
+                <div class="ts-app-topbar">
+                    <div class="start">
+                        <button class="item" [[data-toggle]]="menu:has-hidden">
+                            <span class="{{ts-icon}} is-bars-icon"></span>
+                        </button>
+                        <div class="item is-text">電子信箱</div>
+                    </div>
+                    <div class="content" [[id]]="menu">
+                        <div class="{{ts-input}} is-start-icon {{has-dark}}">
+                            <span class="{{ts-icon}} is-magnifying-glass-icon"></span>
+                            <input type="text" placeholder="搜尋信件…">
+                        </div>
+                        <div class="{{ts-menu}} is-separated is-start-icon {{has-dark}} {{has-top-spaced-small}}">
+                            <button class="item">
+                                <span class="ts-icon is-inbox-icon"></span>
+                                收件匣
+                            </button>
+                            <button class="item">
+                                <span class="ts-icon is-bookmark-icon"></span>
+                                重要郵件
+                            </button>
+                            <button class="item">
+                                <span class="ts-icon is-circle-exclamation-icon"></span>
+                                垃圾郵件
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 功能選單
+            Anchor: Composition Dropdown
+            Description: 使用[彈出式選單](./dropdown.html)讓尾端的額外功能選單起作用。
+            HTML: |
+                <div class="ts-app-topbar">
+                    <div class="start">
+                        <div class="item is-text">遊戲存檔修改器</div>
+                    </div>
+                    <div class="end">
+                        <button class="item" [[data-dropdown]]="dropdown">
+                            <span class="{{ts-icon}} is-ellipsis-vertical-icon"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="{{ts-dropdown}}" [[id]]="dropdown" data-position="bottom-end">
+                    <button class="item">檢查最新版本</button>
+                    <button class="item">使用說明</button>
+                    <button class="item">關於版本</button>
+                </div>

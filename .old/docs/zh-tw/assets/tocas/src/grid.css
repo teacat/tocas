@@ -1,0 +1,347 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-grid {
+    --gap: 1rem;
+
+    --1-wide: calc((100% / (16 / 1)) - var(--gap) + (var(--gap) / (16 / 1)));
+    --2-wide: calc((100% / (16 / 2)) - var(--gap) + (var(--gap) / (16 / 2)));
+    --3-wide: calc((100% / (16 / 3)) - var(--gap) + (var(--gap) / (16 / 3)));
+    --4-wide: calc((100% / (16 / 4)) - var(--gap) + (var(--gap) / (16 / 4)));
+    --5-wide: calc((100% / (16 / 5)) - var(--gap) + (var(--gap) / (16 / 5)));
+    --6-wide: calc((100% / (16 / 6)) - var(--gap) + (var(--gap) / (16 / 6)));
+    --7-wide: calc((100% / (16 / 7)) - var(--gap) + (var(--gap) / (16 / 7)));
+    --8-wide: calc((100% / (16 / 8)) - var(--gap) + (var(--gap) / (16 / 8)));
+    --9-wide: calc((100% / (16 / 9)) - var(--gap) + (var(--gap) / (16 / 9)));
+    --10-wide: calc((100% / (16 / 10)) - var(--gap) + (var(--gap) / (16 / 10)));
+    --11-wide: calc((100% / (16 / 11)) - var(--gap) + (var(--gap) / (16 / 11)));
+    --12-wide: calc((100% / (16 / 12)) - var(--gap) + (var(--gap) / (16 / 12)));
+    --13-wide: calc((100% / (16 / 13)) - var(--gap) + (var(--gap) / (16 / 13)));
+    --14-wide: calc((100% / (16 / 14)) - var(--gap) + (var(--gap) / (16 / 14)));
+    --15-wide: calc((100% / (16 / 15)) - var(--gap) + (var(--gap) / (16 / 15)));
+    --16-wide: calc((100% / (16 / 16)) - var(--gap) + (var(--gap) / (16 / 16)));
+
+    --1-columns: calc((100% / 1) - var(--gap) + (var(--gap) / 1));
+    --2-columns: calc((100% / 2) - var(--gap) + (var(--gap) / 2));
+    --3-columns: calc((100% / 3) - var(--gap) + (var(--gap) / 3));
+    --4-columns: calc((100% / 4) - var(--gap) + (var(--gap) / 4));
+    --5-columns: calc((100% / 5) - var(--gap) + (var(--gap) / 5));
+    --6-columns: calc((100% / 6) - var(--gap) + (var(--gap) / 6));
+    --7-columns: calc((100% / 7) - var(--gap) + (var(--gap) / 7));
+    --8-columns: calc((100% / 8) - var(--gap) + (var(--gap) / 8));
+    --9-columns: calc((100% / 9) - var(--gap) + (var(--gap) / 9));
+    --10-columns: calc((100% / 10) - var(--gap) + (var(--gap) / 10));
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-grid {
+    display: flex;
+    flex-wrap: wrap;
+    color: inherit;
+    gap: var(--gap);
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Columns
+ */
+
+.ts-grid.is-1-columns > .column {
+    flex: var(--1-columns);
+    max-width: var(--1-columns);
+}
+.ts-grid.is-2-columns > .column {
+    flex: var(--2-columns);
+    max-width: var(--2-columns);
+}
+.ts-grid.is-3-columns > .column {
+    flex: var(--3-columns);
+    max-width: var(--3-columns);
+}
+.ts-grid.is-4-columns > .column {
+    flex: var(--4-columns);
+    max-width: var(--4-columns);
+}
+.ts-grid.is-5-columns > .column {
+    flex: var(--5-columns);
+    max-width: var(--5-columns);
+}
+.ts-grid.is-6-columns > .column {
+    flex: var(--6-columns);
+    max-width: var(--6-columns);
+}
+.ts-grid.is-7-columns > .column {
+    flex: var(--7-columns);
+    max-width: var(--7-columns);
+}
+.ts-grid.is-8-columns > .column {
+    flex: var(--8-columns);
+    max-width: var(--8-columns);
+}
+.ts-grid.is-9-columns > .column {
+    flex: var(--9-columns);
+    max-width: var(--9-columns);
+}
+.ts-grid.is-10-columns > .column {
+    flex: var(--10-columns);
+    max-width: var(--10-columns);
+}
+
+/**
+ * Relaxed
+ */
+
+.ts-grid.is-relaxed {
+    --gap: 2rem;
+}
+.ts-grid.is-compact {
+    --gap: 0.5rem;
+}
+
+/**
+ * Divided
+ */
+
+.ts-grid.is-divided > .column:not(:last-child)::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    bottom: 0;
+    right: calc(var(--gap) / 2 * -1);
+    border-right: 1px solid var(--ts-gray-300);
+}
+
+/**
+ * Evenly Divided
+ */
+
+.ts-grid.is-evenly-divided > .column {
+    flex: var(--1-wide);
+    width: var(--1-wide);
+}
+
+/**
+ * Truncated
+ */
+
+.ts-grid .column.is-truncated {
+    overflow: hidden;
+}
+
+/**
+ * Stretched
+ */
+
+.ts-grid.is-stretched > .column {
+    display: inline-flex !important;
+    align-self: stretch;
+    flex-direction: column;
+}
+
+.ts-grid.is-stretched > .column > * {
+    flex-grow: 1;
+}
+
+/**
+ * Space Around
+ */
+
+.ts-grid.is-spaced-between {
+    justify-content: space-between;
+}
+.ts-grid.is-spaced-around {
+    justify-content: space-around;
+}
+
+/**
+ * Reverse
+ */
+
+.ts-grid.is-reversed {
+    flex-direction: row-reverse;
+    flex-wrap: wrap-reverse;
+}
+
+/**
+ * Aligns
+ */
+
+.ts-grid.is-start-aligned {
+    justify-content: flex-start;
+}
+.ts-grid.is-center-aligned {
+    justify-content: center;
+}
+.ts-grid.is-end-aligned {
+    justify-content: flex-end;
+}
+
+.ts-grid.is-top-aligned {
+    align-items: flex-start;
+}
+.ts-grid.is-middle-aligned {
+    align-items: center;
+}
+.ts-grid.is-bottom-aligned {
+    align-items: flex-end;
+}
+
+.ts-grid .column.is-start-aligned {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.ts-grid .column.is-center-aligned {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.ts-grid .column.is-end-aligned {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/**
+ * Ordering
+ */
+
+.ts-grid .column.is-first {
+    order: -1;
+}
+.ts-grid .column.is-last {
+    order: 1;
+}
+
+.ts-grid .column.is-order-1 {
+    order: 1;
+}
+.ts-grid .column.is-order-2 {
+    order: 2;
+}
+.ts-grid .column.is-order-3 {
+    order: 3;
+}
+.ts-grid .column.is-order-4 {
+    order: 4;
+}
+.ts-grid .column.is-order-5 {
+    order: 5;
+}
+.ts-grid .column.is-order-6 {
+    order: 6;
+}
+.ts-grid .column.is-order-7 {
+    order: 7;
+}
+.ts-grid .column.is-order-8 {
+    order: 8;
+}
+.ts-grid .column.is-order-9 {
+    order: 9;
+}
+.ts-grid .column.is-order-10 {
+    order: 10;
+}
+
+/**
+ * Wides
+ */
+
+/*.ts-grid .column {
+
+}*/
+.ts-grid .column.is-1-wide {
+    width: var(--1-wide);
+    max-width: var(--1-wide);
+}
+.ts-grid .column.is-2-wide {
+    width: var(--2-wide);
+    max-width: var(--2-wide);
+}
+.ts-grid .column.is-3-wide {
+    width: var(--3-wide);
+    max-width: var(--3-wide);
+}
+.ts-grid .column.is-4-wide {
+    width: var(--4-wide);
+    max-width: var(--4-wide);
+}
+.ts-grid .column.is-5-wide {
+    width: var(--5-wide);
+    max-width: var(--5-wide);
+}
+.ts-grid .column.is-6-wide {
+    width: var(--6-wide);
+    max-width: var(--6-wide);
+}
+.ts-grid .column.is-7-wide {
+    width: var(--7-wide);
+    max-width: var(--7-wide);
+}
+.ts-grid .column.is-8-wide {
+    width: var(--8-wide);
+    max-width: var(--8-wide);
+}
+.ts-grid .column.is-9-wide {
+    width: var(--9-wide);
+    max-width: var(--9-wide);
+}
+.ts-grid .column.is-10-wide {
+    width: var(--10-wide);
+    max-width: var(--10-wide);
+}
+.ts-grid .column.is-11-wide {
+    width: var(--11-wide);
+    max-width: var(--11-wide);
+}
+.ts-grid .column.is-12-wide {
+    width: var(--12-wide);
+    max-width: var(--12-wide);
+}
+.ts-grid .column.is-13-wide {
+    width: var(--13-wide);
+    max-width: var(--13-wide);
+}
+.ts-grid .column.is-14-wide {
+    width: var(--14-wide);
+    max-width: var(--14-wide);
+}
+.ts-grid .column.is-15-wide {
+    width: var(--15-wide);
+    max-width: var(--15-wide);
+}
+.ts-grid .column.is-16-wide {
+    width: var(--16-wide);
+    max-width: var(--16-wide);
+}
+
+/**
+ * Fluid
+ */
+
+.ts-grid .column.is-fluid {
+    flex: 1;
+    min-width: 0;
+    flex-grow: 1;
+}
+
+/**
+ * Stacked
+ */
+
+.ts-grid.is-stacked > .column {
+    flex: var(--16-wide);
+    max-width: var(--16-wide);
+}

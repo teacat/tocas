@@ -1,0 +1,83 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 常駐訊息
+Description: 固定在頁面上的基本訊息。
+Intro: 常駐訊息通常會在執行完某個動作之後出現，如：表單成功送出、刪除失敗。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Snackbar
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="[[ts-notice]]">
+            <div class="title">看過來</div>
+            <div class="content">請收起側腳架並按住煞車與 GO 按鍵重新啟動馬達。</div>
+        </div>
+
+Definitions:
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 外框線的
+            Anchor: Outlined
+            Description: 僅描繪訊息的外框線使其看起來較沒有那麼顯眼。
+            HTML: |
+                <div class="ts-notice [[is-outlined]]">
+                    <div class="title">測試階段</div>
+                    <div class="content">
+                        目前網站正在進行測試，若有任何不穩定現象請稍待數分鐘即會恢復正常。
+                    </div>
+                </div>
+
+          - Title: 負面的
+            Anchor: Negative
+            Description: 帶有危險意味的訊息。
+            HTML: |
+                <div class="ts-notice [[is-negative]]">
+                    <div class="title">刪除失敗</div>
+                    <div class="content">若要刪除此資料夾，請先清空內部的所有檔案。</div>
+                </div>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改常駐訊息的大小。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-notice [[is-small]]">
+                    <div class="title">小型訊息</div>
+                    <div class="content">這裡是一段文字訊息。</div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-notice">
+                    <div class="title">預設訊息</div>
+                    <div class="content">這裡是一段文字訊息。</div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-notice [[is-large]]">
+                    <div class="title">大型訊息</div>
+                    <div class="content">這裡是一段文字訊息。</div>
+                </div>
+
+          - Title: 較密的
+            Anchor: Dense
+            Description: 變更元件的內距，令元素之間看起來更密集。
+            HTML: |
+                <div class="ts-notice [[is-dense]]">
+                    <div class="title">請求已送出</div>
+                    <div class="content">等待對方接受你的好友請求後，便能看到雙方的上線狀態。</div>
+                </div>

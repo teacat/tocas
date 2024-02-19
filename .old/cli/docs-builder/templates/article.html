@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="{{ .Meta.Information.LanguageCode }}">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./assets/style.css" />
+        <link rel="stylesheet" href="./assets/highlight.css" />
+        <link rel="stylesheet" href="./assets/tocas/tocas.min.css" />
+        <link rel="stylesheet" href="./assets/tocas/src/email.css" />
+        <script src="./assets/tocas/tocas.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+        <script src="./assets/script.js"></script>
+        <title>{{ .Title }} - Tocas UI</title>
+        <!--
+
+
+
+        ▄▄▄        ▄▄████▄
+      ▄█████▄    ▄██▀    ██
+      ▀█▄   ██▄ ██▀      ██
+       ▀██▄▄▄████   ▄▄▄██▀
+          ▀▀▀████▀▀▀▀▀
+             ██
+            ██          ▄█████▄       █████████████          ▄█             █▄
+           ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+           ██        ██         ██    ██         ██        ██  ▀██       ██▀
+           ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+           ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+            ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄███       █▀
+
+
+
+            「你只能死一次，一定要死的轟轟烈烈。」
+
+            沒有人可以做一件事情直到永遠，
+            而一個人的生命也不是永生。
+
+            死亡給予了我們試著活下去的動力，
+            在那之前都應該竭盡所能的向著自己的夢邁進。
+
+            將自己的生命活得淋漓盡致才是最重要的；
+            不要將剛開始的序章放在頁尾。
+
+
+
+        -->
+        <meta name="description" content="{{ .Description }}" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="{{ .Title }} - Tocas UI" />
+        <meta name="twitter:description" content="{{ .Description }}" />
+        <meta name="twitter:image" content="https://v4.tocas-ui.com/{{ .Meta.Information.Path }}/assets/images/og.png" />
+        <meta property="og:title" content="{{ .Title }} - Tocas UI" />
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content="https://v4.tocas-ui.com/{{ .Meta.Information.Path }}/assets/images/og.png" />
+        <meta property="og:url" content="https://v4.tocas-ui.com/{{ .Meta.Information.Path }}/{{ kebablize $.This }}.html" />
+        <meta property="og:image:width" content="1280" />
+        <meta property="og:image:height" content="720" />
+        <meta property="og:description" content="{{ .Description }}" />
+    </head>
+    <body>
+        <div class="穹頂">
+            <div class="界限容器">
+                <div class="穹頂-導航列">
+                    <div class="穹頂-導航列-左側">
+                        <a class="穹頂-導航列-項目 穹頂-導航列-項目_主要" href="./index.html">Tocas UI</a>
+                        <a class="穹頂-導航列-項目" href="./getting-started.html">{{ "Navbar_GettingStarted" | i18n }}</a>
+                        <a class="穹頂-導航列-項目" href="./button.html">{{ "Navbar_Components" | i18n }}</a>
+                        <a class="穹頂-導航列-項目" href="./examples.html">{{ "Navbar_Examples" | i18n }}</a>
+                    </div>
+                    <div class="穹頂-導航列-右側">
+                        <div class="穹頂-導航列-項目 穹頂-導航列-項目_語系的">
+                            <span class="ts-flag is-{{ .Meta.Information.Flag }}-flag"></span> {{ .Meta.Information.Language }}
+                            <div class="穹頂-導航列-項目-語系下拉式選單">
+                                {{ range .Meta.GlobalInformations }}
+                                <a
+                                    class="穹頂-導航列-項目-語系下拉式選單-項目 {{ if eq $.Meta.Information.Path .Path }}穹頂-導航列-項目-語系下拉式選單-項目_啟用的{{end}}"
+                                    href="./../{{ .Path }}/{{ kebablize $.This }}.html"
+                                    ><span class="ts-flag is-{{ .Flag }}-flag"></span> {{ .Language }}</a
+                                >
+                                {{ end }}
+                            </div>
+                        </div>
+                        <a class="穹頂-導航列-項目" href="https://github.com/teacat/tocas" target="_blank"><span class="ts-icon is-github-icon"></span> GitHub</a>
+                    </div>
+                </div>
+                <div class="穹頂-導航列 穹頂-導航列_手機的">
+                    <div class="穹頂-導航列-左側">
+                        <a class="穹頂-導航列-項目 穹頂-導航列-項目_主要" href="./index.html">Tocas UI</a>
+                    </div>
+                    <div class="穹頂-導航列-右側">
+                        <div class="穹頂-導航列-項目 穹頂-導航列-項目_語系的">
+                            <span class="ts-flag is-{{ .Meta.Information.Flag }}-flag"></span> {{ .Meta.Information.Language }}
+                            <div class="穹頂-導航列-項目-語系下拉式選單">
+                                {{ range .Meta.GlobalInformations }}
+                                <a
+                                    class="穹頂-導航列-項目-語系下拉式選單-項目 {{ if eq $.Meta.Information.Path .Path }}穹頂-導航列-項目-語系下拉式選單-項目_啟用的{{end}}"
+                                    href="./../{{ .Path }}/{{ kebablize $.This }}.html"
+                                    ><span class="ts-flag is-{{ .Flag }}-flag"></span> {{ .Language }}</a
+                                >
+                                {{ end }}
+                            </div>
+                        </div>
+                        <button class="穹頂-導航列-項目 穹頂-導航列-項目_選單按鈕" aria-label='{{ "Article_Hamburger_Aria" | i18n }}'>
+                            <span class="ts-icon is-bars-icon"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="穹頂-標題">
+                    <h1 class="穹頂-標題-主要">{{ .Title }}</h1>
+                    <div class="穹頂-標題-說明">{{ .Description }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="主體">
+            <div class="界限容器">
+                <div class='主體-格局 {{if eq .Type "Container" }}主體-格局_容器範例的{{ end }}'>
+                    <!-- 側邊導覽 -->
+                    <div class="主體-格局-導覽">
+                        {{ range .Meta.Components }}
+                        <div class="主體-格局-導覽-標題">{{ index $.Meta.UI.ComponentsCategories .Name }}</div>
+                        {{ range .Items }}
+                        <a href="./{{ . | kebablize }}.html" class="主體-格局-導覽-項目{{ if eq $.This (kebablize .) }} 主體-格局-導覽-項目_啟用的{{ end }}">
+                            {{ index $.Meta.UI.Components . }} {{ if ne (index $.Meta.UI.Components .) (capitalize (trimModule .)) }}<span class="主體-格局-導覽-項目-英文"
+                                >{{ capitalize (trimModule .) }}</span
+                            >{{ end }}<!--{{ if isModule . }}<span class="主體-格局-導覽-項目-模組">JS</span>{{ end }}-->
+                        </a>
+                        {{ end }} {{ end }}
+                        <div class="主體-格局-導覽-關閉按鈕">
+                            <span class="ts-icon is-circle-xmark-icon"></span>
+                        </div>
+                    </div>
+                    <!-- / 側邊導覽 -->
+
+                    <!-- 遮罩 -->
+                    <div class="主體-格局-遮罩"></div>
+                    <!-- / 遮罩 -->
+
+                    <main class="主體-格局-內容{{ if .Grid }} 主體-格局-內容_網格範例的{{ end }}">
+                        <!-- 文章工具列 -->
+                        {{if eq .Type "Article" }}
+                        <div class="主體-格局-內容-工具列">
+                            <div class="主體-格局-內容-工具列-項目 主體-格局-內容-工具列-項目_標題">
+                                {{ "Article_Example_Title" | i18n }}
+                                <!-- 標籤連結
+                                {{ if .Links }}
+                                <div class="主體-格局-內容-工具列-項目-連結標籤">
+                                    {{ range .Links }}
+                                    <div class="主體-格局-內容-工具列-項目-連結標籤-項目">
+                                        <span class="ts-icon is-{{ .Icon }}-icon"></span>
+                                        <div class="主體-格局-內容-工具列-項目-連結標籤-項目-文字">{{ .Title }}</div>
+                                    </div>
+                                    {{ end }}
+                                </div>
+                                {{ end }}
+                                 / 標籤連結 -->
+                            </div>
+
+                            <!-- 明暗色系 -->
+                            <div class="主體-格局-內容-工具列-項目">
+                                <div class="主體-格局-內容-工具列-項目-標籤">{{ "Article_Schemes_Title" | i18n }}</div>
+                                <div class="主體-格局-內容-工具列-項目-下拉式選單">
+                                    <div class="主體-格局-內容-工具列-項目-下拉式選單-文字">
+                                        <span class="主體-格局-內容-工具列-項目-下拉式選單-文字-標籤">{{ "Article_Schemes_User" | i18n }}</span>
+                                        <span class="主體-格局-內容-工具列-項目-下拉式選單-文字-圖示 ts-icon is-chevron-down-icon"></span>
+                                    </div>
+                                    <div class="主體-格局-內容-工具列-項目-下拉式選單-群組">
+                                        <div
+                                            data-value="is-light,is-dark"
+                                            class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目 主體-格局-內容-工具列-項目-下拉式選單-群組-項目_啟用的"
+                                        >
+                                            {{ "Article_Schemes_User" | i18n }}
+                                        </div>
+                                        <div data-value="is-dark;is-light" class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目">{{ "Article_Schemes_Light" | i18n }}</div>
+                                        <div data-value="is-light;is-dark" class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目">{{ "Article_Schemes_Dark" | i18n }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / 明暗色系 -->
+
+                            <!-- 縮放項目 -->
+                            <div class="主體-格局-內容-工具列-項目">
+                                <div class="主體-格局-內容-工具列-項目-標籤">{{ "Article_Scaling_Title" | i18n }}</div>
+                                <div class="主體-格局-內容-工具列-項目-下拉式選單">
+                                    <div class="主體-格局-內容-工具列-項目-下拉式選單-文字">
+                                        <span class="主體-格局-內容-工具列-項目-下拉式選單-文字-標籤">{{ "Article_Scaling_Standard" | i18n }}</span>
+                                        <span class="主體-格局-內容-工具列-項目-下拉式選單-文字-圖示 ts-icon is-chevron-down-icon"></span>
+                                    </div>
+                                    <div class="主體-格局-內容-工具列-項目-下拉式選單-群組">
+                                        <div data-value="is-small,is-medium;is-large" class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目">
+                                            {{ "Article_Scaling_Large" | i18n }}
+                                        </div>
+                                        <div
+                                            data-value="is-large,is-small;is-medium"
+                                            class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目 主體-格局-內容-工具列-項目-下拉式選單-群組-項目_啟用的"
+                                        >
+                                            {{ "Article_Scaling_Standard" | i18n }}
+                                        </div>
+                                        <div data-value="is-large,is-medium;is-small" class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目">
+                                            {{ "Article_Scaling_Small" | i18n }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / 縮放項目 -->
+                        </div>
+
+                        <!-- 主要範例 -->
+                        <div class="主體-格局-內容-主要範例">
+                            <div class="主體-格局-內容-主要範例-實際效果 {{ if .Example.Centered }} 主體-格局-內容-主要範例-實際效果_置中的 {{ end }}">
+                                <div class="主體-格局-內容-主要範例-實際效果-置中容器">{{ .Example.HTML | preview }}</div>
+                            </div>
+                            <div class="主體-格局-內容-主要範例-程式碼">{{ .Example.FormattedHTML }}</div>
+                        </div>
+                        <!-- / 主要範例 -->
+                        {{ end }}
+                        <!-- / 文章工具列 -->
+
+                        <!-- 概要 -->
+                        {{ if .Intro }}
+                        <div class="主體-格局-內容-標題 主體-格局-內容-標題_章節">{{ "Article_Introduction" | i18n }}</div>
+                        <div class="主體-格局-內容-文字">{{ .Intro | markdown }}</div>
+                        {{ end }}
+                        <!-- / 概要 -->
+
+                        <!-- 章節 -->
+                        {{ range .Definitions }}
+                        <div class="主體-格局-內容-標題 主體-格局-內容-標題_章節">{{ .Title }}</div>
+
+                        {{ if .Description }}
+                        <div class="主體-格局-內容-文字">{{ .Description | markdown }}</div>
+                        {{ end }}
+
+                        <!-- 國家旗幟 -->
+                        {{ if .Flags }}
+                        <table class="主體-格局-內容-規格表格">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>ISO 3166-2</th>
+                                    <th>{{ "Article_Flag_Alias" | i18n }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{ range $k, $alias := .Flags }}
+                                <tr>
+                                    <td><span class="ts-flag is-{{ $k }}-flag"></span></td>
+                                    <td><code class="主體-格局-內容-規格表格-函式碼">{{$k}}</code></td>
+                                    <td>{{ range $i, $e := $alias }}{{ if $i }}, {{ end }}<code class="主體-格局-內容-規格表格-函式碼">{{ . }}</code>{{ end }}</td>
+                                </tr>
+                                {{ end }}
+                            </tbody>
+                        </table>
+                        {{ end }}
+                        <!-- / 國家旗幟 -->
+
+                        <!-- 段落 -->
+                        {{ range .Sections }}
+                        <div class="主體-格局-內容-單個範例">
+                            <a class="主體-格局-內容-單個範例-錨點" id="{{ .Anchor | kebablize }}"></a>
+                            <div class="主體-格局-內容-單個範例-文字-標題 主體-格局-內容-單個範例-文字-標題_段落">
+                                <a href="#{{ .Anchor | kebablize }}" class="主體-格局-內容-單個範例-文字-標題-連結">{{ .Title }}</a>
+                                {{ if ne .HTML "" }}
+                                <button class="主體-格局-內容-單個範例-文字-標題-切換原始碼"><span class="ts-icon is-code-icon"></span> {{ "Article_SourceCode" | i18n }}</button>
+                                {{ end }}
+                            </div>
+                            <div class="主體-格局-內容-單個範例-文字">{{ .Description | markdown }}</div>
+
+                            <!-- 範例與程式碼 -->
+                            {{ if .HTML }}
+                            <div class="主體-格局-內容-單個範例-範例">
+                                <div class="主體-格局-內容-單個範例-範例-實際效果">{{ .HTML | preview }}</div>
+                                <div class="主體-格局-內容-單個範例-範例-程式碼">{{ .FormattedHTML }}</div>
+                            </div>
+                            {{ end }}
+                            <!-- / 範例與程式碼 -->
+
+                            <!-- 附帶程式片段 -->
+                            {{ if .AttachedHTML }}
+                            <div class="主體-格局-內容-單個範例-附帶程式碼 {{ if .IsDownloadable }}主體-格局-內容-單個範例-附帶程式碼_可下載的{{ end }}">
+                                {{ .FormattedHTML }} {{ if .IsDownloadable }}<button
+                                    class="主體-格局-內容-單個範例-附帶程式碼-下載按鈕"
+                                    onclick="(function(event){download(event)})(event)"
+                                >
+                                    下載原始碼</button
+                                >{{ end }}
+                            </div>
+                            {{ end }}
+                            <!-- / 附帶程式片段 -->
+
+                            <!-- 圖示組 -->
+                            {{ if .Icons }}
+                            <div class="文件內容-主要欄位-元件-圖示組">
+                                {{ range .Icons }}
+                                <div class="文件內容-主要欄位-元件-圖示組-單個圖示">
+                                    <span class="ts-icon is-{{ . }}-icon 文件內容-主要欄位-元件-圖示組-單個圖示-圖示"></span>
+                                    <span class="文件內容-主要欄位-元件-圖示組-單個圖示-標籤">{{ . }}</span>
+                                </div>
+                                {{ end }}
+                            </div>
+                            {{ end }}
+                            <!-- / 圖示組 -->
+                        </div>
+                        {{ end }}
+                        <!-- / 段落 -->
+                        {{ end }}
+                        <!-- / 章節 -->
+
+                        <!-- HTML 屬性 -->
+                        {{ if .Properties }}
+                        <div class="主體-格局-內容-標題 主體-格局-內容-標題_章節">屬性設定</div>
+                        <div class="主體-格局-內容-變數屬性">
+                            <div class="ts-card">
+                                <table class="ts-table is-definition is-celled">
+                                    <thead>
+                                        <tr>
+                                            <th class="is-collapsed"></th>
+                                            {{ if ne (index .Properties 0).Example "" }}
+                                            <th class="is-collapsed">範例</th>
+                                            {{ end }} {{ if ne (index .Properties 0).Type "" }}
+                                            <th class="is-collapsed">型態</th>
+                                            {{ end }}
+                                            <th>說明</th>
+                                            {{ if ne (index .Properties 0).Default "" }}
+                                            <th class="is-collapsed">預設值</th>
+                                            {{ end }} {{ if ne (index .Properties 0).Target "" }}
+                                            <th class="is-collapsed">對象</th>
+                                            {{ end }}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{ range .Properties }}
+                                        <tr>
+                                            <td class="is-collapsed">{{ .Name }}</td>
+                                            {{ if ne (index $.Properties 0).Example "" }}
+                                            <td class="is-collapsed"><code>{{ .Example }}</code></td>
+                                            {{ end }} {{ if ne (index $.Properties 0).Type "" }}
+                                            <td class="is-collapsed"><code>{{ .Type }}</code></td>
+                                            {{ end }}
+                                            <td>
+                                                {{ .Description | markdown }} {{ if .AdvanceExample }}
+                                                <code>{{ .AdvanceExample | highlight }}</code>
+                                                {{ end }}
+                                            </td>
+                                            {{ if ne (index $.Properties 0).Default "" }}
+                                            <td class="is-collapsed"><code>{{ .Default }}</code></td>
+                                            {{ end }} {{ if ne (index $.Properties 0).Target "" }}
+                                            <td class="is-collapsed"><code>{{ .Target }}</code></td>
+                                            {{ end }}
+                                        </tr>
+                                        {{ end }}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {{ end }}
+                        <!-- / HTML 屬性 -->
+
+                        <!-- 變數屬性 -->
+                        {{ if .Variables }}
+                        <div class="主體-格局-內容-標題 主體-格局-內容-標題_章節">樣式變數</div>
+                        <div class="主體-格局-內容-變數屬性">
+                            <div class="ts-card">
+                                <table class="ts-table is-definition is-celled">
+                                    <thead>
+                                        <tr>
+                                            <th class="is-collapsed"></th>
+                                            {{ if ne (index .Variables 0).Example "" }}
+                                            <th class="is-collapsed">範例</th>
+                                            {{ end }} {{ if ne (index .Variables 0).Type "" }}
+                                            <th class="is-collapsed">型態</th>
+                                            {{ end }}
+                                            <th>說明</th>
+                                            {{ if ne (index .Variables 0).Default "" }}
+                                            <th class="is-collapsed">預設值</th>
+                                            {{ end }} {{ if ne (index .Variables 0).Target "" }}
+                                            <th class="is-collapsed">對象</th>
+                                            {{ end }}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{ range .Variables }}
+                                        <tr>
+                                            <td class="is-collapsed">{{ .Name }}</td>
+                                            {{ if ne (index $.Variables 0).Example "" }}
+                                            <td class="is-collapsed"><code>{{ .Example }}</code></td>
+                                            {{ end }} {{ if ne (index $.Variables 0).Type "" }}
+                                            <td class="is-collapsed"><code>{{ .Type }}</code></td>
+                                            {{ end }}
+                                            <td>
+                                                {{ .Description | markdown }} {{ if .AdvanceExample }}
+                                                <code>{{ .AdvanceExample | highlight }}</code>
+                                                {{ end }}
+                                            </td>
+                                            {{ if ne (index $.Variables 0).Default "" }}
+                                            <td class="is-collapsed"><code>{{ .Default }}</code></td>
+                                            {{ end }} {{ if ne (index $.Variables 0).Target "" }}
+                                            <td class="is-collapsed"><code>{{ .Target }}</code></td>
+                                            {{ end }}
+                                        </tr>
+                                        {{ end }}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        {{ end }}
+                        <!-- / 變數屬性 -->
+
+                        <!-- 額外連結 -->
+                        {{ if .Links }}
+                        <div class="主體-格局-內容-額外連結">
+                            {{ range .Links }}
+                            <div class="主體-格局-內容-額外連結-項目">
+                                <div class="主體-格局-內容-額外連結-項目-主體">
+                                    <div class="主體-格局-內容-額外連結-項目-主體-圖示容器">
+                                        <span class="ts-icon is-{{ .Icon }}-icon"></span>
+                                    </div>
+                                    <div class="主體-格局-內容-額外連結-項目-主體-文字容器">
+                                        <div class="主體-格局-內容-額外連結-項目-主體-文字容器-標題">{{ .Title }}</div>
+                                        <div class="主體-格局-內容-額外連結-項目-主體-文字容器-說明">{{ .Description }}</div>
+                                    </div>
+                                </div>
+                                <div class="主體-格局-內容-額外連結-項目-連結文字">
+                                    <div class="主體-格局-內容-額外連結-項目-連結文字-文字">相關連結</div>
+                                    <div class="主體-格局-內容-額外連結-項目-連結文字-圖示容器"><span class="ts-icon is-arrow-up-right-from-square-icon"></span></div>
+                                </div>
+                            </div>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                        <!-- / 額外連結 -->
+
+                        {{ if .Relatives }}
+                        <div class="主體-格局-內容-相關元件">
+                            <div class="主體-格局-內容-相關元件-標題">{{ "Article_LookingFor_Title" | i18n }}</div>
+                            <ul class="主體-格局-內容-相關元件-清單">
+                                {{ range $value := .Relatives }}
+                                <li class="主體-格局-內容-相關元件-清單-單個項目">
+                                    <a class="主體-格局-內容-相關元件-清單-單個項目-連結" href="{{ . | kebablize }}.html">{{ index $.Meta.UI.Components . }}</a>
+                                </li>
+                                {{ end }}
+                            </ul>
+                        </div>
+                        {{ end }}
+                    </main>
+
+                    <!-- 側邊索引 -->
+                    <div class="主體-格局-索引">
+                        <div class="ts-rail" data-rail>
+                            <div class="content is-locked-top">
+                                {{ range .Definitions }}
+                        <div class="主體-格局-索引-標題">{{ .Title }}</div>
+                        <div class="主體-格局-索引-清單">
+                            {{ range .Sections }}
+                            <a class="主體-格局-索引-清單-項目" href="#{{ .Anchor | kebablize }}">
+                                {{ .Title }} <span class="主體-格局-索引-清單-項目-英文">{{ .HTML | marked }}</span>
+                            </a>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                        <button class="主體-格局-索引-回到頂部"><span class="ts-icon is-arrow-up-icon"></span> {{ "Article_ToTop" | i18n }}</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / 側邊索引 -->
+                </div>
+            </div>
+        </div>
+
+        <div class="頁腳">
+            <div class="界限容器">
+                <div class="頁腳-導航列">
+                    <button class="頁腳-導航列-項目 頁腳-導航列-項目_回到頂部"><span class="ts-icon is-arrow-up-icon"></span> {{ "Footer_ToTop" | i18n }}</button>
+                    <a class="頁腳-導航列-項目" href="https://github.com/teacat/tocas" target="_blank">GitHub</a>
+                    <a class="頁腳-導航列-項目" href="./getting-started.html">{{ "Footer_GettingStarted" | i18n }}</a>
+                    <a class="頁腳-導航列-項目" href="./button.html">{{ "Footer_Components" | i18n }}</a>
+                    <a class="頁腳-導航列-項目" href="./examples.html">{{ "Footer_Examples" | i18n }}</a>
+                </div>
+                <div class="頁腳-格局">
+                    <div class="頁腳-格局-資訊">
+                        <div class="頁腳-格局-資訊-文字">{{ html (i18n "Footer_Paragraph") }}</div>
+                        <div class="頁腳-格局-資訊-翻譯者">{{ translators (i18n "Footer_Translators") }}</div>
+                    </div>
+                    <div class="頁腳-格局-商標">
+                        <img class="頁腳-格局-商標-圖片" src="./assets/images/caris-events.svg" alt='{{ i18n "Footer_Logo_Alt" }}' />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

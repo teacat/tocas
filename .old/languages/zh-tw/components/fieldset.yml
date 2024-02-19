@@ -1,0 +1,113 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 欄位分組
+Description: 以特殊群組區塊包覆部份表單欄位或內容。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <fieldset class="[[ts-fieldset]]">
+            <legend>額外附註</legend>
+            <div class="{{ts-list}} is-unordered">
+                <div class="item">這個世界只是一個假象，所有肉眼可見的東西都不是真的。</div>
+                <div class="item">在時間的盡頭那端，有道不可逆的防火牆。</div>
+                <div class="item">你從來沒有到過這個地方。如果你覺得這一切都很眼熟，請務必聯繫離你最近的服務人員。</div>
+            </div>
+        </fieldset>
+
+Definitions:
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 欄位分組有 `[disabled]` 屬性時，裡面的表單欄位都會被停用且無法互動。
+            HTML: |
+                <fieldset class="ts-fieldset" [[disabled]]>
+                    <legend>被停用的表單</legend>
+                    <div class="{{ts-grid}} is-2-columns">
+                        <div class="column">
+                            <div class="{{ts-text}} is-label">收件人</div>
+                            <div class="{{ts-input}} {{has-top-spaced}}">
+                                <input type="text" value="Yami Odymel">
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="{{ts-text}} is-label">聯絡電話</div>
+                            <div class="{{ts-input}} {{has-top-spaced}}">
+                                <input type="text" value="0987123456">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 較密的
+            Anchor: Dense
+            Description: 變更元件的內距，令元素之間看起來更密集。
+            HTML: |
+                <fieldset class="ts-fieldset [[is-dense]]">
+                    <legend>伊繁星最高協議</legend>
+                    所有隸屬卡莉絲伊繁星旗下已發佈或是正於計劃中之產品其開發者人員皆須遵守的規則。
+                </fieldset>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 表單群組
+            Anchor: Composition Fieldset
+            Description: 在表單裡可以透過欄位群組將某些輸入欄位獨立成一個群組。
+            HTML: |
+                <div class="{{ts-grid}} is-2-columns">
+                    <div class="column">
+                        <div class="{{ts-text}} is-label">申辦人姓名</div>
+                        <div class="{{ts-input}} {{has-top-spaced}}">
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-text}} is-label">監護人姓名</div>
+                        <div class="{{ts-input}} {{has-top-spaced}}">
+                            <input type="text">
+                        </div>
+                    </div>
+                </div>
+                <fieldset class="[[ts-fieldset]] {{has-top-spaced}}">
+                    <legend>機密資料</legend>
+                    <div class="{{ts-grid}} is-3-columns">
+                        <div class="column">
+                            <div class="{{ts-text}} is-label">信用卡卡號</div>
+                            <div class="{{ts-input}} {{has-top-spaced}}">
+                                <input type="text">
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="{{ts-text}} is-label">到期日</div>
+                            <div class="{{ts-input}} {{has-top-spaced}}">
+                                <input type="text">
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="{{ts-text}} is-label">安全碼</div>
+                            <div class="{{ts-input}} {{has-top-spaced}}">
+                                <input type="text">
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>

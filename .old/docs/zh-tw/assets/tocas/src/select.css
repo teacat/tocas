@@ -1,0 +1,353 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-select {
+    --object-distance-vertical: 0.4rem;
+    --object-distance-horizontal: 0.8rem;
+
+    --height: var(--ts-input-height-medium);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-select {
+    display: inline-flex;
+    background: var(--ts-gray-50);
+    border: 1px solid var(--ts-gray-300);
+    border-radius: 0.4rem;
+    cursor: pointer;
+    height: var(--height);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-select select {
+    border: none;
+    margin: 0;
+    background: inherit;
+    font: inherit;
+    outline: none;
+    box-sizing: border-box;
+    user-select: none;
+    border-radius: 0.4rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.ts-select select:focus {
+    outline: 0;
+}
+
+.ts-select select,
+.ts-select .content {
+    line-height: 1.5;
+    font-size: var(--ts-font-size-14px);
+    color: var(--ts-gray-800);
+
+    padding: 0 1rem;
+    padding-right: 2.5rem;
+
+    width: 100%;
+    cursor: pointer;
+}
+
+.ts-select .content {
+    user-select: none;
+    display: flex;
+    gap: var(--object-distance-vertical) var(--object-distance-horizontal);
+    align-items: center;
+    width: calc(100% - 2.5rem);
+    overflow: hidden;
+}
+
+.ts-select .content,
+.ts-select .content * {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.ts-select .content .ts-icon {
+    font-size: 1.1em;
+}
+
+.ts-select select option {
+    background: inherit;
+}
+
+.ts-select::after {
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    right: 1rem;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ts-gray-700);
+
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+
+    text-decoration: inherit;
+    text-align: center;
+    width: 1.18em;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+    content: "\f078";
+    font-size: 13px;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Relaxed
+ */
+
+.ts-select.is-relaxed {
+    --height: var(--ts-input-height-large);
+}
+
+/**
+ * Multiple
+ */
+
+.ts-select.is-multiple {
+    height: auto;
+}
+
+.ts-select.is-multiple::after {
+    content: none;
+}
+
+.ts-select select[multiple] {
+    padding: 0.5rem 0.5rem;
+    overflow-y: auto;
+}
+
+.ts-select select[multiple] option {
+    border-radius: 0.4rem;
+    padding: 0.3rem 0.5rem;
+    margin: 0.1rem 0;
+}
+
+.ts-select select[multiple] option:checked {
+    background: var(--ts-primary-700);
+    color: var(--ts-white);
+}
+
+/**
+ * Solid
+ */
+
+.ts-select.is-solid {
+    background: var(--ts-gray-100);
+    border-color: transparent;
+}
+
+/** Focus */
+.ts-select:focus-within {
+    border-color: var(--ts-primary-600);
+}
+
+/**
+ * Underlined
+ */
+
+.ts-select.is-underlined {
+    border-radius: 0.4rem 0.4rem 0 0;
+    border: 2px solid transparent;
+    background: var(--ts-gray-100);
+    border-bottom: 2px solid var(--ts-gray-400);
+}
+
+.ts-select.is-underlined select option {
+    background: var(--ts-gray-50);
+}
+
+.ts-select.is-underlined:focus-within {
+    border-bottom-color: var(--ts-primary-600);
+}
+
+/**
+ * Active
+ */
+
+.ts-select.is-active {
+    border-color: var(--ts-primary-600);
+}
+
+/** If select is-active then open child .ts-dropdown also */
+.ts-select.is-active .ts-dropdown {
+    display: inline-flex;
+}
+
+.ts-select.is-underlined.is-active {
+    border-color: transparent;
+    border-bottom-color: var(--ts-primary-600);
+}
+
+/**
+ * Basic
+ */
+
+.ts-select.is-basic {
+    padding: 0;
+    background: transparent;
+    border-color: transparent;
+    min-height: initial;
+}
+
+.ts-select.is-basic select {
+    line-height: 1;
+    padding: 0 1.4rem 0 0;
+}
+
+.ts-select.is-basic::after {
+    right: 0;
+    font-size: 12px;
+    padding-top: 2px;
+}
+
+/**
+ * Disabled
+ */
+
+.ts-select.is-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
+}
+
+/**
+ * Fluid
+ */
+
+.ts-select.is-fluid {
+    width: 100%;
+}
+
+/**
+ * Negative
+ */
+
+.ts-select.is-negative {
+    border-color: var(--ts-negative-400);
+}
+
+.ts-select.is-negative select {
+    color: var(--ts-negative-600);
+    font-weight: 500;
+}
+
+.ts-select.is-negative.is-underlined {
+    border-color: transparent;
+    border-bottom-color: var(--ts-negative-400);
+}
+
+/**
+ * Sizes
+ */
+
+.ts-select.is-small {
+    --height: var(--ts-input-height-small);
+}
+.ts-select.is-large {
+    --height: var(--ts-input-height-large);
+}
+
+.ts-select.is-small select {
+    font-size: var(--ts-font-size-13px);
+}
+.ts-select.is-large select {
+    font-size: var(--ts-font-size-17px);
+}
+
+/**
+ * Dense
+ */
+
+.ts-select.is-dense {
+    --height: var(--ts-input-height-medium-dense);
+}
+
+.ts-select.is-dense.is-small {
+    --height: var(--ts-input-height-small-dense);
+}
+.ts-select.is-dense.is-large {
+    --height: var(--ts-input-height-large-dense);
+}
+
+/**
+ * Wrappable
+ */
+
+.ts-select.is-wrappable {
+    min-height: var(--height);
+    height: auto;
+    padding: 0.184em 0;
+}
+
+.ts-select.is-wrappable .content {
+    flex-wrap: wrap;
+}
+
+.ts-select.is-wrappable::after {
+    top: 0.5em;
+    bottom: initial;
+}
+
+/* ==========================================================================
+   Enhanced
+   ========================================================================== */
+
+.ts-select[data-tocas="input-select"] select {
+    display: none;
+}
+
+.ts-select[data-tocas="input-combo"] {
+    cursor: text;
+}
+
+.ts-select[data-tocas="input-combo"] select {
+    display: none;
+}
+
+.ts-select[data-tocas="input-combo"] input.append {
+    border: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    color: var(--ts-gray-800);
+    cursor: pointer;
+    font-size: var(--ts-font-size-14px);
+    padding: 0 2.5rem 0 0.9rem;
+    width: 100%;
+    z-index: 1;
+    background: transparent;
+}
+
+.ts-select[data-tocas="input-combo"] .content.is-ghosting {
+    opacity: 0.5;
+}
+
+.ts-select[data-tocas="input-combo"] .content.is-hidden {
+    visibility: hidden;
+}

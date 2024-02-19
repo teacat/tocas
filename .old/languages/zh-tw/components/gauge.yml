@@ -1,0 +1,156 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 圓形量測計
+Description: 以圓形的方式呈現進度與使用程度。
+Intro: |
+    此元件使用 CSS 變數 `--value` 來控制進度列的百分比進度。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Loading
+    - Progress
+
+#=======================================================
+# 變數
+# Variables
+#=======================================================
+
+Variables:
+    - Name: --value
+      Default: 0
+      Example: 50
+      Target: .bar
+      Description: 進度列的百分比值。
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-gauge]]">
+            <div class="bar" style="--value: 40">
+                <div class="text">40%</div>
+            </div>
+        </div>
+
+Definitions:
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 圓形的
+            Anchor: Circular
+            Description: 以全圓形無缺口的方式呈現整個量測計。
+            HTML: |
+                <div class="ts-gauge [[is-circular]]">
+                    <div class="bar" style="--value: 70">
+                        <div class="text">70%</div>
+                    </div>
+                </div>
+
+          - Title: 上升的
+            Anchor: Uplifted
+            Description: 呈現出類似上升數值的計數器，如：劑量、溫度、濕度。
+            HTML: |
+                <div class="ts-gauge [[is-uplifted]]">
+                    <div class="bar" style="--value: 50">
+                        <div class="text">50%</div>
+                    </div>
+                </div>
+
+          - Title: 置中的
+            Anchor: Centered
+            Description: 使其置中顯示。
+            HTML: |
+                <div class="ts-gauge [[is-centered]]">
+                    <div class="bar" style="--value: 40">
+                        <div class="text">40%</div>
+                    </div>
+                </div>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改圓形量測計的大小。
+            HTML: |
+                <div class="ts-gauge [[is-small]]">
+                    <div class="bar" style="--value: 30">
+                        <div class="text">30%</div>
+                    </div>
+                </div>
+                <div class="ts-gauge">
+                    <div class="bar" style="--value: 30">
+                        <div class="text">30%</div>
+                    </div>
+                </div>
+                <div class="ts-gauge [[is-large]]">
+                    <div class="bar" style="--value: 30">
+                        <div class="text">30%</div>
+                    </div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 傳輸計量
+            Anchor: Composition Usage
+            Description: 雲端檔案傳輸空間通常會有一個顯示目前剩餘額度與流量的相關計數器。
+            HTML: |
+                <div class="{{ts-grid}} is-evenly-divided">
+                    <div class="column">
+                        <div class="{{ts-wrap}} is-middle-aligned">
+                            <div class="[[ts-gauge]] is-small is-circular">
+                                <div class="bar" style="--value: 38">
+                                    <div class="text">38%</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="{{ts-text}} is-bold">空間</div>
+                                19.12 GB / 50 GB
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="{{ts-wrap}} is-middle-aligned">
+                            <div class="[[ts-gauge]] is-small is-circular">
+                                <div class="bar" style="--value: 100">
+                                    <div class="text">---</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="{{ts-text}} is-bold">傳輸</div>
+                                0 B 已使用
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+          - Title: 智慧家庭
+            Anchor: Composition Temperature
+            Description: 用以指示目前溫度、濕度的測量計。
+            HTML: |
+                <div class="{{ts-wrap}} is-middle-aligned">
+                    <div class="[[ts-gauge]] is-uplifted">
+                        <div class="bar" style="--value: 80">
+                            <div class="text">
+                                <span class="{{ts-icon}} is-big is-temperature-full-icon"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="{{ts-statistic}}">
+                            <div class="value">32 °C</div>
+                            <div class="comparison is-increased">2 °C</div>
+                        </div>
+                        房間溫度
+                    </div>
+                </div>

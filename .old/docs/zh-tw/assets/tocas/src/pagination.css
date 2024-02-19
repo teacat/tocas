@@ -1,0 +1,173 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-pagination {
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-pagination {
+    background: var(--ts-gray-200);
+    display: inline-flex;
+    padding: 0.25rem 0.5rem;
+    border-radius: 100rem;
+    color: var(--ts-gray-800);
+    border: 1px solid var(--ts-gray-200);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-pagination .item {
+    border-radius: 100rem;
+    padding: 0.5rem 0.8rem;
+    line-height: 1;
+    margin: 0 0.15rem;
+    color: var(--ts-gray-800);
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Active
+ */
+
+.ts-pagination .item.is-active {
+    background: var(--accent-color, var(--ts-gray-800));
+    color: var(--accent-foreground-color, var(--ts-gray-50));
+    pointer-events: none;
+}
+
+/**
+ * Skipped
+ */
+
+.ts-pagination .item.is-skipped {
+    padding: 0.5rem 0rem;
+    color: var(--ts-gray-600);
+    pointer-events: none;
+
+}
+
+.ts-pagination .item.is-skipped::after {
+    display: inline-block;
+    content: "...";
+}
+
+/**
+ * Fluid
+ */
+
+.ts-pagination.is-fluid {
+    display: flex;
+}
+
+/**
+ * Disabled
+ */
+
+.ts-pagination .item.is-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    user-select: none;
+}
+
+/**
+ * Aligns
+ */
+
+/*.ts-pagination.is-end-aligned {
+    margin-left: auto;
+}*/
+
+/**
+ * Next & Back
+ */
+
+.ts-pagination .item.is-back,
+.ts-pagination .item.is-next,
+.ts-pagination .item.is-first,
+.ts-pagination .item.is-last {
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: inherit;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.ts-pagination .item.is-back::before,
+.ts-pagination .item.is-next::after,
+.ts-pagination .item.is-first::before,
+.ts-pagination .item.is-last::after {
+    font-size: 13px;
+}
+
+.ts-pagination .item.is-back::before {
+    content: "\f053";
+}
+.ts-pagination .item.is-next {
+    margin-left: auto;
+}
+.ts-pagination .item.is-next::after {
+    content: "\f054";
+}
+.ts-pagination .item.is-first::before {
+    content: "\f048";
+}
+.ts-pagination .item.is-last::after {
+    content: "\f051";
+}
+
+/**
+ * Secondary
+ */
+
+.ts-pagination.is-secondary {
+    padding: 0;
+    background: transparent;
+    border-color: transparent;
+}
+
+/**
+ * Sizes
+ */
+
+.ts-pagination.is-small {
+    font-size: var(--ts-font-size-13px);
+}
+
+.ts-pagination.is-large {
+    font-size: var(--ts-font-size-17px);
+}
+
+/**
+ * Dense
+ */
+
+.ts-pagination.is-dense {
+    padding-top: 0.15rem;
+    padding-bottom: 0.15rem;
+}
+
+.ts-pagination.is-dense .item {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}

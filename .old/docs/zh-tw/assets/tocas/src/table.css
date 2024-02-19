@@ -1,0 +1,370 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-table,
+.ts-table :is(thead, tbody, tfoot, tr, th, td) {
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-color: inherit;
+    vertical-align: inherit;
+    text-align: left;
+    font-weight: inherit;
+    font-size: 14px;
+
+    -webkit-border-horizontal-spacing: 0;
+    -webkit-border-vertical-spacing: 0;
+}
+
+.ts-table {
+    width: 100%;
+    color: inherit;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-table thead tr {
+    border-bottom: 1px solid var(--ts-gray-300);
+}
+
+.ts-table tfoot tr {
+    border-top: 1px solid var(--ts-gray-300);
+}
+
+.ts-table tr th {
+    background: var(--ts-gray-100);
+}
+
+.ts-table :is(thead, tfoot) tr th {
+    padding: 0.5rem 1rem;
+    color: var(--ts-gray-600);
+    font-weight: 500;
+}
+
+.ts-table tbody tr + tr {
+    border-top: 1px solid var(--ts-gray-300);
+}
+
+.ts-table tbody tr td {
+    padding: 0.5rem 1rem;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Sizes
+ */
+
+.ts-table.is-small,
+.ts-table.is-small :is(thead, tbody, tfoot, tr, th, td) {
+    font-size: var(--ts-font-size-13px);
+}
+.ts-table.is-large,
+.ts-table.is-large :is(thead, tbody, tfoot, tr, th, td) {
+    font-size: var(--ts-font-size-16px);
+}
+
+/**
+ * Collapsed
+ */
+
+.ts-table.is-collapsed {
+    width: auto;
+}
+
+.ts-table :is(th, td).is-collapsed {
+    width: 1px;
+    white-space: nowrap;
+}
+
+/**
+ * Truncated
+ */
+
+.ts-table.is-truncated {
+    table-layout: fixed;
+}
+.ts-table.is-truncated td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/**
+ * Basic
+ */
+
+.ts-table:is(.is-basic, .is-very-basic) tr th {
+    background: transparent;
+}
+.ts-table.is-very-basic tbody :is(th, td, tr) {
+    border-color: transparent;
+}
+
+/**
+ * Definition
+ */
+
+.ts-table.is-definition tr th:not(:first-child) {
+    background: var(--ts-gray-100);
+}
+.ts-table.is-definition tr th:first-child {
+    background: transparent;
+}
+
+.ts-table.is-definition tr td:first-child {
+    background: var(--ts-gray-100);
+}
+
+/**
+ * Celled
+ */
+
+.ts-table.is-celled tr :is(td, th):not(:last-child) {
+    border-right: 1px solid var(--ts-gray-300);
+}
+
+/**
+ * Striped
+ */
+
+.ts-table.is-striped > tbody > tr:nth-child(even) {
+    background: var(--ts-gray-75);
+}
+
+/**
+ * Empty
+ */
+
+.ts-table td.is-empty {
+    color: var(--ts-gray-300);
+    font-weight: 500;
+}
+
+.ts-table td.is-empty::after {
+    content: "—";
+}
+
+/**
+ * Insetted
+ */
+
+.ts-table td.is-insetted {
+    box-shadow: inset 0px 0px 10px 0px rgb(0 0 0 / 5%);
+}
+
+/**
+ * Aligns
+ */
+
+.ts-table :is(tr, th, td).is-start-aligned {
+    text-align: left;
+}
+
+.ts-table :is(th, td).is-center-aligned {
+    text-align: center;
+}
+
+.ts-table :is(th, td).is-end-aligned {
+    text-align: right;
+}
+
+.ts-table.is-top-aligned :is(th, td) {
+    vertical-align: top;
+}
+
+.ts-table :is(th, td).is-top-aligned {
+    vertical-align: top;
+}
+
+.ts-table :is(th, td).is-middle-aligned {
+    vertical-align: middle;
+}
+
+.ts-table tr.is-middle-aligned td {
+    vertical-align: middle;
+}
+
+.ts-table :is(th, td).is-bottom-aligned {
+    vertical-align: bottom;
+}
+
+/**
+ * Secondary
+ */
+
+.ts-table :is(tr, tr th, tr td).is-secondary {
+    background: var(--ts-gray-75);
+}
+
+/**
+ * Tertiary
+ */
+
+.ts-table :is(tr, tr th, tr td).is-tertiary {
+    background: var(--ts-gray-100);
+}
+
+/**
+ * Active
+ */
+
+.ts-table :is(tr, tr th, tr td).is-active {
+    background: var(--ts-gray-300);
+}
+
+/**
+ * Disabled
+ */
+
+.ts-table :is(tr, tr th, tr td).is-disabled {
+    opacity: 0.5;
+    user-select: none;
+    pointer-events: none;
+}
+
+/**
+ * Single Line
+ */
+
+.ts-table.is-single-line :is(tr, tr th, tr td),
+.ts-table :is(tr, tr th, tr td).is-single-line {
+    white-space: nowrap;
+}
+
+/**
+ * Indicated
+ */
+
+.ts-table :is(tr, tr th, tr td).is-indicated {
+    box-shadow: 2px 0 0 var(--ts-gray-900) inset;
+}
+
+.ts-table :is(tr, tr th, tr td).is-indicated.is-negative {
+    box-shadow: 2px 0 0 var(--ts-negative-600) inset;
+}
+
+.ts-table :is(tr, tr th, tr td).is-indicated.is-positive {
+    box-shadow: 2px 0 0 var(--ts-positive-600) inset;
+}
+
+.ts-table :is(tr, tr th, tr td).is-indicated.is-warning {
+    box-shadow: 2px 0 0 var(--ts-warning-600) inset;
+}
+
+/**
+ * Sticked
+ */
+
+.ts-table.is-sticked tr *:is(td, th):first-child {
+    padding-left: 0;
+}
+.ts-table.is-sticked tr *:is(td, th):last-child {
+    padding-right: 0;
+}
+
+/**
+ * Density
+ */
+
+.ts-table.is-relaxed :is(thead, tfoot) tr th {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+}
+.ts-table.is-relaxed tbody tr td {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+}
+
+.ts-table.is-dense :is(thead, tfoot) tr th {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+.ts-table.is-dense tbody tr td {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+/**
+ * Compact
+ */
+
+.ts-table :is(thead, tfoot) tr th.is-compact {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.ts-table.is-compact :is(thead, tfoot) tr th {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.ts-table.is-compact tbody tr td {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.ts-table tbody tr td.is-compact {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+/**
+ * Padded
+ */
+
+.ts-table.is-padded tbody tr td {
+    padding: 1rem 1.5rem;
+}
+.ts-table.is-padded :is(thead, tfoot) tr th {
+    padding: 1rem 1.5rem;
+}
+.ts-table.is-horizontally-padded tbody tr td {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+.ts-table.is-horizontally-padded :is(thead, tfoot) tr th {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+.ts-table tbody tr td.is-vertically-padded {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.ts-table tbody tr td.is-padded {
+    padding: 1rem 1.5rem;
+}
+.ts-table tbody tr td.is-vertically-padded {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.ts-table tbody tr td.is-horizontally-padded {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+/**
+ * Fitted
+ */
+
+.ts-table.is-fitted :is(thead, tfoot) tr th {
+    padding: 0;
+}
+.ts-table.is-fitted tbody tr td {
+    padding: 0;
+}
+.ts-table tbody tr td.is-fitted {
+    padding: 0;
+}

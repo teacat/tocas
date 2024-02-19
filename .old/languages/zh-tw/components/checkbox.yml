@@ -1,0 +1,149 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 核取方塊
+Description: 可供勾選的項目並支援同時批次選取。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Radio
+    - Selection
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <label class="[[ts-checkbox]]">
+            <input type="checkbox" checked/>
+            蘋果
+        </label>
+
+Definitions:
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 有 `[disabled]` 屬性的核取方塊會無法互動。
+            HTML: |
+                <label class="ts-checkbox">
+                    <input type="checkbox" [[disabled]]/>
+                    記住我的密碼
+                </label>
+
+          - Title: 不定的
+            Anchor: Indeterminate
+            Description: 不定狀態會令其勾選狀態表現地模稜兩可，例如：核取方塊群組裡有沒被勾選的子項目。
+            HTML: |
+                <label class="ts-checkbox [[is-indeterminate]]">
+                    <input type="checkbox" checked/>
+                    所有檔案
+                </label>
+                <div class="{{ts-content}} is-dense">
+                    <div class="{{ts-wrap}} is-vertical is-compact">
+                        <label class="ts-checkbox">
+                            <input type="checkbox" checked/>
+                            影片
+                        </label>
+                        <label class="ts-checkbox">
+                            <input type="checkbox"/>
+                            文件
+                        </label>
+                        <label class="ts-checkbox">
+                            <input type="checkbox" checked/>
+                            音樂
+                        </label>
+                    </div>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 負面的
+            Anchor: Negative
+            Description: 表示一個核取方塊可能沒有被勾選。
+            HTML: |
+                <label class="ts-checkbox [[is-negative]]">
+                    <input type="checkbox" />
+                    我同意使用者規範。
+                </label>
+
+          - Title: 單獨的
+            Anchor: Solo
+            Description: 核取方塊如果沒有任何標籤文字，可以將其指定為單獨的核取方塊，藉此來移除多餘的間距。
+            HTML: |
+                <label class="ts-checkbox [[is-solo]]">
+                    <input type="checkbox" />
+                </label>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改核取方塊的大小。
+            Remove:
+                - <div class="ts-space is-small"></div>
+            HTML: |
+                <label class="ts-checkbox [[is-small]]">
+                    <input type="checkbox" checked/>
+                    小型選項
+                </label>
+                <div class="ts-space is-small"></div>
+                <label class="ts-checkbox">
+                    <input type="checkbox"/>
+                    預設選項
+                </label>
+                <div class="ts-space is-small"></div>
+                <label class="ts-checkbox [[is-large]]">
+                    <input type="checkbox"/>
+                    大型選項
+                </label>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 鄰近核取方塊
+            Anchor: Composition Checkboxes
+            Description: 透過[間隔容器](./wrap.html)元件能讓核取方塊以左右、上下排列並保持一定的間距。
+            HTML: |
+                <div class="{{ts-wrap}} is-vertical">
+                    <div class="{{ts-text}} is-label">持有狀態</div>
+                    <div class="[[{{ts-wrap}}]]">
+                        <label class="ts-checkbox">
+                            <input type="checkbox" checked/>
+                            已售出
+                        </label>
+                        <label class="ts-checkbox">
+                            <input type="checkbox"/>
+                            未販售
+                        </label>
+                        <label class="ts-checkbox">
+                            <input type="checkbox"/>
+                            空投限定
+                        </label>
+                    </div>
+                    <div class="{{ts-text}} is-label">寵物屬性</div>
+                    <div class="[[{{ts-wrap}}]] is-vertical is-compact">
+                        <label class="ts-checkbox">
+                            <input type="checkbox" checked/>
+                            火
+                        </label>
+                        <label class="ts-checkbox">
+                            <input type="checkbox"/>
+                            水
+                        </label>
+                        <label class="ts-checkbox">
+                            <input type="checkbox"/>
+                            土
+                        </label>
+                    </div>
+                </div>

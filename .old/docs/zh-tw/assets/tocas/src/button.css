@@ -1,0 +1,419 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+@keyframes ts-button-loading {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+.ts-button {
+    --horizontal-padding: 1.25em;
+    --height: var(--ts-input-height-medium);
+
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-button {
+    margin: 0;
+    width: auto;
+    font: inherit;
+    outline: none;
+    box-sizing: border-box;
+    user-select: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    height: var(--height);
+
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.ts-button:focus {
+    outline: 0;
+}
+
+.ts-button {
+    border: 2px solid var(--accent-color, var(--ts-gray-800));
+    min-width: 75px;
+    font-size: var(--ts-font-size-14px);
+    line-height: 1.5;
+    font-weight: 500;
+    color: var(--accent-foreground-color, var(--ts-gray-50));
+    background: var(--accent-color, var(--ts-gray-800));
+    text-decoration: none;
+    display: inline-flex;
+    vertical-align: middle;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    padding: 0 var(--horizontal-padding);
+    border-radius: 0.4rem;
+}
+
+.ts-button:hover {
+    cursor: pointer;
+    opacity: 0.98;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Secondary
+ */
+
+.ts-button.is-secondary {
+    color: var(--accent-color, var(--ts-gray-800));
+    border-color: var(--ts-gray-100);
+    background: var(--ts-gray-100);
+}
+
+/**
+ * Tertiary
+ */
+
+.ts-button.is-tertiary {
+    color: var(--ts-gray-800);
+    background: var(--ts-gray-300);
+    border-color: var(--ts-gray-300);
+}
+
+/**
+ * Outlined
+ */
+
+.ts-button.is-outlined {
+    background: transparent;
+    border: 2px solid var(--ts-gray-300);
+    color: var(--accent-color, var(--ts-gray-800));
+}
+
+/**
+ * Negative
+ */
+
+.ts-button.is-negative {
+    color: var(--ts-white);
+    border-color: var(--ts-negative-500);
+    background: var(--ts-negative-500);
+}
+
+.ts-button.is-negative.is-outlined {
+    color: var(--ts-negative-500);
+    border-color: var(--ts-gray-300);
+    background: transparent;
+}
+
+/**
+ * Ghost
+ */
+
+.ts-button.is-ghost {
+    background: transparent;
+    color: var(--ts-gray-800);
+    border: 2px solid transparent;
+}
+
+.ts-button.is-ghost:hover {
+    background: var(--ts-gray-100);
+}
+
+.ts-button.is-ghost.is-negative {
+    color: var(--ts-negative-500);
+}
+
+/**
+ * Loading
+ */
+
+.ts-button.is-loading,
+.ts-button.is-loading.is-negative {
+    color: transparent;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.ts-button.is-loading .ts-icon {
+    visibility: hidden;
+}
+
+.ts-button.is-loading::after {
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+    display: inline;
+    text-decoration: inherit;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+    display: inline-block;
+    animation: ts-button-loading 2s linear infinite;
+    color: var(--ts-gray-50);
+    font-size: var(--ts-font-size-18px);
+    content: "\f110";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.ts-button.is-loading:is(.is-outlined, .is-secondary, .is-tertiary, .is-ghost)::after {
+    color: var(--ts-gray-800);
+}
+
+/**
+ * Tertiary
+ */
+
+/*.ts-button.is-tertiary:hover {
+    background: var(--ts-gray-100);
+    opacity: 1;
+}*/
+
+/**
+ * Sizes
+ */
+
+.ts-button.is-small {
+    --height: var(--ts-input-height-small);
+
+    font-size: var(--ts-font-size-13px);
+}
+
+.ts-button.is-large {
+    --height: var(--ts-input-height-large);
+
+    font-size: var(--ts-font-size-16px);
+}
+
+/**
+ * Disabled
+ */
+
+.ts-button.is-disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
+}
+
+/**
+ * Fluid
+ */
+
+.ts-button.is-fluid {
+    width: 100%;
+}
+
+/**
+ * Circular
+ */
+
+.ts-button.is-circular {
+    border-radius: 100rem;
+}
+
+/**
+ * Icon
+ */
+
+.ts-button.is-icon {
+    padding: 0;
+    min-width: 0;
+    width: calc(var(--height) * 1.1);
+}
+
+.ts-button.is-icon .ts-icon {
+    font-size: 1.2em;
+}
+
+.ts-button.is-icon.is-small .ts-icon {
+    font-size: 1.15em;
+}
+
+/**
+ * Side Icon
+ */
+
+.ts-button:where(.is-start-icon, .is-end-icon) .ts-icon {
+    font-size: 1.2em;
+}
+
+.ts-button:is(.is-start-icon, .is-end-icon) .ts-icon::before {
+    display: inline-block;
+    margin-top: 1px;
+}
+
+.ts-button.is-start-icon .ts-icon {
+    margin-right: 0.5em;
+}
+
+.ts-button.is-end-icon .ts-icon {
+    margin-left: 0.5em;
+}
+
+/**
+ * Labeled Icon
+ */
+
+.ts-button:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    background: var(--ts-gray-900);
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(2.75rem + 2px);
+}
+
+.ts-button:where(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
+    font-size: 1.2em;
+}
+
+.ts-button.is-start-labeled-icon {
+    padding-left: calc(var(--horizontal-padding) + 2.75em);
+}
+
+.ts-button.is-start-labeled-icon .ts-icon {
+    left: -2px;
+    border-radius: 0.4rem 0 0 0.4rem;
+}
+
+.ts-button.is-end-labeled-icon {
+    padding-right: calc(var(--horizontal-padding) + 2.75em);
+}
+
+.ts-button.is-end-labeled-icon .ts-icon {
+    right: -2px;
+    border-radius: 0 0.4rem 0.4rem 0;
+}
+
+.ts-button.is-negative:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
+    background: var(--ts-negative-400);
+}
+
+.ts-button.is-outlined:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
+    /*background: var(--ts-gray-300);*/
+    background: transparent;
+    border: 2px solid var(--ts-gray-300);
+}
+
+.ts-button.is-secondary:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
+    background: var(--ts-gray-200);
+}
+
+.ts-button.is-tertiary:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
+    background: var(--ts-gray-400);
+}
+
+/**
+ * Dense
+ */
+
+.ts-button.is-dense {
+    --height: var(--ts-input-height-medium-dense);
+}
+.ts-button.is-dense.is-small {
+    --height: var(--ts-input-height-small-dense);
+}
+.ts-button.is-dense.is-large {
+    --height: var(--ts-input-height-large-dense);
+}
+
+/**
+ * Wide
+ */
+
+.ts-button.is-short {
+    --horizontal-padding: 0.75em;
+
+    min-width: 65px;
+}
+.ts-button.is-wide {
+    --horizontal-padding: 2em;
+}
+
+/**
+ * Start & End
+ */
+
+.ts-addon {
+    display: flex;
+    gap: 2px;
+}
+
+.ts-addon > *:first-child,
+.ts-addon > .ts-input:first-child :where(input, textarea) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.ts-addon > *:last-child,
+.ts-addon > .ts-input:last-child :where(input, textarea) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/**
+ * Buttons
+ */
+
+.ts-buttons {
+    display: flex;
+}
+
+.ts-buttons .ts-button:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.ts-buttons .ts-button:not(:first-child):not(:last-child) {
+    border-radius: 0;
+}
+
+.ts-buttons .ts-button:not(:first-child)::before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    height: 70%;
+    background: var(--ts-gray-600);
+    width: 1px;
+}
+
+.ts-buttons .ts-button.is-outlined::before {
+    display: none;
+}
+
+.ts-buttons .ts-button.is-negative::before {
+    background: var(--ts-negative-400);
+}
+
+.ts-buttons .ts-button.is-secondary::before {
+    background: var(--ts-gray-400);
+}
+
+.ts-buttons .ts-button:last-child {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.ts-buttons .ts-button.is-outlined + .ts-button.is-outlined {
+    border-left-color: transparent;
+}

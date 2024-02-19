@@ -1,0 +1,218 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 按鈕
+Description: 可供使用者點擊並執行動作的互動元素。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Close
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <button class="[[ts-button]]">送出</button>
+
+Definitions:
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 有 `[disabled]` 屬性的按鈕會無法互動，若按鈕是一個 `<a>` 超連結，則需套用 `.is-disabled` 樣式。
+            HTML: |
+                <button class="ts-button" [[disabled]]>停用按鈕</button>
+                <a class="ts-button [[is-disabled]]">停用連結</a>
+
+          - Title: 讀取中
+            Anchor: Loading
+            Description: 顯示旋轉的讀取圖案表示資料正在送出，使用需加上 `[disabled]` 屬性以停用按鈕互動功能。
+            HTML: |
+                <button class="ts-button [[is-loading]]" disabled>載入中</button>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 次要的
+            Anchor: Secondary
+            Description: 較不重要的次級動作按鈕，通常可作為是備用方案。
+            HTML: |
+                <button class="ts-button [[is-secondary]]">取消</button>
+
+          - Title: 外框線的
+            Anchor: Outlined
+            Description: 僅有基本結構的外框線按鈕。
+            HTML: |
+                <button class="ts-button [[is-outlined]]">前往拜訪</button>
+
+          - Title: 負面的
+            Anchor: Negative
+            Description: 警示使用者這個行為可能具有危險性。
+            HTML: |
+                <button class="ts-button [[is-negative]]">永久銷毀資料</button>
+                <button class="ts-button [[is-negative]] is-outlined">放棄草稿</button>
+
+          - Title: 虛無的
+            Anchor: Ghost
+            Description: 不被考慮或是極少數會被執行的動作。
+            HTML: |
+                <button class="ts-button [[is-ghost]]">忘記密碼</button>
+
+          - Title: 圓角的
+            Anchor: Circular
+            Description: 圓融的圓角能夠呈現出一個行動號召按鈕。
+            HTML: |
+                <button class="ts-button [[is-circular]]">購買</button>
+                <button class="ts-button [[is-circular]] is-outlined">下載最新版本</button>
+
+          - Title: 圖示的
+            Anchor: Icon
+            Description: 僅帶有圖示的按鈕。
+            HTML: |
+                <button class="ts-button [[is-icon]]">
+                    <span class="{{ts-icon}} is-magnifying-glass-icon"></span>
+                </button>
+                <button class="ts-button [[is-icon]] is-negative is-outlined">
+                    <span class="{{ts-icon}} is-trash-icon"></span>
+                </button>
+
+          - Title: 側邊圖示的
+            Anchor: Side Icon
+            Description: 按鈕的文字旁邊可以帶有輔助圖示，圖示會與文字一同置中對齊。
+            HTML: |
+                <button class="ts-button [[is-start-icon]]">
+                    <span class="{{ts-icon}} is-cart-plus-icon"></span>
+                    加入購物車
+                </button>
+                <button class="ts-button [[is-end-icon]] is-secondary">
+                    送出
+                    <span class="{{ts-icon}} is-check-icon"></span>
+                </button>
+
+          - Title: 圖示標籤的
+            Anchor: Labeled Icon
+            Description: 以標籤方式展現的圖示一定會呈現在按鈕的最起始或是尾端位置，對於會上下垂直排列圖示按鈕而言，這更能令視覺上有平衡感。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <button class="ts-button [[is-start-labeled-icon]]">
+                    <span class="{{ts-icon}} is-heart-icon"></span>
+                    收藏
+                </button>
+                <div class="ts-space"></div>
+                <button class="ts-button [[is-start-labeled-icon]] is-outlined">
+                    <span class="{{ts-icon}} is-paper-plane-icon"></span>
+                    送出
+                </button>
+                <div class="ts-space"></div>
+                <button class="ts-button [[is-end-labeled-icon]] is-secondary">
+                    星號
+                    <span class="{{ts-icon}} is-star-icon"></span>
+                </button>
+
+          - Title: 流動的
+            Anchor: Fluid
+            Description: 按鈕的寬度可以填滿整個父容器。
+            HTML: |
+                <button class="ts-button [[is-fluid]]">登入</button>
+
+          - Title: 寬度
+            Anchor: Width
+            Description: 變更按鈕的內距寬度。如果按鈕內的文字過短，可以試著令其變寬。反之亦然，也能讓按鈕變短。
+            HTML: |
+                <button class="ts-button [[is-short]] is-outlined">短的</button>
+                <button class="ts-button is-outlined">預設</button>
+                <button class="ts-button [[is-wide]] is-outlined">寬的</button>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改按鈕的大小。
+            HTML: |
+                <button class="ts-button [[is-small]]">小型按鈕</button>
+                <button class="ts-button">預設按鈕</button>
+                <button class="ts-button [[is-large]]">大型按鈕</button>
+
+          - Title: 較密的
+            Anchor: Dense
+            Description: 變更元件的內距，令元素之間看起來更密集。
+            HTML: |
+                <button class="ts-button [[is-dense]]">跟隨</button>
+
+    - Title: 群組
+      Description:
+      Sections:
+          - Title: 按鈕群組
+            Anchor: Buttons
+            Description: 將多個按鈕合併成為一個主體，多個按鈕之間會以略微可見的分隔線區隔。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="[[ts-buttons]]">
+                    <button class="ts-button">送出</button>
+                    <button class="ts-button is-icon">
+                        <span class="{{ts-icon}} is-chevron-down-icon"></span>
+                    </button>
+                </div>
+                <div class="ts-space"></div>
+                <div class="[[ts-buttons]]">
+                    <button class="ts-button is-outlined">送出</button>
+                    <button class="ts-button is-outlined is-icon">
+                        <span class="{{ts-icon}} is-chevron-down-icon"></span>
+                    </button>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 鄰近按鈕
+            Anchor: Composition Buttons
+            Description: 如果按鈕之間有相鄰另一個按鈕的話，建議使用[間隔容器](./wrap.html)元件令按鈕之間帶有間隔。
+            HTML: |
+                <div class="[[{{ts-wrap}}]]">
+                    <button class="ts-button">發表</button>
+                    <button class="ts-button is-negative is-outlined">放棄草稿</button>
+                </div>
+
+          - Title: 喜歡與不喜歡
+            Anchor: Composition Likes
+            Description: 以按鈕群組來呈現一個喜歡、不喜歡的動作按鈕群組。
+            HTML: |
+                <div class="[[ts-buttons]]">
+                    <button class="ts-button is-secondary is-circular is-start-icon">
+                        <span class="{{ts-icon}} is-thumbs-up-icon"></span>
+                        324
+                    </button>
+                    <button class="ts-button is-secondary is-circular is-start-icon">
+                        <span class="{{ts-icon}} is-regular is-thumbs-down-icon"></span>
+                        7
+                    </button>
+                </div>
+
+          - Title: 功能按鈕
+            Anchor: Composition Split Button
+            Description: 使用按鈕群組能讓主要按鈕旁邊擺放一個輔助功能按鈕，這通常被稱作為 Split Button（分割按鈕）。輔助按鈕可以使用[彈出式選單](./dropdown.html)。
+            HTML: |
+                <div class="[[ts-buttons]]">
+                    <button class="ts-button">開始遊戲</button>
+                    <button class="ts-button is-icon" data-dropdown="dropdown">
+                        <span class="{{ts-icon}} is-gear-icon"></span>
+                    </button>
+                </div>
+                <div class="[[{{ts-dropdown}}]]" id="dropdown">
+                    <button class="item">遊戲設定</button>
+                    <button class="item">掃描與修復</button>
+                    <div class="divider"></div>
+                    <button class="item">移除遊戲</button>
+                </div>

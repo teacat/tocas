@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./assets/style.css" />
+        <link rel="stylesheet" href="./assets/highlight.css" />
+        <link rel="stylesheet" href="./assets/tocas/tocas.min.css" />
+        <link rel="stylesheet" href="./assets/tocas/src/email.css" />
+        <script src="./assets/tocas/tocas.min.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+        <script src="./assets/script.js"></script>
+        <title>箱型容器 - Tocas UI</title>
+        <!--
+
+
+
+        ▄▄▄        ▄▄████▄
+      ▄█████▄    ▄██▀    ██
+      ▀█▄   ██▄ ██▀      ██
+       ▀██▄▄▄████   ▄▄▄██▀
+          ▀▀▀████▀▀▀▀▀
+             ██
+            ██          ▄█████▄       █████████████          ▄█             █▄
+           ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+           ██        ██         ██    ██         ██        ██  ▀██       ██▀
+           ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+           ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+            ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄███       █▀
+
+
+
+            「你只能死一次，一定要死的轟轟烈烈。」
+
+            沒有人可以做一件事情直到永遠，
+            而一個人的生命也不是永生。
+
+            死亡給予了我們試著活下去的動力，
+            在那之前都應該竭盡所能的向著自己的夢邁進。
+
+            將自己的生命活得淋漓盡致才是最重要的；
+            不要將剛開始的序章放在頁尾。
+
+
+
+        -->
+        <meta name="description" content="帶有邊框的基礎架構容器並可與其他元素混搭使用。" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="箱型容器 - Tocas UI" />
+        <meta name="twitter:description" content="帶有邊框的基礎架構容器並可與其他元素混搭使用。" />
+        <meta name="twitter:image" content="https://v4.tocas-ui.com/zh-tw/assets/images/og.png" />
+        <meta property="og:title" content="箱型容器 - Tocas UI" />
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content="https://v4.tocas-ui.com/zh-tw/assets/images/og.png" />
+        <meta property="og:url" content="https://v4.tocas-ui.com/zh-tw/box.html" />
+        <meta property="og:image:width" content="1280" />
+        <meta property="og:image:height" content="720" />
+        <meta property="og:description" content="帶有邊框的基礎架構容器並可與其他元素混搭使用。" />
+    </head>
+    <body>
+        <div class="穹頂">
+            <div class="界限容器">
+                <div class="穹頂-導航列">
+                    <div class="穹頂-導航列-左側">
+                        <a class="穹頂-導航列-項目 穹頂-導航列-項目_主要" href="./index.html">Tocas UI</a>
+                        <a class="穹頂-導航列-項目" href="./getting-started.html">開始使用</a>
+                        <a class="穹頂-導航列-項目" href="./button.html">元件樣式</a>
+                        <a class="穹頂-導航列-項目" href="./examples.html">實際範例</a>
+                    </div>
+                    <div class="穹頂-導航列-右側">
+                        <div class="穹頂-導航列-項目 穹頂-導航列-項目_語系的">
+                            <span class="ts-flag is-taiwan-flag"></span> 台灣正體
+                            <div class="穹頂-導航列-項目-語系下拉式選單">
+                                
+                                <a
+                                    class="穹頂-導航列-項目-語系下拉式選單-項目 穹頂-導航列-項目-語系下拉式選單-項目_啟用的"
+                                    href="./../zh-tw/box.html"
+                                    ><span class="ts-flag is-taiwan-flag"></span> 台灣正體</a
+                                >
+                                
+                            </div>
+                        </div>
+                        <a class="穹頂-導航列-項目" href="https://github.com/teacat/tocas" target="_blank"><span class="ts-icon is-github-icon"></span> GitHub</a>
+                    </div>
+                </div>
+                <div class="穹頂-導航列 穹頂-導航列_手機的">
+                    <div class="穹頂-導航列-左側">
+                        <a class="穹頂-導航列-項目 穹頂-導航列-項目_主要" href="./index.html">Tocas UI</a>
+                    </div>
+                    <div class="穹頂-導航列-右側">
+                        <div class="穹頂-導航列-項目 穹頂-導航列-項目_語系的">
+                            <span class="ts-flag is-taiwan-flag"></span> 台灣正體
+                            <div class="穹頂-導航列-項目-語系下拉式選單">
+                                
+                                <a
+                                    class="穹頂-導航列-項目-語系下拉式選單-項目 穹頂-導航列-項目-語系下拉式選單-項目_啟用的"
+                                    href="./../zh-tw/box.html"
+                                    ><span class="ts-flag is-taiwan-flag"></span> 台灣正體</a
+                                >
+                                
+                            </div>
+                        </div>
+                        <button class="穹頂-導航列-項目 穹頂-導航列-項目_選單按鈕" aria-label='展開導覽選單按鈕'>
+                            <span class="ts-icon is-bars-icon"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="穹頂-標題">
+                    <h1 class="穹頂-標題-主要">箱型容器</h1>
+                    <div class="穹頂-標題-說明">帶有邊框的基礎架構容器並可與其他元素混搭使用。</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="主體">
+            <div class="界限容器">
+                <div class='主體-格局 '>
+                    <!-- 側邊導覽 -->
+                    <div class="主體-格局-導覽">
+                        
+                        <div class="主體-格局-導覽-標題">初入上手</div>
+                        
+                        <a href="./getting-started.html" class="主體-格局-導覽-項目">
+                            開始使用 <span class="主體-格局-導覽-項目-英文"
+                                >Getting Started</span
+                            >
+                        </a>
+                        
+                        <a href="./colors.html" class="主體-格局-導覽-項目">
+                            主題色系 <span class="主體-格局-導覽-項目-英文"
+                                >Colors</span
+                            >
+                        </a>
+                        
+                        <a href="./responsive.html" class="主體-格局-導覽-項目">
+                            響應式設計 <span class="主體-格局-導覽-項目-英文"
+                                >Responsive</span
+                            >
+                        </a>
+                        
+                        <a href="./utilities.html" class="主體-格局-導覽-項目">
+                            輔助樣式 <span class="主體-格局-導覽-項目-英文"
+                                >Utilities</span
+                            >
+                        </a>
+                         
+                        <div class="主體-格局-導覽-標題">格局設計</div>
+                        
+                        <a href="./box.html" class="主體-格局-導覽-項目 主體-格局-導覽-項目_啟用的">
+                            箱型容器 <span class="主體-格局-導覽-項目-英文"
+                                >Box</span
+                            >
+                        </a>
+                        
+                        <a href="./container.html" class="主體-格局-導覽-項目">
+                            界限容器 <span class="主體-格局-導覽-項目-英文"
+                                >Container</span
+                            >
+                        </a>
+                        
+                        <a href="./content.html" class="主體-格局-導覽-項目">
+                            內容區塊 <span class="主體-格局-導覽-項目-英文"
+                                >Content</span
+                            >
+                        </a>
+                        
+                        <a href="./control.html" class="主體-格局-導覽-項目">
+                            表單控制項 <span class="主體-格局-導覽-項目-英文"
+                                >Control</span
+                            >
+                        </a>
+                        
+                        <a href="./grid.html" class="主體-格局-導覽-項目">
+                            網格系統 <span class="主體-格局-導覽-項目-英文"
+                                >Grid</span
+                            >
+                        </a>
+                        
+                        <a href="./wrap.html" class="主體-格局-導覽-項目">
+                            間隔容器 <span class="主體-格局-導覽-項目-英文"
+                                >Wrap</span
+                            >
+                        </a>
+                         
+                        <div class="主體-格局-導覽-標題">表單</div>
+                        
+                        <a href="./button.html" class="主體-格局-導覽-項目">
+                            按鈕 <span class="主體-格局-導覽-項目-英文"
+                                >Button</span
+                            >
+                        </a>
+                        
+                        <a href="./checkbox.html" class="主體-格局-導覽-項目">
+                            核取方塊 <span class="主體-格局-導覽-項目-英文"
+                                >Checkbox</span
+                            >
+                        </a>
+                        
+                        <a href="./fieldset.html" class="主體-格局-導覽-項目">
+                            欄位分組 <span class="主體-格局-導覽-項目-英文"
+                                >Fieldset</span
+                            >
+                        </a>
+                        
+                        <a href="./file.html" class="主體-格局-導覽-項目">
+                            檔案上傳 <span class="主體-格局-導覽-項目-英文"
+                                >File</span
+                            >
+                        </a>
+                        
+                        <a href="./input.html" class="主體-格局-導覽-項目">
+                            輸入欄位 <span class="主體-格局-導覽-項目-英文"
+                                >Input</span
+                            >
+                        </a>
+                        
+                        <a href="./radio.html" class="主體-格局-導覽-項目">
+                            選項按鈕 <span class="主體-格局-導覽-項目-英文"
+                                >Radio</span
+                            >
+                        </a>
+                        
+                        <a href="./select.html" class="主體-格局-導覽-項目">
+                            下拉式選擇 <span class="主體-格局-導覽-項目-英文"
+                                >Select</span
+                            >
+                        </a>
+                        
+                        <a href="./selection.html" class="主體-格局-導覽-項目">
+                            項目切換 <span class="主體-格局-導覽-項目-英文"
+                                >Selection</span
+                            >
+                        </a>
+                        
+                        <a href="./switch.html" class="主體-格局-導覽-項目">
+                            指撥開關 <span class="主體-格局-導覽-項目-英文"
+                                >Switch</span
+                            >
+                        </a>
+                         
+                        <div class="主體-格局-導覽-標題">文字與段落</div>
+                        
+                        <a href="./divider.html" class="主體-格局-導覽-項目">
+                            分隔線 <span class="主體-格局-導覽-項目-英文"
+                                >Divider</span
+                            >
+                        </a>
+                        
+                        <a href="./header.html" class="主體-格局-導覽-項目">
+                            標題 <span class="主體-格局-導覽-項目-英文"
+                                >Header</span
+                            >
+                        </a>
+                        
+                        <a href="./mask.html" class="主體-格局-導覽-項目">
+                            內容遮罩 <span class="主體-格局-導覽-項目-英文"
+                                >Mask</span
+                            >
+                        </a>
+                        
+                        <a href="./quote.html" class="主體-格局-導覽-項目">
+                            引言 <span class="主體-格局-導覽-項目-英文"
+                                >Quote</span
+                            >
+                        </a>
+                        
+                        <a href="./segment.html" class="主體-格局-導覽-項目">
+                            片段 <span class="主體-格局-導覽-項目-英文"
+                                >Segment</span
+                            >
+                        </a>
+                        
+                        <a href="./text.html" class="主體-格局-導覽-項目">
+                            文字 <span class="主體-格局-導覽-項目-英文"
+                                >Text</span
+                            >
+                        </a>
+                         
+                        <div class="主體-格局-導覽-標題">視覺回饋</div>
+                        
+                        <a href="./blankslate.html" class="主體-格局-導覽-項目">
+                            空白看板 <span class="主體-格局-導覽-項目-英文"
+                                >Blankslate</span
+                            >
+                        </a>
+                        
+                        <a href="./gauge.html" class="主體-格局-導覽-項目">
+                            圓形量測計 <span class="主體-格局-導覽-項目-英文"
+                                >Gauge</span
+                            >
+                        </a>
+                        
+                        <a href="./loading.html" class="主體-格局-導覽-項目">
+                            讀取狀態 <span class="主體-格局-導覽-項目-英文"
+                                >Loading</span
+                            >
+                        </a>
+                        
+                        <a href="./modal.html" class="主體-格局-導覽-項目">
+                            快顯視窗 <span class="主體-格局-導覽-項目-英文"
+                                >Modal</span
+                            >
+                        </a>
+                        
+                        <a href="./notice.html" class="主體-格局-導覽-項目">
+                            提示訊息 <span class="主體-格局-導覽-項目-英文"
+                                >Notice</span
+                            >
+                        </a>
+                        
+                        <a href="./placeholder.html" class="主體-格局-導覽-項目">
+                            預置內容 <span class="主體-格局-導覽-項目-英文"
+                                >Placeholder</span
+                            >
+                        </a>
+                        
+                        <a href="./procedure.html" class="主體-格局-導覽-項目">
+                            步驟指示器 <span class="主體-格局-導覽-項目-英文"
+                                >Procedure</span
+                            >
+                        </a>
+                        
+                        <a href="./progress.html" class="主體-格局-導覽-項目">
+                            進度條 <span class="主體-格局-導覽-項目-英文"
+                                >Progress</span
+                            >
+                        </a>
+                        
+                        <a href="./snackbar.html" class="主體-格局-導覽-項目">
+                            簡短通知 <span class="主體-格局-導覽-項目-英文"
+                                >Snackbar</span
+                            >
+                        </a>
+                         
+                        <div class="主體-格局-導覽-標題">多媒體與圖示</div>
+                        
+                        <a href="./avatar.html" class="主體-格局-導覽-項目">
+                            大頭貼 <span class="主體-格局-導覽-項目-英文"
+                                >Avatar</span
+                            >
+                        </a>
+                        
+                        <a href="./flag.html" class="主體-格局-導覽-項目">
+                            國家旗幟 <span class="主體-格局-導覽-項目-英文"
+                                >Flag</span
+                            >
+                        </a>
+                        
+                        <a href="./icon.html" class="主體-格局-導覽-項目">
+                            圖示 <span class="主體-格局-導覽-項目-英文"
+                                >Icon</span
+                            >
+                        </a>
+                        
+                        <a href="./iconset.html" class="主體-格局-導覽-項目">
+                            圖示項目 <span class="主體-格局-導覽-項目-英文"
+                                >Iconset</span
+                            >
+                        </a>
+                        
+                        <a href="./image.html" class="主體-格局-導覽-項目">
+                            多媒體圖片 <span class="主體-格局-導覽-項目-英文"
+                                >Image</span
+                            >
+                        </a>
+                        
+                        <a href="./imageset.html" class="主體-格局-導覽-項目">
+                            圖片組合 <span class="主體-格局-導覽-項目-英文"
+                                >Imageset</span
+                            >
+                        </a>
+                         
+                        <div class="主體-格局-導覽-標題">資料顯示</div>
+                        
+                        <a href="./accordion.html" class="主體-格局-導覽-項目">
+                            可折疊內容 <span class="主體-格局-導覽-項目-英文"
+                                >Accordion</span
+                            >
+                        </a>
+                        
+                        <a href="./badge.html" class="主體-格局-導覽-項目">
+                            計數徽章 <span class="主體-格局-導覽-項目-英文"
+                                >Badge</span
+                            >
+                        </a>
+                        
+                        <a href="./checklist.html" class="主體-格局-導覽-項目">
+                            檢查清單 <span class="主體-格局-導覽-項目-英文"
+                                >Checklist</span
+                            >
+                        </a>
+                        
+                        <a href="./chip.html" class="主體-格局-導覽-項目">
+                            關聯標籤 <span class="主體-格局-導覽-項目-英文"
+                                >Chip</span
+                            >
+                        </a>
+                        
+                        <a href="./close.html" class="主體-格局-導覽-項目">
+                            關閉按鈕 <span class="主體-格局-導覽-項目-英文"
+                                >Close</span
+                            >
+                        </a>
+                        
+                        <a href="./conversation.html" class="主體-格局-導覽-項目">
+                            交談會話 <span class="主體-格局-導覽-項目-英文"
+                                >Conversation</span
+                            >
+                        </a>
+                        
+                        <a href="./list.html" class="主體-格局-導覽-項目">
+                            清單 <span class="主體-格局-導覽-項目-英文"
+                                >List</span
+                            >
+                        </a>
+                        
+                        <a href="./meta.html" class="主體-格局-導覽-項目">
+                            中繼資料 <span class="主體-格局-導覽-項目-英文"
+                                >Meta</span
+                            >
+                        </a>
+                        
+                        <a href="./rating.html" class="主體-格局-導覽-項目">
+                            評分 <span class="主體-格局-導覽-項目-英文"
+                                >Rating</span
+                            >
+                        </a>
+                        
+                        <a href="./statistic.html" class="主體-格局-導覽-項目">
+                            統計數據 <span class="主體-格局-導覽-項目-英文"
+                                >Statistic</span
+                            >
+                        </a>
+                        
+                        <a href="./table.html" class="主體-格局-導覽-項目">
+                            表格 <span class="主體-格局-導覽-項目-英文"
+                                >Table</span
+                            >
+                        </a>
+                        
+                        <a href="./timeline.html" class="主體-格局-導覽-項目">
+                            時間軸 <span class="主體-格局-導覽-項目-英文"
+                                >Timeline</span
+                            >
+                        </a>
+                         
+                        <div class="主體-格局-導覽-標題">導覽</div>
+                        
+                        <a href="./breadcrumb.html" class="主體-格局-導覽-項目">
+                            導覽標記 <span class="主體-格局-導覽-項目-英文"
+                                >Breadcrumb</span
+                            >
+                        </a>
+                        
+                        <a href="./dropdown.html" class="主體-格局-導覽-項目">
+                            彈出式選單 <span class="主體-格局-導覽-項目-英文"
+                                >Dropdown</span
+                            >
+                        </a>
+                        
+                        <a href="./menu.html" class="主體-格局-導覽-項目">
+                            選單 <span class="主體-格局-導覽-項目-英文"
+                                >Menu</span
+                            >
+                        </a>
+                        
+                        <a href="./pagination.html" class="主體-格局-導覽-項目">
+                            頁數導覽列 <span class="主體-格局-導覽-項目-英文"
+                                >Pagination</span
+                            >
+                        </a>
+                        
+                        <a href="./tab.html" class="主體-格局-導覽-項目">
+                            分頁籤 <span class="主體-格局-導覽-項目-英文"
+                                >Tab</span
+                            >
+                        </a>
+                         
+                        <div class="主體-格局-導覽-標題">應用程式</div>
+                        
+                        <a href="./app-drawer.html" class="主體-格局-導覽-項目">
+                            邊緣抽屜 <span class="主體-格局-導覽-項目-英文"
+                                >App Drawer</span
+                            >
+                        </a>
+                        
+                        <a href="./app-layout.html" class="主體-格局-導覽-項目">
+                            格局劃分 <span class="主體-格局-導覽-項目-英文"
+                                >App Layout</span
+                            >
+                        </a>
+                        
+                        <a href="./app-navbar.html" class="主體-格局-導覽-項目">
+                            導航列 <span class="主體-格局-導覽-項目-英文"
+                                >App Navbar</span
+                            >
+                        </a>
+                        
+                        <a href="./app-sidebar.html" class="主體-格局-導覽-項目">
+                            側邊欄 <span class="主體-格局-導覽-項目-英文"
+                                >App Sidebar</span
+                            >
+                        </a>
+                        
+                        <a href="./app-topbar.html" class="主體-格局-導覽-項目">
+                            頂部列 <span class="主體-格局-導覽-項目-英文"
+                                >App Topbar</span
+                            >
+                        </a>
+                         
+                        <div class="主體-格局-導覽-標題">JavaScript 模組</div>
+                        
+                        <a href="./module-dropdown.html" class="主體-格局-導覽-項目">
+                            選單模組 <span class="主體-格局-導覽-項目-英文"
+                                >Dropdown</span
+                            ><span class="主體-格局-導覽-項目-模組">JS</span>
+                        </a>
+                        
+                        <a href="./module-tooltip.html" class="主體-格局-導覽-項目">
+                            工具提示 <span class="主體-格局-導覽-項目-英文"
+                                >Tooltip</span
+                            ><span class="主體-格局-導覽-項目-模組">JS</span>
+                        </a>
+                        
+                        <a href="./module-tab.html" class="主體-格局-導覽-項目">
+                            分頁模組 <span class="主體-格局-導覽-項目-英文"
+                                >Tab</span
+                            ><span class="主體-格局-導覽-項目-模組">JS</span>
+                        </a>
+                        
+                        <a href="./module-toggle.html" class="主體-格局-導覽-項目">
+                            樣式切換 <span class="主體-格局-導覽-項目-英文"
+                                >Toggle</span
+                            ><span class="主體-格局-導覽-項目-模組">JS</span>
+                        </a>
+                         
+                        <div class="主體-格局-導覽-關閉按鈕">
+                            <span class="ts-icon is-circle-xmark-icon"></span>
+                        </div>
+                    </div>
+                    <!-- / 側邊導覽 -->
+
+                    <!-- 遮罩 -->
+                    <div class="主體-格局-遮罩"></div>
+                    <!-- / 遮罩 -->
+
+                    <main class="主體-格局-內容">
+                        <!-- 文章工具列 -->
+                        
+                        <div class="主體-格局-內容-工具列">
+                            <div class="主體-格局-內容-工具列-項目 主體-格局-內容-工具列-項目_標題">
+                                範例
+                                <!-- 標籤連結
+                                
+                                 / 標籤連結 -->
+                            </div>
+
+                            <!-- 明暗色系 -->
+                            <div class="主體-格局-內容-工具列-項目">
+                                <div class="主體-格局-內容-工具列-項目-標籤">明暗色系</div>
+                                <div class="主體-格局-內容-工具列-項目-下拉式選單">
+                                    <div class="主體-格局-內容-工具列-項目-下拉式選單-文字">
+                                        <span class="主體-格局-內容-工具列-項目-下拉式選單-文字-標籤">遵循使用者設定</span>
+                                        <span class="主體-格局-內容-工具列-項目-下拉式選單-文字-圖示 ts-icon is-chevron-down-icon"></span>
+                                    </div>
+                                    <div class="主體-格局-內容-工具列-項目-下拉式選單-群組">
+                                        <div
+                                            data-value="is-light,is-dark"
+                                            class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目 主體-格局-內容-工具列-項目-下拉式選單-群組-項目_啟用的"
+                                        >
+                                            遵循使用者設定
+                                        </div>
+                                        <div data-value="is-dark;is-light" class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目">亮色</div>
+                                        <div data-value="is-light;is-dark" class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目">暗色</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / 明暗色系 -->
+
+                            <!-- 縮放項目 -->
+                            <div class="主體-格局-內容-工具列-項目">
+                                <div class="主體-格局-內容-工具列-項目-標籤">縮放</div>
+                                <div class="主體-格局-內容-工具列-項目-下拉式選單">
+                                    <div class="主體-格局-內容-工具列-項目-下拉式選單-文字">
+                                        <span class="主體-格局-內容-工具列-項目-下拉式選單-文字-標籤">標準</span>
+                                        <span class="主體-格局-內容-工具列-項目-下拉式選單-文字-圖示 ts-icon is-chevron-down-icon"></span>
+                                    </div>
+                                    <div class="主體-格局-內容-工具列-項目-下拉式選單-群組">
+                                        <div data-value="is-small,is-medium;is-large" class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目">
+                                            放大
+                                        </div>
+                                        <div
+                                            data-value="is-large,is-small;is-medium"
+                                            class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目 主體-格局-內容-工具列-項目-下拉式選單-群組-項目_啟用的"
+                                        >
+                                            標準
+                                        </div>
+                                        <div data-value="is-large,is-medium;is-small" class="主體-格局-內容-工具列-項目-下拉式選單-群組-項目">
+                                            縮小
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / 縮放項目 -->
+                        </div>
+
+                        <!-- 主要範例 -->
+                        <div class="主體-格局-內容-主要範例">
+                            <div class="主體-格局-內容-主要範例-實際效果 ">
+                                <div class="主體-格局-內容-主要範例-實際效果-置中容器"><div class="ts-box">
+    <div class="ts-image">
+        <img alt='不重要預置圖片，僅作為範例用' src="./assets/images/16-9.png">
+    </div>
+    <div class="ts-content">
+        <div class="ts-header is-heavy">好吃的千層蛋糕！</div>
+        <p>在 5 月之前於線上網路門市訂購，現在還特別加贈限量環保袋。</p>
+    </div>
+</div>
+</div>
+                            </div>
+                            <div class="主體-格局-內容-主要範例-程式碼"><pre><code class="hljs">&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"<mark>ts-box</mark>"</span>&gt;
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<a href="./image.html">ts-image</a>"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"image.png"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<a href="./header.html">ts-header</a> is-heavy"</span>&gt;</span>好吃的千層蛋糕！<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>在 5 月之前於線上網路門市訂購，現在還特別加贈限量環保袋。<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></code></pre>
+</div>
+                        </div>
+                        <!-- / 主要範例 -->
+                        
+                        <!-- / 文章工具列 -->
+
+                        <!-- 概要 -->
+                        
+                        <div class="主體-格局-內容-標題 主體-格局-內容-標題_章節">概要</div>
+                        <div class="主體-格局-內容-文字"><p>箱型容器看起來有點像是一張卡片，但箱型容器並沒有內距。這就是為什麼通常箱型容器會與<a href="./content.html">內容區塊</a>、<a href="./table.html">表格</a>、<a href="./image.html">圖片</a>這種貼邊元素一起使用。</p>
+
+<p>由於容器沒有預設內距，這讓多個元件搭配上使用更容易。如果元件只有純文字，正常情況下則可以直接使用<a href="./segment.html">片段</a>則會讓結構較為單純。</p>
+</div>
+                        
+                        <!-- / 概要 -->
+
+                        <!-- 章節 -->
+                        
+                        <div class="主體-格局-內容-標題 主體-格局-內容-標題_章節">內容</div>
+
+                        
+
+                        <!-- 國家旗幟 -->
+                        
+                        <!-- / 國家旗幟 -->
+
+                        <!-- 段落 -->
+                        
+                        <div class="主體-格局-內容-單個範例">
+                            <a class="主體-格局-內容-單個範例-錨點" id="symbol"></a>
+                            <div class="主體-格局-內容-單個範例-文字-標題 主體-格局-內容-單個範例-文字-標題_段落">
+                                <a href="#symbol" class="主體-格局-內容-單個範例-文字-標題-連結">象徵圖示</a>
+                                
+                                <button class="主體-格局-內容-單個範例-文字-標題-切換原始碼"><span class="ts-icon is-code-icon"></span> 原始碼</button>
+                                
+                            </div>
+                            <div class="主體-格局-內容-單個範例-文字"><p>箱型容器裡可以在其角落擺放一個圖示作為其象徵。當容器的高度太矮時，其象徵圖示會被裁切。</p>
+</div>
+
+                            <!-- 範例與程式碼 -->
+                            
+                            <div class="主體-格局-內容-單個範例-範例">
+                                <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-box">
+    <div class="ts-content">
+        <p>任何已發布或是計畫中之產品及服務，皆不得用來刻意偏頗大眾想法、喜好、甚至混淆視聽，且該產品及服務不得擁有自我立場。</p>
+    </div>
+    <div class="symbol">
+        <span class="ts-icon is-circle-exclamation-icon"></span>
+    </div>
+</div>
+</div>
+                                <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-box"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;
+        &lt;p&gt;任何已發布或是計畫中之產品及服務，皆不得用來刻意偏頗大眾想法、喜好、甚至混淆視聽，且該產品及服務不得擁有自我立場。&lt;/p&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>symbol</mark>"</span>&gt;
+        &lt;span <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./icon.html">ts-icon</a> is-circle-exclamation-icon"</span>&gt;&lt;/span&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
+</div>
+                            </div>
+                            
+                            <!-- / 範例與程式碼 -->
+
+                            <!-- 附帶程式片段 -->
+                            
+                            <!-- / 附帶程式片段 -->
+
+                            <!-- 圖示組 -->
+                            
+                            <!-- / 圖示組 -->
+                        </div>
+                        
+                        <!-- / 段落 -->
+                        
+                        <div class="主體-格局-內容-標題 主體-格局-內容-標題_章節">外觀</div>
+
+                        
+
+                        <!-- 國家旗幟 -->
+                        
+                        <!-- / 國家旗幟 -->
+
+                        <!-- 段落 -->
+                        
+                        <div class="主體-格局-內容-單個範例">
+                            <a class="主體-格局-內容-單個範例-錨點" id="horizontal"></a>
+                            <div class="主體-格局-內容-單個範例-文字-標題 主體-格局-內容-單個範例-文字-標題_段落">
+                                <a href="#horizontal" class="主體-格局-內容-單個範例-文字-標題-連結">水平的</a>
+                                
+                                <button class="主體-格局-內容-單個範例-文字-標題-切換原始碼"><span class="ts-icon is-code-icon"></span> 原始碼</button>
+                                
+                            </div>
+                            <div class="主體-格局-內容-單個範例-文字"><p>容器裡的元素排列預設為上下垂直，但若排版需要則可以將其改為左右水平排列。</p>
+</div>
+
+                            <!-- 範例與程式碼 -->
+                            
+                            <div class="主體-格局-內容-單個範例-範例">
+                                <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-box is-horizontal">
+    <div class="ts-image is-covered">
+        <img alt='不重要預置圖片，僅作為範例用' style="width: 90px; height: 100%;" src="./assets/images/1-1.png">
+    </div>
+    <div class="ts-content">
+        <div class="ts-header">
+            Zedd - Papercut (Audio) ft. Troye Sivan
+        </div>
+        <p>Get "True Colors" on iTunes: http://smarturl.it/ZeddTrueColors</p>
+    </div>
+</div>
+</div>
+                                <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts-box <mark>is-horizontal</mark>"</span>&gt;
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<a href="./image.html">ts-image</a> is-covered"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">style</span>=<span class="hljs-string">"width: 90px; height: 100%;"</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"image.png"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<a href="./header.html">ts-header</a>"</span>&gt;</span>
+            Zedd - Papercut (Audio) ft. Troye Sivan
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Get "True Colors" on iTunes: http://smarturl.it/ZeddTrueColors<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span></code></pre>
+</div>
+                            </div>
+                            
+                            <!-- / 範例與程式碼 -->
+
+                            <!-- 附帶程式片段 -->
+                            
+                            <!-- / 附帶程式片段 -->
+
+                            <!-- 圖示組 -->
+                            
+                            <!-- / 圖示組 -->
+                        </div>
+                        
+                        <div class="主體-格局-內容-單個範例">
+                            <a class="主體-格局-內容-單個範例-錨點" id="collapsed"></a>
+                            <div class="主體-格局-內容-單個範例-文字-標題 主體-格局-內容-單個範例-文字-標題_段落">
+                                <a href="#collapsed" class="主體-格局-內容-單個範例-文字-標題-連結">最小寬度的</a>
+                                
+                                <button class="主體-格局-內容-單個範例-文字-標題-切換原始碼"><span class="ts-icon is-code-icon"></span> 原始碼</button>
+                                
+                            </div>
+                            <div class="主體-格局-內容-單個範例-文字"><p>由於此元件預設為流動寬度，若希望寬度以內容為主，則可以將其設為最小寬度。</p>
+</div>
+
+                            <!-- 範例與程式碼 -->
+                            
+                            <div class="主體-格局-內容-單個範例-範例">
+                                <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-box is-collapsed">
+    <div class="ts-content">
+        <p>這是一個來自台灣的社群網站，在這裡我們並沒有「讚」或是「已讀」。</p>
+    </div>
+</div>
+</div>
+                                <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;div <span class="hljs-class"><span class="hljs-keyword">class</span></span>=<span class="hljs-string">"ts-box <mark>is-collapsed</mark>"</span>&gt;
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>這是一個來自台灣的社群網站，在這裡我們並沒有「讚」或是「已讀」。<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+&lt;<span class="hljs-regexp">/div&gt;</span></code></pre>
+</div>
+                            </div>
+                            
+                            <!-- / 範例與程式碼 -->
+
+                            <!-- 附帶程式片段 -->
+                            
+                            <!-- / 附帶程式片段 -->
+
+                            <!-- 圖示組 -->
+                            
+                            <!-- / 圖示組 -->
+                        </div>
+                        
+                        <div class="主體-格局-內容-單個範例">
+                            <a class="主體-格局-內容-單個範例-錨點" id="indicated"></a>
+                            <div class="主體-格局-內容-單個範例-文字-標題 主體-格局-內容-單個範例-文字-標題_段落">
+                                <a href="#indicated" class="主體-格局-內容-單個範例-文字-標題-連結">標記的</a>
+                                
+                                <button class="主體-格局-內容-單個範例-文字-標題-切換原始碼"><span class="ts-icon is-code-icon"></span> 原始碼</button>
+                                
+                            </div>
+                            <div class="主體-格局-內容-單個範例-文字"><p>讓容器的某個邊緣有特別標記的樣式。</p>
+</div>
+
+                            <!-- 範例與程式碼 -->
+                            
+                            <div class="主體-格局-內容-單個範例-範例">
+                                <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-box is-top-indicated">
+    <div class="ts-content">上部標記</div>
+</div>
+<div class="ts-space"></div>
+<div class="ts-box is-bottom-indicated">
+    <div class="ts-content">下部標記</div>
+</div>
+<div class="ts-space"></div>
+<div class="ts-box is-left-indicated">
+    <div class="ts-content">左邊標記</div>
+</div>
+<div class="ts-space"></div>
+<div class="ts-box is-right-indicated">
+    <div class="ts-content">右部標記</div>
+</div>
+</div>
+                                <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-box <mark>is-top-indicated</mark>"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;上部標記&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-box <mark>is-bottom-indicated</mark>"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;下部標記&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-box <mark>is-left-indicated</mark>"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;左邊標記&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-box <mark>is-right-indicated</mark>"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;右部標記&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
+</div>
+                            </div>
+                            
+                            <!-- / 範例與程式碼 -->
+
+                            <!-- 附帶程式片段 -->
+                            
+                            <!-- / 附帶程式片段 -->
+
+                            <!-- 圖示組 -->
+                            
+                            <!-- / 圖示組 -->
+                        </div>
+                        
+                        <div class="主體-格局-內容-單個範例">
+                            <a class="主體-格局-內容-單個範例-錨點" id="emphasises"></a>
+                            <div class="主體-格局-內容-單個範例-文字-標題 主體-格局-內容-單個範例-文字-標題_段落">
+                                <a href="#emphasises" class="主體-格局-內容-單個範例-文字-標題-連結">語意</a>
+                                
+                                <button class="主體-格局-內容-單個範例-文字-標題-切換原始碼"><span class="ts-icon is-code-icon"></span> 原始碼</button>
+                                
+                            </div>
+                            <div class="主體-格局-內容-單個範例-文字"><p>讓容器擁有邊緣標記的同時，更改其標記顏色語意。這可以用來強調這個容器呈現的內容是否危險、安全或是需讓人注意的。</p>
+</div>
+
+                            <!-- 範例與程式碼 -->
+                            
+                            <div class="主體-格局-內容-單個範例-範例">
+                                <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-box is-negative is-top-indicated">
+    <div class="ts-content">負面的</div>
+</div>
+<div class="ts-space"></div>
+<div class="ts-box is-positive is-top-indicated">
+    <div class="ts-content">正面的</div>
+</div>
+<div class="ts-space"></div>
+<div class="ts-box is-warning is-top-indicated">
+    <div class="ts-content">警告的</div>
+</div>
+</div>
+                                <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-box <mark>is-negative</mark> is-top-indicated"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;負面的&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-box <mark>is-positive</mark> is-top-indicated"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;正面的&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-box <mark>is-warning</mark> is-top-indicated"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;警告的&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
+</div>
+                            </div>
+                            
+                            <!-- / 範例與程式碼 -->
+
+                            <!-- 附帶程式片段 -->
+                            
+                            <!-- / 附帶程式片段 -->
+
+                            <!-- 圖示組 -->
+                            
+                            <!-- / 圖示組 -->
+                        </div>
+                        
+                        <div class="主體-格局-內容-單個範例">
+                            <a class="主體-格局-內容-單個範例-錨點" id="elevated"></a>
+                            <div class="主體-格局-內容-單個範例-文字-標題 主體-格局-內容-單個範例-文字-標題_段落">
+                                <a href="#elevated" class="主體-格局-內容-單個範例-文字-標題-連結">抬升的</a>
+                                
+                                <button class="主體-格局-內容-單個範例-文字-標題-切換原始碼"><span class="ts-icon is-code-icon"></span> 原始碼</button>
+                                
+                            </div>
+                            <div class="主體-格局-內容-單個範例-文字"><p>透過陰影讓容器看起來有浮起的感覺，如果有一個需要備受矚目的中心內容（如：登入表單）這會是個好選擇。</p>
+</div>
+
+                            <!-- 範例與程式碼 -->
+                            
+                            <div class="主體-格局-內容-單個範例-範例">
+                                <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-box is-elevated">
+    <div class="ts-content">抬升的</div>
+</div>
+<div class="ts-space"></div>
+<div class="ts-box is-very-elevated">
+    <div class="ts-content">非常抬升的</div>
+</div>
+</div>
+                                <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-box <mark>is-elevated</mark>"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;抬升的&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-box <mark>is-very-elevated</mark>"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;非常抬升的&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
+</div>
+                            </div>
+                            
+                            <!-- / 範例與程式碼 -->
+
+                            <!-- 附帶程式片段 -->
+                            
+                            <!-- / 附帶程式片段 -->
+
+                            <!-- 圖示組 -->
+                            
+                            <!-- / 圖示組 -->
+                        </div>
+                        
+                        <div class="主體-格局-內容-單個範例">
+                            <a class="主體-格局-內容-單個範例-錨點" id="squared"></a>
+                            <div class="主體-格局-內容-單個範例-文字-標題 主體-格局-內容-單個範例-文字-標題_段落">
+                                <a href="#squared" class="主體-格局-內容-單個範例-文字-標題-連結">直角的</a>
+                                
+                                <button class="主體-格局-內容-單個範例-文字-標題-切換原始碼"><span class="ts-icon is-code-icon"></span> 原始碼</button>
+                                
+                            </div>
+                            <div class="主體-格局-內容-單個範例-文字"><p>讓邊角以直角呈現而不再圓潤。</p>
+</div>
+
+                            <!-- 範例與程式碼 -->
+                            
+                            <div class="主體-格局-內容-單個範例-範例">
+                                <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-box is-squared">
+    <div class="ts-content">直角箱型容器</div>
+</div>
+</div>
+                                <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-box <mark>is-squared</mark>"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;直角箱型容器&lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
+</div>
+                            </div>
+                            
+                            <!-- / 範例與程式碼 -->
+
+                            <!-- 附帶程式片段 -->
+                            
+                            <!-- / 附帶程式片段 -->
+
+                            <!-- 圖示組 -->
+                            
+                            <!-- / 圖示組 -->
+                        </div>
+                        
+                        <div class="主體-格局-內容-單個範例">
+                            <a class="主體-格局-內容-單個範例-錨點" id="dashed"></a>
+                            <div class="主體-格局-內容-單個範例-文字-標題 主體-格局-內容-單個範例-文字-標題_段落">
+                                <a href="#dashed" class="主體-格局-內容-單個範例-文字-標題-連結">空虛的</a>
+                                
+                                <button class="主體-格局-內容-單個範例-文字-標題-切換原始碼"><span class="ts-icon is-code-icon"></span> 原始碼</button>
+                                
+                            </div>
+                            <div class="主體-格局-內容-單個範例-文字"><p>透過加粗虛線描繪外框，通常用以呈現空的區塊。</p>
+</div>
+
+                            <!-- 範例與程式碼 -->
+                            
+                            <div class="主體-格局-內容-單個範例-範例">
+                                <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-box is-hollowed">
+    <div class="ts-blankslate is-interactive">
+        <div class="header">上傳圖片或影音</div>
+        <div class="description">將圖片拖拉至此處進行上傳</div>
+    </div>
+</div>
+</div>
+                                <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"ts-box <mark>is-hollowed</mark>"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./blankslate.html">ts-blankslate</a> is-interactive"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"header"</span>&gt;上傳圖片或影音&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"description"</span>&gt;將圖片拖拉至此處進行上傳&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
+</div>
+                            </div>
+                            
+                            <!-- / 範例與程式碼 -->
+
+                            <!-- 附帶程式片段 -->
+                            
+                            <!-- / 附帶程式片段 -->
+
+                            <!-- 圖示組 -->
+                            
+                            <!-- / 圖示組 -->
+                        </div>
+                        
+                        <!-- / 段落 -->
+                        
+                        <div class="主體-格局-內容-標題 主體-格局-內容-標題_章節">組合應用</div>
+
+                        
+
+                        <!-- 國家旗幟 -->
+                        
+                        <!-- / 國家旗幟 -->
+
+                        <!-- 段落 -->
+                        
+                        <div class="主體-格局-內容-單個範例">
+                            <a class="主體-格局-內容-單個範例-錨點" id="composition-information"></a>
+                            <div class="主體-格局-內容-單個範例-文字-標題 主體-格局-內容-單個範例-文字-標題_段落">
+                                <a href="#composition-information" class="主體-格局-內容-單個範例-文字-標題-連結">資訊概要</a>
+                                
+                                <button class="主體-格局-內容-單個範例-文字-標題-切換原始碼"><span class="ts-icon is-code-icon"></span> 原始碼</button>
+                                
+                            </div>
+                            <div class="主體-格局-內容-單個範例-文字"><p>透過搭配<a href="./grid.html">網格系統</a>、象徵圖示可以營造出系統儀表板頂部常有的統計數據概要資訊。</p>
+</div>
+
+                            <!-- 範例與程式碼 -->
+                            
+                            <div class="主體-格局-內容-單個範例-範例">
+                                <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-grid is-2-columns">
+    <div class="column">
+        <div class="ts-box">
+            <div class="ts-content">
+                <div class="ts-statistic">
+                    <div class="value">42,689</div>
+                    <div class="comparison is-increased">32</div>
+                </div>
+                本月拜訪次數
+            </div>
+            <div class="symbol">
+                <span class="ts-icon is-eye-icon"></span>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="ts-box">
+            <div class="ts-content">
+                <div class="ts-statistic">
+                    <div class="value">8,652</div>
+                    <div class="comparison is-increased">351</div>
+                </div>
+                總會員數
+            </div>
+            <div class="symbol">
+                <span class="ts-icon is-users-icon"></span>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+                                <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./grid.html">ts-grid</a> is-2-columns"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>ts-box</mark>"</span>&gt;
+            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;
+                &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./statistic.html">ts-statistic</a>"</span>&gt;
+                    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">42</span>,<span class="hljs-number">689</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+                    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comparison is-increased"</span>&gt;<span class="hljs-number">32</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+                &lt;/<span class="hljs-keyword">div</span>&gt;
+                本月拜訪次數
+            &lt;/<span class="hljs-keyword">div</span>&gt;
+            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"symbol"</span>&gt;
+                &lt;span <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./icon.html">ts-icon</a> is-eye-icon"</span>&gt;&lt;/span&gt;
+            &lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"column"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>ts-box</mark>"</span>&gt;
+            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a>"</span>&gt;
+                &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./statistic.html">ts-statistic</a>"</span>&gt;
+                    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"value"</span>&gt;<span class="hljs-number">8</span>,<span class="hljs-number">652</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+                    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"comparison is-increased"</span>&gt;<span class="hljs-number">351</span>&lt;/<span class="hljs-keyword">div</span>&gt;
+                &lt;/<span class="hljs-keyword">div</span>&gt;
+                總會員數
+            &lt;/<span class="hljs-keyword">div</span>&gt;
+            &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"symbol"</span>&gt;
+                &lt;span <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./icon.html">ts-icon</a> is-users-icon"</span>&gt;&lt;/span&gt;
+            &lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
+</div>
+                            </div>
+                            
+                            <!-- / 範例與程式碼 -->
+
+                            <!-- 附帶程式片段 -->
+                            
+                            <!-- / 附帶程式片段 -->
+
+                            <!-- 圖示組 -->
+                            
+                            <!-- / 圖示組 -->
+                        </div>
+                        
+                        <div class="主體-格局-內容-單個範例">
+                            <a class="主體-格局-內容-單個範例-錨點" id="composition-link-preview"></a>
+                            <div class="主體-格局-內容-單個範例-文字-標題 主體-格局-內容-單個範例-文字-標題_段落">
+                                <a href="#composition-link-preview" class="主體-格局-內容-單個範例-文字-標題-連結">連結預覽卡片</a>
+                                
+                                <button class="主體-格局-內容-單個範例-文字-標題-切換原始碼"><span class="ts-icon is-code-icon"></span> 原始碼</button>
+                                
+                            </div>
+                            <div class="主體-格局-內容-單個範例-文字"><p>在箱型容器裡擺放貼邊圖片和文字與標題就可以達成像 Facebook、Twitter 那樣的連結預覽卡片。</p>
+</div>
+
+                            <!-- 範例與程式碼 -->
+                            
+                            <div class="主體-格局-內容-單個範例-範例">
+                                <div class="主體-格局-內容-單個範例-範例-實際效果"><div class="ts-box" style="max-width: 360px">
+    <div class="ts-image">
+        <img alt='不重要預置圖片，僅作為範例用' src="./assets/images/16-9.png">
+    </div>
+    <div class="ts-content is-secondary">
+        <div class="ts-text is-description">yami.io/rog-and-hololive/</div>
+        <div class="ts-header is-truncated is-heavy">華碩自稱「中國公司」，中國分部發言誓死阻撓日本工商</div>
+        <div class="ts-text is-2-lines is-description">在微博上的《ROG玩家国度》小編便發文了，誓死也會阻止這次日本華碩與 Hololive 的工商互動。多數中國網友表示期待且「買不買華碩就看這次了」。</div>
+    </div>
+</div>
+</div>
+                                <div class="主體-格局-內容-單個範例-範例-程式碼"><pre><code class="hljs">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<mark>ts-box</mark>"</span> style=<span class="hljs-string">"max-width: 360px"</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./image.html">ts-image</a>"</span>&gt;
+        &lt;img src=<span class="hljs-string">"image.png"</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./content.html">ts-content</a> is-secondary"</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./text.html">ts-text</a> is-description"</span>&gt;yami.io/rog-<span class="hljs-keyword">and</span>-hololive/&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./header.html">ts-header</a> is-truncated is-heavy"</span>&gt;華碩自稱「中國公司」，中國分部發言誓死阻撓日本工商&lt;/<span class="hljs-keyword">div</span>&gt;
+        &lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">class</span>=<span class="hljs-string">"<a href="./text.html">ts-text</a> is-2-lines is-description"</span>&gt;在微博上的《ROG玩家国度》小編便發文了，誓死也會阻止這次日本華碩與 Hololive 的工商互動。多數中國網友表示期待且「買不買華碩就看這次了」。&lt;/<span class="hljs-keyword">div</span>&gt;
+    &lt;/<span class="hljs-keyword">div</span>&gt;
+&lt;/<span class="hljs-keyword">div</span>&gt;</code></pre>
+</div>
+                            </div>
+                            
+                            <!-- / 範例與程式碼 -->
+
+                            <!-- 附帶程式片段 -->
+                            
+                            <!-- / 附帶程式片段 -->
+
+                            <!-- 圖示組 -->
+                            
+                            <!-- / 圖示組 -->
+                        </div>
+                        
+                        <!-- / 段落 -->
+                        
+                        <!-- / 章節 -->
+
+                        <!-- 變數屬性 -->
+                        
+                        <!-- / 變數屬性 -->
+
+                        <!-- 額外連結 -->
+                        
+                        <!-- / 額外連結 -->
+
+                        
+                        <div class="主體-格局-內容-相關元件">
+                            <div class="主體-格局-內容-相關元件-標題">在尋找相似的元件嗎？</div>
+                            <ul class="主體-格局-內容-相關元件-清單">
+                                
+                                <li class="主體-格局-內容-相關元件-清單-單個項目">
+                                    <a class="主體-格局-內容-相關元件-清單-單個項目-連結" href="segment.html">片段</a>
+                                </li>
+                                
+                                <li class="主體-格局-內容-相關元件-清單-單個項目">
+                                    <a class="主體-格局-內容-相關元件-清單-單個項目-連結" href="content.html">內容區塊</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                        
+                    </main>
+
+                    <!-- 側邊索引 -->
+                    <div class="主體-格局-索引">
+                        
+                        <div class="主體-格局-索引-標題">內容</div>
+                        <div class="主體-格局-索引-清單">
+                            
+                            <a class="主體-格局-索引-清單-項目" href="#symbol">
+                                象徵圖示 <span class="主體-格局-索引-清單-項目-英文">symbol</span>
+                            </a>
+                            
+                        </div>
+                        
+                        <div class="主體-格局-索引-標題">外觀</div>
+                        <div class="主體-格局-索引-清單">
+                            
+                            <a class="主體-格局-索引-清單-項目" href="#horizontal">
+                                水平的 <span class="主體-格局-索引-清單-項目-英文">is-horizontal</span>
+                            </a>
+                            
+                            <a class="主體-格局-索引-清單-項目" href="#collapsed">
+                                最小寬度的 <span class="主體-格局-索引-清單-項目-英文">is-collapsed</span>
+                            </a>
+                            
+                            <a class="主體-格局-索引-清單-項目" href="#indicated">
+                                標記的 <span class="主體-格局-索引-清單-項目-英文">is-top-indicated</span>
+                            </a>
+                            
+                            <a class="主體-格局-索引-清單-項目" href="#emphasises">
+                                語意 <span class="主體-格局-索引-清單-項目-英文">is-negative</span>
+                            </a>
+                            
+                            <a class="主體-格局-索引-清單-項目" href="#elevated">
+                                抬升的 <span class="主體-格局-索引-清單-項目-英文">is-elevated</span>
+                            </a>
+                            
+                            <a class="主體-格局-索引-清單-項目" href="#squared">
+                                直角的 <span class="主體-格局-索引-清單-項目-英文">is-squared</span>
+                            </a>
+                            
+                            <a class="主體-格局-索引-清單-項目" href="#dashed">
+                                空虛的 <span class="主體-格局-索引-清單-項目-英文">is-hollowed</span>
+                            </a>
+                            
+                        </div>
+                        
+                        <div class="主體-格局-索引-標題">組合應用</div>
+                        <div class="主體-格局-索引-清單">
+                            
+                            <a class="主體-格局-索引-清單-項目" href="#composition-information">
+                                資訊概要 <span class="主體-格局-索引-清單-項目-英文">ts-box</span>
+                            </a>
+                            
+                            <a class="主體-格局-索引-清單-項目" href="#composition-link-preview">
+                                連結預覽卡片 <span class="主體-格局-索引-清單-項目-英文">ts-box</span>
+                            </a>
+                            
+                        </div>
+                        
+                        <button class="主體-格局-索引-回到頂部"><span class="ts-icon is-arrow-up-icon"></span> 回到頂部</button>
+                    </div>
+                    <!-- / 側邊索引 -->
+                </div>
+            </div>
+        </div>
+
+        <div class="頁腳">
+            <div class="界限容器">
+                <div class="頁腳-導航列">
+                    <button class="頁腳-導航列-項目 頁腳-導航列-項目_回到頂部"><span class="ts-icon is-arrow-up-icon"></span> 回到頂部</button>
+                    <a class="頁腳-導航列-項目" href="https://github.com/teacat/tocas" target="_blank">GitHub</a>
+                    <a class="頁腳-導航列-項目" href="./getting-started.html">開始使用</a>
+                    <a class="頁腳-導航列-項目" href="./button.html">元件樣式</a>
+                    <a class="頁腳-導航列-項目" href="./examples.html">實際範例</a>
+                </div>
+                <div class="頁腳-格局">
+                    <div class="頁腳-格局-資訊">
+                        <div class="頁腳-格局-資訊-文字">由來自 <span class="ts-flag is-taiwan-flag is-small"></span> 台灣的 <a href="https://twitter.com/YamiOdymel" target="_blank">Yami Odymel</a> 所設計，當然還有<a href="https://github.com/teacat/tocas/graphs/contributors" target="_blank">貢獻者們</a>的愛心❤️。原始碼授權方式為 <a href="https://github.com/teacat/tocas/blob/master/LICENSE" target="_blank">MIT</a>，文件則為 <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh_TW" target="_blank">CC 0</a> 公眾領域。還請盡情地使用、分享或一同改進。Tocas UI 是<a href="https://caris.events" target="_blank">卡莉絲伊繁星</a>的設計語言，而卡莉絲伊繁星屬<a href="https://sorae.co" target="_blank">對空音商事</a>。</div>
+                        <div class="頁腳-格局-資訊-翻譯者">台灣正體語系協作者：<a href="https://twitter.com/YamiOdymel" target="_blank">Yami Odymel</a>、coin3x、<a href="https://www.sean.taipei/" target="_blank">Sea-n</a></div>
+                    </div>
+                    <div class="頁腳-格局-商標">
+                        <img class="頁腳-格局-商標-圖片" src="./assets/images/caris-events.svg" alt='擁有 Tocas UI 的所屬組織商標' />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

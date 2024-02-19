@@ -1,0 +1,215 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 內容區塊
+Description: 用以包覆內容的內距區塊。
+Intro: |
+    讓某個區塊帶有內距，這個元件很常與[卡片容器](./card.html)一同使用。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Card
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="{{ts-card}}">
+            <div class="[[ts-content]] is-dense {{has-dark}}">
+                透過 CSS Variable 取代 Sass 並設計一個臻至完美的動態色彩主題系統
+            </div>
+            <div class="[[ts-content]]">
+                色彩佈景系統在前端實作時常常都是個不小的問題，直到 Sass、Less 這種預先處理器的出現才解決了不少的麻煩，因為你能夠透過短短幾行程式碼就讓程式幫你自動處理顏色的部份，而這方面的教學在國外網站中也不是少數。
+            </div>
+        </div>
+
+Definitions:
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 啟用的
+            Anchor: Active
+            Description: 表示某個內容區塊被選中。
+            HTML: |
+                <div class="{{ts-card}}">
+                    <div class="ts-content is-dense">蘋果</div>
+                    <div class="ts-content [[is-active]] is-dense">菠羅</div>
+                    <div class="ts-content is-dense">拔鳳梨</div>
+                </div>
+
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 表示目前已不再提供可用的功能。
+            HTML: |
+                <div class="{{ts-card}}">
+                    <div class="ts-content is-dense">卡莉絲</div>
+                    <div class="ts-content [[is-disabled]] is-dense">雷莉亞</div>
+                    <div class="ts-content is-dense">依可諾爾</div>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 次要的
+            Anchor: Secondary
+            Description: 淡化的內容區塊會以較不顯眼的方式出現，通常用以呈現某個資訊概要或頁腳。
+            HTML: |
+                <div class="{{ts-card}}">
+                    <div class="ts-content">
+                        Event Store 是一個基於 CQRS 與 Event Sourcing 理念所衍生出來的新概念並由 C Sharp 撰寫。這是一個微服務事件儲藏中心，這可能很難懂，但別緊張，這些都會在本文中得到答案。
+                    </div>
+                    <div class="{{ts-divider}}"></div>
+                    <div class="ts-content [[is-secondary]] is-dense">
+                        <span class="{{ts-icon}} is-end-spaced is-eye-icon"></span> 6,439,852 觀看次數
+                    </div>
+                </div>
+
+          - Title: 非主要的
+            Anchor: Tertiary
+            Description: 更沈重的語氣讓使用者知道這不是內容主體，但可以作為概要矚目看板。
+            HTML: |
+                <div class="ts-content [[is-tertiary]] is-vertically-very-padded">
+                    <div class="{{ts-header}} is-large is-center-aligned">這個故事結束了</div>
+                    <div class="{{ts-text}} is-secondary is-center-aligned">所有人不是死亡就是離開了，也許有一天會有人替這個遺跡找到新的用處。</div>
+                </div>
+
+          - Title: 文字對齊
+            Anchor: Aligns
+            Description: 更改文字的對齊方式。
+            HTML: |
+                <div class="{{ts-card}}">
+                    <div class="ts-content [[is-start-aligned]]">
+                        置起始位置
+                    </div>
+                    <div class="ts-content [[is-center-aligned]]">
+                        我置中
+                    </div>
+                    <div class="ts-content [[is-end-aligned]]">
+                        置結束位置
+                    </div>
+                </div>
+
+          - Title: 可互動的
+            Anchor: Interactive
+            Description: 增加視覺效果令使用者能夠透過滑鼠、觸控得知這個區塊可以被點擊或是互動。
+            HTML: |
+                <div class="{{ts-card}}">
+                    <div class="ts-content [[is-interactive]] is-dense">
+                        <span class="{{ts-icon}} is-end-spaced is-download-icon"></span> 下載
+                    </div>
+                    <div class="ts-content [[is-interactive]] is-active is-dense">
+                        <span class="{{ts-icon}} is-end-spaced is-heart-icon"></span> 最愛
+                    </div>
+                    <div class="ts-content [[is-interactive]] is-dense">
+                        <span class="{{ts-icon}} is-end-spaced is-box-archive-icon"></span> 彙整
+                    </div>
+                </div>
+
+          - Title: 增加內距
+            Anchor: Padded
+            Description: 加大內容區塊的內距，適合用於排版。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="{{ts-card}}">
+                    <div class="ts-content [[is-very-padded]]">
+                        這個區塊的內距是原本的 3 倍。
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="{{ts-card}}">
+                    <div class="ts-content [[is-padded]]">
+                        這個區塊的內距是原本的 1.5 倍。
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="{{ts-card}}">
+                    <div class="ts-content [[is-horizontally-padded]]">
+                        僅有增加左右水平內距。
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="{{ts-card}}">
+                    <div class="ts-content [[is-vertically-padded]]">
+                        僅有增加上下垂直內距。
+                    </div>
+                </div>
+
+          - Title: 圓角的
+            Anchor: Rounded
+            Description: 使區塊本身的四個角落以圓角呈現，避免太過尖銳。
+            HTML: |
+                <div class="ts-content [[is-rounded]] is-tertiary">
+                    透過網路改變現實生活中的事件。比起創新我們更喜歡革新並找出大家真正所需。
+                </div>
+
+          - Title: 無內距
+            Anchor: Fitted
+            Description: 移除區塊的內距。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="{{ts-card}}">
+                    <div class="ts-content [[is-fitted]]">
+                        移除所有內距。
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="{{ts-card}}">
+                    <div class="ts-content [[is-horizontally-fitted]]">
+                        移除左右水平內距。
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="{{ts-card}}">
+                    <div class="ts-content [[is-vertically-fitted]]">
+                        移除上下垂直內距。
+                    </div>
+                </div>
+
+          - Title: 較密的
+            Anchor: Dense
+            Description: 變更元件的內距，令元素之間看起來更密集。
+            HTML: |
+                <div class="{{ts-card}}">
+                    <div class="ts-content [[is-dense]]">
+                        <div class="{{ts-header}}">圖像複用、反轉、鏡射：怎麼將遊戲壓縮在 40 KB 以下還同時保持關卡獨特性？</div>
+                        Micro Mages 為了保持關卡的獨特性，開發者還特別精心設計了一個「偏移索引」系統，而遊戲中的種種設計都值得令人仔細觀察一番，而這就成為 Micro Mages 對這款遊戲最直接的廣告賣點。
+                    </div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 暗色區塊
+            Anchor: Composition Dark
+            Description: 以暗色主題呈現某個特定區塊，檢視[主題色系](./colors.html)頁面以獲得更多資訊。
+            HTML: |
+                <div class="{{ts-card}}">
+                    <div class="ts-content is-dense [[{{has-dark}}]]">
+                        けものフレンズ
+                    </div>
+                    <div class="ts-content">
+                        Welcome to ようこそジャパリパーク！<br>
+                        今日もドッタンバッタン大騒ぎ
+                    </div>
+                </div>
+
+          - Title: 概要看板
+            Anchor: Composition Slate
+            Description: 在某些頁面的開頭上方可以擺放概要看板用來指示使用者目前頁面的用途。
+            HTML: |
+                <div class="[[ts-content]] is-tertiary is-vertically-very-padded">
+                    <div class="{{ts-header}} is-large">建立使用者</div>
+                    <div class="{{ts-text}} is-secondary">初始化一個使用者資料並授予登入權限。</div>
+                </div>

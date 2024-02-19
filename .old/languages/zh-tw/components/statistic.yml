@@ -1,0 +1,86 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 統計數據
+Description: 顯示分析數值與統計數字。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <div class="[[ts-statistic]]">
+            <div class="value">8,964</div>
+            <div class="comparison is-increased">32</div>
+        </div>
+
+Definitions:
+    - Title: 結構
+      Description:
+      Sections:
+          - Title: 數值
+            Anchor: Value
+            Description: 數值會以較大的字體呈現。
+            HTML: |
+                <div class="ts-statistic">
+                    <div class="[[value]]">19,293</div>
+                </div>
+
+          - Title: 比較數值
+            Anchor: Comparison
+            Description: 表示這個數據自上次以來的差別值。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-statistic">
+                    <div class="value">42,689</div>
+                    <div class="comparison [[is-increased]]">195</div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-statistic">
+                    <div class="value">1,998</div>
+                    <div class="comparison [[is-decreased]]">13</div>
+                </div>
+
+          - Title: 單位
+            Anchor: Unit
+            Description: 指出這個數據的單位為何。
+            HTML: |
+                <div class="ts-statistic">
+                    <div class="value">10,000</div>
+                    <div class="[[unit]]">次</div>
+                </div>
+
+          - Title: 圖示
+            Anchor: Icon
+            Description: 在數值旁擺放輔助用的圖示。
+            HTML: |
+                <div class="ts-statistic">
+                    <span class="[[{{ts-icon}}]] is-eye-icon"></span>
+                    <div class="value">30,000</div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 標籤文字
+            Anchor: Composition Label
+            Description: 使用統計數據時，通常會建議在其上、下方擺放文字元素表明這個數據是什麼。
+            HTML: |
+                <div class="[[{{ts-text}}]] is-label">下載次數</div>
+                <div class="ts-statistic">
+                    <div class="value">10,000</div>
+                    <div class="unit">次</div>
+                </div>

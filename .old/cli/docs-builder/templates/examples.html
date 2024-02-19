@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="{{ .Meta.Information.LanguageCode }}">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./assets/style.css" />
+        <link rel="stylesheet" href="./assets/highlight.css" />
+        <link rel="stylesheet" href="./assets/tocas/tocas.min.css" />
+        <link rel="stylesheet" href="./assets/examples.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+        <script src="./assets/script.js"></script>
+        <title>{{ .Title }} - Tocas UI</title>
+        <!--
+
+
+
+        ▄▄▄        ▄▄████▄
+      ▄█████▄    ▄██▀    ██
+      ▀█▄   ██▄ ██▀      ██
+       ▀██▄▄▄████   ▄▄▄██▀
+          ▀▀▀████▀▀▀▀▀
+             ██
+            ██          ▄█████▄       █████████████          ▄█             █▄
+           ██         ▄█▀     ▀█▄     ██         ██         ██▀█▄         ▄█▀
+           ██        ██         ██    ██         ██        ██  ▀██       ██▀
+           ██        ██         ██    ██         ██      ▄█▀     ██     ▀▀▀▀▀▀▀███
+           ██        ▀█▄       ▄█▀    ██         ██     ██▀       ▀█▄         ██▀
+            ██         ▀███████▀      █████████████    ███▄▄▄▄▄▄▄▄▄███       █▀
+
+
+
+            「你只能死一次，一定要死的轟轟烈烈。」
+
+            沒有人可以做一件事情直到永遠，
+            而一個人的生命也不是永生。
+
+            死亡給予了我們試著活下去的動力，
+            在那之前都應該竭盡所能的向著自己的夢邁進。
+
+            將自己的生命活得淋漓盡致才是最重要的；
+            不要將剛開始的序章放在頁尾。
+
+
+
+        -->
+        <meta name="description" content="{{ .Description }}" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="{{ .Title }} - Tocas UI" />
+        <meta name="twitter:description" content="{{ .Description }}" />
+        <meta name="twitter:image" content="https://v4.tocas-ui.com/{{ .Meta.Information.Path }}/assets/images/og.png" />
+        <meta property="og:title" content="{{ .Title }} - Tocas UI" />
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content="https://v4.tocas-ui.com/{{ .Meta.Information.Path }}/assets/images/og.png" />
+        <meta property="og:url" content="https://v4.tocas-ui.com/{{ .Meta.Information.Path }}/examples.html" />
+        <meta property="og:image:width" content="1280" />
+        <meta property="og:image:height" content="720" />
+        <meta property="og:description" content="{{ .Description }}" />
+    </head>
+    <body>
+        <div class="穹頂">
+            <div class="界限容器">
+                <div class="穹頂-導航列">
+                    <div class="穹頂-導航列-左側">
+                        <a class="穹頂-導航列-項目 穹頂-導航列-項目_主要" href="./index.html">Tocas UI</a>
+                        <a class="穹頂-導航列-項目" href="./getting-started.html">{{ "Navbar_GettingStarted" | i18n }}</a>
+                        <a class="穹頂-導航列-項目" href="./button.html">{{ "Navbar_Components" | i18n }}</a>
+                        <a class="穹頂-導航列-項目" href="./examples.html">{{ "Navbar_Examples" | i18n }}</a>
+                    </div>
+                    <div class="穹頂-導航列-右側">
+                        <div class="穹頂-導航列-項目 穹頂-導航列-項目_語系的">
+                            <span class="ts-flag is-{{ .Meta.Information.Flag }}-flag"></span> {{ .Meta.Information.Language }}
+                            <div class="穹頂-導航列-項目-語系下拉式選單">
+                                {{ range .Meta.GlobalInformations }}
+                                <a
+                                    class="穹頂-導航列-項目-語系下拉式選單-項目 {{ if eq $.Meta.Information.Path .Path }}穹頂-導航列-項目-語系下拉式選單-項目_啟用的{{end}}"
+                                    href="./../{{ .Path }}/examples.html"
+                                    ><span class="ts-flag is-{{ .Flag }}-flag"></span> {{ .Language }}</a
+                                >
+                                {{ end }}
+                            </div>
+                        </div>
+                        <a class="穹頂-導航列-項目" href="https://github.com/teacat/tocas" target="_blank"><span class="ts-icon is-github-icon"></span> GitHub</a>
+                    </div>
+                </div>
+                <div class="穹頂-導航列 穹頂-導航列_手機的">
+                    <div class="穹頂-導航列-左側">
+                        <a class="穹頂-導航列-項目 穹頂-導航列-項目_主要" href="./index.html">Tocas UI</a>
+                    </div>
+                    <div class="穹頂-導航列-右側">
+                        <div class="穹頂-導航列-項目 穹頂-導航列-項目_語系的">
+                            <span class="ts-flag is-{{ .Meta.Information.Flag }}-flag"></span> {{ .Meta.Information.Language }}
+                            <div class="穹頂-導航列-項目-語系下拉式選單">
+                                {{ range .Meta.GlobalInformations }}
+                                <a
+                                    class="穹頂-導航列-項目-語系下拉式選單-項目 {{ if eq $.Meta.Information.Path .Path }}穹頂-導航列-項目-語系下拉式選單-項目_啟用的{{end}}"
+                                    href="./../{{ .Path }}/examples.html"
+                                    ><span class="ts-flag is-{{ .Flag }}-flag"></span> {{ .Language }}</a
+                                >
+                                {{ end }}
+                            </div>
+                        </div>
+                        <!--<a class="穹頂-導航列-項目 穹頂-導航列-項目_選單按鈕" href="#!">
+                            <span class="ts-icon is-bars-icon"></span>
+                        </a>-->
+                    </div>
+                </div>
+                <div class="穹頂-標題">
+                    <h1 class="穹頂-標題-主要">{{ .Title }}</h1>
+                    <div class="穹頂-標題-說明">{{ .Description }}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="文件內容">
+            <div class="界限容器">
+                <div class="文件內容-電腦版設計">
+                    <div class="文件內容-電腦版設計-標題">{{ "Example_DesignedForDesktop" | i18n }}</div>
+                    <div class="文件內容-電腦版設計-內容">{{ "Example_DesignedForDesktop_Description" | i18n }}</div>
+                </div>
+
+                <div class="文件內容-範例清單">
+                    {{ range .Examples }}
+                    <div class="文件內容-範例清單-段落">
+                        <div class="文件內容-範例清單-段落-標題">{{ .Title }}</div>
+                        <div class="文件內容-範例清單-段落-說明">{{ .Description }}</div>
+                        <div class="文件內容-範例清單-段落-項目清單">
+                            {{ range .Items }}
+                            <a
+                                href="{{ .Link }}"
+                                target="_blank"
+                                class='文件內容-範例清單-段落-項目清單-項目 {{if eq .Link "#!"}}文件內容-範例清單-段落-項目清單-項目_停用的{{ end }}'
+                            >
+                                <img src="./examples/screenshots/{{ .Image }}_dark.png" class="文件內容-範例清單-段落-項目清單-項目-螢幕截圖 has-light-hidden" />
+                                <img src="./examples/screenshots/{{ .Image }}_light.png" class="文件內容-範例清單-段落-項目清單-項目-螢幕截圖 has-dark-hidden" />
+                                <div class="文件內容-範例清單-段落-項目清單-項目-標題">{{ .Title }}</div>
+                                <div class="文件內容-範例清單-段落-項目清單-項目-說明">{{ .Description }}</div>
+                                <span class="ts-icon is-{{ .Symbol }}-icon 文件內容-範例清單-段落-項目清單-項目-圖示"></span>
+                            </a>
+                            {{ end }}
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+
+        <div class="頁腳">
+            <div class="界限容器">
+                <div class="頁腳-導航列">
+                    <button class="頁腳-導航列-項目 頁腳-導航列-項目_回到頂部"><span class="ts-icon is-arrow-up-icon"></span> {{ "Footer_ToTop" | i18n }}</button>
+                    <a class="頁腳-導航列-項目" href="https://github.com/teacat/tocas" target="_blank">GitHub</a>
+                    <a class="頁腳-導航列-項目" href="./getting-started.html">{{ "Footer_GettingStarted" | i18n }}</a>
+                    <a class="頁腳-導航列-項目" href="./button.html">{{ "Footer_Components" | i18n }}</a>
+                    <a class="頁腳-導航列-項目" href="./examples.html">{{ "Footer_Examples" | i18n }}</a>
+                </div>
+                <div class="頁腳-格局">
+                    <div class="頁腳-格局-資訊">
+                        <div class="頁腳-格局-資訊-文字">{{ html (i18n "Footer_Paragraph") }}</div>
+                        <div class="頁腳-格局-資訊-翻譯者">{{ translators (i18n "Footer_Translators") }}</div>
+                    </div>
+                    <div class="頁腳-格局-商標">
+                        <img class="頁腳-格局-商標-圖片" src="./assets/images/caris-events.svg" alt='{{ i18n "Footer_Logo_Alt" }}' />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

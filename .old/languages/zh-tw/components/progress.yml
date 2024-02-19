@@ -1,0 +1,199 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 進度條
+Description: 呈現物件的讀取以及就緒狀態指示。
+Intro: |
+    此元件使用 CSS 變數 `--value` 來控制進度列的百分比進度。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Gauge
+    - Loading
+
+#=======================================================
+# 變數
+# Variables
+#=======================================================
+
+Variables:
+    - Name: --value
+      Default: 0
+      Example: 50
+      Target: .bar
+      Description: 進度列的百分比值。
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="[[ts-progress]]">
+            <div class="bar" style="--value: 50">
+                <div class="text">50%</div>
+            </div>
+        </div>
+
+# Links:
+#     - Icon: palette
+#       Title: 領銜主色
+#       Description: 使用不同主色彩繪這個元件。
+#       Link: ./colors.html
+
+Definitions:
+    - Title: 結構
+      Description:
+      Sections:
+          - Title: 文字
+            Anchor: Text
+            Description: 進度列裡可以擺放一個文字作為百分比標籤。
+            HTML: |
+                <div class="ts-progress">
+                    <div class="bar" style="--value: 80">
+                        <div class="[[text]]">80%</div>
+                    </div>
+                </div>
+
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 啟用的
+            Anchor: Active
+            Description: 讓進度列表現出正在活動的效果。
+            HTML: |
+                <div class="ts-progress [[is-active]]">
+                    <div class="bar" style="--value: 70"></div>
+                </div>
+
+          - Title: 處理中
+            Anchor: Processing
+            Description: 明確地讓使用者知道目前的進度正在被妥善處理中。
+            HTML: |
+                <div class="ts-progress [[is-processing]]">
+                    <div class="bar" style="--value: 40"></div>
+                </div>
+
+          - Title: 不定的
+            Anchor: Indeterminate
+            Description: 請求正在傳送且等待伺服器接收。
+            HTML: |
+                <div class="ts-progress [[is-indeterminate]]">
+                    <div class="bar" style="--value: 50"></div>
+                </div>
+
+          - Title: 佇列的
+            Anchor: Queried
+            Description: 正在等待伺服器回傳結果。
+            HTML: |
+                <div class="ts-progress [[is-queried]]">
+                    <div class="bar" style="--value: 30"></div>
+                </div>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 空的
+            Anchor: Empty
+            Description: 當進度為零時，可以指定其狀態為空並隱藏進度條的背景。
+            HTML: |
+                <div class="ts-progress [[is-empty]]">
+                    <div class="bar" style="--value: 0">
+                        <div class="[[text]]">0%</div>
+                    </div>
+                </div>
+
+          - Title: 次要列
+            Anchor: Secondary
+            Description: 次要的進度列可以作為緩衝值或是輔助使用。
+            HTML: |
+                <div class="ts-progress">
+                    <div class="bar" style="--value: 40">
+                        <div class="text">40%</div>
+                    </div>
+                    <div class="bar [[is-secondary]]" style="--value: 60">
+                        <div class="text">60%</div>
+                    </div>
+                </div>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 以不同的大小尺寸呈現進度條。
+            Remove:
+                - <div class="ts-space"></div>
+            HTML: |
+                <div class="ts-progress [[is-tiny]]">
+                    <div class="bar" style="--value: 50">
+                        <div class="text">50%</div>
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-progress [[is-small]]">
+                    <div class="bar" style="--value: 50">
+                        <div class="text">50%</div>
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-progress">
+                    <div class="bar" style="--value: 50">
+                        <div class="text">50%</div>
+                    </div>
+                </div>
+                <div class="ts-space"></div>
+                <div class="ts-progress [[is-large]]">
+                    <div class="bar" style="--value: 50">
+                        <div class="text">50%</div>
+                    </div>
+                </div>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 相簿上傳佇列
+            Anchor: Composition Upload
+            Description: 上傳相簿照片時，通常會有一個上傳進度列和輔助文字。
+            HTML: |
+                <div class="{{ts-card}}">
+                    <div class="{{ts-content}} is-secondary">
+                        <div class="[[ts-progress]] is-processing">
+                            <div class="bar" style="--value: 70">
+                                <div class="text">70%</div>
+                            </div>
+                        </div>
+                        <div class="{{ts-text}} is-description {{has-top-spaced-small}}">共 4 張照片，3 張正在處理中。</div>
+                    </div>
+                    <div class="{{ts-divider}}"></div>
+                    <div class="{{ts-content}}">
+                        <div class="{{ts-grid}}">
+                            <div class="column">
+                                <img src="!-4:3-!" width="145">
+                            </div>
+                            <div class="column is-fluid">
+                                <div class="{{ts-grid}}">
+                                    <div class="column is-fluid">
+                                        <div class="{{ts-input}}">
+                                            <input type="text" placeholder="照片標題">
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <button class="{{ts-button}} is-icon is-outlined">
+                                            <span class="{{ts-icon}} is-trash-icon"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="ts-space"></div>
+                                <div class="{{ts-input}}">
+                                    <textarea placeholder="描述一下這張照片…"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>

@@ -1,0 +1,124 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 單選方塊
+Description: 在多個選項中僅可單選作為答案的項目。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+Relatives:
+    - Checkbox
+    - Selection
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    Centered: true
+    HTML: |
+        <label class="[[ts-radio]]">
+            <input name="eat" type="radio" checked/>
+            早餐
+        </label>
+
+Definitions:
+    - Title: 狀態
+      Description:
+      Sections:
+          - Title: 停用的
+            Anchor: Disabled
+            Description: 有 `[disabled]` 屬性的單選方塊會無法互動。
+            HTML: |
+                <label class="ts-radio">
+                    <input name="linux" type="radio" [[disabled]]/>
+                    Arch Linux
+                </label>
+
+    - Title: 外觀
+      Description:
+      Sections:
+          - Title: 負面的
+            Anchor: Negative
+            Description: 表示一個單選方塊可能沒有被選取。
+            HTML: |
+                <label class="ts-radio [[is-negative]]">
+                    <input name="love" type="radio" />
+                    愛情摩天輪
+                </label>
+
+          - Title: 單獨的
+            Anchor: Solo
+            Description: 單選方塊如果沒有任何標籤文字，可以將其指定為單獨的單選方塊，藉此來移除多餘的間距。
+            HTML: |
+                <label class="ts-radio [[is-solo]]">
+                    <input name="solo" type="radio" />
+                </label>
+
+          - Title: 尺寸
+            Anchor: Sizes
+            Description: 更改選項按鈕的大小。
+            Remove:
+                - <div class="ts-space is-small"></div>
+            HTML: |
+                <label class="ts-radio [[is-small]]">
+                    <input name="size" type="radio" checked/>
+                    小型選項
+                </label>
+                <div class="ts-space is-small"></div>
+                <label class="ts-radio">
+                    <input name="size" type="radio"/>
+                    預設選項
+                </label>
+                <div class="ts-space is-small"></div>
+                <label class="ts-radio [[is-large]]">
+                    <input name="size" type="radio"/>
+                    大型選項
+                </label>
+
+    - Title: 組合應用
+      Description:
+      Sections:
+          - Title: 鄰近選項按鈕
+            Anchor: Composition Radios
+            Description: 透過[間隔容器](./wrap.html)元件能讓核取方塊以左右、上下排列並保持一定的間距。
+            HTML: |
+                <div class="{{ts-wrap}} is-vertical">
+                    <div class="{{ts-text}} is-label">性別</div>
+                    <div class="[[{{ts-wrap}}]]">
+                        <label class="ts-radio">
+                            <input name="gender" type="radio" checked/>
+                            男性
+                        </label>
+                        <label class="ts-radio">
+                            <input name="gender" type="radio" />
+                            女性
+                        </label>
+                        <label class="ts-radio">
+                            <input name="gender" type="radio" />
+                            其它
+                        </label>
+                    </div>
+                    <div class="{{ts-text}} is-label">來電狀態</div>
+                    <div class="[[{{ts-wrap}}]] is-vertical is-compact">
+                        <label class="ts-radio">
+                            <input name="ring" type="radio" checked/>
+                            響鈴
+                        </label>
+                        <label class="ts-radio">
+                            <input name="ring" type="radio" />
+                            震動
+                        </label>
+                        <label class="ts-radio">
+                            <input name="ring" type="radio" />
+                            靜音
+                        </label>
+                    </div>
+                </div>

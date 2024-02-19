@@ -1,0 +1,270 @@
+#=======================================================
+# Header
+#=======================================================
+
+Title: 響應式設計
+Description: 協助你能夠在不同裝置上更加地得心應手。
+
+#=======================================================
+# Settings
+#=======================================================
+
+Type: Paragraphy
+Grid: true
+
+#=======================================================
+# Definitions
+#=======================================================
+
+Definitions:
+    - Title: 定義
+      Sections:
+          - Title: 中斷點尺寸
+            Anchor: Default Breakpoints
+            Description: |
+                Tocas UI 預設提供四個裝置中斷點。
+
+                <div class="ts-card">
+                    <table class="ts-table is-definition is-celled">
+                        <thead>
+                            <tr>
+                                <th class="is-collapsed"></th>
+                                <th class="is-collapsed">狀態指示</th>
+                                <th class="is-collapsed">當螢幕尺寸 .. 時</th>
+                                <th>出現時機</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="is-collapsed">mobile</td>
+                                <td class="is-collapsed is-center-aligned">
+                                    <div class="ts-badge tablet+:has-hidden">目前</div>
+                                </td>
+                                <td class="is-collapsed">&ge; 0px 和 &le; 767px</td>
+                                <td>
+                                    <div class="ts-list is-unordered">
+                                        <div class="item">⮃ 手機直向握持。</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">tablet</td>
+                                <td class="is-collapsed is-center-aligned">
+                                    <div class="ts-badge mobile:has-hidden desktop+:has-hidden">目前</div>
+                                </td>
+                                <td class="is-collapsed">&ge; 768px 和 &le; 1023px</td>
+                                <td>
+                                    <div class="ts-list is-unordered">
+                                        <div class="item">⮂ 多數手機的橫向。</div>
+                                        <div class="item">⮃ 平板電腦的直向。</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">desktop</td>
+                                <td class="is-collapsed is-center-aligned">
+                                    <div class="ts-badge tablet-:has-hidden widescreen:has-hidden">目前</div>
+                                </td>
+                                <td class="is-collapsed">&ge; 1024px 和 &le; 1279px</td>
+                                <td>
+                                    <div class="ts-list is-unordered">
+                                        <div class="item">⮂ 平板電腦的橫向。</div>
+                                        <div class="item">縮小的瀏覽器視窗。</div>
+                                        <div class="item">通常可視為電腦裝置的起始點。</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">widescreen</td>
+                                <td class="is-collapsed is-center-aligned">
+                                    <div class="ts-badge desktop-:has-hidden">目前</div>
+                                </td>
+                                <td class="is-collapsed">&ge; 1280px</td>
+                                <td>
+                                    <div class="ts-list is-unordered">
+                                        <div class="item">⮂ 大型平板電腦的橫向（如：iPad Pro 或 Surface Pro）。</div>
+                                        <div class="item">筆記型電腦、桌上型電腦。</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+    - Title: 使用方式
+      Sections:
+          - Title: 基本使用
+            Anchor: Responsive Usage
+            Description: |
+               將 `中斷點:樣式` 套用到元素上，就能使用響應式功能。
+
+                <div class="ts-card">
+                    <table class="ts-table is-definition is-celled">
+                        <thead>
+                            <tr>
+                                <th class="is-collapsed"></th>
+                                <th class="is-collapsed">範例</th>
+                                <th>生效時機</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="is-collapsed">中斷點</td>
+                                <td class="is-collapsed">
+                                    <code>mobile</code>
+                                </td>
+                                <td>只在「某個中斷點」生效。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">中斷點+</td>
+                                <td class="is-collapsed">
+                                    <code>mobile+</code>
+                                </td>
+                                <td>在「某個中斷點」與「以上」生效。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">中斷點-</td>
+                                <td class="is-collapsed">
+                                    <code>tablet-</code>
+                                </td>
+                                <td>在「某個中斷點」與「以下」生效。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">中斷點-中斷點</td>
+                                <td class="is-collapsed">
+                                    <code>tablet-widescreen</code>
+                                </td>
+                                <td>在「某個中斷點」與「某個中斷點」之間生效。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            AttachedHTML: |
+                <!-- 只在 mobile 套用 is-small -->
+                <div class="{{ts-button}} [[mobile:is-small]]"></div>
+
+                <!-- 在 tablet, desktop, widescreen 套用 is-small -->
+                <div class="{{ts-button}} [[tablet+:is-small]]"></div>
+
+          - Title: 臨時尺寸
+            Anchor: Responsive Arbitrary
+            Description: |
+                透過方括號 `[尺寸]` 取代原本的中斷點名稱，就能使用像 `100px` 或 `450px` 這種臨時尺寸。
+
+                <div class="ts-card">
+                    <table class="ts-table is-definition is-celled">
+                        <thead>
+                            <tr>
+                                <th class="is-collapsed"></th>
+                                <th class="is-collapsed">範例</th>
+                                <th>生效時機</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="is-collapsed">[尺寸+]</td>
+                                <td class="is-collapsed">
+                                    <code>[450px]+</code>
+                                </td>
+                                <td>在「某個尺寸」與「以上」生效。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">[尺寸-]</td>
+                                <td class="is-collapsed">
+                                    <code>[800px]-</code>
+                                </td>
+                                <td>在「某個尺寸」與「以下」生效。</td>
+                            </tr>
+                            <tr>
+                                <td class="is-collapsed">[尺寸-尺寸]</td>
+                                <td class="is-collapsed">
+                                    <code>[300px-400px]</code>
+                                </td>
+                                <td>在「某個尺寸」與「某個尺寸」之間生效。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            AttachedHTML: |
+                <!-- 螢幕在 300px 或以下套用 is-small -->
+                <div class="{{ts-button}} [[[300px]-:is-small]]"></div>
+
+                <!-- 螢幕在 300px 到 400px 之間套用 is-small -->
+                <div class="{{ts-button}} [[[300px-400px]:is-small]]"></div>
+
+    - Title: 實際應用
+      Sections:
+          - Title: 在 … 時隱藏/顯示元素
+            Anchor: Responsive Visibility
+            Description: |
+                在指定中斷點套用 `has-hidden` [輔助樣式](./utilities.html)就能隱藏元素，善用此功能可以讓元素只在特定裝置顯示。
+            HTML: |
+                <!-- 在 tablet, desktop, widescreen 隱藏 -->
+                <!-- 等同於：只在 mobile 顯示 -->
+                <div class="{{ts-badge}} [[tablet+:has-hidden]]">Mobile 📱</div>
+
+                <!-- 在 mobile, desktop, widescreen 隱藏 -->
+                <!-- 等同於：只在 tablet 顯示 -->
+                <div class="{{ts-badge}} [[mobile:has-hidden]] [[desktop+:has-hidden]]">Tablet 💻</div>
+
+                <!-- 在 mobile, tablet, widescreen 隱藏 -->
+                <!-- 等同於：只在 desktop 顯示 -->
+                <div class="{{ts-badge}} [[tablet-:has-hidden]] [[widescreen:has-hidden]]">Desktop 🖥️</div>
+
+                <!-- 在 mobile, tablet, desktop 隱藏 -->
+                <!-- 等同於：只在 widescreen 顯示 -->
+                <div class="{{ts-badge}} [[desktop-:has-hidden]]">Widescreen 📺</div>
+
+          - Title: 響應網格系統
+            Anchor: Responsive Grid
+            Description: |
+                讓欄位寬度隨著螢幕尺寸變動，但 `mobile` 中斷點設置的樣式**不會**往上沿用，所以你必須指定每個階段的樣式。
+            HTML: |
+                <div class="{{ts-grid}}">
+                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
+                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
+                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
+                    <div class="column [[mobile:is-16-wide]] [[tablet+:is-8-wide]]"></div>
+                </div>
+
+    - Title: 進階功能
+      Sections:
+          - Title: 自訂中斷點
+            Anchor: Responsive Customize
+            Description: |
+                透過 CSS 變數覆寫、新增 Tocas UI 的中斷點尺寸。新增中斷點時，必須同時指定兩個 CSS 變數：
+
+                <div class="ts-list is-unordered">
+                    <div class="item">
+                        <code>--ts-breakpoint-名稱-min</code>：該中斷點的最小、起始尺寸。
+                    </div>
+                    <div class="item">
+                        <code>--ts-breakpoint-名稱-min</code>：該中斷點的最大、結束尺寸。
+                    </div>
+                </div>
+
+                套用響應式功能時，Tocas UI 會找離這個元素最近的中斷點定義。
+            AttachedHTML: |
+                <style type="text/css">
+                html {
+                    /** 建立名為 computer 的中斷點 */
+                    --ts-breakpoint-computer-min: 768px;
+                    --ts-breakpoint-computer-max: 1280px;
+                }
+                </style>
+
+                <!-- 螢幕在 768px ~ 1280px 之間套用 is-small 樣式 -->
+                <div class="{{ts-button}} [[computer:is-small]]"></div>
+
+          - Title: 基於容器的中斷點
+            Anchor: Responsive Container Query
+            Description: |
+                讓元素依據容器的寬度來當作中斷點基準，而非螢幕大小；這也被稱作 Container Query。
+
+                在中斷點前面加上 `@` 符號（例如：`@mobile`、`@[400px]+`），元素就會依據最鄰近的 `@container` 容器寬度來做為響應式的判斷依據。
+            AttachedHTML: |
+                <div class="{{ts-content}} [[@container]]">
+                    <!-- 如果 ts-content 的寬度在 300px 或以上就套用 is-small -->
+                    <div class="{{ts-button}} [[@[300px+]:is-small]]"></div>
+                </div>
+

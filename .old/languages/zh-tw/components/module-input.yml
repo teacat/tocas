@@ -1,0 +1,293 @@
+#=======================================================
+# 標頭
+# Header
+#=======================================================
+
+Title: 多彩欄位
+Description: 跟隨輸入欄位的內容自動延展尺寸。
+Intro: |
+    這個 JavaScript 模組是用來強化輸入欄位的功能。文件仍在編輯並試圖讓人更易懂，請暫時不要使用。
+
+    監聽輸入欄位事件時，這些欄位都是原生位置。
+
+    ※ Tocas UI 的 JavaScript 模組文件呈現方式正在改善。
+
+#=======================================================
+# 設定
+# Settings
+#=======================================================
+
+Type: Article
+
+#=======================================================
+# 基本樣式
+# Definitions
+#=======================================================
+
+Example:
+    HTML: |
+        <div class="ts-input">
+            <input type="text" [[data-input]]="chips" value="蘋果,鳳梨">
+        </div>
+
+Definitions:
+    - Title: 種類
+      Description:
+      Sections:
+          - Title: 密碼欄位
+            Anchor: Password
+            Description: |
+                密碼輸入欄位會有帶眼睛圖示的按鈕可以用來顯示或隱藏密碼。
+            HTML: |
+                <div class="ts-input">
+                    <input type="password" [[data-input]]="password" placeholder="使用者密碼">
+                </div>
+
+          - Title: 標籤欄位
+            Anchor: Chips
+            Description: |
+                多選標籤欄位能讓使用者在打字的同時按下 Enter 鍵來新增標籤，該欄位的值會以逗點區隔（如：`a,b,c`）。
+            HTML: |
+                <div class="ts-input">
+                    <input type="text" [[data-input]]="chips" value="漢堡,土司">
+                </div>
+
+          - Title: 複合式欄位
+            Anchor: Combo
+            Description: |
+                複合式欄位運作起來像一般的[下拉式選擇](./select.html)欄位，但使用者可以透過輸入文字來即時搜尋選項。
+            HTML: |
+                <div class="ts-select">
+                    <select [[data-input]]="combo">
+                        <option>蘋果</option>
+                        <option>西瓜</option>
+                        <option>香蕉</option>
+                    </select>
+                </div>
+
+                <div class="ts-select">
+                    <select [[data-input]]="combo">
+                        <option data-icon="heart">愛心</option>
+                        <option data-icon="sun">太陽</option>
+                        <option data-icon="user">使用者</option>
+                    </select>
+                </div>
+                <div class="ts-select">
+                    <select [[data-input]]="combo">
+                        <option data-avatar="!-user-!">User A</option>
+                        <option data-avatar="!-user2-!">User B</option>
+                        <option data-avatar="!-user3-!">User C</option>
+                    </select>
+                </div>
+                <div class="ts-select">
+                    <select [[data-input]]="combo">
+                        <option disabled value selected>請選擇使用者</option>
+                        <option data-avatar="!-user2-!">User Foo</option>
+                        <option data-avatar="!-user3-!">User Bar</option>
+                    </select>
+                </div>
+                <div class="ts-select">
+                    <select [[data-input]]="combo">
+                        <option data-flag="tw">台灣</option>
+                        <option data-flag="jp">日本</option>
+                        <option data-flag="us">美國</option>
+                    </select>
+                </div>
+                <div class="ts-select">
+                    <select [[data-input]]="combo">
+                        <option data-description="@yamiodymel">Yami Odymel</option>
+                        <option data-description="@karisu">Karisu</option>
+                        <option disabled data-description="@world">Hello</option>
+                    </select>
+                </div>
+
+          - Title: 基本選擇
+            Anchor: Select
+            Description: |
+                基本選擇欄位與[下拉式選擇](./select.html)基本上無異，但裡面可以擺放更豐富的元素（如：[國家旗幟](./flag.html)、[大頭貼](./avatar.html)）。
+            HTML: |
+                <div class="ts-select">
+                    <select [[data-input]]="select">
+                        <option data-icon="heart">愛心</option>
+                        <option data-icon="sun">太陽</option>
+                        <option data-icon="user">使用者</option>
+                    </select>
+                </div>
+                <div class="ts-select">
+                    <select [[data-input]]="select">
+                        <option data-avatar="!-user-!">User A</option>
+                        <option data-avatar="!-user2-!">User B</option>
+                        <option data-avatar="!-user3-!">User C</option>
+                    </select>
+                </div>
+                <div class="ts-select">
+                    <select [[data-input]]="select">
+                        <option disabled value selected>請選擇使用者</option>
+                        <option data-avatar="!-user2-!">User Foo</option>
+                        <option data-avatar="!-user3-!">User Bar</option>
+                    </select>
+                </div>
+                <div class="ts-select">
+                    <select [[data-input]]="select">
+                        <option data-flag="tw">台灣</option>
+                        <option data-flag="jp">日本</option>
+                        <option data-flag="us">美國</option>
+                    </select>
+                </div>
+                <div class="ts-select">
+                    <select [[data-input]]="select">
+                        <option data-flag="tw" data-text="">台灣（+886）</option>
+                        <option data-flag="jp" data-text="">日本（+886）</option>
+                        <option data-flag="us" data-text="">美國（+886）</option>
+                    </select>
+                </div>
+                <div class="ts-select">
+                    <select [[data-input]]="select">
+                        <option data-flag="tw" data-text="台灣">台灣（+886）</option>
+                        <option data-flag="jp" data-text="日本">日本（+886）</option>
+                        <option data-flag="us" data-text="美國">美國（+886）</option>
+                    </select>
+                </div>
+                <div class="ts-select">
+                    <select [[data-input]]="select">
+                        <option data-icon="circle" data-color="green">線上</option>
+                        <option data-icon="moon" data-color="yellow">暫時離開</option>
+                        <option data-icon="circle-minus" data-color="red">不要打擾</option>
+                        <option data-icon="circle" data-color="grey">隱藏</option>
+                    </select>
+                </div>
+                <div class="ts-select">
+                    <select [[data-input]]="select">
+                        <option data-icon="circle" data-icon-color="green">線上</option>
+                        <option data-icon="moon" data-icon-color="#d4d437">暫時離開</option>
+                        <option data-icon="circle-minus" data-icon-color="red">不要打擾</option>
+                        <option data-icon="circle" data-icon-color="grey">隱藏</option>
+                    </select>
+                </div>
+                 <div class="ts-select">
+                    <select [[data-input]]="select">
+                        <option data-icon="circle" data-icon-color="green">線上</option>
+                        <option data-icon="moon" data-icon-color="#d4d437">暫時離開</option>
+                        <optgroup label="Group 3" disabled>
+                            <option>Option 3.1</option>
+                            <option>Option 3.2</option>
+                            <option>Option 3.3</option>
+                        </optgroup>
+                        <optgroup label="Group 2">
+                            <option>Option 2.1</option>
+                            <option>Option 2.2</option>
+                            <option>Option 2.3</option>
+                        </optgroup>
+                        <option data-icon="circle-minus" data-icon-color="red">不要打擾</option>
+                        <option data-icon="circle" data-icon-color="grey">隱藏</option>
+                    </select>
+                </div>
+                <div class="ts-select">
+                    <select [[data-input]]="select">
+                        <option data-text="🥰">🥰 喜愛</option>
+                        <option data-text="😡">😡 討厭</option>
+                        <option data-text="👽">👽 外星人</option>
+                    </select>
+                </div>
+                <div class="ts-select">
+                    <select [[data-input]]="select">
+                        <option data-description="@yamiodymel">Yami Odymel</option>
+                        <option data-description="@karisu">Karisu</option>
+                        <option disabled data-description="@world">Hello</option>
+                    </select>
+                </div>
+
+          - Title: 多選欄位
+            Anchor: Multi
+            Description: |
+                一個 `[data-input="multi"]` 多選輸入欄位能夠建立下拉式選單且能挑選多個項目。使用這種欄位之前，必須先指定一個預先資料集，相關資訊可以參考下方「預先資料集」章節。
+            HTML: |
+                <div class="ts-input">
+                    <input type="text" [[data-input]]="multi" value="鈴芽之旅">
+                    <datalist>
+                        <option value="鈴芽之旅">
+                        <option value="你的名字">
+                        <option value="天氣之子">
+                        <option value="讓我聽見愛的歌聲">
+                        <option value="跳躍吧！時空少女">
+                    </datalist>
+                </div>
+
+
+    - Title: 使用說明
+      Description:
+      Sections:
+          - Title: 項目上限
+            Anchor: Max Items
+            Description: |
+                透過 `[data-max-items]` 來設定使用者最多同時可以選擇、新增幾個項目。在預設不指定的情況下，使用者可以無限選擇直到項目都被選取為止。
+            HTML: |
+                <div class="ts-input">
+                    <input type="text" data-input="chips" [[data-max-items]]="5" value="這個,欄位,項目,只能五個">
+                </div>
+
+          - Title: 允許自訂內容
+            Anchor: Creation
+            Description: |
+                有指定預先資料集的情況下，使用者無法自行新增資料集以外的內容。指定 `[data-creation="true"]` 就可以解除這個限制。
+            HTML: |
+                <div class="ts-input">
+                    <input type="text" data-input="chips" [[data-creation]]="true" value="香港">
+                    <datalist>
+                        <option value="Taiwan">
+                        <option value="Van Taiwan">
+                        <option value="Tainan">
+                        <option value="Jawan">
+                        <option value="日本">
+                        <option value="手日">
+                        <option value="記得日本">
+                        <option value="記日本">
+                        <option value="香港">
+                        <option value="台灣">
+                        <option value="中國">
+                    </datalist>
+                </div>
+
+          - Title: 允許自訂內容
+            Anchor: Creation
+            Description: |
+                有指定預先資料集的情況下，使用者無法自行新增資料集以外的內容。指定 `[data-creation="true"]` 就可以解除這個限制。
+            HTML: |
+                <div class="ts-input">
+                    <input type="text" data-input="chips" [[data-creation]]="true" value="香港">
+                    <datalist>
+                        <option data-icon="heart" value="Taiwan">
+                        <option data-avatar="!-user-!" value="Van Taiwan">
+                        <option data-flag="tw" value="Tainan">
+                        <option data-description="@karisu" value="Jawan">
+                        <option data-image="!-user-!" value="日本">
+                        <option value="手日">
+                        <option value="記得日本">
+                        <option value="記日本">
+                        <option value="香港">
+                        <option value="台灣">
+                        <option value="中國">
+                    </datalist>
+                </div>
+
+
+    - Title: 項目
+      Description:
+      Sections:
+          - Title: 預先資料集
+            Anchor: Datalist
+            Description: |
+                使用 HTML 原生的 `<datalist>` 標籤可以事先定義使用者能夠選擇的項目。先透過 `[data-name]` 命名一個 `<datalist>` 資料集，再將 `[data-datalist]` 套用到 `<input>` 來指向到該資料集。
+
+                每個項目的 HTML 標籤是 `<option value="值">`，如果項目的文字標籤與內容值不相同，可以用 `<option value="值">文字</option>` 呈現。
+
+            HTML: |
+                <div class="ts-input">
+                    <input type="text" data-input="chips" value="banana">
+                    <datalist>
+                        <option value="apple">蘋果</option>
+                        <option value="banana">香蕉</option>
+                        <option value="watermelon">西瓜</option>
+                        <option value="mango">芒果</option>
+                    </datalist>
+                </div>

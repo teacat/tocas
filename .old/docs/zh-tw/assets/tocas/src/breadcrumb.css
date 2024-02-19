@@ -1,0 +1,132 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-breadcrumb {
+    --accent-color: initial;
+    --accent-foreground-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-breadcrumb {
+    display: flex;
+    gap: 0.7rem;
+    color: var(--ts-gray-800);
+    line-height: 1;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-breadcrumb .item {
+    text-decoration: none;
+    color: var(--ts-gray-800);
+    padding-right: 1.1rem;
+}
+
+.ts-breadcrumb .item:last-child {
+    padding-right: 0;
+}
+
+.ts-breadcrumb .item .ts-icon {
+    display: inline-block;
+    text-decoration: none;
+}
+
+.ts-breadcrumb a.item:hover {
+    text-decoration: underline;
+}
+
+.ts-breadcrumb .item::after {
+    position: absolute;
+    user-select: none;
+    margin-left: 0.7rem;
+    display: inline-block;
+    pointer-events: none;
+    content: "/";
+    color: var(--ts-gray-500);
+}
+
+.ts-breadcrumb .item:last-child::after {
+    display: none;
+}
+
+.ts-breadcrumb .divider .ts-icon {
+    font-size: 12px;
+    color: var(--ts-gray-500);
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Stepped
+ */
+
+.ts-breadcrumb.is-stepped .item {
+    color: var(--ts-gray-500);
+}
+
+/**
+ * Active
+ */
+
+.ts-breadcrumb .item.is-active {
+    color: var(--accent-color, var(--ts-gray-800));
+    font-weight: 500;
+}
+
+/**
+ * Customized
+ */
+
+.ts-breadcrumb.is-customized .item::after {
+    content: "";
+}
+.ts-breadcrumb.is-customized .item {
+    padding-right: 0;
+}
+
+/**
+ * Chevroned
+ */
+
+.ts-breadcrumb.is-chevroned .item::after {
+    content: "\f054";
+    font-size: var(--ts-font-size-12px);
+    line-height: 1.4;
+}
+
+/**
+ * Hyphenated
+ */
+
+.ts-breadcrumb.is-hyphenated .item::after {
+    content: "-";
+}
+
+.ts-breadcrumb:is(.is-chevroned, .is-hyphenated) .item::after {
+    font-family: "Icons";
+    font-weight: normal;
+    font-style: normal;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    backface-visibility: hidden;
+}
+
+/**
+ * Sizes
+ */
+
+.ts-breadcrumb.is-small {
+    font-size: var(--ts-font-size-14px);
+}
+
+.ts-breadcrumb.is-large {
+    font-size: var(--ts-font-size-17px);
+}
