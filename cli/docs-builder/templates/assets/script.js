@@ -69,6 +69,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // document.querySelectorAll("[data-value]").forEach(e => {
+    //     e.addEventListener("click", e => {
+    //         let [removes, add] = e.target.getAttribute("data-value").split(";")
+    //         document.querySelector("html").classList.remove(...removes.split(","))
+    //         if (add !== undefined) {
+    //             document.querySelector("html").classList.add(add);
+    //         }
+    //     });
+    // });
+
     window.addEventListener("hashchange", rescanAnchor);
     rescanAnchor();
 });
