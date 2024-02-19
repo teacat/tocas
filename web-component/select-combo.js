@@ -9,14 +9,13 @@ getID = () => {
     return (Math.random().toString(36) + '00000000000000000').slice(2, 10 + 2);
 };
 
-class TocasSelectComponent extends HTMLElement {
-    static observedAttributes = ["class", "type"];
+class TocasSelectComboComponent extends HTMLElement {
+    static observedAttributes = ["class"];
 
     view = createElement(`<div class="view"></div>`);
     dropdown = createElement(`<div class="ts-dropdown"></div>`);
     select = createElement(`<div class="ts-select"></div>`);
     content = createElement(`<div class="content"></div>`);
-    combo_append = createElement(`<input type="text" class="append" />`);
 
     constructor() {
         super();
@@ -48,12 +47,6 @@ class TocasSelectComponent extends HTMLElement {
         this.select.setAttribute("data-dropdown", this.dropdown.id)
         this.select.className = `ts-select${this.getAttribute("class") ? ' ' + this.getAttribute("class") : ''}`
         this.select.append(this.content)
-
-        if (this.getAttribute("type") === "combo") {
-            this.select.classList.add("is-combo")
-            this.select.append(this.combo_append)
-        }
-
         this.view.append(this.select)
         this.view.append(this.dropdown)
         this.append(this.view)
@@ -143,95 +136,6 @@ class TocasSelectComponent extends HTMLElement {
         // 避免整個 DOM 還沒出來，導致 Tocas 監聽不到東西，這是多餘但又安全的手段。
         this.underlying().removeEventListener("change", this.onUnderlyingChange.bind(this))
         this.underlying().addEventListener("change", this.onUnderlyingChange.bind(this))
-
-        //
-        if (this.getAttribute("type") === "combo") {
-            this.removeEventListener("click", this.onContainerClick.bind(this))
-            this.addEventListener("click", this.onContainerClick.bind(this))
-
-            this.combo_append.removeEventListener("input", this.onAppendInput.bind(this))
-            this.combo_append.addEventListener("input", this.onAppendInput.bind(this))
-
-            this.combo_append.removeEventListener("focus", this.onAppendFocus.bind(this))
-            this.combo_append.addEventListener("focus", this.onAppendFocus.bind(this))
-
-            this.combo_append.removeEventListener("blur", this.onAppendBlur.bind(this))
-            this.combo_append.addEventListener("blur", this.onAppendBlur.bind(this))
-
-        }
-    }
-
-    //
-    onContainerClick(event) {
-        // 如果容器被點擊的話就聚焦到 Append 輸入欄位讓使用者可以打字。
-        // 確保使用者不是在點擊容器裡的下拉式選單或是標籤，
-        // 我們不想因為這樣就聚焦到 Append 輸入欄位。
-        if (event.target.closest(".ts-dropdown") === this.dropdown) {
-            return;
-        }
-
-        // 聚焦到 `combo_append` 這樣就可以讓使用者輸入。
-        this.combo_append.focus();
-    }
-
-    //
-    updateGhosting() {
-
-    }
-
-    //
-    onAppendBlur(event) {
-        console.log(event)
-
-
-        if (event.relatedTarget?.closest(".ts-dropdown") === this.dropdown) {
-            return;
-        }
-
-        this.content.classList.remove("has-invisible")
-        this.content.classList.remove("is-ghosting")
-
-        this.combo_append.value = ""
-    }
-
-    //
-    onAppendFocus() {
-        var append_value = this.combo_append.value.trim().toLowerCase()
-
-        if (append_value === "") {
-            this.content.classList.remove("has-invisible")
-            this.content.classList.add("is-ghosting")
-        } else {
-            this.content.classList.remove("is-ghosting")
-            this.content.classList.add("has-invisible")
-        }
-    }
-
-    //
-    onAppendInput() {
-        var append_value = this.combo_append.value.trim().toLowerCase()
-
-        if (append_value === "") {
-            this.content.classList.remove("has-invisible")
-            this.content.classList.add("is-ghosting")
-        } else {
-            this.content.classList.remove("is-ghosting")
-            this.content.classList.add("has-invisible")
-        }
-
-        this.dropdown.querySelectorAll("button").forEach((item) => {
-            //if (item.disabled) {
-            //    return
-            //}
-
-            var is_matched_text = item.dataset.text.trim().toLowerCase().includes(append_value)
-            var is_matched_value = item.dataset.value.trim().toLowerCase().includes(append_value)
-            if (is_matched_text || is_matched_value) {
-                item.classList.remove("has-hidden")
-            } else {
-                item.classList.add("has-hidden")
-            }
-        })
     }
 
     // updateSelect
@@ -239,10 +143,8 @@ class TocasSelectComponent extends HTMLElement {
         // 如果這個 Select 被停用，就在 Select 上加上 is-disabled，反之則移除。
         if (this.underlying().disabled) {
             this.select.classList.add("is-disabled")
-            this.combo_append.disabled = true
         } else {
             this.select.classList.remove("is-disabled")
-            this.combo_append.disabled = false
         }
 
         // 如果下拉式選單是顯示的，就在 Select 上加上 is-active，反之則移除。
@@ -299,14 +201,14 @@ class TocasSelectComponent extends HTMLElement {
             // 如果這個項目被停用而且又沒有值，那很有可能只是一個預設的預置項目（Placeholder），
             // 就不要將這個渲染於清單中。
             if (option.disabled && option.value === "") {
-                // var empty_item = createElement(`<button class="item has-hidden" disabled></button>`)
-                //
-                // this.dropdown.append(empty_item)
-                // return
+                var empty_item = createElement(`<button class="item has-hidden" disabled></button>`)
+
+                this.dropdown.append(empty_item)
+                return
             }
 
             var option_data = this.parseOption(option)
-            var item = createElement(`<button class="item" data-value="${option_data.value}" data-text="${option_data.default_text}">${option_data.default_text}</button>`)
+            var item = createElement(`<button class="item" data-value="${option_data.value}">${option_data.default_text}</button>`)
 
             // 如果這個項目被停用，就套用停用樣式。
             if (option.disabled || optgroup?.disabled) {
@@ -348,15 +250,6 @@ class TocasSelectComponent extends HTMLElement {
 
     // selectValue
     selectValue(index) {
-        this.content.classList.remove("has-invisible")
-        this.content.classList.remove("is-ghosting")
-
-        this.combo_append.value = ""
-
-        this.dropdown.querySelectorAll("button").forEach((item) => {
-            item.classList.remove("has-hidden")
-        })
-
         // 如果選取的項目跟目前的項目索引一樣，就不要觸發。
         if (this.underlying().selectedIndex === index) {
             return
@@ -366,8 +259,6 @@ class TocasSelectComponent extends HTMLElement {
         this.underlying().dispatchEvent(new Event('change', {
             bubbles: true
         }));
-
-
     }
 
     // updateContent
@@ -422,4 +313,4 @@ class TocasSelectComponent extends HTMLElement {
     }
 }
 
-customElements.define('ts-select', TocasSelectComponent);
+customElements.define('ts-select-combo', TocasSelectComponent);
