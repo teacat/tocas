@@ -88,16 +88,40 @@ window.tocas_modules = [];
     // @/import "tocas.select.js";
 
     /* ==========================================================================
+       Auto Size
+       ========================================================================== */
+
+    // @import "tocas.autosize.js";
+
+    /* ==========================================================================
        Input
        ========================================================================== */
 
     // @/import "tocas.input.js";
 
     /* ==========================================================================
-       Fileplace
+       FileInvoke
        ========================================================================== */
 
-    // @/import "tocas.fileplace.js";
+    // @import "tocas.fileinvoke.js";
+
+    /* ==========================================================================
+       Invoke
+       ========================================================================== */
+
+    // @/import "tocas.invoke.js";
+
+    /* ==========================================================================
+       Rail
+       ========================================================================== */
+
+    // @import "tocas.rail.js";
+
+    /* ==========================================================================
+       Dialog
+       ========================================================================== */
+
+    // @import "tocas.dialog.js";
 
     /* ==========================================================================
        Base
@@ -105,7 +129,7 @@ window.tocas_modules = [];
 
     // searchScopeTargets
     getID = () => {
-        return (Math.random().toString(36)+'00000000000000000').slice(2, 10+2);
+        return (Math.random().toString(36) + "00000000000000000").slice(2, 10 + 2);
     };
 
     // createElement
@@ -121,7 +145,7 @@ window.tocas_modules = [];
             if (typeof v.addedNodeMutation === "function") {
                 v.addedNodeMutation(node);
             }
-        })
+        });
     };
 
     //
@@ -130,7 +154,7 @@ window.tocas_modules = [];
             if (typeof v.attributeMutation === "function") {
                 v.attributeMutation(mutation);
             }
-        })
+        });
     };
 
     // mutation_observered 用來儲存正在監聽的元素以避免重複加入到 MutationObserver 裡。
@@ -224,7 +248,7 @@ window.tocas_modules = [];
             if (typeof v.windowResize === "function") {
                 v.windowResize(event);
             }
-        })
+        });
     });
 
     /**
@@ -236,6 +260,14 @@ window.tocas_modules = [];
             if (typeof v.windowClick === "function") {
                 v.windowClick(event);
             }
-        })
+        });
+    });
+
+    window.addEventListener("mousedown", event => {
+        window.tocas_modules.forEach(v => {
+            if (typeof v.windowMousedown === "function") {
+                v.windowMousedown(event);
+            }
+        });
     });
 })();
