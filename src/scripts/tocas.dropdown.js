@@ -8,17 +8,22 @@ class Dropdown {
 
     // addedNodeMutation
     addedNodeMutation = added_node => {
-        // 當有新的節點被增加，就更新彈出式選單的清單。
-        this.updateDropdowns()
-
         // 如果這個追加的 DOM 元素是一個會觸發彈出式選單的元素，就監聽其點擊事件。
         if (this.isDropdownTrigger(added_node)) {
             this.bindEventListener(added_node)
+            this.recordDropdowns(added_node)
         }
 
         // 如果這個追加的 DOM 元素是一個彈出式選單容器，就監聽其選項點擊事件。
         if (this.isDropdown(added_node)) {
             this.bindItemEventListener(added_node)
+        }
+    }
+
+    // removedNodeMutation
+    removedNodeMutation = removed_node => {
+        if (this.isDropdownTrigger(removed_node)) {
+            this.unrecordDropdowns(removed_node)
         }
     }
 
@@ -33,11 +38,14 @@ class Dropdown {
         return element.matches(`.ts-dropdown`) && this.#dropdowns.has(element.id)
     }
 
-    // updateDropdowns
-    updateDropdowns = () => {
-        document.querySelectorAll("[data-dropdown]").forEach(element => {
-            this.#dropdowns.add(element.dataset.dropdown)
-        })
+    // recordDropdowns
+    recordDropdowns = trigger => {
+        this.#dropdowns.add(trigger.dataset.dropdown)
+    }
+
+    // unrecordDropdowns
+    unrecordDropdowns = trigger => {
+        this.#dropdowns.delete(trigger.dataset.dropdown)
     }
 
     // position
@@ -206,11 +214,11 @@ class Dropdown {
 
                     // 選單的寬高不會超過可用空間。
                     TocasFloatingUIDOM.size({
-                        apply({availableWidth, availableHeight, elements}) {
+                        apply({ availableWidth, availableHeight, elements }) {
                             Object.assign(elements.floating.style, {
                                 maxWidth: `${availableWidth}px`,
                                 maxHeight: `${availableHeight}px`,
-                            });
+                            })
                         },
                     }),
                 ],
