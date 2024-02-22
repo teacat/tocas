@@ -8,7 +8,7 @@ class Dialog {
     addedNodeMutation = added_node => {
         // 如果這個新追加的 DOM 節點是一個 Dialog 模組，就監聽其點擊事件。
         if (this.isDialog(added_node)) {
-            this.bindDialogEventListener(added_node);
+            this.bindDialogEventListener(added_node)
         }
 
         // 如果這個新追加的 DOM 節點是一個 Dialog 模組，就監聽其點擊事件。
@@ -16,44 +16,44 @@ class Dialog {
             // 監聽其點擊事件。
             this.bindTriggerEventListener(added_node)
         }
-    };
+    }
 
     // isTrigger
     isTrigger = element => {
-        return element.matches("[data-dialog]");
-    };
+        return element.matches("[data-dialog]")
+    }
 
     // isDialog
     isDialog = element => {
-        return element.matches("dialog.ts-modal, dialog.ts-app-drawer");
-    };
+        return element.matches("dialog.ts-modal, dialog.ts-app-drawer")
+    }
 
     // isModal
     isModal = element => {
-        return element.matches(":modal");
-    };
+        return element.matches(":modal")
+    }
 
     // isDismissible
     isDismissible = element => {
-        var dismissible = element.dataset.dismissible || "true";
+        var dismissible = element.dataset.dismissible || "true"
         return dismissible === "true"
-    };
+    }
 
     // bindDialogEventListener
     bindDialogEventListener = element => {
         // 不使用 click 是避免使用者在內部選取文字，但是在外部放開，這會被當作 click 而關閉。
-        element.removeEventListener("mousedown", this.onClickBackdrop);
-        element.addEventListener("mousedown", this.onClickBackdrop);
+        element.removeEventListener("mousedown", this.onClickBackdrop)
+        element.addEventListener("mousedown", this.onClickBackdrop)
 
-        element.removeEventListener("cancel", this.onCancel);
-        element.addEventListener("cancel", this.onCancel);
-    };
+        element.removeEventListener("cancel", this.onCancel)
+        element.addEventListener("cancel", this.onCancel)
+    }
 
     // bindTriggerEventListener
     bindTriggerEventListener = element => {
-        element.removeEventListener("click", this.onClickTrigger);
-        element.addEventListener("click", this.onClickTrigger);
-    };
+        element.removeEventListener("click", this.onClickTrigger)
+        element.addEventListener("click", this.onClickTrigger)
+    }
 
     // onClickBackdrop
     onClickBackdrop = event => {
@@ -63,19 +63,19 @@ class Dialog {
             return
         }
         if (dialog === event.target && this.isModal(dialog)) {
-            event.target.dispatchEvent(new Event('cancel', { bubbles: true }));
-            event.target.close();
+            event.target.dispatchEvent(new Event("cancel", { bubbles: true }))
+            event.target.close()
         }
-    };
+    }
 
     // onCancel
     onCancel = event => {
-        var dialog = event.target.closest("dialog");
+        var dialog = event.target.closest("dialog")
 
         if (!this.isDismissible(dialog)) {
-            event.preventDefault();
+            event.preventDefault()
         }
-    };
+    }
 
     // onClickTrigger
     onClickTrigger = event => {

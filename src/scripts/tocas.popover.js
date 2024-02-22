@@ -39,8 +39,8 @@ class Popover {
         // 監聽捲軸滾動，讓捲軸可以滾穿 Top-Layer，
         // 這樣使用者就不會被 Popover 卡住不好捲動底層頁面。
         element.addEventListener("wheel", this.wheelEventListener)
-        element.addEventListener('touchstart', this.touchstartEventListener)
-        element.addEventListener('touchmove', this.touchmoveEventListener)
+        element.addEventListener("touchstart", this.touchstartEventListener)
+        element.addEventListener("touchmove", this.touchmoveEventListener)
     }
 
     // wheelEventListener
@@ -71,11 +71,10 @@ class Popover {
 
     // universalWheelHandler
     universalWheelHandler = (delta_x, delta_y, event) => {
-        var is_scrollable = event.target.scrollHeight > event.target.clientHeight ||
-                            event.target.scrollWidth  > event.target.clientWidth
-                            // 沒有內容的 Textarea 雖然 Overflow 是 Auto，但多數瀏覽器都允許滾動下層。
-                            // getComputedStyle(event.target).overflow === 'auto'    ||
-                            // getComputedStyle(event.target).overflow === 'scroll'
+        var is_scrollable = event.target.scrollHeight > event.target.clientHeight || event.target.scrollWidth > event.target.clientWidth
+        // 沒有內容的 Textarea 雖然 Overflow 是 Auto，但多數瀏覽器都允許滾動下層。
+        // getComputedStyle(event.target).overflow === 'auto'    ||
+        // getComputedStyle(event.target).overflow === 'scroll'
 
         // 如果 Popover 本身就可以捲動，那就不要干涉。
         if (is_scrollable) {
@@ -88,7 +87,7 @@ class Popover {
 
         // NOTE: 如果 Textarea 已經滑到底，使用者此時按住 Textarea 往下滑，並不會讓網頁捲動。
         // 主要是 Input 不會將事件冒泡給 Popover 的 ontouchmove 監聽器，這暫時不重要，先不解決。
-        scrolling_element.scrollTop  += delta_y
+        scrolling_element.scrollTop += delta_y
         scrolling_element.scrollLeft += delta_x
     }
 
@@ -97,10 +96,11 @@ class Popover {
         var parent = element.parentElement
 
         while (parent) {
-            const is_scrollable = parent.scrollHeight > parent.clientHeight    ||
-                                  parent.scrollWidth  > parent.clientWidth     ||
-                                  getComputedStyle(parent).overflow === 'auto' ||
-                                  getComputedStyle(parent).overflow === 'scroll'
+            const is_scrollable =
+                parent.scrollHeight > parent.clientHeight ||
+                parent.scrollWidth > parent.clientWidth ||
+                getComputedStyle(parent).overflow === "auto" ||
+                getComputedStyle(parent).overflow === "scroll"
             if (is_scrollable) {
                 return parent
             }
