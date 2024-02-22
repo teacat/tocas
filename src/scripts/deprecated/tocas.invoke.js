@@ -1,8 +1,8 @@
 class Invoke {
-    constructor() { }
+    constructor() {}
 
     // attributeMutation
-    attributeMutation = mutation => { }
+    attributeMutation = mutation => {}
 
     // addedNodeMutation
     addedNodeMutation = added_node => {
