@@ -12,11 +12,15 @@ class Dropdown {
         if (this.isDropdownTrigger(added_node)) {
             this.bindEventListener(added_node)
             this.recordDropdowns(added_node)
+            this.refreshTrigger(added_node)
         }
 
         // 如果這個追加的 DOM 元素是一個彈出式選單容器，就監聽其選項點擊事件。
         if (this.isDropdown(added_node)) {
             this.bindItemEventListener(added_node)
+
+            // 應該不需要，因為 Dropdown 預設都一定是關的。
+            //this.refreshRelatedTriggers(added_node)
         }
     }
 
@@ -48,6 +52,32 @@ class Dropdown {
         this.#dropdowns.delete(trigger.dataset.dropdown)
     }
 
+    // refreshTrigger
+    refreshTrigger = element => {
+        var target = document.getElementById(element.dataset.dropdown)
+        if (target === null) {
+            return
+        }
+
+        var inactive_classes = element.dataset.inactive ? element.dataset.inactive.split(" ") : []
+        var active_classes = element.dataset.active ? element.dataset.active.split(" ") : []
+
+        if (target.classList.contains("is-visible")) {
+            element.classList.add(...active_classes)
+            element.classList.remove(...inactive_classes)
+        } else {
+            element.classList.add(...inactive_classes)
+            element.classList.remove(...active_classes)
+        }
+    }
+
+    // refreshRelatedTriggers
+    refreshRelatedTriggers = target => {
+        document.querySelectorAll(`[data-dropdown="${target.id}"]`).forEach(trigger => {
+            this.refreshTrigger(trigger)
+        })
+    }
+
     // position
     position = element => {
         return element.dataset.position || "bottom-start"
@@ -71,11 +101,6 @@ class Dropdown {
 
         // 如果這個點擊事件是在點擊一個會開關 Dropdown 的觸發元素。
         if (closest_trigger !== null) {
-            //if (document.activeElement === event.target && document.activeElement.tagName === "INPUT") {
-            //    console.log("wow")
-            //    return
-            //}
-
             // 取得這個觸發元素原本會打開的 Dropdown 名稱。
             var name = closest_trigger.dataset.dropdown
 
@@ -138,6 +163,8 @@ class Dropdown {
             dropdown.style.removeProperty("--ts-dropdown-min-width")
             dropdown.style.removeProperty("--ts-dropdown-position")
         }
+
+        this.refreshRelatedTriggers(dropdown)
     }
 
     // itemClickEventListener
@@ -176,15 +203,10 @@ class Dropdown {
             target.style.removeProperty("--ts-dropdown-position")
         }
 
-        //if (document.activeElement.closest("[data-dropdown]") === element && document.activeElement.tagName === "INPUT") {
-        //    if (target.classList.contains("is-visible")) {
-        //        return
-        //    }
-        //
-        //}
-
         // 切換目標彈出式選單的可見度。
         target.classList.toggle("is-visible")
+
+        this.refreshRelatedTriggers(target)
 
         // 如果目標選單現在不再可見，就是被隱藏了，那就不需要執行接下來的行為。
         if (!target.classList.contains("is-visible")) {
