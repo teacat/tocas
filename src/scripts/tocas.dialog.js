@@ -25,7 +25,7 @@ class Dialog {
 
     // isDialog
     isDialog = element => {
-        return element.matches("dialog.ts-modal, dialog.ts-app-drawer")
+        return element.matches("dialog.ts-modal, dialog.ts-drawer")
     }
 
     // isModal
