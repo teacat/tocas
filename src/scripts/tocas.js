@@ -1,44 +1,13 @@
 window.tocas = {
     config: {
         strict_responsive: false,
-        attributes: {
-            tab: "data-tab",
-            tab_name: "data-name",
-            toggle: "data-toggle",
-            toggle_name: "data-name",
-            input: "data-input",
-            dropdown: "data-dropdown",
-            dropdown_name: "data-name",
-            dropdown_position: "data-position",
-            tooltip: "data-tooltip",
-            tooltip_position: "data-position",
-            tooltip_delay: "data-delay",
-            tooltip_html: "data-html",
-            tooltip_trigger: "data-trigger",
-            fileplace: "data-fileplace",
-            fileplace_name: "data-name",
-        },
-        scopes: {
-            tab: "@scope",
-            toggle: "@scope",
-            tab: "@scope",
-            fileplace: "@scope",
-            dropdown: "@scope",
-            container: "@container",
-        },
-        classes: {
-            hidden: "has-hidden",
-            tab_active: "is-active",
-            tooltip_visible: "is-visible",
-            tab: "ts-tab",
-        },
     },
-};
+}
 
-window.tocas_modules = [];
+window.tocas_modules = []
 
 //
-(function () {
+;(function () {
     /* ==========================================================================
        Floating UI
        ========================================================================== */
@@ -58,10 +27,10 @@ window.tocas_modules = [];
     // @import "tocas.tab.js";
 
     /* ==========================================================================
-       Toggle
+       Collapse
        ========================================================================== */
 
-    // @import "tocas.toggle.js";
+    // @import "tocas.collapse.js";
 
     /* ==========================================================================
        Dropdown
@@ -88,34 +57,10 @@ window.tocas_modules = [];
     // @/import "tocas.select.js";
 
     /* ==========================================================================
-       Auto Size
-       ========================================================================== */
-
-    // @import "tocas.autosize.js";
-
-    /* ==========================================================================
-       Input
-       ========================================================================== */
-
-    // @/import "tocas.input.js";
-
-    /* ==========================================================================
-       FileInvoke
-       ========================================================================== */
-
-    // @import "tocas.fileinvoke.js";
-
-    /* ==========================================================================
-       Invoke
-       ========================================================================== */
-
-    // @/import "tocas.invoke.js";
-
-    /* ==========================================================================
        Rail
        ========================================================================== */
 
-    // @import "tocas.rail.js";
+    // @/import "tocas.rail.js";
 
     /* ==========================================================================
        Dialog
@@ -127,45 +72,54 @@ window.tocas_modules = [];
        Base
        ========================================================================== */
 
-    // searchScopeTargets
+    // getID
     getID = () => {
-        return (Math.random().toString(36) + "00000000000000000").slice(2, 10 + 2);
-    };
+        return (Math.random().toString(36) + "00000000000000000").slice(2, 10 + 2)
+    }
 
     // createElement
     createElement = html => {
-        var template = document.createElement("template");
-        template.innerHTML = html.trim();
-        return template.content.firstChild;
-    };
+        var template = document.createElement("template")
+        template.innerHTML = html.trim()
+        return template.content.firstChild
+    }
 
     //
     addedNodeMutation = node => {
         window.tocas_modules.forEach(v => {
             if (typeof v.addedNodeMutation === "function") {
-                v.addedNodeMutation(node);
+                v.addedNodeMutation(node)
             }
-        });
-    };
+        })
+    }
+
+    //
+    removedNodeMutation = node => {
+        window.tocas_modules.forEach(v => {
+            if (typeof v.removedNodeMutation === "function") {
+                v.removedNodeMutation(node)
+            }
+        })
+    }
 
     //
     attributeMutation = mutation => {
         window.tocas_modules.forEach(v => {
             if (typeof v.attributeMutation === "function") {
-                v.attributeMutation(mutation);
+                v.attributeMutation(mutation)
             }
-        });
-    };
+        })
+    }
 
     // mutation_observered 用來儲存正在監聽的元素以避免重複加入到 MutationObserver 裡。
-    var mutation_observered = new Set([]);
+    var mutation_observered = new Set([])
 
     // MutationObserver 是真正會監聽每個元素異動的函式。
     var mutation_observer = new MutationObserver(mutations => {
         mutations.forEach(mutation => {
             // 如果是屬性的異動就交給屬性函式處理。
             if (mutation.type === "attributes") {
-                attributeMutation(mutation);
+                attributeMutation(mutation)
             }
 
             // 如果是節點的新增就交給節點函式處理。
@@ -173,32 +127,32 @@ window.tocas_modules = [];
                 mutation.addedNodes.forEach(added_node => {
                     // 如果這個節點不是 HTMLElement 就略過，因為他有可能是 Text Node。
                     if (added_node.nodeType !== Node.ELEMENT_NODE || !(added_node instanceof HTMLElement)) {
-                        return;
+                        return
                     }
 
                     // 建立一個 TreeWalker 來加強 MutationObserver 的 childList 跟 subtree，
                     // 因為 MutationObserver 可能會忽略 Vue.js 那樣透過 innerHTML 修改節點的時候。
-                    var tree_walker = document.createTreeWalker(added_node, NodeFilter.SHOW_ELEMENT);
+                    var tree_walker = document.createTreeWalker(added_node, NodeFilter.SHOW_ELEMENT)
 
                     // 收集需要監聽的 HTML 節點元素。
-                    var nodes = [];
+                    var nodes = []
 
                     // 會使用遞迴，所以先將自己視為其中一個節點。
-                    var current_node = tree_walker.currentNode;
+                    var current_node = tree_walker.currentNode
 
                     // 不斷地爬到沒有下個節點為止。
                     while (current_node) {
-                        nodes = [...nodes, current_node];
-                        current_node = tree_walker.nextNode();
+                        nodes = [...nodes, current_node]
+                        current_node = tree_walker.nextNode()
                     }
 
                     // 將使用 TreeWalker 爬到的每個節點收錄進 MutationObserver 裡面，監聽更詳細的節點。
                     nodes.forEach(node => {
                         // 如果這個節點已經被監聽過了則忽略。
                         if (mutation_observered.has(node)) {
-                            return;
+                            return
                         } else {
-                            mutation_observered.add(node);
+                            mutation_observered.add(node)
                         }
 
                         mutation_observer.observe(node, {
@@ -207,12 +161,12 @@ window.tocas_modules = [];
                             attributes: true,
                             attributeOldValue: true,
                             attributeFilter: ["class"],
-                        });
+                        })
 
                         // 替這些節點呼叫對應的函式。
-                        addedNodeMutation(node);
-                    });
-                });
+                        addedNodeMutation(node)
+                    })
+                })
             }
 
             // 如果是節點的移除就做一些清除的函式。
@@ -220,15 +174,18 @@ window.tocas_modules = [];
                 mutation.removedNodes.forEach(removed_node => {
                     // 如果這個節點不是 HTMLElement 就略過，因為他有可能是 Text Node。
                     if (removed_node.nodeType !== Node.ELEMENT_NODE || !(removed_node instanceof HTMLElement)) {
-                        return;
+                        return
                     }
 
+                    // 替這些節點呼叫對應的函式。
+                    removedNodeMutation(removed_node)
+
                     // 從已監聽的清單中移除來節省部份資源。
-                    mutation_observered.delete(removed_node);
-                });
+                    mutation_observered.delete(removed_node)
+                })
             }
-        });
-    });
+        })
+    })
 
     // 監聽網頁元素異動的 MutationObserver。
     mutation_observer.observe(document.documentElement, {
@@ -237,7 +194,7 @@ window.tocas_modules = [];
         attributes: true,
         attributeOldValue: true,
         attributeFilter: ["class"],
-    });
+    })
 
     /**
      * Window Resize
@@ -246,10 +203,10 @@ window.tocas_modules = [];
     window.addEventListener("resize", event => {
         window.tocas_modules.forEach(v => {
             if (typeof v.windowResize === "function") {
-                v.windowResize(event);
+                v.windowResize(event)
             }
-        });
-    });
+        })
+    })
 
     /**
      * Window Click
@@ -258,16 +215,16 @@ window.tocas_modules = [];
     window.addEventListener("click", event => {
         window.tocas_modules.forEach(v => {
             if (typeof v.windowClick === "function") {
-                v.windowClick(event);
+                v.windowClick(event)
             }
-        });
-    });
+        })
+    })
 
     window.addEventListener("mousedown", event => {
         window.tocas_modules.forEach(v => {
             if (typeof v.windowMousedown === "function") {
-                v.windowMousedown(event);
+                v.windowMousedown(event)
             }
-        });
-    });
-})();
+        })
+    })
+})()

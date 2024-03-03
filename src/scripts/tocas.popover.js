@@ -2,6 +2,13 @@ class Popover {
     #touch_start_y = 0
     #touch_start_x = 0
 
+    // #last_clicked_element 是用來紀錄最後一次點擊的元素，
+    // 以此來取得若有 Popover 被打開，應該要附著在哪個觸發元素。
+    #last_clicked_element = null
+
+    // TODO: 在 Trigger 初始化的時候檢查自己的 data-inactive 樣式
+    #popovers = new Set()
+
     // attributeMutation
     attributeMutation = mutation => {}
 
@@ -15,12 +22,16 @@ class Popover {
 
     // isPopover
     isPopover = element => {
-        return element.matches(`[data-popover][popover]`)
+        return element.matches(`.ts-popover[popover]`)
     }
 
     // position
     position = element => {
         return element.dataset.position || "bottom"
+    }
+
+    windowClick = event => {
+        this.#last_clicked_element = event.target
     }
 
     // bindEventListener
@@ -39,8 +50,8 @@ class Popover {
         // 監聽捲軸滾動，讓捲軸可以滾穿 Top-Layer，
         // 這樣使用者就不會被 Popover 卡住不好捲動底層頁面。
         element.addEventListener("wheel", this.wheelEventListener)
-        element.addEventListener('touchstart', this.touchstartEventListener)
-        element.addEventListener('touchmove', this.touchmoveEventListener)
+        element.addEventListener("touchstart", this.touchstartEventListener)
+        element.addEventListener("touchmove", this.touchmoveEventListener)
     }
 
     // wheelEventListener
@@ -71,11 +82,10 @@ class Popover {
 
     // universalWheelHandler
     universalWheelHandler = (delta_x, delta_y, event) => {
-        var is_scrollable = event.target.scrollHeight > event.target.clientHeight ||
-                            event.target.scrollWidth  > event.target.clientWidth
-                            // 沒有內容的 Textarea 雖然 Overflow 是 Auto，但多數瀏覽器都允許滾動下層。
-                            // getComputedStyle(event.target).overflow === 'auto'    ||
-                            // getComputedStyle(event.target).overflow === 'scroll'
+        var is_scrollable = event.target.scrollHeight > event.target.clientHeight || event.target.scrollWidth > event.target.clientWidth
+        // 沒有內容的 Textarea 雖然 Overflow 是 Auto，但多數瀏覽器都允許滾動下層。
+        // getComputedStyle(event.target).overflow === 'auto'    ||
+        // getComputedStyle(event.target).overflow === 'scroll'
 
         // 如果 Popover 本身就可以捲動，那就不要干涉。
         if (is_scrollable) {
@@ -88,7 +98,7 @@ class Popover {
 
         // NOTE: 如果 Textarea 已經滑到底，使用者此時按住 Textarea 往下滑，並不會讓網頁捲動。
         // 主要是 Input 不會將事件冒泡給 Popover 的 ontouchmove 監聽器，這暫時不重要，先不解決。
-        scrolling_element.scrollTop  += delta_y
+        scrolling_element.scrollTop += delta_y
         scrolling_element.scrollLeft += delta_x
     }
 
@@ -97,16 +107,43 @@ class Popover {
         var parent = element.parentElement
 
         while (parent) {
-            const is_scrollable = parent.scrollHeight > parent.clientHeight    ||
-                                  parent.scrollWidth  > parent.clientWidth     ||
-                                  getComputedStyle(parent).overflow === 'auto' ||
-                                  getComputedStyle(parent).overflow === 'scroll'
+            const is_scrollable =
+                parent.scrollHeight > parent.clientHeight ||
+                parent.scrollWidth > parent.clientWidth ||
+                getComputedStyle(parent).overflow === "auto" ||
+                getComputedStyle(parent).overflow === "scroll"
             if (is_scrollable) {
                 return parent
             }
             parent = parent.parentElement
         }
         return null
+    }
+
+    // refreshRelatedTriggers
+    refreshRelatedTriggers = target => {
+        document.querySelectorAll(`[popovertarget="${target.id}"]`).forEach(trigger => {
+            this.refreshTrigger(trigger)
+        })
+    }
+
+    // refreshTrigger
+    refreshTrigger = element => {
+        var target = element.popoverTargetElement
+        if (!target) {
+            return
+        }
+
+        var inactive_classes = element.dataset.inactive ? element.dataset.inactive.split(" ") : []
+        var active_classes = element.dataset.active ? element.dataset.active.split(" ") : []
+
+        if (target.matches(":popover-open")) {
+            element.classList.add(...active_classes)
+            element.classList.remove(...inactive_classes)
+        } else {
+            element.classList.add(...inactive_classes)
+            element.classList.remove(...active_classes)
+        }
     }
 
     // beforetoggleEventListener
@@ -121,11 +158,7 @@ class Popover {
     toggleEventListener = event => {
         var popover = event.target
 
-        // 取得這個觸發元素會切換的彈出式選單名稱。
-        var target_id = popover.dataset.popover
-
-        // 透過命名空間搜尋對應的彈出式選單。
-        var target = document.getElementById(target_id)
+        this.refreshRelatedTriggers(popover)
 
         if (event.newState === "closed") {
             if (popover.tocas_popover !== undefined) {
@@ -134,6 +167,17 @@ class Popover {
                 // NOTE: 以後再來考慮 A11y。
                 // target.removeAttribute("aria-expanded")
             }
+            return
+        }
+
+        // 找出這個 Popover 相關的附著目標。
+        var target =
+            document.getElementById(popover.dataset.anchor) || // 先找這個 Popover 指定的 [data-anchor]
+            this.#last_clicked_element?.closest(`[popovertarget="${event.target.id}]`) || // 再找最後一次點擊的 [popovertarget]
+            document.querySelector(`[popovertarget="${event.target.id}"]`) // 再找整個網頁第一個符合跟此 Popover 有關的 [popovertarget]
+
+        // 如果完全沒有可附著的目標就離開。
+        if (!target) {
             return
         }
 

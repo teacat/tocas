@@ -56,7 +56,7 @@ class Tooltip {
 
     // triggers
     triggers = element => {
-        return element.dataset.trigger?.split(' ').filter(i => i) || ["hover"]
+        return element.dataset.trigger?.split(" ").filter(i => i) || ["hover"]
     }
 
     // hasTrigger
@@ -66,7 +66,7 @@ class Tooltip {
 
     //
     enterEventListener = event => {
-        var type    = event.type
+        var type = event.type
         var element = event.target.closest("[data-tooltip]")
 
         // 如果目前的裝置是觸控裝置就忽略工具提示的觸發行為。
@@ -76,8 +76,7 @@ class Tooltip {
 
         // 如果滑鼠移入但是又沒有 Hover 觸發條件，就忽略滑鼠移入事件。
         // 如果是 Focus 也是一樣的道理。
-        if ((type === "mouseover" && !this.hasTrigger(element, "hover")) ||
-            (type === "focusin"   && !this.hasTrigger(element, "focus"))) {
+        if ((type === "mouseover" && !this.hasTrigger(element, "hover")) || (type === "focusin" && !this.hasTrigger(element, "focus"))) {
             return
         }
 
@@ -95,7 +94,7 @@ class Tooltip {
 
     //
     leaveEventListener = event => {
-        var type    = event.type
+        var type = event.type
         var element = event.target.closest("[data-tooltip]")
 
         // 如果滑鼠移開的元素不是主元素就忽略，
@@ -107,7 +106,7 @@ class Tooltip {
         // 如果滑鼠移開這個元素，但這個元素有 Focus 觸發條件，且又還是在聚焦狀態，就忽略滑鼠移出事件
         // 因為使用者可能是 Hover In 又 Hover Out，但是 Focus 更重要。
         var has_focus_trigger = this.hasTrigger(element, "focus")
-        var focused_element   = document.activeElement.closest("[data-tooltip]")
+        var focused_element = document.activeElement.closest("[data-tooltip]")
 
         if (type === "mouseleave" && has_focus_trigger && focused_element === element) {
             return
@@ -140,7 +139,7 @@ class Tooltip {
         var tooltip = document.createElement("div")
 
         // 如果 [data-html] 是 "true" 的話就允許使用者在工具提示裡使用 HTML。
-        if (element.dataset.html === 'true') {
+        if (element.dataset.html === "true") {
             tooltip.innerHTML = element.dataset.tooltip
         } else {
             tooltip.innerText = element.dataset.tooltip
@@ -190,8 +189,8 @@ class Tooltip {
         // 使用 FloatingUI 來初始化工具提示的浮動元素。
         element.tocas_tooltip = TocasFloatingUIDOM.autoUpdate(element, tooltip, () => {
             TocasFloatingUIDOM.computePosition(element, tooltip, {
-                strategy  : "fixed",
-                placement : position,
+                strategy: "fixed",
+                placement: position,
                 middleware: [
                     // 下面過窄時會擠兌到上面。
                     TocasFloatingUIDOM.flip({
@@ -219,7 +218,7 @@ class Tooltip {
                 // 賦予工具提示絕對座標。
                 Object.assign(tooltip.style, {
                     left: `${x}px`,
-                    top : `${y}px`,
+                    top: `${y}px`,
                 })
 
                 // 設置箭頭的水平座標，因為箭頭只會出現在上面或下面，所以不需要 y 座標。

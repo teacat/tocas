@@ -59,6 +59,11 @@ body {
         Roboto, "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif;
 }
 
+/** Lock scroll when dialog was opened */
+body:has(dialog.ts-modal[open], dialog.ts-drawer[open]) {
+    overflow: hidden;
+}
+
 /**
  * Input for iOS date input
  *
@@ -123,7 +128,8 @@ dialog[class*="ts-"],
     margin-block-end: 1em;
 }
 
-[class*="ts-"] :where(:first-child) {
+[class*="ts-"] :where(:first-child),
+[class*="ts-"] :where(.has-hidden:first-child + p) {
     margin-block-start: 0;
 }
 
@@ -131,7 +137,8 @@ dialog[class*="ts-"],
     margin-block-start: 0.5em;
 }
 
-[class*="ts-"] :where(:last-child) {
+[class*="ts-"] :where(:last-child),
+[class*="ts-"] :where(:has(+ .has-hidden:last-child)) {
     margin-block-end: 0;
 }
 

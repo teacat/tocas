@@ -1,13 +1,9 @@
-# Tocas UI
+# Tocas UI [![](https://img.shields.io/npm/dt/tocas.svg)](https://www.npmjs.com/package/tocas) [![](https://img.shields.io/npm/v/tocas.svg)](https://github.com/teacat/tocas/releases) [![](https://img.shields.io/npm/l/tocas.svg)](https://github.com/teacat/tocas/blob/master/LICENSE)
 
 以最快最直覺的方式，建構多樣的網站與漸進式網路應用程式介面。
 
-[![](https://img.shields.io/npm/dt/tocas.svg)](https://www.npmjs.com/package/tocas)
-[![](https://img.shields.io/npm/v/tocas.svg)](https://github.com/teacat/tocas/releases)
-[![](https://img.shields.io/npm/l/tocas.svg)](https://github.com/teacat/tocas/blob/master/LICENSE)
-
--   📘 文件：[v4.tocas-ui.com/zh-tw](https://v4.tocas-ui.com/zh-tw)
--   🎲 範例：[v4.tocas-ui.com/zh-tw/examples.html](https://v4.tocas-ui.com/zh-tw/examples.html)
+-   📘 文件：[tocas-ui.com/5.0/zh-tw](https://tocas-ui.com/5.0/zh-tw)
+-   🎲 範例：[tocas-ui.com/5.0/zh-tw/examples.html](https://tocas-ui.com/5.0/zh-tw/examples.html)
 -   📦 原始碼：[GitHub](https://github.com/teacat/tocas) | [NPM](https://www.npmjs.com/package/tocas) | [cdnjs](https://cdnjs.com/libraries/tocas)
 -   🌎 語系：**台灣正體**
 
@@ -19,24 +15,16 @@
 
 ```html
 <!-- 核心：Tocas UI -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.2.5/tocas.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/4.2.5/tocas.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas/5.0.0/tocas.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas/5.0.0/tocas.min.js"></script>
 
 <!-- 字體：Noto Sans TC -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
-```
 
-&nbsp;
-
-**或者…自行下載 Tocas UI**
-
-下載 `/dist` 資料夾並像下面這樣引用 Tocas UI 檔案，這樣你便能在離線環境使用 Tocas UI。
-
-```html
-<link rel="stylesheet" href="./tocas/dist/tocas.min.css" />
-<script src="./tocas/dist/tocas.min.js"></script>
+<!-- 啟用：響應式設計 -->
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 ```
 
 &nbsp;
@@ -56,8 +44,8 @@
 </div>
 ```
 
--   📘 文件：[v4.tocas-ui.com/zh-tw](https://v4.tocas-ui.com/zh-tw)
--   🎲 範例：[v4.tocas-ui.com/zh-tw/examples.html](https://v4.tocas-ui.com/zh-tw/examples.html)
+-   📘 文件：[tocas-ui.com/5.0/zh-tw](https://tocas-ui.com/5.0/zh-tw)
+-   🎲 範例：[tocas-ui.com/5.0/zh-tw/examples.html](https://tocas-ui.com/5.0/zh-tw/examples.html)
 
 &nbsp;
 

@@ -1,0 +1,116 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+dialog.ts-drawer {
+    --width: 380px;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+dialog.ts-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgb(0 0 0 / 50%);
+    display: none;
+    overflow-y: auto;
+    height: auto;
+    width: auto;
+    outline: none;
+    align-items: flex-start;
+    flex-direction: column;
+    z-index: var(--ts-z-drawer);
+}
+
+dialog.ts-drawer:modal,
+dialog.ts-drawer:popover-open {
+    background: transparent;
+}
+
+dialog.ts-drawer::backdrop {
+    background: rgb(0 0 0 / 50%);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-drawer > .content {
+    background: var(--ts-gray-50);
+    box-shadow: var(--ts-elevated-shadow-drawer);
+    width: var(--width);
+    max-width: 100%;
+    flex: 1;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Visible
+ */
+
+dialog.ts-drawer[open],
+dialog.ts-drawer:popover-open {
+    display: flex;
+}
+
+/**
+ * Positions
+ */
+
+.ts-drawer.is-bottom {
+    --width: 100%;
+
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.ts-drawer.is-bottom > .content {
+}
+
+.ts-drawer.is-end {
+    align-items: flex-end;
+}
+
+.ts-drawer.is-start {
+    align-items: flex-start;
+}
+
+/**
+ * Sizes
+ */
+
+.ts-drawer.is-small {
+    --width: 280px;
+}
+
+.ts-drawer.is-large {
+    --width: 580px;
+}
+
+/**
+ * Modal
+ */
+
+.ts-drawer.is-modal {
+    padding: 1rem;
+}
+
+.ts-drawer.is-modal > .content {
+    border-radius: var(--ts-border-radius-container);
+}
+
+/**
+ * Fullscreen
+ */
+
+.ts-drawer.is-fullscreen {
+    --width: 100%;
+}

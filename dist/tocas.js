@@ -1,44 +1,13 @@
 window.tocas = {
     config: {
         strict_responsive: false,
-        attributes: {
-            tab: "data-tab",
-            tab_name: "data-name",
-            toggle: "data-toggle",
-            toggle_name: "data-name",
-            input: "data-input",
-            dropdown: "data-dropdown",
-            dropdown_name: "data-name",
-            dropdown_position: "data-position",
-            tooltip: "data-tooltip",
-            tooltip_position: "data-position",
-            tooltip_delay: "data-delay",
-            tooltip_html: "data-html",
-            tooltip_trigger: "data-trigger",
-            fileplace: "data-fileplace",
-            fileplace_name: "data-name",
-        },
-        scopes: {
-            tab: "@scope",
-            toggle: "@scope",
-            tab: "@scope",
-            fileplace: "@scope",
-            dropdown: "@scope",
-            container: "@container",
-        },
-        classes: {
-            hidden: "has-hidden",
-            tab_active: "is-active",
-            tooltip_visible: "is-visible",
-            tab: "ts-tab",
-        },
     },
-};
+}
 
-window.tocas_modules = [];
+window.tocas_modules = []
 
 //
-(function () {
+;(function () {
     /* ==========================================================================
        Floating UI
        ========================================================================== */
@@ -61,10 +30,10 @@ window.tocas_modules = [];
         this.resize_observer = new ResizeObserver(entries => {
             entries.forEach(entry => {
                 this.getAllContaineredElements(entry.target).forEach(element => {
-                    this.check(element);
-                });
-            });
-        });
+                    this.check(element)
+                })
+            })
+        })
     }
 
     // attributeMutation
@@ -76,152 +45,154 @@ window.tocas_modules = [];
         // 如果這個元素被追加 Container 樣式，就把他視為容器來監聽尺寸異動，
         // 但如果不再是 Container 的話，就從監聽裡移除。
         if (this.isContainer(mutation.target)) {
-            this.resize_observer.observe(mutation.target);
+            this.resize_observer.observe(mutation.target)
         } else {
-            this.resize_observer.unobserve(mutation.target);
+            this.resize_observer.unobserve(mutation.target)
         }
-    };
+    }
 
     // addedNodeMutation
     addedNodeMutation = added_node => {
         // 如果這個追加的新元素帶有響應式樣式，就立即檢查響應式渲染。
         if (this.isResponsiveElement(added_node)) {
-            this.check(added_node);
+            this.check(added_node)
         }
 
         // 如果這個追加的新元素是一個 Container，就納入容器的尺寸監聽裡。
         if (this.isContainer(added_node)) {
-            this.resize_observer.observe(added_node);
+            this.resize_observer.observe(added_node)
         }
-    };
+    }
 
     // getAllContaineredElements
     getAllContaineredElements = container => {
-        return container.querySelectorAll(tocas.config.strict_responsive ? `[class^="@"]:is([class*=":is-"],[class*=":has-"])` : `[class^="@"][class*=":"]`);
-    };
+        return container.querySelectorAll(
+            tocas.config.strict_responsive ? `[class^="@"]:is([class*=":is-"],[class*=":has-"])` : `[class^="@"][class*=":"]`
+        )
+    }
 
     // getAllResponsiveElements
     getAllResponsiveElements = container => {
-        return container.querySelectorAll(tocas.config.strict_responsive ? `[class*=":is-"],[class*=":has-"]` : `[class*=":"]`);
-    };
+        return container.querySelectorAll(tocas.config.strict_responsive ? `[class*=":is-"],[class*=":has-"]` : `[class*=":"]`)
+    }
 
     // isContainer
     isContainer = element => {
-        return element.matches(`[class~="${tocas.config.scopes.container}"]`);
-    };
+        return element.matches(`[class~="@container"]`)
+    }
 
     // isResponsiveElement
     isResponsiveElement = element => {
-        return element.matches(tocas.config.strict_responsive ? `[class*=":is-"],[class*=":has-"]` : `[class*=":"]`);
-    };
+        return element.matches(tocas.config.strict_responsive ? `[class*=":is-"],[class*=":has-"]` : `[class*=":"]`)
+    }
 
     // hasResponsiveClass
     hasResponsiveClass = class_name => {
-        return tocas.config.strict_responsive ? class_name.includes(":is-") || class_name.includes(":has-") : class_name.includes(":");
-    };
+        return tocas.config.strict_responsive ? class_name.includes(":is-") || class_name.includes(":has-") : class_name.includes(":")
+    }
 
     // windowResize
     windowResize = () => {
         this.getAllResponsiveElements(document).forEach(element => {
-            this.check(element);
-        });
-    };
+            this.check(element)
+        })
+    }
 
     // unit
     unit = value => {
-        return parseInt(value, 10) || 0;
-    };
+        return parseInt(value, 10) || 0
+    }
 
     // breakpointSize
     breakpointSize = (breakpoint, element) => {
-        var style = window.getComputedStyle(element);
+        var style = window.getComputedStyle(element)
 
         return {
             min: this.unit(style.getPropertyValue(`--ts-breakpoint-${breakpoint}-min`)),
             max: this.unit(style.getPropertyValue(`--ts-breakpoint-${breakpoint}-max`)),
-        };
-    };
+        }
+    }
 
     // rule
     rule = (rule, element) => {
         // 判斷規則有沒有 @ 開頭來看是不是一個 Container Query。
         // @breakpoint
-        var is_container_query = rule.startsWith("@");
+        var is_container_query = rule.startsWith("@")
 
         // 判斷規則的結尾有沒有 + 來看是不是要求大於或等於這個中斷點。
         // breakpoint+, [size]+
-        var is_equal_or_greater = rule.endsWith("+");
+        var is_equal_or_greater = rule.endsWith("+")
 
         // 判斷規則的結尾有沒有 - 來看是不是要求小於或等於這個中斷點。
         // breakpoint-, [size]-
-        var is_equal_or_lesser = rule.endsWith("-");
+        var is_equal_or_lesser = rule.endsWith("-")
 
         // 判斷這個規則有沒有包含 [ 來看是不是一個自訂尺寸，不判斷開頭是因為開頭可能是 @ 一個 Container Query。
         // [size]
-        var is_custom_size = rule.includes("[");
+        var is_custom_size = rule.includes("[")
 
         // 移除首要的 @ 符號。
         if (is_container_query) {
-            rule = rule.substring(1);
+            rule = rule.substring(1)
         }
 
         // 移除結尾的 +, - 符號。
         if (is_equal_or_greater || is_equal_or_lesser) {
-            rule = rule.substring(0, rule.length - 1);
+            rule = rule.substring(0, rule.length - 1)
         }
 
         // 移除首要跟結尾的 [ 跟 ] 符號。
         if (is_custom_size) {
-            rule = rule.substring(1).substring(0, rule.length - 1);
+            rule = rule.substring(1).substring(0, rule.length - 1)
         }
 
         // 從 breakpoint-breakpoint 結構中拆出 min, max 值，如果有的話。
-        var [min_breakpoint, max_breakpoint] = rule.split("-");
+        var [min_breakpoint, max_breakpoint] = rule.split("-")
 
         // 如果是自訂尺寸的話，就直接把規則當作 Unit 去解析，不去讀元素的中斷點定義。
         if (is_custom_size) {
             // 如果是大於或等於的定義，就從 Unit 裡面解析最小起始點，然後最大值設為 99999。
             // [size] +
             if (is_equal_or_greater) {
-                return [this.unit(min_breakpoint), 99999];
+                return [this.unit(min_breakpoint), 99999]
             }
 
             // 如果是小於或等於的定義，最小值設為 0，然後 Unit 裡面的最小起始點就是目標最大值。
             // [size] -
             if (is_equal_or_lesser) {
-                return [0, this.unit(min_breakpoint)];
+                return [0, this.unit(min_breakpoint)]
             }
 
             // [minSize-maxSize]
-            return [this.unit(min_breakpoint), this.unit(max_breakpoint)];
+            return [this.unit(min_breakpoint), this.unit(max_breakpoint)]
         }
 
         // 從目前這個元素繼承的中斷點來搜尋最小的定義。
-        var from = this.breakpointSize(min_breakpoint, element);
+        var from = this.breakpointSize(min_breakpoint, element)
 
         // 如果這個規則有找到最大中斷點，那麼他就是 breakpoint-breakpoint 規則
         // 所以我們取得最大中斷點的像素定義，然後同時回傳最小跟最大的定義。
         if (max_breakpoint !== undefined) {
-            return [from.min, this.breakpointSize(max_breakpoint, element).max];
+            return [from.min, this.breakpointSize(max_breakpoint, element).max]
         }
 
         // 如果是大於或等於的定義，就從繼承的定義裡取得最小起始點，然後最大值設為 99999。
         // breakpoint+
         if (is_equal_or_greater) {
-            return [from.min, 99999];
+            return [from.min, 99999]
         }
 
         // 如果是小於或等於的定義，最小值設為 0，然後繼承的定義裡，最小起始點就是目標最大值。
         // breakpoint-
         if (is_equal_or_lesser) {
-            return [0, from.max];
+            return [0, from.max]
         }
 
         // 如果這個定義不是大於也不是小於，就取得這個中斷點的最小與最大值定義，
         // 這個規則只會在這個中斷點生效。
         // breakpoint
-        return [from.min, from.max];
-    };
+        return [from.min, from.max]
+    }
 
     // compile
     compile = element => {
@@ -229,58 +200,59 @@ window.tocas_modules = [];
             .filter(class_name => this.hasResponsiveClass(class_name))
             .map(class_name => {
                 // 透過 `:` 來切分規則跟想要切換的樣式名稱。
-                var [rule, target_class] = class_name.split(":");
+                var [rule, target_class] = class_name.split(":")
 
                 // 從規則解析這個樣式的中斷點起始與結束定義。
-                var [min, max] = this.rule(rule, element);
+                var [min, max] = this.rule(rule, element)
 
                 // 如果這個規則開頭有個 @ 符號，就尋找最近的 Container 容器來作為寬度判斷，
                 // 但如果沒有，就以視窗的 innerWidth 為主。
                 // @breakpoint
                 var width = rule.startsWith("@")
-                    ? Math.round(element.closest(`[class~="${tocas.config.scopes.container}"]`).getBoundingClientRect().width)
-                    : Math.round(window.innerWidth);
+                    ? Math.round(element.closest(`[class~="@container"]`).getBoundingClientRect().width)
+                    : Math.round(window.innerWidth)
 
                 return {
                     min,
                     max,
                     width,
                     target_class,
-                };
-            });
-    };
+                }
+            })
+    }
 
     // check
     check = element => {
         // 這個陣列會用來記得我們在目前中斷點有哪些樣式是生效的，
         // 這樣遇到不相符的中斷點，就不會因為起衝突然後又把他們移除掉。
-        var applieds = [];
+        var applieds = []
 
         // 篩選這個元素所有不含響應規則的樣式並且先把需要的樣式計算出相關中繼點來做整理。
-        var compiled_list = this.compile(element);
+        var compiled_list = this.compile(element)
 
         // 先跑一輪符合目前中斷點的樣式。
         compiled_list.forEach(({ width, min, max, target_class }) => {
             // 如果寬度符合這個中斷點，就套用對應的樣式。
             if (width >= min && width <= max) {
-                element.classList.add(target_class);
+                element.classList.add(target_class)
 
                 // 把這個樣式儲存到記憶陣列裡，這樣等一下就不會又移除他。
-                applieds = [...applieds, target_class];
+                applieds = [...applieds, target_class]
             }
-        });
+        })
 
         // 另外跑一輪不相符的中斷點，檢查有哪些不對的樣式應該移除掉。
         compiled_list.forEach(({ width, min, max, target_class }) => {
             // 如果寬度不符合這個中斷點，而且這個樣式也不是剛才追加的，就移除這個不符合條件的樣式。
             if ((width < min || width > max) && !applieds.includes(target_class)) {
-                element.classList.remove(target_class);
+                element.classList.remove(target_class)
             }
-        });
-    };
+        })
+    }
 }
 
 window.tocas_modules = [...window.tocas_modules, new Responsive()]
+
 
 
     /* ==========================================================================
@@ -289,128 +261,198 @@ window.tocas_modules = [...window.tocas_modules, new Responsive()]
 
     class Tab {
     // attributeMutation
-    attributeMutation = mutation => {};
+    attributeMutation = mutation => {}
 
     // addedNodeMutation
     addedNodeMutation = added_node => {
         // 如果這個新追加的 DOM 節點是一個 Tab 模組，就監聽其點擊事件。
         if (this.isTab(added_node)) {
             // 監聽其點擊事件。
-            this.bindEventListener(added_node);
+            this.bindEventListener(added_node)
 
             // 如果這個項目沒有被啟用，就預設隱藏對應的內容，這樣使用者就不用額外手動隱藏該內容。
-            this.initialTab(added_node);
+            this.initialTab(added_node)
         }
-    };
+    }
 
     // isTab
     isTab = element => {
-        return element.matches("[data-tab]");
-    };
+        return element.matches("[data-tab]")
+    }
 
     // isActiveTab
     isActiveTab = element => {
-        return element.classList.contains("is-active");
-    };
+        return element.classList.contains("is-active")
+    }
 
     // initialTab
     initialTab = element => {
         if (!this.isActiveTab(element)) {
-            document.getElementById(element.dataset.tab).classList.add("has-hidden");
+            document.getElementById(element.dataset.tab).classList.add("has-hidden")
         }
-    };
+    }
 
     // toggle
     toggle = event => {
         // 有時候點擊按鈕可能是裡面的圖示觸發事件，所以要取得點擊後最鄰近的分頁模組。
-        var element = event.target.closest("[data-tab]");
+        var element = event.target.closest("[data-tab]")
 
         // 取得這個分頁模組要切換的目標內容名稱。
-        var tab_name = element.dataset.tab;
+        var tab_name = element.dataset.tab
 
         // 取得這個 `.ts-tab` 的分頁群組元素。
-        var tab_group_element = element.closest(".ts-tab");
+        var tab_group_element = element.closest(".ts-tab")
 
         // 建立一個陣列用來收集等一下所有不相關的分頁，這樣就可以一次關閉。
-        var should_close = [];
+        var should_close = []
 
         // 在同個分頁群組裡，透過掃描每個分頁項目來找出有哪些關聯的分頁內容名稱。
         tab_group_element.querySelectorAll("[data-tab]").forEach(v => {
             // 如果這個項目就是我們要啟用的分頁，那就啟用這個項目。
             if (v.dataset.tab === tab_name) {
-                v.classList.add("is-active");
+                v.classList.add("is-active")
             }
 
             // 但如果這個項目不是我們要啟用的分頁。
             else {
                 // 收集這個項目的目標分頁名稱，等一下就能一次隱藏這些非目標內容。
-                should_close = [...should_close, v.dataset.tab];
+                should_close = [...should_close, v.dataset.tab]
 
                 // 移除這個項目的啟用狀態，因為這個項目本來就不是我們要啟用的。
-                v.classList.remove("is-active");
+                v.classList.remove("is-active")
             }
-        });
+        })
 
         // 隱藏那些該關閉的分頁。
-        should_close.forEach((id) => {
-            document.getElementById(id).classList.add("has-hidden");
+        should_close.forEach(id => {
+            document.getElementById(id).classList.add("has-hidden")
         })
 
         // 顯示目標分頁。
-        document.getElementById(tab_name).classList.remove("has-hidden");
-    };
+        document.getElementById(tab_name).classList.remove("has-hidden")
+    }
 
     // bindEventListener
     bindEventListener = element => {
-        element.removeEventListener("click", this.toggle);
-        element.addEventListener("click", this.toggle);
-    };
+        element.removeEventListener("click", this.toggle)
+        element.addEventListener("click", this.toggle)
+    }
 }
 
 window.tocas_modules = [...window.tocas_modules, new Tab()]
 
 
+
     /* ==========================================================================
-       Toggle
+       Collapse
        ========================================================================== */
 
-    class Toggle {
+    class Collapse {
+    // #collapses 用以隨時更新頁面上有哪些存在的顯示切換 ID，
+    // 這個清單資料來自於有被指定在 [data-collapse] 裡的名稱。
+    #collapses = new Set()
+
     // attributeMutation
-    attributeMutation = mutation => {};
+    attributeMutation = mutation => {
+        if (this.isCollapse(mutation.target)) {
+            this.refreshRelatedTriggers(mutation.target)
+        }
+    }
 
     // addedNodeMutation
     addedNodeMutation = added_node => {
-        // 如果這個新追加的 DOM 節點是一個 Toggle 模組，就監聽其點擊事件。
-        if (this.isToggle(added_node)) {
-            this.bindEventListener(added_node);
+        // 如果這個新追加的 DOM 節點是一個 Collapse 觸發按鈕，就監聽其點擊事件。
+        if (this.isCollapseTrigger(added_node)) {
+            this.bindEventListener(added_node)
+            this.recordCollapses(added_node)
+            this.refreshTrigger(added_node)
         }
-    };
 
-    // isToggle
-    isToggle = element => {
-        return element.matches("[data-toggle]");
-    };
+        // 如果這個新追加的 DOM 節點是一個 Collapse 目標，
+        // 就基於目標目前的隱藏狀態，更新所有觸發按鈕的樣式。
+        if (this.isCollapse(added_node)) {
+            this.refreshRelatedTriggers(added_node)
+        }
+    }
+
+    // removedNodeMutation
+    removedNodeMutation = removed_node => {
+        if (this.isCollapseTrigger(removed_node)) {
+            this.unrecordCollapses(removed_node)
+        }
+    }
+
+    // isCollapseTrigger
+    isCollapseTrigger = element => {
+        return element.matches("[data-collapse]")
+    }
+
+    // isCollapse
+    isCollapse = element => {
+        return this.#collapses.has(element.id)
+    }
+
+    // recordCollapses
+    recordCollapses = trigger => {
+        console.log(this.#collapses)
+        this.#collapses.add(trigger.dataset.collapse)
+    }
+
+    // unrecordCollapses
+    unrecordCollapses = trigger => {
+        this.#collapses.delete(trigger.dataset.collapse)
+    }
+
+    // refreshRelatedTriggers
+    refreshRelatedTriggers = target => {
+        // 這裡使用 try 是因為有些瀏覽器的擴充套件可能會插入額外非正規 id 的元素而導致 querySelector 出錯。
+        try {
+            document.querySelectorAll(`[data-collapse="${target.id}"]`).forEach(trigger => {
+                this.refreshTrigger(trigger)
+            })
+        } catch {}
+    }
+
+    // refreshTrigger
+    refreshTrigger = element => {
+        var target = document.getElementById(element.dataset.collapse)
+        if (target === null) {
+            return
+        }
+
+        var inactive_classes = element.dataset.inactive ? element.dataset.inactive.split(" ") : []
+        var active_classes = element.dataset.active ? element.dataset.active.split(" ") : []
+
+        if (target.classList.contains("has-hidden")) {
+            element.classList.add(...inactive_classes)
+            element.classList.remove(...active_classes)
+        } else {
+            element.classList.add(...active_classes)
+            element.classList.remove(...inactive_classes)
+        }
+    }
 
     // toggle
     toggle = event => {
         // 有時候點擊按鈕可能是裡面的圖示觸發事件，所以要取得點擊後最鄰近的切換模組。
-        var element = event.target.closest("[data-toggle]");
+        var element = event.target.closest("[data-collapse]")
 
-        // 透過 `:` 從規則裡切分出目標名稱還有欲切換的樣式名稱。
-        var [id, class_name] = element.dataset.toggle.split(":");
+        // 切換目標的能見度。
+        document.getElementById(element.dataset.collapse).classList.toggle("has-hidden")
 
-        // 尋找同個命名空間裡的所有目標，然後切換所有目標元素的指定樣式。
-        document.getElementById(id).classList.toggle(class_name);
-    };
+        // 更新觸發元素自己的樣式。
+        this.updateTriggerClass(element)
+    }
 
     // bindEventListener
     bindEventListener = element => {
-        element.removeEventListener("click", this.toggle);
-        element.addEventListener("click", this.toggle);
-    };
+        element.removeEventListener("click", this.toggle)
+        element.addEventListener("click", this.toggle)
+    }
 }
 
-window.tocas_modules = [...window.tocas_modules, new Toggle()]
+window.tocas_modules = [...window.tocas_modules, new Collapse()]
+
 
 
     /* ==========================================================================
@@ -423,21 +465,30 @@ window.tocas_modules = [...window.tocas_modules, new Toggle()]
     #dropdowns = new Set()
 
     // attributeMutation
-    attributeMutation = mutation => { }
+    attributeMutation = mutation => {}
 
     // addedNodeMutation
     addedNodeMutation = added_node => {
-        // 當有新的節點被增加，就更新彈出式選單的清單。
-        this.updateDropdowns()
-
         // 如果這個追加的 DOM 元素是一個會觸發彈出式選單的元素，就監聽其點擊事件。
         if (this.isDropdownTrigger(added_node)) {
             this.bindEventListener(added_node)
+            this.recordDropdowns(added_node)
+            this.refreshTrigger(added_node)
         }
 
         // 如果這個追加的 DOM 元素是一個彈出式選單容器，就監聽其選項點擊事件。
         if (this.isDropdown(added_node)) {
             this.bindItemEventListener(added_node)
+
+            // 應該不需要，因為 Dropdown 預設都一定是關的。
+            //this.refreshRelatedTriggers(added_node)
+        }
+    }
+
+    // removedNodeMutation
+    removedNodeMutation = removed_node => {
+        if (this.isDropdownTrigger(removed_node)) {
+            this.unrecordDropdowns(removed_node)
         }
     }
 
@@ -452,10 +503,39 @@ window.tocas_modules = [...window.tocas_modules, new Toggle()]
         return element.matches(`.ts-dropdown`) && this.#dropdowns.has(element.id)
     }
 
-    // updateDropdowns
-    updateDropdowns = () => {
-        document.querySelectorAll("[data-dropdown]").forEach(element => {
-            this.#dropdowns.add(element.dataset.dropdown)
+    // recordDropdowns
+    recordDropdowns = trigger => {
+        this.#dropdowns.add(trigger.dataset.dropdown)
+    }
+
+    // unrecordDropdowns
+    unrecordDropdowns = trigger => {
+        this.#dropdowns.delete(trigger.dataset.dropdown)
+    }
+
+    // refreshTrigger
+    refreshTrigger = element => {
+        var target = document.getElementById(element.dataset.dropdown)
+        if (target === null) {
+            return
+        }
+
+        var inactive_classes = element.dataset.inactive ? element.dataset.inactive.split(" ") : []
+        var active_classes = element.dataset.active ? element.dataset.active.split(" ") : []
+
+        if (target.classList.contains("is-visible")) {
+            element.classList.add(...active_classes)
+            element.classList.remove(...inactive_classes)
+        } else {
+            element.classList.add(...inactive_classes)
+            element.classList.remove(...active_classes)
+        }
+    }
+
+    // refreshRelatedTriggers
+    refreshRelatedTriggers = target => {
+        document.querySelectorAll(`[data-dropdown="${target.id}"]`).forEach(trigger => {
+            this.refreshTrigger(trigger)
         })
     }
 
@@ -480,15 +560,8 @@ window.tocas_modules = [...window.tocas_modules, new Toggle()]
             })
         }
 
-
-
         // 如果這個點擊事件是在點擊一個會開關 Dropdown 的觸發元素。
         if (closest_trigger !== null) {
-            if (document.activeElement === event.target && document.activeElement.tagName === "INPUT") {
-                console.log("wow")
-                return
-            }
-
             // 取得這個觸發元素原本會打開的 Dropdown 名稱。
             var name = closest_trigger.dataset.dropdown
 
@@ -551,6 +624,8 @@ window.tocas_modules = [...window.tocas_modules, new Toggle()]
             dropdown.style.removeProperty("--ts-dropdown-min-width")
             dropdown.style.removeProperty("--ts-dropdown-position")
         }
+
+        this.refreshRelatedTriggers(dropdown)
     }
 
     // itemClickEventListener
@@ -589,15 +664,10 @@ window.tocas_modules = [...window.tocas_modules, new Toggle()]
             target.style.removeProperty("--ts-dropdown-position")
         }
 
-        if (document.activeElement.closest("[data-dropdown]") === element && document.activeElement.tagName === "INPUT") {
-            if (target.classList.contains("is-visible")) {
-                return
-            }
-
-        }
-
         // 切換目標彈出式選單的可見度。
         target.classList.toggle("is-visible")
+
+        this.refreshRelatedTriggers(target)
 
         // 如果目標選單現在不再可見，就是被隱藏了，那就不需要執行接下來的行為。
         if (!target.classList.contains("is-visible")) {
@@ -631,7 +701,7 @@ window.tocas_modules = [...window.tocas_modules, new Toggle()]
                             Object.assign(elements.floating.style, {
                                 maxWidth: `${availableWidth}px`,
                                 maxHeight: `${availableHeight}px`,
-                            });
+                            })
                         },
                     }),
                 ],
@@ -649,6 +719,7 @@ window.tocas_modules = [...window.tocas_modules, new Toggle()]
 window.tocas_modules = [...window.tocas_modules, new Dropdown()]
 
 
+
     /* ==========================================================================
        Popover
        ========================================================================== */
@@ -656,6 +727,13 @@ window.tocas_modules = [...window.tocas_modules, new Dropdown()]
     class Popover {
     #touch_start_y = 0
     #touch_start_x = 0
+
+    // #last_clicked_element 是用來紀錄最後一次點擊的元素，
+    // 以此來取得若有 Popover 被打開，應該要附著在哪個觸發元素。
+    #last_clicked_element = null
+
+    // TODO: 在 Trigger 初始化的時候檢查自己的 data-inactive 樣式
+    #popovers = new Set()
 
     // attributeMutation
     attributeMutation = mutation => {}
@@ -670,12 +748,16 @@ window.tocas_modules = [...window.tocas_modules, new Dropdown()]
 
     // isPopover
     isPopover = element => {
-        return element.matches(`[data-popover][popover]`)
+        return element.matches(`.ts-popover[popover]`)
     }
 
     // position
     position = element => {
         return element.dataset.position || "bottom"
+    }
+
+    windowClick = event => {
+        this.#last_clicked_element = event.target
     }
 
     // bindEventListener
@@ -694,8 +776,8 @@ window.tocas_modules = [...window.tocas_modules, new Dropdown()]
         // 監聽捲軸滾動，讓捲軸可以滾穿 Top-Layer，
         // 這樣使用者就不會被 Popover 卡住不好捲動底層頁面。
         element.addEventListener("wheel", this.wheelEventListener)
-        element.addEventListener('touchstart', this.touchstartEventListener)
-        element.addEventListener('touchmove', this.touchmoveEventListener)
+        element.addEventListener("touchstart", this.touchstartEventListener)
+        element.addEventListener("touchmove", this.touchmoveEventListener)
     }
 
     // wheelEventListener
@@ -726,11 +808,10 @@ window.tocas_modules = [...window.tocas_modules, new Dropdown()]
 
     // universalWheelHandler
     universalWheelHandler = (delta_x, delta_y, event) => {
-        var is_scrollable = event.target.scrollHeight > event.target.clientHeight ||
-                            event.target.scrollWidth  > event.target.clientWidth
-                            // 沒有內容的 Textarea 雖然 Overflow 是 Auto，但多數瀏覽器都允許滾動下層。
-                            // getComputedStyle(event.target).overflow === 'auto'    ||
-                            // getComputedStyle(event.target).overflow === 'scroll'
+        var is_scrollable = event.target.scrollHeight > event.target.clientHeight || event.target.scrollWidth > event.target.clientWidth
+        // 沒有內容的 Textarea 雖然 Overflow 是 Auto，但多數瀏覽器都允許滾動下層。
+        // getComputedStyle(event.target).overflow === 'auto'    ||
+        // getComputedStyle(event.target).overflow === 'scroll'
 
         // 如果 Popover 本身就可以捲動，那就不要干涉。
         if (is_scrollable) {
@@ -743,7 +824,7 @@ window.tocas_modules = [...window.tocas_modules, new Dropdown()]
 
         // NOTE: 如果 Textarea 已經滑到底，使用者此時按住 Textarea 往下滑，並不會讓網頁捲動。
         // 主要是 Input 不會將事件冒泡給 Popover 的 ontouchmove 監聽器，這暫時不重要，先不解決。
-        scrolling_element.scrollTop  += delta_y
+        scrolling_element.scrollTop += delta_y
         scrolling_element.scrollLeft += delta_x
     }
 
@@ -752,16 +833,43 @@ window.tocas_modules = [...window.tocas_modules, new Dropdown()]
         var parent = element.parentElement
 
         while (parent) {
-            const is_scrollable = parent.scrollHeight > parent.clientHeight    ||
-                                  parent.scrollWidth  > parent.clientWidth     ||
-                                  getComputedStyle(parent).overflow === 'auto' ||
-                                  getComputedStyle(parent).overflow === 'scroll'
+            const is_scrollable =
+                parent.scrollHeight > parent.clientHeight ||
+                parent.scrollWidth > parent.clientWidth ||
+                getComputedStyle(parent).overflow === "auto" ||
+                getComputedStyle(parent).overflow === "scroll"
             if (is_scrollable) {
                 return parent
             }
             parent = parent.parentElement
         }
         return null
+    }
+
+    // refreshRelatedTriggers
+    refreshRelatedTriggers = target => {
+        document.querySelectorAll(`[popovertarget="${target.id}"]`).forEach(trigger => {
+            this.refreshTrigger(trigger)
+        })
+    }
+
+    // refreshTrigger
+    refreshTrigger = element => {
+        var target = element.popoverTargetElement
+        if (!target) {
+            return
+        }
+
+        var inactive_classes = element.dataset.inactive ? element.dataset.inactive.split(" ") : []
+        var active_classes = element.dataset.active ? element.dataset.active.split(" ") : []
+
+        if (target.matches(":popover-open")) {
+            element.classList.add(...active_classes)
+            element.classList.remove(...inactive_classes)
+        } else {
+            element.classList.add(...inactive_classes)
+            element.classList.remove(...active_classes)
+        }
     }
 
     // beforetoggleEventListener
@@ -776,11 +884,7 @@ window.tocas_modules = [...window.tocas_modules, new Dropdown()]
     toggleEventListener = event => {
         var popover = event.target
 
-        // 取得這個觸發元素會切換的彈出式選單名稱。
-        var target_id = popover.dataset.popover
-
-        // 透過命名空間搜尋對應的彈出式選單。
-        var target = document.getElementById(target_id)
+        this.refreshRelatedTriggers(popover)
 
         if (event.newState === "closed") {
             if (popover.tocas_popover !== undefined) {
@@ -789,6 +893,17 @@ window.tocas_modules = [...window.tocas_modules, new Dropdown()]
                 // NOTE: 以後再來考慮 A11y。
                 // target.removeAttribute("aria-expanded")
             }
+            return
+        }
+
+        // 找出這個 Popover 相關的附著目標。
+        var target =
+            document.getElementById(popover.dataset.anchor) || // 先找這個 Popover 指定的 [data-anchor]
+            this.#last_clicked_element?.closest(`[popovertarget="${event.target.id}]`) || // 再找最後一次點擊的 [popovertarget]
+            document.querySelector(`[popovertarget="${event.target.id}"]`) // 再找整個網頁第一個符合跟此 Popover 有關的 [popovertarget]
+
+        // 如果完全沒有可附著的目標就離開。
+        if (!target) {
             return
         }
 
@@ -833,6 +948,7 @@ window.tocas_modules = [...window.tocas_modules, new Dropdown()]
 }
 
 window.tocas_modules = [...window.tocas_modules, new Popover()]
+
 
 
     /* ==========================================================================
@@ -897,7 +1013,7 @@ window.tocas_modules = [...window.tocas_modules, new Popover()]
 
     // triggers
     triggers = element => {
-        return element.dataset.trigger?.split(' ').filter(i => i) || ["hover"]
+        return element.dataset.trigger?.split(" ").filter(i => i) || ["hover"]
     }
 
     // hasTrigger
@@ -907,7 +1023,7 @@ window.tocas_modules = [...window.tocas_modules, new Popover()]
 
     //
     enterEventListener = event => {
-        var type    = event.type
+        var type = event.type
         var element = event.target.closest("[data-tooltip]")
 
         // 如果目前的裝置是觸控裝置就忽略工具提示的觸發行為。
@@ -917,8 +1033,7 @@ window.tocas_modules = [...window.tocas_modules, new Popover()]
 
         // 如果滑鼠移入但是又沒有 Hover 觸發條件，就忽略滑鼠移入事件。
         // 如果是 Focus 也是一樣的道理。
-        if ((type === "mouseover" && !this.hasTrigger(element, "hover")) ||
-            (type === "focusin"   && !this.hasTrigger(element, "focus"))) {
+        if ((type === "mouseover" && !this.hasTrigger(element, "hover")) || (type === "focusin" && !this.hasTrigger(element, "focus"))) {
             return
         }
 
@@ -936,7 +1051,7 @@ window.tocas_modules = [...window.tocas_modules, new Popover()]
 
     //
     leaveEventListener = event => {
-        var type    = event.type
+        var type = event.type
         var element = event.target.closest("[data-tooltip]")
 
         // 如果滑鼠移開的元素不是主元素就忽略，
@@ -948,7 +1063,7 @@ window.tocas_modules = [...window.tocas_modules, new Popover()]
         // 如果滑鼠移開這個元素，但這個元素有 Focus 觸發條件，且又還是在聚焦狀態，就忽略滑鼠移出事件
         // 因為使用者可能是 Hover In 又 Hover Out，但是 Focus 更重要。
         var has_focus_trigger = this.hasTrigger(element, "focus")
-        var focused_element   = document.activeElement.closest("[data-tooltip]")
+        var focused_element = document.activeElement.closest("[data-tooltip]")
 
         if (type === "mouseleave" && has_focus_trigger && focused_element === element) {
             return
@@ -981,7 +1096,7 @@ window.tocas_modules = [...window.tocas_modules, new Popover()]
         var tooltip = document.createElement("div")
 
         // 如果 [data-html] 是 "true" 的話就允許使用者在工具提示裡使用 HTML。
-        if (element.dataset.html === 'true') {
+        if (element.dataset.html === "true") {
             tooltip.innerHTML = element.dataset.tooltip
         } else {
             tooltip.innerText = element.dataset.tooltip
@@ -1031,8 +1146,8 @@ window.tocas_modules = [...window.tocas_modules, new Popover()]
         // 使用 FloatingUI 來初始化工具提示的浮動元素。
         element.tocas_tooltip = TocasFloatingUIDOM.autoUpdate(element, tooltip, () => {
             TocasFloatingUIDOM.computePosition(element, tooltip, {
-                strategy  : "fixed",
-                placement : position,
+                strategy: "fixed",
+                placement: position,
                 middleware: [
                     // 下面過窄時會擠兌到上面。
                     TocasFloatingUIDOM.flip({
@@ -1060,7 +1175,7 @@ window.tocas_modules = [...window.tocas_modules, new Popover()]
                 // 賦予工具提示絕對座標。
                 Object.assign(tooltip.style, {
                     left: `${x}px`,
-                    top : `${y}px`,
+                    top: `${y}px`,
                 })
 
                 // 設置箭頭的水平座標，因為箭頭只會出現在上面或下面，所以不需要 y 座標。
@@ -1082,6 +1197,7 @@ window.tocas_modules = [...window.tocas_modules, new Popover()]
 window.tocas_modules = [...window.tocas_modules, new Tooltip()]
 
 
+
     /* ==========================================================================
        Select
        ========================================================================== */
@@ -1089,461 +1205,10 @@ window.tocas_modules = [...window.tocas_modules, new Tooltip()]
     // @/import "tocas.select.js";
 
     /* ==========================================================================
-       Auto Size
-       ========================================================================== */
-
-    class AutoSize {
-    constructor() { }
-
-    // attributeMutation
-    attributeMutation = mutation => { };
-
-    // addedNodeMutation
-    addedNodeMutation = added_node => {
-        // 如果追加的 DOM 節點是一個 AutoSize 模組就監聽其互動事件。
-        if (this.isAutoSize(added_node)) {
-            this.bindEventListener(added_node);
-
-            // TODO: resize automatically
-        }
-    };
-
-    // isAutoSize
-    isAutoSize = element => {
-        return element.matches(`[data-autosize]`);
-    };
-
-    // bindEventListener
-    bindEventListener = element => {
-        element.addEventListener("input", event => {
-            this.recalculateSize(event);
-        });
-        element.addEventListener("change", event => {
-            // this.recalculateSize(event);
-        });
-    };
-
-    // recalculateSize
-    recalculateSize = event => {
-        var element = event.target.closest(`input, textarea`);
-        var direction = element.dataset.autosize || "vertical";
-
-        //
-        if (direction === "horizontal") {
-            var computed = window.getComputedStyle(element, null);
-            var border_offset =
-                Math.round(parseFloat(computed.getPropertyValue("border-left-width"))) + Math.round(parseFloat(computed.getPropertyValue("border-right-width")));
-            var padding_offset = Math.round(parseFloat(computed.getPropertyValue("padding-left"))) + Math.round(parseFloat(computed.getPropertyValue("padding-right")));
-
-            element.style.width = `${this.calculateWidth(element) + border_offset + padding_offset}px`;
-        }
-
-        //
-        if (direction === "vertical") {
-            element.style.height = "";
-            element.style.overflowY = "hidden";
-
-            var max_rows = parseInt(element.getAttribute("data-max-rows")) || 0;
-            var computed = window.getComputedStyle(element, null);
-            var line_height = Math.round(parseFloat(computed.getPropertyValue("line-height")));
-            var height = Math.round(this.calculateHeight(element));
-            var rows = Math.floor(height / line_height);
-
-            var border_offset =
-                Math.round(parseFloat(computed.getPropertyValue("border-top-width"))) + Math.round(parseFloat(computed.getPropertyValue("border-bottom-width")));
-            var padding_offset = Math.round(parseFloat(computed.getPropertyValue("padding-top"))) + Math.round(parseFloat(computed.getPropertyValue("padding-bottom")));
-
-            if (max_rows > 0 && rows >= max_rows) {
-                var max_height = Math.round(line_height * max_rows + border_offset + padding_offset);
-
-                element.style.overflowY = "auto";
-
-                element.style.height = `${max_height}px`;
-
-                return;
-            }
-
-            element.style.height = `${height + border_offset}px`;
-
-            element.style.overflowY = "auto";
-        }
-    };
-
-    // calculateHeight
-    calculateHeight = element => {
-        return element.scrollHeight;
-    };
-
-    // calculateWidth
-    calculateWidth = element => {
-        var canvas = this.calculateWidth.canvas || (this.calculateWidth.canvas = document.createElement("canvas"));
-        var context = canvas.getContext("2d");
-        var font = window.getComputedStyle(element, null).getPropertyValue("font");
-        var text = element.value;
-        context.font = font;
-        var textMeasurement = context.measureText(text);
-        return Math.floor(textMeasurement.width);
-    };
-}
-
-window.tocas_modules = [...window.tocas_modules, new AutoSize()]
-
-
-    /* ==========================================================================
-       Input
-       ========================================================================== */
-
-    // @/import "tocas.input.js";
-
-    /* ==========================================================================
-       FileInvoke
-       ========================================================================== */
-
-    class FileInvoke {
-    constructor() { }
-
-    // attributeMutation
-    attributeMutation = mutation => { }
-
-    // addedNodeMutation
-    addedNodeMutation = added_node => {
-        // 如果這個新追加的 DOM 節點是一個 FileInvoke 模組，就監聽其點擊事件。
-        if (this.isFileInvoke(added_node)) {
-            // 監聽其點擊事件。
-            this.bindEventListener(added_node)
-        }
-    }
-
-    // isFileInvoke
-    isFileInvoke = element => {
-        return element.matches(`[data-fileinvoke]`)
-    }
-
-    // bindEventListener
-    bindEventListener = element => {
-        element.removeEventListener("dragover", this.dragEventHandler)
-        element.removeEventListener("dragenter", this.dragEventHandler)
-        element.removeEventListener("drop", this.dropEventHandler)
-        element.removeEventListener("click", this.clickEventHandler)
-
-        element.addEventListener("dragover", this.dragEventHandler)
-        element.addEventListener("dragenter", this.dragEventHandler)
-        element.addEventListener("drop", this.dropEventHandler)
-        element.addEventListener("click", this.clickEventHandler)
-    }
-
-    // getFileInput
-    getFileInput = element => {
-        return document.getElementById(element.dataset.fileinvoke)
-    }
-
-    // dragEventHandler
-    dragEventHandler = event => {
-        // 避免瀏覽器有其他動作。
-        event.preventDefault()
-    }
-
-    // dropEventHandler
-    dropEventHandler = event => {
-        // 取得對應的 Fileplace 元素。
-        var element = event.target.closest(`[data-fileinvoke]`)
-
-        // 避免瀏覽器有其他動作。
-        event.preventDefault()
-
-        // 取得關聯的檔案上傳欄位。
-        var file_input = this.getFileInput(element)
-
-        // 如果沒有指定可以多選，就永遠只取得拖曳的第一個檔案。
-        // 如果有多選的話，就直接將拖曳的檔案列表轉發給檔案上傳欄位。
-        if (file_input.getAttribute("multiple") === null) {
-            var data = new DataTransfer()
-            data.items.add(event.dataTransfer.files[0])
-            file_input.files = data.files
-        } else {
-            file_input.files = event.dataTransfer.files
-        }
-
-        // 觸發變更事件，讓其他程式能夠監聽此異動。
-        file_input.dispatchEvent(new Event("change", { bubbles: true }))
-    }
-
-    // clickEventHandler
-    clickEventHandler = event => {
-        // 取得對應的 FileInvoke 元素。
-        var element = event.target.closest(`[data-fileinvoke]`)
-
-        // 取得關聯的檔案上傳欄位。
-        var file_input = this.getFileInput(element)
-
-        // 點擊檔案上傳欄位來開啟檔案視窗。
-        file_input.click()
-    }
-}
-
-window.tocas_modules = [...window.tocas_modules, new FileInvoke()]
-
-
-    /* ==========================================================================
-       Invoke
-       ========================================================================== */
-
-    // @/import "tocas.invoke.js";
-
-    /* ==========================================================================
        Rail
        ========================================================================== */
 
-    class Rail {
-    // attributeMutation
-    attributeMutation = mutation => {};
-
-    // addedNodeMutation
-    addedNodeMutation = added_node => {
-        if (this.isRail(added_node)) {
-            this.bindEventListener(added_node);
-        }
-    };
-
-    // isRail
-    isRail = element => {
-        return element.matches("[data-rail]");
-    };
-
-    // bindEventListener
-    bindEventListener = element => {
-        var content_element = element.querySelector(".content")
-
-        window.removeEventListener("scroll", this.scrollHandler(content_element));
-        window.addEventListener("scroll", this.scrollHandler(content_element));
-
-
-
-        var ro = new ResizeObserver(entries => {
-
-            var content_rect = content_element.getBoundingClientRect();
-            var rail_rect = element.getBoundingClientRect();
-            console.log( Math.abs(content_rect.bottom - rail_rect.bottom))
-            if ( Math.abs(content_rect.bottom - rail_rect.bottom) <= 30 || content_rect.bottom > rail_rect.bottom) {
-
-
-                if (this.isShorterThanView(content_element)) {
-                    this.resetLocks(content_element)
-
-                } else {
-                    this.lockBottom(content_element)
-                }
-            } else {
-                console.log(this.isShorterThanView(content_element))
-                if (this.isShorterThanView(content_element)) {
-                    this.resetLocks(content_element)
-
-                } else {
-                    this.lockMiddle(content_element)
-                }
-
-            }
-
-
-        });
-
-        ro.observe(content_element);
-    };
-
-    initRail = element => {};
-
-    getStaticTop = element => {
-        element.classList.add("is-calculating-top")
-        var offset_top = element.offsetTop;
-
-        element.classList.remove("is-calculating-top")
-        return offset_top
-    };
-
-    // isLockedTop
-    isLockedTop = element => {
-        return element.classList.contains("is-locked-top")
-    };
-
-    // isLockedMiddle
-    isLockedMiddle = element => {
-        return element.classList.contains("is-locked-middle")
-    };
-
-    // isLockedBottom
-    isLockedBottom = element => {
-        return element.classList.contains("is-locked-bottom")
-    };
-
-    // isCollidedTop
-    isCollidedTop = element => {
-        var rect = element.getBoundingClientRect();
-
-        return rect.top > 10
-
-        //if (this.isLockedMiddle(element)) {
-        //    var translate_y = parseInt(element.style.getPropertyValue('--translate-y'))
-        //    return (translate_y + element.offsetHeight) - (window.scrollY + window.innerHeight) < 10
-        //}
-        //return false
-    }
-
-    // isCollidedBottom
-    isCollidedBottom = element => {
-        var rect = element.getBoundingClientRect();
-
-        var element_bottom = rect.top + window.scrollY + element.offsetHeight
-        var window_bottom = window.scrollY + window.innerHeight
-
-        // 計算 元素頂部 + 元素高度，減去 視窗頂部 + 視窗高度 來計算出 元素底部 到 畫面底部 的距離。
-        var distance = element_bottom - window_bottom
-
-        console.log(distance)
-
-
-        // 如果元素現在被鎖在中間，那他就是 `position: relative` 搭配 `translateY` 的狀態，
-        // 這個時候 offsetTop 會不管用，所以要用當初鎖定的 transateY 去計算元素目前實際的位置。
-        if (this.isLockedMiddle(element)) {
-            var current_offset_top = parseInt(element.style.getPropertyValue('--top'))
-
-            //console.log((current_offset_top + element.offsetHeight) - (window.scrollY + window.innerHeight))
-            //var distance = (current_offset_top + element.offsetHeight) - (window.scrollY + window.innerHeight)
-        }
-
-
-
-        // 如果元素底部到畫面底部的距離小於 10px，就代表元素已經碰到畫面底部了。
-        return distance < 10// Math.abs(element_bottom - window_bottom) < 10 //distance < 10 //&& distance > -10
-    }
-
-    // lockBottom
-    lockBottom = (element) => {
-        element.classList.remove("is-locked-top", "is-locked-middle")
-
-        var static_offset_top = this.getStaticTop(element)
-        var rect = element.getBoundingClientRect();
-
-        element.style.setProperty('--top', `${window.innerHeight - rect.height}px`);
-        element.classList.add("is-locked-bottom")
-    }
-
-    // lockMiddle
-    lockMiddle = (element) => {
-        if (this.isLockedMiddle(element)) {
-            return
-        }
-
-        var static_offset_top = this.getStaticTop(element)
-        var current_offset_top = element.offsetTop
-
-        element.classList.remove("is-locked-top", "is-locked-bottom")
-
-        element.style.setProperty('--top', `${current_offset_top - static_offset_top}px`);
-        element.classList.add("is-locked-middle")
-    }
-
-    // lockTop
-    lockTop = (element) => {
-        element.classList.remove("is-locked-middle", "is-locked-bottom")
-        element.classList.add("is-locked-top")
-    }
-
-    //
-    isShorterThanView = element => {
-        return element.offsetHeight < window.innerHeight
-    }
-
-    //
-    resetLocks = element => {
-        element.classList.remove("is-locked-middle", "is-locked-bottom")
-        element.classList.add("is-locked-top")
-    }
-
-    // findScrollableParent
-    findScrollableParent = element => {
-        var parent = element.parentElement
-
-        while (parent) {
-            const is_scrollable = parent.scrollHeight > parent.clientHeight    ||
-                                  parent.scrollWidth  > parent.clientWidth     ||
-                                  getComputedStyle(parent).overflow === 'auto' ||
-                                  getComputedStyle(parent).overflow === 'scroll'
-            if (is_scrollable) {
-                return parent
-            }
-            parent = parent.parentElement
-        }
-        return null
-    }
-
-    scrollHandler = element => {
-        var last_scroll_top  = window.scrollY;
-
-        return event => {
-            var current_scroll_top = window.scrollY || document.documentElement.scrollTop;
-            var scroll_direction   = current_scroll_top > last_scroll_top ? "down" : "up";
-            last_scroll_top = current_scroll_top;
-
-            if (this.isShorterThanView(element)) {
-                this.resetLocks(element)
-                return
-            }
-
-            if (scroll_direction === "up") {
-                // 如果元素目前所在畫面頂部，使用者又剛好在往上滾，就什麼事都不要做。
-                if (this.isLockedTop(element)) {
-                    return
-
-                // 如果元素已經鎖在中間，使用者就必須往上滾直至碰到元素頂部，元素才會吸附在螢幕頂部。
-                } else if (this.isLockedMiddle(element) && this.isCollidedTop(element)) {
-                    this.lockTop(element)
-                    return
-
-                // 如果元素目前底部是鎖定在畫面底部，現在往上滾的時候就先鎖定元素目前的位置，這樣就可以正常往上瀏覽。
-                } else if (this.isLockedBottom(element)) {
-                    this.lockMiddle(element)
-                    return
-                }
-
-                //
-                if (this.isCollidedTop(element)) {
-                    this.lockTop(element)
-                    return
-                }
-            } else {
-                // 如果元素目前所在畫面底部，使用者又剛好在往下滾，就什麼事都不要做。
-                if (this.isLockedBottom(element)) {
-                    return
-
-                // 如果元素已經鎖在中間，使用者就必須往下滾直至碰到元素底部，元素才會吸附在螢幕底部。
-                } else if (this.isLockedMiddle(element) && this.isCollidedBottom(element)) {
-                    this.lockBottom(element)
-                    return
-
-                //
-                //} else if (this.isLockedMiddle(element)) {
-                //    this.lockMiddle(element)
-                //    return
-
-                // 如果元素目前頂部是鎖定在畫面頂部，現在往下滾的時候就先鎖定元素目前的位置，這樣就可以正常往下瀏覽。
-                } else if (this.isLockedTop(element)) {
-                    this.lockMiddle(element)
-                    return
-                }
-
-
-                //
-                if (this.isCollidedBottom(element)) {
-                    this.lockBottom(element)
-                    return
-                }
-            }
-        }
-    };
-}
-
-window.tocas_modules = [...window.tocas_modules, new Rail()];
-
+    // @/import "tocas.rail.js";
 
     /* ==========================================================================
        Dialog
@@ -1559,7 +1224,7 @@ window.tocas_modules = [...window.tocas_modules, new Rail()];
     addedNodeMutation = added_node => {
         // 如果這個新追加的 DOM 節點是一個 Dialog 模組，就監聽其點擊事件。
         if (this.isDialog(added_node)) {
-            this.bindDialogEventListener(added_node);
+            this.bindDialogEventListener(added_node)
         }
 
         // 如果這個新追加的 DOM 節點是一個 Dialog 模組，就監聽其點擊事件。
@@ -1567,44 +1232,44 @@ window.tocas_modules = [...window.tocas_modules, new Rail()];
             // 監聽其點擊事件。
             this.bindTriggerEventListener(added_node)
         }
-    };
+    }
 
     // isTrigger
     isTrigger = element => {
-        return element.matches("[data-dialog]");
-    };
+        return element.matches("[data-dialog]")
+    }
 
     // isDialog
     isDialog = element => {
-        return element.matches("dialog.ts-modal, dialog.ts-app-drawer");
-    };
+        return element.matches("dialog.ts-modal, dialog.ts-drawer")
+    }
 
     // isModal
     isModal = element => {
-        return element.matches(":modal");
-    };
+        return element.matches(":modal")
+    }
 
     // isDismissible
     isDismissible = element => {
-        var dismissible = element.dataset.dismissible || "true";
+        var dismissible = element.dataset.dismissible || "true"
         return dismissible === "true"
-    };
+    }
 
     // bindDialogEventListener
     bindDialogEventListener = element => {
         // 不使用 click 是避免使用者在內部選取文字，但是在外部放開，這會被當作 click 而關閉。
-        element.removeEventListener("mousedown", this.onClickBackdrop);
-        element.addEventListener("mousedown", this.onClickBackdrop);
+        element.removeEventListener("mousedown", this.onClickBackdrop)
+        element.addEventListener("mousedown", this.onClickBackdrop)
 
-        element.removeEventListener("cancel", this.onCancel);
-        element.addEventListener("cancel", this.onCancel);
-    };
+        element.removeEventListener("cancel", this.onCancel)
+        element.addEventListener("cancel", this.onCancel)
+    }
 
     // bindTriggerEventListener
     bindTriggerEventListener = element => {
-        element.removeEventListener("click", this.onClickTrigger);
-        element.addEventListener("click", this.onClickTrigger);
-    };
+        element.removeEventListener("click", this.onClickTrigger)
+        element.addEventListener("click", this.onClickTrigger)
+    }
 
     // onClickBackdrop
     onClickBackdrop = event => {
@@ -1614,19 +1279,19 @@ window.tocas_modules = [...window.tocas_modules, new Rail()];
             return
         }
         if (dialog === event.target && this.isModal(dialog)) {
-            event.target.dispatchEvent(new Event('cancel', { bubbles: true }));
-            event.target.close();
+            event.target.dispatchEvent(new Event("cancel", { bubbles: true }))
+            event.target.close()
         }
-    };
+    }
 
     // onCancel
     onCancel = event => {
-        var dialog = event.target.closest("dialog");
+        var dialog = event.target.closest("dialog")
 
         if (!this.isDismissible(dialog)) {
-            event.preventDefault();
+            event.preventDefault()
         }
-    };
+    }
 
     // onClickTrigger
     onClickTrigger = event => {
@@ -1646,49 +1311,59 @@ window.tocas_modules = [...window.tocas_modules, new Rail()];
 window.tocas_modules = [...window.tocas_modules, new Dialog()]
 
 
+
     /* ==========================================================================
        Base
        ========================================================================== */
 
-    // searchScopeTargets
+    // getID
     getID = () => {
-        return (Math.random().toString(36) + "00000000000000000").slice(2, 10 + 2);
-    };
+        return (Math.random().toString(36) + "00000000000000000").slice(2, 10 + 2)
+    }
 
     // createElement
     createElement = html => {
-        var template = document.createElement("template");
-        template.innerHTML = html.trim();
-        return template.content.firstChild;
-    };
+        var template = document.createElement("template")
+        template.innerHTML = html.trim()
+        return template.content.firstChild
+    }
 
     //
     addedNodeMutation = node => {
         window.tocas_modules.forEach(v => {
             if (typeof v.addedNodeMutation === "function") {
-                v.addedNodeMutation(node);
+                v.addedNodeMutation(node)
             }
-        });
-    };
+        })
+    }
+
+    //
+    removedNodeMutation = node => {
+        window.tocas_modules.forEach(v => {
+            if (typeof v.removedNodeMutation === "function") {
+                v.removedNodeMutation(node)
+            }
+        })
+    }
 
     //
     attributeMutation = mutation => {
         window.tocas_modules.forEach(v => {
             if (typeof v.attributeMutation === "function") {
-                v.attributeMutation(mutation);
+                v.attributeMutation(mutation)
             }
-        });
-    };
+        })
+    }
 
     // mutation_observered 用來儲存正在監聽的元素以避免重複加入到 MutationObserver 裡。
-    var mutation_observered = new Set([]);
+    var mutation_observered = new Set([])
 
     // MutationObserver 是真正會監聽每個元素異動的函式。
     var mutation_observer = new MutationObserver(mutations => {
         mutations.forEach(mutation => {
             // 如果是屬性的異動就交給屬性函式處理。
             if (mutation.type === "attributes") {
-                attributeMutation(mutation);
+                attributeMutation(mutation)
             }
 
             // 如果是節點的新增就交給節點函式處理。
@@ -1696,32 +1371,32 @@ window.tocas_modules = [...window.tocas_modules, new Dialog()]
                 mutation.addedNodes.forEach(added_node => {
                     // 如果這個節點不是 HTMLElement 就略過，因為他有可能是 Text Node。
                     if (added_node.nodeType !== Node.ELEMENT_NODE || !(added_node instanceof HTMLElement)) {
-                        return;
+                        return
                     }
 
                     // 建立一個 TreeWalker 來加強 MutationObserver 的 childList 跟 subtree，
                     // 因為 MutationObserver 可能會忽略 Vue.js 那樣透過 innerHTML 修改節點的時候。
-                    var tree_walker = document.createTreeWalker(added_node, NodeFilter.SHOW_ELEMENT);
+                    var tree_walker = document.createTreeWalker(added_node, NodeFilter.SHOW_ELEMENT)
 
                     // 收集需要監聽的 HTML 節點元素。
-                    var nodes = [];
+                    var nodes = []
 
                     // 會使用遞迴，所以先將自己視為其中一個節點。
-                    var current_node = tree_walker.currentNode;
+                    var current_node = tree_walker.currentNode
 
                     // 不斷地爬到沒有下個節點為止。
                     while (current_node) {
-                        nodes = [...nodes, current_node];
-                        current_node = tree_walker.nextNode();
+                        nodes = [...nodes, current_node]
+                        current_node = tree_walker.nextNode()
                     }
 
                     // 將使用 TreeWalker 爬到的每個節點收錄進 MutationObserver 裡面，監聽更詳細的節點。
                     nodes.forEach(node => {
                         // 如果這個節點已經被監聽過了則忽略。
                         if (mutation_observered.has(node)) {
-                            return;
+                            return
                         } else {
-                            mutation_observered.add(node);
+                            mutation_observered.add(node)
                         }
 
                         mutation_observer.observe(node, {
@@ -1730,12 +1405,12 @@ window.tocas_modules = [...window.tocas_modules, new Dialog()]
                             attributes: true,
                             attributeOldValue: true,
                             attributeFilter: ["class"],
-                        });
+                        })
 
                         // 替這些節點呼叫對應的函式。
-                        addedNodeMutation(node);
-                    });
-                });
+                        addedNodeMutation(node)
+                    })
+                })
             }
 
             // 如果是節點的移除就做一些清除的函式。
@@ -1743,15 +1418,18 @@ window.tocas_modules = [...window.tocas_modules, new Dialog()]
                 mutation.removedNodes.forEach(removed_node => {
                     // 如果這個節點不是 HTMLElement 就略過，因為他有可能是 Text Node。
                     if (removed_node.nodeType !== Node.ELEMENT_NODE || !(removed_node instanceof HTMLElement)) {
-                        return;
+                        return
                     }
 
+                    // 替這些節點呼叫對應的函式。
+                    removedNodeMutation(removed_node)
+
                     // 從已監聽的清單中移除來節省部份資源。
-                    mutation_observered.delete(removed_node);
-                });
+                    mutation_observered.delete(removed_node)
+                })
             }
-        });
-    });
+        })
+    })
 
     // 監聽網頁元素異動的 MutationObserver。
     mutation_observer.observe(document.documentElement, {
@@ -1760,7 +1438,7 @@ window.tocas_modules = [...window.tocas_modules, new Dialog()]
         attributes: true,
         attributeOldValue: true,
         attributeFilter: ["class"],
-    });
+    })
 
     /**
      * Window Resize
@@ -1769,10 +1447,10 @@ window.tocas_modules = [...window.tocas_modules, new Dialog()]
     window.addEventListener("resize", event => {
         window.tocas_modules.forEach(v => {
             if (typeof v.windowResize === "function") {
-                v.windowResize(event);
+                v.windowResize(event)
             }
-        });
-    });
+        })
+    })
 
     /**
      * Window Click
@@ -1781,16 +1459,16 @@ window.tocas_modules = [...window.tocas_modules, new Dialog()]
     window.addEventListener("click", event => {
         window.tocas_modules.forEach(v => {
             if (typeof v.windowClick === "function") {
-                v.windowClick(event);
+                v.windowClick(event)
             }
-        });
-    });
+        })
+    })
 
     window.addEventListener("mousedown", event => {
         window.tocas_modules.forEach(v => {
             if (typeof v.windowMousedown === "function") {
-                v.windowMousedown(event);
+                v.windowMousedown(event)
             }
-        });
-    });
-})();
+        })
+    })
+})()
