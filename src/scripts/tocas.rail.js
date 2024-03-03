@@ -41,6 +41,8 @@ class Rail {
             }
         })
 
+        // window resize?
+
         ro.observe(content_element)
     }
 
