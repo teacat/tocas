@@ -42,12 +42,11 @@
     border-top: 1px solid var(--ts-gray-300);
 }
 
-.ts-table tr th {
+.ts-table :is(thead, tfoot) tr :is(th, td) {
     background: var(--ts-gray-100);
 }
 
-.ts-table :is(thead, tfoot) tr th {
-    padding: 0.5rem 1rem;
+.ts-table tr th {
     color: var(--ts-gray-600);
     font-weight: 500;
 }
@@ -56,7 +55,8 @@
     border-top: 1px solid var(--ts-gray-300);
 }
 
-.ts-table tbody tr td {
+.ts-table tr th,
+.ts-table tr td {
     padding: 0.5rem 1rem;
 }
 
@@ -107,7 +107,7 @@
  * Basic
  */
 
-.ts-table:is(.is-basic, .is-very-basic) tr th {
+.ts-table:is(.is-basic, .is-very-basic) :is(thead, tfoot) tr :is(th, td) {
     background: transparent;
 }
 .ts-table.is-very-basic tbody :is(th, td, tr) {
@@ -118,14 +118,14 @@
  * Definition
  */
 
-.ts-table.is-definition tr th:not(:first-child) {
+.ts-table.is-definition :is(thead, tfoot) tr :is(th, td):not(:first-child) {
     background: var(--ts-gray-100);
 }
-.ts-table.is-definition tr th:first-child {
+.ts-table.is-definition :is(thead, tfoot) tr :is(th, td):first-child {
     background: transparent;
 }
 
-.ts-table.is-definition tr td:first-child {
+.ts-table.is-definition tbody tr :is(th, td):first-child {
     background: var(--ts-gray-100);
 }
 
