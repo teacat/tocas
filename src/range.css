@@ -1,0 +1,81 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-range {
+    --accent-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-range {
+    display: flex;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-range input {
+    appearance: none;
+    width: 100%;
+    height: calc(1.15rem / 2);
+    cursor: pointer;
+    background: var(--ts-gray-200);
+    border-radius: var(--ts-border-radius-element);
+    border: none;
+}
+
+.ts-range input::-webkit-slider-runnable-track {
+    background: transparent;
+    cursor: pointer;
+}
+
+.ts-range input::-moz-range-track {
+    background: transparent;
+    cursor: pointer;
+}
+
+.ts-range input::-webkit-slider-thumb {
+    appearance: none;
+    border: none;
+    box-shadow: 0;
+    height: 1.15rem;
+    width: 1.15rem;
+    border-radius: 100rem;
+    background: var(--accent-color, var(--ts-primary-700));
+    cursor: pointer;
+}
+
+.ts-range input::-moz-range-thumb {
+    appearance: none;
+    border: none;
+    box-shadow: 0;
+    height: 1.15rem;
+    width: 1.15rem;
+    border-radius: 100rem;
+    background: var(--accent-color, var(--ts-primary-700));
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Disabled
+ */
+
+.ts-range:has(:disabled),
+fieldset:disabled .ts-range {
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
+}
+
+.ts-range input:disabled,
+fieldset:disabled .ts-range input {
+    background: var(--ts-gray-200);
+}
