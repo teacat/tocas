@@ -1,0 +1,71 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-app-loading {
+    --accent-color: initial;
+    --height: 3px;
+}
+
+.ts-app-loading .bar {
+    --value: 0;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-app-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+    pointer-events: none;
+    z-index: var(--ts-z-app-loading);
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-app-loading .bar {
+    position: relative;
+    width: calc(var(--value) * 1%);
+    height: var(--height);
+    background: var(--accent-color, var(--ts-primary-600));
+    transition: width 0.5s ease-in-out;
+}
+
+.ts-app-loading .bar::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    right: 0;
+    height: var(--height);
+    width: 100px;
+    transform: rotate(2.5deg) translate(0px, -4px);
+    box-shadow: var(--ts-elevated-shadow-app-loading);
+    z-index: 2;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Active
+ */
+
+.ts-app-loading.is-active {
+    opacity: 1;
+}
+
+/**
+ * Unanimated
+ */
+
+.ts-app-loading.is-unanimated .bar {
+    transition: none;
+}
