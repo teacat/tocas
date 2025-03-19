@@ -54,9 +54,10 @@ body {
     -webkit-text-size-adjust: 100%; /** 3. */
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /** 4. */
 
-    font-family: "Noto Sans TC", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue", "Helvetica", "Arial", "Microsoft JhengHei", wf_SegoeUI, "Segoe UI",
-        Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", 微軟正黑體, "LiHei Pro", "WenQuanYi Micro Hei", "Droid Sans Fallback", "AR PL UMing TW",
-        Roboto, "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif;
+    font-family: "Noto Sans TC", "Noto Sans SC", "Noto Sans HK", "Noto Sans JP", "Noto Sans KR", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue",
+        "Helvetica", "Arial", "Microsoft JhengHei", wf_SegoeUI, "Segoe UI", Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", 微軟正黑體,
+        "LiHei Pro", "WenQuanYi Micro Hei", "Droid Sans Fallback", "AR PL UMing TW", Roboto, "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans",
+        sans-serif;
 }
 
 /** Lock scroll when dialog was opened */
@@ -8663,7 +8664,7 @@ fieldset:disabled .ts-button {
     font-family: "Icons";
     font-weight: normal;
     font-style: normal;
-    display: inline;
+    display: inline-block;
     text-decoration: none;
     text-align: center;
     width: 1.18em;
@@ -9476,9 +9477,10 @@ fieldset:disabled .ts-input.is-underlined {
     border: 0;
     min-width: 75px;
     /** Firefox */
-    font-family: "Noto Sans TC", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue", "Helvetica", "Arial", "Microsoft JhengHei", wf_SegoeUI, "Segoe UI",
-        Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", 微軟正黑體, "LiHei Pro", "WenQuanYi Micro Hei", "Droid Sans Fallback", "AR PL UMing TW",
-        Roboto, "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans", sans-serif;
+    font-family: "Noto Sans TC", "Noto Sans SC", "Noto Sans HK", "Noto Sans JP", "Noto Sans KR", "SF Pro TC", "SF Pro Text", "SF Pro Icons", "PingFang TC", "Helvetica Neue",
+        "Helvetica", "Arial", "Microsoft JhengHei", wf_SegoeUI, "Segoe UI", Segoe, "Segoe WP", Tahoma, Verdana, Ubuntu, "Bitstream Vera Sans", "DejaVu Sans", 微軟正黑體,
+        "LiHei Pro", "WenQuanYi Micro Hei", "Droid Sans Fallback", "AR PL UMing TW", Roboto, "Hiragino Maru Gothic ProN", メイリオ, "ヒラギノ丸ゴ ProN W4", Meiryo, "Droid Sans",
+        sans-serif;
     font-size: var(--ts-relative-small);
     line-height: 1.5;
     font-weight: 500;
@@ -10147,7 +10149,7 @@ fieldset:disabled .ts-radio input {
     bottom: 0;
     left: 0;
     content: "";
-    background: #5a5a5a;
+    background: var(--ts-gray-300);
     border-radius: var(--ts-border-radius-element);
     animation: ts-progress-active 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
@@ -10564,6 +10566,7 @@ fieldset:disabled .ts-radio input {
 .ts-select {
     position: relative;
     display: inline-flex;
+    align-items: center;
     background: var(--ts-gray-50);
     border: 1px solid var(--ts-gray-300);
     border-radius: var(--ts-border-radius-element);
@@ -10578,6 +10581,7 @@ fieldset:disabled .ts-radio input {
 .ts-select select {
     border: none;
     margin: 0;
+    height: 100%;
     background: inherit;
     font: inherit;
     outline: none;
@@ -10777,8 +10781,8 @@ fieldset:disabled .ts-radio input {
  * Disabled
  */
 
-//.ts-select.is-disabled,
-.ts-select:has(:disabled) {
+/** :has(:disabled) will applied if <option disabled> */
+.ts-select:has(select:disabled) {
     pointer-events: none;
     opacity: 0.5;
     user-select: none;
@@ -11103,6 +11107,10 @@ ts-select.is-fluid {
 .ts-text.is-icon-link {
     display: inline-flex;
     gap: 0.25rem;
+}
+button.ts-text.is-icon-link {
+    text-align: left;
+    align-items: center;
 }
 
 /**
@@ -11970,6 +11978,25 @@ a.ts-box:hover {
 }
 
 /**
+ * Vertical Aligns
+ */
+
+.ts-image.is-top-aligned,
+.ts-image.is-top-aligned img {
+    vertical-align: top;
+}
+
+.ts-image.is-middle-aligned,
+.ts-image.is-middle-aligned img {
+    vertical-align: middle;
+}
+
+.ts-image.is-bottom-aligned,
+.ts-image.is-bottom-aligned img {
+    vertical-align: bottom;
+}
+
+/**
  * Spaced
  */
 
@@ -12202,6 +12229,17 @@ fieldset:disabled .ts-switch {
 }
 
 /**
+ * Link
+ */
+
+.ts-meta.is-link .item {
+    color: var(--ts-link-700);
+}
+.ts-meta.is-link .item:hover {
+    text-decoration: underline;
+}
+
+/**
  * Secondary
  */
 
@@ -12430,7 +12468,8 @@ fieldset:disabled .ts-switch {
     font-weight: 500;
 }
 
-.ts-table tbody tr + tr {
+.ts-table tbody tr + tr,
+.ts-table tbody + tbody tr {
     border-top: 1px solid var(--ts-gray-300);
 }
 
@@ -12514,6 +12553,14 @@ fieldset:disabled .ts-switch {
 
 .ts-table.is-celled tr :is(td, th):not(:last-child) {
     border-right: 1px solid var(--ts-gray-300);
+}
+
+/**
+ * Selectable
+ */
+
+.ts-table.is-selectable > tbody > tr:hover:hover {
+    background: var(--ts-gray-75);
 }
 
 /**
@@ -12663,7 +12710,9 @@ fieldset:disabled .ts-switch {
     padding-top: 0.8rem;
     padding-bottom: 0.8rem;
 }
-.ts-table.is-relaxed tbody tr td {
+.ts-table.is-relaxed tbody tr td,
+.ts-table tbody.is-relaxed tr td,
+.ts-table tbody tr.is-relaxed td {
     padding-top: 0.8rem;
     padding-bottom: 0.8rem;
 }
@@ -12672,7 +12721,9 @@ fieldset:disabled .ts-switch {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
 }
-.ts-table.is-dense tbody tr td {
+.ts-table.is-dense tbody tr td,
+.ts-table tbody.is-dense tr td,
+.ts-table tbody tr.is-dense td {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
 }
@@ -13232,6 +13283,14 @@ fieldset:disabled .ts-switch {
 }
 
 /**
+ * No Wrap
+ */
+
+.ts-grid.is-nowrap {
+    flex-wrap: nowrap;
+}
+
+/**
  * Reverse
  */
 
@@ -13751,12 +13810,14 @@ fieldset:disabled .ts-chip {
 .ts-chip.is-dense {
     padding-top: 0.1rem;
     padding-bottom: 0.1rem;
+    line-height: 1.5;
 }
 
 .ts-chip.is-dense:is(.is-input, .is-toggle) .content {
     min-height: 20px;
     padding-top: 0.1rem;
     padding-bottom: 0.1rem;
+    line-height: 1.5;
 }
 
 /**
@@ -17228,6 +17289,14 @@ a.ts-header:hover {
 }
 
 /**
+ * Negative
+ */
+
+.ts-menu .item.is-negative {
+    color: var(--ts-negative-500);
+}
+
+/**
  * Disabled
  */
 
@@ -17610,7 +17679,7 @@ a.ts-header:hover {
    Structure
    ========================================================================== */
 
-.ts-iconset .ts-icon {
+.ts-iconset > .ts-icon {
     width: 3rem;
     min-width: 3rem;
     height: 3rem;
@@ -17628,6 +17697,11 @@ a.ts-header:hover {
     line-height: 1.4;
 }
 
+.ts-iconset:has(.title):not(:has(.text)),
+.ts-iconset:has(.text):not(:has(.title)) {
+    align-items: center;
+}
+
 /* ==========================================================================
    Variations
    ========================================================================== */
@@ -17636,7 +17710,7 @@ a.ts-header:hover {
  * Circular
  */
 
-.ts-iconset.is-circular .ts-icon {
+.ts-iconset.is-circular > .ts-icon {
     border-radius: 100rem;
 }
 
@@ -17644,7 +17718,7 @@ a.ts-header:hover {
  * Outlined
  */
 
-.ts-iconset.is-outlined .ts-icon {
+.ts-iconset.is-outlined > .ts-icon {
     background: transparent;
     color: var(--accent-color, inherit);
     border: 2px solid var(--ts-gray-300);
@@ -17960,8 +18034,12 @@ dialog.ts-modal > .content {
  * Open
  */
 
-dialog.ts-modal[open],
+dialog.ts-modal[open] {
+    display: flex;
+}
+
 dialog.ts-modal:popover-open {
+    /** See #1064, separate for iOS fix */
     display: flex;
 }
 
@@ -18299,6 +18377,14 @@ dialog.ts-modal.is-fullscreen > .content {
 .ts-dropdown .item.is-active {
     background: var(--accent-color, var(--ts-gray-800));
     color: var(--accent-foreground-color, var(--ts-gray-50));
+}
+
+/**
+ * Negative
+ */
+
+.ts-dropdown .item.is-negative {
+    color: var(--ts-negative-500);
 }
 
 /**
@@ -19076,6 +19162,12 @@ dialog.ts-app-drawer:popover-open {
     overflow-y: auto;
 }
 
+@-moz-document url-prefix() {
+    body:has(> .ts-app-center, > form > .ts-app-center) {
+        height: 100%;
+    }
+}
+
 /* ==========================================================================
    Structure
    ========================================================================== */
@@ -19441,11 +19533,14 @@ dialog.ts-app-drawer:popover-open {
  * Line Height
  */
 
+.has-leading-none {
+    line-height: 1 !important;
+}
 .has-leading-small {
     line-height: 1.4 !important;
 }
-.has-leading-none {
-    line-height: 1 !important;
+.has-leading-normal {
+    line-height: 1.75 !important;
 }
 .has-leading-large {
     line-height: 1.9 !important;
@@ -19676,6 +19771,89 @@ dialog.ts-app-drawer:popover-open {
 /* ==========================================================================
    Structure
    ========================================================================== */
+
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+.ts-range {
+    --accent-color: initial;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+.ts-range {
+    display: flex;
+}
+
+/* ==========================================================================
+   Structure
+   ========================================================================== */
+
+.ts-range input {
+    appearance: none;
+    width: 100%;
+    height: calc(1.15rem / 2);
+    cursor: pointer;
+    background: var(--ts-gray-200);
+    border-radius: var(--ts-border-radius-element);
+    border: none;
+}
+
+.ts-range input::-webkit-slider-runnable-track {
+    background: transparent;
+    cursor: pointer;
+}
+
+.ts-range input::-moz-range-track {
+    background: transparent;
+    cursor: pointer;
+}
+
+.ts-range input::-webkit-slider-thumb {
+    appearance: none;
+    border: none;
+    box-shadow: 0;
+    height: 1.15rem;
+    width: 1.15rem;
+    border-radius: 100rem;
+    background: var(--accent-color, var(--ts-primary-700));
+    cursor: pointer;
+}
+
+.ts-range input::-moz-range-thumb {
+    appearance: none;
+    border: none;
+    box-shadow: 0;
+    height: 1.15rem;
+    width: 1.15rem;
+    border-radius: 100rem;
+    background: var(--accent-color, var(--ts-primary-700));
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   Variations
+   ========================================================================== */
+
+/**
+ * Disabled
+ */
+
+.ts-range:has(:disabled),
+fieldset:disabled .ts-range {
+    pointer-events: none;
+    opacity: 0.5;
+    user-select: none;
+}
+
+.ts-range input:disabled,
+fieldset:disabled .ts-range input {
+    background: var(--ts-gray-200);
+}
+
 
 
 
