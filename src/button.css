@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Variables
+   Animation
    ========================================================================== */
 
 @keyframes ts-button-loading {
@@ -11,12 +11,19 @@
     }
 }
 
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
 .ts-button {
     --horizontal-padding: 1.25em;
     --height: var(--ts-input-height-medium);
 
     --accent-color: initial;
     --accent-foreground-color: initial;
+
+    --border-width: 2px;
+    --icon-size: 1.1em;
 }
 
 /* ==========================================================================
@@ -32,7 +39,6 @@
     box-sizing: border-box;
     user-select: none;
     text-overflow: ellipsis;
-    overflow: hidden;
     white-space: nowrap;
     height: var(--height);
 
@@ -47,7 +53,7 @@
 }
 
 .ts-button {
-    border: 2px solid var(--accent-color, var(--ts-gray-800));
+    border: var(--border-width) solid var(--accent-color, var(--ts-gray-900));
     min-width: 75px;
     font-size: var(--ts-font-size-14px);
     line-height: 1.5;
@@ -65,9 +71,8 @@
     border-radius: var(--ts-border-radius-element);
 }
 
-.ts-button:hover {
-    cursor: pointer;
-    opacity: 0.98;
+.ts-button .ts-icon {
+    font-size: var(--icon-size);
 }
 
 /* ==========================================================================
@@ -159,7 +164,7 @@
     display: inline-block;
     animation: ts-button-loading 2s linear infinite;
     color: var(--ts-gray-50);
-    font-size: var(--ts-font-size-18px);
+    font-size: 1.3em;
     content: "\f110";
     position: absolute;
     top: 50%;
@@ -219,27 +224,16 @@ fieldset:disabled .ts-button {
  */
 
 .ts-button.is-icon {
+    --icon-size: 1.25em;
+
     padding: 0;
     min-width: 0;
-    /*width: calc(var(--height) * 1.1);*/
     width: var(--height);
-}
-
-.ts-button.is-icon .ts-icon {
-    font-size: 1.2em;
-}
-
-.ts-button.is-icon.is-small .ts-icon {
-    font-size: 1.15em;
 }
 
 /**
  * Side Icon
  */
-
-.ts-button:where(.is-start-icon, .is-end-icon) .ts-icon {
-    font-size: 1.2em;
-}
 
 .ts-button:is(.is-start-icon, .is-end-icon) .ts-icon::before {
     display: inline-block;
@@ -260,49 +254,39 @@ fieldset:disabled .ts-button {
 
 .ts-button:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
     position: absolute;
-    top: -2px;
-    bottom: -2px;
-    background: var(--ts-gray-900);
+    top: calc(var(--border-width) * -1);
+    bottom: calc(var(--border-width) * -1);
+    background: rgb(0, 0, 0, 0.035);
     line-height: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: calc(2.75rem + 2px);
-}
-
-.ts-button:where(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
-    font-size: 1.2em;
+    height: calc(100% + var(--border-width) * 2);
+    width: auto;
+    aspect-ratio: 1 / 1;
 }
 
 .ts-button.is-start-labeled-icon {
-    padding-left: calc(var(--horizontal-padding) + 2.75em);
+    padding-left: calc(var(--horizontal-padding) + var(--height));
 }
 
 .ts-button.is-start-labeled-icon .ts-icon {
-    left: -2px;
+    left: calc(var(--border-width) * -1);
     border-radius: var(--ts-border-radius-element) 0 0 var(--ts-border-radius-element);
 }
 
 .ts-button.is-end-labeled-icon {
-    padding-right: calc(var(--horizontal-padding) + 2.75em);
+    padding-right: calc(var(--horizontal-padding) + var(--height));
 }
 
 .ts-button.is-end-labeled-icon .ts-icon {
-    right: -2px;
+    right: calc(var(--border-width) * -1);
     border-radius: 0 var(--ts-border-radius-element) var(--ts-border-radius-element) 0;
-}
-
-.ts-button.is-negative:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
-    background: var(--ts-negative-400);
 }
 
 .ts-button.is-outlined:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
     background: transparent;
-    border: 2px solid var(--ts-gray-300);
-}
-
-.ts-button.is-secondary:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
-    background: var(--ts-gray-200);
+    border: var(--border-width) solid var(--ts-gray-300);
 }
 
 /**
@@ -310,13 +294,10 @@ fieldset:disabled .ts-button {
  */
 
 .ts-button.is-dense {
-    --height: var(--ts-input-height-medium-dense);
-}
-.ts-button.is-dense.is-small {
-    --height: var(--ts-input-height-small-dense);
+    --height: var(--ts-input-height-small);
 }
 .ts-button.is-dense.is-large {
-    --height: var(--ts-input-height-large-dense);
+    --height: var(--ts-input-height-medium);
 }
 
 /**
@@ -362,8 +343,8 @@ fieldset:disabled .ts-button {
     content: "";
     top: 50%;
     transform: translateY(-50%);
-    left: 0;
-    height: 70%;
+    left: -2px;
+    height: 50%;
     background: var(--ts-gray-600);
     width: 1px;
 }
