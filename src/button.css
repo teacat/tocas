@@ -53,13 +53,13 @@
 }
 
 .ts-button {
-    border: var(--border-width) solid var(--accent-color, var(--ts-gray-900));
+    border: var(--border-width) solid var(--accent-color, var(--ts-color-accent));
     min-width: 75px;
     font-size: var(--ts-font-size-14px);
     line-height: 1.5;
     font-weight: 500;
-    color: var(--accent-foreground-color, var(--ts-gray-50));
-    background: var(--accent-color, var(--ts-gray-900));
+    color: var(--accent-foreground-color, var(--ts-color-text-on-accent));
+    background: var(--accent-color, var(--ts-color-accent));
     text-decoration: none;
     display: inline-flex;
     vertical-align: middle;
@@ -84,9 +84,9 @@
  */
 
 .ts-button.is-secondary {
-    color: var(--accent-color, var(--ts-gray-900));
-    border-color: var(--ts-gray-100);
-    background: var(--ts-gray-100);
+    color: var(--accent-color, var(--ts-color-text));
+    border-color: var(--ts-color-background-element);
+    background: var(--ts-color-background-element);
 }
 
 /**
@@ -95,8 +95,8 @@
 
 .ts-button.is-outlined {
     background: transparent;
-    border: var(--border-width) solid var(--ts-gray-300);
-    color: var(--accent-color, var(--ts-gray-900));
+    border: var(--border-width) solid var(--ts-color-border);
+    color: var(--accent-color, var(--ts-color-text));
 }
 
 /**
@@ -105,24 +105,24 @@
 
 .ts-button.is-negative {
     color: white;
-    border-color: var(--ts-negative-500);
-    background: var(--ts-negative-500);
+    border-color: var(--ts-color-background-negative);
+    background: var(--ts-color-background-negative);
 }
 
 .ts-button.is-negative.is-outlined {
-    color: var(--ts-negative-600);
-    border-color: var(--ts-gray-300);
+    color: var(--ts-color-text-negative);
+    border-color: var(--ts-color-border);
     background: transparent;
 }
 
 .ts-button.is-negative.is-secondary {
-    color: var(--ts-negative-600);
-    border-color: var(--ts-gray-100);
-    background: var(--ts-gray-100);
+    color: var(--ts-color-text-negative);
+    border-color: var(--ts-color-background-element);
+    background: var(--ts-color-background-element);
 }
 
 .ts-button.is-ghost.is-negative {
-    color: var(--ts-negative-600);
+    color: var(--ts-color-text-negative);
 }
 
 /**
@@ -131,12 +131,12 @@
 
 .ts-button.is-ghost {
     background: transparent;
-    color: var(--ts-gray-900);
+    color: var(--accent-color, var(--ts-color-text));
     border: 2px solid transparent;
 }
 
 .ts-button.is-ghost:hover {
-    background: var(--ts-gray-100);
+    background: var(--ts-color-background-tertiary);
 }
 
 /**
@@ -163,7 +163,7 @@
     backface-visibility: hidden;
     display: inline-block;
     animation: ts-button-loading 2s linear infinite;
-    color: var(--ts-gray-50);
+    color: var(--accent-foreground-color, var(--ts-color-text-on-accent));
     font-size: 1.3em;
     content: "\f110";
     position: absolute;
@@ -172,7 +172,7 @@
 }
 
 .ts-button.is-loading:is(.is-outlined, .is-secondary, .is-ghost)::after {
-    color: var(--ts-gray-900);
+    color: var(--accent-color, var(--ts-color-text));
 }
 
 /**
@@ -286,7 +286,7 @@ fieldset:disabled .ts-button {
 
 .ts-button.is-outlined:is(.is-start-labeled-icon, .is-end-labeled-icon) .ts-icon {
     background: transparent;
-    border: var(--border-width) solid var(--ts-gray-300);
+    border: var(--border-width) solid var(--ts-color-border);
 }
 
 /**
@@ -345,7 +345,7 @@ fieldset:disabled .ts-button {
     transform: translateY(-50%);
     left: -2px;
     height: 50%;
-    background: var(--ts-gray-700);
+    background: color-mix(in srgb, var(--accent-color, var(--ts-color-accent)), light-dark(white, black) 30%);
     width: 1px;
 }
 
@@ -358,11 +358,11 @@ fieldset:disabled .ts-button {
 }
 
 .ts-buttons .ts-button.is-negative::before {
-    background: var(--ts-negative-400);
+    background: color-mix(in srgb, var(--ts-color-background-negative), light-dark(black, white) 30%);
 }
 
 .ts-buttons .ts-button.is-secondary::before {
-    background: var(--ts-gray-400);
+    background: color-mix(in srgb, var(--ts-color-background-element), light-dark(black, white) 30%);
 }
 
 .ts-buttons .ts-button:last-child {
