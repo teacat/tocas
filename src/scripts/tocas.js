@@ -130,7 +130,7 @@ window.tocas_modules = []
 
                     // 不斷地爬到沒有下個節點為止。
                     while (current_node) {
-                        nodes = [...nodes, current_node]
+                        nodes.push(current_node)
                         current_node = tree_walker.nextNode()
                     }
 
