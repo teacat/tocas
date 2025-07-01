@@ -16,7 +16,7 @@
 ```html
 <!-- 核心：Tocas UI -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/5.0.3/tocas.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tocass-ui/5.0.3/tocas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocas-ui/5.0.3/tocas.min.js"></script>
 
 <!-- 字體：Noto Sans TC -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
