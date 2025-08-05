@@ -4,6 +4,7 @@
 
 .ts-menu {
     --object-distance: 0.8rem;
+    --indicator-width: 2px;
     --accent-color: initial;
     --accent-foreground-color: initial;
 }
@@ -69,7 +70,7 @@
  * Active
  */
 
-.ts-menu .item.is-active {
+.ts-menu:not(.is-start-indicated):not(.is-end-indicated) .item.is-active {
     background: var(--accent-color, var(--ts-gray-800));
     color: var(--accent-foreground-color, var(--ts-gray-50));
 }
@@ -112,6 +113,54 @@
 
 .ts-menu.is-separated .item {
     border-radius: var(--ts-border-radius-element);
+}
+
+/**
+ * Indicated
+ */
+
+.ts-menu.is-start-indicated .item.is-active,
+.ts-menu.is-end-indicated .item.is-active {
+    background: var(--ts-gray-75);
+}
+
+.ts-menu.is-start-indicated .item:not(.is-active):hover,
+.ts-menu.is-end-indicated .item:not(.is-active):hover {
+    background: transparent;
+    opacity: 0.85;
+}
+
+.ts-menu.is-start-indicated .item {
+    border-left: var(--indicator-width) solid var(--ts-gray-300);
+}
+
+.ts-menu.is-start-indicated .item.is-active {
+    border-left-color: var(--accent-color, var(--ts-gray-800))
+}
+
+.ts-menu.is-end-indicated .item {
+    border-right: var(--indicator-width) solid var(--ts-gray-300);
+}
+
+.ts-menu.is-end-indicated .item.is-active {
+    border-right-color: var(--accent-color, var(--ts-gray-800))
+}
+
+.ts-menu.is-start-indicated.is-separated,
+.ts-menu.is-end-indicated.is-separated {
+    --indicator-width: 3px;
+
+    gap: 0;
+}
+
+.ts-menu.is-start-indicated.is-separated .item,
+.ts-menu.is-end-indicated.is-separated .item {
+    border-radius: 0
+}
+
+.ts-menu.is-start-indicated.is-separated .item:not(.is-active),
+.ts-menu.is-end-indicated.is-separated .item:not(.is-active) {
+    border-color: transparent
 }
 
 /**
