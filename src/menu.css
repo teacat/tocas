@@ -4,6 +4,7 @@
 
 .ts-menu {
     --object-distance: 0.8rem;
+    --indicator-width: 2px;
     --accent-color: initial;
     --accent-foreground-color: initial;
 }
@@ -38,11 +39,6 @@
     font-size: 1.1em;
 }
 
-.ts-menu .item .ts-badge {
-    margin-left: auto;
-    margin-top: -1px;
-}
-
 .ts-menu .item .description {
     font-size: var(--ts-relative-small);
     color: var(--ts-gray-500);
@@ -50,6 +46,16 @@
     text-align: right;
     margin-left: auto;
     float: right;
+}
+
+.ts-menu .item .badge {
+    line-height: 1;
+    font-size: var(--ts-relative-tiny);
+    background: var(--accent-color, var(--ts-gray-800));
+    color: var(--accent-foreground-color, var(--ts-gray-50));
+    padding: .2rem .5rem;
+    border-radius: 100rem;
+    margin-left: auto;
 }
 
 .ts-menu .item:hover {
@@ -69,9 +75,18 @@
  * Active
  */
 
-.ts-menu .item.is-active {
+.ts-menu:not(.is-start-indicated):not(.is-end-indicated) .item.is-active {
     background: var(--accent-color, var(--ts-gray-800));
     color: var(--accent-foreground-color, var(--ts-gray-50));
+}
+
+/**
+ * Secondary
+ */
+
+.ts-menu.is-secondary.is-secondary.is-secondary .item.is-active {
+    background: var(--ts-gray-100);
+    color: var(--accent-color, var(--ts-gray-800));
 }
 
 /**
@@ -99,7 +114,7 @@
 
 .ts-menu .item.is-selected {
     background: var(--accent-color, var(--ts-primary-700));
-    color: var(--accent-foreground-color, var(--ts-white));
+    color: var(--accent-foreground-color, white);
 }
 
 /**
@@ -112,6 +127,54 @@
 
 .ts-menu.is-separated .item {
     border-radius: var(--ts-border-radius-element);
+}
+
+/**
+ * Indicated
+ */
+
+.ts-menu.is-start-indicated .item.is-active,
+.ts-menu.is-end-indicated .item.is-active {
+    background: var(--ts-gray-75);
+}
+
+.ts-menu.is-start-indicated .item:not(.is-active):hover,
+.ts-menu.is-end-indicated .item:not(.is-active):hover {
+    background: transparent;
+    opacity: 0.85;
+}
+
+.ts-menu.is-start-indicated .item {
+    border-left: var(--indicator-width) solid var(--ts-gray-300);
+}
+
+.ts-menu.is-start-indicated .item.is-active {
+    border-left-color: var(--accent-color, var(--ts-gray-800))
+}
+
+.ts-menu.is-end-indicated .item {
+    border-right: var(--indicator-width) solid var(--ts-gray-300);
+}
+
+.ts-menu.is-end-indicated .item.is-active {
+    border-right-color: var(--accent-color, var(--ts-gray-800))
+}
+
+.ts-menu.is-start-indicated.is-separated,
+.ts-menu.is-end-indicated.is-separated {
+    --indicator-width: 3px;
+
+    gap: 0;
+}
+
+.ts-menu.is-start-indicated.is-separated .item,
+.ts-menu.is-end-indicated.is-separated .item {
+    border-radius: 0
+}
+
+.ts-menu.is-start-indicated.is-separated .item:not(.is-active),
+.ts-menu.is-end-indicated.is-separated .item:not(.is-active) {
+    border-color: transparent
 }
 
 /**

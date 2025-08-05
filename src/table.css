@@ -16,7 +16,6 @@
     border-collapse: collapse;
     border-spacing: 0;
     border-color: inherit;
-    vertical-align: inherit;
     text-align: left;
     font-weight: inherit;
     font-size: 14px;
@@ -46,7 +45,8 @@
     background: var(--ts-gray-100);
 }
 
-.ts-table tr th {
+.ts-table tr th,
+.ts-table.is-definition tr td:first-child:not(.is-ignored) {
     color: var(--ts-gray-600);
     font-weight: 500;
 }
@@ -150,7 +150,11 @@
  * Striped
  */
 
-.ts-table.is-striped > tbody > tr:nth-child(even) {
+.ts-table.is-striped:not(.is-basic):not(.is-very-basic) > tbody > tr:nth-child(even) {
+    background: var(--ts-gray-75);
+}
+.ts-table.is-striped.is-basic > tbody > tr:nth-child(odd),
+.ts-table.is-striped.is-very-basic > tbody > tr:nth-child(odd) {
     background: var(--ts-gray-75);
 }
 
@@ -179,35 +183,39 @@
  * Aligns
  */
 
-.ts-table :is(tr, th, td).is-start-aligned {
+.ts-table.is-start-aligned :is(th, td),
+.ts-table :is(tr, th, td).is-start-aligned,
+.ts-table tr.is-start-aligned td {
     text-align: left;
 }
 
-.ts-table :is(th, td).is-center-aligned {
+.ts-table.is-center-aligned :is(th, td),
+.ts-table :is(th, td).is-center-aligned,
+.ts-table tr.is-center-aligned td {
     text-align: center;
 }
 
-.ts-table :is(th, td).is-end-aligned {
+.ts-table.is-end-aligned :is(th, td),
+.ts-table :is(th, td).is-end-aligned,
+.ts-table tr.is-end-aligned td {
     text-align: right;
 }
 
-.ts-table.is-top-aligned :is(th, td) {
+.ts-table.is-top-aligned :is(th, td),
+.ts-table :is(th, td).is-top-aligned,
+.ts-table tr.is-top-aligned td {
     vertical-align: top;
 }
 
-.ts-table :is(th, td).is-top-aligned {
-    vertical-align: top;
-}
-
-.ts-table :is(th, td).is-middle-aligned {
-    vertical-align: middle;
-}
-
+.ts-table.is-middle-aligned :is(th, td),
+.ts-table :is(th, td).is-middle-aligned,
 .ts-table tr.is-middle-aligned td {
     vertical-align: middle;
 }
 
-.ts-table :is(th, td).is-bottom-aligned {
+.ts-table.is-bottom-aligned :is(th, td),
+.ts-table :is(th, td).is-bottom-aligned,
+.ts-table tr.is-bottom-aligned td {
     vertical-align: bottom;
 }
 
@@ -289,10 +297,6 @@
  * Density
  */
 
-.ts-table.is-relaxed :is(thead, tfoot) tr th {
-    padding-top: 0.8rem;
-    padding-bottom: 0.8rem;
-}
 .ts-table.is-relaxed tbody tr td,
 .ts-table tbody.is-relaxed tr td,
 .ts-table tbody tr.is-relaxed td {
@@ -300,10 +304,6 @@
     padding-bottom: 0.8rem;
 }
 
-.ts-table.is-dense :is(thead, tfoot) tr th {
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
-}
 .ts-table.is-dense tbody tr td,
 .ts-table tbody.is-dense tr td,
 .ts-table tbody tr.is-dense td {
