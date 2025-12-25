@@ -9,6 +9,10 @@ class Responsive {
                 })
             })
         })
+
+        // 立即檢查一次所有響應式元素，因為 MutationObserver 不會監聽已經存在的元素（例如：HTML）。
+        // https://github.com/teacat/tocas/issues/1050
+        this.windowResize()
     }
 
     // attributeMutation
@@ -42,7 +46,7 @@ class Responsive {
     // getAllContaineredElements
     getAllContaineredElements = container => {
         return container.querySelectorAll(
-            tocas.config.strict_responsive ? `[class^="@"]:is([class*=":is-"],[class*=":has-"])` : `[class^="@"][class*=":"]`
+            tocas.config.strict_responsive ? `[class^="@"]:is([class*=":is-"],[class*=":has-"])` : `[class^="@"][class*=":"]`,
         )
     }
 
