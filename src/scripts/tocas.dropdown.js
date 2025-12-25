@@ -204,7 +204,11 @@ class Dropdown {
         }
 
         // 切換目標彈出式選單的可見度。
-        target.classList.toggle("is-visible")
+        if (element.dataset.autoclose === "false") {
+            target.classList.add("is-visible")
+        } else {
+            target.classList.toggle("is-visible")
+        }
 
         this.refreshRelatedTriggers(target)
 
