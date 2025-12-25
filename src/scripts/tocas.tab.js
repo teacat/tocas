@@ -12,6 +12,15 @@ class Tab {
             // 如果這個項目沒有被啟用，就預設隱藏對應的內容，這樣使用者就不用額外手動隱藏該內容。
             this.initialTab(added_node)
         }
+
+        // 如果這個新追加的 DOM 節點有 ID，那它可能是某個 Tab 的內容。
+        // https://github.com/teacat/tocas/issues/1078
+        if (added_node.id) {
+            var tab = document.querySelector(`[data-tab="${added_node.id}"]`)
+            if (tab) {
+                this.initialTab(tab)
+            }
+        }
     }
 
     // isTab
@@ -27,7 +36,7 @@ class Tab {
     // initialTab
     initialTab = element => {
         if (!this.isActiveTab(element)) {
-            document.getElementById(element.dataset.tab).classList.add("has-hidden")
+            document.getElementById(element.dataset.tab)?.classList.add("has-hidden")
         }
     }
 
