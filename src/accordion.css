@@ -60,7 +60,9 @@ details.ts-accordion summary::after {
  * Open
  */
 
-details.ts-accordion[open] summary::after {
+/** > selector to prevent inheritance issues */
+/** https://github.com/teacat/tocas/issues/1072 */
+details.ts-accordion[open] > summary::after {
     content: "\f077";
 }
 
@@ -72,10 +74,10 @@ details.ts-accordion[open] summary {
  * Plus Sign
  */
 
-details.ts-accordion.is-plus-sign summary::after {
-    content: "\2b";
+details.ts-accordion.is-plus-sign[open] > summary::after {
+    content: "\f068";
 }
 
-details.ts-accordion.is-plus-sign[open] summary::after {
-    content: "\f068";
+details.ts-accordion.is-plus-sign summary::after {
+    content: "\2b";
 }
