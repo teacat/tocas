@@ -83,6 +83,12 @@ class Dropdown {
         return element.dataset.position || "bottom-start"
     }
 
+    // collapse
+    collapse = element => {
+        var collapse = element.dataset.collapse || "trigger item"
+        return collapse.split(" ")
+    }
+
     // windowMousedown
     windowMousedown = event => {
         // 取得這個視窗點擊最鄰近的 Dropdown 模組觸發元素。
@@ -178,8 +184,10 @@ class Dropdown {
             return
         }
 
-        // 項目點擊成功，關閉這個彈出式選單。
-        this.closeDropdown(dropdown)
+        // 如果包含 "item"，則關閉選單。
+        if (this.collapse(dropdown).includes("item")) {
+            this.closeDropdown(dropdown)
+        }
     }
 
     // clickEventListener
@@ -203,11 +211,11 @@ class Dropdown {
             target.style.removeProperty("--ts-dropdown-position")
         }
 
-        // 切換目標彈出式選單的可見度。
-        if (element.dataset.autoclose === "false") {
-            target.classList.add("is-visible")
-        } else {
+        // 根據關閉條件決定行為。
+        if (this.collapse(target).includes("trigger")) {
             target.classList.toggle("is-visible")
+        } else {
+            target.classList.add("is-visible")
         }
 
         this.refreshRelatedTriggers(target)
